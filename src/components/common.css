@@ -1,0 +1,49 @@
+@import "./variables.css";
+@import url("https://fonts.googleapis.com/css?family=Encode+Sans+Semi+Condensed|Questrial");
+
+@font-face {
+  font-family: Stratum;
+  src: url("../../fonts/StratumNo1 Medium.ttf");
+}
+
+html {
+  /* stylelint-disable max-line-length */
+  font-family: Stratum, "Helvetica Neue For Number", "Hiragino Kaku Gothic ProN", "メイリオ", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* stylelint-enable */
+
+  font-size: 16px;
+
+  @media (--500-viewport) {
+    font-size: 15px;
+  }
+}
+
+h1 {
+  font-size: 2.3rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.7rem;
+}
+
+h4 {
+  font-size: 1.4rem;
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+span {
+  font-size: 1.1rem;
+}
+
+a {
+  font-size: 1.1rem;
+  text-decoration: none;
+}

@@ -1,0 +1,39 @@
+@import "../../variables.css";
+
+:root {
+  --border-width: 2px;
+}
+
+.container {
+  border-radius: 3px;
+  border-style: solid;
+  border-width: var(--border-width);
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px 25px;
+  position: relative;
+  text-align: center;
+  transition: .5s;
+  width: 80px;
+}
+
+.container:hover {
+  border: var(--border-width) solid rgba(255,255,255, 0);
+}
+
+.container:before, .container:after {
+  box-sizing: border-box;
+  content: "";
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scale(0);
+  transition: .5s;
+  width: 100%;
+  z-index: 3;
+}
+
+.container:hover:before, .container:hover:after {
+  transform: scale(1);
+}

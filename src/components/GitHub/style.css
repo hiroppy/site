@@ -1,0 +1,73 @@
+@import "../variables.css";
+
+:root {
+  --icon-size: 80px;
+}
+
+.wrapper {
+  background: var(--color-white);
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: var(--max-width);
+  justify-content: flex-start;
+}
+
+.box {
+  cursor: pointer;
+  text-decoration: none;
+  width: 200px;
+
+  &:after {
+    background: transparent;
+    content: "";
+    display: block;
+    height: 3px;
+    margin: auto;
+    transition: width .4s ease, background .4s ease;
+    width: 0;
+  }
+
+  &:hover:after {
+    width: 90%;
+    background: var(--color-key);
+  }
+
+  & > p {
+    color: var(--color-black);
+    transition: color 400ms;
+  }
+
+  &:hover > p {
+    color: var(--color-key);
+  }
+
+  @media (--500-viewport) {
+    width: 50% !important;
+  }
+
+  @media (--900-viewport) {
+    width: 33%;
+  }
+}
+
+.icon {
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: var(--icon-size);
+  margin: 10px auto;
+  width: var(--icon-size);
+}
+
+.title {
+  text-align: center;
+}
+
+.calendar {
+  overflow-x: auto;
+  max-width: 100%;
+}

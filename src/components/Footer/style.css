@@ -1,0 +1,78 @@
+@import "../variables.css";
+
+.wrapper {
+  background: var(--color-black);
+  color: var(--color-white);
+  overflow: hidden;
+  position: relative;
+}
+
+.container {
+  align-items: baseline;
+  height: 200px;
+  justify-content: space-around;
+
+  & > * {
+    text-align: center;
+    width: 33%;
+  }
+
+  @media (--650-viewport) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: auto;
+
+    & > * {
+      text-align: left;
+      width: 100%;
+    }
+  }
+}
+
+.link {
+  color: var(--color-white);
+  /* font-family: 'Questrial', sans-serif,  "Hiragino Kaku Gothic ProN", "メイリオ"; */
+  transition: color 500ms;
+}
+
+.link:hover {
+  color: var(--color-key);
+}
+
+.sns {
+  display: flex;
+  flex-wrap: wrap;
+
+  & > a {
+    color: var(--color-white);
+    line-height: 1.3;
+    transition: color 500ms;
+    width: 33%;
+
+    &:hover {
+      color: var(--color-key);
+    }
+
+    @media (--500-viewport) {
+      width: 100%;
+    }
+  }
+}
+
+.center {
+  /* text-align: left; */
+}
+
+.site {
+  margin-top: 0;
+}
+
+.copyright {
+  font-size: .8rem;
+  text-align: right;
+  padding: 20px 50px;
+
+  @media (--650-viewport) {
+    padding: 20px 15px;
+  }
+}

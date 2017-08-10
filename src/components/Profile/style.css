@@ -1,0 +1,33 @@
+@import "../variables.css";
+
+.wrapper {
+  background: #fff;
+}
+
+.container {
+  align-items: flex-start;
+  border: 3px solid var(--color-black);
+  border-radius: 3px;
+  display: flex;
+  padding: 30px 50px;
+  text-align: center;
+
+  & span {
+    color: var(--color-key);
+  }
+
+  @media (--500-viewport) {
+    flex-direction: column;
+    padding: 30px 10px;
+  }
+}
+
+.box {
+  margin: 0 20px;
+  text-align: left;
+}
+
+.name {
+  color: #363636;
+  font-weight: 400;
+}
