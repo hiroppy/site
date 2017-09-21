@@ -20,10 +20,12 @@ const Hero = () => (
     </div>
     {
       [...Array(4)].map((_, i) => (
-        <i
-          key={i}
-          className={background.meteor1}
-        />
+        <div className={background.meteor1Wrapper}>
+          <i
+            key={i}
+            className={background.meteor1}
+          />
+        </div>
       ))
     }
     {

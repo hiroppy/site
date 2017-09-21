@@ -26,20 +26,24 @@
 /* meteor-1 */
 @for $i from 1 to 5 {
   $delay: random(0, 30)s;
-  $left: calc(random(0, 100) * 1%);
+  $left: calc(random(0, 100)%);
   $opacity: calc((random(0, 30) + 30) * .01);
-  $top: calc(random(0, 60) * 1%);
+  $top: calc(random(0, 60)%);
 
-  .meteor1:nth-of-type($(i)):global {
-    animation-name: meteor-1-$(i);
-    animation-delay: $delay;
-    transition-timing-function: ease-in;
-    animation-duration: calc(random(0, 10)s + 25s);
-    animation-iteration-count: infinite;
+  .meteor1Wrapper:nth-of-type($(i)) {
+    position: absolute;
     left: $(left);
-    opacity: 0;
     top: $(top);
-    rotate: random(0, 360)deg;
+    transform: rotate(random(0, 360)deg);
+
+    & > .meteor1:global {
+      animation-name: meteor-1-$(i);
+      animation-delay: $delay;
+      transition-timing-function: ease-in;
+      animation-duration: calc(random(0, 10)s + 20s);
+      animation-iteration-count: infinite;
+      opacity: 0;
+    }
   }
 
   @Keyframes meteor-1-$(i) {
@@ -66,16 +70,16 @@
 }
 
 /* meteor-2 */
-@for $i from 5 to 10 {
+@for $i from 1 to 5 {
   $delay: random(0, 30)s;
-  $left: calc(random(0, 100) * 1%);
+  $left: calc(random(0, 100)%);
   $opacity: calc((random(0, 30) + 30) * .01);
-  $top: calc(random(0, 70) * 1%);
+  $top: calc(random(0, 70)%);
 
   .meteor2:nth-of-type($(i)):global {
     animation-name: meteor-2-$(i);
     animation-delay: $delay;
-    animation-duration: calc(random(0, 10)s + 20s);
+    animation-duration: calc(random(0, 10)s + 30s);
     animation-iteration-count: infinite;
     left: $(left);
     opacity: 0;
