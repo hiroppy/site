@@ -7,8 +7,6 @@ css:
 html:
   filename: index.html
   template: ./index.ejs
-dev:
-  port: 3000
 prod:
   url: true
   extract: true

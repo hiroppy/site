@@ -6,6 +6,10 @@ import styles from './style.css';
 
 const slides = [
   {
+    text: 'the present and future of JavaScript',
+    link: 'https://abouthiroppy.github.io/slides/the-present-and-future-of-JavaScript/'
+  },
+  {
     text: 'node-whatwg-url',
     link: 'https://abouthiroppy.github.io/slides/node-whatwg-url/'
   },
