@@ -29,6 +29,10 @@ const articles = [
     link: 'http://abouthiroppy.hatenablog.jp/entry/2017/07/28/101318'
   },
   {
+    text: 'JavaScriptの現状と将来というタイトルで発表してきた',
+    link: 'http://abouthiroppy.hatenablog.jp/entry/the-present-and-future-of-JavaScript'
+  },
+  {
     text: '簡単なアプリケーションでwebpackとbabelの設定をしなくて済むライブラリを作った',
     link: 'http://abouthiroppy.hatenablog.jp/entry/2017/09/11/101235'
   },
