@@ -25,13 +25,6 @@ const Profile = () => (
         <span className="transition">hello[at]about-hiroppy.com</span><br /><br />
         <span className="transition">Request for writing, speech, work etc...</span>
         <h2>My Career</h2>
-        <a
-          rel="noopener noreferrer"
-          href="https://stackoverflow.com/users/story/7014700"
-          target="_blank"
-        >
-          My story
-        </a>
         <h3>Mercari</h3>
         <span className="transition">2017/06 -</span>
         <h3>Dwango</h3>
