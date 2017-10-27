@@ -5,12 +5,13 @@ import Container from '../templates/Container';
 import { sr } from '../App';
 
 import nodejs from '../../../images/nodejs.png';
+import nodejsjp from '../../../images/nodejsjp.png';
 import babel from '../../../images/babel.png';
 import webpack from '../../../images/webpack.png';
 import maintainer from '../../../images/maintainer.png';
 import crowi from '../../../images/crowi.png';
 import clipy from '../../../images/clipy.png';
-import nodejsjp from '../../../images/nodejsjp.png';
+import jekyll from '../../../images/jekyll.png';
 import myDish from '../../../images/my-dish.jpeg';
 
 import styles from './style.css';
@@ -58,6 +59,11 @@ class GitHub extends React.Component {
             title="Node.js Foundation"
           />
           <Org
+            src={nodejsjp}
+            link="nodejsjp"
+            title="nodejsjp"
+          />
+          <Org
             src={babel}
             link="babel"
             title="Babel"
@@ -78,14 +84,14 @@ class GitHub extends React.Component {
             title="crowi"
           />
           <Org
+            src={jekyll}
+            link="jekyll"
+            title="jekyll"
+          />
+          <Org
             src={clipy}
             link="clipy"
             title="Clipy Project"
-          />
-          <Org
-            src={nodejsjp}
-            link="nodejsjp"
-            title="nodejsjp"
           />
           <Org
             src={myDish}
