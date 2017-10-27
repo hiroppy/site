@@ -33,7 +33,7 @@
     "eslint-config-sky": "^1.6.2",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-react": "^7.4.0",
-    "nyc": "^11.2.1",
+    "nyc": "^11.3.0",
     "postcss": "^6.0.13",
     "postcss-advanced-variables": "^1.2.2",
     "postcss-browser-reporter": "^0.5.0",
@@ -46,7 +46,7 @@
     "react-hot-loader": "^3.1.1",
     "stylelint": "^8.2.0",
     "stylelint-config-sky": "^1.1.0",
-    "sweetpack": "^0.10.0"
+    "sweetpack": "^0.10.1"
   },
   "dependencies": {
     "classnames": "^2.2.5",
