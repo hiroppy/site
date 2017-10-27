@@ -4,6 +4,7 @@ import styles from './style.css';
 
 const Button = (props) => (
   <a
+    rel="noopener"
     href={props.link}
     style={{ borderColor: props.color }}
     target="_blank"

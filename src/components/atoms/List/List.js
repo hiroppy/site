@@ -13,6 +13,7 @@ const List = (props) => (
           {
             item.link ? (
               <a
+                rel="noopener"
                 href={item.link}
                 target="_blank"
               >

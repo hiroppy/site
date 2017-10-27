@@ -56,8 +56,9 @@ const Account = (props) => (
       props.children
     }
     <a
-      target="_blank"
+      rel="noopener"
       href={props.link}
+      target="_blank"
     >
       &gt;
     </a>

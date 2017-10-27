@@ -17,6 +17,7 @@ import styles from './style.css';
 
 const Org = (props) => (
   <a
+    rel="noopener"
     href={`https://github.com/${props.link}`}
     target="_blank"
     className={cx('box', styles.box)}
