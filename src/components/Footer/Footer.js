@@ -7,9 +7,11 @@ const Footer = () => (
   <footer className={styles.wrapper}>
     {
       [...Array(5)].map((_, i) => (
-        <div className={background.meteor1Wrapper}>
+        <div
+          key={i}
+          className={background.meteor1Wrapper}
+        >
           <i
-            key={i}
             className={background.meteor1}
           />
         </div>
