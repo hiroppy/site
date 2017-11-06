@@ -33,16 +33,16 @@ const articles = [
     link: 'http://abouthiroppy.hatenablog.jp/entry/the-present-and-future-of-JavaScript'
   },
   {
+    text: 'Node.jsのパフォーマンスチューニングのtips',
+    link: 'http://abouthiroppy.hatenablog.jp/entry/2017/11/06/095943'
+  },
+  {
     text: '簡単なアプリケーションでwebpackとbabelの設定をしなくて済むライブラリを作った',
     link: 'http://abouthiroppy.hatenablog.jp/entry/2017/09/11/101235'
   },
   {
     text: '次のリリースであるBabel7の主な変更点まとめ',
     link: 'http://abouthiroppy.hatenablog.jp/entry/babel7'
-  },
-  {
-    text: 'ドワンゴを退職してメルカリに入社した',
-    link: 'http://abouthiroppy.hatenablog.jp/entry/2017/06/01/100000'
   },
   {
     text: 'メモ: Node.jsとAyo.jsに分裂したという話',
