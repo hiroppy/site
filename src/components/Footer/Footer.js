@@ -24,6 +24,7 @@ const Footer = () => (
         <a href="https://www.facebook.com/abouthiroppy">FaceBook</a>
         <a href="http://b.hatena.ne.jp/about_hiroppy">Hatena</a>
         <a href="https://www.linkedin.com/in/yuta-hiroto-340b4952/">LinkedIn</a>
+        <a href="https://connpass.com/user/about_hiroppy/">Connpass</a>
       </div>
       <div className={styles.center}>
         <p>
