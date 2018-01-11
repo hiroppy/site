@@ -28,7 +28,7 @@ const Profile = () => (
         <h3>Dwango</h3>
         <span className="transition">2017/12 -</span>
         <h3>Mercari</h3>
-        <span className="transition">2017/06 -</span>
+        <span className="transition">2017/06 - 2017/12</span>
         <h3>Dwango</h3>
         <span className="transition">2015/04 - 2017/06</span>
       </div>
