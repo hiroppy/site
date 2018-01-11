@@ -25,6 +25,8 @@ const Profile = () => (
         <span className="transition">hello[at]about-hiroppy.com</span><br /><br />
         <span className="transition">Request for writing, speech, work etc...</span>
         <h2>My Career</h2>
+        <h3>Dwango</h3>
+        <span className="transition">2017/12 -</span>
         <h3>Mercari</h3>
         <span className="transition">2017/06 -</span>
         <h3>Dwango</h3>
