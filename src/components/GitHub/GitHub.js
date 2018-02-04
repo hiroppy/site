@@ -12,6 +12,7 @@ import maintainer from '../../../images/maintainer.png';
 import crowi from '../../../images/crowi.png';
 import clipy from '../../../images/clipy.png';
 import jekyll from '../../../images/jekyll.png';
+import nicoHaco from '../../../images/nicohaco.png';
 import myDish from '../../../images/my-dish.jpeg';
 
 import styles from './style.css';
@@ -92,6 +93,11 @@ class GitHub extends React.Component {
             src={clipy}
             link="clipy"
             title="Clipy Project"
+          />
+          <Org
+            src={nicoHaco}
+            link="nicohaco"
+            title="NicoHaco"
           />
           <Org
             src={myDish}

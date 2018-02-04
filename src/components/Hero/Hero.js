@@ -43,7 +43,7 @@ const Hero = () => (
     <p className="transition">I am a JavaScript junkie!</p>
     <p className="transition">
       I work as a developer and a Node.js core collaborator
-      for Mercari and Node.js Foundation.
+      for Dwango and Node.js Foundation.
     </p>
     <div className={cx('transition', styles.buttons)}>
       <Button
