@@ -47,7 +47,7 @@ const Hero = () => (
     </p>
     <div className={cx('transition', styles.buttons)}>
       <Button
-        link="https://github.com/abouthiroppy"
+        link="https://github.com/hiroppy"
         className={styles.github}
       >
         GitHub

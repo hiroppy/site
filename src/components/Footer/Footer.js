@@ -19,7 +19,7 @@ const Footer = () => (
     }
     <Container className={styles.container}>
       <div className={styles.sns}>
-        <a href="https://github.com/abouthiroppy">GitHub</a>
+        <a href="https://github.com/hiroppy">GitHub</a>
         <a href="https://twitter.com/about_hiroppy">Twitter</a>
         <a href="https://www.facebook.com/abouthiroppy">FaceBook</a>
         <a href="http://b.hatena.ne.jp/about_hiroppy">Hatena</a>
@@ -45,7 +45,7 @@ const Footer = () => (
         <p>
           <a
             rel="noopener noreferrer"
-            href="https://github.com/abouthiroppy/site"
+            href="https://github.com/hiroppy/site"
             target="_blank"
             className={styles.link}
           >
@@ -55,7 +55,7 @@ const Footer = () => (
         <p>
           <a
             rel="noopener noreferrer"
-            href="http://houzicha.about-hiroppy.com"
+            href="http://houzicha.hiroppy.me"
             target="_blank"
             className={styles.link}
           >
@@ -65,7 +65,7 @@ const Footer = () => (
       </div>
     </Container>
     <div className={styles.copyright}>
-      © 2017 - Copyright Yuta Hiroto, All Rights Reserved.
+      © 2018 - Copyright Yuta Hiroto, All Rights Reserved.
     </div>
   </footer>
 );

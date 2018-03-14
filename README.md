@@ -2,6 +2,6 @@
   <h1>Site</h1>
 </div>
 
-http://about-hiroppy.com/
+https://hiroppy.me
 
 This theme is the universe.

@@ -7,23 +7,23 @@ import styles from './style.css';
 const slides = [
   {
     text: 'the present and future of JavaScript',
-    link: 'https://abouthiroppy.github.io/slides/the-present-and-future-of-JavaScript/'
+    link: 'https://hiroppy.github.io/slides/the-present-and-future-of-JavaScript/'
   },
   {
     text: 'how to build a slide',
-    link: 'https://abouthiroppy.github.io/slides/how-to-build-a-slide/'
+    link: 'https://hiroppy.github.io/slides/how-to-build-a-slide/'
   },
   {
     text: 'node-whatwg-url',
-    link: 'https://abouthiroppy.github.io/slides/node-whatwg-url/'
+    link: 'https://hiroppy.github.io/slides/node-whatwg-url/'
   },
   {
-    text: 'node@8.0.0 (Japanese)',
-    link: 'https://abouthiroppy.github.io/slides/node8/'
+    text: 'how to manage the document of Node.js',
+    link: 'https://hiroppy.github.io/slides/how-to-manage-the-document-of-Node.js'
   },
   {
     text: 'nicohaco (Japanese)',
-    link: 'https://abouthiroppy.github.io/slides/nicohaco/'
+    link: 'https://hiroppy.github.io/slides/nicohaco/'
   }
 ];
 
@@ -76,7 +76,7 @@ const Material = () => (
       <div className={styles.box}>
         <h3 className={styles.title}>Slides</h3>
         <div className={cx(styles.list, 'transition')}>
-          <Account link="https://github.com/abouthiroppy/slides">
+          <Account link="https://github.com/hiroppy/slides">
             Slides(Main)
           </Account>
           <List
