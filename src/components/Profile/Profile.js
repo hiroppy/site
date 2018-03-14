@@ -22,7 +22,7 @@ const Profile = () => (
       </div>
       <div className={styles.box}>
         <h2>Contact</h2>
-        <span className="transition">hello[at]about-hiroppy.com</span><br /><br />
+        <span className="transition">hello[at]hiroppy.me</span><br /><br />
         <span className="transition">Request for writing, speech, work etc...</span>
         <h2>My Career</h2>
         <h3>Dwango</h3>

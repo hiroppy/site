@@ -34,7 +34,7 @@ const Org = (props) => (
 
 class GitHub extends React.Component {
   componentDidMount() {
-    new Calendar(this.calendar, 'abouthiroppy');
+    new Calendar(this.calendar, 'hiroppy');
 
     // [TODO] combine
     const config = {
