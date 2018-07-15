@@ -52,16 +52,6 @@ const Footer = () => (
             This site&apos;s codes
           </a>
         </p>
-        <p>
-          <a
-            rel="noopener noreferrer"
-            href="http://houzicha.hiroppy.me"
-            target="_blank"
-            className={styles.link}
-          >
-            Old site is houzicha
-          </a>
-        </p>
       </div>
     </Container>
     <div className={styles.copyright}>
