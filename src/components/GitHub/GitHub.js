@@ -9,6 +9,7 @@ import nodejsjp from '../../../images/nodejsjp.png';
 import babel from '../../../images/babel.png';
 import webpack from '../../../images/webpack.png';
 import maintainer from '../../../images/maintainer.png';
+import stylelint from '../../../images/stylelint.png';
 import crowi from '../../../images/crowi.png';
 import clipy from '../../../images/clipy.png';
 import jekyll from '../../../images/jekyll.png';
@@ -78,6 +79,11 @@ class GitHub extends React.Component {
             src={maintainer}
             link="maintainers"
             title="Open Source Maintainers on GitHub"
+          />
+          <Org
+            src={stylelint}
+            link="stylelint"
+            title="stylelint"
           />
           <Org
             src={crowi}
