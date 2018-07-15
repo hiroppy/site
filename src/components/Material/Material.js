@@ -7,50 +7,50 @@ import styles from './style.css';
 const slides = [
   {
     text: 'the present and future of JavaScript',
-    link: 'https://hiroppy.github.io/slides/the-present-and-future-of-JavaScript/'
+    link: 'https://slides.hiroppy.me/the-present-and-future-of-JavaScript/'
   },
   {
     text: 'how to build a slide',
-    link: 'https://hiroppy.github.io/slides/how-to-build-a-slide/'
+    link: 'https://slides.hiroppy.me/how-to-build-a-slide/'
   },
   {
-    text: 'node-whatwg-url',
-    link: 'https://hiroppy.github.io/slides/node-whatwg-url/'
+    text: 'performance timing api with node.js',
+    link: 'http://slides.hiroppy.me/performance-timing-api-with-node.js/'
+  },
+  {
+    text: 'worker_threads (Japanese)',
+    link: 'https://slides.hiroppy.me/worker_threads/'
   },
   {
     text: 'how to manage the document of Node.js',
-    link: 'https://hiroppy.github.io/slides/how-to-manage-the-document-of-Node.js'
-  },
-  {
-    text: 'nicohaco (Japanese)',
-    link: 'https://hiroppy.github.io/slides/nicohaco/'
+    link: 'http://slides.hiroppy.me/how-to-manage-the-document-of-Node.js/'
   }
 ];
 
 const articles = [
   {
+    text: 'Markdownだけで綺麗なスライドを作るCLIを作っている',
+    link: 'http://blog.hiroppy.me/entry/fusuma'
+  },
+  {
     text: 'PWAの実装をしてみた',
-    link: 'http://abouthiroppy.hatenablog.jp/entry/2017/07/28/101318'
+    link: 'http://blog.hiroppy.me/entry/2017/07/28/101318'
   },
   {
     text: 'JavaScriptの現状と将来というタイトルで発表してきた',
-    link: 'http://abouthiroppy.hatenablog.jp/entry/the-present-and-future-of-JavaScript'
+    link: 'http://blog.hiroppy.me/entry/the-present-and-future-of-JavaScript'
   },
   {
     text: 'Node.jsのパフォーマンスチューニングのtips',
-    link: 'http://abouthiroppy.hatenablog.jp/entry/2017/11/06/095943'
+    link: 'http://blog.hiroppy.me/entry/2017/11/06/095943'
   },
   {
-    text: '簡単なアプリケーションでwebpackとbabelの設定をしなくて済むライブラリを作った',
-    link: 'http://abouthiroppy.hatenablog.jp/entry/2017/09/11/101235'
+    text: 'Node.jsにworkerが入った',
+    link: 'http://blog.hiroppy.me/entry/worker_threads'
   },
   {
-    text: '次のリリースであるBabel7の主な変更点まとめ',
-    link: 'http://abouthiroppy.hatenablog.jp/entry/babel7'
-  },
-  {
-    text: 'メモ: Node.jsとAyo.jsに分裂したという話',
-    link: 'http://abouthiroppy.hatenablog.jp/entry/2017/08/26/094425'
+    text: 'webpack4への簡単なマイグレーションガイド',
+    link: 'http://blog.hiroppy.me/entry/migrate-to-webpack4'
   }
 ];
 
