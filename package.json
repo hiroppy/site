@@ -55,7 +55,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "github-calendar": "^1.3.1",
-    "normalize.css": "^7.0.0",
+    "normalize.css": "^8.0.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "scrollreveal": "^3.3.6",
