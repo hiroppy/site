@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "declaration": false,
+    "jsx": "react",
+    "lib": ["es2017", "dom"],
+    "target": "es2015",
+    "module": "commonjs",
+    "moduleResolution": "node", // for module:esnext
+    "allowJs": false,
+    "sourceMap": true,
+    "removeComments": false, // to leave webpack's comment
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": false,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "strict": true,
+    "types": []
+  },
+  "exclude": ["node_modules", "src/**/*.test.ts", "src/client/**/*.stories.ts"],
+  "include": ["src/**/*"]
+}
