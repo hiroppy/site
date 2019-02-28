@@ -37,7 +37,7 @@
     "eslint-config-sky": "1.6.2",
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-react": "7.4.0",
-    "nyc": "11.3.0",
+    "nyc": "13.3.0",
     "parcel-bundler": "1.11.0",
     "postcss": "6.0.13",
     "postcss-advanced-variables": "1.2.2",
