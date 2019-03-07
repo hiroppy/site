@@ -19,6 +19,7 @@ import clipy from '../../../images/clipy.png';
 import jekyll from '../../../images/jekyll.png';
 import nicoHaco from '../../../images/nicohaco.png';
 import gatsby from '../../../images/gatsby.png';
+import danger from '../../../images/danger.png';
 
 const Wrapper = styled(WrapperComponent)`
   background: ${whiteColor};
@@ -136,17 +137,18 @@ export class GitHub extends React.PureComponent {
       <Wrapper className="github">
         <h2>GitHub</h2>
         <Container>
-          <Org src={nodejs} link="nodejs" title="node.js Foundation" />
-          <Org src={babel} link="babel" title="babel" />
+          <Org src={nodejs} link="nodejs" title="Node.js Foundation" />
+          <Org src={babel} link="babel" title="Babel" />
           <Org src={webpack} link="webpack" title="webpack" />
-          <Org src={gatsby} link="gatsbyjs" title="gatsby" />
-          <Org src={maintainer} link="maintainers" title="open source maintainers on github" />
+          <Org src={gatsby} link="gatsbyjs" title="Gatsby" />
+          <Org src={maintainer} link="maintainers" title="Open Source Maintainers on GitHub" />
           <Org src={stylelint} link="stylelint" title="stylelint" />
-          <Org src={jekyll} link="jekyll" title="jekyll" />
+          <Org src={danger} link="danger" title="Danger" />
+          <Org src={jekyll} link="jekyll" title="Jekyll" />
           <Org src={crowi} link="crowi" title="crowi" />
-          <Org src={nodejsjp} link="nodejsjp" title="nodejsjp" />
-          <Org src={clipy} link="clipy" title="clipy project" />
-          <Org src={nicoHaco} link="nicohaco" title="nicohaco" />
+          <Org src={nodejsjp} link="nodejsjp" title="Node.js Japan User Group" />
+          <Org src={clipy} link="clipy" title="Clipy Project" />
+          <Org src={nicoHaco} link="nicohaco" title="NicoHaco" />
         </Container>
         <h3>Contributions</h3>
         <CalendarComponent ref={(calendar) => (this.calendar = calendar)} className="transition" />
