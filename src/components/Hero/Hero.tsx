@@ -88,8 +88,8 @@ const SupportButton = styled(Button)`
 
 export const Hero: React.FC = () => (
   <Box className="Hero">
-    <div>{[...Array(29)].map((_, i) => <Star key={i} />)}</div>
-    {[...Array(9)].map((_, i) => <Meteor1 key={i} />)}
+    <div>{[...Array(24)].map((_, i) => <Star key={i} />)}</div>
+    {[...Array(4)].map((_, i) => <Meteor1 key={i} />)}
     {[...Array(4)].map((_, i) => <Meteor2 key={i} />)}
     <Avatar className="transition" />
     <h1 className="transition">hiroppy</h1>
