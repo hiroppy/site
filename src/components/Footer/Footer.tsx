@@ -16,6 +16,7 @@ const Container = styled(ContainerComponent)`
   align-items: baseline;
   height: 200px;
   justify-content: space-around;
+  min-height: auto;
 
   & > * {
     text-align: center;

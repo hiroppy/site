@@ -12,6 +12,7 @@ const Section = styled.section`
   justify-content: center;
   margin: auto;
   padding: 70px 50px;
+  min-height: calc(100vh - 70px * 2);
 
   ${mediaQueries.smartphone`
     padding: 70px 15px;

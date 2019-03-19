@@ -18,7 +18,6 @@ import { mediaQueries } from '../../utils/mediaQueries';
 const Box = styled(Container)`
   background: ${blackColor};
   color: ${whiteColor};
-  height: 100vh;
   flex-direction: column;
   text-align: center;
   overflow: hidden;

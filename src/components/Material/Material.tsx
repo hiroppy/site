@@ -58,6 +58,14 @@ const slideAccounts = [
 
 const articles = [
   {
+    text: 'OSSで報酬が支給された話',
+    link: 'https://blog.hiroppy.me/entry/open-collective'
+  },
+  {
+    text: 'OSSの現状と今後',
+    link: 'https://blog.hiroppy.me/entry/current-status-and-future-of-oss'
+  },
+  {
     text: 'webpackの仕組みを簡潔に説明する',
     link: 'https://blog.hiroppy.me/entry/mechanism-of-webpack'
   },
@@ -76,15 +84,6 @@ const articles = [
   {
     text: 'Node.jsのパフォーマンスチューニングのtips',
     link: 'http://blog.hiroppy.me/entry/2017/11/06/095943'
-  },
-
-  {
-    text: 'JavaScriptの現状と将来というタイトルで発表してきた',
-    link: 'http://blog.hiroppy.me/entry/the-present-and-future-of-JavaScript'
-  },
-  {
-    text: 'webpack4への簡単なマイグレーションガイド',
-    link: 'http://blog.hiroppy.me/entry/migrate-to-webpack4'
   }
 ];
 
