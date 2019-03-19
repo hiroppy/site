@@ -55,7 +55,7 @@ const Buttons = styled.div`
 
 const Button = styled(ButtonComponent)`
   color: ${whiteColor};
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   transition: color 0.7s;
 
   &:visited {
@@ -81,6 +81,11 @@ const Button = styled(ButtonComponent)`
   }
 `;
 
+const SupportButton = styled(Button)`
+  font-size: 2rem;
+  width: auto;
+`;
+
 export const Hero: React.FC = () => (
   <Box className="Hero">
     <div>{[...Array(29)].map((_, i) => <Star key={i} />)}</div>
@@ -88,11 +93,17 @@ export const Hero: React.FC = () => (
     {[...Array(4)].map((_, i) => <Meteor2 key={i} />)}
     <Avatar className="transition" />
     <h1 className="transition">hiroppy</h1>
-    <p className="transition">I am a JavaScript junkie!</p>
+    <br />
+    <SupportButton link="https://www.patreon.com/hiroppy" className="transition" color="#e85b46">
+      Support hiroppy
+    </SupportButton>
+
+    <br />
+    <h3 className="transition">I am a JavaScript junkie!</h3>
     <p className="transition">
       Working on Node.js, webpack, stylelint, babel, gatsby and Node.js Japan User Group.
     </p>
-    <Buttons className="transision">
+    <Buttons className="transition">
       <Button link="https://github.com/hiroppy" color={githubColor}>
         GitHub
       </Button>
