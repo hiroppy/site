@@ -20,6 +20,7 @@ import jekyll from '../../../images/jekyll.png';
 import nicoHaco from '../../../images/nicohaco.png';
 import gatsby from '../../../images/gatsby.png';
 import danger from '../../../images/danger.png';
+import reactjapan from '../../../images/reactjapan.png';
 
 const Wrapper = styled(WrapperComponent)`
   background: ${whiteColor};
@@ -146,8 +147,9 @@ export class GitHub extends React.PureComponent {
           <Org src={danger} link="danger" title="Danger" />
           <Org src={jekyll} link="jekyll" title="Jekyll" />
           <Org src={crowi} link="crowi" title="crowi" />
-          <Org src={nodejsjp} link="nodejsjp" title="Node.js Japan User Group" />
           <Org src={clipy} link="clipy" title="Clipy Project" />
+          <Org src={nodejsjp} link="nodejsjp" title="Node.js Japan User Group" />
+          <Org src={reactjapan} link="reactjapan" title="React Japan" />
           <Org src={nicoHaco} link="nicohaco" title="NicoHaco" />
         </Container>
         <h3>Contributions</h3>
