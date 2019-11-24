@@ -8,6 +8,10 @@ import { Flame } from '../Flame';
 
 const slides = [
   {
+    text: 'Introduce the new ESM implementation of Node.js',
+    link: 'https://slides.hiroppy.me/node-esm/'
+  },
+  {
     text: 'webpack の イママデ と コレカラ',
     link: 'https://slides.hiroppy.me/webpack-history'
   },
@@ -18,10 +22,6 @@ const slides = [
   {
     text: 'The event loop of node',
     link: 'https://slides.hiroppy.me/the-event-loop-of-node'
-  },
-  {
-    text: 'how to build a slide',
-    link: 'https://slides.hiroppy.me/how-to-build-a-slide/'
   },
   {
     text: 'performance timing api with node.js',
@@ -39,7 +39,7 @@ const slides = [
 
 const slideAccounts = [
   {
-    title: 'GitHub',
+    title: 'GitHub (Main)',
     href: 'https://github.com/hiroppy/slides'
   },
   {
@@ -49,14 +49,14 @@ const slideAccounts = [
   {
     title: 'SlideShare',
     href: 'https://www.slideshare.net/about_hiroppy'
-  },
-  {
-    title: 'Niconare',
-    href: 'https://niconare.nicovideo.jp/@hiroppy'
   }
 ];
 
 const articles = [
+  {
+    text: 'SPA + SSR + PWA の作り方とセキュリティについて',
+    link: 'https://blog.hiroppy.me/entry/ssr-sample_2'
+  },
   {
     text: 'OSSで報酬が支給された話',
     link: 'https://blog.hiroppy.me/entry/open-collective'
@@ -72,10 +72,6 @@ const articles = [
   {
     text: 'Node.jsでのイベントループの仕組みとタイマーについて',
     link: 'https://blog.hiroppy.me/entry/nodejs-event-loop'
-  },
-  {
-    text: 'Markdownだけで綺麗なスライドを作るCLIを作っている',
-    link: 'http://blog.hiroppy.me/entry/fusuma'
   },
   {
     text: 'Node.jsのアプリケーションデバッグ・改善方法をおさらいする',

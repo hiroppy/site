@@ -23,6 +23,7 @@ const Li = styled.li`
 
   &:before {
     content: '-';
+    font-size: 20px;
     margin-left: -15px;
   }
 
