@@ -1,26 +1,12 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useStaticQuery, graphql } from 'gatsby';
 import 'github-calendar/dist/github-calendar.css';
 import 'github-calendar/dist/github-calendar-responsive.css';
 import Calendar from 'github-calendar';
 import styled from 'styled-components';
 import { Container as WrapperComponent } from '../templates/Container';
-import { sr } from '../App';
 import { mainColor, blackColor, maxWidth, whiteColor } from '../../variables';
 import { mediaQueries } from '../../utils/mediaQueries';
-
-import nodejs from '../../../images/nodejs.png';
-import nodejsjp from '../../../images/nodejsjp.png';
-import babel from '../../../images/babel.png';
-import webpack from '../../../images/webpack.png';
-import maintainer from '../../../images/maintainer.png';
-import stylelint from '../../../images/stylelint.png';
-import crowi from '../../../images/crowi.png';
-import clipy from '../../../images/clipy.png';
-import jekyll from '../../../images/jekyll.png';
-import nicoHaco from '../../../images/nicohaco.png';
-import gatsby from '../../../images/gatsby.png';
-import danger from '../../../images/danger.png';
-import reactjapan from '../../../images/reactjapan.png';
 
 const Wrapper = styled(WrapperComponent)`
   background: ${whiteColor};
@@ -106,55 +92,65 @@ const CalendarComponent = styled.div`
   overflow-x: auto;
 `;
 
-export class GitHub extends React.PureComponent {
-  calendar: HTMLElement | null;
-
-  constructor(props: {}) {
-    super(props);
-
-    this.calendar = null;
-  }
-
-  componentDidMount() {
-    if (this.calendar) {
-      new Calendar(this.calendar, 'hiroppy');
+const query = graphql`
+  query {
+    allDataJson {
+      edges {
+        node {
+          organizations {
+            name
+            link
+            image
+          }
+        }
+      }
     }
+    allImageSharp {
+      edges {
+        node {
+          fixed(width: 200) {
+            srcWebp
+            originalName
+          }
+        }
+      }
+    }
+  }
+`;
 
-    // [TODO] combine
-    const config = {
-      origin: 'top',
-      duration: 1000,
-      delay: 300,
-      scale: 1,
-      easing: 'ease',
-      reset: true
+export const GitHub: React.FC = () => {
+  const calendarEl = useRef(null);
+  const {
+    allDataJson: { edges: data },
+    allImageSharp: { edges: images }
+  } = useStaticQuery(query);
+
+  const orgImages = images.map(({ node: { fixed } }) => fixed);
+  const orgs = data[0].node.organizations.map(({ image, ...rest }) => {
+    const imageSrc = orgImages.find(({ originalName, srcWebp }) => originalName === `${image}.png`);
+
+    return {
+      ...rest,
+      image: imageSrc ? imageSrc.srcWebp : ''
     };
+  });
 
-    sr.reveal('.box', config, 50);
-  }
+  useEffect(() => {
+    if (calendarEl) {
+      new Calendar((calendarEl.current as unknown) as HTMLElement, 'hiroppy');
+    }
+  }, []);
 
-  render() {
-    return (
-      <Wrapper className="github">
-        <h2>GitHub</h2>
-        <Container>
-          <Org src={nodejs} link="nodejs" title="Node.js Foundation" />
-          <Org src={babel} link="babel" title="Babel" />
-          <Org src={webpack} link="webpack" title="webpack" />
-          <Org src={gatsby} link="gatsbyjs" title="Gatsby" />
-          <Org src={maintainer} link="maintainers" title="Open Source Maintainers on GitHub" />
-          <Org src={stylelint} link="stylelint" title="stylelint" />
-          <Org src={danger} link="danger" title="Danger" />
-          <Org src={jekyll} link="jekyll" title="Jekyll" />
-          <Org src={crowi} link="crowi" title="crowi" />
-          <Org src={clipy} link="clipy" title="Clipy Project" />
-          <Org src={nodejsjp} link="nodejsjp" title="Node.js Japan User Group" />
-          <Org src={reactjapan} link="reactjapan" title="React Japan" />
-          <Org src={nicoHaco} link="nicohaco" title="NicoHaco" />
-        </Container>
-        <h3>Contributions</h3>
-        <CalendarComponent ref={(calendar) => (this.calendar = calendar)} className="transition" />
-      </Wrapper>
-    );
-  }
-}
+  return (
+    <Wrapper className="github">
+      <h2>GitHub</h2>
+      <Container>
+        {orgs.map(({ image, link, name }) => (
+          <Org src={image} link={link} title={name} />
+        ))}
+      </Container>
+      <h3>Contributions</h3>
+      <CalendarComponent ref={calendarEl} className="transition" />
+    </Wrapper>
+  );
+};

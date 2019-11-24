@@ -1,4 +1,5 @@
 import React from 'react';
+import { useStaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 import { Container } from '../templates/Container';
 import { Button as ButtonComponent } from '../atoms/Button';
@@ -12,7 +13,6 @@ import {
   facebookColor,
   hatenaColor
 } from '../../variables';
-import avatar from '../../../images/avatar.jpg';
 import { mediaQueries } from '../../utils/mediaQueries';
 
 const Box = styled(Container)`
@@ -24,8 +24,8 @@ const Box = styled(Container)`
   position: relative;
 `;
 
-const Avatar = styled.div`
-  background: url('${avatar}');
+const Avatar = styled.div<{ url: string }>`
+  background: ${({ url }) => `url('${url}')`};
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
@@ -86,36 +86,65 @@ const SupportButton = styled(Button)`
   width: auto;
 `;
 
-export const Hero: React.FC = () => (
-  <Box className="Hero">
-    <div>{[...Array(24)].map((_, i) => <Star key={i} />)}</div>
-    {[...Array(4)].map((_, i) => <Meteor1 key={i} />)}
-    {[...Array(4)].map((_, i) => <Meteor2 key={i} />)}
-    <Avatar className="transition" />
-    <h1 className="transition">hiroppy</h1>
-    <br />
-    <SupportButton link="https://www.patreon.com/hiroppy" className="transition" color="#e85b46">
-      Support hiroppy
-    </SupportButton>
+const query = graphql`
+  query {
+    file(relativePath: { eq: "avatar.jpg" }) {
+      childImageSharp {
+        fixed(width: 200) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+  }
+`;
 
-    <br />
-    <h3 className="transition">I am a JavaScript junkie!</h3>
-    <p className="transition">
-      Working on Node.js, webpack, stylelint, babel, gatsby and Node.js Japan User Group.
-    </p>
-    <Buttons className="transition">
-      <Button link="https://github.com/hiroppy" color={githubColor}>
-        GitHub
-      </Button>
-      <Button link="https://twitter.com/about_hiroppy" color={twitterColor}>
-        Twitter
-      </Button>
-      <Button link="https://www.facebook.com/abouthiroppy" color={facebookColor}>
-        FaceBook
-      </Button>
-      <Button link="http://abouthiroppy.hatenablog.jp/" color={hatenaColor}>
-        Blog
-      </Button>
-    </Buttons>
-  </Box>
-);
+export const Hero: React.FC = () => {
+  const res = useStaticQuery(query);
+  const avatar = res.file && res.file.childImageSharp.fixed.src;
+
+  return (
+    <Box className="Hero">
+      <div>
+        {[...Array(24)].map((_, i) => (
+          <Star key={i} />
+        ))}
+      </div>
+      {[...Array(4)].map((_, i) => (
+        <Meteor1 key={i} />
+      ))}
+      {[...Array(4)].map((_, i) => (
+        <Meteor2 key={i} />
+      ))}
+      <Avatar className="transition" url={avatar} />
+      <h1 className="transition">hiroppy</h1>
+      <br />
+      <SupportButton
+        link="https://github.com/sponsors/hiroppy"
+        className="transition"
+        color="#e85b46"
+      >
+        Support hiroppy as a sponsor
+      </SupportButton>
+
+      <br />
+      <h3 className="transition">I am a JavaScript junkie!</h3>
+      <p className="transition">
+        Working on Node.js, webpack, babel, and Japan Node.js Association.
+      </p>
+      <Buttons className="transition">
+        <Button link="https://github.com/hiroppy" color={githubColor}>
+          GitHub
+        </Button>
+        <Button link="https://twitter.com/about_hiroppy" color={twitterColor}>
+          Twitter
+        </Button>
+        <Button link="https://www.facebook.com/abouthiroppy" color={facebookColor}>
+          FaceBook
+        </Button>
+        <Button link="http://abouthiroppy.hatenablog.jp/" color={hatenaColor}>
+          Blog
+        </Button>
+      </Buttons>
+    </Box>
+  );
+};
