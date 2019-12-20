@@ -24,7 +24,7 @@
     "eslint": "6.7.2",
     "eslint-plugin-react": "7.16.0",
     "prettier": "1.19.1",
-    "typescript": "3.7.3"
+    "typescript": "3.7.4"
   },
   "dependencies": {
     "core-js": "3.4.8",
