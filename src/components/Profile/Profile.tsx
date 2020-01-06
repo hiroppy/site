@@ -63,14 +63,14 @@ export const Profile: React.FC = () => (
           <>
             <H3>Working at</H3>
             <P>- Mercari, Inc. as a web frontend developer</P>
+            <P>- Kakaku.com, Inc. as a web technical advisor</P>
+            <P>- Black, Inc. as a web technical advisor</P>
             <H3>History</H3>
             <H3 as="h4">Main</H3>
             <P>- 2017/12 - 2019/10: Dwango, Inc.</P>
             <P>- 2017/06 - 2017/12: Mercari, Inc.</P>
             <P>- 2015/04 - 2017/06: Dwango, Inc.</P>
             <H3 as="h4">Side</H3>
-            <P>- 2019/12 - : Kakaku.com, Inc. as a web technical advisor</P>
-            <P>- 2019/12 - : Black, Inc. as a web technical advisor</P>
             <P>- 2018/09 - 2019/10: Mercari, Inc. as a web technical advisor</P>
             <P>- 2018/06 - 2018/09: BizReach, Inc.</P>
             <P>- 2014/07 - 2014/08: CyberAgent, Inc.</P>
