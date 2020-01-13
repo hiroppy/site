@@ -27,7 +27,7 @@
     "typescript": "3.7.4"
   },
   "dependencies": {
-    "core-js": "3.6.3",
+    "core-js": "3.6.4",
     "gatsby": "2.18.21",
     "gatsby-image": "2.2.38",
     "gatsby-plugin-manifest": "2.2.37",
