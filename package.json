@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "core-js": "3.6.4",
-    "gatsby": "2.19.37",
+    "gatsby": "2.19.38",
     "gatsby-image": "2.2.43",
     "gatsby-plugin-manifest": "2.2.46",
     "gatsby-plugin-netlify": "2.1.34",
