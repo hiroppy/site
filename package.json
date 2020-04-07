@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "7.8.3",
-    "@babel/plugin-proposal-object-rest-spread": "7.9.0",
+    "@babel/plugin-proposal-object-rest-spread": "7.9.5",
     "@babel/preset-typescript": "7.9.0",
     "@types/react": "16.9.32",
     "@types/react-dom": "16.9.6",
@@ -29,7 +29,7 @@
   "dependencies": {
     "core-js": "3.6.4",
     "gatsby": "2.20.13",
-    "gatsby-image": "2.3.1",
+    "gatsby-image": "2.3.2",
     "gatsby-plugin-manifest": "2.3.3",
     "gatsby-plugin-netlify": "2.2.1",
     "gatsby-plugin-react-helmet": "3.2.1",
