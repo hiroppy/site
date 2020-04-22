@@ -2,6 +2,7 @@ const { resolve } = require('path');
 const { config } = require('dotenv');
 
 config();
+console.log('github_token', process.env.GITHUB_TOKEN);
 
 module.exports = {
   siteMetadata: {
