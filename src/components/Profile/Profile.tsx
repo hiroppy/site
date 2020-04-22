@@ -55,7 +55,7 @@ export const Profile: React.FC = () => (
               - <A href="https://reactjs-meetup.connpass.com/">React.js meetup</A>
             </P>
           </>
-        )
+        ),
       }}
       right={{
         title: 'Careers',
@@ -64,7 +64,7 @@ export const Profile: React.FC = () => (
             <H3>Working at</H3>
             <P>- Mercari, Inc. as a web frontend developer</P>
             <P>- Kakaku.com, Inc. as a web technical advisor</P>
-            <P>- Black, Inc. as a web technical advisor</P>
+            <P>- Black, Inc. as a web frontend developer</P>
             <H3>History</H3>
             <H3 as="h4">Main</H3>
             <P>- 2017/12 - 2019/10: Dwango, Inc.</P>
@@ -76,7 +76,7 @@ export const Profile: React.FC = () => (
             <P>- 2014/07 - 2014/08: CyberAgent, Inc.</P>
             <P>- 2013/04 - 2015/01: Eyes, JAPAN Co. Ltd.</P>
           </>
-        )
+        ),
       }}
     />
   </Container>

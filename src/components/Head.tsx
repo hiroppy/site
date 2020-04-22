@@ -9,7 +9,7 @@ export type Props = {
 export const Head: React.SFC<Props> = ({ title, description }) => (
   <Helmet
     htmlAttributes={{
-      lang: 'en'
+      lang: 'en',
     }}
   >
     <meta charSet="UTF-8" />

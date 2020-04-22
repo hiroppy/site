@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { css, Interpolation } from 'styled-components';
 import { smartphoneSize, tabletSize, pcSize } from '../variables';
 
@@ -13,5 +15,5 @@ export const mediaQueryBuilder = (size: number) => (
 export const mediaQueries = {
   tablet: mediaQueryBuilder(tabletSize),
   smartphone: mediaQueryBuilder(smartphoneSize),
-  pcSize: mediaQueryBuilder(pcSize)
+  pcSize: mediaQueryBuilder(pcSize),
 };

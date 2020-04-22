@@ -11,7 +11,7 @@ import {
   githubColor,
   twitterColor,
   facebookColor,
-  hatenaColor
+  hatenaColor,
 } from '../../variables';
 import { mediaQueries } from '../../utils/mediaQueries';
 

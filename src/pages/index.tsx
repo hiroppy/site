@@ -22,8 +22,8 @@ const query = graphql`
 const Index: React.FC = () => {
   const {
     site: {
-      siteMetadata: { title, description }
-    }
+      siteMetadata: { title, description },
+    },
   } = useStaticQuery(query);
 
   return (

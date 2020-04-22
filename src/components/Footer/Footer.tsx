@@ -94,7 +94,9 @@ const Link: React.FC<{
 
 export const Footer: React.FC = () => (
   <Wrapper>
-    {[...Array(9)].map((_, i) => <Meteor1 key={i} />)}
+    {[...Array(9)].map((_, i) => (
+      <Meteor1 key={i} />
+    ))}
     <Container>
       <SNS>
         <Link href="https://github.com/hiroppy">GitHub</Link>
