@@ -6,24 +6,27 @@ import 'github-calendar/dist/github-calendar.css';
 import 'github-calendar/dist/github-calendar-responsive.css';
 import { Container as WrapperComponent } from '../templates/Container';
 import { mainColor, blackColor, maxWidth, whiteColor } from '../../variables';
-import { mediaQueries } from '../../utils/mediaQueries';
 
 const Wrapper = styled(WrapperComponent)`
   background: ${whiteColor};
   flex-direction: column;
 `;
 
-const Container = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  max-width: ${maxWidth}px;
-  justify-content: flex-start;
+const Container = styled.div<{ size: number }>`
+  grid-gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(${({ size }) => size}px, 1fr));
+  width: 100%;
+  max-width: 1200px;
+`;
+
+const SubTitle = styled.h3`
+  margin-top: 32px;
 `;
 
 const Box = styled.a`
   cursor: pointer;
   text-decoration: none;
-  width: 200px;
 
   &:after {
     background: transparent;
@@ -51,14 +54,6 @@ const Box = styled.a`
     text-align: center;
     transition: color 400ms;
   }
-
-  ${mediaQueries.smartphone`
-    width: 50% !important;
-  `};
-
-  ${mediaQueries.pcSize`
-    width: 33%;
-  `};
 `;
 
 const Icon = styled.div`
@@ -82,11 +77,6 @@ const Org: React.FC<{
   </Box>
 );
 
-const SponsorBox = styled(Box)`
-  margin-right: 8px;
-  width: inherit;
-`;
-
 const SponsorIcon = styled(Icon)`
   border-radius: 50%;
 `;
@@ -95,9 +85,9 @@ const Sponsor: React.FC<{
   url: string;
   img: string;
 }> = (props) => (
-  <SponsorBox rel="noopener" href={props.url} target="_blank" className="box">
+  <Box rel="noopener" href={props.url} target="_blank" className="box">
     <SponsorIcon src={props.img} />
-  </SponsorBox>
+  </Box>
 );
 
 const SponsorButton = styled.a`
@@ -234,15 +224,13 @@ export const GitHub: React.FC = () => {
   return (
     <Wrapper className="github">
       <h2>GitHub</h2>
-      <Container>
+      <Container size={150}>
         {orgs.map(({ image, link, name }, i) => (
           <Org src={image} link={link} title={name} key={i} />
         ))}
       </Container>
-      <h3>Contributions</h3>
-      <CalendarComponent ref={calendarEl} className="transition" />
-      <h3>Sponsors</h3>
-      <Container>
+      <SubTitle>Sponsors</SubTitle>
+      <Container size={80}>
         {sponsors.map(({ avatarUrl, url }, i) => (
           <Sponsor url={url} img={avatarUrl} key={i} />
         ))}
@@ -250,6 +238,8 @@ export const GitHub: React.FC = () => {
       <SponsorButton href="https://github.com/sponsors/hiroppy">
         Become a sponsor to hiroppy
       </SponsorButton>
+      <SubTitle>Contributions</SubTitle>
+      <CalendarComponent ref={calendarEl} className="transition" />
     </Wrapper>
   );
 };
