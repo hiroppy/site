@@ -1,5 +1,6 @@
 const { resolve } = require('path');
 const { config } = require('dotenv');
+const { query: githubQuery } = require('./graphql/github');
 
 config();
 console.log('github_token', process.env.GITHUB_TOKEN);
@@ -19,10 +20,15 @@ module.exports = {
         allExtensions: true,
       },
     },
+    {
+      resolve: 'gatsby-plugin-graphql-codegen',
+      options: {
+        fileName: 'generated-types/gatsby-graphql.d.ts',
+      },
+    },
     'gatsby-plugin-styled-components',
     'gatsby-plugin-react-helmet',
     'gatsby-transformer-json',
-    // have to do this order if want to get data from json
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -30,7 +36,6 @@ module.exports = {
         path: resolve(__dirname, 'data'),
       },
     },
-
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -56,21 +61,7 @@ module.exports = {
       resolve: 'gatsby-source-github-api',
       options: {
         token: process.env.GITHUB_TOKEN,
-        graphQLQuery: `
-          {
-            user(login: "hiroppy") {
-              sponsorshipsAsMaintainer(first: 50, orderBy: {field: CREATED_AT, direction: ASC}) {
-                nodes {
-                  sponsor {
-                    avatarUrl(size: 150)
-                    name
-                    url
-                  }
-                }
-              }
-            }
-          }
-        `,
+        graphQLQuery: githubQuery,
       },
     },
   ],

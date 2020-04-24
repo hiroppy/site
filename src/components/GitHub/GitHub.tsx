@@ -6,6 +6,8 @@ import 'github-calendar/dist/github-calendar.css';
 import 'github-calendar/dist/github-calendar-responsive.css';
 import { Container as WrapperComponent } from '../templates/Container';
 import { mainColor, blackColor, maxWidth, whiteColor } from '../../variables';
+import { GithubData } from '../../../generated-types/gatsby-graphql';
+import { organizationsWhitelist } from '../../../graphql/github';
 
 const Wrapper = styled(WrapperComponent)`
   background: ${whiteColor};
@@ -56,6 +58,14 @@ const Box = styled.a`
   }
 `;
 
+const BoxContainer: React.FC<{
+  url: string;
+}> = ({ url, children }) => (
+  <Box rel="noopener" href={url} target="_blank" className="box">
+    {children}
+  </Box>
+);
+
 const Icon = styled.div`
   background-size: contain;
   background-position: center center;
@@ -66,29 +76,9 @@ const Icon = styled.div`
   width: 80px;
 `;
 
-const Org: React.FC<{
-  title: string;
-  src: string;
-  link: string;
-}> = (props) => (
-  <Box rel="noopener" href={`https://github.com/${props.link}`} target="_blank" className="box">
-    <Icon src={props.src} />
-    <p>{props.title}</p>
-  </Box>
-);
-
 const SponsorIcon = styled(Icon)`
   border-radius: 50%;
 `;
-
-const Sponsor: React.FC<{
-  url: string;
-  img: string;
-}> = (props) => (
-  <Box rel="noopener" href={props.url} target="_blank" className="box">
-    <SponsorIcon src={props.img} />
-  </Box>
-);
 
 const SponsorButton = styled.a`
   color: ${blackColor};
@@ -115,37 +105,25 @@ const CalendarComponent = styled.div`
 
 const query = graphql`
   query {
-    allDataJson {
-      edges {
-        node {
-          organizations {
-            name
-            link
-            image
-          }
-        }
-      }
-    }
-    allImageSharp {
-      edges {
-        node {
-          fixed(width: 200) {
-            srcWebp
-            originalName
-          }
-        }
-      }
-    }
     githubData {
       data {
         user {
           sponsorshipsAsMaintainer {
             nodes {
               sponsor {
+                id
                 avatarUrl
                 name
                 url
               }
+            }
+          }
+          organizations {
+            nodes {
+              id
+              avatarUrl
+              name
+              url
             }
           }
         }
@@ -154,66 +132,21 @@ const query = graphql`
   }
 `;
 
-type Query = {
-  allDataJson: {
-    edges: {
-      node: {
-        organizations: {
-          image: string;
-          name: string;
-          link: string;
-        }[];
-      };
-    }[];
-  };
-  allImageSharp: {
-    edges: {
-      node: {
-        fixed: {
-          srcWebp: string;
-          originalName: string;
-        };
-      };
-    }[];
-  };
-  githubData: {
-    data: {
-      user: {
-        sponsorshipsAsMaintainer: {
-          nodes: {
-            sponsor: {
-              avatarUrl: string;
-              name: string;
-              url: string;
-            };
-          }[];
-        };
-      };
-    };
-  };
-};
-
 export const GitHub: React.FC = () => {
   const calendarEl = useRef(null);
   const {
-    allDataJson: { edges: data },
-    allImageSharp: { edges: images },
-    githubData: {
-      data: { user },
-    },
-  } = useStaticQuery<Query>(query);
+    githubData: { data },
+  } = useStaticQuery<{ githubData: GithubData }>(query);
 
-  const orgImages = images.map(({ node: { fixed } }) => fixed);
-  const orgs = data[0].node.organizations.map(({ image, ...rest }) => {
-    const imageSrc = orgImages.find(({ originalName }) => originalName === `${image}.png`);
+  if (!data?.user) {
+    return null;
+  }
 
-    return {
-      ...rest,
-      image: imageSrc ? imageSrc.srcWebp : '',
-    };
-  });
-
-  const sponsors = user.sponsorshipsAsMaintainer.nodes.map(({ sponsor }) => sponsor);
+  const { sponsorshipsAsMaintainer, organizations } = data.user;
+  const orgs = organizations?.nodes!.filter((organization) =>
+    organizationsWhitelist.includes(organization?.name || '')
+  );
+  const sponsors = sponsorshipsAsMaintainer?.nodes?.map((sponsor) => sponsor!.sponsor);
 
   useEffect(() => {
     if (calendarEl) {
@@ -225,15 +158,22 @@ export const GitHub: React.FC = () => {
     <Wrapper className="github">
       <h2>GitHub</h2>
       <Container size={150}>
-        {orgs.map(({ image, link, name }, i) => (
-          <Org src={image} link={link} title={name} key={i} />
-        ))}
+        {orgs &&
+          orgs.map(({ avatarUrl, url, name, id }: any) => (
+            <BoxContainer url={url} key={id}>
+              <Icon src={avatarUrl} />
+              <p>{name}</p>
+            </BoxContainer>
+          ))}
       </Container>
       <SubTitle>Sponsors</SubTitle>
       <Container size={80}>
-        {sponsors.map(({ avatarUrl, url }, i) => (
-          <Sponsor url={url} img={avatarUrl} key={i} />
-        ))}
+        {sponsors &&
+          sponsors.map(({ avatarUrl, url, id }: any) => (
+            <BoxContainer url={url} key={id}>
+              <SponsorIcon src={avatarUrl} />
+            </BoxContainer>
+          ))}
       </Container>
       <SponsorButton href="https://github.com/sponsors/hiroppy">
         Become a sponsor to hiroppy

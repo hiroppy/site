@@ -14,6 +14,7 @@ import {
   hatenaColor,
 } from '../../variables';
 import { mediaQueries } from '../../utils/mediaQueries';
+import { File, DataJson } from '../../../generated-types/gatsby-graphql';
 
 const Box = styled(Container)`
   background: ${blackColor};
@@ -91,16 +92,29 @@ const query = graphql`
     file(relativePath: { eq: "avatar.jpg" }) {
       childImageSharp {
         fixed(width: 200) {
-          ...GatsbyImageSharpFixed
+          base64
+          width
+          height
+          src
+          srcSet
         }
+      }
+    }
+    dataJson {
+      sns {
+        service
+        url
       }
     }
   }
 `;
 
 export const Hero: React.FC = () => {
-  const res = useStaticQuery(query);
-  const avatar = res.file && res.file.childImageSharp.fixed.src;
+  const {
+    file,
+    dataJson: { sns },
+  } = useStaticQuery<{ file: File; dataJson: DataJson }>(query);
+  const avatar = file?.childImageSharp?.fixed?.src;
 
   return (
     <Box className="Hero">
@@ -115,7 +129,7 @@ export const Hero: React.FC = () => {
       {[...Array(4)].map((_, i) => (
         <Meteor2 key={i} />
       ))}
-      <Avatar className="transition" url={avatar} />
+      {avatar && <Avatar className="transition" url={avatar} />}
       <h1 className="transition">hiroppy</h1>
       <br />
       <SupportButton
@@ -125,7 +139,6 @@ export const Hero: React.FC = () => {
       >
         Support hiroppy as a sponsor
       </SupportButton>
-
       <br />
       <h3 className="transition">I am a JavaScript junkie!</h3>
       <p className="transition">

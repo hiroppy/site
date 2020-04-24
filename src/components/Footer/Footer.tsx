@@ -1,9 +1,11 @@
 import React from 'react';
+import { useStaticQuery, graphql } from 'gatsby';
+import styled from 'styled-components';
 import { Container as ContainerComponent } from '../templates/Container';
 import { Meteor1 } from '../animations/meteor';
-import styled from 'styled-components';
 import { blackColor, whiteColor, mainColor } from '../../variables';
 import { mediaQueries } from '../../utils/mediaQueries';
+import { DataJson } from '../../../generated-types/gatsby-graphql';
 
 const Wrapper = styled.footer`
   background: ${blackColor};
@@ -92,34 +94,40 @@ const Link: React.FC<{
   </A>
 );
 
-export const Footer: React.FC = () => (
-  <Wrapper>
-    {[...Array(9)].map((_, i) => (
-      <Meteor1 key={i} />
-    ))}
-    <Container>
-      <SNS>
-        <Link href="https://github.com/hiroppy">GitHub</Link>
-        <Link href="https://twitter.com/about_hiroppy">Twitter</Link>
-        <Link href="https://www.facebook.com/abouthiroppy">FaceBook</Link>
-        <Link href="http://b.hatena.ne.jp/about_hiroppy">Hatena</Link>
-        <Link href="https://www.linkedin.com/in/yuta-hiroto-340b4952/">LinkedIn</Link>
-        <Link href="https://connpass.com/user/about_hiroppy/">Connpass</Link>
-      </SNS>
-      <Center>
-        <p>
-          You can ping me on&nbsp;
-          <Link href="https://twitter.com/about_hiroppy">Twitter</Link>
-          &nbsp; or my contact email.
-        </p>
-        <p>Request for work, speech, writing, etc are welcome.</p>
-      </Center>
-      <div>
-        <p>
-          <Link href="https://github.com/hiroppy/site">This site&apos;s codes</Link>
-        </p>
-      </div>
-    </Container>
-    <CopyRight>© 2019 - Copyright Yuta Hiroto, All Rights Reserved.</CopyRight>
-  </Wrapper>
-);
+const query = graphql`
+  query {
+    dataJson {
+      sns {
+        service
+        url
+      }
+    }
+  }
+`;
+
+export const Footer: React.FC = () => {
+  const {
+    dataJson: { sns },
+  } = useStaticQuery<{ dataJson: DataJson }>(query);
+
+  return (
+    <Wrapper>
+      {[...Array(9)].map((_, i) => (
+        <Meteor1 key={i} />
+      ))}
+      <Container>
+        <SNS>{sns && sns.map(({ url, service }: any) => <Link href={url}>{service}</Link>)}</SNS>
+        <Center>
+          <p>You can ping me on Twitter or my contact email.</p>
+          <p>Request for work, speech, writing, etc are welcome.</p>
+        </Center>
+        <div>
+          <p>
+            <Link href="https://github.com/hiroppy/site">This site&apos;s code</Link>
+          </p>
+        </div>
+      </Container>
+      <CopyRight>© 2020 - Copyright Yuta Hiroto, All Rights Reserved.</CopyRight>
+    </Wrapper>
+  );
+};

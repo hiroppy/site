@@ -5,7 +5,7 @@ import { App } from '../components/App';
 import { Hero } from '../components/Hero';
 import { Profile } from '../components/Profile';
 import { GitHub } from '../components/GitHub';
-import { Material } from '../components/Material';
+import { Materials } from '../components/Materials';
 import { Footer } from '../components/Footer';
 
 const query = graphql`
@@ -33,7 +33,7 @@ const Index: React.FC = () => {
         <Hero />
         <Profile />
         <GitHub />
-        <Material />
+        <Materials />
         <Footer />
       </App>
     </>
