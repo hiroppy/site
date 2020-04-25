@@ -119,7 +119,7 @@ export const Hero: React.FC = () => {
   return (
     <Box className="Hero">
       <div>
-        {[...Array(24)].map((_, i) => (
+        {[...Array(29)].map((_, i) => (
           <Star key={i} />
         ))}
       </div>

@@ -29,6 +29,11 @@
       "service": "Connpass",
       "name": "about_hiroppy",
       "url": "https://connpass.com/user/about_hiroppy"
+    },
+    {
+      "service": "TechFeed",
+      "name": "hiroppy",
+      "url": "https://beta.techfeed.io/people/@hiroppy"
     }
   ],
   "jobs": {
