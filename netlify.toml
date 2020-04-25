@@ -1,3 +1,7 @@
 [build]
   command = "npm run build"
   publish = "public"
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

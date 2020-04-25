@@ -61,16 +61,13 @@ const Box = styled.a`
 const BoxContainer: React.FC<{
   url: string;
 }> = ({ url, children }) => (
-  <Box rel="noopener" href={url} target="_blank" className="box">
+  <Box rel="noopener" href={url} target="_blank" className="box" aria-label="icon">
     {children}
   </Box>
 );
 
-const Icon = styled.div`
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-image: ${({ src }: { src: string }) => `url(${src})`};
+const Icon = styled.img`
+  display: block;
   height: 80px;
   margin: 10px auto;
   width: 80px;
@@ -161,7 +158,7 @@ export const GitHub: React.FC = () => {
         {orgs &&
           orgs.map(({ avatarUrl, url, name, id }: any) => (
             <BoxContainer url={url} key={id}>
-              <Icon src={avatarUrl} />
+              <Icon src={avatarUrl} loading="lazy" alt={name} />
               <p>{name}</p>
             </BoxContainer>
           ))}
@@ -169,9 +166,9 @@ export const GitHub: React.FC = () => {
       <SubTitle>Sponsors</SubTitle>
       <Container size={80}>
         {sponsors &&
-          sponsors.map(({ avatarUrl, url, id }: any) => (
+          sponsors.map(({ avatarUrl, url, id, name }: any) => (
             <BoxContainer url={url} key={id}>
-              <SponsorIcon src={avatarUrl} />
+              <SponsorIcon src={avatarUrl} loading="lazy" alt={name || 'user'} />
             </BoxContainer>
           ))}
       </Container>

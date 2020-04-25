@@ -21,7 +21,7 @@ const query = `{
       nodes {
         sponsor {
           id
-          avatarUrl(size: 150)
+          avatarUrl(size: 100)
           name
           url
         }
@@ -30,7 +30,7 @@ const query = `{
     organizations(first: 50) {
       nodes {
         id
-        avatarUrl(size: 150)
+        avatarUrl(size: 120)
         name
         url
       }

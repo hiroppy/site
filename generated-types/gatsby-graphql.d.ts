@@ -2048,10 +2048,10 @@ export type Query = {
   allSite: SiteConnection;
   imageSharp?: Maybe<ImageSharp>;
   allImageSharp: ImageSharpConnection;
-  dataJson?: Maybe<DataJson>;
-  allDataJson: DataJsonConnection;
   githubData?: Maybe<GithubData>;
   allGithubData: GithubDataConnection;
+  dataJson?: Maybe<DataJson>;
+  allDataJson: DataJsonConnection;
   siteBuildMetadata?: Maybe<SiteBuildMetadata>;
   allSiteBuildMetadata: SiteBuildMetadataConnection;
   sitePlugin?: Maybe<SitePlugin>;
@@ -2229,6 +2229,24 @@ export type QueryAllImageSharpArgs = {
 };
 
 
+export type QueryGithubDataArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  data?: Maybe<GithubDataDataFilterInput>;
+  rawResult?: Maybe<GithubDataRawResultFilterInput>;
+};
+
+
+export type QueryAllGithubDataArgs = {
+  filter?: Maybe<GithubDataFilterInput>;
+  sort?: Maybe<GithubDataSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryDataJsonArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -2243,24 +2261,6 @@ export type QueryDataJsonArgs = {
 export type QueryAllDataJsonArgs = {
   filter?: Maybe<DataJsonFilterInput>;
   sort?: Maybe<DataJsonSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryGithubDataArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  data?: Maybe<GithubDataDataFilterInput>;
-  rawResult?: Maybe<GithubDataRawResultFilterInput>;
-};
-
-
-export type QueryAllGithubDataArgs = {
-  filter?: Maybe<GithubDataFilterInput>;
-  sort?: Maybe<GithubDataSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -2816,9 +2816,9 @@ export type SitePageFieldsEnum =
   'pluginCreator___pluginOptions___theme_color' |
   'pluginCreator___pluginOptions___display' |
   'pluginCreator___pluginOptions___icon' |
+  'pluginCreator___pluginOptions___pathCheck' |
   'pluginCreator___pluginOptions___token' |
   'pluginCreator___pluginOptions___graphQLQuery' |
-  'pluginCreator___pluginOptions___pathCheck' |
   'pluginCreator___nodeAPIs' |
   'pluginCreator___browserAPIs' |
   'pluginCreator___ssrAPIs' |
@@ -3016,9 +3016,9 @@ export type SitePluginFieldsEnum =
   'pluginOptions___theme_color' |
   'pluginOptions___display' |
   'pluginOptions___icon' |
+  'pluginOptions___pathCheck' |
   'pluginOptions___token' |
   'pluginOptions___graphQLQuery' |
-  'pluginOptions___pathCheck' |
   'nodeAPIs' |
   'browserAPIs' |
   'ssrAPIs' |
@@ -3145,9 +3145,9 @@ export type SitePluginPluginOptions = {
   theme_color?: Maybe<Scalars['String']>;
   display?: Maybe<Scalars['String']>;
   icon?: Maybe<Scalars['String']>;
+  pathCheck?: Maybe<Scalars['Boolean']>;
   token?: Maybe<Scalars['String']>;
   graphQLQuery?: Maybe<Scalars['String']>;
-  pathCheck?: Maybe<Scalars['Boolean']>;
 };
 
 export type SitePluginPluginOptionsFilterInput = {
@@ -3162,9 +3162,9 @@ export type SitePluginPluginOptionsFilterInput = {
   theme_color?: Maybe<StringQueryOperatorInput>;
   display?: Maybe<StringQueryOperatorInput>;
   icon?: Maybe<StringQueryOperatorInput>;
+  pathCheck?: Maybe<BooleanQueryOperatorInput>;
   token?: Maybe<StringQueryOperatorInput>;
   graphQLQuery?: Maybe<StringQueryOperatorInput>;
-  pathCheck?: Maybe<BooleanQueryOperatorInput>;
 };
 
 export type SitePluginSortInput = {
