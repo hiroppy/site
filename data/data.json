@@ -12,8 +12,7 @@
     },
     {
       "service": "FaceBook",
-      "name": "Yuta Hiroto",
-      "url": "https://www.facebook.com/abouthiroppy"
+      "name": "Yuta Hiroto", "url": "https://www.facebook.com/abouthiroppy"
     },
     {
       "service": "Hatena",
@@ -123,12 +122,8 @@
         "link": "https://blog.hiroppy.me/entry/ssr-sample_2"
       },
       {
-        "text": "OSSで報酬が支給された話",
-        "link": "https://blog.hiroppy.me/entry/open-collective"
-      },
-      {
-        "text": "OSSの現状と今後",
-        "link": "https://blog.hiroppy.me/entry/current-status-and-future-of-oss"
+        "text": "module bundlerの作り方(準備編)",
+        "link": "https://blog.hiroppy.me/entry/create-module-bundler-preparation"
       },
       {
         "text": "webpackの仕組みを簡潔に説明する",
@@ -145,6 +140,10 @@
       {
         "text": "Node.jsのパフォーマンスチューニングのtips",
         "link": "http://blog.hiroppy.me/entry/2017/11/06/095943"
+      },
+      {
+        "text": "OSSの現状と今後",
+        "link": "https://blog.hiroppy.me/entry/current-status-and-future-of-oss"
       }
     ],
     "accounts": {
