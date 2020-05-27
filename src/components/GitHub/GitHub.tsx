@@ -163,7 +163,7 @@ export const GitHub: React.FC = () => {
             </BoxContainer>
           ))}
       </Container>
-      <SubTitle>Sponsors</SubTitle>
+      <SubTitle id="github-sponsors">Sponsors</SubTitle>
       <Container size={80}>
         {sponsors &&
           sponsors.map(({ avatarUrl, url, id, name }: any) => (
