@@ -32,7 +32,7 @@
   "dependencies": {
     "core-js": "3.6.5",
     "dotenv": "8.2.0",
-    "gatsby": "2.23.22",
+    "gatsby": "2.23.23",
     "gatsby-image": "2.4.12",
     "gatsby-plugin-graphql-codegen": "2.7.1",
     "gatsby-plugin-manifest": "2.4.17",
