@@ -45,7 +45,7 @@
     "gatsby-source-github-api": "0.2.1",
     "gatsby-transformer-json": "2.4.11",
     "gatsby-transformer-sharp": "2.5.12",
-    "github-calendar": "2.2.1",
+    "github-calendar": "2.2.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-helmet": "6.1.0",
