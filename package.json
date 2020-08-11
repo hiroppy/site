@@ -32,24 +32,24 @@
   "dependencies": {
     "core-js": "3.6.5",
     "dotenv": "8.2.0",
-    "gatsby": "2.24.42",
+    "gatsby": "2.24.43",
     "gatsby-image": "2.4.15",
     "gatsby-plugin-graphql-codegen": "2.7.1",
-    "gatsby-plugin-manifest": "2.4.22",
+    "gatsby-plugin-manifest": "2.4.23",
     "gatsby-plugin-netlify": "2.3.13",
     "gatsby-plugin-react-helmet": "3.3.10",
-    "gatsby-plugin-sharp": "2.6.26",
+    "gatsby-plugin-sharp": "2.6.27",
     "gatsby-plugin-styled-components": "3.3.10",
     "gatsby-plugin-typescript": "2.4.18",
     "gatsby-source-filesystem": "2.3.24",
     "gatsby-source-github-api": "0.2.1",
     "gatsby-transformer-json": "2.4.11",
-    "gatsby-transformer-sharp": "2.5.12",
+    "gatsby-transformer-sharp": "2.5.13",
     "github-calendar": "2.2.3",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-helmet": "6.1.0",
     "styled-components": "5.1.1",
-    "styled-reset": "4.2.1"
+    "styled-reset": "4.2.2"
   }
 }
