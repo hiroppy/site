@@ -13,9 +13,9 @@
     "fmt": "prettier --loglevel warn --write \"**/*.{js,ts,tsx,md,json,css}\""
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "7.10.4",
-    "@babel/plugin-proposal-object-rest-spread": "7.11.0",
-    "@babel/preset-typescript": "7.10.4",
+    "@babel/plugin-proposal-class-properties": "7.12.1",
+    "@babel/plugin-proposal-object-rest-spread": "7.12.1",
+    "@babel/preset-typescript": "7.12.1",
     "@types/react": "16.9.53",
     "@types/react-dom": "16.9.8",
     "@types/react-helmet": "6.1.0",
@@ -23,7 +23,7 @@
     "@types/styled-components": "5.1.4",
     "babel-plugin-styled-components": "1.11.1",
     "eslint": "7.11.0",
-    "eslint-config-prettier": "6.12.0",
+    "eslint-config-prettier": "6.13.0",
     "eslint-plugin-prettier": "3.1.4",
     "eslint-plugin-react": "7.21.4",
     "prettier": "2.1.2",
@@ -46,8 +46,8 @@
     "gatsby-transformer-json": "2.4.14",
     "gatsby-transformer-sharp": "2.5.18",
     "github-calendar": "2.2.3",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
     "react-helmet": "6.1.0",
     "styled-components": "5.2.0",
     "styled-reset": "4.2.3"
