@@ -42,6 +42,7 @@ const query = graphql`
         current {
           name
           position
+          url
         }
         history {
           main {

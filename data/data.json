@@ -12,7 +12,8 @@
     },
     {
       "service": "FaceBook",
-      "name": "Yuta Hiroto", "url": "https://www.facebook.com/abouthiroppy"
+      "name": "Yuta Hiroto",
+      "url": "https://www.facebook.com/abouthiroppy"
     },
     {
       "service": "Hatena",
@@ -43,7 +44,8 @@
       },
       {
         "name": "Kakaku.com, Inc.",
-        "position": "a web technical advisor"
+        "position": "a web technical advisor",
+        "url": "https://note.com/tabelog_frontend/n/n21b819c09121"
       },
       {
         "name": "Black, Inc.",
