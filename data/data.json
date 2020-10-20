@@ -3,22 +3,26 @@
     {
       "service": "GitHub",
       "name": "hiroppy",
-      "url": "https://github.com/hiroppy"
+      "url": "https://github.com/hiroppy",
+      "color": "#767676"
     },
     {
       "service": "Twitter",
       "name": "about_hiroppy",
-      "url": "https://twitter.com/about_hiroppy"
+      "url": "https://twitter.com/about_hiroppy",
+      "color": "#00aced"
     },
     {
       "service": "FaceBook",
       "name": "Yuta Hiroto",
-      "url": "https://www.facebook.com/yuta.hiroto0429/"
+      "url": "https://www.facebook.com/yuta.hiroto0429/",
+      "color": "#305097"
     },
     {
       "service": "Hatena",
       "name": "about_hiroppy",
-      "url": "https://b.hatena.ne.jp/about_hiroppy"
+      "url": "https://b.hatena.ne.jp/about_hiroppy",
+      "color": "#008fde"
     },
     {
       "service": "LinkedIn",

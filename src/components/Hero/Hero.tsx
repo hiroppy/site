@@ -5,14 +5,7 @@ import { Container } from '../templates/Container';
 import { Button as ButtonComponent } from '../atoms/Button';
 import { Star } from '../animations/star';
 import { Meteor1, Meteor2 } from '../animations/meteor';
-import {
-  blackColor,
-  whiteColor,
-  githubColor,
-  twitterColor,
-  facebookColor,
-  hatenaColor,
-} from '../../variables';
+import { blackColor, whiteColor } from '../../variables';
 import { mediaQueries } from '../../utils/mediaQueries';
 import { File, DataJson } from '../../../generated-types/gatsby-graphql';
 
@@ -104,6 +97,7 @@ const query = graphql`
       sns {
         service
         url
+        color
       }
     }
   }
@@ -115,6 +109,9 @@ export const Hero: React.FC = () => {
     dataJson: { sns },
   } = useStaticQuery<{ file: File; dataJson: DataJson }>(query);
   const avatar = file?.childImageSharp?.fixed?.src;
+  const snsList = sns?.filter((account) => {
+    return ['GitHub', 'Twitter', 'FaceBook', 'Hatena'].includes(account?.service!);
+  });
 
   return (
     <Box className="Hero">
@@ -145,18 +142,13 @@ export const Hero: React.FC = () => {
         Working on Node.js, webpack, babel, and Japan Node.js Association.
       </p>
       <Buttons className="transition">
-        <Button link="https://github.com/hiroppy" color={githubColor}>
-          GitHub
-        </Button>
-        <Button link="https://twitter.com/about_hiroppy" color={twitterColor}>
-          Twitter
-        </Button>
-        <Button link="https://www.facebook.com/abouthiroppy" color={facebookColor}>
-          FaceBook
-        </Button>
-        <Button link="http://abouthiroppy.hatenablog.jp/" color={hatenaColor}>
-          Blog
-        </Button>
+        {
+          snsList?.map((sns) => (
+            sns?.url && sns?.color && <Button link={sns.url} color={sns.color}>
+              {sns?.service}
+            </Button>
+          ))
+        }
       </Buttons>
     </Box>
   );
