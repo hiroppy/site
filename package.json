@@ -41,7 +41,7 @@
     "gatsby-plugin-sharp": "2.9.0",
     "gatsby-plugin-styled-components": "3.5.0",
     "gatsby-plugin-typescript": "2.7.0",
-    "gatsby-source-filesystem": "2.6.0",
+    "gatsby-source-filesystem": "2.6.1",
     "gatsby-source-github-api": "0.2.1",
     "gatsby-transformer-json": "2.6.0",
     "gatsby-transformer-sharp": "2.7.0",
