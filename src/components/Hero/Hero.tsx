@@ -110,7 +110,7 @@ export const Hero: React.FC = () => {
   } = useStaticQuery<{ file: File; dataJson: DataJson }>(query);
   const avatar = file?.childImageSharp?.fixed?.src;
   const snsList = sns?.filter((account) => {
-    return ['GitHub', 'Twitter', 'FaceBook', 'Hatena'].includes(account?.service!);
+    return ['GitHub', 'Twitter', 'Facebook', 'Hatena'].includes(account?.service!);
   });
 
   return (
