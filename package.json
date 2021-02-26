@@ -13,9 +13,9 @@
     "fmt": "prettier --loglevel warn --write \"**/*.{js,ts,tsx,md,json,css}\""
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "7.12.13",
-    "@babel/plugin-proposal-object-rest-spread": "7.12.13",
-    "@babel/preset-typescript": "7.12.17",
+    "@babel/plugin-proposal-class-properties": "7.13.0",
+    "@babel/plugin-proposal-object-rest-spread": "7.13.8",
+    "@babel/preset-typescript": "7.13.0",
     "@types/react": "17.0.1",
     "@types/react-dom": "17.0.0",
     "@types/react-helmet": "6.1.0",
