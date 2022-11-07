@@ -3,8 +3,6 @@ import Layout from "../layouts/Layout.astro";
 import MainLayout from "../layouts/MainLayout.astro";
 import data from "../../generated/jobs.json";
 
-type Date = `${number}/${number}/${number}`;
-
 const length = 700;
 const topMargin = 60;
 const minYeah = 2010;
@@ -20,7 +18,7 @@ const jobs = Object.entries(data)
   })
   .flat();
 
-function calcLengthFromDate(start: Date, end: Date | "-") {
+function calcLengthFromDate(start: string, end: string | "-") {
   const [year, month] = start.split("/").map((v) => Number(v));
 
   if (year < minYeah || year > maxYeah || month < 0 || month > 12) {
@@ -75,7 +73,7 @@ function getTotalMonths(year: number, month: number) {
         ))
       }
       {
-        jobs.map(({ name, type, start, end, level = 1, comment, position }) => (
+        jobs.map(({ name, type, start, end, level, comment, position }) => (
           <div
             class={`absolute h-full w-1/2 z-20 ${
               type === "main" ? "" : "translate-x-full"

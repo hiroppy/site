@@ -5,42 +5,48 @@
       "start": "2022/08/01",
       "end": "-",
       "position": "VPoE",
-      "comment": "初ベンチャー🎉"
+      "comment": "初ベンチャー🎉",
+      "level": 1
     },
     {
       "name": "Mercari/Souzoh",
       "start": "2019/11/01",
       "end": "2022/07/31",
       "position": "",
-      "comment": "Enabling Team"
+      "comment": "Enabling Team",
+      "level": 1
     },
     {
       "name": "Dwango",
       "start": "2017/12/16",
       "end": "2019/10/31",
       "position": "",
-      "comment": "N予備校/ニコニコ生放送"
+      "comment": "N予備校/ニコニコ生放送",
+      "level": 1
     },
     {
       "name": "Mercari",
       "start": "2017/06/01",
       "end": "2017/11/31",
       "position": "",
-      "comment": "Mercari Web"
+      "comment": "Mercari Web",
+      "level": 1
     },
     {
       "name": "Dwango",
       "start": "2015/04/01",
       "end": "2017/05/31",
       "position": "",
-      "comment": "N予備校"
+      "comment": "N予備校",
+      "level": 1
     },
     {
       "name": "Univ of Aizu 👨‍🎓",
       "start": "2011/04/01",
       "end": "2015/03/31",
       "position": "student",
-      "comment": "画像処理の研究"
+      "comment": "画像処理の研究",
+      "level": 1
     }
   ],
   "side": [
@@ -49,7 +55,8 @@
       "start": "2022/8/01",
       "end": "-",
       "position": "",
-      "comment": "Enabling Team"
+      "comment": "Enabling Team",
+      "level": 1
     },
     {
       "name": "Yuimedi",
@@ -64,14 +71,16 @@
       "start": "2022/02/01",
       "end": "2022/05/31",
       "position": "technical adviser",
-      "comment": "事業方針が変わったので短い"
+      "comment": "事業方針が変わったので短い",
+      "level": 1
     },
     {
       "name": "Black 🥸",
       "start": "2019/12/01",
       "end": "2020/05/31",
       "position": "technical adviser",
-      "comment": "事業方針が変わったので短い"
+      "comment": "事業方針が変わったので短い",
+      "level": 1
     },
     {
       "name": "Tabelog 🥸",
@@ -86,35 +95,40 @@
       "start": "2018/11/01",
       "end": "2019/10/31",
       "position": "technical adviser",
-      "comment": "Webのリアーキテクチャ"
+      "comment": "Webのリアーキテクチャ",
+      "level": 1
     },
     {
       "name": "Bizreach",
       "start": "2017/06/01",
       "end": "2017/09/31",
       "position": "",
-      "comment": "スポット"
+      "comment": "スポット",
+      "level": 1
     },
     {
       "name": "Eyes, Japan",
       "start": "2014/05/01",
       "end": "2015/02/31",
       "position": "",
-      "comment": ""
+      "comment": "",
+      "level": 1
     },
     {
       "name": "CyberAgent 👨‍🎓",
       "start": "2013/07/01",
       "end": "2013/09/31",
       "position": "student",
-      "comment": "intern"
+      "comment": "intern",
+      "level": 1
     },
     {
       "name": "Freelance",
       "start": "2011/05/01",
       "end": "2013/05/31",
       "position": "",
-      "comment": "Web制作"
+      "comment": "Web制作",
+      "level": 1
     }
   ]
 }

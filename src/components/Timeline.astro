@@ -14,7 +14,7 @@ const { items } = Astro.props;
 <ol class="relative border-l border-gray-500 ml-4">
   {
     items.map(
-      ({ title, description, url, type, publishedAt, comment, image, site_name, appendixes, icon, iconColor }) => (
+      ({ title, description, url, type, publishedAt, comment, image, site_name, appendixes, icon }) => (
         <li class="mb-10 ml-6 relative">
           <span class="flex absolute -left-10 justify-center items-center w-8 h-8 bg-slate-400 rounded-full text-lg">
             {icon}
@@ -53,6 +53,7 @@ const { items } = Astro.props;
                       {
                         Object.entries(appendixes).map(([key, value]) => (
                           <span>{key}: </span>
+                          // @ts-expect-error TODO: refactor
                           <a href={value} class="text-blue-300" target="_blank">{value}</a>
                         ))
                       }
