@@ -1,0 +1,16 @@
+{
+  "files.exclude": {
+    "node_modules/**": true
+  },
+  "files.watcherExclude": {
+    "node_modules/**": true
+  },
+  "search.exclude": {
+    "node_modules/**": true
+  },
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
