@@ -44,17 +44,21 @@ const { title } = Astro.props as Props;
       }
     </style>
   </body>
-  <script
-    type="text/partytown"
-    src="https://www.googletagmanager.com/gtag/js?id=G-FD7632999P"
-  ></script>
-  <script type="text/partytown">
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
+  {
+    import.meta.env.PROD && (
+      <script
+        type="text/partytown"
+        src="https://www.googletagmanager.com/gtag/js?id=G-FD7632999P"
+      ></script>
+      <script type="text/partytown">
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
 
-    gtag("config", "G-FD7632999P");
-  </script>
+        gtag("config", "G-FD7632999P");
+      </script>
+    )
+  }
 </html>

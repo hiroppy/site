@@ -2,19 +2,21 @@ export const PAGE_LINKS = <const>[
   {
     icon: "😵‍💫",
     title: "About",
-    content: "Hello, I'm Yuta Hiroto!",
+    content: "Hello, I'm Yuta Hiroto! I like OSS development and sleeping 😴",
     href: "/",
   },
   {
     icon: "👨‍💻",
     title: "Jobs",
-    content: "I've been working in Yuimedi as VPoE",
+    content:
+      "I work in Yuimedi as VPoE and support Souzoh and Tabelog as a techinical adviser 🥸",
     href: "/jobs",
   },
   {
     icon: "📣",
     title: "Media",
-    content: "mounthly ecosystem",
+    content:
+      "Currently, I will reject the request of speaking basically but I speak on Monthly Ecosystem of Podcast",
     href: "/media",
   },
 ];
