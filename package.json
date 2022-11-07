@@ -21,5 +21,8 @@
     "prettier-plugin-astro": "^0.7.0",
     "rss-parser": "^3.12.0",
     "undici": "^5.12.0"
+  },
+  "dependencies": {
+    "@astrojs/partytown": "^1.0.1"
   }
 }
