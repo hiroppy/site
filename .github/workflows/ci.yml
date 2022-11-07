@@ -1,14 +1,14 @@
 name: ci
 on:
   pull_request:
-    branches: [main]
+    branches: [master]
     paths:
       - 'package.json'
       - 'src/**'
       - 'data/**'
       - '.github/workflows/ci.yml'
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - 'package.json'
       - 'src/**'
