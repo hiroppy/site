@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "fmt": "prettier -w ."
   },
   "devDependencies": {
     "@astrojs/tailwind": "^2.1.2",
@@ -16,6 +17,8 @@
     "dotenv": "^16.0.3",
     "emoji-js": "^3.7.0",
     "octokit": "^2.0.10",
+    "prettier": "^2.7.1",
+    "prettier-plugin-astro": "^0.5.5",
     "rss-parser": "^3.12.0",
     "undici": "^5.12.0"
   }
