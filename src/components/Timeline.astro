@@ -53,8 +53,7 @@ const { items } = Astro.props;
                       {
                         Object.entries(appendixes).map(([key, value]) => (
                           <span>{key}: </span>
-                          // @ts-expect-error TODO: refactor
-                          <a href={value} class="text-blue-300" target="_blank">{value}</a>
+                          <a href={value as string} class="text-blue-300" target="_blank">{value}</a>
                         ))
                       }
                     </div>

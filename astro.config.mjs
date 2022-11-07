@@ -1,9 +1,11 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import partytown from "@astrojs/partytown";
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://hiroppy.me",
   integrations: [
     tailwind(),
     partytown({
@@ -11,5 +13,6 @@ export default defineConfig({
         forward: ["dataLayer.push"],
       },
     }),
+    sitemap(),
   ],
 });
