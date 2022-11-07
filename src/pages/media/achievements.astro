@@ -1,0 +1,21 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import MediaLayout from "../../layouts/MediaLayout.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import Timeline from "../../components/Timeline.astro";
+import data from "../../../generated/achievements.json";
+import { getMediaIcon } from "../../utils/getMediaIcon";
+
+const sites = data.map((item) => ({
+  ...item,
+  icon: getMediaIcon("achievement"),
+}));
+---
+
+<Layout title="Events">
+  <MainLayout title="Media / achievements">
+    <MediaLayout current="achievements">
+      <Timeline items={sites} />
+    </MediaLayout>
+  </MainLayout>
+</Layout>

@@ -1,0 +1,30 @@
+---
+type Props = {
+  current: "all" | "talks" | "podcasts" | "articles" | "achievements";
+};
+
+const { current } = Astro.props;
+const kinds: Record<Props["current"], string> = {
+  all: "/media",
+  articles: "/media/articles",
+  talks: "/media/talks",
+  podcasts: "/media/podcasts",
+  achievements: "/media/achievements",
+};
+---
+
+<div class="my-5 flex gap-2 overflow-auto">
+  {
+    Object.entries(kinds).map(([kind, href]) => (
+      <a
+        href={href}
+        class={`font-semibold ${
+          current === kind ? "text-blue-300" : "text-white"
+        }`}
+      >
+        {kind}
+      </a>
+    ))
+  }
+</div>
+<slot />

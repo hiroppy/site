@@ -1,0 +1,34 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import MediaLayout from "../../layouts/MediaLayout.astro";
+import Timeline from "../../components/Timeline.astro";
+import articles from "../../../generated/articles.json";
+import achievements from "../../../generated/achievements.json";
+import podcasts from "../../../generated/podcasts.json";
+import { getMediaIcon } from "../../utils/getMediaIcon";
+import { sortItems } from "../../utils/sortItems";
+
+const sites = sortItems([
+  ...articles.map((item) => ({
+    ...item,
+    icon: getMediaIcon("article"),
+  })),
+  ...achievements.map((item) => ({
+    ...item,
+    icon: getMediaIcon("achievement"),
+  })),
+  ...podcasts.map((item) => ({
+    ...item,
+    icon: getMediaIcon("podcast"),
+  })),
+]);
+---
+
+<Layout title="media/all">
+  <MainLayout title="Media / all">
+    <MediaLayout current="all">
+      <Timeline items={sites} />
+    </MediaLayout>
+  </MainLayout>
+</Layout>

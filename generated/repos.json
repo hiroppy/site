@@ -1,0 +1,68 @@
+{
+  "hot": [
+    {
+      "name": "nodejs/node",
+      "url": "https://github.com/nodejs/node",
+      "description": "Node.js JavaScript runtime ✨🐢🚀✨",
+      "language": "JavaScript",
+      "stars": 91357,
+      "avatar": "https://avatars.githubusercontent.com/u/9950313?v=4"
+    },
+    {
+      "name": "hiroppy/fusuma",
+      "url": "https://github.com/hiroppy/fusuma",
+      "description": "✍️Fusuma makes slides with Markdown easily.",
+      "language": "JavaScript",
+      "stars": 5243,
+      "avatar": "https://avatars.githubusercontent.com/u/3367801?v=4"
+    },
+    {
+      "name": "webpack/webpack",
+      "url": "https://github.com/webpack/webpack",
+      "description": "A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows for loading parts of the application on demand. Through \"loaders\", modules can be CommonJs, AMD, ES6 modules, CSS, Images, JSON, Coffeescript, LESS, ... and your custom stuff.",
+      "language": "JavaScript",
+      "stars": 62030,
+      "avatar": "https://avatars.githubusercontent.com/u/2105791?v=4"
+    },
+    {
+      "name": "webpack/webpack-dev-server",
+      "url": "https://github.com/webpack/webpack-dev-server",
+      "description": "Serves a webpack app. Updates the browser on changes. Documentation https://webpack.js.org/configuration/dev-server/.",
+      "language": "JavaScript",
+      "stars": 7491,
+      "avatar": "https://avatars.githubusercontent.com/u/2105791?v=4"
+    },
+    {
+      "name": "babel/babel",
+      "url": "https://github.com/babel/babel",
+      "description": "🐠 Babel is a compiler for writing next generation JavaScript.",
+      "language": "TypeScript",
+      "stars": 41570,
+      "avatar": "https://avatars.githubusercontent.com/u/9637642?v=4"
+    },
+    {
+      "name": "stylelint/stylelint",
+      "url": "https://github.com/stylelint/stylelint",
+      "description": "A mighty, modern linter that helps you avoid errors and enforce conventions in your styles.",
+      "language": "JavaScript",
+      "stars": 9979,
+      "avatar": "https://avatars.githubusercontent.com/u/10076935?v=4"
+    },
+    {
+      "name": "hiroppy/the-sample-of-module-bundler",
+      "url": "https://github.com/hiroppy/the-sample-of-module-bundler",
+      "description": "You will know how to make a javascript bundler",
+      "language": "JavaScript",
+      "stars": 33,
+      "avatar": "https://avatars.githubusercontent.com/u/3367801?v=4"
+    },
+    {
+      "name": "hiroppy/slides",
+      "url": "https://github.com/hiroppy/slides",
+      "description": "My slides",
+      "language": "CSS",
+      "stars": 64,
+      "avatar": "https://avatars.githubusercontent.com/u/3367801?v=4"
+    }
+  ]
+}

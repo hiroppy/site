@@ -1,0 +1,58 @@
+---
+import SnsIcon from "./SnsIcon.astro";
+import { PAGE_LINKS } from "../constants";
+
+const currentMenu = PAGE_LINKS.find(({ href }) =>
+  href === "/" ? Astro.url.pathname === href : Astro.url.pathname.includes(href)
+) ?? {
+  icon: "😵",
+  title: "not found",
+};
+---
+
+<header
+  class="h-10 border-b-2 border-b-slate-700 sticky top-0 bg-slate-800 z-50"
+>
+  <div class="container mx-auto px-4 flex items-center justify-between h-full">
+    <div class="text-gray-300">
+      <div class="flex lg:hidden items-center gap-1">
+        <input id="check01" type="checkbox" name="menu" class="hidden peer" />
+        <label for="check01" class="select-none"
+          >{currentMenu.icon} {currentMenu.title}</label
+        >
+        <svg
+          class="w-4 h-4 shrink-0 peer-checked:rotate-180 text-gray-400"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clip-rule="evenodd"></path>
+        </svg>
+
+        <div
+          class="hidden peer-checked:block absolute top-10 z-50 w-32 rounded-lg border shadow-sm bg-gray-700 border-gray-600 py-2"
+        >
+          <ul class="flex gap-2 flex-col">
+            {
+              PAGE_LINKS.map(({ title, href, icon }) => (
+                <li class="mx-2">
+                  <a href={href} class="w-full block">
+                    {icon} {title}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+    <SnsIcon href="https://github.com/hiroppy/site" name="GitHub">
+      <path
+        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+      ></path>
+    </SnsIcon>
+  </div>
+</header>

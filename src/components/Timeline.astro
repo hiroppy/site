@@ -1,0 +1,74 @@
+---
+import Card from '../components/Card.astro'
+
+type Props = {
+  items: (any & {
+    icon: string;
+    lang?: "ja" | "en";
+  })[];
+};
+
+const { items } = Astro.props;
+---
+
+<ol class="relative border-l border-gray-500 ml-4">
+  {
+    items.map(
+      ({ title, description, url, type, publishedAt, comment, image, site_name, appendixes, icon, iconColor }) => (
+        <li class="mb-10 ml-6 relative">
+          <span class="flex absolute -left-10 justify-center items-center w-8 h-8 bg-slate-400 rounded-full text-lg">
+            {icon}
+          </span>
+          <div class="ml-2">
+          <Card>
+            <div class="justify-between items-center mb-3 sm:flex">
+              <time class="mb-1 text-xs font-normal sm:order-last sm:mb-0">
+                {publishedAt}
+              </time>
+              <div class="text-sm font-normal">
+                {type === "podcast" ? "Appeared" : "Posted"}{" "}
+                <a
+                  href={url}
+                  class="font-semibold text-blue-300 hover:underline"
+                  target="_blank"
+                >
+                  {title}
+                </a>{" "}
+                {site_name && (
+                  <>
+                    on
+                    <span class="text-blue-200">{site_name}</span>
+                  </>
+                )}
+              </div>
+            </div>
+            {(comment || appendixes) && (
+              <div class="p-3 text-xs rounded-lg border bg-gray-600 border-gray-500 text-gray-200 break-all">
+                {
+                  comment && <p>{comment}</p>
+                }
+                {
+                  appendixes && (
+                    <div>
+                      {
+                        Object.entries(appendixes).map(([key, value]) => (
+                          <span>{key}: </span>
+                          <a href={value} class="text-blue-300" target="_blank">{value}</a>
+                        ))
+                      }
+                    </div>
+                  )
+                }
+              </div>
+            )}
+            <div class="mt-4 flex gap-5 items-start break-all">
+              <img src={image} class="w-24 object-contain" decoding="async" loading="lazy" alt={title} />
+              <p class="text-white text-xs">{description}</p>
+            </div>
+          </Card>
+          </div>
+        </li>
+      )
+    )
+  }
+</ol>

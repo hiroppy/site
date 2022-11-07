@@ -1,0 +1,47 @@
+---
+import Header from "../components/Header.astro";
+
+type Props = {
+  title: string;
+};
+
+const { title } = Astro.props as Props;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="bg-slate-800">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content="hiroppy's website" />
+    <title>hiroppy's site - {title}</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <Header />
+    <div class="container mx-auto py-5 lg:py-20 min-h-screen px-4">
+      <slot />
+    </div>
+    <footer class="h-20 border-t-2 border-t-slate-700">
+      <div
+        class="container mx-auto px-4 flex items-center justify-between h-full text-sm text-gray-400"
+      >
+        <span>
+          © {new Date().getFullYear()} - Copyright Hiroppy, All Rights Reserved.
+        </span>
+        <span>Old Site</span>
+      </div>
+    </footer>
+    <style>
+      html {
+        font-size: 17px;
+      }
+
+      :global(code) {
+        font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+      }
+    </style>
+  </body>
+</html>

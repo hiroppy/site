@@ -1,0 +1,28 @@
+name: ci
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'package.json'
+      - 'src/**'
+      - 'data/**'
+      - '.github/workflows/ci.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'package.json'
+      - 'src/**'
+      - 'data/**'
+      - '.github/workflows/ci.yml'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      - run: npm run astro check
+      - run: npm run build
