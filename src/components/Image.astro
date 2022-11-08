@@ -7,6 +7,8 @@ type Props = {
 };
 
 const { src, alt, className, lazy = false } = Astro.props;
+const placeholderColor =
+  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcfPRvPQAHHgLWeG8FbgAAAABJRU5ErkJggg==";
 ---
 
 <img
@@ -15,4 +17,5 @@ const { src, alt, className, lazy = false } = Astro.props;
   decoding="async"
   alt={alt}
   loading={lazy ? "lazy" : "eager"}
+  onerror={`this.onerror=null; this.src='data:image/png;base64,${placeholderColor}'`}
 />

@@ -161,9 +161,9 @@ import Image from "../components/Image.astro";
             sponsors.past.map(({ name, href, avatar }) => (
               <a href={href} target="_blank">
                 <Image
-                  src={avatar as string}
-                  alt={name as string}
-                  className="rounded-full w-12 h-12 bg-blue-300"
+                  src={avatar ?? ""}
+                  alt={name ?? "private user"}
+                  className="rounded-full w-12 h-12"
                   lazy
                 />
               </a>
