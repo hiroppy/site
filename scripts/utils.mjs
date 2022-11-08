@@ -6,6 +6,8 @@ import { readFile, writeFile } from "node:fs/promises";
 import { load } from "cheerio";
 import ParseFeed from "rss-parser";
 
+const promisifyExec = promisify(exec);
+
 export const baseDataPath = join(fileURLToPath(import.meta.url), "../../data");
 export const generatedDataPath = join(
   fileURLToPath(import.meta.url),
@@ -37,13 +39,29 @@ export async function collectAlreadyHavingSites(filename) {
   }
 }
 
+export async function getMeta(url, title) {
+  // twitterはbotをつけないとogをつけない
+  // nodeライブラリは基本、user-agentを変えれない
+  const { stdout: html } = await promisifyExec(
+    `curl '${url}' -H 'User-Agent: bot'`
+  );
+
+  const $ = load(html);
+
+  return {
+    title: title ?? $("meta[property='og:title']").attr("content"),
+    description: $("meta[property='og:description']").attr("content"),
+    image: $("meta[property='og:image']").attr("content"),
+    siteName: $("meta[property='og:site_name']").attr("content"),
+  };
+}
+
 // 取得したものはsiteのキーの中にいれて、判断はキーが有るか行う
 export async function crawlSites(filename) {
-  const promisifyExec = promisify(exec);
   const sites = await collectAlreadyHavingSites(filename);
   const data = await readData(filename);
   const promises = data.map(
-    async ({ url, comment, publishedAt, appendixes, hot, title }) => {
+    async ({ url, comment, publishedAt, appendixes, hot, title, siteName }) => {
       const memo = sites.find(({ url: memoedUrl }) => memoedUrl === url);
 
       if (memo) {
@@ -53,22 +71,17 @@ export async function crawlSites(filename) {
         console.log("new", url);
       }
 
-      // twitterはbotをつけないとogをつけない
-      // nodeライブラリは基本、user-agentを変えれない
-      const { stdout: html } = await promisifyExec(
-        `curl '${url}' -H 'User-Agent: bot'`
-      );
+      const meta = await getMeta(url, title);
 
-      const $ = load(html);
-      const og = {
-        title: title ?? $("meta[property='og:title']").attr("content"),
-        description: $("meta[property='og:description']").attr("content"),
-        image: $("meta[property='og:image']").attr("content"),
-        siteName: $("meta[property='og:site_name']").attr("content"),
-      };
+      if (siteName?.startsWith("http")) {
+        const site = await getMeta(siteName);
+
+        meta.siteName = site.title;
+        meta.siteUrl = siteName;
+      }
 
       return {
-        ...og,
+        ...meta,
         url,
         hot,
         comment,
