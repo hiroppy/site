@@ -1,15 +1,17 @@
 ---
+import type { MediaType } from "../constants";
+
 type Props = {
-  current: "all" | "talks" | "podcasts" | "articles" | "achievements";
+  current: "all" | MediaType;
 };
 
 const { current } = Astro.props;
 const kinds: Record<Props["current"], string> = {
   all: "/media",
-  articles: "/media/articles",
-  talks: "/media/talks",
-  podcasts: "/media/podcasts",
-  achievements: "/media/achievements",
+  article: "/media/articles",
+  talk: "/media/talks",
+  podcast: "/media/podcasts",
+  achievement: "/media/achievements",
 };
 ---
 

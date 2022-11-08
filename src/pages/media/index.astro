@@ -7,7 +7,7 @@ import articles from "../../../generated/articles.json";
 import achievements from "../../../generated/achievements.json";
 import podcasts from "../../../generated/podcasts.json";
 import talks from "../../../generated/talks.json";
-import { getMediaIcon } from "../../utils/getMediaIcon";
+import { getMediaIcon } from "../../utils/media";
 import { sortItems } from "../../utils/sortItems";
 
 const sites = sortItems([
@@ -30,7 +30,7 @@ const sites = sortItems([
 ]);
 ---
 
-<Layout title="media/all">
+<Layout>
   <MainLayout title="Media / all">
     <MediaLayout current="all">
       <Timeline items={sites} />

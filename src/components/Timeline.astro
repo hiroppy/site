@@ -1,12 +1,26 @@
 ---
-import Card from '../components/Card.astro';
+import Card from "../components/Card.astro";
 import Image from "../components/Image.astro";
 
+export type Items = {
+  siteName?: string;
+  siteUrl?: string;
+  url: string;
+  title: string;
+  description?: string;
+  image?: string;
+  publishedAt: string;
+  category?: string;
+  icon: string;
+  hot?: boolean;
+  prefixForTitle: string;
+  // remove
+  comment?: string;
+  appendixes?: any;
+}[];
+
 type Props = {
-  items: (any & {
-    icon: string;
-    lang?: "ja" | "en";
-  })[];
+  items: Items;
 };
 
 const { items } = Astro.props;
@@ -15,58 +29,74 @@ const { items } = Astro.props;
 <ol class="relative border-l border-gray-500 ml-4">
   {
     items.map(
-      ({ title, description, url, type, publishedAt, comment, image, site_name, appendixes, icon }) => (
+      ({
+        title,
+        description,
+        url,
+        publishedAt,
+        comment,
+        image,
+        appendixes,
+        siteName,
+        icon,
+        prefixForTitle,
+      }) => (
         <li class="mb-10 ml-6 relative">
           <span class="flex absolute -left-10 justify-center items-center w-8 h-8 bg-slate-400 rounded-full text-lg">
             {icon}
           </span>
           <div class="ml-2">
-          <Card>
-            <div class="justify-between items-center mb-3 sm:flex">
-              <time class="mb-1 text-xs font-normal sm:order-last sm:mb-0">
-                {publishedAt}
-              </time>
-              <div class="text-sm font-normal">
-                {type === "podcast" ? "Appeared" : "Posted"}{" "}
-                <a
-                  href={url}
-                  class="font-semibold text-blue-300 hover:underline"
-                  target="_blank"
-                >
-                  {title}
-                </a>{" "}
-                {site_name && (
-                  <>
-                    on
-                    <span class="text-blue-200">{site_name}</span>
-                  </>
-                )}
+            <Card>
+              <div class="justify-between items-center mb-3 sm:flex">
+                <time class="mb-1 text-xs font-normal sm:order-last sm:mb-0">
+                  {publishedAt}
+                </time>
+                <div class="text-sm font-normal">
+                  {prefixForTitle}{" "}
+                  <a
+                    href={url}
+                    class="font-semibold text-blue-300 hover:underline"
+                    target="_blank"
+                  >
+                    {title}
+                  </a>{" "}
+                  {siteName && (
+                    <>
+                      on
+                      <span class="text-blue-200">{siteName}</span>
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
-            {(comment || appendixes) && (
-              <div class="p-3 text-xs rounded-lg border bg-gray-600 border-gray-500 text-gray-200 break-all">
-                {
-                  comment && <p>{comment}</p>
-                }
-                {
-                  appendixes && (
-                    <div>
-                      {
-                        Object.entries(appendixes).map(([key, value]) => (
-                          <span>{key}: </span>
-                          <a href={value as string} class="text-blue-300" target="_blank">{value}</a>
-                        ))
-                      }
-                    </div>
-                  )
-                }
+              <div class="mt-4 flex gap-5 items-start break-all">
+                <Image
+                  src={image ?? ""}
+                  className="w-24 object-contain"
+                  lazy
+                  alt={title}
+                />
+                <p class="text-white text-xs">{description}</p>
               </div>
-            )}
-            <div class="mt-4 flex gap-5 items-start break-all">
-              <Image src={image ?? ''} className="w-24 object-contain" lazy alt={title} />
-              <p class="text-white text-xs">{description}</p>
-            </div>
-          </Card>
+              {(comment || appendixes) && (
+                <div class="mt-4 p-3 text-xs rounded-lg border bg-gray-600 border-gray-500 text-gray-200 break-all">
+                  {
+                    comment && <p>{comment}</p>
+                  }
+                  {
+                    appendixes && (
+                      <div>
+                        {
+                          Object.entries(appendixes).map(([key, value]) => (
+                            <span>{key}: </span>
+                            <a href={value as string} class="text-blue-300" target="_blank">{value}</a>
+                          ))
+                        }
+                      </div>
+                    )
+                  }
+                </div>
+              )}
+            </Card>
           </div>
         </li>
       )

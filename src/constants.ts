@@ -22,3 +22,5 @@ export const PAGE_LINKS = <const>[
 ];
 
 export type PAGE_PATH = typeof PAGE_LINKS[number]["href"];
+
+export type MediaType = "article" | "podcast" | "achievement" | "talk";
