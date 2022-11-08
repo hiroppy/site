@@ -43,7 +43,7 @@ export async function crawlSites(filename) {
   const sites = await collectAlreadyHavingSites(filename);
   const data = await readData(filename);
   const promises = data.map(
-    async ({ url, comment, publishedAt, appendixes, hot }) => {
+    async ({ url, comment, publishedAt, appendixes, hot, title }) => {
       const memo = sites.find(({ url: memoedUrl }) => memoedUrl === url);
 
       if (memo) {
@@ -61,7 +61,7 @@ export async function crawlSites(filename) {
 
       const $ = load(html);
       const og = {
-        title: $("meta[property='og:title']").attr("content"),
+        title: title ?? $("meta[property='og:title']").attr("content"),
         description: $("meta[property='og:description']").attr("content"),
         image: $("meta[property='og:image']").attr("content"),
         siteName: $("meta[property='og:site_name']").attr("content"),

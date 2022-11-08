@@ -1,0 +1,213 @@
+[
+  {
+    "title": "メルカリShopsのキャッシュ戦略",
+    "description": "メルカリShopsのブログで紹介したものをスライド化しました",
+    "image": "https://slides.hiroppy.me/cache-strategy-on-mercari-shops/thumbnail.png",
+    "siteName": "hiroppy's slides",
+    "url": "https://slides.hiroppy.me/cache-strategy-on-mercari-shops/",
+    "publishedAt": "2021-08-30"
+  },
+  {
+    "title": "ツールの成長の歴史とこれから求められるもの",
+    "image": "https://slides.hiroppy.me/tools-history-and-future/thumbnail.png",
+    "siteName": "hiroppy's slides",
+    "url": "https://slides.hiroppy.me/tools-history-and-future/",
+    "publishedAt": "2021-07-07"
+  },
+  {
+    "title": "Source Maps v3",
+    "image": "https://slides.hiroppy.me/sourcemap-v3/thumbnail.png",
+    "siteName": "hiroppy's slides",
+    "url": "https://slides.hiroppy.me/sourcemap-v3/",
+    "publishedAt": "2021-05-26"
+  },
+  {
+    "title": "a deep dive into module graph",
+    "description": "Introducing how to create/run module graph",
+    "image": "https://slides.hiroppy.me/a-deep-dive-into-module-graph/thumbnail.png",
+    "siteName": "hiroppy's slides",
+    "url": "https://slides.hiroppy.me/a-deep-dive-into-module-graph/",
+    "publishedAt": "2021-01-25"
+  },
+  {
+    "title": "Introducing webpack asset modules",
+    "description": "introducing how to use asset modules of webpack5",
+    "siteName": "hiroppy's slides",
+    "url": "https://slides.hiroppy.me/introducing-webpack-asset-modules/",
+    "publishedAt": "2020-04-17"
+  },
+  {
+    "title": "top level await",
+    "siteName": "hiroppy's slides",
+    "url": "https://slides.hiroppy.me/top-level-await/",
+    "publishedAt": "2019-10-09"
+  },
+  {
+    "title": "introduce ecmascript modules of node.js",
+    "description": "Node.js is implementing ECMAScript Modules. This talk will introduce how it resolves modules.",
+    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4",
+    "siteName": "hiroppy's slides",
+    "url": "https://slides.hiroppy.me/node-esm/",
+    "publishedAt": "2019-04-25"
+  },
+  {
+    "title": "apollo と react を使ったアプリケーション設計",
+    "description": "",
+    "image": "https://avatars2.githubusercontent.com/u/17189275?s=200&v=4",
+    "siteName": "hiroppy's slides",
+    "url": "https://slides.hiroppy.me/introduce-apollo/",
+    "publishedAt": "2019-01-31"
+  },
+  {
+    "title": "webpackのイママデとコレカラ",
+    "description": "webpackの歴史を辿っていき、機能を紹介していきます。",
+    "image": "https://avatars1.githubusercontent.com/u/2105791?s=200&v=4",
+    "siteName": "hiroppy's slides",
+    "url": "https://slides.hiroppy.me/webpack-history/",
+    "publishedAt": "2018-11-25"
+  },
+  {
+    "title": "the event loop of node",
+    "description": "introduce the mechanism of the event loop",
+    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4",
+    "siteName": "hiroppy's slides",
+    "url": "https://slides.hiroppy.me/the-event-loop-of-node/",
+    "publishedAt": "2018-10-24"
+  },
+  {
+    "title": "future of node",
+    "description": "Introduce the current stability 1 modules and hot topics.",
+    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4",
+    "siteName": "hiroppy's slides",
+    "url": "https://slides.hiroppy.me/future-of-node/",
+    "publishedAt": "2018-07-25"
+  },
+  {
+    "title": "Worker Threads",
+    "description": "introduce worker_threads",
+    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4",
+    "siteName": "hiroppy's slides",
+    "url": "https://slides.hiroppy.me/worker_threads/",
+    "publishedAt": "2018-06-26"
+  },
+  {
+    "title": "util.types",
+    "url": "http://slides.hiroppy.me/util.types/",
+    "publishedAt": "2018-04-24"
+  },
+  {
+    "title": "performance timing api with node.js",
+    "url": "http://slides.hiroppy.me/performance-timing-api-with-node.js/",
+    "publishedAt": "2018-03-24"
+  },
+  {
+    "title": "node-core-utils",
+    "description": "introduce node-core-utils",
+    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4",
+    "siteName": "abouthiroppy's slides",
+    "url": "https://slides.hiroppy.me/node-core-utils/",
+    "publishedAt": "2018-03-06"
+  },
+  {
+    "title": "how to manage the document of Node.js",
+    "description": "",
+    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4",
+    "siteName": "abouthiroppy's slides",
+    "url": "https://slides.hiroppy.me/how-to-manage-the-document-of-Node.js/",
+    "publishedAt": "2017-11-11"
+  },
+  {
+    "title": "the present and future of JavaScript",
+    "description": "Explain how specifications are determined and how it will be in the future.",
+    "image": "https://avatars1.githubusercontent.com/u/1725583?v=4&s=200",
+    "siteName": "abouthiroppy's slides",
+    "url": "https://slides.hiroppy.me/the-present-and-future-of-JavaScript/",
+    "publishedAt": "2017-10-08"
+  },
+  {
+    "title": "nicohaco",
+    "description": "NicoHacoというNicoBoxのPC版アプリを作った",
+    "image": "",
+    "siteName": "abouthiroppy's slides",
+    "url": "https://slides.hiroppy.me/nicohaco/",
+    "publishedAt": "2017-05-29"
+  },
+  {
+    "title": "node8",
+    "description": "Node@8.0.0の紹介スライド",
+    "image": "https://avatars1.githubusercontent.com/u/9950313?v=3&s=200",
+    "siteName": "abouthiroppy's slides",
+    "url": "https://slides.hiroppy.me/node8/",
+    "publishedAt": "2017-04-24"
+  },
+  {
+    "title": "node-whatwg-url",
+    "description": "whatwg-url in Node",
+    "image": "",
+    "siteName": "abouthiroppy's slides",
+    "url": "https://slides.hiroppy.me/node-whatwg-url/",
+    "publishedAt": "2017-03-31"
+  },
+  {
+    "title": "Node8.3.0について",
+    "description": "buildersconの飛び込みLT資料。\n\n以下の記事のスライド版です。\nhttp://abouthiroppy.hatenablog.jp/entry/2017/08/03/095304\n\n",
+    "image": "https://files.speakerdeck.com/presentations/a6557873216b4b91bfe27517bba2715c/slide_0.jpg?8382227",
+    "siteName": "Speaker Deck",
+    "url": "https://speakerdeck.com/abouthiroppy/node8-dot-3-0nituite",
+    "publishedAt": "2017-08-04"
+  },
+  {
+    "title": "ECMAScript",
+    "description": "https://atnd.org/events/82619 の発表資料",
+    "image": "https://files.speakerdeck.com/presentations/01762954986b4be3ba0adbb1de6738e9/slide_0.jpg?7234927",
+    "siteName": "Speaker Deck",
+    "url": "https://speakerdeck.com/abouthiroppy/ecmascript",
+    "publishedAt": "2016-11-20"
+  },
+  {
+    "title": "reflow/repaint",
+    "description": "11/11の社内勉強会資料",
+    "image": "https://files.speakerdeck.com/presentations/d47ef63344f24b6293ff50a84957a4ff/slide_0.jpg?7234952",
+    "siteName": "Speaker Deck",
+    "url": "https://speakerdeck.com/abouthiroppy/repaint",
+    "publishedAt": "2016-11-10"
+  },
+  {
+    "title": "my tools",
+    "description": "8/10の社内勉強会資料",
+    "image": "https://files.speakerdeck.com/presentations/0b813d69d973470abe32bdc06dd0be38/slide_0.jpg?7235019",
+    "siteName": "Speaker Deck",
+    "url": "https://speakerdeck.com/abouthiroppy/my-tools",
+    "publishedAt": "2016-08-10"
+  },
+  {
+    "title": "OSSを楽しむ話",
+    "description": "",
+    "image": "https://files.speakerdeck.com/presentations/3e4c64732abd41c2a8b2549a3fccf498/slide_0.jpg?7235051",
+    "siteName": "Speaker Deck",
+    "url": "https://speakerdeck.com/abouthiroppy/osswole-simuhua",
+    "publishedAt": "2016-04-18"
+  },
+  {
+    "title": "React Nativeを触ってみた話",
+    "description": "",
+    "image": "https://files.speakerdeck.com/presentations/808a0fa15de040ce939550e52bc33545/slide_0.jpg?7235065",
+    "siteName": "Speaker Deck",
+    "url": "https://speakerdeck.com/abouthiroppy/react-nativewohong-tutemitahua",
+    "publishedAt": "2015-10-10"
+  },
+  {
+    "title": "ブラック企業から学ぶMVCモデル",
+    "description": "ブラック企業から学ぶMVCモデル  第47回 情報科学若手の会 2014/09/15   ",
+    "image": "https://cdn.slidesharecdn.com/ss_thumbnails/mvc-140914213919-phpapp01-thumbnail.jpg?width=640&amp;height=640&amp;fit=bounds",
+    "url": "https://www.slideshare.net/about_hiroppy/mvc-39079770",
+    "publishedAt": "2014-09-15"
+  },
+  {
+    "title": "Alt01-LT",
+    "description": "今更ながらALT#1でのLT発表資料を上げました。 angular-fullstack",
+    "image": "https://cdn.slidesharecdn.com/ss_thumbnails/alt01-140924033701-phpapp02-thumbnail.jpg?width=640&amp;height=640&amp;fit=bounds",
+    "url": "https://www.slideshare.net/about_hiroppy/alt01",
+    "publishedAt": "2014-06-24"
+  }
+]

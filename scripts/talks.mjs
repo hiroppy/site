@@ -1,14 +1,18 @@
 import { readData, generateData, crawlSites } from "./utils.mjs";
 
-// const data = await readData("talks");
-
 const data = await crawlSites("talks");
-
-console.log(data);
+const errors = [];
 
 // validate
 for (const slide of data) {
   if (!slide.title) {
-    console.error(slide.publishedAt, "title not found");
+    errors.push(slide.publishedAt);
   }
 }
+
+if (errors.length !== 0) {
+  console.log(errors.join(","));
+  process.exit(1);
+}
+
+await generateData("talks", data);

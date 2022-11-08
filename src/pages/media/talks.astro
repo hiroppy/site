@@ -3,17 +3,19 @@ import Layout from "../../layouts/Layout.astro";
 import MediaLayout from "../../layouts/MediaLayout.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 import Timeline from "../../components/Timeline.astro";
+import talks from "../../../generated/talks.json";
+import { getMediaIcon } from "../../utils/getMediaIcon";
 
-// const sites = data.map((item) => ({
-//   ...item,
-//   type: "podcast" as "podcast",
-// }));
+const sites = talks.map((item) => ({
+  ...item,
+  icon: getMediaIcon("talk"),
+}));
 ---
 
 <Layout title="Talks">
   <MainLayout title="Media / talks">
     <MediaLayout current="talks">
-      <Timeline items={[]} />
+      <Timeline items={sites} />
     </MediaLayout>
   </MainLayout>
 </Layout>
