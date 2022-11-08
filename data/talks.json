@@ -1,8 +1,32 @@
 [
   {
+    "publishedAt": "2021-09-15",
+    "url": "https://www.youtube.com/watch?v=1uCWzfaIedE",
+    "siteName": "https://mercari.connpass.com/event/221980/",
+    "appendixes": {
+      "blog": "https://engineering.mercari.com/blog/entry/20210817-mercari-shops-ci-cd-pr-env/"
+    }
+  },
+  {
+    "publishedAt": "2021-09-01",
+    "url": "https://www.youtube.com/watch?v=YNLvIkqRC-g",
+    "siteName": "https://mercari.connpass.com/event/221978/",
+    "appendixes": {
+      "blog": "https://engineering.mercari.com/blog/entry/20210823-a57631d32e/"
+    }
+  },
+  {
     "publishedAt": "2021-08-30",
     "url": "https://slides.hiroppy.me/cache-strategy-on-mercari-shops/",
     "siteName": "https://nodejs.connpass.com/event/221358/"
+  },
+  {
+    "publishedAt": "2021-07-15",
+    "url": "https://www.youtube.com/watch?v=XyoeJ1TRaMk",
+    "siteName": "https://uit.connpass.com/event/216043/",
+    "appendixes": {
+      "blog": "https://engineering.linecorp.com/ja/blog/uit-meetup-vol-13/"
+    }
   },
   {
     "publishedAt": "2021-07-07",

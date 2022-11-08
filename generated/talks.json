@@ -1,5 +1,29 @@
 [
   {
+    "title": "Souzoh Tech Talk #05:Infrastructure",
+    "description": "9/15（水）に行われたSouzoh Tech Talk #05:Infrastructureの様子です。ぜひご覧ください！",
+    "image": "https://i.ytimg.com/vi/1uCWzfaIedE/hqdefault.jpg",
+    "siteName": "【増枠】Souzoh Tech Talk #05:Infrastructure",
+    "siteUrl": "https://mercari.connpass.com/event/221980/",
+    "url": "https://www.youtube.com/watch?v=1uCWzfaIedE",
+    "publishedAt": "2021-09-15",
+    "appendixes": {
+      "blog": "https://engineering.mercari.com/blog/entry/20210817-mercari-shops-ci-cd-pr-env/"
+    }
+  },
+  {
+    "title": "Souzoh Tech Talk #03: Frontend",
+    "description": "9/1（水）に行ったSouzoh Tech Talk #03: Frontendの様子です！ぜひご覧ください。",
+    "image": "https://i.ytimg.com/vi/YNLvIkqRC-g/hqdefault.jpg",
+    "siteName": "【増枠】Souzoh Tech Talk #03: Frontend",
+    "siteUrl": "https://mercari.connpass.com/event/221978/",
+    "url": "https://www.youtube.com/watch?v=YNLvIkqRC-g",
+    "publishedAt": "2021-09-01",
+    "appendixes": {
+      "blog": "https://engineering.mercari.com/blog/entry/20210823-a57631d32e/"
+    }
+  },
+  {
     "title": "メルカリShopsのキャッシュ戦略",
     "description": "メルカリShopsのブログで紹介したものをスライド化しました",
     "image": "https://slides.hiroppy.me/cache-strategy-on-mercari-shops/thumbnail.png",
@@ -7,6 +31,18 @@
     "siteUrl": "https://nodejs.connpass.com/event/221358/",
     "url": "https://slides.hiroppy.me/cache-strategy-on-mercari-shops/",
     "publishedAt": "2021-08-30"
+  },
+  {
+    "title": "UIT Meetup vol. 13 『知っておきたいFront-end Toolingの今』",
+    "description": "UIT Meetup vol. 13では、Vite、Snowpack、esbuild など、昨今多くの提案がされている Frontend Tooling の分野を深堀りしていきます。なぜ今新しいツールやバンドラーが求められているのか？ それぞれのツールの詳しい使い勝手、そして今後従来のツールを置き換えるものとなる...",
+    "image": "https://i.ytimg.com/vi/XyoeJ1TRaMk/hqdefault.jpg",
+    "siteName": "UIT Meetup vol. 13 『知っておきたいFront-end Toolingの今』",
+    "siteUrl": "https://uit.connpass.com/event/216043/",
+    "url": "https://www.youtube.com/watch?v=XyoeJ1TRaMk",
+    "publishedAt": "2021-07-15",
+    "appendixes": {
+      "blog": "https://engineering.linecorp.com/ja/blog/uit-meetup-vol-13/"
+    }
   },
   {
     "title": "ツールの成長の歴史とこれから求められるもの",

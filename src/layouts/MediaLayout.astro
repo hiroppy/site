@@ -1,17 +1,13 @@
 ---
-import type { MediaType } from "../constants";
+type Path = "" | "/articles" | "/talks" | "/podcasts" | "/achievements";
 
-type Props = {
-  current: "all" | MediaType;
-};
-
-const { current } = Astro.props;
-const kinds: Record<Props["current"], string> = {
-  all: "/media",
-  article: "/media/articles",
-  talk: "/media/talks",
-  podcast: "/media/podcasts",
-  achievement: "/media/achievements",
+const currentPath = Astro.url.pathname.replace("/media", "");
+const kinds: Record<Path, string> = {
+  "": "/media",
+  "/articles": "/media/articles",
+  "/talks": "/media/talks",
+  "/podcasts": "/media/podcasts",
+  "/achievements": "/media/achievements",
 };
 ---
 
@@ -21,10 +17,10 @@ const kinds: Record<Props["current"], string> = {
       <a
         href={href}
         class={`font-semibold ${
-          current === kind ? "text-blue-300" : "text-white"
+          currentPath === kind ? "text-blue-300" : "text-white"
         }`}
       >
-        {kind}
+        {kind === "" ? "all" : kind.replace(/^\//, "")}
       </a>
     ))
   }

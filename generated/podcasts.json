@@ -53,14 +53,5 @@
     "url": "https://uit-inside.linecorp.com/episode/93",
     "comment": "https://engineering.linecorp.com/ja/blog/uit-meetup-vol-13/",
     "publishedAt": "2021-07-30"
-  },
-  {
-    "title": "UIT Meetup vol. 13 『知っておきたいFront-end Toolingの今』",
-    "description": "UIT Meetup vol. 13では、Vite、Snowpack、esbuild など、昨今多くの提案がされている Frontend Tooling の分野を深堀りしていきます。なぜ今新しいツールやバンドラーが求められているのか？ それぞれのツールの詳しい使い勝手、そして今後従来のツールを置き換えるものとなる...",
-    "image": "https://i.ytimg.com/vi/XyoeJ1TRaMk/hqdefault.jpg",
-    "siteName": "YouTube",
-    "url": "https://www.youtube.com/watch?v=XyoeJ1TRaMk",
-    "comment": "https://engineering.linecorp.com/ja/blog/uit-meetup-vol-13/",
-    "publishedAt": "2021-07-15"
   }
 ]
