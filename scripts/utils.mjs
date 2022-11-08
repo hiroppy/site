@@ -78,6 +78,8 @@ export async function crawlSites(filename) {
 
         meta.siteName = site.title;
         meta.siteUrl = siteName;
+      } else if (siteName) {
+        meta.siteName = siteName;
       }
 
       return {

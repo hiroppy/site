@@ -28,20 +28,20 @@
     "title": "a deep dive into module graph",
     "description": "Introducing how to create/run module graph",
     "image": "https://slides.hiroppy.me/a-deep-dive-into-module-graph/thumbnail.png",
-    "siteName": "hiroppy's slides",
+    "siteName": "a certain university",
     "url": "https://slides.hiroppy.me/a-deep-dive-into-module-graph/",
     "publishedAt": "2021-01-25"
   },
   {
     "title": "Introducing webpack asset modules",
     "description": "introducing how to use asset modules of webpack5",
-    "siteName": "hiroppy's slides",
+    "siteName": "remo_study",
     "url": "https://slides.hiroppy.me/introducing-webpack-asset-modules/",
     "publishedAt": "2020-04-17"
   },
   {
     "title": "top level await",
-    "siteName": "hiroppy's slides",
+    "siteName": "tc39_study",
     "url": "https://slides.hiroppy.me/top-level-await/",
     "publishedAt": "2019-10-09"
   },
@@ -49,7 +49,7 @@
     "title": "introduce ecmascript modules of node.js",
     "description": "Node.js is implementing ECMAScript Modules. This talk will introduce how it resolves modules.",
     "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4",
-    "siteName": "hiroppy's slides",
+    "siteName": "Dublin Node.js Meetup",
     "url": "https://slides.hiroppy.me/node-esm/",
     "publishedAt": "2019-04-25"
   },
@@ -143,7 +143,7 @@
     "title": "nicohaco",
     "description": "NicoHacoというNicoBoxのPC版アプリを作った",
     "image": "",
-    "siteName": "abouthiroppy's slides",
+    "siteName": "Dwangoの社内勉強会",
     "url": "https://slides.hiroppy.me/nicohaco/",
     "publishedAt": "2017-05-29"
   },
@@ -169,7 +169,7 @@
     "title": "Node8.3.0について",
     "description": "buildersconの飛び込みLT資料。\n\n以下の記事のスライド版です。\nhttp://abouthiroppy.hatenablog.jp/entry/2017/08/03/095304\n\n",
     "image": "https://files.speakerdeck.com/presentations/a6557873216b4b91bfe27517bba2715c/slide_0.jpg?8382227",
-    "siteName": "Speaker Deck",
+    "siteName": "builderscon",
     "url": "https://speakerdeck.com/abouthiroppy/node8-dot-3-0nituite",
     "publishedAt": "2017-08-04"
   },
@@ -177,7 +177,7 @@
     "title": "ECMAScript",
     "description": "https://atnd.org/events/82619 の発表資料",
     "image": "https://files.speakerdeck.com/presentations/01762954986b4be3ba0adbb1de6738e9/slide_0.jpg?7234927",
-    "siteName": "Speaker Deck",
+    "siteName": "ALT#07",
     "url": "https://speakerdeck.com/abouthiroppy/ecmascript",
     "publishedAt": "2016-11-20"
   },
@@ -185,7 +185,7 @@
     "title": "reflow/repaint",
     "description": "11/11の社内勉強会資料",
     "image": "https://files.speakerdeck.com/presentations/d47ef63344f24b6293ff50a84957a4ff/slide_0.jpg?7234952",
-    "siteName": "Speaker Deck",
+    "siteName": "frontier-dev-js2 勉強会",
     "url": "https://speakerdeck.com/abouthiroppy/repaint",
     "publishedAt": "2016-11-10"
   },
@@ -193,7 +193,7 @@
     "title": "my tools",
     "description": "8/10の社内勉強会資料",
     "image": "https://files.speakerdeck.com/presentations/0b813d69d973470abe32bdc06dd0be38/slide_0.jpg?7235019",
-    "siteName": "Speaker Deck",
+    "siteName": "frontier-dev-js1 勉強会",
     "url": "https://speakerdeck.com/abouthiroppy/my-tools",
     "publishedAt": "2016-08-10"
   },
@@ -201,7 +201,7 @@
     "title": "OSSを楽しむ話",
     "description": "",
     "image": "https://files.speakerdeck.com/presentations/3e4c64732abd41c2a8b2549a3fccf498/slide_0.jpg?7235051",
-    "siteName": "Speaker Deck",
+    "siteName": "Dwangoの社内勉強会",
     "url": "https://speakerdeck.com/abouthiroppy/osswole-simuhua",
     "publishedAt": "2016-04-18"
   },
@@ -209,7 +209,7 @@
     "title": "React Nativeを触ってみた話",
     "description": "",
     "image": "https://files.speakerdeck.com/presentations/808a0fa15de040ce939550e52bc33545/slide_0.jpg?7235065",
-    "siteName": "Speaker Deck",
+    "siteName": "ALT#05",
     "url": "https://speakerdeck.com/abouthiroppy/react-nativewohong-tutemitahua",
     "publishedAt": "2015-10-10"
   },
@@ -226,6 +226,7 @@
     "title": "Alt01-LT",
     "description": "今更ながらALT#1でのLT発表資料を上げました。 angular-fullstack",
     "image": "https://cdn.slidesharecdn.com/ss_thumbnails/alt01-140924033701-phpapp02-thumbnail.jpg?width=640&amp;height=640&amp;fit=bounds",
+    "siteName": "ALT#01",
     "url": "https://www.slideshare.net/about_hiroppy/alt01",
     "publishedAt": "2014-06-24"
   }

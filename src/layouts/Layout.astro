@@ -1,8 +1,8 @@
 ---
+import GA from "../components/GA.astro";
 import Header from "../components/Header.astro";
 
 const title = Astro.url.pathname.slice(1);
-
 ---
 
 <!DOCTYPE html>
@@ -41,21 +41,5 @@ const title = Astro.url.pathname.slice(1);
       }
     </style>
   </body>
-  {
-    import.meta.env.PROD && (
-      <script
-        type="text/partytown"
-        src="https://www.googletagmanager.com/gtag/js?id=G-FD7632999P"
-      ></script>
-      <script type="text/partytown">
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-          dataLayer.push(arguments);
-        }
-        gtag("js", new Date());
-
-        gtag("config", "G-FD7632999P");
-      </script>
-    )
-  }
+  {import.meta.env.PROD && <GA />}
 </html>
