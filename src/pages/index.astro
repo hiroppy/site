@@ -5,16 +5,16 @@ import Card from "../components/Card.astro";
 import repos from "../../generated/repos.json";
 import sponsors from "../../generated/sponsors.json";
 import articles from "../../generated/articles.json";
+import Image from "../components/Image.astro";
 ---
 
 <Layout title="root">
   <MainLayout title="About">
     <div class="flex gap-5 flex-col sm:flex-row max-w-fit mx-auto items-center">
       <div class="m-auto min-w-fit">
-        <img
+        <Image
           src="/images/me.webp"
-          class="rounded-full w-24 h-24 md:w-32 md:h-32"
-          decoding="async"
+          className="rounded-full w-24 h-24 md:w-32 md:h-32"
           alt="hiroppy"
         />
       </div>
@@ -49,10 +49,9 @@ import articles from "../../generated/articles.json";
                     {title}
                   </a>
                   <div class="flex justify-between w-full items-end text-gray-300">
-                    <img
+                    <Image
                       src={image}
-                      decoding="async"
-                      class="h-20 rounded-lg object-contain"
+                      className="h-20 rounded-lg object-contain"
                       alt={title}
                     />
                     <div class="flex items-center text-sm gap-2">
@@ -88,11 +87,11 @@ import articles from "../../generated/articles.json";
             repos.hot.map(
               ({ name, avatar, description, url, stars, language }) => (
                 <li class="flex gap-2 bg-slate-600 p-2 rounded-lg">
-                  <img
+                  <Image
                     src={`${avatar}&s=32`}
-                    decoding="async"
-                    class="w-8 h-8 rounded-full"
+                    className="w-8 h-8 rounded-full"
                     alt={name}
+                    lazy
                   />
                   <div class="flex flex-col text-sm flex-1 gap-2">
                     <a
@@ -149,12 +148,11 @@ import articles from "../../generated/articles.json";
           {
             sponsors.current.map(({ name, href, avatar }) => (
               <a href={href} target="_blank">
-                <img
+                <Image
                   src={avatar}
                   alt={name}
-                  decoding="async"
-                  class="rounded-full w-12 h-12"
-                  loading="lazy"
+                  className="rounded-full w-12 h-12"
+                  lazy
                 />
               </a>
             ))
@@ -162,12 +160,11 @@ import articles from "../../generated/articles.json";
           {
             sponsors.past.map(({ name, href, avatar }) => (
               <a href={href} target="_blank">
-                <img
-                  src={avatar}
-                  alt={name}
-                  decoding="async"
-                  class="rounded-full w-12 h-12 bg-blue-300"
-                  loading="lazy"
+                <Image
+                  src={avatar as string}
+                  alt={name as string}
+                  className="rounded-full w-12 h-12 bg-blue-300"
+                  lazy
                 />
               </a>
             ))

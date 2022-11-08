@@ -6,6 +6,7 @@ import Timeline from "../../components/Timeline.astro";
 import articles from "../../../generated/articles.json";
 import achievements from "../../../generated/achievements.json";
 import podcasts from "../../../generated/podcasts.json";
+import talks from "../../../generated/talks.json";
 import { getMediaIcon } from "../../utils/getMediaIcon";
 import { sortItems } from "../../utils/sortItems";
 
@@ -21,6 +22,10 @@ const sites = sortItems([
   ...podcasts.map((item) => ({
     ...item,
     icon: getMediaIcon("podcast"),
+  })),
+  ...talks.map((item) => ({
+    ...item,
+    icon: getMediaIcon("talk"),
   })),
 ]);
 ---

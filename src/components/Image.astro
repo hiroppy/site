@@ -1,0 +1,18 @@
+---
+type Props = {
+  src: string;
+  alt: string;
+  className?: string;
+  lazy?: boolean;
+};
+
+const { src, alt, className, lazy = false } = Astro.props;
+---
+
+<img
+  src={src}
+  class={className}
+  decoding="async"
+  alt={alt}
+  loading={lazy ? "lazy" : "eager"}
+/>

@@ -1,5 +1,6 @@
 ---
-import Card from '../components/Card.astro'
+import Card from '../components/Card.astro';
+import Image from "../components/Image.astro";
 
 type Props = {
   items: (any & {
@@ -62,7 +63,7 @@ const { items } = Astro.props;
               </div>
             )}
             <div class="mt-4 flex gap-5 items-start break-all">
-              <img src={image} class="w-24 object-contain" decoding="async" loading="lazy" alt={title} />
+              <Image src={image} className="w-24 object-contain" lazy alt={title} />
               <p class="text-white text-xs">{description}</p>
             </div>
           </Card>
