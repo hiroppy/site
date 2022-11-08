@@ -24,5 +24,6 @@ jobs:
         with:
           node-version: "18"
           cache: "npm"
-      - run: npx astro check
+      - run: npm i
+      - run: npm run astro check
       - run: npm run build
