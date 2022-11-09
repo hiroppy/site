@@ -1,8 +1,12 @@
 ---
+import Footer from "../components/Footer.astro";
 import GA from "../components/GA.astro";
 import Header from "../components/Header.astro";
 
 const title = Astro.url.pathname.slice(1);
+const siteTitle = "hiroppy's site";
+const siteDescription =
+  "Hiroppy is a JavaScript engineer and working on some OSS projects and Japanese communities.";
 ---
 
 <!DOCTYPE html>
@@ -11,25 +15,26 @@ const title = Astro.url.pathname.slice(1);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content="hiroppy's website" />
-    <title>hiroppy's site - {title}</title>
+    <meta name="description" content={siteDescription} />
+    <meta property="theme-color" content="#3498db" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteTitle} />
+    <meta property="og:title" content="hiroppy's site" />
+    <meta property="og:description" content={siteDescription} />
+    <meta property="og:image" content="/images/me.webp" />
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:creator" content="@about_hiroppy" />
+    <title>{siteTitle} - {title}</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="canonical" href="https://hiroppy.me" />
   </head>
   <body>
     <Header />
     <div class="container mx-auto py-5 lg:py-20 min-h-screen px-2 sm:px-4">
       <slot />
     </div>
-    <footer class="h-20 border-t-2 border-t-slate-700">
-      <div
-        class="container mx-auto px-4 flex items-center justify-between h-full text-sm text-gray-400"
-      >
-        <span>
-          © {new Date().getFullYear()} - Copyright Hiroppy, All Rights Reserved.
-        </span>
-        <span>Old Site</span>
-      </div>
-    </footer>
+    <Footer />
     <style>
       html {
         font-size: 17px;
