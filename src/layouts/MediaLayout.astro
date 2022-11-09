@@ -1,7 +1,8 @@
 ---
 type Path = "" | "/articles" | "/talks" | "/podcasts" | "/achievements";
 
-const currentPath = Astro.url.pathname.replace("/media", "");
+// buildのときだけ、/が最後につく
+const currentPath = Astro.url.pathname.replace("/media", "").replace(/\/$/, "");
 const kinds: Record<Path, string> = {
   "": "/media",
   "/articles": "/media/articles",
