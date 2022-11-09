@@ -44,7 +44,7 @@ import Image from "../components/Image.astro";
             articles
               .filter(({ hot }) => !!hot)
               .map(({ url, title, image, bookmark }) => (
-                <li class="flex flex-col gap-2 items-start bg-slate-600 p-2 rounded-lg justify-between">
+                <li class="flex flex-col gap-2 items-start bg-slate-600 p-2 sm:p-3 rounded-lg justify-between">
                   <a class="text-blue-200 block" href={url} target="_blank">
                     {title}
                   </a>
@@ -86,7 +86,7 @@ import Image from "../components/Image.astro";
           {
             repos.hot.map(
               ({ name, image, description, url, stars, language }) => (
-                <li class="flex gap-2 bg-slate-600 p-2 rounded-lg">
+                <li class="flex gap-2 bg-slate-600 p-2 sm:p-3 rounded-lg">
                   <Image
                     src={image}
                     className="w-8 h-8 rounded-full"
