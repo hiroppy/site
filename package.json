@@ -8,10 +8,14 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "fmt": "prettier -w ."
+    "fmt": "prettier -w .",
+    "clean": "rm -r ./generated/* ./public/images/external/*",
+    "run:all": "node scripts/index.mjs",
+    "convert:webp": "node scripts/image.mjs"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^2.1.2",
+    "@squoosh/cli": "^0.7.2",
     "astro": "^1.6.5",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.0.3",

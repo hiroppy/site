@@ -1,7 +1,7 @@
 import { Octokit } from "octokit";
 import EmojiConvertor from "emoji-js";
 import { config } from "dotenv";
-import { readData, generateData } from "./utils.mjs";
+import { readData, generateData, downloadImage } from "./utils.mjs";
 
 config();
 
@@ -26,7 +26,7 @@ const res = await Promise.all(
       description: emoji.replace_colons(data.description),
       language: data.language,
       stars: data.stargazers_count,
-      avatar: data.owner.avatar_url,
+      image: await downloadImage(`${data.owner.avatar_url}?s=40`),
     };
   })
 );

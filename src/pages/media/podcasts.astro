@@ -3,11 +3,10 @@ import Layout from "../../layouts/Layout.astro";
 import MediaLayout from "../../layouts/MediaLayout.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 import Timeline from "../../components/Timeline.astro";
-import type { Items } from "../../components/Timeline.astro";
 import data from "../../../generated/podcasts.json";
 import { getMediaIcon, getPrefixForTitle } from "../../utils/media";
 
-const sites: Items = data.map((item) => ({
+const sites: DataItem[] = data.map((item) => ({
   ...item,
   icon: getMediaIcon("podcast"),
   prefixForTitle: getPrefixForTitle("podcast"),

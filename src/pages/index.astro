@@ -85,10 +85,10 @@ import Image from "../components/Image.astro";
         <ol class="grid grid-cols-1 xl:grid-cols-2 gap-4">
           {
             repos.hot.map(
-              ({ name, avatar, description, url, stars, language }) => (
+              ({ name, image, description, url, stars, language }) => (
                 <li class="flex gap-2 bg-slate-600 p-2 rounded-lg">
                   <Image
-                    src={`${avatar}&s=32`}
+                    src={image}
                     className="w-8 h-8 rounded-full"
                     alt={name}
                     lazy

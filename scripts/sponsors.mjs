@@ -1,6 +1,6 @@
 import { load } from "cheerio";
 import { fetch } from "undici";
-import { readData, generateData } from "./utils.mjs";
+import { readData, generateData, downloadImage } from "./utils.mjs";
 
 // github apiでは過去に寄付してくれた方を取得できないのでhtmlから取る
 // await octokit.graphql(`
@@ -34,19 +34,23 @@ const [currentSponsors, pastSponsors] = Array.from(
 
 {
   const $$ = $.load(currentSponsors);
-  sponsors.current = Array.from($$("a")).map((el) => ({
-    href: `https://github.com${$$.load(el)("a").attr("href")}`,
-    avatar: $$.load(el)("img").attr("src"),
-    name: $$.load(el)("img").attr("alt"),
-  }));
+  sponsors.current = await Promise.all(
+    Array.from($$("a")).map(async (el) => ({
+      href: `https://github.com${$$.load(el)("a").attr("href")}`,
+      avatar: await downloadImage($$.load(el)("img").attr("src")),
+      name: $$.load(el)("img").attr("alt"),
+    }))
+  );
 }
 {
   const $$ = $.load(pastSponsors);
-  sponsors.past = Array.from($$("a")).map((el) => ({
-    href: `https://github.com${$$.load(el)("a").attr("href")}`,
-    avatar: $$.load(el)("img").attr("src"),
-    name: $$.load(el)("img").attr("alt"),
-  }));
+  sponsors.past = await Promise.all(
+    Array.from($$("a")).map(async (el) => ({
+      href: `https://github.com${$$.load(el)("a").attr("href")}`,
+      avatar: await downloadImage($$.load(el)("img").attr("src")),
+      name: $$.load(el)("img").attr("alt"),
+    }))
+  );
 }
 
 await generateData("sponsors", sponsors);

@@ -11,22 +11,22 @@ import { getMediaIcon } from "../../utils/media";
 import { sortItems } from "../../utils/sortItems";
 
 const sites = sortItems([
-  ...articles.map((item) => ({
+  ...(articles.map((item) => ({
     ...item,
     icon: getMediaIcon("article"),
-  })),
-  ...achievements.map((item) => ({
+  })) as DataItem[]),
+  ...(achievements.map((item) => ({
     ...item,
     icon: getMediaIcon("achievement"),
-  })),
-  ...podcasts.map((item) => ({
+  })) as DataItem[]),
+  ...(podcasts.map((item) => ({
     ...item,
     icon: getMediaIcon("podcast"),
-  })),
-  ...talks.map((item) => ({
+  })) as DataItem[]),
+  ...(talks.map((item) => ({
     ...item,
     icon: getMediaIcon("talk"),
-  })),
+  })) as DataItem[]),
 ]);
 ---
 

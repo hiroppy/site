@@ -1,4 +1,10 @@
-import { crawlSites, readData, generateData, sortItems } from "./utils.mjs";
+import {
+  crawlSites,
+  readData,
+  generateData,
+  sortItems,
+  downloadImage,
+} from "./utils.mjs";
 import ParseFeed from "rss-parser";
 import { fetch } from "undici";
 
@@ -15,13 +21,13 @@ const platform = {
   siteName: res.title,
   siteUrl: res.link,
 };
-const hatena = res.items.map(
-  ({ title, link, enclosure, isoDate, categories }) => ({
+const hatena = await Promise.all(
+  res.items.map(async ({ title, link, enclosure, isoDate, categories }) => ({
     ...platform,
     hot: hatenaHot.includes(link),
     url: link,
     title,
-    image: enclosure.url,
+    image: await downloadImage(enclosure.url),
     publishedAt: `${isoDate}`.split("T")[0],
     category: categories?.includes("life")
       ? "life"
@@ -31,7 +37,7 @@ const hatena = res.items.map(
         categories?.includes("GitHub")
       ? "tech"
       : "",
-  })
+  }))
 );
 
 await getBookmark("https://hiroppy.me");
