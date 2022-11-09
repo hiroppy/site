@@ -27,7 +27,11 @@ const siteDescription =
     <title>{siteTitle} - {title}</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="canonical" href="https://hiroppy.me" />
+    {
+      Astro.url.pathname === "/" && (
+        <link rel="canonical" href="https://hiroppy.me" />
+      )
+    }
     <link rel="dns-prefetch" href="//www.googletagmanager.com" />
     <link rel="preconnect" href="//www.googletagmanager.com" />
   </head>
