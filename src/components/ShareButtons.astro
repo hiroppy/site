@@ -1,0 +1,18 @@
+---
+import SnsIcon from "./SnsIcon.astro";
+import Twitter from "./icons/Twitter.astro";
+
+type Props = {
+  url: string;
+};
+
+const { url } = Astro.props;
+
+// https://twitter.com/intent/tweet?source=http%3A%2F%2Fhiroppy.me%2Fblog&text=test:%20http%3A%2F%2Fhiroppy.me%2Fblog
+---
+
+<div class="share-buttons flex flex-row gap-4 mt-4 items-center justify-center">
+  <SnsIcon name="twitter" href={url} size={6}>
+    <Twitter />
+  </SnsIcon>
+</div>

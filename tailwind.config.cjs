@@ -2,6 +2,10 @@
 module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
+    listStyleType: {
+      none: "none",
+      hyphen: "'-  '",
+    },
     extend: {
       colors: {
         main: "#3498db",

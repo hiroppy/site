@@ -1,0 +1,104 @@
+---
+import { formatDate } from "../utils/formatDate";
+import Layout from "./Layout.astro";
+import MainLayout from "./MainLayout.astro";
+import Paper from "../components/Paper.astro";
+import type { MarkdownLayoutProps } from "astro/dist/@types/astro";
+import ShareButtons from "../components/ShareButtons.astro";
+
+const { frontmatter, headings } =
+  Astro.props as MarkdownLayoutProps<BlogFrontmatter>;
+const date = formatDate(new Date(frontmatter.date));
+const indices = headings.filter((heading) => heading.depth < 4);
+const diffDate =
+  (new Date().getTime() - new Date(frontmatter.date).getTime()) /
+  (60 * 60 * 1000 * 24);
+---
+
+<Layout title={frontmatter.title}>
+  <MainLayout title={frontmatter.title}>
+    <Paper slot="optional-content">
+      <div class="p-4">
+        <p>🔖 Index</p>
+        <ol class="mt-4">
+          {
+            indices.map(({ slug, text, depth }) => (
+              <li style={{ marginLeft: `${(depth - 1) * 10}px` }}>
+                <a href={`#${slug}`} class="text-sm hover:text-blue-300">
+                  {text}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </Paper>
+    <p class="text-sm mb-10 text-right">{date}</p>
+    {
+      diffDate > 365 && (
+        <div class="bg-yellow-500 p-2 mb-8 rounded-sm">
+          <span class="text-gray-800 text-sm">
+            🚨 This article hasn't been updated in over a year
+          </span>
+        </div>
+      )
+    }
+    <div class="markdown-body text-stone-300">
+      <slot />
+    </div>
+    <hr class="border-gray-600 mt-12" />
+    <div>
+      <ShareButtons url={frontmatter.url!} />
+    </div>
+  </MainLayout>
+</Layout>
+<style is:global>
+  .markdown-body ul {
+    @apply list-hyphen pl-4 my-2;
+  }
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3,
+  .markdown-body h4 {
+    @apply font-bold text-gray-100 mt-10 mb-1;
+  }
+  .markdown-body h1 {
+    @apply text-2xl;
+  }
+  .markdown-body h2 {
+    @apply text-xl;
+  }
+  .markdown-body h3 {
+    @apply text-lg;
+  }
+  .markdown-body p {
+    @apply my-4;
+  }
+  .markdown-body code:not(pre > *) {
+    @apply text-gray-100;
+  }
+  .markdown-body code:not(pre > *)::before {
+    content: "`";
+  }
+  .markdown-body code:not(pre > *)::after {
+    content: "`";
+  }
+  .markdown-body pre {
+    @apply p-4 text-sm rounded-lg;
+  }
+  .markdown-body a {
+    @apply text-blue-300;
+  }
+  .markdown-body hr {
+    @apply my-4 border-gray-500;
+  }
+  .markdown-body img {
+    @apply mx-auto max-h-72;
+  }
+  .markdown-body strong {
+    @apply text-gray-100;
+  }
+  .markdown-body blockquote {
+    @apply px-4 border border-gray-600 border-l-blue-300 border-l-2;
+  }
+</style>

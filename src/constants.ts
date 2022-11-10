@@ -19,6 +19,13 @@ export const PAGE_LINKS = <const>[
       "Currently, I will reject the request of speaking basically but I speak on Monthly Ecosystem of Podcast",
     href: "/media",
   },
+  {
+    icon: "🗒",
+    title: "Blog",
+    content:
+      "Currently, I will reject the request of speaking basically but I speak on Monthly Ecosystem of Podcast",
+    href: "/blog",
+  },
 ];
 
 export type PAGE_PATH = typeof PAGE_LINKS[number]["href"];

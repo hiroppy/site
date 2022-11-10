@@ -16,3 +16,10 @@ type DataItem = {
   comment?: string;
   appendixes?: any;
 };
+
+type BlogFrontmatter = {
+  date: string;
+  title: string;
+  description: string;
+  image: string;
+};

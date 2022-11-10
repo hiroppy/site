@@ -2,17 +2,19 @@
 type Props = {
   href: string;
   name: string;
+  text?: string;
 };
 
-const { href, name } = Astro.props;
+const { href, name, text } = Astro.props;
 ---
 
 <a
   href={href}
   target="_blank"
-  class="hover:text-sky-400 text-gray-300"
+  class="hover:text-sky-400 text-gray-300 flex gap-2 items-center"
   aria-label={`Link for ${name}`}
 >
+  {text && <span>{text}</span>}
   <svg
     class="h-5 w-5"
     viewBox="0 0 24 24"
