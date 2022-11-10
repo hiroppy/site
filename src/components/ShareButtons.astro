@@ -1,0 +1,28 @@
+---
+import SnsIcon from "./SnsIcon.astro";
+import Twitter from "./icons/Twitter.astro";
+import Hatena from "./icons/Hatena.astro";
+
+type Props = {
+  url: string;
+  title: string;
+};
+
+const { url, title } = Astro.props;
+const twitter = `https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw%7Ctwcamp%5Ebuttonembed%7Ctwterm%5Eshare%7Ctwgr%5E&text=${title}&url=${url}`;
+const twitterFollow =
+  "https://twitter.com/intent/follow?screen_name=about_hiroppy";
+const hatena = `https://b.hatena.ne.jp/entry/panel/?url=${url}#bbutton`;
+---
+
+<div class="share-buttons flex flex-row gap-4 mt-4 items-center justify-center">
+  <SnsIcon name="twitter" href={twitter} text="tweet">
+    <Twitter />
+  </SnsIcon>
+  <SnsIcon name="twitter" href={twitterFollow} text="follow">
+    <Twitter />
+  </SnsIcon>
+  <SnsIcon name="hatena" href={hatena} text="bookmark" className="w-4 h-4">
+    <Hatena />
+  </SnsIcon>
+</div>

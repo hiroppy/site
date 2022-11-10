@@ -1,0 +1,43 @@
+---
+import { load } from "cheerio";
+import Image from "./Image.astro";
+
+type Props = {
+  url: string;
+};
+
+const { url } = Astro.props;
+const html = await fetch(url).then((res) => res.text());
+const $ = load(html);
+const title =
+  $("meta[property='og:title']").attr("content") ?? $("title").text();
+const description =
+  $("meta[property='og:description']").attr("content") ??
+  $("meta[name='description']").attr("content");
+const image = $("meta[property='og:image']").attr("content");
+---
+
+<div class="flex border border-gray-600 p-4 gap-4 justify-between">
+  <div class="flex flex-col gap-2 flex-1">
+    <a href={url} target="_blank" class="font-semibold">
+      {title}
+    </a>
+    <span class="text-sm"
+      >{
+        description && description.length > 100
+          ? `${description?.slice(0, 100)}...`
+          : description
+      }</span
+    >
+  </div>
+  {
+    image && (
+      <Image
+        src={image}
+        className="h-10 object-contain sm:h-24"
+        alt="title"
+        webp={false}
+      />
+    )
+  }
+</div>

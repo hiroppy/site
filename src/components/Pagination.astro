@@ -1,0 +1,15 @@
+---
+import Link from "./Link.astro";
+
+type Props = {
+  prev?: string;
+  next?: string;
+};
+
+const { prev, next } = Astro.props;
+---
+
+<div class="flex justify-between items-center mt-4">
+  {prev ? <Link href={prev}>{`< back`}</Link> : <div />}
+  {next && <Link href={next}>{`next page >`}</Link>}
+</div>

@@ -1,0 +1,230 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: rendertronを用いてSSRに対応してないサイトでもSEOやOGP対策を行う
+date: 2020-09-01
+description: rendertronを使い、dynamic renderingをする方法の紹介とパフォーマンス検証を行います
+image: /images/brands/chrome.png
+tags: javascript
+hatenaPath: rendertron
+---
+
+import OG from "../../components/OG.astro";
+import TwitterCard from "../../components/TwitterCard.astro";
+
+## Dynamic Rendering
+
+この手法は Dynamic Rendering と呼ばれ、SSR に対応してないサイトに対しての SEO 対策として有効です。Dynamic Rendering とは一言でいうと、サーバーで Node 単体ではなく、ブラウザを動かすイメージです。 これは SSR みたいな Node.js のコードを書くことないため、導入コストは低いです。
+
+![](/images/blog/rendertron/flow.png)
+
+詳しくは、以下の google の記事を読んでください。
+
+<OG url="https://developers.google.com/search/docs/guides/dynamic-rendering" />
+
+この記事でも説明されている rendertron を今回は用います。
+
+## Rendertron
+
+<OG url="https://github.com/GoogleChrome/rendertron" />
+
+puppeteer をラップした api server みたいなもので内部は koa が使われています。これを起動し、`/render`へ url を path として挿入するとそのページの html が返されます。 例えば、`/render/https://google.com`とアクセスすると、google.com の html が返ってきます。 また、スクリーンショットも取れたりします。(`/screenshot`)
+
+返す html は配信元とは一致はせず最適化されたものが返されます。例えば、`console.log('hello')`や`document.write('test')`だけ書かれた js などは、html に挿入された後そのスクリプトタグは html 内からなくなったり、`base`がついたりします。
+
+ちなみに rendertron を GCP で動かすのはもっと簡単だったりします。
+
+## インフラ構成
+
+<OG url="https://github.com/hiroppy/dynamic-rendering-sample" />
+
+上記のリポジトリでは docker-compose で簡単な構成を作りました。
+
+![](/images/blog/rendertron/arch.png)
+
+- `https://foo.com`へアクセスが来たとき、Nginx で bot かどうかを判断する
+  - bot の場合は、rendertron(internal)のサーバーへ
+    - アクセスの url を rendertron の url の path につける
+      - e.g. `http://rendertron/render/https://foo.com`
+    - rendetron が index.html へアクセスし、html をレンダリングし返す
+  - ユーザーの場合は、index.html を取りに行く
+
+### 前段
+
+以下を参考にしました。
+
+https://github.com/GoogleChrome/rendertron/blob/main/docs/server-setup/nginx.md
+
+```nginx
+upstream rendertron {
+  server rendertron:3000;
+}
+
+map $http_user_agent $is_bot {
+    # default 1; # if you want to debug as a bot, you should comment out this
+  '~*googlebot' 1;
+}
+
+server {
+  listen 80;
+  server_name localhost;
+
+  if ($is_bot = 1) {
+    rewrite ^(.*)$ /rendertron/$1;
+  }
+
+  location /rendertron/ {
+    proxy_set_header X-Real-IP  $remote_addr;
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_pass http://rendertron/render/$scheme://storage$request_uri;
+  }
+
+  location / {
+    proxy_pass http://storage/;
+  }
+}
+```
+
+bot の場合、url に`/rendertron`を付け、`location /rendertron/`の分岐へいれます。そして、`proxy_pass http://rendertron/render/$scheme://storage$request_uri;` のリバースプロキシを設定します。 このように書くことにより、`http://localhost:8080`を`http://rendertron/render/http://localhost:8080`と飛ばすようにし、html を返すようにします。
+
+### Rendertron
+
+特に何もしなくていいですが、puppeteer を導入するために自前で Dockerfile を書くのは少し大変なので、今回は、こちらのイメージを使いました。
+
+https://hub.docker.com/r/ammobindotca/rendertron
+
+### SPA
+
+index.html を持っているサーバーで`try_files`してあげることにより、404 を回避させます。
+
+```nginx
+# nginx.conf
+
+server {
+  listen 80;
+  server_name localhost;
+
+  location / {
+    root /usr/share/nginx/sample;
+    # for spa
+    try_files $uri $uri/ /index.html;
+  }
+}
+```
+
+## HTML, JS
+
+ここは例なので何でもよく、各サービスのアプリケーションコードとなります。
+今回は、重いアプリケーションを動かしたかったので[ここ](https://observablehq.com/@d3/hierarchical-edge-bundling)から d3 のサンプルを借りました。 これが html へレンダリングされていれば成功となります。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="observablehq-6b3f2a05"></div>
+    <script type="module">
+      (async () => {
+        const id = "#observablehq-6b3f2a05";
+
+        if (document.querySelector(id).children.length === 0) {
+          const { Runtime, Inspector } = await import(
+            "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js"
+          );
+          const { default: define } = await import(
+            "https://api.observablehq.com/@d3/hierarchical-edge-bundling.js?v=3"
+          );
+          const inspect = Inspector.into(id);
+
+          new Runtime().module(define, (name) =>
+            name === "chart" ? inspect() : undefined
+          );
+        }
+      })();
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>
+```
+
+main.js では、ogp を設定したいと思います。
+
+```javascript
+// main.js
+const a = document.createElement("a");
+
+a.setAttribute(
+  "href",
+  "https://observablehq.com/@d3/hierarchical-edge-bundling"
+);
+a.text = "This is hierarchical-edge-bundling, the code is here.";
+
+document.body.append(a);
+
+// ogp
+const props = [
+  {
+    type: "og:url",
+    content: "http://localhost:8080",
+  },
+  {
+    type: "og:type",
+    content: "website",
+  },
+  // ...
+];
+
+const fragment = document.createDocumentFragment();
+
+props.forEach(({ type, content }) => {
+  const meta = document.createElement("meta");
+
+  meta.setAttribute("property", type);
+  meta.setAttribute("content", content);
+
+  fragment.appendChild(meta);
+});
+
+document.querySelector("head").appendChild(fragment);
+```
+
+## 結果
+
+### ユーザーがアクセスした場合
+
+![](/images/blog/rendertron/res-by-user.png)
+
+まんま上記の html が出力されただけとなり、CSR です。
+
+### bot がアクセスした場合
+
+![](/images/blog/rendertron/res-by-bot.png)
+
+meta に`og`や body の中に d3 の結果出力コードが出ていて SSR が成功しました。
+
+また、画面でみてもユーザーのアクセスと同様の画面となります。
+
+![](/images/blog/rendertron/res-on-browser.png)
+
+これで google ボットや Twitter などの ogp にも対応することが可能です。
+
+## 問題点
+
+体感的に、SSR よりは遅く感じます。SSR は最適化しやすいのもあると思いますが。
+
+![](/images/blog/rendertron/res-on-network.png)
+
+SSR よりは楽な分、効率が悪いようにみえますが、今後 ssr-server と rendertron で同じ鯖スペックでどれぐらい捌けるのかも含め実験してみたいなーって思ったりします。
+
+いずれにせよこういうのは、大規模サービスで実験しないとわからないことが多いので今後に期待です。
+
+## さいごに
+
+昨日の夜、突然やりたくなって記事にしました。
+
+導入コストは低いので、今 SPA なサイトだけど SSR してないから SEO が不安とか ogp も有効化したい！って人は検討してみてもいいんじゃないでしょうか。
+
+リポジトリ
+
+<OG url="https://github.com/hiroppy/dynamic-rendering-sample" />

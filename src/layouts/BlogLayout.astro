@@ -1,0 +1,158 @@
+---
+import { formatDate } from "../utils/formatDate";
+import Layout from "./Layout.astro";
+import MainLayout from "./MainLayout.astro";
+import Paper from "../components/Paper.astro";
+import type { MarkdownLayoutProps } from "astro/dist/@types/astro";
+import ShareButtons from "../components/ShareButtons.astro";
+import { createAccordionDescription, getTags, sortByDate } from "../utils/blog";
+import Link from "../components/Link.astro";
+import { HATENA_BLOG_URL } from "../constants";
+
+const { frontmatter, headings } =
+  Astro.props as MarkdownLayoutProps<BlogFrontmatter>;
+const date = formatDate(new Date(frontmatter.date));
+const indices = headings.filter((heading) => heading.depth < 4);
+const diffDate =
+  (new Date().getTime() - new Date(frontmatter.date).getTime()) /
+  (60 * 60 * 1000 * 24);
+const posts = sortByDate(await Astro.glob("../pages/blog/*.mdx"));
+const content = createAccordionDescription(posts);
+const { title, url, description, image, tags } = frontmatter;
+const index = posts.findIndex(
+  ({ url }) => url === Astro.url.pathname.replace(/\/$/, "" /* for prod */)
+);
+---
+
+<Layout title={title} description={description} image={image}>
+  <MainLayout title={title} content={content}>
+    <Paper slot="optional-content">
+      <div class="p-4">
+        <p>🔖 Index</p>
+        <ol class="mt-4">
+          {
+            indices.map(({ slug, text, depth }) => (
+              <li style={{ marginLeft: `${(depth - 1) * 12}px` }}>
+                <a href={`#${slug}`} class="text-sm hover:text-blue-300">
+                  - {text}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </Paper>
+    <p class="text-sm mb-10 text-right">{date}</p>
+    <div class="flex gap-4 mb-8 flex-col">
+      {
+        getTags(tags).includes("javascript") && diffDate > 365 && (
+          <div class="bg-yellow-500 p-2 rounded-sm">
+            <span class="text-gray-800 text-sm">
+              🚨 This article hasn't been updated in over a year
+            </span>
+          </div>
+        )
+      }
+      {
+        frontmatter.hatenaPath && (
+          <div class="bg-gray-600 p-2 mb-8 rounded-sm text-sm">
+            📸 This post was copied from{" "}
+            <Link href={`${HATENA_BLOG_URL}/${frontmatter.hatenaPath}`} isBlank>
+              Hatena Blog
+            </Link>
+          </div>
+        )
+      }
+    </div>
+    <div class="blog text-gray-300">
+      <slot />
+    </div>
+    <hr class="border-gray-600 mt-12" />
+    <div>
+      <ShareButtons url={`${Astro.site?.origin}${url!}`} title={title} />
+      {
+        index !== -1 && (
+          <div class="flex justify-between mt-10 flex-col md:flex-row gap-2 text-center">
+            {index !== 0 ? (
+              <Link href={posts[index - 1].url!}>{`< ${
+                posts[index - 1].frontmatter.title
+              }`}</Link>
+            ) : (
+              <div />
+            )}
+            {index !== posts.length - 1 && (
+              <Link href={posts[index + 1].url!}>{`${
+                posts[index + 1].frontmatter.title
+              } >`}</Link>
+            )}
+          </div>
+        )
+      }
+    </div>
+  </MainLayout>
+</Layout>
+<style is:global>
+  .blog ul {
+    @apply list-hyphen pl-4 my-2;
+  }
+  .blog h1,
+  .blog h2,
+  .blog h3,
+  .blog h4 {
+    @apply font-bold text-gray-50 mt-10 mb-1;
+  }
+  .blog h1 {
+    @apply text-2xl;
+  }
+  .blog h2 {
+    @apply text-xl;
+  }
+  .blog h3 {
+    @apply text-lg;
+  }
+  .blog h4 {
+    @apply text-base;
+  }
+  .blog p {
+    @apply my-4;
+  }
+  .blog code:not(pre > *) {
+    @apply text-gray-100;
+  }
+  .blog code:not(pre > *)::before {
+    content: "`";
+  }
+  .blog code:not(pre > *)::after {
+    content: "`";
+  }
+  .blog pre {
+    @apply p-4 text-sm rounded-lg;
+  }
+  .blog a {
+    @apply text-blue-300;
+  }
+  .blog hr {
+    @apply my-4 border-gray-500;
+  }
+  .blog img {
+    @apply mx-auto max-h-72;
+  }
+  .blog strong {
+    @apply text-gray-100;
+  }
+  .blog blockquote {
+    @apply px-4 border border-gray-600 border-l-blue-300 border-l-2;
+  }
+  .blog table {
+    @apply border-collapse table-auto w-full text-sm;
+  }
+  .blog th {
+    @apply border-b border-gray-600  p-4 pl-8 pt-0 text-gray-200 text-left;
+  }
+  .blog tbody {
+    @apply bg-gray-800;
+  }
+  .blog td {
+    @apply border-b border-slate-700 p-4 pl-8 text-gray-400;
+  }
+</style>

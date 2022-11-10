@@ -1,0 +1,555 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: module bundlerの作り方(準備編)
+date: 2020-05-19
+description: Bundlerの内部アルゴリズムを解説します
+image: /images/brands/js.png
+tags: javascript
+hatenaPath: create-module-bundler-preparation
+---
+
+import OG from "../../components/OG.astro";
+
+今回は中身がどう動いているかを解説したいと思います。
+最初のこの記事では、最低限の実装を説明していくことにします。
+
+webpackのアルゴリズムの仕組みはこちらを読んでください。
+
+<OG url="https://blog.hiroppy.me/entry/mechanism-of-webpack" />
+
+
+
+## 必要なステップ
+
+必要なステップは以下の3つです。
+
+- エントリーポイントからのすべてのモジュールを走査し、`require`を解決後にユニークidを付与していく
+- コード内のモジュールパス(`require`の引数(e.g. `./module.js`))をidへ置換する
+- runtime のコードテンプレートの作成
+  - IIFE(即時関数)箇所とそれに付随する引数のmodule群
+
+この実装されあれば、動くコードはできます。(2つめはoptionalでもいいけど後からつらくなる)
+
+## モジュール解決
+
+今回は説明しやすいように関数を2つに分けています。
+
+- すべてのモジュールの把握とID作成
+- コード内のrequire部分をIDを置換
+
+### 1. 使われるモジュールをすべて列挙し、ユニークIDを添付させる
+
+ここでのゴールは、モジュールのコードをすべてASTにしそれぞれのモジュールにユニークなIDを付与していくことです。
+
+今回は、webpackでも使うJSのパーサーであるacornを使っても良いのですが、codegenがほしいのでbabelを使って行います。(もちろん、[acorn](https://github.com/acornjs/acorn)と[escodegen](https://github.com/estools/escodegen)を使っても良い)
+
+`@babel/parser`でコードをASTに落とし、`@babel/traverse` でトラバースをし、`@babel/generator`でASTからコードを生成します。
+
+以下の処理を再帰させることにより、使用されるモジュールを列挙します。
+
+#### ファイル名を取得する
+
+`require` の declarations type は `CallExpression`で `callee`のtypeは `Identifier` となります。
+
+```javascript
+const parser = require('@babel/parser');
+const { default: traverse } = require('@babel/traverse');
+const { default: generate } = require('@babel/generator');
+
+const basePath = dirname(entryPath);
+const ast = parser.parse(await promises.readFile(entryPath, 'utf8'));
+
+ traverse(ast, {
+  CallExpression({ node: { callee, arguments: args } }) {
+    if (callee.type === 'Identifier' && callee.name === 'require') {
+      const filePath = getScriptFilePath(basePath, args[0].value);
+    }
+  },
+});
+```
+
+つまり、このように構文解析を行えば、呼び出されるモジュールファイルがわかります。
+そして、CJSでは拡張子が省略可能であり、`index.js`も`.`で省略可能なので、以下の処理が必要です。
+
+```javascript
+function getFilename(filename) {
+  // index.js === .
+  if (filename === '.') {
+    return 'index.js';
+  }
+
+  // omit .js
+  if (extname(filename) === '') {
+    return `${filename}.js`;
+  }
+
+  return filename;
+}
+```
+
+#### node_modulesのファイルを読み込む
+
+注意点は以下の通りです。
+
+- node_modulesも`xxx/yyy`の形式でも動く
+- mainフィールドがない場合は、`'./index.js'`を参照する
+- node_modules内のモジュールの子供は`./`等でアクセスするため少し処理が複雑になる
+  - 再帰処理を行う時に`xxx`が来たらベースのパスをリセットしrootの値にする
+  - そうでない場合は前回のベースのパスを引き継ぐために引数に渡す
+
+また、この処理は以下の点がめんどくさいので一旦不完全として進めて行きたいと思います。
+
+- package.jsonの`module`, `browser`, `exports`フィールドには対応しない
+- node_modulesのディレクトリ昇格処理は行わない
+
+```javascript
+function getScriptFilePath(basePath, filename) {
+  if (isNodeModule(filename)) {
+    return join(basePath, getFilename(filename));
+  }
+
+  // node_modules
+  const moduleBasePath = join(basePath, 'node_modules', filename);
+
+  // e.g. require('a/b')
+  // need to split by /
+  if (filename.includes('/')) {
+    const dir = dirname(moduleBasePath);
+    const name = basename(moduleBasePath);
+
+    return join(dir, getFilename(name));
+  }
+
+  // TODO: add module, browser, exports
+  const { main } = require(join(moduleBasePath, 'package.json'));
+
+  // when main field is undefined, index.js will be an entry point
+  return join(moduleBasePath, getFilename(main));
+}
+```
+
+#### 使われるモジュールのマップを作成する
+
+
+これでバンドラーからモジュールへのファイルアクセスが行えたので、そのモジュールの中身を取得しASTに変換し、保持します。ここでは以下の情報を整理します。
+
+- id => moduleに振られたユニークid
+- path => 絶対パス、`require('./module1')` の `./module1`での検索は困難で書き方が多く一意でないため絶対パスが検索キー
+- ast => 後から再度使うのでASTの形で保持しておく
+
+```javascript
+const modulesMap = new Set();
+
+// エントリーポイントは0番
+modulesMap.add({
+  id: 0,
+  path: entryPath,
+  ast: entryCodeAst,
+});
+```
+
+**ここで最初にモジュールをすべて把握するのかというと、あとからすべてのコードの`require`にモジュールのIDを振っていくため一度すべてのモジュールの対応表を作らなければなりません。**
+
+##### filenameをidにしない理由
+
+- メリット
+  - どのファイルが読まれているかわかりやすい
+  - `require`の引数を置換しなくてもいいので、実装が楽
+    - 最終的に`require`を実行して走査するので、idの対応付けが必要でファイル名をidにすると単純なコードでは動く
+- デメリット
+  - bundleサイズが大きくなる
+  - ファイル階層、ファイル名の省略、拡張子の省略で一意な値にならない
+    - `require('xxxx)` のxxxxとキー名を一緒にするのはコード内ですべて統一されている保証がないので危ない
+    - 絶対パスに変換すればこの問題は解決するが、結局ソースコード内の変更を行っているしbundleサイズが大きくなるので無駄
+
+なので、モジュールそれぞれに数値idをふることにより上記の問題を解決するのが一般的です。
+
+
+#### モジュールをキャッシュする
+
+これを行うことにより、すでに読み込まれたモジュールの追加を防ぎ、Circular Dependency防ぎます。
+以下の場合の対応を行わないと再帰が終わらずに無限にループします。
+
+Circular Dependencyの例
+
+```javascript
+// entry.js
+module.exports = 'from entry';
+
+const a = require('./module1');
+
+console.log('main:', a);
+```
+
+```javascript
+// module1.js
+const a = require('./entry');
+
+console.log('module1:', a);
+
+module.exports = 'from module1';
+```
+
+以下のように現在走査しているファイルの絶対パスを使って確認を行います。
+
+```javascript
+const hasAlreadyModule = Array.from(modulesMap).some(({ path }) => path === filePath);
+```
+
+無ければ、追加し、そのモジュールはキャッシュされていないのでそのモジュールの依存を辿るために再帰を行います。
+
+```javascript
+if (!hasAlreadyModule) {
+  try {
+    // node_modulesだったら現在のベースパスをリセット
+    const nextDir = isNodeModule(args[0].value) ? entryDir : dirname(filePath);
+    const code = readFileSync(filePath, 'utf-8');
+    const ast = parser.parse(code);
+
+    modulesMap.add({
+      id: modulesMap.size, // これで自動的にIDがインクリメントされていく
+      ast,
+      path: filePath,
+    });
+    walkDeps(ast, nextDir);  // まだ見てないモジュールの中身を見に行く
+  } catch (e) {
+    console.warn('could not find the module:', e.message);
+  }
+}
+```
+
+#### 全体コード
+
+<details>
+
+```javascript
+async function buildModulesMap(entryDir, entryFilename) {
+  const modulesMap = new Set();
+  const entryPath = getScriptFilePath(entryDir, `./${entryFilename}`);
+  const entryCodeAst = parser.parse(await promises.readFile(entryPath, 'utf8'));
+
+  // add an entry point
+  modulesMap.add({
+    id: 0,
+    path: entryPath, // an absolute path
+    ast: entryCodeAst,
+  });
+
+  // start from the entry-point to check all deps
+  walkDeps(entryCodeAst, entryDir);
+
+  function walkDeps(ast, currentDir) {
+    traverse(ast, {
+      CallExpression({ node: { callee, arguments: args } }) {
+        if (callee.type === 'Identifier' && callee.name === 'require') {
+          const filePath = getScriptFilePath(currentDir, args[0].value);
+          const hasAlreadyModule = Array.from(modulesMap).some(({ path }) => path === filePath);
+
+          if (!hasAlreadyModule) {
+            try {
+              // reset the current directory when node_modules
+              // ./ has 2 types which are local of the first party and local of the third party module
+              const nextDir = isNodeModule(args[0].value) ? entryDir : dirname(filePath);
+              const ast = parser.parse(readFileSync(filePath, 'utf-8'));
+
+              modulesMap.add({
+                id: modulesMap.size,
+                ast,
+                path: filePath,
+              });
+
+              walkDeps(ast, nextDir);
+            } catch (e) {
+              console.warn('could not find the module:', e.message);
+            }
+          }
+        }
+      },
+    });
+  }
+
+  return modulesMap;
+}
+```
+
+</details>
+
+
+### 2. すべてのコードの`require`をidに置換する
+
+ここでのゴールは、先程生成した`modulesMap`のコードの`require`の中身をすべてidを書き換えることです。
+
+先程作成した以下の情報を使っていきます。
+
+```javascript
+const modulesMap = new Set();
+
+modulesMap.add({
+  id: 0,
+  path: entryPath, // 絶対パス
+  ast: entryCodeAst,
+});
+```
+
+それをすべて回しつつ、ASTがすでにあるので再度トラバースを行い自身(`modulesMap`)の中に入っている他のモジュールを探しそのIDを`require`部分を上書きします。
+
+e.g.  `./module.js` === `1`(id) => `require('./module')` ===>`require(1)`
+
+```javascript
+for (const { id, ast, path } of modulesMap.values()) {
+  traverse(ast, {
+    CallExpression({ node: { callee, arguments: args } }) {
+      if (callee.type === 'Identifier' && callee.name === 'require') {
+        const filePath = getScriptFilePath(
+          // node_modulesのときはプロジェクトのベースパスではなく、そのモジュールのpathをベースにする
+          isNodeModule(args[0].value) ? dirname(path) : basePath,
+          args[0].value
+        );
+        const { id: moduleID } =  // ここでrequireの中身のファイルIDを手に入れる
+          Array.from(modulesMap.values()).find(({ path }) => path === filePath) || {};
+
+        // requireの引数の中身を変更する
+        args[0].value = moduleID; // './xxxx' => 0 等の数字(moduleID)へ置換する
+      }
+    },
+  });
+}
+```
+
+最終的な展開式は、各モジュールの**id**と**code**だけあればいいので、以下のように管理します。
+`path`はなくてもいいですが、bundleされたファイルにコメントでファイル名書いてあげるとわかりやすいので入れておいたほうがいいです。
+
+```javascript
+const modules = new Map();
+
+modules.set(id, {
+  path,
+  code: moduleTemplate(generate(ast).code),
+});
+```
+
+実行で読み込まれるファイルのすべての依存を解決し、一意なモジュールのidに置換が行えました。
+
+#### 全体コード
+
+<details>
+
+```javascript
+function convertToModuleId(basePath, modulesMap) {
+  const modules = new Map();
+
+  for (const { id, ast, path } of modulesMap.values()) {
+    traverse(ast, {
+      CallExpression({ node: { callee, arguments: args } }) {
+        if (callee.type === 'Identifier' && callee.name === 'require') {
+          const filePath = getScriptFilePath(
+            // don't reset the path when node_modules
+            // because the path during searching in node_modules is the base path of modulesMap
+            isNodeModule(args[0].value) ? dirname(path) : basePath,
+            args[0].value
+          );
+          const { id: moduleId } =
+            Array.from(modulesMap.values()).find(({ path }) => path === filePath) || {};
+
+          args[0].value = moduleId;
+        }
+      },
+    });
+
+    modules.set(id, {
+      path,
+      code: moduleTemplate(generate(ast).code),
+    });
+  }
+
+  return modules;
+}
+```
+
+</details>
+
+## ランタイムのコード作成
+
+最後に二種類の実行コードの作成を行います。
+
+- モジュールテンプレート
+- 本体テンプレート(IIFE)
+
+### モジュールテンプレート
+
+モジュールは以下のように展開されます。
+
+```javascript
+// before
+function m(txt) {
+  console.log('module', txt);
+}
+
+module.exports = m;
+```
+
+```javascript
+// after
+({
+  [id]: function (module, exports, require) {
+    function m(txt) {
+      console.log('module', txt);
+    }
+
+    module.exports = m;
+  }
+})
+```
+
+このように引数の`module`, `exports`,  `require`を持った関数に囲います。
+これは後ほど、本体の引数として使われます。
+
+### 本体テンプレート
+
+上記で作成したモジュールテンプレートをvalueとして保持し、keyをそのモジュールのidとしたオブジェクトをIIFEの引数に渡します。
+
+```javascript
+((modules) => {
+  const usedModules = {};
+
+  function require(moduleId) {
+    if (usedModules[moduleId]) {
+      return usedModules[moduleId].exports;
+    }
+
+    const module = (usedModules[moduleId] = {
+      exports: {},
+    });
+
+    modules[moduleId](module, module.exports, require);
+
+    return module.exports;
+  }
+
+  return require(0); // この0はエントリーポイントの0
+})({
+  // ここからは上のテンプレート
+  0: function (module, exports, require) {
+    const m = require(1);
+
+    m('from entry.js');
+  },
+  1: function (module, exports, require) {
+    function m(txt) {
+      console.log('module', txt);
+    }
+
+    module.exports = m;
+  },
+  // ここまで
+});
+```
+
+これでモジュール解決も行えて、1ファイルで実行できる形となりました。
+これが最低限のベースコードとなります。
+
+### 処理フロー
+
+1 引数に設定しているモジュール群が本体コードに渡りすべての実行が始まる
+
+```
+((modules) => {
+```
+
+2 最初に `return require(0);` が実行される
+0(entry pointのmoduleId)はすでにこのコードを生成する時にセットしておく
+
+```
+((modules) => {
+  ...
+
+  return require(0);
+})({...});
+```
+
+3 `require(0)`を実行する
+
+ここの処理は再帰的に行われるため以下共通
+
+```javascript
+const usedModules = {};
+
+function require(moduleId) {
+  if (usedModules[moduleId]) {
+    return usedModules[moduleId].exports;
+  }
+
+  const module = (usedModules[moduleId] = {
+    exports: {},
+  });
+
+  modules[moduleId](module, module.exports, require);
+
+  return module.exports;
+}
+```
+
+- 最初にキャッシュ用の変数(`usedModules`)を確認する(今回は最初なので空)
+  - キャッシュ変数のキーはmoduleIDなので、もしあればその中の`exports`を返して終わり
+
+--- ここからはキャッシュが無い時の処理 ----
+
+- 次にキャッシュ変数に今の引数のmoduleIdの値を入れ初期化(次回以降のキャッシュのため)
+  - 出口の`exports`だけあれば全部のモジュールがつながるのでそれだけ初期化する
+
+```javascript
+const module = (usedModules[moduleId] = {
+  exports: {},
+});
+```
+
+- 次に以下の処理を実行する
+
+```javascript
+// nodeには、exportsとmodule.exportsがあるため、第1引数と第2引数を使いmodule.exportsに格納する
+// requireは走査用ラッパー
+modules[moduleId](module, module.exports, require);
+```
+
+- ここで第3引数に`require`を渡しているため再帰的に走査を行いキャッシュ変数に使ったモジュールを貯めつつ実行をしていきます
+
+```javascript
+({
+0: function (module, exports, require) {
+  // 引数経由で来たIIFE内のrequire functionがここで実行され、1の走査が始まる
+  // 1の中にrequireがあれば更にそれが呼ばれる を繰り返しコードを組み立てる
+  // require functionの戻り値はキャッシュ変数に格納されたexports
+  const m = require(1);
+
+  m('from entry.js');
+}
+})
+```
+
+このようにエントリーポイントからスタートし、上から順に再帰的にモジュールからモジュールへ呼び出しを行い実行していきます。
+
+### bundleされたコード例
+
+```javascript
+'use strict';
+
+const { version } = require('react');
+
+console.log(version);
+```
+
+これの変換後は以下のようになります。
+
+https://github.com/hiroppy/the-sample-of-module-bundler/blob/master/tests/output/cjs/node-modules/main.min.js
+
+これを見ればわかりますが、tree shaking/dead code eliminationの必要性が出てきます。
+
+## リポジトリ
+
+すべてのコードはこのリポジトリにあります。
+
+<OG url="https://github.com/hiroppy/the-sample-of-module-bundler" />
+
+## さいごに
+
+次回は、tree shaking + ESMについて書こうと思います。

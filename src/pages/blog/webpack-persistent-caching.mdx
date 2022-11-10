@@ -1,0 +1,298 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: webpack@5で入るPersistent Cachingについて
+date: 2020-10-05
+description: 新しく入ったPersistent cachingの機能について紹介します
+image: /images/brands/webpack.png
+tags: javascript
+hatenaPath: webpack-persistent-caching
+---
+
+import OG from "../../components/OG.astro";
+import TwitterCard from "../../components/TwitterCard.astro";
+
+webpack は in-memory のみで今まで永続的なキャッシュを実装していませんでした。理由としては、パフォーマンスよりも安全性を優先していたためです。
+cache-loader を使ったことがある人はわかるかもしれませんが、確かに速くなる一方、安全性が損なわれているのは事実です。
+
+この機能は、**webpack はデフォルトでファイルキャッシュをオンにはしませんが**それでもビルドの速度を上げたい場合に使う機能です。
+
+以下がデフォルトの挙動となります。
+
+| mode        | cache  |
+| ----------- | ------ |
+| development | memory |
+| production  | false  |
+
+[webpack/lib/config/defaults.js](https://github.com/webpack/webpack/blob/60f7ce301df553d8ab0276ba2838ddb60ead1c94/lib/config/defaults.js#L158-L160)
+
+## 実際に使うときの設定
+
+結論ですが、webpack.config.js へ以下のように書くことが推奨されます。
+
+```javascript
+module.exports = {
+  cache: {
+    type: "filesystem",
+    buildDependencies: {
+      config: [__filename],
+    },
+  },
+};
+```
+
+あとは、各コードの設定に依存するため`version`等の追加が必要になる可能性があります。
+
+## ドキュメント
+
+<OG url="https://webpack.js.org/configuration/other-options/#cache" />
+
+## 仕組み
+
+ファイルキャッシュでは以下のようにデフォルトでは`node_modules/.cache/webpack`というディレクトリにスナップショットを生成します。
+
+```shell
+(๑˃̵ᴗ˂̵)و ~/D/w/node_modules  ᐅ tree .cache
+.cache
+└── webpack
+    └── default-production
+        ├── 0.pack <-- 生成済みコードの記録
+        └── index.pack <-- 依存ファイル等の記録
+
+2 directories, 2 files
+```
+
+このようにシリアル化されたデータを保存します。
+MD4 ハッシュアルゴリズムを用いた etag を識別子とし、それと一致したものを webpack は使用します。(実装が知りたい人は[createHash.js](https://github.com/webpack/webpack/blob/master/lib/util/createHash.js)と[PackFileCacheStrategy.js](https://github.com/webpack/webpack/blob/master/lib/cache/PackFileCacheStrategy.js)を読んでください)
+本番環境と buildDependencies には、 timestamp + hash モードがデフォルトで適応されます。
+使うユーザーは `snapshot` のオプションを設定することはないと思うので、この記事では割愛します。
+
+https://webpack.js.org/configuration/other-options/#snapshot
+
+webpack は、すべてのモジュールそれぞれに対し、`compilation.fileDependencies`, `compilation.contextDependencies`, `compilation.missingDependencies`をトラッキングし、スナップショットを生成していきます。
+_余談ですが、この三点は、webpack@5 から`Sortable Set`から`Set`となり、並び替えが不可能となりましたのでプラグイン作者は気をつけてください。_
+
+つまり、特定ファイルを変更すると webpack はそのファイルのキャッシュ(webpack 内ではキャッシュエントリと呼ばれる)を無効化し、各種 loader を実行後にファイル解析を行い再生成を行います。また、bundle.js のキャッシュエントリを無効化し、このファイルを再生成する可能性があります。
+
+例えば、依存ファイルを変更すると以下のように変更されます。
+
+```shell
+(๑˃̵ᴗ˂̵)و ~/D/w/node_modules  ᐅ tree .cache
+.cache
+└── webpack
+    └── default-production
+        ├── 0.pack
+        ├── 1.pack
+        ├── index.pack
+        └── index.pack.old
+
+2 directories, 4 files
+```
+
+1 の方が新しくなり、スナップショットが追加されました。
+
+### キャッシュエントリが無効化されるケース
+
+以下の場合にキャッシュエントリが無効化されます。
+
+- 監視下のファイルが変更されたとき
+- 設定を変更したとき
+  - webpack.config.js の`cache`等の設定変更
+- loader か plugin がパッケージアップデートされたとき
+- 依存関係(node_modules)がパッケージアップデートされたとき
+- cli からビルドに影響のある値を送ったとき
+  - `--optimization-minimize`, コードで判断できないもの
+- カスタムなビルドスクリプトが変更されたとき
+  - `cache.version`, `cache.name`, `cache.buildDependencies`
+
+**ビルド結果を変更する可能性のあるものはキャッシュエントリが無効化されます。**
+例えば、`--optimization-minimize`を渡せばビルド結果には影響されます。しかし入力されたソースコードの変更だけではこれを検知できませんが、キャッシュはこれを考慮する必要があります。 webpack ではそれに対して、`cache.version`, `cache.name`, `cache.buildDependencies`を使い処理をしますが、これを自動的に認識するのは難しいため影響が生じたときに再構築する必要が出てきます。(かなり安全性を重視しています)
+
+## オプション
+
+最低限のものだけ説明します。
+
+### type
+
+`memory`と`filesystem`が存在し、どちらを選択することができます。
+
+### buildDependencies
+
+`cache.buildDependencies`には、ビルドにおけるコード依存関係を追加します。
+
+#### defaultWebpack
+
+webpack のすべての依存関係を取得するために、デフォルトで`webpack/lib`となります。
+この設定は基本的に設定する必要はないです。
+
+```javascript
+module.exports = {
+  cache: {
+    type: "filesystem",
+    buildDependencies: {
+      defaultWebpack: ["webpack/lib"],
+    },
+  },
+};
+```
+
+#### config
+
+公式では、最新の設定(webpack.config.js, etc)とすべての依存を取得するために`__ filename`を設定することが推奨されます。
+このように書くことにより、設定とすべての依存関係を取得するようになります。
+
+https://webpack.js.org/configuration/other-options/#cachebuilddependencies
+
+```javascript
+module.exports = {
+  cache: {
+    type: "filesystem",
+    buildDependencies: {
+      config: [__filename],
+    },
+  },
+};
+```
+
+ディレクトリの場合、最も近い package.json の依存関係が分析され、ファイルの場合は、Node.js のモジュールのキャッシュを見て、依存関係を webpack は把握します。
+
+注意点として、ディレクトリの場合は、必ずスラッシュで終わる必要があります(そうしないとファイルと識別されてしまう)
+
+## version
+
+たとえ同じ内容でも、この値を変更することにより永続的キャッシュを無効化することができます。
+ビルドの一部の依存において、表現できない場合が存在します。(e.g. DB から読み込まれた値、環境変数、コマンドラインで渡される値)
+もしキャッシュがおかしい場合このオプションを確認・検討してください。
+
+もしコードが definePlugin 経由で環境変数を入れていてそれをバンドルに埋め込む場合、これはこの環境変数(e.g. git の revision)への依存があるので、バージョン名をこの値にし、キャッシュを無効化する必要があります。
+
+```javascript
+module.exports = {
+  cache: {
+    type: "filesystem",
+    buildDependencies: {
+      config: [__filename],
+    },
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env.foo": JSON.stringify("foo"),
+    }),
+  ],
+};
+```
+
+上記の場合は`config`でこの webpack.config.js を監視下に置いており、そこで`foo`を定義しているため、この文字列を変更したら webpack は検知できるため問題ないです。問題は、監視下で webpack が変更されたか認知できない(ずっと末端まで変数等)です。
+
+しかし、`.env`を利用する場合は以下のように`version`を指定しないとキャッシュは更新されません。
+
+```
+# .env
+VERSION=1.0
+```
+
+```javascript
+const webpack = require("webpack");
+const { config } = require("dotenv");
+
+config();
+
+module.exports = {
+  cache: {
+    type: "filesystem",
+    buildDependencies: {
+      config: [__filename],
+    },
+    version: process.env.VERSION,
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env.version": process.env.VERSION,
+    }),
+  ],
+};
+```
+
+さてこれで問題になるのが、もしこれをしっかり設定しないと**過去のスナップショットを参照するため生成結果も過去の状態になることです。**これが webpack が恐れていた問題です。この場合だと、`version`を指定しない場合、出力は常に最初のビルド時のものとなり.env で書き換えしても反映されません。
+
+つまり、`cache.name`でも、キャッシュを無効化できるためコードに依存しますが導入の検討する可能性があります。
+
+### パフォーマンスの最適化
+
+node_modules のコードに対して、timestamp + hash で管理するとコストがかかりビルド速度が低下するため webpack では、package.json 内のバージョンと名前を利用し評価しています。 なので、**絶対に node_modules 内のコードを編集することは避けてください。**
+
+この最適化は、`snapshot.managedPaths`のパスに適応され、デフォルトでは webpack がインストールされている node_modules となります。yarn.pnp の場合、ファイルパスでハッシュを利用するため上記の最適化は yarn がカバーするため行われません。
+
+#### d3 を使った場合のパフォーマンス測定
+
+```javascript
+// index.js
+import * as d3 from "d3";
+import "foo.js";
+```
+
+```javascript
+// foo.js
+console.log("foo");
+```
+
+```javascript
+// webpack.config.js
+module.exports = {
+  cache: {
+    type: "filesystem",
+    buildDependencies: {
+      config: [__filename],
+    },
+  },
+};
+```
+
+最初はキャッシュがないため、webpack@4 同様に以下の速度ぐらいとなります。
+
+```
+asset main.js 36.3 KiB [emitted] [minimized] (name: main)
+orphan modules 584 KiB [orphan] 554 modules
+cacheable modules 117 KiB
+  ./src/index.js + 103 modules 117 KiB [built] [code generated]
+  ./src/foo.js 21 bytes [built] [code generated]
+webpack 5.0.0-rc.2 compiled successfully in 1836 ms
+```
+
+もう一度、何も変更せずにビルドを行ってみます。
+
+```
+asset main.js 36.3 KiB [compared for emit] [minimized] (name: main)
+cached modules 700 KiB [cached] 556 modules
+webpack 5.0.0-rc.2 compiled successfully in 429 ms
+```
+
+**前回と同様なのですべてキャッシュが使われていることがわかり、約 4.5 倍程度早くなったことが確認できます。**
+
+それでは、foo.js の中身を変更します。
+
+```
+asset main.js 36.3 KiB [emitted] [minimized] (name: main)
+cached modules 700 KiB [cached] 555 modules
+./src/foo.js 18 bytes [built] [code generated]
+webpack 5.0.0-rc.2 compiled successfully in 1228 ms
+```
+
+foo.js のコードのみが再度生成され、foo.js のスナップショットが更新されました。index.js を含め更新されたわけではないため速度はフルビルドの時よりも速くなります。
+
+再度、何も変更せずにビルドを行います。
+
+```
+asset main.js 36.3 KiB [compared for emit] [minimized] (name: main)
+cached modules 700 KiB [cached] 556 modules
+webpack 5.0.0-rc.2 compiled successfully in 416 ms
+```
+
+すべてのキャッシュが利用され変更がないため、400ms 台で落ち着きました。
+
+## さいごに
+
+webpack5 への機能追加として、一番投票率が多かったのがこの永続的キャッシュという機能でした。
+
+https://webpack.js.org/vote
+
+この機能は、開発時に大いに役に立つと思います。もし、webpack のビルド時間に不満がある人はこの機能を試してみると良いかなと思います。

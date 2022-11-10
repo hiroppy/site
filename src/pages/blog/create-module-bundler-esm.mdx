@@ -1,0 +1,477 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: module bundlerの作り方(ECMAScript Modules編)
+date: 2020-06-01
+description: BundlerでどうESMの静的解析を行い結果を生成するかを解説します
+image: /images/brands/js.png
+tags: javascript
+hatenaPath: create-module-bundler-esm
+---
+
+import OG from "../../components/OG.astro";
+
+前回の準備編では、module bundler がどのように動いているかを説明しました。
+
+<OG url="https://blog.hiroppy.me/entry/create-module-bundler-preparation" />
+
+今回は、dynamic import 以外の最低限の実装を入れていきます。
+
+リポジトリ
+
+<OG url="https://github.com/hiroppy/the-sample-of-module-bundler" />
+
+変更されたコード一覧は[こちら](https://github.com/hiroppy/the-sample-of-module-bundler/pull/1)
+
+## ECMAScript Modules(ESM)について
+
+さて、多くの人がすでに使っている以下のような構文が ESM と呼ばれるものです。
+
+```javascript
+import { version } from "module";
+export const a = 1;
+```
+
+### 仕様等のドキュメント
+
+tc39: https://tc39.es/ecma262/#sec-modules
+
+whatwg: https://whatwg.github.io/loader
+
+https://exploringjs.com/impatient-js/ch_modules.html
+
+また、Node.js での ESM の解決方法は CJS との互換性を保つために別途異なるのでここでは扱いません。
+
+<OG url="https://blog.hiroppy.me/entry/node-esm" />
+
+webpack では現在、Node.js の scope-package の対応中なので、もう少しお待ち下さい。
+
+### ECMAScript Modules と CommonJS Modules の違い
+
+ESM の特徴は、事前に静的解析を行います。 そうすると以下のようなメリットが得られます。
+
+- ランタイムでシンタックスエラーが発生することを避けれる
+- 不必要なコードを消す(dead code elimination)ことが容易に行える
+  - CJS の tree shaking 対応は webpack で現在進行中
+
+ESM はトップレベルで宣言しないといけないのはそのような理由があるからです。
+また、CJS は同期ですが、dynamic import は非同期です。(`require.ensure`除く)
+
+## 出力されるランタイムコード
+
+先に完成したコードを見ていきます。
+
+```javascript
+// entry.js
+import { add as addNumber } from "./module1.js";
+
+console.log(addNumber(10));
+
+// module1.js
+export function add(n) {
+  return 10 + n;
+}
+```
+
+上記のコードは以下のような出力になります。
+
+```javascript
+((modules) => {
+  const usedModules = {};
+
+  function require(moduleId) {
+    if (usedModules[moduleId]) {
+      return usedModules[moduleId].exports;
+    }
+
+    const module = (usedModules[moduleId] = {
+      exports: {},
+    });
+
+    modules[moduleId](module, module.exports, require);
+
+    return module.exports;
+  }
+
+  require.__defineExports = (exports, exporters) => {
+    Object.entries(exporters).forEach(([key, value]) => {
+      Object.defineProperty(exports, key, {
+        enumerable: true,
+        get: value,
+      });
+    });
+  };
+
+  return require(0);
+})({
+  0: function (module, exports, require) {
+    const __BUNDLER__1 = require(1);
+
+    console.log(__BUNDLER__1["add"](10));
+  },
+  1: function (module, exports, require) {
+    function add(n) {
+      return 10 + n;
+    }
+
+    require.__defineExports(exports, {
+      add: () => add,
+    });
+  },
+});
+```
+
+今回は CJS との互換をあまり考えないため、`__esModule`を`exports`にアサインはしません。
+
+ほかのパターンを見る場合は[こちら](https://github.com/hiroppy/the-sample-of-module-bundler/tree/master/tests/output)
+
+### CJS と ESM の出力の違い
+
+ESM も最終的には CJS に合わせた状態(`require`)になりますが、大きな違いが 2 点あります。
+
+#### ESM ではランタイムコード生成時に既に実行先が確定される
+
+先程、話したとおり ESM では静的解析を行うことが前提となるため実行前にすべて確定されます。
+このコードを CJS で書くと以下のような出力になります。
+
+```javascript
+// CJS
+({
+  0: function (module, exports, require) {
+    const { add: addNumber } = require(1);
+
+    console.log(addNumber(10));
+  },
+  1: function (module, exports, require) {
+    function add(n) {
+      return 10 + n;
+    }
+
+    module.exports = {
+      add,
+    };
+  },
+});
+```
+
+CJS の場合、`1`が`0`に呼び出されてその時に`usedModules[1].exports`に`add`が登録され、`0`で使われます。 しかし、`0`からすると本当に`1`に`add`があるのかわからないため、実行時に落ちる可能性があります。
+
+ESM は事前に実行するものを予約したコードに変換することによりこの問題を防ぎます。
+
+```javascript
+// ESM
+({
+  0: function (module, exports, require) {
+    const __BUNDLER__1 = require(1);
+
+    console.log(__BUNDLER__1["add"](10));
+  },
+  1: function (module, exports, require) {
+    function add(n) {
+      return 10 + n;
+    }
+
+    require.__defineExports(exports, {
+      add: () => add,
+    });
+  },
+});
+```
+
+`__BUNDLER__1['add'](10)` のように必ず実行できる形でコードが吐かれます。
+もう少ししっかり書くなら、` (0, __BUNDLER__1['add'])(10);`と変換したほうが良いです。 こうしないと`this`のスコープを担保できないからです。更に、`.add`に変えるとコード量も減ります。(たしか webpack@3 でそっちに移行した記憶)
+
+**つまり、呼び出す側が既に呼び出される側の内部を把握している状態となり実行時にエラーを起こすのを防げるということです。**
+
+#### 属性の付与が必要となる
+
+新しく`require`に`__defineExports`を追加しました。
+これは、**exports されるものに必ず`enumerable`を付与しなければいけないためです。**
+
+<OG url="https://developer.mozilla.org/ja/docs/Web/JavaScript/Enumerability_and_ownership_of_properties" />
+
+IIFE 内で共通で使うために以下を定義します。
+
+```javascript
+require.__defineExports = (exports, exporters) => {
+  Object.entries(exporters).forEach(([key, value]) => {
+    Object.defineProperty(exports, key, {
+      enumerable: true,
+      get: value,
+    });
+  });
+};
+```
+
+そして、モジュールが初めて呼び出された時に以下の`require.__defineExports`を実行し、`usedModules[1].exports`に`Object.defineProperty`経由でプロパティを追加します。
+
+```javascript
+({
+  1: function (module, exports, require) {
+    function add(n) {
+      return 10 + n;
+    }
+
+    require.__defineExports(exports, {
+      add: () => add, // このオブジェクトにこのファイル内のexportされるものが追加されている
+    });
+  },
+});
+```
+
+## コードを書き換える
+
+AST を弄りたい人は astexplorer を使うと便利です。
+
+<OG url="https://astexplorer.net" />
+
+CJS ではコードの書き換えは`require('module')` ->`require(1)`のように moduleId のみの書き換えでしたが ESM では呼び出し元等を編集する必要があります。
+
+ESM も CJS とモジュールのマップ作成の処理は共通なので、コードの走査処理だけが ESM 時に新しく追加されます。
+
+[コード箇所](https://github.com/hiroppy/the-sample-of-module-bundler/blob/master/src/index.js#L113)
+
+- CJS: modules のリストを作る -> `require`の中身を moduleId に変更する
+- ESM: modules のリストを作る -> **ソースコードをトラバースする** -> `require`の中身を moduleId に変更する
+  - 二段階目で`require`に変換し、CJS と同じ形になるため三段階目は CJS と共通で動く
+
+---
+
+それでは、babel を使い AST を走査し以下のことを達成していきます。
+
+- `import`を`require`へ変換
+  - (e.g. `import a from 'module'` -> `const a = require('module')`)
+- 外部モジュールから使っている変数、関数等をすべて置換する
+  - (e.g. `a(1);` -> `__BUNDLER__1["a"](1)`)
+- `export`をすべてマッピングし、不必要なシンタックスを消す
+  - (e.g. `export const a = 1` -> `const a = 1`)
+
+### import を変更する
+
+[コード箇所](https://github.com/hiroppy/the-sample-of-module-bundler/blob/master/src/transformToCjs.js#L119-L140)
+
+親は`ImportDeclaration`となり、type は`ImportDefaultSpecifier`, `ImportNamespaceSpecifier`, `ImportSpecifier`となります。
+
+```javascript
+// ImportDefaultSpecifier
+import a from "module";
+// ImportNamespaceSpecifier
+import { a } from "module";
+import * as a from "module";
+// ImportSpecifier
+import { a as b } from "module";
+import { default as a } from "module"; // CJSとESMの互換ブリッジ
+```
+
+**ゴールは`require`に変更し、格納先の変数名に Id 込の名前を付与することです。**
+
+最初にモジュールのマッピングをし Id を発行しているのでそれを変数名へ紐付けていきます。
+
+`import { a } from 'module'` -> `const __BUNDLE__1 = require('module')`
+
+`import`は、どの type でも`const a = require('b')`となるためすべて共通化できます。
+
+### `export` を変更する
+
+`export`はいろいろなケース(e.g. アグリゲート)があるので、最小限の実装にしています。
+
+[コード箇所](https://github.com/hiroppy/the-sample-of-module-bundler/blob/master/src/transformToCjs.js#L141-L204)
+
+親は`ExportDeclaration`となり、type は`ExportDefaultDeclaration`と`ExportNamedDeclaration`となります。
+
+```javascript
+// ExportDefaultDeclaration
+//   FunctionDeclaration
+//     export default function a() {}
+//   Identifier
+//     const a = 1;
+//     export default a;
+//   ArrowFunctionExpression 本当はclassも追加しないとダメ
+//     export default () => {}
+// ExportNamedDeclaration
+//   export const a = 1;
+//   未実装
+//   export { a, b };
+//   export a from 'module';
+```
+
+**ゴールは、export されるもののマッピングで、名前と接続先を把握し以下のように展開します。**
+
+```javascript
+function add(n) {
+  return 10 + n;
+}
+
+require.__defineExports(exports, {
+  //名前     接続先
+  add: () => add,
+});
+```
+
+#### 名前を付与する
+
+最初に export されるものの名前を取得しなければなりませんが、状況によって取り方が異なります。
+
+```javascript
+// export default function a()
+node.declaration.name;
+// function a() {}
+// export default a;
+node.declaration.id && node.declaration.id.name;
+// export const a = 1
+node.declaration.declarations && node.declaration.declarations[0].id.name;
+```
+
+これで名前が取れないときは、`export default () => {}` やクラスの可能性を考慮します。
+この場合は、名前をこちらが付けてあげて接続先を作ります。(e.g. key: `default`, name: `__default__`)
+
+`export default () => {};` -> `const __default = () => {};` と書き換えて名前を付けます。
+
+#### 不要なコードを消す
+
+`Object.defineProperty(exports, key)`で値を展開していくため、コード内に不要なコードがあります。
+
+- `export default function a() {}` -> `function a() {}`
+- `export default a` -> この行事自体が不要
+- `export const a = 1` -> `const a = 1`
+
+`export` に付随したコードはランタイムでは必要なくなります。
+
+### import されたものをコード内で紐付け置換する
+
+[コード箇所](https://github.com/hiroppy/the-sample-of-module-bundler/blob/master/src/transformToCjs.js#L28-L118)
+
+コード内の import したものを使っている箇所をすべて書き換えます。
+`ReferencedIdentifier`に入ってきて、かつ親の type が`ImportDeclaration`がターゲットです。
+
+**ゴールは、import されたモジュールが呼び出されている場所を`__BUNDLER__{id}[function/variable name]`に変えていくことです。**
+
+```javascript
+// before
+import { foo as bar } from "module";
+console.log(bar(10));
+// after
+const __BUNDLER__1 = require("module");
+console.log(__BUNDLER_1["foo"](10));
+```
+
+最初に、scope hoisting を考えないといけないため以下の処理を行いスコープを固定します。
+これを行うことにより import されたものとコード内で使われているものが正しく紐付けられます。
+
+```javascript
+const localName = path.node.name;
+const localBinding = path.scope.getBinding(localName);
+const { parent } = localBinding.path; // 親を確定させる
+```
+
+`import` は複数連続(`{a, b, ...}`)して入っているのでループし、確認していきます。
+
+```javascript
+parent.specifiers.forEach(({ type, local, imported }) => {});
+```
+
+このループの中でそれぞれの export されたものとコード内で使用されるものを置換してきます。
+
+それの`local`はコード内の情報を示し、`imported`はコード外の情報を意味します。
+つまり、`a as b`の場合、`imported` as `local` となり`imported`は元の情報を辿る上で重要な役割を果たします。
+
+#### ImportNamespaceSpecifier: `import * as foo from 'module'`
+
+一番めんどくさいです。
+というのも、`default`を省略できるかどうかはプラットフォームに依存しているため互換性を考えないといけないからです。(Node.js, Babel, typescript, etc..)
+例えば、出力先が`module.exports = require('./foo')` とかが代表的な例です。
+
+ここでの最終的な展開式は以下のようになります。
+
+```javascript
+const __BUNDLER_1 = require(1);
+console.log(__BUNDLER_1["default"]); // import先のdefault
+console.log(__BUNDLER_1["func"]()); // import先のnamed exportされたfunc
+console.log(__BUNDLER_1);
+/**
+ * default: xxxx
+ * func: yyyy
+ */
+```
+
+しかし、これは互換性を崩しているので実際はよくなくて、以下のほうが安全です。
+
+```javascript
+const __BUNDLER_1 = require(1);
+console.log(__BUNDLER_1["default"]["default"]); // import先のdefault
+console.log(__BUNDLER_1["default"]["func"]()); // import先のnamed exportされたfunc
+console.log(__BUNDLER_1);
+/**
+ * default: {
+ *   default: xxxx,
+ *   func: yyyy
+ * },
+ * func: yyyy
+ */
+
+// esModuleの場合はgetDefaultを使うを判別する関数をIIFEに作成する
+const getDefaultExport = function (module) {
+  const getter =
+    module && module.__esModule
+      ? function getDefault() {
+          return module["default"];
+        }
+      : function getModuleExports() {
+          return module;
+        };
+  Object.defineProperty(getter, "esm", { enumerable: true, get: getter });
+  return getter;
+};
+```
+
+このサンプルでは`default`を 1 階層挟まずにやっているため Object の key が直で名前となります。
+
+#### ImportDefaultSpecifier: `import foo from 'module'`
+
+default は必ず一つしか無いため、name は`default`となります。
+
+#### ImportSpecifier: `import { foo } from 'module'`
+
+普通の named import であれば、name は import 先と同じです。
+問題は、リネームされている場合です。この場合は、`imported.name`を見る必要があります。
+そして、ローカルのリネームされたものは全部置き換えます。
+
+```javascript
+// import { foo as bar } from 'module';
+const __BUNDLER__1 = require("module");
+console.log(__BUNDLER_1["foo"](10)); // <--- barはもういらないのでfooに戻してあげる
+```
+
+#### 置換を行う
+
+それぞれの状態でも name を取れたので最後に置換を行います。
+
+```javascript
+const assignment = t.identifier(
+  `${prefix}${moduleId}${name ? `[${JSON.stringify(name)}]` : ""}`
+);
+// ImportNamespaceSpecifierは今回defaultを省いたので以下
+// replace `['foo'].foo` with `['foo']`
+path.parentPath.replaceWith(assignment);
+// その他
+path.replaceWith(assignment);
+```
+
+ここでの node の区間は以下の箇所です。
+
+```
+// parent node:  |             ここ               |
+// current node: |     この区間      | ここはとなり |
+                                 foo()
+                  __BUNDLER_1['foo']()
+```
+
+なぜ`ImportNamespaceSpecifier`では`parentPath.replaceWith`を使っているかというと`()`部分も修正したかったからです。
+
+これでコード置換が行えたので、最初に出したランタイムコードが作成されます。
+
+## さいごに
+
+以上で、module bundler で ESM の対応をする方法の紹介は終わりです。
+すべてのコードはこの PR を見るとわかります。
+
+<OG url="https://github.com/hiroppy/the-sample-of-module-bundler/pull/1" />

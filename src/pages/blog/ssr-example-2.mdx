@@ -1,0 +1,717 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: SPA + SSR + PWA の作り方とセキュリティについて
+date: 2019-11-22
+description: SPA, SSR, PWAをどのように安全に作るかを解説します
+image: /images/blog/ssr-example-2/score.png
+tags: javascript
+hatenaPath: ssr-sample_2
+---
+
+import OG from "../../components/OG.astro";
+
+一年前に以下の記事を書いて、その後放置していたら多くのライブラリのメジャーリリースで完全に動かなくなってしまったのでリニューアルしました。
+
+<OG url="https://blog.hiroppy.me/entry/ssr-sample" />
+
+以下のセクションで説明していきますが、コードを読んだほうが早いです。
+
+## リポジトリ
+
+<OG url="https://github.com/hiroppy/ssr-sample" />
+
+このリポジトリはこれを見れば様々な実装の動く土俵を作れるというのを目的としています。
+環境構築ですら毎回忘れるので。。
+なので冗長に書いてある部分も多いですが、今後も新しい必要な実装を小さく追加していく予定です。
+
+動きを確認したい人は、clone して手元で動かしてみてください。
+
+## 技術スタック
+
+これはあくまでもサンプルなので、saga と apollo が混じってますが実際はどちらかで大丈夫です。
+SPA のベースは redux, saga で設計していて、apollo-state は使わずあくまでも query と mutation のみです。
+
+主要なライブラリは以下のとおりです。
+
+| deps                | devDeps           |
+| ------------------- | ----------------- |
+| react               | typescript        |
+| redux               | webpack           |
+| react-router        | babel             |
+| react-helmet        | storybook         |
+| redux-saga          | storyshots        |
+| styled-components   | jest              |
+| loadable-components | testing-library   |
+| apollo-boost        | nodemon           |
+| express             | prettier          |
+| nanoid              | workbox           |
+|                     | typescript-eslint |
+|                     | autocannon        |
+
+## Server Side Rendering
+
+注目するべき点は loadable-components の大幅なアルゴリズム改善だと思っています。
+これにより、パフォーマンスは改善されました。
+
+### loadable-components
+
+<OG url="https://github.com/smooth-code/loadable-components" />
+
+未だ、React のほうが SSR に対応していないため、引き続き react-loadable や loadable-components は必要となります。
+
+Suspense は SSR 対応進めています。
+
+<OG url="https://github.com/facebook/react/pull/17285" />
+
+メジャーバージョンで react-loadable と同様に webpack を使い assets の map を作成するようになりました。
+これにより、SSR の処理が高速化されました。
+しかし、babel-plugin に依存しないと動かないため、babel-preset-typescript をこのライブラリでは使っています。
+
+### データの送り方
+
+SSR で取得したデータは Store を構築し、それをクライアントサイドに HTML 経由で渡します。
+
+以下のように`data`属性を使い、script タグ経由で渡すのがいいと自分も思っています。
+
+<OG url="https://qiita.com/koba04/items/e9de79b517662f3d9922" />
+
+<br />
+
+```html
+<script
+  nonce="xxxxx"
+  id="initial-data"
+  type="text/plain"
+  data-json="${preloadedState}"
+></script>
+```
+
+この`preloadedState`はエスケープ処理が必要なので注意してください。
+
+クライアント側の読み込み方
+
+```typescript
+const initialData = JSON.parse(
+  document.getElementById("initial-data")!.getAttribute("data-json")!
+);
+const { store } = configureStore(initialData);
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/client/index.tsx#L21-L22
+
+### useEffect
+
+SSR では、componentDidMount 前までしか実行されません。
+つまり、hooks では`useEffect`は呼び出されず FC には constructor は存在しません。
+一体どこに初期化処理とかあれば書けばいいのかベストプラクティスは自分はわかりません。
+
+```javascript
+if (!process.env.IS_BROWSER) {
+  dispatch(loadSagaPage(maxLength));
+} else {
+  useEffect(() => {
+    dispatch(loadSagaPage(maxLength));
+  }, []);
+}
+```
+
+今はこんなふうに書いているけど気持ち悪いので辞めたい。。
+
+### レンダリングコード
+
+```javascript
+// ここでassetsのmapを取得する
+const statsFile = resolve(
+  __dirname,
+  process.env.NODE_ENV !== "production"
+    ? "../../../../dist/client/loadable-stats.json"
+    : "../../../../client/loadable-stats.json"
+);
+
+export async function get(req: Request, res: Response) {
+  const baseUrl = `${req.protocol}://${req.get("Host")}`;
+  const { nonce }: { nonce: string } = res.locals;
+  const { store, runSaga } = configureStore();
+  const client = createClient({ link: new SchemaLink({ schema }) });
+  const sheet = new ServerStyleSheet();
+  const context = {};
+
+  // Node.jsでは完全なurlが必要なのでstoreにわたす
+  store.dispatch(setBaseUrl(baseUrl));
+
+  const App = () => (
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        <StaticRouter location={req.url} context={context}>
+          {/* add `div` because of `hydrate` */}
+          <div id="root">
+            <Router />
+          </div>
+        </StaticRouter>
+      </Provider>
+    </ApolloProvider>
+  );
+
+  try {
+    const extractor = new ChunkExtractor({ statsFile });
+    // assets mapがあるのでrenderToStringを走らせる必要がなくなった
+    const tree = extractor.collectChunks(<App />);
+
+    await Promise.all([
+      // react-apolloの処理をキックすることにより、redux-saga, react-helmet, styled-componentsの処理を実行
+      getMarkupFromTree({
+        tree,
+        renderFunction: renderToStaticMarkup, // あくまでも処理を実行するためなので軽量なstaticMarkupで良い
+      }),
+      // 上記のrenderToStaticMarkupで実行され、sagaの終了を待つ
+      runSaga(),
+    ]);
+
+    const body = renderToString(tree); // ここでクライアントに渡すhtmlのレンダリングを行う
+
+    // ここからはhtmlに埋め込むscriptタグの生成やstoreのデータをクライアントに渡すためのjson等を作成
+    const preloadedState = JSON.stringify(store.getState());
+    const helmetContent = Helmet.renderStatic();
+    const meta = `
+      ${helmetContent.meta.toString()}
+      ${helmetContent.title.toString()}
+    `.trim();
+    const style = sheet.getStyleTags();
+    const scripts = extractor.getScriptTags({ nonce });
+    const graphql = JSON.stringify(client.extract());
+
+    return res.send(
+      renderFullPage({
+        meta,
+        body,
+        style,
+        preloadedState,
+        scripts,
+        graphql,
+        nonce,
+      })
+    );
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send(e.message);
+  }
+}
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/server/controllers/renderer/renderer.tsx
+
+## Single Page Application
+
+SPA のベースは redux の store(or apollo-state), routing が react-router, 副作用の操作を redux-saga でこのサンプルは行っています。
+
+### hooks
+
+react に hooks が入ったことにより、react-router や redux、apollo の hooks 対応されました。
+
+```javascript
+export const Saga: React.FC = () => {
+  const dispatch = useDispatch(); // reduxのdispatch
+  const samples = useSelector(getSagaCode); // reduxのselector
+  const { search } = useLocation(); // react-routerでlocationを取得
+  const maxLength = new URLSearchParams(search).get("max");
+
+  if (!process.env.IS_BROWSER) {
+    dispatch(loadSagaPage(maxLength)); // actionを実行し、typeとpreloadをdispatchへ(containersが行っていたこと)
+  } else {
+    useEffect(() => {
+      dispatch(loadSagaPage(maxLength));
+    }, []);
+  }
+
+  const like = useCallback((id: number) => {
+    // reactのuseCallback
+    dispatch(addLike(id));
+  }, []);
+
+  return (
+    <>
+      <Head title="saga-page" />
+      <p>get => get all samples</p>
+      <p>post => add a like count</p>
+      {samples.length !== 0 && (
+        <CodeSamplesBox samples={samples} addLike={like} />
+      )}
+    </>
+  );
+};
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/client/components/pages/Saga/Saga.tsx
+
+### redux
+
+redux は hooks が入ったことにより大きな変更があります。
+それは、presentational と container という単語が無くなりそうです。
+
+<OG url="https://github.com/reduxjs/redux/issues/3313" />
+
+今までの redux は、presentational と container で責務(関心事)が別れていました。
+それは自分にとってはきれいだと思っていました、presentational で store からくる値は props を渡す感じ。
+
+しかし、hooks が入ったことにより、dispatch を presentational から呼ぶことになったので container も必要ないです。
+
+### apollo
+
+apollo は本当にきれいに書くことができるようになり満足しています。
+
+移行記事は以下を参考にしてください。
+
+<OG url="https://blog.hiroppy.me/entry/react-apollo3.3.0" />
+
+<br />
+
+```typescript
+export const GET_SAMPLES = gql`
+  query getSamples($maxLength: Int) {
+    samples(maxLength: $maxLength) {
+      id
+      name
+      code
+      likeCount
+      description
+    }
+  }
+`;
+
+export const ADD_LIKE = gql`
+  mutation addLike($id: Int) {
+    addLike(id: $id) {
+      id
+    }
+  }
+`;
+
+export const Apollo = () => {
+  const dispatch = useDispatch();
+  const { search } = useLocation();
+  const maxLength = new URLSearchParams(search).get("max");
+  const {
+    loading: queryLoading,
+    error: queryError,
+    data: queryData,
+  } = useQuery<{
+    // queryのhooks
+    samples: Samples;
+  }>(GET_SAMPLES, { variables: { maxLength: Number(maxLength) } });
+  const [
+    addLike,
+    { loading: mutationLoading, error: mutationError, data: mutationData },
+  ] = useMutation(ADD_LIKE, {
+    // mutationのhooks
+    // ここは実際、refetch行うべきじゃないけど、これサンプルなので手抜きです
+    refetchQueries: [
+      { query: GET_SAMPLES, variables: { maxLength: Number(maxLength) } },
+    ],
+  });
+  const like = useCallback((id: number) => {
+    addLike({ variables: { id } }); // mutationを実行
+  }, []);
+
+  // SPAをsagaで管理している関係上、ここでもstopだけ行わないといけない
+  if (!process.env.IS_BROWSER) {
+    dispatch(loadApolloPage());
+  }
+
+  return (
+    <>
+      <Head title="apollo-page" />
+      <p>{`query => get all samples`}</p>
+      <p>{`mutation => add a like count`}</p>
+      {queryLoading && <p>loading...</p>}
+      {queryError && <p>error...</p>}
+      {queryData && (
+        <CodeSamplesBox samples={queryData.samples} addLike={like} />
+      )}
+    </>
+  );
+};
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/client/components/pages/Apollo/Apollo.tsx
+
+はぁ、きれい。。。(saga 捨てたい顔)
+
+### redux-saga
+
+saga が行うこととして、クライアントサイドとサーバーサイドで一点異なる点があります。
+それは、saga のプロセスをサーバーサイドの場合停止させないといけなく、そうしないとクライアントに html を返せません。
+
+なので、以下のように止めるようにします。
+
+```javascript
+function* loadTopPage(actions: ReturnType<typeof LoadTopPage>) {
+  yield changePage();
+  yield put(loadTopPageSuccess());
+
+  if (!process.env.IS_BROWSER) {
+    yield call(stopSaga); // ENDを呼ぶ
+  }
+}
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/client/sagas/pages.ts
+
+自分が SPA で実装を行うときは、saga を 2 ライン走らせます。
+
+- 全体を管理する appProcess
+  - 読み込み完了、エラー(502, etc...)、どこのページでも行う処理(e.g. login, ga, etc..)
+- 各ページの pageProcess
+  - ページ固有の処理(e.g. fetching, etc...)
+
+```javascript
+export function* pagesProcess() {
+  yield takeLatest(LOAD_APP_PROCESS, appProcess);
+  yield takeLatest(LOAD_TOP_PAGE, loadTopPage);
+  yield takeLatest(LOAD_SAGA_PAGE, loadSagaPage);
+  yield takeLatest(LOAD_APOLLO_PAGE, loadApolloPage);
+}
+```
+
+https://gist.github.com/hiroppy/9b5daf8da5cd639a62a917d536f5dfc5
+
+これらが終わり次第、END を呼ぶ構築が一番いいと思います。
+
+### App Shell
+
+PWA と少し被りますが、saga との話もあるのでここで。
+
+react-router でパスに応じた components はここに流れてきます。
+つまり、このコンポーネントが上位階層で、ここで header だけのレンダリング(App)と共通処理(appProcess)を行います。
+
+```javascript
+export const App: React.FC = ({ children }) => {
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  // ここはmiddlewareで行う共通の処理(appProcess)を実行(起動させる)
+  if (!process.env.IS_BROWSER) {
+    dispatch(loadAppProcess());
+  } else {
+    useEffect(() => {
+      dispatch(loadAppProcess());
+    }, []);
+  }
+
+  // e.g. send to Google Analytics...
+  useEffect(() => {}, [location]); // ここでSPA全体のパス変更を監視し、イベントを発火させる(e.g. GA)
+
+  return (
+    <>
+      <Header />{" "}
+      {/* ここは変わることがない(あってもredux経由でHeader内selectorによる再描画) */}
+      <GlobalStyle />
+      <Container>{children}</Container>{" "}
+      {/* childrenはreact-routerから来たコンポーネント */}
+    </>
+  );
+};
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/client/components/App/App.tsx
+
+## Progressive Web Application
+
+### Manifest
+
+PWA の manifest は、`manifest.json`ではなく`manifest.webmanifest` というファイル名にします。
+
+<OG url="https://developer.mozilla.org/ja/docs/Web/Manifest" />
+
+仕様
+
+<OG url="https://w3c.github.io/manifest" />
+
+webpack-pwa-manifest を使い、生成します。
+
+```javascript
+// webpack.config.js
+new PwaManifest({
+  filename: "manifest.webmanifest",
+  name: "ssr-sample",
+  short_name: "ssr-sample",
+  theme_color: "#3498db",
+  description: "introducing SPA and SSR",
+  background_color: "#f5f5f5",
+  crossorigin: "use-credentials",
+  icons: [
+    {
+      src: resolve("./assets/avatar.png"),
+      sizes: [96, 128, 192, 256, 384, 512],
+    },
+  ],
+});
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/webpack.client.prod.config.js#L21-L35
+
+add to home screen 等はデバッグしづらいので、もし原因がわからなかったら`chrome://flags/#bypass-app-banner-engagement-checks`をオンにすると幸せになります。
+
+PC での add to home screen はこんな感じになります。
+
+![](/images/blog/ssr-example-2/pwa.png)
+
+### Service Worker
+
+Workbox を使います。
+
+<OG url="https://developers.google.com/web/tools/workbox" />
+
+<br />
+
+```javascript
+// webpack.config.js
+new GenerateSW({
+  clientsClaim: true,
+  skipWaiting: true,
+  include: [/\.js$/], // 今回出力がjsしかないため
+  runtimeCaching: [
+    {
+      urlPattern: new RegExp("."), // start_urlに合わせる
+      handler: "StaleWhileRevalidate", // cacheを使い裏でfetchする
+    },
+    {
+      urlPattern: new RegExp("api|graphql"),
+      handler: "NetworkFirst", // ネットワークアクセスを優先する
+    },
+    {
+      urlPattern: new RegExp(
+        "https://fonts.googleapis.com|https://fonts.gstatic.com"
+      ),
+      handler: "CacheFirst", // cacheを優先する。expire設定したほうがいい
+    },
+  ],
+});
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/webpack.client.prod.config.js#L36-L54
+
+後ほど、説明しますが、CSP には注意してください。
+service-worker からのアクセスは`connect`となります。
+
+## Audits
+
+![](/images/blog/ssr-example-2/score.png)
+
+Express の http/2 対応がマージされれば全部 100 になります。(or Nginx 置いて)
+
+## Security
+
+### Content Security Policy
+
+<OG url="https://developer.mozilla.org/ja/docs/Web/HTTP/CSP" />
+
+CSP とは、XSS を防ぐために信頼したものしかブラウザが実行しないように制御できます。
+サーバーで毎回ハッシュ値を生成し、それを script タグにつけ http header から`Content-Security-Policy`の属性を照会し一致するものだけを実行します。
+これは、script 以外にも css や font, images, connect 等幅広く設定できます。
+
+今回のサンプルでは、google font を使うため google font と readme のバッジで使われる shields を許可しています。
+
+```javascript
+// google font: https://stackoverflow.com/a/34576000/7014700
+const baseDirectives: helmet.IHelmetContentSecurityPolicyDirectives = {
+  defaultSrc: ["'self'"],
+  styleSrc: ["'unsafe-inline'", "fonts.googleapis.com"], // for styled-components
+  fontSrc: ["'self'", "data: fonts.gstatic.com"],
+  imgSrc: ["'self'", "img.shields.io"], // for README
+  connectSrc: [
+    "'self'",
+    "img.shields.io",
+    "fonts.googleapis.com",
+    "fonts.gstatic.com",
+  ], // for service-worker
+  workerSrc: ["'self'"],
+};
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/server/csp.ts
+
+このように指定したところへのアクセスだけを許可することより XSS に対して強固な web アプリケーションが作成できます。
+
+このアプリケーションでは、`nonce`方式を説明していきます。
+
+```javascript
+export function generateNonceId(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  res.locals.nonce = Buffer.from(nanoid(32)).toString("base64");
+  next();
+}
+```
+
+[f:id:about_hiroppy:20191122082040p:plain]
+
+```html
+<meta
+  property="csp-nonce"
+  content="ZmZIaTAyQ25rZ2FxVERUVVI4VUhBTUVJc29uTV9leUo="
+/>
+<script
+  async
+  data-chunk="components-pages-Top"
+  src="/public/vendors~components-pages-Apollo~components-pages-NotFound~components-pages-Saga~components-pages-Top.bundle.js"
+  nonce="ZmZIaTAyQ25rZ2FxVERUVVI4VUhBTUVJc29uTV9leUo="
+></script>
+```
+
+もっと詳しく知りたい方は Pixiv の記事が詳しいので読むと良さそうです。
+
+<OG url="https://inside.pixiv.blog/kobo/5137" />
+
+#### Dynamic Import
+
+CSP の問題点として、dynamic import の対応の難しさが上げられます。
+dynamic import の場合、`nonce`が存在しないためです。
+CSP には、level3 と level2 が存在し、level3 には strict-dynamic という仕組みがありそれがこの問題を解決します。
+strict-dynamic では、nonce 付きの実行されたスクリプトの子供は nonce が無くても実行可能となります。
+
+Firefox や Chrome ではすでに level3 が対応済みなのでこの問題は解決できますが、level3 に対応していないブラウザに対して dynamic import は解決が行なえません。
+`__webpack_nonce__`を使えば、動きますが nonce は本来毎アクセス時に hash を生成しないと攻撃者に推測される可能性があるため、ビルド時ではいけなく根本的な解決ではありません。
+
+```javascript
+// chrome, firefox
+const lv3Directives: helmet.IHelmetContentSecurityPolicyDirectives = {
+  ...baseDirectives,
+  scriptSrc: [
+    (req, res) => `'nonce-${res.locals.nonce}'`,
+    "'strict-dynamic'",
+    "'unsafe-eval'",
+  ],
+};
+
+// safari
+const lv2Directives: helmet.IHelmetContentSecurityPolicyDirectives = {
+  ...baseDirectives,
+  scriptSrc: [
+    "'self",
+    (req, res) => `'nonce-${res.locals.nonce}'`,
+    "'unsafe-eval'",
+    "'unsafe-inline'",
+  ],
+};
+```
+
+#### Service Worker
+
+service worker からの問い合わせは`connect-src`となります。
+以下のように、`styleSrc`や`fontSrc`と同じ url が`connectSrc`に書いてあるのがわかります。
+
+```javascript
+const baseDirectives: helmet.IHelmetContentSecurityPolicyDirectives = {
+  defaultSrc: ["'self'"],
+  styleSrc: ["'unsafe-inline'", "fonts.googleapis.com"], // for styled-components
+  fontSrc: ["'self'", "data: fonts.gstatic.com"],
+  imgSrc: ["'self'", "img.shields.io"], // for README
+  connectSrc: [
+    "'self'",
+    "img.shields.io",
+    "fonts.googleapis.com",
+    "fonts.gstatic.com",
+  ], // for service-worker
+  workerSrc: ["'self'"],
+};
+```
+
+### GraphQL
+
+GraphQL はスキーマが自由であるため、サーバーへの負荷対策を行う必要があります。
+例えば、入れ子の深い不正クエリーが送られてきたときにはサーバー側の処理に負荷がかかる可能性があるため、その処理に到達させる前に弾く必要があります。
+DoS を防ぐためにも必ず入れる対策がこの対策です。
+
+有名な方法は以下のとおりです。
+
+- ホワイトリスト
+  - リストに書かれたクエリのみを通過させる
+- 深さ制限
+  - 指定したクエリの深さ以下を通過させる
+- 重み(コスト)制限
+  - クエリーに重さ(深さ含む)付けをし、それの合計値が指定値以下の場合は通過させる
+
+このサンプルでは、重み制限を使用しています。
+
+例えば、今回は使ってないですが graphql-validation-complexity であれば以下の計算式となります。(実際、fragments 等でもう少し難しくなりますが)
+
+```
+// Conclusion
+// Field: 1
+// root: scalarCost * 1
+// not root: objectCost * 1
+// list: listFactor * 10
+
+// query {
+//   a {       # * objectCost
+//     a1a     # * scalarCost
+//     a1b {   # * objectCost
+//       b1a   # * scalerCost
+//       b1b   # * scalerCost
+//     }
+//   }
+//   arr {     # * objectCost
+//     arr1 {  # * objectCost * listFactor
+//       name  # listFactor
+//     }
+//     arr2 {  # objectCost * listFactor
+//       name  # listFactor
+//       id    # listFactor
+//     }
+//   }
+// }
+
+// a * objectCost + a.a1a * scalarCost + a.a1b * objectCost + a.a1b.b1a * scalerCost + a.a1b.b1b * scalerCost
+// + arr * objectCost + arr.arr1 * objectCost * listFactor + arr.arr1.name * listFactor
+// + arr.arr2 * objectCost * listFactor + arr.arr2.name * listFactor + arr.arr2.id * listFactor
+```
+
+https://github.com/hiroppy/graphql-production/blob/master/graphql-validation-complexity/validate.js
+
+今回は、graphql-query-complexity を使っています。
+
+```javascript
+const apollo = new ApolloServer({
+  plugins: [
+    {
+      requestDidStart: () => ({
+        didResolveOperation({ request, document }) {
+          const complexity = getComplexity({
+            schema,
+            query: request.operationName
+              ? separateOperations(document)[request.operationName]
+              : document,
+            variables: request.variables,
+            estimators: [
+              fieldExtensionsEstimator(),
+              simpleEstimator({ defaultComplexity: 1 }),
+            ],
+          });
+
+          // graphqlのスキーマのコストがlimitCost(今回は10)以上であれば、throwし中断させる
+          if (complexity >= limitCost) {
+            throw new Error(`${complexity} is over ${limitCost}`);
+          }
+          console.log("Used query complexity points:", complexity);
+        },
+        didEncounterErrors(err) {
+          console.error(err);
+        },
+      }),
+    },
+  ],
+});
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/server/apollo.ts
+
+GraphQL はプロダクションでリリースするときには必ず、このような対策が必要となります。
+
+## おわり
+
+長文になりましたが、機能追加等の PR/Issue 歓迎しています。
+また、もし興味あれば GitHub Sponsors もよろしくおねがいします。
+
+<OG url="https://github.com/sponsors/hiroppy" />

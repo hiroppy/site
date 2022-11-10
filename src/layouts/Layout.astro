@@ -3,10 +3,20 @@ import Footer from "../components/Footer.astro";
 import GA from "../components/GA.astro";
 import Header from "../components/Header.astro";
 
-const title = Astro.url.pathname.slice(1);
+type Props = {
+  title?: string;
+  description?: string;
+  image?: string;
+};
+
+const { title, description, image } = Astro.props;
+const pageTitle = title ?? Astro.url.pathname.slice(1);
 const siteTitle = "hiroppy's site";
 const siteDescription =
+  description ??
   "Hiroppy is a JavaScript engineer and working on some OSS projects and Japanese communities.";
+const ogImage = image ?? "/images/me.webp";
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!DOCTYPE html>
@@ -19,19 +29,15 @@ const siteDescription =
     <meta property="theme-color" content="#3498db" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={siteTitle} />
-    <meta property="og:title" content="hiroppy's site" />
+    <meta property="og:title" content={`${siteTitle} - ${pageTitle}`} />
     <meta property="og:description" content={siteDescription} />
-    <meta property="og:image" content="/images/me.webp" />
+    <meta property="og:image" content={ogImage} />
     <meta property="twitter:card" content="summary" />
     <meta property="twitter:creator" content="@about_hiroppy" />
-    <title>{siteTitle} - {title}</title>
+    <title>{siteTitle} - {pageTitle}</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    {
-      Astro.url.pathname === "/" && (
-        <link rel="canonical" href="https://hiroppy.me" />
-      )
-    }
+    <link rel="canonical" href={canonicalURL} />
     <link rel="dns-prefetch" href="//www.googletagmanager.com" />
     <link rel="preconnect" href="//www.googletagmanager.com" />
   </head>

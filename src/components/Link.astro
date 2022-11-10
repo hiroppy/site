@@ -1,0 +1,17 @@
+---
+type Props = {
+  href: string;
+  isBlank?: boolean;
+  className?: string;
+};
+
+const { href, isBlank = false, className } = Astro.props;
+---
+
+<a
+  href={href}
+  target={isBlank ? "_blank" : undefined}
+  class={className ?? "text-blue-300"}
+  rel="noreferrer"
+  ><slot />
+</a>

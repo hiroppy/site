@@ -16,3 +16,13 @@ type DataItem = {
   comment?: string;
   appendixes?: any;
 };
+
+type BlogFrontmatter = {
+  date: string;
+  title: string;
+  description: string;
+  image: string;
+  tags: string;
+  // 以前のhatenablogのpath
+  hatenaPath?: string;
+};

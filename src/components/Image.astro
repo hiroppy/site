@@ -4,13 +4,15 @@ type Props = {
   alt: string;
   className?: string;
   lazy?: boolean;
+  // TODO: remove
+  webp?: boolean;
 };
 
-const { src, alt, className, lazy = false } = Astro.props;
+const { src, alt, className, lazy = true, webp } = Astro.props;
 const placeholderColor =
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcfPRvPQAHHgLWeG8FbgAAAABJRU5ErkJggg==";
 // TODO: only support webp
-const defaultSrc = src.replace(/\.(png|jpg)$/, ".webp");
+const defaultSrc = webp ? src.replace(/\.(png|jpg)$/, ".webp") : src;
 ---
 
 <img
