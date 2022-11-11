@@ -16,7 +16,7 @@
   "devDependencies": {
     "@astrojs/tailwind": "^2.1.2",
     "@squoosh/cli": "^0.7.2",
-    "astro": "^1.6.6",
+    "astro": "^1.6.7",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.0.3",
     "emoji-js": "^3.7.0",
