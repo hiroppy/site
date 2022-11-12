@@ -6,6 +6,7 @@ for (const value of Object.values(data)) {
   for (const job of value) {
     job.name = `${job.name} ${getIcon(job.position)}`.trim();
     job.level = job.level ?? 1;
+    job.position = job.position ?? "engineer";
   }
 }
 

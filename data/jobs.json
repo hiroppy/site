@@ -11,28 +11,24 @@
       "name": "Mercari/Souzoh",
       "start": "2019/11/01",
       "end": "2022/07/31",
-      "position": "",
       "comment": "Enabling Team"
     },
     {
       "name": "Dwango",
       "start": "2017/12/16",
       "end": "2019/10/31",
-      "position": "",
       "comment": "N予備校/ニコニコ生放送"
     },
     {
       "name": "Mercari",
       "start": "2017/06/01",
       "end": "2017/11/31",
-      "position": "",
       "comment": "Mercari Web"
     },
     {
       "name": "Dwango",
       "start": "2015/04/01",
       "end": "2017/05/31",
-      "position": "",
       "comment": "N予備校"
     },
     {
@@ -40,7 +36,7 @@
       "start": "2011/04/01",
       "end": "2015/03/31",
       "position": "student",
-      "comment": "画像処理の研究"
+      "comment": "画像処理の研究とActionScript@3"
     }
   ],
   "side": [
@@ -48,15 +44,13 @@
       "name": "Souzoh",
       "start": "2022/8/01",
       "end": "-",
-      "position": "",
       "comment": "Enabling Team"
     },
     {
       "name": "Yuimedi",
       "start": "2021/11/01",
       "end": "2022/06/01",
-      "position": "",
-      "comment": "",
+      "comment": "立ち上げのお手伝い",
       "level": 9
     },
     {
@@ -92,15 +86,13 @@
       "name": "Bizreach",
       "start": "2017/06/01",
       "end": "2017/09/31",
-      "position": "",
       "comment": "スポット"
     },
     {
       "name": "Eyes, Japan",
       "start": "2014/05/01",
       "end": "2015/02/31",
-      "position": "",
-      "comment": ""
+      "comment": "委託"
     },
     {
       "name": "CyberAgent",
@@ -113,7 +105,6 @@
       "name": "Freelance",
       "start": "2011/05/01",
       "end": "2013/05/31",
-      "position": "",
       "comment": "Web制作"
     }
   ]
