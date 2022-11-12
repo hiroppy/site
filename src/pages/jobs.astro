@@ -51,6 +51,7 @@ function getTotalMonths(year: number, month: number) {
 
 <Layout>
   <MainLayout title="Jobs">
+    <p class="text-right mb-2">🙈 the side job shows only public</p>
     <div class="relative overflow-auto" style={{ height: `${length}px` }}>
       <div
         class="flex justify-around text-lg bg-slate-700 z-30 font-semibold text-gray-200"
@@ -77,11 +78,12 @@ function getTotalMonths(year: number, month: number) {
       {
         jobs.map(({ name, type, start, end, level, comment, position }) => (
           <div
-            class={`absolute h-full w-1/2 z-20 ${
+            class={`absolute h-full w-1/2 ${
               type === "main" ? "" : "translate-x-full"
             }`}
             style={{
               pointerEvents: "none",
+              zIndex: 20 - level,
             }}
           >
             <div
@@ -109,7 +111,7 @@ function getTotalMonths(year: number, month: number) {
               >
                 <div class="relative">
                   <span>{name}</span>
-                  <div class="rounded px-2 py-1 absolute -top-12 -translate-x-1/2 left-1/2 bg-gray-800 opacity-0 group-hover:opacity-100 transition pointer-events-none min-w-max text-sm text-center text-gray-300 font-normal">
+                  <div class="rounded px-2 py-1 absolute -top-12 -translate-x-1/2 left-1/2 bg-gray-800 opacity-0 group-hover:opacity-100 transition pointer-events-none min-w-max text-sm text-center text-gray-300 font-normal z-20">
                     <p>{`${start} - ${end === "-" ? "" : end}`.trim()}</p>
                     <p>
                       {position}: {comment}

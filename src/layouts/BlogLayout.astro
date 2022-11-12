@@ -12,7 +12,7 @@ import { HATENA_BLOG_URL } from "../constants";
 const { frontmatter, headings } =
   Astro.props as MarkdownLayoutProps<BlogFrontmatter>;
 const date = formatDate(new Date(frontmatter.date));
-const indices = headings.filter((heading) => heading.depth < 5);
+const indices = headings.filter((heading) => heading.depth < 4);
 const diffDate =
   (new Date().getTime() - new Date(frontmatter.date).getTime()) /
   (60 * 60 * 1000 * 24);
