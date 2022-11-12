@@ -28,7 +28,7 @@
     "undici": "^5.12.0"
   },
   "dependencies": {
-    "@astrojs/mdx": "^0.11.5",
+    "@astrojs/mdx": "^0.11.6",
     "@astrojs/partytown": "^1.0.1",
     "@astrojs/sitemap": "^1.0.0"
   }
