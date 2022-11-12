@@ -16,6 +16,7 @@ const siteDescription =
   description ??
   "Hiroppy is a JavaScript engineer and working on some OSS projects and Japanese communities.";
 const ogImage = image ?? "/images/me.webp";
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!DOCTYPE html>
@@ -36,11 +37,7 @@ const ogImage = image ?? "/images/me.webp";
     <title>{siteTitle} - {pageTitle}</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    {
-      Astro.url.pathname === "/" && (
-        <link rel="canonical" href="https://hiroppy.me" />
-      )
-    }
+    <link rel="canonical" href={canonicalURL} />
     <link rel="dns-prefetch" href="//www.googletagmanager.com" />
     <link rel="preconnect" href="//www.googletagmanager.com" />
   </head>
