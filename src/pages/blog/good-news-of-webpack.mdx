@@ -1,0 +1,60 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: webpackに関してよかったニュースとそれに対する感想
+date: 2022-01-17
+description: webpackのメンバーの良かったニュースを聞いて感想文をかいた
+image: /images/brands/webpack.png
+tags: javascript,oss
+hatenaPath: good-news-of-webpack
+---
+
+import OG from "../../components/OG.astro";
+import TwitterCard from "../../components/TwitterCard.astro";
+
+注意: これは公式見解ではない、ただ 1 メンバーの感想文です。
+
+---
+
+最近の大きなニュースとしては、webpack の主要メンバーの 2 人(Sokra, Alexander)は現在 vercel 雇われたことです。
+
+<TwitterCard id="1381860800533528576" width={350} height={300} />
+
+<TwitterCard id="1476162135579414530" width={350} height={240} />
+
+これによりメンテナンスの安定度が増したことは確かでしょう。現状の問題点はメンテナ不足です。webpack ですら深刻です。 例えば今日、障害が発生している mini-css-extract-plugin は一人で開発しているためレビュワーがいません。この 2 年ぐらいずっとこのような感じです。
+
+<OG url="https://www.bleepingcomputer.com/news/security/npm-dependency-is-breaking-some-react-apps-today-heres-the-fix" />
+
+アクティブなメンバーはごく数人であり、彼らがいなくなると途端に速度が低下されることでしょう。その中の二人が雇われたことは個人的には安心度があり良かったニュースです。しかしながら、安定はしても人数を増やさないとスケールしないので、どう OSS コミュニティを今後も広げていきメンテナンスできる人を増やすかは鍵だと思います。
+
+さて、webpack が vercel の要望に引っ張られるかどうか？と聞かれることがありますが、それは自分にはわかりません。例えば、lazy compilation の実装も他のに比べてそこまで優先度は高くなかった記憶ですが、next.js の onDemandEntries を webpack native に寄せるために優先度が上がったのかなと想像はしています。ただ、webpack はサービスというよりも、インフラであるため基本的に入る機能はユーザーに良い影響があるものばかりで、大きな心配はしてません。例として、現在 css に第一市民権を与える機能を追加していますが、これは誰に対してもいい影響を与えるものだと自信を持って言えます。
+
+<TwitterCard id="1481182979078881280" width={500} height={700} />
+
+他にわかっている範囲では、vercel も swc の author を入れたことにより、話していると webpack にも acorn から swc へ乗り換える可能性と優先度が上がってきていることを感じています。理由は明確で、next.js も含め JS 界隈で今注目されている開発速度向上のためです。今後、webpack から swc(bundle 機能もまだまだ実験中ですが持っているため)へ next.js 自体が完全に乗り換える可能性は否定できませんが、内部の人間ではないためそれは今後に注目しましょう。
+
+<OG url="https://github.com/webpack/webpack/issues/13425" />
+
+ちなみに swc も webpack の ast を構築済みです。
+
+<OG url="https://github.com/swc-project/swc/tree/main/crates/swc_webpack_ast" />
+
+他には、terser-webpack-plugin に swc と esbuild が入った点も同じ理由です。(もうパッケージ名と一致してない とは思っていますが)
+
+<OG url="https://github.com/webpack-contrib/terser-webpack-plugin#swc" />
+
+---
+
+唯一心配しているのは、今後の webpack の openCollective の運営に対してはどうなるのかなって思っています。webpack は OSS の中で大量のスポンサーがいることは有名です。少なくとも v4 までは、機能追加をスポンサー、ユーザーの投票で優先度を決めるということにしていました。
+
+v4 では以下の通り
+
+<OG url="https://v4.webpack.js.org/vote" />
+
+しかし、現在の v5 ではページ自体が機能していません。
+
+スポンサーの意向が伝えられない状態での openCollective の運用は今後不明な要素となります。このスポンサーは果たして vercel と比べてどれぐらい重みがあるのか？ や vote ページ機能してないけどどうするんだっけ みたいな問題が残っています。その反面、基本会社の仕事として OSS をする場合は配当を受け取らないので、さらにプールに大きな余りができ、新しいメンテナを入れやすくなる点は良かったかなと思います。経験上、お金を払えばメンテナンスが続くわけではないですが、ないよりはあったほうがいいとは思います。いずれにせよ、このような不安はありつつ、これほど大きな資金を持つ OSS で且つ会社に雇われる状況になったことがある OSS は初だと思うので、今後に注目という事になりそうです。
+
+---
+
+まとめもなにもないですが、数年 openCollective で運営していて特にコロナの影響で配当額が大幅に変わり、OSS フルタイムが厳しい状況もありました。それが会社に雇われて本当に良かったと思うのと同時に、今後の OSS コミュニティ運営について、注目していきたいと思います。

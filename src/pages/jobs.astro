@@ -52,7 +52,9 @@ function getTotalMonths(year: number, month: number) {
 <Layout>
   <MainLayout title="Jobs">
     <div class="relative overflow-auto" style={{ height: `${length}px` }}>
-      <div class="flex justify-around text-lg bg-slate-700 z-30 font-semibold">
+      <div
+        class="flex justify-around text-lg bg-slate-700 z-30 font-semibold text-gray-200"
+      >
         <p>Main</p>
         <p>Side</p>
       </div>
@@ -87,7 +89,7 @@ function getTotalMonths(year: number, month: number) {
                 type === "main" ? "right-2  border-r-0" : "border-l-0"
               } ${
                 end === "-"
-                  ? "border-t-0 border-red-600 text-white font-semibold"
+                  ? "border-t-0 border-red-600 text-gray-50 font-semibold"
                   : "border-cyan-600 text-gray-300"
               }`}
               style={{

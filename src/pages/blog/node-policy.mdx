@@ -1,0 +1,99 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Node.jsをPolicyにより安全に実行する
+date: 2019-12-18
+description: Node.jsに入ったPolicyという機能を紹介します
+image: /images/brands/nodejs.png
+tags: javascript
+hatenaPath: node-policy
+---
+
+import OG from "../../components/OG.astro";
+
+この記事は、[Node.js Advent Calendar 2019](https://qiita.com/advent-calendar/2019/nodejs)の 18 日目です。
+
+## Policy とは？
+
+<br />
+
+<OG url="https://nodejs.org/api/policy.html" />
+
+実行コードを制御するセキュリティ機構が Node.js に入りました。
+ポリシーファイルを使い、整合性のチェックを行います。
+これにより、`require`したときにファイルが変化していないことを保証することが可能です。
+
+<OG url="https://docs.google.com/document/d/1h__FmXsEWRuNrzAV_l3Iw9i_z8fCXSokGfBiW8-nDNg/edit#heading=h.m7xhvpd3gmjw" />
+
+アルゴリズムは、W3C にある SRI と同様です。
+
+https://www.w3.org/TR/SRI/#the-integrity-attribute
+
+https://github.com/nodejs/node/blob/master/lib/internal/policy/sri.js
+
+この機能は、まだ実験中のフェーズなためフラグが必要となります。
+
+## 使い方
+
+```javascript
+// app.js
+
+console.log("app");
+
+require("fs");
+require("./foo.js");
+```
+
+```javascript
+// foo.js
+
+console.log("foo");
+```
+
+最初に各ファイルのハッシュ値を生成する必要があります。
+
+```
+$ printf "sha384-$(cat app.js | openssl dgst -sha384 -binary | base64)"
+sha384-stoY+K7ZeOkSLHmCYOOrfWcLsKFb1Niv/dkz6f9Q0UP5FQi9pRTglvtGcQ/IPyZR
+
+$ printf "sha384-$(cat foo.js | openssl dgst -sha384 -binary | base64)"
+sha384-1RHAoU62Cn5DMHZLSZZKEnvcml+GOtj5O4BXAUohiYtjGzo0v/iFIM7KOxRwoG7P
+```
+
+policy.json を作成し、以下のように登録します。
+これは、実行ファイルすべて列挙する必要があります。(entry-point 含め)
+
+```json
+{
+  "resources": {
+    "./app.js": {
+      "integrity": "sha384-stoY+K7ZeOkSLHmCYOOrfWcLsKFb1Niv/dkz6f9Q0UP5FQi9pRTglvtGcQ/IPyZR",
+      "dependencies": {
+        "fs": true,
+        "./foo.js": "./foo.js"
+      }
+    },
+    "./foo.js": {
+      "integrity": "sha384-1RHAoU62Cn5DMHZLSZZKEnvcml+GOtj5O4BXAUohiYtjGzo0v/iFIM7KOxRwoG7P"
+    }
+  }
+}
+```
+
+`dependencies` は boolean でも可能ですが、本番環境では推奨されません。
+今回は、ビルトインモジュールの fs なので`true`としています。
+各ファイルで`require`するモジュールファイルは、すべて列挙する必要性があります。
+
+Dependency Redirection(`dependencies`)は、`require.cache`や`module.constructor`等のアクセスに対しては、防ぐことができません。
+つまり、`require`のみのチェックを行うということになります。
+
+以下のように policy.json を指定して実行します。
+
+```
+$ node --experimental-policy=policy.json app.js
+```
+
+## まとめ
+
+厳格に行うのであれば、コードよりハッシュ値は変わるため Policy を使うのは有効です。
+しかしこれを一つづつ行うのは大変なため、何かしらの CLI で一括で行える機構が必要です。
+まだユーザーランドには自分が知る限り存在しないため今後に期待です。

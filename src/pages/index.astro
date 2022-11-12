@@ -6,6 +6,8 @@ import repos from "../../generated/repos.json";
 import sponsors from "../../generated/sponsors.json";
 import articles from "../../generated/articles.json";
 import Image from "../components/Image.astro";
+import Hatena from "../components/icons/Hatena.astro";
+import Link from "../components/Link.astro";
 ---
 
 <Layout>
@@ -22,14 +24,12 @@ import Image from "../components/Image.astro";
         <p>
           Hiroppy is a JavaScript engineer and working on some OSS projects and
           Japanese communities. I have lived in Japan and Ireland, and now I
-          work in <a
-            href="https://yuimedi.com/en"
-            target="_blank"
-            class="text-blue-300">Yuimedi, inc</a
-          > that is a medical IT company as PVoE in Japan.
+          work in <Link href="https://yuimedi.com/en" isBlank>Yuimedi, inc</Link
+          >
+          that is a medical IT company as PVoE in Japan.
         </p>
         <p>
-          You can ping me on Twitter DM or
+          You can ping me on Twitter or
           <code class="bg-gray-700 p-1 rounded-lg text-gray-300 text-sm"
             >hello[at]hiroppy.me</code
           > when you have requesting for work, speech, writing, and so on are welcome
@@ -45,9 +45,9 @@ import Image from "../components/Image.astro";
               .filter(({ hot }) => !!hot)
               .map(({ url, title, image, bookmark }) => (
                 <li class="flex flex-col gap-2 items-start bg-slate-600 p-2 sm:p-3 rounded-lg justify-between">
-                  <a class="text-blue-200 block" href={url} target="_blank">
+                  <Link href={url} isBlank className="text-blue-200">
                     {title}
-                  </a>
+                  </Link>
                   <div class="flex justify-between w-full items-end text-gray-300">
                     <Image
                       src={image}
@@ -55,24 +55,7 @@ import Image from "../components/Image.astro";
                       alt={title}
                     />
                     <div class="flex items-center text-sm gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 355.004 300"
-                        fill="currentColor"
-                        class="w-3 h-3"
-                      >
-                        <g>
-                          <path class="fill" d="M280.009,0h70v200.005h-70V0z" />
-                          <path
-                            class="fill"
-                            d="M215.192,160.596c-11.844-13.239-28.314-20.683-49.443-22.288 c18.795-5.122,32.443-12.616,41.077-22.628c8.593-9.88,12.856-23.292,12.856-40.171c0-13.362-2.922-25.184-8.579-35.397 c-5.805-10.152-14.14-18.276-25.102-24.357c-9.586-5.274-20.98-8.994-34.262-11.188c-13.349-2.126-36.709-3.198-70.231-3.198H0 V298.63h83.976c33.737,0,58.064-1.182,72.94-3.441c14.863-2.337,27.334-6.27,37.428-11.662 c12.484-6.587,22.007-15.964,28.662-28.01c6.698-12.085,10.014-26.02,10.014-41.956 C233.017,191.514,227.079,173.798,215.192,160.596z M75.26,67.27h17.398c20.108,0,33.617,2.267,40.59,6.787 c6.877,4.542,10.388,12.38,10.388,23.547c0,10.745-3.733,18.313-11.118,22.751c-7.483,4.354-21.117,6.562-41.079,6.562H75.26 V67.27z M144.276,237.733c-7.916,4.862-21.557,7.251-40.696,7.251H75.265v-64.949h29.54c19.654,0,33.243,2.475,40.469,7.414 c7.343,4.942,10.955,13.665,10.955,26.191C156.226,224.85,152.263,232.899,144.276,237.733z"
-                          />
-                          <path
-                            class="fill"
-                            d="M315.014,220.003c-22.101,0-40.002,17.891-40.002,39.991 c0,22.1,17.902,40.006,40.002,40.006c22.072,0,39.99-17.906,39.99-40.006C355.004,237.894,337.088,220.003,315.014,220.003z"
-                          />
-                        </g>
-                      </svg>
+                      <Hatena />
                       <span>{bookmark}</span>
                     </div>
                   </div>
@@ -91,16 +74,11 @@ import Image from "../components/Image.astro";
                     src={image}
                     className="w-8 h-8 rounded-full"
                     alt={name}
-                    lazy
                   />
                   <div class="flex flex-col text-sm flex-1 gap-2">
-                    <a
-                      class="text-blue-200 text-lg block"
-                      href={url}
-                      target="_blank"
-                    >
+                    <Link href={url} isBlank className="text-blue-200 text-lg">
                       {name}
-                    </a>
+                    </Link>
                     <span class="break-all flex-1">{description}</span>
                     <div class="flex justify-between items-center">
                       <div class="flex gap-2 items-center">
@@ -147,26 +125,24 @@ import Image from "../components/Image.astro";
         <div class="flex flex-wrap gap-2">
           {
             sponsors.current.map(({ name, href, avatar }) => (
-              <a href={href} target="_blank">
+              <Link href={href} isBlank>
                 <Image
                   src={avatar}
                   alt={name}
                   className="rounded-full w-12 h-12"
-                  lazy
                 />
-              </a>
+              </Link>
             ))
           }
           {
             sponsors.past.map(({ name, href, avatar }) => (
-              <a href={href} target="_blank">
+              <Link href={href} isBlank>
                 <Image
                   src={avatar ?? ""}
                   alt={name ?? "private user"}
                   className="rounded-full w-12 h-12"
-                  lazy
                 />
-              </a>
+              </Link>
             ))
           }
         </div>

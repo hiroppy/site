@@ -1,0 +1,35 @@
+---
+import Card from "./Card.astro";
+import Image from "./Image.astro";
+import { getTags } from "../utils/blog";
+import { formatDate } from "../utils/formatDate";
+
+type Props = {
+  url: string;
+  frontmatter: BlogFrontmatter;
+};
+
+const { url, frontmatter } = Astro.props;
+---
+
+<Card>
+  <a href={url}>
+    <h2 class="font-semibold text-blue-300">{frontmatter.title}</h2>
+  </a>
+  <div class="flex justify-between gap-2 mt-2">
+    <div class="flex justify-between gap-4 flex-col">
+      <p>{frontmatter.description}</p>
+      <div class="flex gap-3 items-center text-gray-300 text-sm">
+        <span>{formatDate(new Date(frontmatter.date))}</span>
+        <div class="flex gap-2">
+          {getTags(frontmatter.tags).map((tag) => <span>#{tag}</span>)}
+        </div>
+      </div>
+    </div>
+    <Image
+      src={frontmatter.image}
+      alt={frontmatter.title}
+      className="h-20 rounded-lg"
+    />
+  </div>
+</Card>

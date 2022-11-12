@@ -9,8 +9,11 @@ type Props = {
 const { url } = Astro.props;
 const html = await fetch(url).then((res) => res.text());
 const $ = load(html);
-const title = $("meta[property='og:title']").attr("content");
-const description = $("meta[property='og:description']").attr("content");
+const title =
+  $("meta[property='og:title']").attr("content") ?? $("title").text();
+const description =
+  $("meta[property='og:description']").attr("content") ??
+  $("meta[name='description']").attr("content");
 const image = $("meta[property='og:image']").attr("content");
 ---
 
@@ -31,8 +34,7 @@ const image = $("meta[property='og:image']").attr("content");
     image && (
       <Image
         src={image}
-        className="h-24 object-contain"
-        lazy
+        className="h-10 object-contain sm:h-24"
         alt="title"
         webp={false}
       />

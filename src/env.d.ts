@@ -22,4 +22,7 @@ type BlogFrontmatter = {
   title: string;
   description: string;
   image: string;
+  tags: string;
+  // 以前のhatenablogのpath
+  hatenaPath?: string;
 };

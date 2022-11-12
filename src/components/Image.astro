@@ -8,7 +8,7 @@ type Props = {
   webp?: boolean;
 };
 
-const { src, alt, className, lazy = false, webp } = Astro.props;
+const { src, alt, className, lazy = true, webp } = Astro.props;
 const placeholderColor =
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcfPRvPQAHHgLWeG8FbgAAAABJRU5ErkJggg==";
 // TODO: only support webp

@@ -1,0 +1,172 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: webpackのinline syntax
+date: 2020-04-14
+description: webpackのシンタックスの読み方を解説します
+image: /images/brands/webpack.png
+tags: javascript
+hatenaPath: webpack-inline-syntax
+---
+
+import OG from "../../components/OG.astro";
+
+誰得かわからないですが、これの質問が来たのでここで説明しようと思います。
+webpack は、ローダーチェインと呼ばれる仕組みで動いています。
+これには、inline の書き方が存在しますが開発者ですら使うのは非推奨です。
+しかし、webpack のログにはこの表記が多々出てくるため疑問がある人は多いと思います。
+
+設定は以下のファイル群です。
+
+```javascript
+// webpack.config.js
+module.exports = {
+  mode: "development",
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.css$/i,
+        use: [require.resolve("./loader")],
+        enforce: "post",
+      },
+    ],
+  },
+};
+```
+
+```javascript
+// loader.js
+module.exports = function postLoader(res) {
+  console.log(this.resource);
+
+  return res;
+};
+```
+
+この場合は、拡張子.css がきた場合に css-loader -> style-loader -> ./loader というローダーチェインが発生します。
+
+## 基本
+
+webpack のローダーの読み方は右からとなり、options のつなぎは query です。
+また、inline は webpack.config.js に書かれたものよりも優先度が高く上書き可能です。
+以下の場合だと、css-modules と sourceMap が上書きされ有効化されます。
+**ローダー間は`!`でセパレートします。**
+
+```javascript
+import style from "style-loader!css-loader?modules&sourceMap!./style.css";
+```
+
+## 接頭辞
+
+webpack では prefix につけるものによって内容が変化します。
+
+### !
+
+```javascript
+import style from "!style-loader!css-loader?modules&sourceMap!./style.css";
+```
+
+先頭に`!`をつけることにより、webpack.config.js に書かれたローダーの設定群を無効にします。
+
+### !!
+
+```javascript
+import style from "!!style-loader!css-loader?modules&sourceMap!./style.css";
+```
+
+先頭に`!!`をつけることにより、`!`に加え`enforce`の`pre`, `post`を無効にします。
+なので、この記事の例だと`./loader`の呼び出しも`!!`にすることにより無効化出来ます。
+
+#### !!!...
+
+これ以降はまだ予約なし。
+
+### -!
+
+```javascript
+import style from "-!style-loader!css-loader?modules&sourceMap!./style.css";
+```
+
+先頭に`-!`をつけることにより、`!`に加え`enforce`の`pre`を無効化します。(`post`のみ動く)
+この記事の場合、`./loader`は`post`で設定されるため呼び出しが行われます。
+
+## Match Resource
+
+`!=!`を使うことにより、リソースの match を行います。
+
+```javascript
+import style from "./style.js!=!style-loader!css-loader?modules&sourceMap!./style.css";
+```
+
+この場合は、css で処理してたものを強制的に js と認識させます。
+なので、実際には style.js というファイル名は存在しません。
+
+これは主に Module Type を変更するときに使われます。
+例えば、json ファイルを js に変換してなにか処理を続行する場合等。
+
+上の例で上げた webpack.config.js を見てみます。
+
+```javascript
+module.exports = {
+  mode: "development",
+  module: {
+    rules: [
+      // ...
+      {
+        test: /\.css$/i,
+        use: [require.resolve("./loader")],
+        enforce: "post",
+      },
+    ],
+  },
+};
+```
+
+```javascript
+// loader
+module.exports = function postLoader(res) {
+  console.log(this.resource);
+
+  return res;
+};
+```
+
+Match Resouce は変換先の拡張子を webpack.config.js へ渡すため、この場合のローダーの出力は何も出ません。
+
+さて、以下のようにキャッチするのを css ではなく js に変更します。
+
+```diff
+module.exports = {
+  mode: 'development',
+  module: {
+      ...
+      {
+-        test: /\.css$/i,
++        test: /\.js$/i,
+        use: [require.resolve('./loader')],
+        enforce: 'post',
+      }
+    ],
+  },
+};
+```
+
+ローダーの出力は以下のようになります。
+
+```
+/webpack/src/index.js
+/webpack/src/style.css <----- !!!!!
+/webpack/node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
+/webpack/node_modules/css-loader/dist/runtime/api.js
+```
+
+でてきました。すごい不思議だとは思いますが、test の条件にマッチしていないように見えます。
+import のファイル名は`.css`なのに`test: /\.js$/i`のローダに入っていることとなります。
+この場合は、match resouce によって変換されていることが読み取れます。
+
+## 最後に
+
+覚えなくていいです。

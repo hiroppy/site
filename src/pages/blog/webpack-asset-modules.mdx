@@ -1,0 +1,156 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: webpackの次のバージョンで入るassetModulesの紹介
+date: 2020-06-02
+description: 新しく入ったAsset Modulesの機能について紹介します
+image: /images/brands/webpack.png
+tags: javascript
+hatenaPath: webpack-asset-modules
+---
+
+import OG from "../../components/OG.astro";
+
+この機能が導入されることにより、`{raw/file/url}-loader` が不要となります。
+webpack@4 でも使えますが、まだ実験的フェーズです。
+
+## Documentation
+
+<OG url="https://webpack.js.org/guides/asset-modules" />
+
+## PR
+
+<OG url="https://github.com/webpack/webpack/pull/8983" />
+
+## モジュールタイプと以前との対応表
+
+- `asset/resource` -> file-loader
+- `asset/inline` -> url-loader
+- `asset/source` -> raw-loader
+- `asset` -> `asset/resource`と`asset/inline`を自動選択する(閾値: 8kb)
+
+## 使い方
+
+実験フラグをオンにする。
+
+```javascript
+// webpack.config.js
+module.exports = {
+  experiments: {
+    asset: true,
+  },
+};
+```
+
+### アセットを出力する (file-loader)
+
+別ディレクトリにファイルを出力しそのファイルパスを返す。
+`output.assetModuleFilename`に出力ファイル名を指定することができる。
+
+```javascript
+// webpack.config.js
+module.exports = {
+  output: {
+    assetModuleFilename: "images/[hash][ext]",
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpg|gif)$/,
+        type: "asset/resource",
+      },
+    ],
+  },
+};
+```
+
+```javascript
+// src/index.js
+import foo from "./images/foo.png";
+
+console.log(foo);
+// /dist/images/151cfcfa1bd74779aadb.png
+img.src = foo;
+```
+
+### データ URI を出力する (url-loader)
+
+Base64 アルゴリズムを使い出力される文字列を返す。(カスタマイズ可能)
+
+```javascript
+// webpack.config.js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        type: "asset/inline",
+      },
+    ],
+  },
+};
+```
+
+```javascript
+// src/index.js
+import foo from "./images/foo.svg";
+
+console.log(foo);
+// data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDo...vc3ZnPgo=
+
+block.style.background = `url(${foo})`;
+```
+
+### ソースを出力する (raw-loader)
+
+ソースコードの中身を返す。
+
+```javascript
+// webpack.config.js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.txt/,
+        type: "asset/source",
+      },
+    ],
+  },
+};
+```
+
+```javascript
+// src/index.js
+import foo from "./foo.txt";
+
+console.log(foo);
+// hello!
+block.textContent = foo;
+```
+
+### 自動的に選択させる
+
+ファイルの大きさにより、自動的に`asset/resource`か`asset/inline`の実行を決定する。
+8kb 以下の場合は、inline となりそれ以上は resouce となる。
+
+閾値を変えたい場合は、`parser.dataUrlCondition.maxSize`を指定することができる。
+
+```javascript
+module.exports = {
+  output: {
+    assetModuleFilename: "images/[hash][ext]",
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpg|gif)$/,
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 4 * 1024, // 4kb
+          },
+        },
+      },
+    ],
+  },
+};
+```

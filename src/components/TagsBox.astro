@@ -1,0 +1,27 @@
+---
+import Paper from "./Paper.astro";
+
+type Props = {
+  tags: string[];
+};
+
+const { tags } = Astro.props;
+---
+
+<Paper>
+  <div class="p-4">
+    <p>🏷 Tags</p>
+    <div class="flex gap-2 mt-4 flex-wrap">
+      {
+        tags.map((tag) => (
+          <a
+            class="py-1 px-3 rounded-lg bg-gray-700 shadow-sm border border-gray-600 text-gray-200 text-sm hover:text-blue-300"
+            href={`/blog/tags/${tag}`}
+          >
+            {tag}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</Paper>
