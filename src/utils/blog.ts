@@ -32,7 +32,7 @@ export function getAllTags(mdxs: Mdxs) {
       mdxs
         .map((post) => post.frontmatter.tags.split(",").map((v) => v.trim()))
         .flat()
-        .sort()
+        .sort((a, b) => a.length - b.length)
     ),
   ];
 }

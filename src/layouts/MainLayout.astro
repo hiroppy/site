@@ -8,6 +8,7 @@ import GitHub from "../components/icons/GitHub.astro";
 import Facebook from "../components/icons/Facebook.astro";
 import LinkedIn from "../components/icons/LinkedIn.astro";
 import Pencil from "../components/icons/Pencil.astro";
+import Rss from "../components/icons/Rss.astro";
 
 type Props = {
   title: string;
@@ -40,8 +41,8 @@ const { title, content } = Astro.props;
           <SnsIcon href="https://jp.linkedin.com/in/hiroppy" name="Linkedin">
             <LinkedIn />
           </SnsIcon>
-          <SnsIcon href="https://blog.hiroppy.me/" name="Blog">
-            <Pencil />
+          <SnsIcon href="/blog/rss.xml" name="RSS">
+            <Rss />
           </SnsIcon>
         </div>
       </Paper>
