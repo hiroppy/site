@@ -1,0 +1,52 @@
+---
+import BlogCardItem from "../../../../components/BlogCardItem.astro";
+import TagsBox from "../../../../components/TagsBox.astro";
+import Layout from "../../../../layouts/Layout.astro";
+import MainLayout from "../../../../layouts/MainLayout.astro";
+import {
+  getAllTags,
+  sortByDate,
+  createAccordionDescription,
+} from "../../../../utils/blog";
+import type { Mdxs } from "../../../../utils/blog";
+import type { GetStaticPathsOptions, Page } from "astro";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const posts = sortByDate(await Astro.glob("../../*.mdx"));
+  const tags = getAllTags(posts);
+
+  return tags.map((tag) =>
+    paginate(
+      posts.filter((post) => post.frontmatter.tags.includes(tag)),
+      {
+        params: { tag },
+        pageSize: 20,
+      }
+    )
+  );
+}
+
+const allPosts = sortByDate(await Astro.glob("../../*.mdx"));
+const allTags = getAllTags(allPosts);
+const content = createAccordionDescription(allPosts);
+const { tag } = Astro.params;
+const { page } = Astro.props as {
+  page: Page<Mdxs[number]>;
+};
+---
+
+<Layout>
+  <MainLayout title={`Blog / ${tag}`} content={content}>
+    <TagsBox tags={allTags} slot="optional-content" />
+    <a class="text-right text-blue-300 mb-4 block" href="/blog"
+      >👋 Go back to blog/</a
+    >
+    <div class="gap-4 flex flex-col">
+      {
+        page.data.map(({ url, frontmatter }) => (
+          <BlogCardItem url={url!} frontmatter={frontmatter} />
+        ))
+      }
+    </div>
+  </MainLayout>
+</Layout>

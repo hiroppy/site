@@ -18,7 +18,7 @@ export function createAccordionDescription(mdxs: Mdxs) {
     posts.length
   }<br />last posted date - ${formatDate(
     new Date(posts[0].frontmatter.date)
-  )}<br />TODO`;
+  )}<br />previous blog - <a href="https://blog.hiroppy.me" target="_blank">技術探し</a>`;
 }
 
 // TODO: refactor

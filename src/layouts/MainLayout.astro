@@ -7,7 +7,6 @@ import Twitter from "../components/icons/Twitter.astro";
 import GitHub from "../components/icons/GitHub.astro";
 import Facebook from "../components/icons/Facebook.astro";
 import LinkedIn from "../components/icons/LinkedIn.astro";
-import Pencil from "../components/icons/Pencil.astro";
 import Rss from "../components/icons/Rss.astro";
 
 type Props = {
@@ -19,7 +18,7 @@ const { title, content } = Astro.props;
 ---
 
 <main class="flex gap-4 items-start">
-  <div class="sticky top-14 w-64 hidden lg:block shrink-0">
+  <div class="sticky w-64 hidden lg:block shrink-0" style={{ top: "128px" }}>
     <div class="flex flex-col gap-4">
       <Paper>
         <Accordion options={PAGE_LINKS} content={content} />

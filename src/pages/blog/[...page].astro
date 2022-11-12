@@ -1,17 +1,29 @@
 ---
+import type { GetStaticPathsOptions, Page } from "astro";
 import BlogCardItem from "../../components/BlogCardItem.astro";
+import Pagination from "../../components/Pagination.astro";
 import TagsBox from "../../components/TagsBox.astro";
 import Layout from "../../layouts/Layout.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 import {
   createAccordionDescription,
   getAllTags,
+  Mdxs,
   sortByDate,
 } from "../../utils/blog";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const posts = sortByDate(await Astro.glob("./*.mdx"));
+
+  return paginate(posts, { pageSize: 20 });
+}
 
 const posts = sortByDate(await Astro.glob("./*.mdx"));
 const content = createAccordionDescription(posts);
 const allTags = getAllTags(posts);
+const { page } = Astro.props as {
+  page: Page<Mdxs[number]>;
+};
 ---
 
 <Layout>
@@ -24,10 +36,11 @@ const allTags = getAllTags(posts);
     >
     <div class="gap-4 flex flex-col">
       {
-        posts.map(({ url, frontmatter }) => (
+        page.data.map(({ url, frontmatter }) => (
           <BlogCardItem url={url!} frontmatter={frontmatter} />
         ))
       }
     </div>
+    <Pagination prev={page.url.prev} next={page.url.next} />
   </MainLayout>
 </Layout>

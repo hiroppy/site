@@ -2,7 +2,8 @@ export const PAGE_LINKS = <const>[
   {
     icon: "😵‍💫",
     title: "About",
-    content: "Hello, I'm Yuta Hiroto! I like OSS development and sleeping 😴",
+    content:
+      "Hello, I'm Yuta Hiroto! I'm a Node.js and webpack committer and I like OSS development and sleeping 😴",
     href: "/",
   },
   {
