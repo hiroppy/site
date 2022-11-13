@@ -26,7 +26,6 @@ jobs:
           cache: "npm"
       - run: npm i
       - run: npm run astro check
-      - run: npm run build
   build:
     runs-on: ubuntu-latest
     steps:
@@ -37,7 +36,7 @@ jobs:
           cache: "npm"
       - run: npm i
       - run: npm run build
-      - run: sleep 120
+      - run: sleep 60
         shell: bash
         if: contains(github.ref, 'master')
       - run: node scripts/generateCache.mjs
