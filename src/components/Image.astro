@@ -21,16 +21,27 @@ const {
   height,
 } = Astro.props;
 const placeholderColor =
-  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcfPRvPQAHHgLWeG8FbgAAAABJRU5ErkJggg==";
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcfPRvPQAHHgLWeG8FbgAAAABJRU5ErkJggg==";
 
 if (isOptimization && (!width || !height)) {
   throw new Error("width/height should be required");
 }
 ---
 
-{/* astro/image は大きさがわからないものに使うには使いづらい。。 */}
 {
-  isOptimization ? (
+  /* astro/image は大きさがわからないものを扱うのは難しいので、native imageも用意しておく */
+}
+{
+  src === "" ? (
+    <div
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+        background: `url('${placeholderColor}')`,
+      }}
+      class={className}
+    />
+  ) : isOptimization ? (
     <Image
       src={src}
       class={className}
@@ -49,7 +60,7 @@ if (isOptimization && (!width || !height)) {
       decoding="async"
       alt={alt}
       loading={lazy ? "lazy" : "eager"}
-      onerror={`this.onerror=null; this.src='data:image/png;base64,${placeholderColor}'`}
+      onerror={`this.onerror=null; this.src='${placeholderColor}'`}
     />
   )
 }
