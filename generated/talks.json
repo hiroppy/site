@@ -2,7 +2,7 @@
   {
     "title": "Souzoh Tech Talk #05:Infrastructure",
     "description": "9/15（水）に行われたSouzoh Tech Talk #05:Infrastructureの様子です。ぜひご覧ください！",
-    "image": "/images/external/aS55dGltZy5jb20vdmkvMXVDV3pmYUllZEUvaHFkZWZhdWx0LmpwZw==.webp",
+    "image": "/images/external/aS55dGltZy5jb20vdmkvMXVDV3pmYUllZEUvaHFkZWZhdWx0LmpwZw==.jpg",
     "siteName": "【増枠】Souzoh Tech Talk #05:Infrastructure",
     "siteUrl": "https://mercari.connpass.com/event/221980/",
     "url": "https://www.youtube.com/watch?v=1uCWzfaIedE",
@@ -14,7 +14,7 @@
   {
     "title": "Souzoh Tech Talk #03: Frontend",
     "description": "9/1（水）に行ったSouzoh Tech Talk #03: Frontendの様子です！ぜひご覧ください。",
-    "image": "/images/external/aS55dGltZy5jb20vdmkvWU5MdklrcVJDLWcvaHFkZWZhdWx0LmpwZw==.webp",
+    "image": "/images/external/aS55dGltZy5jb20vdmkvWU5MdklrcVJDLWcvaHFkZWZhdWx0LmpwZw==.jpg",
     "siteName": "【増枠】Souzoh Tech Talk #03: Frontend",
     "siteUrl": "https://mercari.connpass.com/event/221978/",
     "url": "https://www.youtube.com/watch?v=YNLvIkqRC-g",
@@ -26,7 +26,7 @@
   {
     "title": "メルカリShopsのキャッシュ戦略",
     "description": "メルカリShopsのブログで紹介したものをスライド化しました",
-    "image": "/images/external/c2xpZGVzLmhpcm9wcHkubWUvY2FjaGUtc3RyYXRlZ3ktb24tbWVyY2FyaS1zaG9wcy90aHVtYm5haWwucG5n.webp",
+    "image": "/images/external/c2xpZGVzLmhpcm9wcHkubWUvY2FjaGUtc3RyYXRlZ3ktb24tbWVyY2FyaS1zaG9wcy90aHVtYm5haWwucG5n.png",
     "siteName": "Node学園 37時限目 オンライン",
     "siteUrl": "https://nodejs.connpass.com/event/221358/",
     "url": "https://slides.hiroppy.me/cache-strategy-on-mercari-shops/",
@@ -35,7 +35,7 @@
   {
     "title": "UIT Meetup vol. 13 『知っておきたいFront-end Toolingの今』",
     "description": "UIT Meetup vol. 13では、Vite、Snowpack、esbuild など、昨今多くの提案がされている Frontend Tooling の分野を深堀りしていきます。なぜ今新しいツールやバンドラーが求められているのか？ それぞれのツールの詳しい使い勝手、そして今後従来のツールを置き換えるものとなる...",
-    "image": "/images/external/aS55dGltZy5jb20vdmkvWHlvZUoxVFJhTWsvaHFkZWZhdWx0LmpwZw==.webp",
+    "image": "/images/external/aS55dGltZy5jb20vdmkvWHlvZUoxVFJhTWsvaHFkZWZhdWx0LmpwZw==.jpg",
     "siteName": "UIT Meetup vol. 13 『知っておきたいFront-end Toolingの今』",
     "siteUrl": "https://uit.connpass.com/event/216043/",
     "url": "https://www.youtube.com/watch?v=XyoeJ1TRaMk",
@@ -46,7 +46,7 @@
   },
   {
     "title": "ツールの成長の歴史とこれから求められるもの",
-    "image": "/images/external/c2xpZGVzLmhpcm9wcHkubWUvdG9vbHMtaGlzdG9yeS1hbmQtZnV0dXJlL3RodW1ibmFpbC5wbmc=.webp",
+    "image": "/images/external/c2xpZGVzLmhpcm9wcHkubWUvdG9vbHMtaGlzdG9yeS1hbmQtZnV0dXJlL3RodW1ibmFpbC5wbmc=.png",
     "siteName": "UIT Meetup vol. 13 『知っておきたいFront-end Toolingの今』",
     "siteUrl": "https://uit.connpass.com/event/216043/",
     "url": "https://slides.hiroppy.me/tools-history-and-future/",
@@ -54,7 +54,7 @@
   },
   {
     "title": "Source Maps v3",
-    "image": "/images/external/c2xpZGVzLmhpcm9wcHkubWUvc291cmNlbWFwLXYzL3RodW1ibmFpbC5wbmc=.webp",
+    "image": "/images/external/c2xpZGVzLmhpcm9wcHkubWUvc291cmNlbWFwLXYzL3RodW1ibmFpbC5wbmc=.png",
     "siteName": "TechFeed Summit#6 - v16リリース記念！Node.jsの最新動向を語り尽くす！",
     "siteUrl": "https://techfeed.connpass.com/event/213218/",
     "url": "https://slides.hiroppy.me/sourcemap-v3/",
@@ -63,7 +63,7 @@
   {
     "title": "a deep dive into module graph",
     "description": "Introducing how to create/run module graph",
-    "image": "/images/external/c2xpZGVzLmhpcm9wcHkubWUvYS1kZWVwLWRpdmUtaW50by1tb2R1bGUtZ3JhcGgvdGh1bWJuYWlsLnBuZw==.webp",
+    "image": "/images/external/c2xpZGVzLmhpcm9wcHkubWUvYS1kZWVwLWRpdmUtaW50by1tb2R1bGUtZ3JhcGgvdGh1bWJuYWlsLnBuZw==.png",
     "siteName": "a certain university",
     "url": "https://slides.hiroppy.me/a-deep-dive-into-module-graph/",
     "publishedAt": "2021-01-25"
@@ -84,7 +84,7 @@
   {
     "title": "introduce ecmascript modules of node.js",
     "description": "Node.js is implementing ECMAScript Modules. This talk will introduce how it resolves modules.",
-    "image": "/images/external/YXZhdGFyczMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvOTk1MDMxMz9zPTIwMCZ2PTQ=.webp",
+    "image": "/images/external/YXZhdGFyczMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvOTk1MDMxMz9zPTIwMCZ2PTQ=.png",
     "siteName": "Dublin Node.js Meetup",
     "url": "https://slides.hiroppy.me/node-esm/",
     "publishedAt": "2019-04-25"
@@ -92,7 +92,7 @@
   {
     "title": "apollo と react を使ったアプリケーション設計",
     "description": "",
-    "image": "/images/external/YXZhdGFyczIuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvMTcxODkyNzU_cz0yMDAmdj00.webp",
+    "image": "/images/external/YXZhdGFyczIuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvMTcxODkyNzU_cz0yMDAmdj00.png",
     "siteName": "React.js meetup #6",
     "siteUrl": "https://reactjs-meetup.connpass.com/event/115274/",
     "url": "https://slides.hiroppy.me/introduce-apollo/",
@@ -101,7 +101,7 @@
   {
     "title": "webpackのイママデとコレカラ",
     "description": "webpackの歴史を辿っていき、機能を紹介していきます。",
-    "image": "/images/external/YXZhdGFyczEuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvMjEwNTc5MT9zPTIwMCZ2PTQ=.webp",
+    "image": "/images/external/YXZhdGFyczEuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvMjEwNTc5MT9zPTIwMCZ2PTQ=.png",
     "siteName": "HTML5 Conference",
     "siteUrl": "https://events.html5j.org/conference/2018/11/",
     "url": "https://slides.hiroppy.me/webpack-history/",
@@ -110,7 +110,7 @@
   {
     "title": "the event loop of node",
     "description": "introduce the mechanism of the event loop",
-    "image": "/images/external/YXZhdGFyczMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvOTk1MDMxMz9zPTIwMCZ2PTQ=.webp",
+    "image": "/images/external/YXZhdGFyczMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvOTk1MDMxMz9zPTIwMCZ2PTQ=.png",
     "siteName": "We Are JavaScripters! @25th【初心者歓迎LT大会",
     "siteUrl": "https://wajs.connpass.com/event/103761/",
     "url": "https://slides.hiroppy.me/the-event-loop-of-node/",
@@ -119,7 +119,7 @@
   {
     "title": "future of node",
     "description": "Introduce the current stability 1 modules and hot topics.",
-    "image": "/images/external/YXZhdGFyczMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvOTk1MDMxMz9zPTIwMCZ2PTQ=.webp",
+    "image": "/images/external/YXZhdGFyczMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvOTk1MDMxMz9zPTIwMCZ2PTQ=.png",
     "siteName": "BPStudy#131〜JavaScriptの今を語る",
     "siteUrl": "https://bpstudy.connpass.com/event/90777/",
     "url": "https://slides.hiroppy.me/future-of-node/",
@@ -128,7 +128,7 @@
   {
     "title": "Worker Threads",
     "description": "introduce worker_threads",
-    "image": "/images/external/YXZhdGFyczMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvOTk1MDMxMz9zPTIwMCZ2PTQ=.webp",
+    "image": "/images/external/YXZhdGFyczMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvOTk1MDMxMz9zPTIwMCZ2PTQ=.png",
     "siteName": "Roppongi.js #4@DMM.com",
     "siteUrl": "https://roppongi-js.connpass.com/event/86684/",
     "url": "https://slides.hiroppy.me/worker_threads/",
@@ -151,7 +151,7 @@
   {
     "title": "node-core-utils",
     "description": "introduce node-core-utils",
-    "image": "/images/external/YXZhdGFyczMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvOTk1MDMxMz9zPTIwMCZ2PTQ=.webp",
+    "image": "/images/external/YXZhdGFyczMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvOTk1MDMxMz9zPTIwMCZ2PTQ=.png",
     "siteName": "【さらに増枠】SRE-SET Automation Night #2",
     "siteUrl": "https://mercari.connpass.com/event/79046/",
     "url": "https://slides.hiroppy.me/node-core-utils/",
@@ -160,7 +160,7 @@
   {
     "title": "how to manage the document of Node.js",
     "description": "",
-    "image": "/images/external/YXZhdGFyczMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvOTk1MDMxMz9zPTIwMCZ2PTQ=.webp",
+    "image": "/images/external/YXZhdGFyczMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvOTk1MDMxMz9zPTIwMCZ2PTQ=.png",
     "siteName": "歌舞伎座.tech#14「OSSドキュメンテーション勉強会」",
     "siteUrl": "https://kbkz.connpass.com/event/5150/",
     "url": "https://slides.hiroppy.me/how-to-manage-the-document-of-Node.js/",
@@ -169,7 +169,7 @@
   {
     "title": "the present and future of JavaScript",
     "description": "Explain how specifications are determined and how it will be in the future.",
-    "image": "/images/external/YXZhdGFyczEuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvMTcyNTU4Mz92PTQmcz0yMDA=.webp",
+    "image": "/images/external/YXZhdGFyczEuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvMTcyNTU4Mz92PTQmcz0yMDA=.png",
     "siteName": "第50回 情報科学若手の会 開催報告 | 情報科学若手の会",
     "siteUrl": "https://wakate.org/2017/10/10/50threport/",
     "url": "https://slides.hiroppy.me/the-present-and-future-of-JavaScript/",
@@ -186,7 +186,7 @@
   {
     "title": "node8",
     "description": "Node@8.0.0の紹介スライド",
-    "image": "/images/external/YXZhdGFyczEuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvOTk1MDMxMz92PTMmcz0yMDA=.webp",
+    "image": "/images/external/YXZhdGFyczEuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvOTk1MDMxMz92PTMmcz0yMDA=.png",
     "siteName": "Node学園 25時限目",
     "siteUrl": "https://nodejs.connpass.com/event/54749/",
     "url": "https://slides.hiroppy.me/node8/",
@@ -204,7 +204,7 @@
   {
     "title": "Node8.3.0について",
     "description": "buildersconの飛び込みLT資料。\n\n以下の記事のスライド版です。\nhttp://abouthiroppy.hatenablog.jp/entry/2017/08/03/095304\n\n",
-    "image": "/images/external/ZmlsZXMuc3BlYWtlcmRlY2suY29tL3ByZXNlbnRhdGlvbnMvYTY1NTc4NzMyMTZiNGI5MWJmZTI3NTE3YmJhMjcxNW.webp",
+    "image": "/images/external/ZmlsZXMuc3BlYWtlcmRlY2suY29tL3ByZXNlbnRhdGlvbnMvYTY1NTc4NzMyMTZiNGI5MWJmZTI3NTE3YmJhMjcxNW.jpg",
     "siteName": "builderscon",
     "url": "https://speakerdeck.com/abouthiroppy/node8-dot-3-0nituite",
     "publishedAt": "2017-08-04"
@@ -212,7 +212,7 @@
   {
     "title": "ECMAScript",
     "description": "https://atnd.org/events/82619 の発表資料",
-    "image": "/images/external/ZmlsZXMuc3BlYWtlcmRlY2suY29tL3ByZXNlbnRhdGlvbnMvMDE3NjI5NTQ5ODZiNGJlM2JhMGFkYmIxZGU2NzM4ZT.webp",
+    "image": "/images/external/ZmlsZXMuc3BlYWtlcmRlY2suY29tL3ByZXNlbnRhdGlvbnMvMDE3NjI5NTQ5ODZiNGJlM2JhMGFkYmIxZGU2NzM4ZT.jpg",
     "siteName": "ALT#07",
     "url": "https://speakerdeck.com/abouthiroppy/ecmascript",
     "publishedAt": "2016-11-20"
@@ -220,7 +220,7 @@
   {
     "title": "reflow/repaint",
     "description": "11/11の社内勉強会資料",
-    "image": "/images/external/ZmlsZXMuc3BlYWtlcmRlY2suY29tL3ByZXNlbnRhdGlvbnMvZDQ3ZWY2MzM0NGYyNGI2MjkzZmY1MGE4NDk1N2E0Zm.webp",
+    "image": "/images/external/ZmlsZXMuc3BlYWtlcmRlY2suY29tL3ByZXNlbnRhdGlvbnMvZDQ3ZWY2MzM0NGYyNGI2MjkzZmY1MGE4NDk1N2E0Zm.jpg",
     "siteName": "frontier-dev-js2 勉強会",
     "url": "https://speakerdeck.com/abouthiroppy/repaint",
     "publishedAt": "2016-11-10"
@@ -228,7 +228,7 @@
   {
     "title": "my tools",
     "description": "8/10の社内勉強会資料",
-    "image": "/images/external/ZmlsZXMuc3BlYWtlcmRlY2suY29tL3ByZXNlbnRhdGlvbnMvMGI4MTNkNjlkOTczNDcwYWJlMzJiZGMwNmRkMGJlMz.webp",
+    "image": "/images/external/ZmlsZXMuc3BlYWtlcmRlY2suY29tL3ByZXNlbnRhdGlvbnMvMGI4MTNkNjlkOTczNDcwYWJlMzJiZGMwNmRkMGJlMz.jpg",
     "siteName": "frontier-dev-js1 勉強会",
     "url": "https://speakerdeck.com/abouthiroppy/my-tools",
     "publishedAt": "2016-08-10"
@@ -236,7 +236,7 @@
   {
     "title": "OSSを楽しむ話",
     "description": "",
-    "image": "/images/external/ZmlsZXMuc3BlYWtlcmRlY2suY29tL3ByZXNlbnRhdGlvbnMvM2U0YzY0NzMyYWJkNDFjMmE4YjI1NDlhM2ZjY2Y0OT.webp",
+    "image": "/images/external/ZmlsZXMuc3BlYWtlcmRlY2suY29tL3ByZXNlbnRhdGlvbnMvM2U0YzY0NzMyYWJkNDFjMmE4YjI1NDlhM2ZjY2Y0OT.jpg",
     "siteName": "Dwangoの社内勉強会",
     "url": "https://speakerdeck.com/abouthiroppy/osswole-simuhua",
     "publishedAt": "2016-04-18"
@@ -244,7 +244,7 @@
   {
     "title": "React Nativeを触ってみた話",
     "description": "",
-    "image": "/images/external/ZmlsZXMuc3BlYWtlcmRlY2suY29tL3ByZXNlbnRhdGlvbnMvODA4YTBmYTE1ZGUwNDBjZTkzOTU1MGU1MmJjMzM1ND.webp",
+    "image": "/images/external/ZmlsZXMuc3BlYWtlcmRlY2suY29tL3ByZXNlbnRhdGlvbnMvODA4YTBmYTE1ZGUwNDBjZTkzOTU1MGU1MmJjMzM1ND.jpg",
     "siteName": "ALT#05",
     "url": "https://speakerdeck.com/abouthiroppy/react-nativewohong-tutemitahua",
     "publishedAt": "2015-10-10"
@@ -252,7 +252,7 @@
   {
     "title": "ブラック企業から学ぶMVCモデル",
     "description": "ブラック企業から学ぶMVCモデル  第47回 情報科学若手の会 2014/09/15   ",
-    "image": "/images/external/Y2RuLnNsaWRlc2hhcmVjZG4uY29tL3NzX3RodW1ibmFpbHMvbXZjLTE0MDkxNDIxMzkxOS1waHBhcHAwMS10aHVtYm.webp",
+    "image": "/images/external/Y2RuLnNsaWRlc2hhcmVjZG4uY29tL3NzX3RodW1ibmFpbHMvbXZjLTE0MDkxNDIxMzkxOS1waHBhcHAwMS10aHVtYm.jpg",
     "siteName": "第47回 情報科学若手の会 開催報告 | 情報科学若手の会",
     "siteUrl": "https://wakate.org/2014/09/16/47threport/",
     "url": "https://www.slideshare.net/about_hiroppy/mvc-39079770",
@@ -261,7 +261,7 @@
   {
     "title": "Alt01-LT",
     "description": "今更ながらALT#1でのLT発表資料を上げました。 angular-fullstack",
-    "image": "/images/external/Y2RuLnNsaWRlc2hhcmVjZG4uY29tL3NzX3RodW1ibmFpbHMvYWx0MDEtMTQwOTI0MDMzNzAxLXBocGFwcDAyLXRodW.webp",
+    "image": "/images/external/Y2RuLnNsaWRlc2hhcmVjZG4uY29tL3NzX3RodW1ibmFpbHMvYWx0MDEtMTQwOTI0MDMzNzAxLXBocGFwcDAyLXRodW.jpg",
     "siteName": "ALT#01",
     "url": "https://www.slideshare.net/about_hiroppy/alt01",
     "publishedAt": "2014-06-24"

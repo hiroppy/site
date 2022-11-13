@@ -29,7 +29,10 @@ const { url, frontmatter } = Astro.props;
     <Image
       src={frontmatter.image}
       alt={frontmatter.title}
-      className="h-20 rounded-lg"
+      className="w-20 h-20"
+      isOptimization
+      width={20 * 4}
+      height={20 * 4}
     />
   </div>
 </Card>

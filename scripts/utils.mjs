@@ -129,32 +129,21 @@ export async function downloadImage(url) {
     ? ".webp"
     : url.includes(".gif")
     ? ".gif"
-    : ".jpg";
+    : ".png";
   const filename = `${Buffer.from(url.replace(/https?:\/\//, ""))
     .toString("base64")
     .replace("/", "_")
-    .slice(0, 90)}`;
-  const webp = `${filename}.webp`;
-  const fullPath = `/images/external/${webp}`;
+    .slice(0, 90)}${ext}`;
+  const fullPath = `/images/external/${filename}`;
   const assets = await readdir(baseImageOutputPath);
 
-  if (assets.includes(webp)) {
+  if (assets.includes(filename)) {
     return fullPath;
   }
 
   await stream(url, { throwOnError: true }, () =>
-    createWriteStream(join(baseImageOutputPath, `${filename}${ext}`))
+    createWriteStream(join(baseImageOutputPath, filename))
   );
 
   return fullPath;
-}
-
-// astro/image has these errors so we don't use it
-// - Error: ENOENT: no such file or directory, open '/Users/hiroppy/programming/site/dist/mozjpeg/mozjpeg_node_dec.wasm'
-// - Unknown image output: "undefined" used for
-// - Input buffer has corrupt header: glib: XML parse error: Error domain 1 code 77 on line 1168 column 1 of data: Premature end of data in tag li line 1037
-export async function convertImageToWebp(path) {
-  await promisifyExec(
-    `npx @squoosh/cli --webp auto ${baseImageOutputPath}/${path} -d ${baseImageOutputPath}`
-  );
 }

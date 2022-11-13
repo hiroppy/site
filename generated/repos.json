@@ -5,48 +5,48 @@
       "url": "https://github.com/nodejs/node",
       "description": "Node.js JavaScript runtime ✨🐢🚀✨",
       "language": "JavaScript",
-      "stars": 91409,
-      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS85OTUwMzEzP3Y9ND9zPTQw.webp"
+      "stars": 91464,
+      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS85OTUwMzEzP3Y9ND9zPTQw.png"
     },
     {
       "name": "hiroppy/fusuma",
       "url": "https://github.com/hiroppy/fusuma",
       "description": "✍️Fusuma makes slides with Markdown easily.",
       "language": "JavaScript",
-      "stars": 5248,
-      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8zMzY3ODAxP3Y9ND9zPTQw.webp"
+      "stars": 5252,
+      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8zMzY3ODAxP3Y9ND9zPTQw.png"
     },
     {
       "name": "webpack/webpack",
       "url": "https://github.com/webpack/webpack",
       "description": "A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows for loading parts of the application on demand. Through \"loaders\", modules can be CommonJs, AMD, ES6 modules, CSS, Images, JSON, Coffeescript, LESS, ... and your custom stuff.",
       "language": "JavaScript",
-      "stars": 62046,
-      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8yMTA1NzkxP3Y9ND9zPTQw.webp"
+      "stars": 62061,
+      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8yMTA1NzkxP3Y9ND9zPTQw.png"
     },
     {
       "name": "webpack/webpack-dev-server",
       "url": "https://github.com/webpack/webpack-dev-server",
       "description": "Serves a webpack app. Updates the browser on changes. Documentation https://webpack.js.org/configuration/dev-server/.",
       "language": "JavaScript",
-      "stars": 7492,
-      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8yMTA1NzkxP3Y9ND9zPTQw.webp"
+      "stars": 7494,
+      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8yMTA1NzkxP3Y9ND9zPTQw.png"
     },
     {
       "name": "babel/babel",
       "url": "https://github.com/babel/babel",
       "description": "🐠 Babel is a compiler for writing next generation JavaScript.",
       "language": "TypeScript",
-      "stars": 41581,
-      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS85NjM3NjQyP3Y9ND9zPTQw.webp"
+      "stars": 41598,
+      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS85NjM3NjQyP3Y9ND9zPTQw.png"
     },
     {
       "name": "stylelint/stylelint",
       "url": "https://github.com/stylelint/stylelint",
       "description": "A mighty, modern linter that helps you avoid errors and enforce conventions in your styles.",
       "language": "JavaScript",
-      "stars": 9983,
-      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8xMDA3NjkzNT92PTQ_cz00MA==.webp"
+      "stars": 9993,
+      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8xMDA3NjkzNT92PTQ_cz00MA==.png"
     },
     {
       "name": "hiroppy/the-sample-of-module-bundler",
@@ -54,7 +54,7 @@
       "description": "You will know how to make a javascript bundler",
       "language": "JavaScript",
       "stars": 33,
-      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8zMzY3ODAxP3Y9ND9zPTQw.webp"
+      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8zMzY3ODAxP3Y9ND9zPTQw.png"
     },
     {
       "name": "hiroppy/slides",
@@ -62,7 +62,7 @@
       "description": "My slides",
       "language": "CSS",
       "stars": 64,
-      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8zMzY3ODAxP3Y9ND9zPTQw.webp"
+      "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8zMzY3ODAxP3Y9ND9zPTQw.png"
     }
   ]
 }

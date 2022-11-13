@@ -26,6 +26,7 @@ jobs:
           cache: "npm"
       - run: npm i
       - run: npm run astro check
+      - run: npm run fmt:check
   build:
     runs-on: ubuntu-latest
     steps:

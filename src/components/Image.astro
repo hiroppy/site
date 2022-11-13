@@ -1,25 +1,55 @@
 ---
+import { Image } from "@astrojs/image/components";
+
 type Props = {
   src: string;
   alt: string;
   className?: string;
   lazy?: boolean;
-  // TODO: remove
-  webp?: boolean;
+  isOptimization: boolean;
+  width?: number;
+  height?: number;
 };
 
-const { src, alt, className, lazy = true, webp } = Astro.props;
+const {
+  src,
+  alt,
+  className,
+  lazy = true,
+  isOptimization,
+  width,
+  height,
+} = Astro.props;
 const placeholderColor =
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcfPRvPQAHHgLWeG8FbgAAAABJRU5ErkJggg==";
-// TODO: only support webp
-const defaultSrc = webp ? src.replace(/\.(png|jpg)$/, ".webp") : src;
+
+if (isOptimization && (!width || !height)) {
+  throw new Error("width/height should be required");
+}
 ---
 
-<img
-  src={defaultSrc}
-  class={className}
-  decoding="async"
-  alt={alt}
-  loading={lazy ? "lazy" : "eager"}
-  onerror={`this.onerror=null; this.src='data:image/png;base64,${placeholderColor}'`}
-/>
+{/* astro/image は大きさがわからないものに使うには使いづらい。。 */}
+{
+  isOptimization ? (
+    <Image
+      src={src}
+      class={className}
+      alt={alt}
+      format="webp"
+      fit="contain"
+      position="left top"
+      background="rgba(0,0,0,0)"
+      width={width! * 4}
+      height={height! * 4}
+    />
+  ) : (
+    <img
+      src={src}
+      class={className}
+      decoding="async"
+      alt={alt}
+      loading={lazy ? "lazy" : "eager"}
+      onerror={`this.onerror=null; this.src='data:image/png;base64,${placeholderColor}'`}
+    />
+  )
+}

@@ -9,14 +9,13 @@
     "preview": "astro preview",
     "astro": "astro",
     "fmt": "prettier -w .",
+    "fmt:check": "prettier --check .",
     "clean": "rm -r ./generated/* ./public/images/external/*",
-    "run:all": "node scripts/index.mjs",
-    "convert:webp": "node scripts/image.mjs"
+    "run:all": "node scripts/index.mjs"
   },
   "devDependencies": {
     "@astrojs/rss": "^1.0.3",
     "@astrojs/tailwind": "^2.1.2",
-    "@squoosh/cli": "^0.7.2",
     "astro": "^1.6.7",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.0.3",
@@ -25,9 +24,11 @@
     "prettier": "^2.7.1",
     "prettier-plugin-astro": "^0.7.0",
     "rss-parser": "^3.12.0",
+    "sharp": "^0.31.2",
     "undici": "^5.12.0"
   },
   "dependencies": {
+    "@astrojs/image": "^0.11.4",
     "@astrojs/mdx": "^0.11.6",
     "@astrojs/partytown": "^1.0.1",
     "@astrojs/sitemap": "^1.0.0"
