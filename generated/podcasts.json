@@ -29,7 +29,6 @@
     "image": "/images/external/bW96YWljLmZtL2Fzc2V0cy9pbWcvbW96YWljLjYwMHg2MDAucG5n.png",
     "siteName": "mozaic.fm",
     "url": "https://mozaic.fm/episodes/102/monthly-ecosystem-202208.html",
-    "comment": "初出演🎉",
     "publishedAt": "2022-08-20"
   },
   {
@@ -47,7 +46,6 @@
     "image": "/images/external/aS5zY2RuLmNvL2ltYWdlL2FiNjc2NTYzMDAwMGJhOGE2MzY3OTRiMzA5ZmMwODRhZTI3NmFmNmM=.png",
     "siteName": "Spotify",
     "url": "https://open.spotify.com/episode/4lExWWHOz4AGxrikd8w99A",
-    "comment": "",
     "publishedAt": "2021-09-10",
     "appendixes": {
       "youtube": "https://www.youtube.com/watch?v=YNLvIkqRC-g"
@@ -59,7 +57,9 @@
     "image": "/images/external/dm9zLmxpbmUtc2Nkbi5uZXQvcG9kY2FzdC9vcGVuZ3JhcGhzL2VwaXNvZGUwOTMucG5n.png",
     "siteName": "UIT INSIDE",
     "url": "https://uit-inside.linecorp.com/episode/93",
-    "comment": "https://engineering.linecorp.com/ja/blog/uit-meetup-vol-13/",
-    "publishedAt": "2021-07-30"
+    "publishedAt": "2021-07-30",
+    "appendixes": {
+      "blog": "https://engineering.linecorp.com/ja/blog/uit-meetup-vol-13"
+    }
   }
 ]

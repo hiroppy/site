@@ -1,7 +1,10 @@
 ---
 import Card from "../components/Card.astro";
 import Image from "../components/Image.astro";
-import Link from "./Link.astro";
+import GitHub from "./icons/GitHub.astro";
+import Pencil from "./icons/Pencil.astro";
+import Youtube from "./icons/Youtube.astro";
+import SnsIcon from "./SnsIcon.astro";
 
 type Props = {
   items: DataItem[];
@@ -18,7 +21,6 @@ const { items } = Astro.props;
         description,
         url,
         publishedAt,
-        comment,
         image,
         appendixes,
         siteName,
@@ -52,7 +54,7 @@ const { items } = Astro.props;
                   )}
                 </div>
               </div>
-              <div class="mt-4 flex gap-5 items-start break-all">
+              <div class="mt-4 flex gap-5 break-all">
                 {image && (
                   <Image
                     src={image}
@@ -63,23 +65,17 @@ const { items } = Astro.props;
                     isOptimization
                   />
                 )}
-                <div class="flex-1">
+                <div class="flex-1 flex gap-4 flex-col justify-between">
                   <p class="text-gray-100 text-xs">{description}</p>
-                  {(comment || appendixes) && (
-                    <div class="mt-4 p-3 text-xs rounded-lg border bg-gray-600 border-gray-500 text-gray-200 break-all">
-                      {comment && <p>{comment}</p>}
-                      {appendixes && (
-                        <div>
-                          {Object.entries(appendixes).map(([key, value]) => (
-                            <>
-                              <span>{key}: </span>
-                              <Link href={value as string} isBlank>
-                                {value}
-                              </Link>
-                            </>
-                          ))}
-                        </div>
-                      )}
+                  {appendixes && (
+                    <div>
+                      {Object.entries(appendixes).map(([key, value]) => (
+                        <SnsIcon href={value} name={key}>
+                          {key === "github" && <GitHub />}
+                          {key === "youtube" && <Youtube />}
+                          {key === "blog" && <Pencil />}
+                        </SnsIcon>
+                      ))}
                     </div>
                   )}
                 </div>
