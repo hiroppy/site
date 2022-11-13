@@ -14,7 +14,6 @@ on:
       - "src/**"
       - "data/**"
       - ".github/workflows/ci.yml"
-
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -73,3 +72,25 @@ jobs:
           path: ./dist
       - run: npm install -g serve pa11y-ci
       - run: serve dist & pa11y-ci
+  vrt:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.27.0-focal
+      options: --user root
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: npm
+      - uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: ./dist
+      - run: npm i
+      - run: npm test
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
