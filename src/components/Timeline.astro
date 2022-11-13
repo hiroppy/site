@@ -70,7 +70,7 @@ const { items } = Astro.props;
                   {appendixes && (
                     <div>
                       {Object.entries(appendixes).map(([key, value]) => (
-                        <SnsIcon href={value} name={key}>
+                        <SnsIcon href={value!} name={key}>
                           {key === "github" && <GitHub />}
                           {key === "youtube" && <Youtube />}
                           {key === "blog" && <Pencil />}

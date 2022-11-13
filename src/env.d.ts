@@ -12,7 +12,7 @@ type DataItem = {
   icon: string;
   hot?: boolean;
   prefixForTitle: string;
-  appendixes?: Record<string, string>;
+  appendixes?: Record<string, string | undefined>;
 };
 
 type BlogFrontmatter = {

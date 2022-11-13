@@ -1,3 +1,5 @@
+export const SITE_TITLE = "hiroppy's site";
+
 export const PAGE_LINKS = <const>[
   {
     icon: "😵‍💫",
