@@ -19,7 +19,7 @@ const jobs = Object.entries(data)
   .flat();
 
 function calcLengthFromDate(start: string, end: string | "-") {
-  const [year, month] = start.split("/").map((v) => Number(v));
+  const [year, month] = start.split("-").map((v) => Number(v));
 
   if (year < minYeah || year > maxYeah || month < 0 || month > 12) {
     throw new Error(`Invalid number: ${year}, ${month}`);
@@ -30,7 +30,7 @@ function calcLengthFromDate(start: string, end: string | "-") {
   let height;
 
   if (end !== "-") {
-    const [year, month] = end.split("/").map((v) => Number(v));
+    const [year, month] = end.split("-").map((v) => Number(v));
     const t = getTotalMonths(year, month);
 
     height = (t - totalMonths) * monthPx;
@@ -112,7 +112,7 @@ function getTotalMonths(year: number, month: number) {
                 <div class="relative">
                   <span>{name}</span>
                   <div class="rounded px-2 py-1 absolute -top-12 -translate-x-1/2 left-1/2 bg-gray-800 opacity-0 group-hover:opacity-100 transition pointer-events-none min-w-max text-sm text-center text-gray-300 font-normal z-20">
-                    <p>{`${start} - ${end === "-" ? "" : end}`.trim()}</p>
+                    <p>{`${start} ~ ${end === "-" ? "" : end}`.trim()}</p>
                     <p>
                       {position}: {comment}
                     </p>
