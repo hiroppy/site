@@ -1,14 +1,14 @@
 name: ci
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
     paths:
       - "package.json"
       - "src/**"
       - "data/**"
       - ".github/workflows/ci.yml"
   push:
-    branches: [master]
+    branches: [main]
     paths:
       - "package.json"
       - "src/**"
@@ -39,6 +39,6 @@ jobs:
       - run: npm run build
       - run: sleep 60
         shell: bash
-        if: contains(github.ref, 'master')
+        if: contains(github.ref, 'main')
       - run: node scripts/generateCache.mjs
-        if: contains(github.ref, 'master')
+        if: contains(github.ref, 'main')
