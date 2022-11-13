@@ -21,8 +21,7 @@ export function createAccordionDescription(mdxs: Mdxs) {
   )}<br />previous blog - <a href="https://blog.hiroppy.me" target="_blank">技術探し</a>`;
 }
 
-// TODO: refactor
-export function getTags(tags: string) {
+export function parseTags(tags: string) {
   return tags.split(",").map((v) => v.trim());
 }
 
@@ -30,7 +29,7 @@ export function getAllTags(mdxs: Mdxs) {
   return [
     ...new Set(
       mdxs
-        .map((post) => post.frontmatter.tags.split(",").map((v) => v.trim()))
+        .map((post) => parseTags(post.frontmatter.tags))
         .flat()
         .sort((a, b) => a.length - b.length)
     ),

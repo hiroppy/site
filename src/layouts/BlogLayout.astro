@@ -5,7 +5,11 @@ import MainLayout from "./MainLayout.astro";
 import Paper from "../components/Paper.astro";
 import type { MarkdownLayoutProps } from "astro/dist/@types/astro";
 import ShareButtons from "../components/ShareButtons.astro";
-import { createAccordionDescription, getTags, sortByDate } from "../utils/blog";
+import {
+  createAccordionDescription,
+  parseTags,
+  sortByDate,
+} from "../utils/blog";
 import Link from "../components/Link.astro";
 import { HATENA_BLOG_URL } from "../constants";
 
@@ -16,9 +20,14 @@ const indices = headings.filter((heading) => heading.depth < 4);
 const diffDate =
   (new Date().getTime() - new Date(frontmatter.date).getTime()) /
   (60 * 60 * 1000 * 24);
-const posts = sortByDate(await Astro.glob("../pages/blog/*.mdx"));
-const content = createAccordionDescription(posts);
 const { title, url, description, image, tags } = frontmatter;
+// HMRで重くなるため、dev環境ではglobをさせない
+const posts = import.meta.env.PROD
+  ? sortByDate(await Astro.glob("../pages/blog/*.mdx"))
+  : [];
+const content = import.meta.env.PROD
+  ? createAccordionDescription(posts)
+  : "dev mode doesn't show the content";
 const index = posts.findIndex(
   ({ url }) => url === Astro.url.pathname.replace(/\/$/, "" /* for prod */)
 );
@@ -45,7 +54,7 @@ const index = posts.findIndex(
     <p class="text-sm mb-10 text-right">{date}</p>
     <div class="flex gap-4 mb-8 flex-col">
       {
-        getTags(tags).includes("javascript") && diffDate > 365 && (
+        parseTags(tags).includes("javascript") && diffDate > 365 && (
           <div class="bg-yellow-500 p-2 rounded-sm">
             <span class="text-gray-800 text-sm">
               🚨 This article hasn't been updated in over a year

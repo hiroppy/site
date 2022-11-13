@@ -1,7 +1,7 @@
 ---
 import Card from "./Card.astro";
 import Image from "./Image.astro";
-import { getTags } from "../utils/blog";
+import { parseTags } from "../utils/blog";
 import { formatDate } from "../utils/formatDate";
 
 type Props = {
@@ -22,7 +22,7 @@ const { url, frontmatter } = Astro.props;
       <div class="flex gap-3 items-center text-gray-300 text-sm">
         <span>{formatDate(new Date(frontmatter.date))}</span>
         <div class="flex gap-2">
-          {getTags(frontmatter.tags).map((tag) => <span>#{tag}</span>)}
+          {parseTags(frontmatter.tags).map((tag) => <span>#{tag}</span>)}
         </div>
       </div>
     </div>
