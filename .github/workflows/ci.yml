@@ -27,3 +27,18 @@ jobs:
       - run: npm i
       - run: npm run astro check
       - run: npm run build
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+      - run: npm i
+      - run: npm run build
+      - run: sleep 120
+        shell: bash
+        if: contains(github.ref, 'master')
+      - run: node scripts/generateCache.mjs
+        if: contains(github.ref, 'master')
