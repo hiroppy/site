@@ -1,0 +1,54 @@
+name: generate-data
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/*.json"
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+      - run: npm i
+      - uses: tj-actions/changed-files@v34
+        id: changed-files
+        with:
+          files: |
+            data/*.json
+      - name: achievements
+        if: contains(steps.changed-files.outputs.modified_files, 'data/achievements.json')
+        run: node scripts/achievements.mjs
+      - name: articles
+        if: contains(steps.changed-files.outputs.modified_files, 'data/articles.json') || contains(steps.changed-files.outputs.modified_files, 'data/hatena.json')
+        run: node scripts/articles.mjs
+      - name: jobs
+        if: contains(steps.changed-files.outputs.modified_files, 'data/jobs.json')
+        run: node scripts/jobs.mjs
+      - name: podcasts
+        if: contains(steps.changed-files.outputs.modified_files, 'data/podcasts.json')
+        run: node scripts/podcasts.mjs
+      - name: repos
+        if: contains(steps.changed-files.outputs.modified_files, 'data/repos.json')
+        run: node scripts/repos.mjs
+      - name: talks
+        if: contains(steps.changed-files.outputs.modified_files, 'data/talks.json')
+        run: node scripts/talks.mjs
+      - run: npm run fmt
+      - name: Commit to repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+          COMMIT_MSG: |
+            update generated data
+        run: |
+          git config user.email "no-reply@hiroppy.me"
+          git config user.name "hiroppy-bot"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          git checkout main
+          git add .
+          git diff --quiet && git diff --staged --quiet || (git commit -m "${COMMIT_MSG}"; git push origin main)
