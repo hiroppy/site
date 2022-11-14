@@ -58,5 +58,12 @@
     "appendixes": {
       "github": "https://github.com/nodejs/node"
     }
+  },
+  {
+    "title": "蝉丸ファン on Twitter",
+    "description": "“そういえば僕のドワンゴ退職の履歴がニコニコ大百科にのっていました。 https://t.co/lMkfIJgK5R”",
+    "siteName": "Twitter",
+    "url": "https://twitter.com/about_hiroppy/status/876982250855833600",
+    "publishedAt": "2017-06-20"
   }
 ]
