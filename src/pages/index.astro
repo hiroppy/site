@@ -27,7 +27,8 @@ import Link from "../components/Link.astro";
         <p>
           Hiroppy is a JavaScript engineer and working on some OSS projects and
           Japanese communities. I have lived in Japan and Ireland, and now I
-          work in <Link href="https://yuimedi.com/en" isBlank>Yuimedi, inc</Link
+          work in <Link name="Yuimedi" href="https://yuimedi.com/en" isBlank
+            >Yuimedi, inc</Link
           >
           that is a medical IT company as PVoE in Japan.
         </p>
@@ -48,7 +49,12 @@ import Link from "../components/Link.astro";
               .filter(({ hot }) => !!hot)
               .map(({ url, title, image, bookmark }) => (
                 <li class="flex flex-col gap-2 items-start bg-slate-600 p-2 sm:p-3 rounded-lg justify-between">
-                  <Link href={url} isBlank className="text-blue-200">
+                  <Link
+                    name={title}
+                    href={url}
+                    isBlank
+                    className="text-blue-200"
+                  >
                     {title}
                   </Link>
                   <div class="flex justify-between w-full items-end text-gray-300">
@@ -83,7 +89,12 @@ import Link from "../components/Link.astro";
                     isOptimization
                   />
                   <div class="flex flex-col text-sm flex-1 gap-2">
-                    <Link href={url} isBlank className="text-blue-200 text-lg">
+                    <Link
+                      name={name}
+                      href={url}
+                      isBlank
+                      className="text-blue-200 text-lg"
+                    >
                       {name}
                     </Link>
                     <span class="break-all flex-1">{description}</span>
@@ -132,7 +143,7 @@ import Link from "../components/Link.astro";
         <div class="flex flex-wrap gap-2">
           {
             sponsors.current.map(({ name, href, avatar }) => (
-              <Link href={href} isBlank>
+              <Link name={name} href={href} isBlank>
                 <Image
                   src={avatar}
                   alt={name}
@@ -146,7 +157,7 @@ import Link from "../components/Link.astro";
           }
           {
             sponsors.past.map(({ name, href, avatar }) => (
-              <Link href={href} isBlank aria-label={name ?? "private user"}>
+              <Link href={href} isBlank name={name ?? "private user"}>
                 <Image
                   src={avatar ?? ""}
                   alt={name ?? "private user"}

@@ -3,7 +3,7 @@ module.exports = {
     collect: {
       staticDistDir: "./dist",
       url: ["/", "/media", "/blog", "/blog/vrt"],
-      numberOfRuns: 1,
+      numberOfRuns: 2,
     },
     assert: {
       preset: "lighthouse:no-pwa",
@@ -12,7 +12,7 @@ module.exports = {
         deprecations: "off",
         // no js
         "csp-xss": "off",
-        "render-blocking-resources": ["error", { maxLength: 2 }],
+        "render-blocking-resources": ["error", { maxLength: 3 }],
         "uses-responsive-images": "off",
         // for twitter card
         "unused-javascript": "off",
