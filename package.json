@@ -9,6 +9,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "check": "astro check",
     "fmt": "prettier -w .",
     "fmt:check": "prettier --check .",
     "clean": "rm -r ./generated/* ./public/images/external/*",
