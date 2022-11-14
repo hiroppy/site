@@ -2,11 +2,11 @@ module.exports = {
   ci: {
     collect: {
       staticDistDir: "./dist",
-      url: ["/", "/media", "/blog", "/blog/join-yuimedi"],
+      url: ["/", "/media", "/blog", "/blog/vrt"],
       numberOfRuns: 1,
     },
     assert: {
-      preset: "lighthouse:no-pwa",
+      preset: ["lighthouse:recommended", "lighthouse:no-pwa"],
       assertions: {
         // for partytown
         deprecations: "off",
