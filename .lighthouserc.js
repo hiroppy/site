@@ -3,7 +3,7 @@ module.exports = {
     collect: {
       staticDistDir: "./dist",
       url: ["/", "/media", "/blog", "/blog/vrt"],
-      numberOfRuns: 2,
+      numberOfRuns: 1,
     },
     assert: {
       preset: "lighthouse:no-pwa",
