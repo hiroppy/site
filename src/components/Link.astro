@@ -1,11 +1,12 @@
 ---
 type Props = {
+  name: string;
   href: string;
   isBlank?: boolean;
   className?: string;
 };
 
-const { href, isBlank = false, className } = Astro.props;
+const { name, href, isBlank = false, className } = Astro.props;
 ---
 
 <a
@@ -13,5 +14,6 @@ const { href, isBlank = false, className } = Astro.props;
   target={isBlank ? "_blank" : undefined}
   class={className ?? "text-blue-300"}
   rel="noreferrer"
+  aria-label={`Link for ${name}`}
   ><slot />
 </a>

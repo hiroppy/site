@@ -13,7 +13,8 @@
     "fmt": "prettier -w .",
     "fmt:check": "prettier --check .",
     "clean": "rm -r ./generated/* ./public/images/external/*",
-    "run:all": "node scripts/index.mjs"
+    "run:all": "node scripts/index.mjs",
+    "cache": "node scripts/generatecache.mjs"
   },
   "devDependencies": {
     "cheerio": "^1.0.0-rc.12",

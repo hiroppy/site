@@ -37,3 +37,7 @@ jobs:
           cache: "npm"
       - run: npm i
       - run: npm run build
+      - run: npm install -g @lhci/cli
+      - run: lhci autorun --upload.target=temporary-public-storage
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

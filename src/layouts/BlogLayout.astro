@@ -80,7 +80,11 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.u
         frontmatter.hatenaPath && (
           <div class="bg-gray-600 p-2 mb-8 rounded-sm text-sm">
             📸 This post was copied from{" "}
-            <Link href={`${HATENA_BLOG_URL}/${frontmatter.hatenaPath}`} isBlank>
+            <Link
+              name="Hatena"
+              href={`${HATENA_BLOG_URL}/${frontmatter.hatenaPath}`}
+              isBlank
+            >
               Hatena Blog
             </Link>
           </div>
@@ -97,16 +101,18 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.u
         index !== -1 && (
           <div class="flex justify-between mt-10 flex-col md:flex-row gap-2 text-center">
             {index !== 0 ? (
-              <Link href={posts[index - 1].url!}>{`< ${
-                posts[index - 1].frontmatter.title
-              }`}</Link>
+              <Link
+                name={posts[index - 1].frontmatter.title}
+                href={posts[index - 1].url!}
+              >{`< ${posts[index - 1].frontmatter.title}`}</Link>
             ) : (
               <div />
             )}
             {index !== posts.length - 1 && (
-              <Link href={posts[index + 1].url!}>{`${
-                posts[index + 1].frontmatter.title
-              } >`}</Link>
+              <Link
+                name={posts[index + 1].frontmatter.title}
+                href={posts[index + 1].url!}
+              >{`${posts[index + 1].frontmatter.title} >`}</Link>
             )}
           </div>
         )

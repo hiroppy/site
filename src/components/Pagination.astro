@@ -10,6 +10,6 @@ const { prev, next } = Astro.props;
 ---
 
 <div class="flex justify-between items-center mt-4">
-  {prev ? <Link href={prev}>{`< back`}</Link> : <div />}
-  {next && <Link href={next}>{`next page >`}</Link>}
+  {prev ? <Link href={prev} name="prev">{`< back`}</Link> : <div />}
+  {next && <Link href={next} name="next">{`next page >`}</Link>}
 </div>
