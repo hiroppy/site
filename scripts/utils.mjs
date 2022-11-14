@@ -6,7 +6,6 @@ import { exec } from "node:child_process";
 import { promisify } from "node:util";
 import { readFile, writeFile } from "node:fs/promises";
 import { load } from "cheerio";
-import ParseFeed from "rss-parser";
 
 const promisifyExec = promisify(exec);
 

@@ -5,38 +5,42 @@ import {
   sortItems,
   downloadImage,
 } from "./utils.mjs";
-import ParseFeed from "rss-parser";
+import { load } from "cheerio";
 
 const { hot: hatenaHot } = await readData("hatena");
 
+const hatenaRes = await fetch("https://blog.hiroppy.me/rss?size=100")
+  .then((res) => res.text())
+  .then((res) =>
+    // cheerioはlinkのタグを抽出できない
+    res
+      .replace(/\<(link)\>/g, "<linkTag>")
+      .replace(/\<\/(link)\>/g, "</linkTag>")
+  );
+const items = load(hatenaRes)("item").toArray();
+
 // hatena
-const parse = new ParseFeed({
-  customFields: {
-    item: [],
-  },
-});
-const res = await parse.parseURL("https://blog.hiroppy.me/rss?size=100");
 const platform = {
-  siteName: res.title,
-  siteUrl: res.link,
+  siteName: load(hatenaRes)("channel > title").text(),
+  siteUrl: load(hatenaRes)("channel > linkTag").text(),
 };
+
 const hatena = await Promise.all(
-  res.items.map(async ({ title, link, enclosure, isoDate, categories }) => ({
-    ...platform,
-    hot: hatenaHot.includes(link),
-    url: link,
-    title,
-    image: await downloadImage(enclosure.url),
-    publishedAt: `${isoDate}`.split("T")[0],
-    category: categories?.includes("life")
-      ? "life"
-      : categories?.includes("JavaScript") ||
-        categories?.includes("Node") ||
-        categories?.includes("webpack") ||
-        categories?.includes("GitHub")
-      ? "tech"
-      : "",
-  }))
+  items.map(async (item) => {
+    const $ = load(item);
+    const link = $("linkTag").text();
+
+    return {
+      ...platform,
+      hot: hatenaHot.includes(link),
+      url: link,
+      title: $("title").text(),
+      image: await downloadImage($("enclosure").attr("url")),
+      publishedAt: `${new Date($("pubDate").text()).toISOString()}`.split(
+        "T"
+      )[0],
+    };
+  })
 );
 
 await getBookmark("https://hiroppy.me");

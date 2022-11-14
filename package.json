@@ -20,7 +20,6 @@
     "octokit": "^2.0.10",
     "prettier": "^2.7.1",
     "prettier-plugin-astro": "^0.7.0",
-    "rss-parser": "^3.12.0",
     "sharp": "^0.31.2"
   },
   "dependencies": {
