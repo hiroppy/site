@@ -16,8 +16,12 @@ module.exports = {
         "uses-responsive-images": "off",
         // for twitter card
         "unused-javascript": "off",
-        // a blog page doesn't convert to webp
+        // a article page doesn't convert to webp
         "uses-optimized-images": "off",
+        // for article page
+        "unsized-images": "off",
+        // for article page
+        "modern-image-formats": "off",
       },
     },
   },
