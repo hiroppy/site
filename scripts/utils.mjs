@@ -7,7 +7,6 @@ import { promisify } from "node:util";
 import { readFile, writeFile } from "node:fs/promises";
 import { load } from "cheerio";
 import ParseFeed from "rss-parser";
-import { stream } from "undici";
 
 const promisifyExec = promisify(exec);
 
@@ -141,9 +140,12 @@ export async function downloadImage(url) {
     return fullPath;
   }
 
-  await stream(url, { throwOnError: true }, () =>
-    createWriteStream(join(baseImageOutputPath, filename))
-  );
+  const response = await fetch(url);
+  const blob = await response.blob();
+  const arrayBuffer = await blob.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+
+  createWriteStream(join(baseImageOutputPath, filename)).write(buffer);
 
   return fullPath;
 }

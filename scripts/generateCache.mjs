@@ -1,7 +1,6 @@
 import { join } from "node:path";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { fetch } from "undici";
 import { load } from "cheerio";
 
 const xml = await readFile(

@@ -1,5 +1,4 @@
 import { load } from "cheerio";
-import { fetch } from "undici";
 import { readData, generateData, downloadImage } from "./utils.mjs";
 
 // github apiでは過去に寄付してくれた方を取得できないのでhtmlから取る

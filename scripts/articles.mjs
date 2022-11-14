@@ -6,7 +6,6 @@ import {
   downloadImage,
 } from "./utils.mjs";
 import ParseFeed from "rss-parser";
-import { fetch } from "undici";
 
 const { hot: hatenaHot } = await readData("hatena");
 
