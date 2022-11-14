@@ -6,7 +6,7 @@ module.exports = {
       numberOfRuns: 1,
     },
     assert: {
-      preset: ["lighthouse:recommended", "lighthouse:no-pwa"],
+      preset: "lighthouse:no-pwa",
       assertions: {
         // for partytown
         deprecations: "off",

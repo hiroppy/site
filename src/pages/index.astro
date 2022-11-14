@@ -146,7 +146,7 @@ import Link from "../components/Link.astro";
           }
           {
             sponsors.past.map(({ name, href, avatar }) => (
-              <Link href={href} isBlank>
+              <Link href={href} isBlank aria-label={name ?? "private user"}>
                 <Image
                   src={avatar ?? ""}
                   alt={name ?? "private user"}
