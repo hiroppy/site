@@ -12,6 +12,8 @@ import {
 } from "../utils/blog";
 import Link from "../components/Link.astro";
 import { HATENA_BLOG_URL } from "../constants";
+import SnsIcon from "../components/SnsIcon.astro";
+import GitHub from "../components/icons/GitHub.astro";
 
 const { frontmatter, headings } =
   Astro.props as MarkdownLayoutProps<BlogFrontmatter>;
@@ -31,6 +33,7 @@ const content = import.meta.env.PROD
 const index = posts.findIndex(
   ({ url }) => url === Astro.url.pathname.replace(/\/$/, "" /* for prod */)
 );
+const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.url.pathname}.mdx`;
 ---
 
 <Layout title={title} description={description} image={image}>
@@ -51,7 +54,18 @@ const index = posts.findIndex(
         </ol>
       </div>
     </Paper>
-    <p class="text-sm mb-10 text-right">{date}</p>
+    <div class="flex gap-4 mb-10 justify-end items-center text-sm">
+      <p>{date}</p>
+      <SnsIcon
+        name="GitHub"
+        href={githubUrl}
+        text="Edit"
+        className="w-4 h-4 text-blue-300"
+        textClassName="text-blue-300"
+      >
+        <GitHub />
+      </SnsIcon>
+    </div>
     <div class="flex gap-4 mb-8 flex-col">
       {
         parseTags(tags).includes("javascript") && diffDate > 365 && (

@@ -4,9 +4,10 @@ type Props = {
   name: string;
   text?: string;
   className?: string;
+  textClassName?: string;
 };
 
-const { href, name, text, className = "w-5 h-5" } = Astro.props;
+const { href, name, text, className = "w-5 h-5", textClassName } = Astro.props;
 ---
 
 <a
@@ -26,5 +27,5 @@ const { href, name, text, className = "w-5 h-5" } = Astro.props;
   >
     <slot />
   </svg>
-  {text && <span>{text}</span>}
+  {text && <span class={textClassName}>{text}</span>}
 </a>
