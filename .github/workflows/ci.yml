@@ -73,6 +73,7 @@ jobs:
       - run: npm install -g serve pa11y-ci
       - run: serve dist & pa11y-ci
   vrt:
+    needs: [build]
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.27.0-focal
