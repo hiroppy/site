@@ -1,8 +1,10 @@
+const paths = require("./testedPaths.cjs");
+
 module.exports = {
   ci: {
     collect: {
       staticDistDir: "./dist",
-      url: ["/", "/media", "/blog", "/blog/vrt"],
+      url: paths,
       numberOfRuns: 1,
     },
     assert: {
@@ -16,12 +18,8 @@ module.exports = {
         "uses-responsive-images": "off",
         // for twitter card
         "unused-javascript": "off",
-        // a article page doesn't convert to webp
-        "uses-optimized-images": "off",
         // for article page
         "unsized-images": "off",
-        // for article page
-        "modern-image-formats": "off",
       },
     },
   },

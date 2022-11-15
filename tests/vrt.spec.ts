@@ -1,12 +1,6 @@
 import { test, expect } from "@playwright/test";
-
-const paths = <const>[
-  "/",
-  "/jobs",
-  "/blog",
-  "/blog/vrt",
-  "/media/achievements",
-];
+// @ts-expect-error
+import paths from "../testedPaths.cjs";
 
 for (const path of paths) {
   test(`VRT: ${path}`, async ({ page }) => {
