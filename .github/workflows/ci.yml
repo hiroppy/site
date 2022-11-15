@@ -75,14 +75,14 @@ jobs:
   vrt:
     needs: [build]
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.27.0-focal
-      options: --user root
+    # container:
+    #   image: mcr.microsoft.com/playwright:v1.27.0-focal
+    #   options: --user root
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "14"
+          node-version: "18"
           cache: npm
       - uses: actions/download-artifact@v3
         with:
@@ -90,7 +90,6 @@ jobs:
           path: ./dist
       - run: npm i
       - run: npm i serve -g
-      - run: npx playwright install --with-deps chromium
       - run: npm test
       - uses: actions/upload-artifact@v3
         if: always()
