@@ -72,25 +72,25 @@ jobs:
           path: ./dist
       - run: npm install -g serve pa11y-ci
       - run: serve dist & pa11y-ci
-  vrt:
-    needs: [build]
-    runs-on: macos-12
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-          cache: npm
-      - uses: actions/download-artifact@v3
-        with:
-          name: dist
-          path: ./dist
-      - run: |
-          npm i
-          npx playwright install --with-deps chromium
-      - run: npm test
-      - uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: test-results
-          path: test-results/
+  # vrt:
+  #   needs: [build]
+  #   runs-on: macos-12
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: "18"
+  #         cache: npm
+  #     - uses: actions/download-artifact@v3
+  #       with:
+  #         name: dist
+  #         path: ./dist
+  #     - run: |
+  #         npm i
+  #         npx playwright install --with-deps chromium
+  #     - run: npm test
+  #     - uses: actions/upload-artifact@v3
+  #       if: failure()
+  #       with:
+  #         name: test-results
+  #         path: test-results/
