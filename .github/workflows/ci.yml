@@ -89,6 +89,7 @@ jobs:
           name: dist
           path: ./dist
       - run: npm i
+      - run: npm i serve -g
       - run: npm test
       - uses: actions/upload-artifact@v3
         if: always()

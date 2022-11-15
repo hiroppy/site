@@ -2,7 +2,8 @@ import type { PlaywrightTestConfig } from "@playwright/test";
 
 const config: PlaywrightTestConfig = {
   webServer: {
-    command: "npm run preview",
+    // command: "npm run preview",
+    command: "serve dist",
     port: 3000,
   },
 };
