@@ -6,4 +6,5 @@ npm-debug.log
 .env
 .eslintcache
 dist
-.lighthouseci/
+.lighthouseci
+test-results

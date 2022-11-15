@@ -64,7 +64,7 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.u
     <div class="flex gap-4 mb-8 flex-col">
       {
         parseTags(tags).includes("javascript") && diffDate > 365 && (
-          <div class="bg-yellow-500 p-2 rounded-sm">
+          <div class="bg-yellow-500 p-3 rounded-md">
             <span class="text-gray-800 text-sm">
               🚨 This article hasn't been updated in over a year
             </span>
@@ -73,8 +73,8 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.u
       }
       {
         frontmatter.hatenaPath && (
-          <div class="bg-gray-600 p-2 mb-8 rounded-sm text-sm">
-            📸 This post was copied from{" "}
+          <div class="bg-gray-800 p-3 mb-8 rounded-md text-sm">
+            💁‍♀️ This post was copied from{" "}
             <Link
               name="Hatena"
               href={`${HATENA_BLOG_URL}/${frontmatter.hatenaPath}`}
