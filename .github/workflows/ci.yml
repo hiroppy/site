@@ -74,7 +74,7 @@ jobs:
       - run: serve dist & pa11y-ci
   vrt:
     needs: [build]
-    runs-on: macos-latest
+    runs-on: macos-12
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -92,5 +92,5 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
-          name: playwright-report
-          path: playwright-report/
+          name: test-results
+          path: test-results/
