@@ -1,6 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import MainLayout from "../../layouts/MainLayout.astro";
 import MediaLayout from "../../layouts/MediaLayout.astro";
 import Timeline from "../../components/Timeline.astro";
 import articles from "../../../generated/articles.json";
@@ -31,9 +30,7 @@ const sites = sortItems([
 ---
 
 <Layout>
-  <MainLayout title="Media / all">
-    <MediaLayout>
-      <Timeline items={sites} />
-    </MediaLayout>
-  </MainLayout>
+  <MediaLayout>
+    <Timeline items={sites} />
+  </MediaLayout>
 </Layout>

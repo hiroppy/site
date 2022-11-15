@@ -22,6 +22,7 @@ const {
 } = Astro.props;
 const placeholderColor =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcfPRvPQAHHgLWeG8FbgAAAABJRU5ErkJggg==";
+const loading = lazy ? "lazy" : "eager";
 
 if (isOptimization && (!width || !height)) {
   throw new Error("width/height should be required");
@@ -52,6 +53,7 @@ if (isOptimization && (!width || !height)) {
       background="rgba(0,0,0,0)"
       width={width! * 4}
       height={height! * 4}
+      loading={loading}
     />
   ) : (
     <img
@@ -59,7 +61,7 @@ if (isOptimization && (!width || !height)) {
       class={className}
       decoding="async"
       alt={alt}
-      loading={lazy ? "lazy" : "eager"}
+      loading={loading}
       onerror={`this.onerror=null; this.src='${placeholderColor}'`}
     />
   )

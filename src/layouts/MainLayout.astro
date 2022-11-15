@@ -11,17 +11,20 @@ import Rss from "../components/icons/Rss.astro";
 
 type Props = {
   title: string;
-  content?: string;
 };
 
-const { title, content } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <main class="flex gap-4 items-start">
-  <div class="sticky w-64 hidden lg:block shrink-0" style={{ top: "128px" }}>
+  <div class="sticky w-64 hidden lg:block shrink-0" style={{ top: "104px" }}>
     <div class="flex flex-col gap-4">
       <Paper>
-        <Accordion options={PAGE_LINKS} content={content} />
+        <Accordion options={PAGE_LINKS}>
+          <div slot="description" class="text-sm text-gray-50">
+            <slot name="description" />
+          </div>
+        </Accordion>
       </Paper>
       <Paper>
         <div class="flex justify-around items-center p-4">

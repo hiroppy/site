@@ -1,0 +1,30 @@
+---
+import { sortByDate } from "../utils/blog";
+import { formatDate } from "../utils/formatDate";
+
+// HMRで重くなるため、dev環境ではglobをさせない
+const posts = import.meta.env.PROD
+  ? sortByDate(await Astro.glob("../pages/blog/*.mdx"))
+  : [];
+const sections = [
+  ["Number of posts", posts.length],
+  [
+    "Last posted date",
+    import.meta.env.PROD
+      ? formatDate(new Date(posts[0].frontmatter.date))
+      : "dev mode",
+  ],
+  ["Previous blog", "技術探し"],
+];
+---
+
+<div>
+  {
+    sections.map(([title, content]) => (
+      <div class="flex justify-between items-center">
+        <span>{title}</span>
+        <span>{content}</span>
+      </div>
+    ))
+  }
+</div>

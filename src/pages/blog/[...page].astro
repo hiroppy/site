@@ -1,16 +1,12 @@
 ---
 import type { GetStaticPathsOptions, Page } from "astro";
 import BlogCardItem from "../../components/BlogCardItem.astro";
+import BlogDescription from "../../components/BlogDescription.astro";
 import Pagination from "../../components/Pagination.astro";
 import TagsBox from "../../components/TagsBox.astro";
 import Layout from "../../layouts/Layout.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
-import {
-  createAccordionDescription,
-  getAllTags,
-  Mdxs,
-  sortByDate,
-} from "../../utils/blog";
+import { getAllTags, Mdxs, sortByDate } from "../../utils/blog";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts = sortByDate(await Astro.glob("./*.mdx"));
@@ -19,7 +15,6 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 }
 
 const posts = sortByDate(await Astro.glob("./*.mdx"));
-const content = createAccordionDescription(posts);
 const allTags = getAllTags(posts);
 const { page } = Astro.props as {
   page: Page<Mdxs[number]>;
@@ -27,7 +22,8 @@ const { page } = Astro.props as {
 ---
 
 <Layout>
-  <MainLayout title="Blog" content={content}>
+  <MainLayout title="Blog">
+    <BlogDescription slot="description" />
     <TagsBox tags={allTags} slot="optional-content" />
     <a
       class="text-right text-blue-300 mb-4 block"

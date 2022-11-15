@@ -1,4 +1,6 @@
 ---
+import MainLayout from "./MainLayout.astro";
+
 type Path = "" | "/articles" | "/talks" | "/podcasts" | "/achievements";
 
 // buildのときだけ、/が最後につく
@@ -12,18 +14,26 @@ const kinds: Record<Path, string> = {
 };
 ---
 
-<div class="my-5 flex gap-2 overflow-auto">
-  {
-    Object.entries(kinds).map(([kind, href]) => (
-      <a
-        href={href}
-        class={`font-semibold ${
-          currentPath === kind ? "text-blue-300" : "text-gray-100"
-        }`}
-      >
-        {kind === "" ? "all" : kind.replace(/^\//, "")}
-      </a>
-    ))
-  }
-</div>
-<slot />
+<MainLayout
+  title={`Media / ${currentPath === "" ? "all" : currentPath.replace("/", "")}`}
+>
+  <span slot="description">
+    I speak on Monthly Ecosystem of Podcast every month and I write a blog
+    sometimes 😺
+  </span>
+  <div class="my-5 flex gap-3 md:gap-2 overflow-x-auto p-2">
+    {
+      Object.entries(kinds).map(([kind, href]) => (
+        <a
+          href={href}
+          class={`font-semibold ${
+            currentPath === kind ? "text-blue-300" : "text-gray-100"
+          }`}
+        >
+          {kind === "" ? "all" : kind.replace(/^\//, "")}
+        </a>
+      ))
+    }
+  </div>
+  <slot />
+</MainLayout>

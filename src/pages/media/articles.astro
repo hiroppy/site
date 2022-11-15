@@ -1,7 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import MediaLayout from "../../layouts/MediaLayout.astro";
-import MainLayout from "../../layouts/MainLayout.astro";
 import Timeline from "../../components/Timeline.astro";
 import data from "../../../generated/articles.json";
 import { getMediaIcon, getPrefixForTitle } from "../../utils/media";
@@ -14,9 +13,7 @@ const items: DataItem[] = data.map((item) => ({
 ---
 
 <Layout>
-  <MainLayout title="Media / articles">
-    <MediaLayout>
-      <Timeline items={items} />
-    </MediaLayout>
-  </MainLayout>
+  <MediaLayout>
+    <Timeline items={items} />
+  </MediaLayout>
 </Layout>

@@ -34,6 +34,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:image" content={ogImage} />
     <meta property="twitter:card" content="summary" />
     <meta property="twitter:creator" content="@about_hiroppy" />
+    <meta
+      name="google-site-verification"
+      content="5oxyYILHYb_TUbxn5n1vZlDDEj2K8BTQhwMqJnEX8CA"
+    />
     <title>{SITE_TITLE} - {pageTitle}</title>
     <link rel="icon" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -43,20 +47,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   </head>
   <body>
     <Header />
-    <div class="container mx-auto py-5 lg:py-20 min-h-screen px-2 sm:px-4">
+    <div class="container mx-auto py-4 lg:py-14 min-h-screen px-2 sm:px-4">
       <slot />
     </div>
     <Footer />
-    <style>
-      html {
-        font-size: 17px;
-      }
-
-      :global(code) {
-        font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-      }
-    </style>
   </body>
   {import.meta.env.PROD && <GA />}
 </html>

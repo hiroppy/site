@@ -1,1 +1,2 @@
 user-agent: *
+Sitemap: https://hiroppy.me/sitemap-index.xml

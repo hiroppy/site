@@ -5,15 +5,12 @@ import MainLayout from "./MainLayout.astro";
 import Paper from "../components/Paper.astro";
 import type { MarkdownLayoutProps } from "astro/dist/@types/astro";
 import ShareButtons from "../components/ShareButtons.astro";
-import {
-  createAccordionDescription,
-  parseTags,
-  sortByDate,
-} from "../utils/blog";
+import { parseTags, sortByDate } from "../utils/blog";
 import Link from "../components/Link.astro";
 import { HATENA_BLOG_URL } from "../constants";
 import SnsIcon from "../components/SnsIcon.astro";
 import GitHub from "../components/icons/GitHub.astro";
+import BlogDescription from "../components/BlogDescription.astro";
 
 const { frontmatter, headings } =
   Astro.props as MarkdownLayoutProps<BlogFrontmatter>;
@@ -27,9 +24,6 @@ const { title, url, description, image, tags } = frontmatter;
 const posts = import.meta.env.PROD
   ? sortByDate(await Astro.glob("../pages/blog/*.mdx"))
   : [];
-const content = import.meta.env.PROD
-  ? createAccordionDescription(posts)
-  : "dev mode doesn't show the content";
 const index = posts.findIndex(
   ({ url }) => url === Astro.url.pathname.replace(/\/$/, "" /* for prod */)
 );
@@ -37,7 +31,8 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.u
 ---
 
 <Layout title={title} description={description} image={image}>
-  <MainLayout title={title} content={content}>
+  <MainLayout title={title}>
+    <BlogDescription slot="description" />
     <Paper slot="optional-content">
       <div class="p-4">
         <p>🔖 Index</p>

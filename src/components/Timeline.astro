@@ -16,17 +16,20 @@ const { items } = Astro.props;
 <ol class="relative border-l border-gray-500 ml-4">
   {
     items.map(
-      ({
-        title,
-        description,
-        url,
-        publishedAt,
-        image,
-        appendixes,
-        siteName,
-        icon,
-        prefixForTitle,
-      }) => (
+      (
+        {
+          title,
+          description,
+          url,
+          publishedAt,
+          image,
+          appendixes,
+          siteName,
+          icon,
+          prefixForTitle,
+        },
+        i
+      ) => (
         <li class="mb-10 ml-6 relative">
           <span class="flex absolute -left-11 justify-center items-center w-10 h-10 bg-slate-700 rounded-full text-lg border-gray-500 border-2">
             {icon}
@@ -63,12 +66,13 @@ const { items } = Astro.props;
                     width={24 * 4}
                     height={24 * 4}
                     isOptimization
+                    lazy={i > 5}
                   />
                 )}
-                <div class="flex-1 flex gap-4 flex-col justify-between">
+                <div class="flex-1">
                   <p class="text-gray-100 text-xs">{description}</p>
                   {appendixes && (
-                    <div>
+                    <div class="mt-4">
                       {Object.entries(appendixes).map(([key, value]) => (
                         <SnsIcon href={value!} name={key}>
                           {key === "github" && <GitHub />}
