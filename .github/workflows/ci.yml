@@ -74,7 +74,7 @@ jobs:
       - run: serve dist & pa11y-ci
   vrt:
     needs: [build]
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -90,7 +90,7 @@ jobs:
           npx playwright install --with-deps chromium
       - run: npm test
       - uses: actions/upload-artifact@v3
-        if: always()
+        if: failure()
         with:
           name: playwright-report
           path: playwright-report/
