@@ -65,9 +65,11 @@ import Link from "../components/Link.astro";
                   <div class="flex justify-between w-full items-end text-gray-300">
                     <Image
                       src={image}
-                      className="h-20 rounded-lg object-contain"
+                      className="object-contain w-40 h-20"
                       alt={title}
-                      isOptimization={false}
+                      width={160}
+                      height={80}
+                      isOptimization
                       lazy={false}
                     />
                     <div class="flex items-center text-sm gap-2">
