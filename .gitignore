@@ -8,3 +8,4 @@ npm-debug.log
 dist
 .lighthouseci
 test-results
+service_account_secret.json

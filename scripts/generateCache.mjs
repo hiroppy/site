@@ -1,17 +1,6 @@
-import { join } from "node:path";
-import { readFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import { load } from "cheerio";
+import { getUrls } from "./utils.mjs";
 
-const xml = await readFile(
-  join(fileURLToPath(import.meta.url), "../../dist/sitemap-0.xml"),
-  "utf-8"
-);
-
-const $ = load(xml);
-const urls = $("url loc")
-  .toArray()
-  .map((el) => el.children[0].data);
+const urls = await getUrls();
 
 await Promise.allSettled(
   urls.map(async (url) => {

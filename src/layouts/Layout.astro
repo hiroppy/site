@@ -20,7 +20,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="bg-slate-800">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -45,7 +45,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="dns-prefetch" href="//www.googletagmanager.com" />
     <link rel="preconnect" href="//www.googletagmanager.com" />
   </head>
-  <body>
+  <body class="bg-slate-800">
     <Header />
     <div class="container mx-auto py-4 lg:py-14 min-h-screen px-2 sm:px-4">
       <slot />

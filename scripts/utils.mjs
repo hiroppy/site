@@ -148,3 +148,17 @@ export async function downloadImage(url) {
 
   return fullPath;
 }
+
+export async function getUrls() {
+  const xml = await readFile(
+    join(fileURLToPath(import.meta.url), "../../dist/sitemap-0.xml"),
+    "utf-8"
+  );
+
+  const $ = load(xml);
+  const urls = $("url loc")
+    .toArray()
+    .map((el) => el.children[0].data);
+
+  return urls;
+}
