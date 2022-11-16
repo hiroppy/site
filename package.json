@@ -9,13 +9,14 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test": "playwright test",
     "check": "astro check",
+    "test:prepare": "docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:v1.28.0-focal /bin/bash",
+    "test": "playwright test",
     "fmt": "prettier -w .",
     "fmt:check": "prettier --check .",
-    "clean": "rm -r ./generated/* ./public/images/external/*",
-    "run:all": "node scripts/index.mjs",
-    "cache": "node scripts/generatecache.mjs"
+    "generate:all": "node scripts/index.mjs",
+    "cache": "node scripts/generatecache.mjs",
+    "clean": "rm -r ./generated/* ./public/images/external/*"
   },
   "devDependencies": {
     "cheerio": "^1.0.0-rc.12",
@@ -24,6 +25,7 @@
     "octokit": "^2.0.10",
     "prettier": "^2.7.1",
     "prettier-plugin-astro": "^0.7.0",
+    "serve": "^14.1.1",
     "sharp": "^0.31.2"
   },
   "dependencies": {

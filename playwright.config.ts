@@ -2,7 +2,8 @@ import type { PlaywrightTestConfig } from "@playwright/test";
 
 const config: PlaywrightTestConfig = {
   webServer: {
-    command: "npm run preview",
+    // docker内でsharpを動かすのは難しいのでastro previewを使わない
+    command: "serve dist",
     port: 3000,
   },
 };
