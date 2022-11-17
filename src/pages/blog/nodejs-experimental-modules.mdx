@@ -1,0 +1,167 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Node.jsの新しいモジュール方式の実験的導入
+date: 2019-03-19
+description: Node.jsに新しく入るESMのアルゴリズムと仕組みを紹介します
+image: /images/brands/nodejs.png
+tags: javascript
+hatenaPath: nodejs-experimental-modules
+---
+
+import OG from "../../components/OG.astro";
+
+Node.js の Core へ ESM と CJS の新しい方式が実験的フェイズ(stability: 1)として入ります。
+
+ESM 対応は安定化までのプランとしてステージを 4 つ(0 -3)用意しており、現在が 2 です。
+
+<OG url="https://github.com/nodejs/modules/blob/master/doc/plan-for-new-modules-implementation.md" />
+
+2019 年の 10 月に実験的から安定的へ移行するのが最終目標となります。(stage:3)
+
+## 内容まとめ
+
+- `--es-module-specifier-resolution=node|explicit `で処理解決方法を決定する
+  - `explicit` がデフォルト
+- `--entry-type=commonjs|module`で CJS か ESM かを決定する
+  - デフォルトは近しい親にある package.json の`type`フィールドを参照する
+- ESM ではデフォルトで json は読み込めない
+  - `--experimental-json-modules`を付ける必要がある
+- CJS と ESM の違い
+  - ESM の場合、拡張子が必須
+  - `NODE_PATH`がない
+  - `require`, `exports`, `module.exports`, `__filename`, `__dirname`がない
+    - [`module.createRequireFromPath`](https://nodejs.org/api/modules.html#modules_module_createrequirefrompath_filename)、及び`import.meta.url`を使いましょう
+  - `require.extensions` , `require.cache` の使用不可
+  - URL-based のパス指定
+
+とりあえず、package.json に`type`フィールド追加すると、そのスコープ内の`.js`ファイルはそのモジュールタイプになるよって覚えておけばいいです。
+
+## ESM 事前知識
+
+以下の記事を読んでください。
+
+<OG url="https://blog.hiroppy.me/entry/nodejs-esm" />
+
+## PR
+
+### Core への PR
+
+<br />
+
+<OG url="https://github.com/nodejs/node/pull/26745" />
+
+### 初期提案実装
+
+<br />
+
+<OG url="https://github.com/nodejs/ecmascript-modules/pull/32" />
+
+## --es-module-specifier-resolution
+
+`explicit` と `node` が存在し、デフォルトは`explicit`です。
+
+違いは以下の通りとなります。
+
+- 拡張子を省略することができない
+- `index`を許容しない
+
+まだ、変更される可能性が高いため注意が必要です。
+今までどおりの挙動を望むのであれば、`node`を指定する必要があります。
+
+## リゾルバアルゴリズム
+
+`type`フラグが`module`の場合、package.json を軸に次の package.json までにネストされたフォルダとサブフォルダをすべて ESM とみなす仕様(そしてつぎ package.json のフラグが`module`の場合は続く)
+もし package.json がない場合は、デフォルトで commonjs となります。
+
+<OG url="https://blog.hiroppy.me/entry/nodejs-package-mode" />
+
+## 使用法
+
+実験的なフェイズなため、実行時に`--experimental-modules`フラグが必要です。
+
+### `.mjs`がエントリーポイントの場合
+
+この場合は、デフォルトで ESM として読み込みます。
+
+```sh
+node --experimental-modules index.mjs
+```
+
+また、上記の実行の場合、エントリーポイントから ESM 形式で import するファイルは`.mjs`である必要があります。
+
+しかし、`--entry-type`フラグ及び、package.json の`type`に`module`を指定すると、`.mjs`という拡張子を使うことなく、ESM として読み込むことが可能となります。
+
+```json
+// package.json
+
+{
+  "type": "module"
+}
+```
+
+### --entry-type
+
+このフラグには、`commonjs`と`module`の 2 つの設定が存在します。
+
+`module`が指定された場合、`.js`, `.mjs`, 拡張子がないファイルは ESM として呼び出されます。
+この指定がない場合、デフォルトは`cjs`です。
+
+```sh
+$ node --experimental-modules --entry-type=module --eval \
+  "import { sep } from 'path'; console.log(sep);"
+/
+```
+
+```sh
+$ node --experimental-modules --entry-type=commonjs --eval \
+  "import { sep } from 'path'; console.log(sep);"
+
+import { sep } from 'path'; console.log(sep);
+       ^
+
+SyntaxError: Unexpected token {
+```
+
+### package.json の type フィールド
+
+`--entry-type`の package.json に書く版です。
+
+最も近い親の package.json の`type`フィールドを参照し、モジュール方式を決定していきます。
+
+一般的に今までの node_modules の package.json は`type`フィールドを持たないため、commonjs で読み込まれ互換性を保つことが期待されます。
+
+```json
+// sample/package.json
+
+{
+  "type": "module"
+}
+```
+
+```javascript
+// ./sample/index.js
+
+// 近しいpackage.jsonのtypeがmoduleなので、このファイルはESMで読み込まれる
+import "./sample/setup/init.js";
+
+// ./node_modules/foo/package.jsonにはtypeが書いてないため、CJSで読み込まれる
+import "foo";
+```
+
+## 特定ファイルのモジュール形式をロックしたい場合
+
+ユーザーが表現できる拡張子は、`.js`, `.mjs`, `.cjs`となります。
+`type: module|commonjs`以下では、`.js`はそれに従います。
+
+つまり、特定のファイルに対して拡張子で操作することになります。
+
+- `type:module` 以下で commonjs として扱いたいファイルに対しては、`.cjs`の拡張子にする
+- `type:commonjs`以下で esm として扱いたいファイルに対しては、`.mjs`の拡張子にする
+
+```javascript
+// 常にcommonjsとして読み込む
+import "./legacy-file.cjs";
+
+// 常にesmとして読み込む
+import "commonjs-package/src/index.mjs";
+```
