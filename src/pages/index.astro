@@ -28,7 +28,7 @@ import Link from "../components/Link.astro";
           lazy={false}
         />
       </div>
-      <div class="flex-auto">
+      <div class="flex-auto xl:text-lg">
         <p>
           Hiroppy is a JavaScript engineer and working on some OSS projects and
           Japanese communities. I have lived in Japan and Ireland, and now I
@@ -53,7 +53,7 @@ import Link from "../components/Link.astro";
             articles
               .filter(({ hot }) => !!hot)
               .map(({ url, title, image, bookmark }) => (
-                <li class="flex flex-col gap-2 items-start bg-slate-600 p-2 sm:p-3 rounded-lg justify-between">
+                <li class="flex flex-col gap-4 items-start bg-slate-600 p-2 sm:p-3 rounded-lg justify-between">
                   <Link
                     name={title}
                     href={url}

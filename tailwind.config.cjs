@@ -1,16 +1,16 @@
-const plugin = require("tailwindcss/plugin");
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{astro,md,mdx}"],
   theme: {
     fontFamily: {
       body: [
-        "Avenir",
-        "Helvetica",
+        "system-ui",
         "Arial",
-        "Hiragino Sans",
-        "Meiryo,sans-serif",
+        "Helvetica",
+        "'Hiragino Sans'",
+        "'Hiragino Kaku Gothic ProN'",
+        "'Meiryo,sans-serif'",
+        "sans-serif",
       ],
     },
     listStyleType: {
@@ -39,11 +39,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    plugin(({ addBase }) => {
-      addBase({
-        html: { fontSize: "17px" },
-      });
-    }),
-  ],
+  plugins: [],
 };

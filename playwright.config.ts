@@ -5,6 +5,7 @@ const config: PlaywrightTestConfig = {
     // docker内でsharpを動かすのは難しいのでastro previewを使わない
     command: "serve dist",
     port: 3000,
+    reuseExistingServer: true,
   },
 };
 
