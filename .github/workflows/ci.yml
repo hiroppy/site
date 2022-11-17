@@ -70,9 +70,7 @@ jobs:
         with:
           name: dist
           path: ./dist
-      - run: |
-          npm i
-          npm i -g pa11y-ci
+     - run: npm install -g serve pa11y-ci
       - run: serve dist & pa11y-ci
   vrt:
     needs: [build]
