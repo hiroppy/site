@@ -24,3 +24,12 @@ type BlogFrontmatter = {
   // 以前のhatenablogのpath
   hatenaPath?: string;
 };
+
+type OGPJson = Record<
+  string,
+  {
+    title: string;
+    description: string;
+    image: string;
+  }
+>;
