@@ -26,22 +26,7 @@ jobs:
       - run: npm i
       - run: npm run check
       - run: npm run fmt:check
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-          cache: "npm"
-      - run: npm i
-      - run: npm run build
-      - uses: actions/upload-artifact@v3
-        with:
-          name: dist
-          path: ./dist
   lighthouse:
-    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -49,16 +34,13 @@ jobs:
         with:
           node-version: "18"
           cache: npm
-      - uses: actions/download-artifact@v3
-        with:
-          name: dist
-          path: ./dist
+      - run: npm i
+      - run: npm run build
       - run: npm i -g @lhci/cli
       - run: lhci autorun --upload.target=temporary-public-storage
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
   a11y:
-    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -66,24 +48,18 @@ jobs:
         with:
           node-version: "18"
           cache: npm
-      - uses: actions/download-artifact@v3
-        with:
-          name: dist
-          path: ./dist
+      - run: npm i
+      - run: npm run build
       - run: npm i -g serve pa11y-ci
       - run: serve dist & pa11y-ci
   vrt:
-    needs: [build]
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.28.0-focal
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
-        with:
-          name: dist
-          path: ./dist
       - run: npm i
+      - run: npm run build
       - run: npm test
       - uses: actions/upload-artifact@v3
         if: failure()
