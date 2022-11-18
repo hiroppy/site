@@ -1,20 +1,59 @@
 ---
 import { load } from "cheerio";
 import Image from "./Image.astro";
+import { join } from "node:path";
+import { writeFileSync, readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
 type Props = {
   url: string;
 };
 
 const { url } = Astro.props;
-const html = await fetch(url).then((res) => res.text());
-const $ = load(html);
-const title =
-  $("meta[property='og:title']").attr("content") ?? $("title").text();
-const description =
-  $("meta[property='og:description']").attr("content") ??
-  $("meta[name='description']").attr("content");
-const image = $("meta[property='og:image']").attr("content");
+const generatedFilePath = join(
+  fileURLToPath(import.meta.url),
+  "../../generated/ogp.json"
+);
+let title: string = "";
+let description: string = "";
+let image: string = "";
+const ogp = JSON.parse(readFileSync(generatedFilePath, "utf8"));
+
+if (ogp[url]) {
+  title = ogp[url].title;
+  description = ogp[url].description;
+  image = ogp[url].image;
+} else {
+  const html = await fetch(url).then((res) => res.text());
+  const $ = load(html);
+
+  title = $("meta[property='og:title']").attr("content") ?? $("title").text();
+  description =
+    $("meta[property='og:description']").attr("content") ??
+    $("meta[name='description']").attr("content") ??
+    "";
+  image = $("meta[property='og:image']").attr("content") ?? "";
+
+  if (import.meta.env.PROD) {
+    const ogp = JSON.parse(readFileSync(generatedFilePath, "utf8"));
+
+    writeFileSync(
+      generatedFilePath,
+      JSON.stringify(
+        {
+          ...ogp,
+          [url]: {
+            title,
+            description,
+            image,
+          },
+        },
+        null,
+        2
+      )
+    );
+  }
+}
 ---
 
 <div class="flex border border-gray-600 p-4 gap-4 justify-between">
