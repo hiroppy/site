@@ -4,7 +4,7 @@
   "private": true,
   "packageManager": "npm@9.1.2",
   "scripts": {
-    "corepack": "corepack enable npm",
+    "setup": "git config --local core.hooksPath .githooks && corepack enable npm",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",

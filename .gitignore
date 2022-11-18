@@ -9,3 +9,5 @@ dist
 .lighthouseci
 test-results
 service_account_secret.json
+.githooks/*
+!/.githooks/pre-commit
