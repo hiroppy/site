@@ -27,7 +27,10 @@ const posts = import.meta.env.PROD
 const index = posts.findIndex(
   ({ url }) => url === Astro.url.pathname.replace(/\/$/, "" /* for prod */)
 );
-const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.url.pathname.replace(/(^\/|\/$)/g, "")}.mdx`;
+const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.url.pathname.replace(
+  /(^\/|\/$)/g,
+  ""
+)}.mdx`;
 ---
 
 <Layout title={title} description={description} image={image}>
