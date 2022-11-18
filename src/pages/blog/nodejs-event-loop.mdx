@@ -1,0 +1,486 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Node.jsでのイベントループの仕組みとタイマーについて
+date: 2018-09-26
+description: Node.jsに新しく入るESMのアルゴリズムと仕組みを紹介します
+image: /images/brands/nodejs.png
+tags: javascript
+hatenaPath: nodejs-event-loop
+---
+
+import OG from "../../components/OG.astro";
+import YoutubeCard from "../../components/YoutubeCard.astro";
+
+# イベントループ
+
+![](/images/blog/nodejs-event-loop/cat.gif)
+
+## イベントループとは？
+
+イベントループとは、JavaScript がシングルスレッドなのにもかかわらず、効率よくノンブロッキング I/O を実行できるようにする仕組みです。
+イベントループはメインスレッドで実行されます。
+
+ブラウザのイベントループとは異なるので注意が必要です。
+
+Node.js のイベントループは libuv に基づきます。
+ブラウザのイベントループは[html5](https://www.w3.org/TR/html5/webappapis.html#event-loops)に基づきます。
+
+## libuv
+
+Node.js の非同期はカーネルと会話するために libuv を使います。
+もともと、Node.js のために作られたものですが、今は様々なところで使われています。
+
+libuv とは、非同期 I/O に強く、クロスプラットフォーム対応の抽象化ライブラリです。
+基本的には、イベントループと非同期処理を行います。
+
+![](/images/blog/nodejs-event-loop/libuv.png)
+
+libuv は、Node.js にイベントループ機能全体を提供しています。
+デフォルトでは、デフォルトサイズが 4 のスレッドプールを作ります。
+
+<OG url="http://docs.libuv.org/en/v1.x/design.html" />
+
+イベントループのコードは以下を参照してください。
+
+<OG url="https://github.com/libuv/libuv/blob/v1.x/src/unix/core.c" />
+
+## タスク
+
+タスクは、同期タスクと非同期タスクの 2 種類存在します。
+
+```javascript
+setTimeout(() => console.log(1));
+setImmediate(() => console.log(2));
+process.nextTick(() => console.log(3));
+Promise.resolve().then(() => console.log(4));
+(() => console.log(5))();
+```
+
+- 同期タスク
+  - `(() => console.log(5))();`
+- 非同期タスク
+  - `setTimeout(() => console.log(1));`
+  - `setImmediate(() => console.log(2));`
+  - `process.nextTick(() => console.log(3));`
+  - `Promise.resolve().then(() => console.log(4));`
+
+同期タスクは常に非同期タスクよりも早く実行されます。
+また、`EventEmitter` で発生するイベントはタスクとは呼びません。
+
+このコードの出力は以下の通りになります。
+
+```
+5
+3
+4
+1
+2
+```
+
+なぜこのような順番で出力されるかは、次のイベントループの説明でわかるはずです。
+
+## イベントループの仕組み
+
+Node.js が起動すると以下のイベントループが初期化されます。
+
+![](/images/blog/nodejs-event-loop/eventloop.png)
+
+<OG url="http://voidcanvas.com/nodejs-event-loop" />
+
+<br />
+
+<OG url="https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/#event-loop-explained" />
+
+初期化はされますが、開始前に行われることがあります。
+
+- タイマーのスケジュール設定
+- `process.nextTick`等の実行
+- 同期タスクの実行
+- 非同期 API の呼び出し
+
+上記が終わり次第、イベントループが開始されます。
+
+注意点として、**イベントループは複数の task を同時に処理することはできないため、キューに入れられ順次処理をされるようになっています。**
+つまり、一つのタスクが完了する時間が長いと健全ではない(イベントループに遅延が出る)ということになります。
+
+また、Node.js ではタスクキューの処理に OS のカーネルが依存しているため、タスクを受け取った瞬間を判断することは不可能で、準備ができている場合のみを知っています。
+
+### フェーズ
+
+イベントループには 6 つのフェーズが存在します。
+
+- timers
+- pending callbacks
+- idle, prepare
+- poll
+- check
+- close callbacks
+
+JavaScript の実行は、idle, prepare を除くどこかのフェーズで実行されます。
+それぞれフェーズには、実行するコールバックの FIFO ジョブキューを持ちます。
+そのフェーズに入るとそのフェーズの処理が実行され、キューが処理されます。
+そして、キューが empty になるかコールバックの上限に達したらイベントループは次のフェーズへ遷移します。
+
+libuv との関係図です。
+
+![](/images/blog/nodejs-event-loop/steps.jpeg)
+
+https://jsblog.insiderattack.net/handling-io-nodejs-event-loop-part-4-418062f917d1
+
+libuv は、各フェーズ毎にフェーズの結果を Node に伝達する必要があります。
+このときに nextTickQueue と microTaskQueue に入れられたイベントのキューをチェックします。
+もし、キューが空ではない場合は空になるまでキューの処理を行い、メインのイベントループのフェーズへ移行します。
+つまり、各フェーズ後(フェーズが移行する前)に nextTickQueue と microTaskQueue が実行されるということです。
+
+フローは以下の図のような感じになります。
+
+![](/images/blog/nodejs-event-loop/flow.png)
+
+<OG url="https://medium.com/the-node-js-collection/what-you-should-know-to-really-understand-the-node-js-event-loop-and-its-metrics-c4907b19da4c" />
+
+#### イベントキュー
+
+libuv から提供されるキューと Node が提供するキューの 6 種類があります。
+
+- libuv
+  - Expired timers / intervals queue
+  - IO Events Queue
+  - Immediates Queue
+  - Close Handlers Queue
+- Node
+  - nextTick Queue
+  - microTask Queue
+
+### nextTickQueue / microTaskQueue
+
+- code: [ib/internal/bootstrap/node.js#L77-L78](https://github.com/nodejs/node/blob/0227635315c3aa1c31e6814325822a1e4306372e/lib/internal/bootstrap/node.js#L77-L78)
+- code: [lib/internal/process/next_tick.js](https://github.com/nodejs/node/blob/8b4af64f50c5e41ce0155716f294c24ccdecad03/lib/internal/process/next_tick.js)
+
+先に nextTickQueue と microTaskQueue の説明をしたいと思います。
+この 2 つは libuv による提供ではなく、Node により実装されています。
+
+先程の説明の通り、イベントループの各フェーズの後に nextTickQueue と microTaskQueue に入れられたイベントのキューをチェックし、空になるまで実行します。
+
+また、この２つはイベントループのフェーズの一部ではないことに注意してください。
+
+#### nextTickQueue
+
+`process.nextTick`を使用して登録されたコールバックを保持します。
+**すべての非同期タスクの中で最速となります。**
+nextTick は再帰的に呼び出すと Node をブロックする可能性があるため注意です。
+
+#### microTaskQueue
+
+`Promises`オブジェクトのコールバックはここに所属します。
+microTaskQueue に入っている Promise は V8 によって提供されるネイティブのみが適用対象とされます。
+
+イベントループと同様に nextTickQueue が空になり次第、実行となります。
+
+```javascript
+process.nextTick(() => console.log(1));
+Promise.resolve().then(() => console.log(2));
+process.nextTick(() => console.log(3));
+Promise.resolve().then(() => console.log(4));
+process.nextTick(() => console.log(5));
+```
+
+```
+1
+3
+5
+2
+4
+```
+
+先に nextTickQueue が消費されているのがわかります。
+
+---
+
+ここまでの説明で、以下がなぜこの順番になるのか半分ぐらいわかるかと思います。
+
+```javascript
+setTimeout(() => console.log(1));
+setImmediate(() => console.log(2));
+process.nextTick(() => console.log(3)); // 2
+Promise.resolve().then(() => console.log(4)); // 3
+(() => console.log(5))(); // 1
+```
+
+次からは各フェーズの説明を行っていきます。
+
+### Timers Phase
+
+- code: [src/timer.c#L147-L164](https://github.com/libuv/libuv/blob/master/src/timer.c#L147-L164)
+
+イベントループの開始フェーズです。
+このフェーズでは、`setTimeout` や `setInterval` のタイマーのコールバックを実行します。
+タイマーを最小ヒープに保持し、Node は有効期限が切れたタイマーを確認し、コールバックを呼びます。
+複数の有効期限が切れたタイマーが存在する場合、登録した順番に実行されます。(FIFO)
+
+OS のスケジューリングや他のコールバックの実行により遅延が発生する可能性があり、Node.js ではコールバックの実行する正確なタイミングや順序付けは保証されません。
+**指定された時間のできるだけ近い時間で呼び出されます。**
+
+<OG url="https://nodejs.org/api/timers.html#timers_settimeout_callback_delay_args" />
+
+<br />
+
+```javascript
+const start = process.hrtime();
+
+setTimeout(() => {
+  const end = process.hrtime(start);
+
+  console.log(
+    `timeout callback executed after ${end[0]}s and ${
+      end[1] / Math.pow(10, 9)
+    }ms`
+  );
+}, 1000);
+```
+
+```sh
+# output
+timeout callback executed after 1s and 0.0070209ms
+timeout callback executed after 1s and 0.004651383ms
+timeout callback executed after 1s and 0.001348922ms
+```
+
+毎回異なる結果となり、`0ms` となることはありません。
+
+### Pending Callbacks Phase
+
+- code: [src/unix/core.c#L765-L784](https://github.com/libuv/libuv/blob/81c77427afb39b6fa6c0ecffdc1c1e2b3dde7aea/src/unix/core.c#L765-L784)
+
+イベントループの`pending_queue`に存在するコールバックを実行するフェーズです。
+完了、エラーの I/O 操作のコールバックが実行されます。
+
+poll フェーズの最後のラウンドで実行されるコールバックは実行できず、このラウンドの pending callbacks フェーズまで延期となります。
+
+### Idle, Prepare Phase
+
+- code: [src/unix/loop-watcher.c#L48-L60](https://github.com/libuv/libuv/blob/v1.x/src/unix/loop-watcher.c#L48-L60)
+
+libuv によって内部的に呼び出されるフェーズです。
+次のフェーズである Poll Phase が開始されるたびに Prepare も実行されます。
+
+### Poll Phase
+
+- code: [src/unix/posix-poll.c#L134](https://github.com/libuv/libuv/blob/v1.x/src/unix/posix-poll.c#L134)
+
+このフェーズは、サーバの応答、まだ返されていない I/O イベントを待機するために使用されるポーリング時間です。
+新しいソケットコネクトやファイルの読み込みなどの新しい I/O イベントを取得し、実行します。
+
+このフェーズでは、以下の 2 つのことを行います。
+
+- I / O をブロックしてポーリングする時間を計算する
+- キュー内のイベントを処理する
+
+ポーリングする時間を計算します。(これは様々な状態によって結果が変わります)
+I/O の処理をシステムコールの epoll のキューに全て登録します。
+epoll_wait システムコールを呼び、ポーリングを行います。
+完了したら、コールバックを呼びます。
+
+キューになにか存在する場合、キューが empty になるかシステム依存の限度に達するまで順次同期実行を行います。
+キューが空の場合、以下の 2 つのうち 1 つが実行されます。
+
+- スケジューリングされている場合、イベントループはこのフェーズを終了し、次の check フェーズへ進みスケジュールされたスクリプトを実行する
+- スケジュールされていない場合、イベントループはコールバックがキューへ追加されるのを待ち実行する
+
+### Check Phase
+
+`setImmediate`のコールバック専用フェーズです。
+`setImmediate`で登録されたすべてのコールバックを実行します。
+timer フェーズのものとは異なり、専用のフェーズがあるため、必ず実行が保証されます。
+つまり、poll フェーズで実行されていたコールバック内に`setImmediate`が存在すれば、`setTimeout`よりも先に呼ばれることが保証されます。
+
+### Close Callbacks Phase
+
+- code: [src/unix/core.c#L293-L305](https://github.com/libuv/libuv/blob/v1.x/src/unix/core.c#L293-L305)
+
+すべての `close` イベントのコールバックが処理されます。(e.g. `readable.on('close', () => {})`)
+もし、キューに処理するものがなければ、ループが終了となります。
+存在すれば、timer フェーズへ遷移します。
+
+## 例
+
+```javascript
+const { readFile } = require("fs");
+
+const timeoutScheduled = Date.now();
+
+setTimeout(() => {
+  console.log(`delay: ${Date.now() - timeoutScheduled}ms`);
+}, 100);
+
+readFile(__filename, () => {
+  const startCallback = Date.now();
+
+  while (Date.now() - startCallback < 500) {}
+});
+```
+
+```sh
+# output
+delay: 502ms
+```
+
+このコードをぱっと見た時に、100ms 後に`delay: 100ms`と出力されるだろうと思うかもしれません。
+このコードのフローを説明します。
+
+### 第一ラウンド
+
+スクリプトが最初のイベントループに入ったときには、まだ有効期限が切れたタイマーが存在しておらず、実行可能な I/O コールバックも存在しません。
+つまり、この第一ラウンドはポーリングフェーズに入り、カーネルからのファイル読み込み結果を待ちます。
+このときは、ファイルの読み込みが軽量であり、タイマーよりも早く結果を取得します。
+例えば、`setTimeout`に時間を 100 ではなく 0 や 1 にしていた場合、ファイルの結果よりも先にタイマーの有効期限が切れるため、次のループで結果が変わります。
+
+### 第二ラウンド
+
+今回は、100ms でやっていて、ファイルの読み込みのほうが速く、まだ timer の有効期限が切れてません。
+もし、0 や 1 であれば、`delay`が出力されていたでしょう。
+すでに、ファイルは取得できているため、pending callbacks フェーズに入ります。
+このコールバック内では、500ms の同期処理を実行させています。
+そして、このコールバックはジョブキューに入っており、次のフェーズへ移行するには、キューを空にする必要があります。
+なので、ここで 500ms の遅延(500ms を停止させた)が発生したということになります。
+無事、500ms の実行が終わったらキューが空になるため、次のイベントループへ移行します。
+
+### 第三ラウンド
+
+すでに第二ラウンドの遅延により、タイマーの有効期限が切れるため、`setTimeout`はタイマーフェーズ中に実行され、`delay`を出力し終了します。
+
+<OG url="https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/#phases-in-detail" />
+
+## まとめ
+
+```javascript
+setTimeout(() => console.log(1));
+setImmediate(() => console.log(2));
+process.nextTick(() => console.log(3));
+Promise.resolve().then(() => console.log(4));
+(() => console.log(5))();
+```
+
+```
+5
+3
+4
+1
+2
+```
+
+なぜこの順番の出力になるかは上記のイベントループの流れでわかるかと思います。
+
+```
+1. 同期タスク: (() => console.log(5))();
+2. 非同期タスク::nextTickQueue : process.nextTick(() => console.log(3));
+3. 非同期タスク::microTaskQueue: Promise.resolve().then(() => console.log(4));
+4. 非同期タスク::timers phase: setTimeout(() => console.log(1));
+5. 非同期タスク::check phase: setImmediate(() => console.log(2));
+```
+
+---
+
+- イベントループはメインスレッドで実行される
+- イベントループは複数のタスクを実行できず、キューに入れられたのを順次処理する
+- イベントループには 6 つのフェーズが存在する
+- フェーズが遷移する前に nextTickQueue と microTaskQueue が実行される
+
+# Timer
+
+Node.js で使えるタイマーは以下の 4 つとなります。
+`setImmediate` と `process.nextTick` は Node.js 固有でありブラウザにはないことに注意してください。
+
+```javascript
+setTimeout;
+setInterval;
+setImmediate;
+process.nextTick;
+```
+
+## setTimeout(() => {}, 0)
+
+```javascript
+setTimeout(() => console.log("setTimeout"));
+setImmediate(() => console.log("setImmediate"));
+process.nextTick(() => console.log("nextTick"));
+```
+
+上記の出力は以下のようになります。
+
+```
+nextTick
+setTimeout
+setImmediate
+```
+
+nextTick が一番最初に来るのは最初に説明したとおりです。
+そして、timers フェーズが来て、check フェーズなのでこのような出力となります。
+しかし、この出力は保証された出力ではありません。
+timer フェーズに入ったときに有効期限が切れたかわからないためです。
+
+さて、`setTimeout`が`0`の時の遅延はどれぐらいなのでしょうか？
+第二引数の範囲は、1ms から 2147483647ms と決められており、範囲外の指定をしたときには、1ms となるように規定されています。
+つまり `0`のときは 1ms より大きい値となります。
+
+<OG url="https://nodejs.org/api/timers.html#timers_settimeout_callback_delay_args" />
+
+ちなみに、`setTimeout` を 4ms に指定したら自分の PC では`setImmediate`が先に出力されるようになりました。
+
+`setImmediate` は、poll フェーズ後に保証された実行ができるため、使う場面によっては、有用な使い方が可能となります。
+
+## 順番を操作する
+
+```javascript
+const { readFile } = require("fs");
+
+readFile(__filename, () => {
+  setTimeout(() => console.log("setTimeout"));
+  setImmediate(() => console.log("setImmediate"));
+});
+```
+
+```
+setImmediate
+setTimeout
+```
+
+上の例だと必ず `setImmediate` が先に出力されるようになります。
+それは、最初に pending callbacks フェーズに入り、その次が check フェーズだからです。
+timers フェーズは過ぎてしまっており、次のループなため出力が遅れるのです。
+
+# まとめ
+
+ブラウザとは違う部分がありますが、macroTasks や microTasks の考えなどは同じ部分があります。
+
+ちなみにブラウザはこの記事がわかりやすいです。
+
+<OG url="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules" />
+
+動画はこちら
+
+<YoutubeCard id="8aGhZQkoFbQ" />
+
+イベントループは理解するまで難しいコンセントではありますが、一度理解すればコードの理解が深まったり、最適化できたりします。
+(よく言われる「わからないで`nextTick`を使うのは危険」っていう話とか)
+
+# リファレンス
+
+<br />
+
+<OG url="https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick" />
+
+<br />
+
+<OG url="https://cnodejs.org/topic/5a9108d78d6e16e56bb80882" />
+
+<br />
+
+<OG url="https://cnodejs.org/topic/55a76cf95d5240f223494f31" />
+
+<br />
+
+<OG url="http://docs.libuv.org/en/v1.x/design.html" />
+
+<br />
+
+<OG url="http://www.ruanyifeng.com/blog/2018/02/node-event-loop.html" />

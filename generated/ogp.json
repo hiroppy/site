@@ -543,5 +543,65 @@
     "title": "hiroppy's site - ",
     "description": "Hiroppy is a JavaScript engineer and working on some OSS projects and Japanese communities.",
     "image": "/images/me.png"
+  },
+  "http://docs.libuv.org/en/v1.x/design.html": {
+    "title": "Design overview — libuv documentation",
+    "description": "",
+    "image": ""
+  },
+  "https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/#event-loop-explained": {
+    "title": "The Node.js Event Loop, Timers, and process.nextTick() | Node.js",
+    "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
+    "image": "https://nodejs.org/static/images/logo-hexagon-card.png"
+  },
+  "https://medium.com/the-node-js-collection/what-you-should-know-to-really-understand-the-node-js-event-loop-and-its-metrics-c4907b19da4c": {
+    "title": "What you should know to really understand the Node.js Event Loop",
+    "description": "Node.js is an event-based platform. This means that everything that happens in Node is the reaction to an event. A transaction passing…",
+    "image": "https://miro.medium.com/max/1200/1*ROxiavz7LeRpIfcgRDE7CA.png"
+  },
+  "http://voidcanvas.com/nodejs-event-loop": {
+    "title": "Node.js event loop workflow & lifecycle in low level",
+    "description": "A year back while describing the differences between setImmediate & process.nextTick, I wrote a bit on the low level architecture of node’s event-loop. \nSurprisingly, the readers of that post became more",
+    "image": "https://imorph-assets.s3.amazonaws.com/site-docs/7ef2fe59-41d0-42ae-b6c9-eaa9f753e78b/85b179e9-8f33-4369-b31f-c6191e1eb6bd-original.png"
+  },
+  "https://github.com/libuv/libuv/blob/v1.x/src/unix/core.c": {
+    "title": "libuv/core.c at v1.x · libuv/libuv",
+    "description": "Cross-platform asynchronous I/O. Contribute to libuv/libuv development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/1780799f9fb49ef6326322ea7e3ebe4383d12f8cb5aeafd23d7f5cfa3cd86c9b/libuv/libuv"
+  },
+  "http://www.ruanyifeng.com/blog/2018/02/node-event-loop.html": {
+    "title": "Node 定时器详解 - 阮一峰的网络日志",
+    "description": "",
+    "image": ""
+  },
+  "https://nodejs.org/api/timers.html#timers_settimeout_callback_delay_args": {
+    "title": "Timers | Node.js v19.1.0 Documentation",
+    "description": "",
+    "image": ""
+  },
+  "https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/#phases-in-detail": {
+    "title": "The Node.js Event Loop, Timers, and process.nextTick() | Node.js",
+    "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
+    "image": "https://nodejs.org/static/images/logo-hexagon-card.png"
+  },
+  "https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick": {
+    "title": "The Node.js Event Loop, Timers, and process.nextTick() | Node.js",
+    "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
+    "image": "https://nodejs.org/static/images/logo-hexagon-card.png"
+  },
+  "https://cnodejs.org/topic/55a76cf95d5240f223494f31": {
+    "title": "Node.js挖掘之四：从libuv到JS，一个TCP连接事件引发的一系列callback的逆向调用过程 - CNode技术社区",
+    "description": "CNode：Node.js专业中文社区",
+    "image": ""
+  },
+  "https://cnodejs.org/topic/5a9108d78d6e16e56bb80882": {
+    "title": "不要混淆nodejs和浏览器中的event loop - CNode技术社区",
+    "description": "CNode：Node.js专业中文社区",
+    "image": ""
+  },
+  "https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules": {
+    "title": "Tasks, microtasks, queues and schedules",
+    "description": "",
+    "image": "https://jakearchibald.com/c/icon-42537423.png"
   }
 }

@@ -1,23 +1,22 @@
 ---
 import { load } from "cheerio";
 import Image from "./Image.astro";
-import { join } from "node:path";
 import { writeFileSync, readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 
 type Props = {
   url: string;
 };
 
 const { url } = Astro.props;
-const generatedFilePath = join(
-  fileURLToPath(import.meta.url),
-  "../../generated/ogp.json"
+const generatedFilePath = new URL(
+  import.meta.env.PROD ? "../generated/ogp.json" : "../../generated/ogp.json",
+  // astroはbuild時に自身ではなくdist/entry.mjsに向けてしまう
+  import.meta.url
 );
+const ogp: OGPJson = JSON.parse(readFileSync(generatedFilePath, "utf8"));
 let title: string = "";
 let description: string = "";
 let image: string = "";
-const ogp: OGPJson = JSON.parse(readFileSync(generatedFilePath, "utf8"));
 
 if (ogp[url]) {
   title = ogp[url].title;
