@@ -1,0 +1,119 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: OSSの現状と今後
+date: 2019-02-28
+description: どのようにOSSのメンテナーを広げていくかの戦略の一例
+image: /images/brands/github.png
+tags: oss,github
+hatenaPath: current-status-and-future-of-oss
+---
+
+import OG from "../../components/OG.astro";
+import TwitterCard from "../../components/TwitterCard.astro";
+
+Gatsby が面白い仕組みを導入していて、驚いたので書くことにしました。
+
+## Gatsby
+
+React.js の静的サイトジェネレーター
+
+<OG url="https://github.com/gatsbyjs/gatsby" />
+
+最近、海外ではとても流行っています。
+
+### コミュニティ
+
+<TwitterCard id="1099824596734246913" height={380} />
+
+最近、gatsby のメンテナチームに所属しました。
+
+![](/images/blog/current-status-and-future-of-oss/members.png)
+
+人数が異常ですよね、このチームに所属していると gatsbyjs/gatsby の write 権限を持ちます。
+
+そう、個人的に画期的だと思った仕組みは、メンバーの招待です。
+1 つ PR を出し、マージされると write 権限がもらえます。
+
+![](/images/blog/current-status-and-future-of-oss/comment.png)
+
+github は、admin と write と read があり、push ができるのは write 以上です。
+なので、issue の close や label, pr の review、merge 等が行えるようになります。
+
+このように多くの参加者に権限を与えることにより継続的にメンテさせるのは賢いと自分は感動しました。
+
+#### 危険？
+
+最初、自分は人を信用しすぎじゃない？って思いました。
+
+しかし、github には code owner という仕組みがあり、必ず登録された人を通さないとマージしないようにする仕組みがあります。
+
+![](/images/blog/current-status-and-future-of-oss/reviewers.png)
+
+<br />
+
+<OG url="https://github.blog/2017-07-06-introducing-code-owners" />
+
+なので、ある程度安全が担保できるとは思いますし、そもそも変な人は PR を出す可能性が低いので少しは安心できるかなと思います。
+
+### どれだけアクティブか？
+
+大体メールが 120 通ぐらい 1 日に来ます。Node の Core で 70 通ぐらいです。
+毎日、大量の PR が来て議論をし、マージをしていくため自然と多くなります。
+
+insights の結果は以下の通り。
+
+![](/images/blog/current-status-and-future-of-oss/insight.png)
+
+<br />
+
+![](/images/blog/current-status-and-future-of-oss/insight2.png)
+
+Node Core がこれぐらい
+
+![](/images/blog/current-status-and-future-of-oss/insight3.png)
+
+GitHub が一年に一回公開している The State of the Octoverse でも以下のように言われています。
+
+> React-based web development tools like Gatsby are both among the fastest growing topics this year.
+
+2018 年では急成長するトピックの 5 位に gatsby がいて、来年は更に伸びることが容易に想像できます。
+
+![](/images/blog/current-status-and-future-of-oss/octoverse.png)
+
+<OG url="https://octoverse.github.com" />
+
+ここまで人気でアクティブな理由としての１つの要因がこの仕組みじゃないかなと思っています。
+
+## 現状
+
+さて、自分が所属する OSS の多くはメンテナ不足が問題視されます。(自分の中では)
+
+例えば、webpack を例にとってみます。
+現状、webpack であれば author である sokra 氏が中心で動いており、webpack-dev-server 等は自分と evilebottnawi 氏で管理しています。(もちろん webpack の手伝いはするが...)
+loader 系のメンテナは 0 のところがありました。
+
+<OG url="https://github.com/webpack-contrib/mocha-loader/pull/76#issuecomment-467005601" />
+
+上がってくる issue や pr の量が多く一日に捌ききれる数は限られます。
+大体、webpack 以外のを含め自分宛にくるのが 1 日 20 件ぐらいで、1 日 3 時間近くを費やしていますが、修正のコードを書いたりするので全部を見ることが難しいです。
+また、毎日活動できるわけではないためマージすることができない日もあります。
+自分は OSS を義務にしたくないと思っていますが、最近、義務感がありどうにかしたいなと思っています。
+
+どれだけ規模が大きい OSS でも、アクティブメンテナは基本的に不足しています。
+なぜこれでも成り立つかというと、成熟したコミュニティがあり、その人達に issue の回答や PR の作成を助けてもらっているからだと思っています。
+
+しかし、結局レビューしてマージできる人間はごく少量に限られるためその人はほぼ毎日活動しなくてはなりません。
+
+これは、webpack だけの話ではなく他の大規模な OSS でも起こっています。
+当たり前ですが、自分がずっとアクティブとは限らないため、常に我々も次のメンテナを探さなければいけませんが、会社の採用よりも難しいと思っています。
+リクルートみたいなシステムが無いですし、PR を出すこと自体が難易度高いと思うし、そもそも仕事ではないので継続や教育がないことが多いです。
+
+なので、今回の gatsby の仕組みには驚きましたし、これぐらい潔く write を渡したほうが冗長的でいいんじゃないかなって思います。
+
+## まとめ
+
+OSS では、コミュニティやエコシステムや翻訳等もですが、メンテナのアクティブさも重要視されることかと思います。
+
+**大切なことは継続的なメンテナの確保であり、それが難しいのは事実です。**
+
+いつの日も OSS というのは、メンテナ不足であり、そこからどう活発にし、生かしていくかの戦略として gatsby の仕組みはアクティブになる人を生みやすく正しい戦略だと感じ自分は感動したので記事にしました。

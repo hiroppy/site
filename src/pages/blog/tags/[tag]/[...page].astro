@@ -3,7 +3,7 @@ import BlogCardItem from "../../../../components/BlogCardItem.astro";
 import TagsBox from "../../../../components/TagsBox.astro";
 import Layout from "../../../../layouts/Layout.astro";
 import MainLayout from "../../../../layouts/MainLayout.astro";
-import { getAllTags, sortByDate } from "../../../../utils/blog";
+import { getAllTags, parseTags, sortByDate } from "../../../../utils/blog";
 import BlogDescription from "../../../../components/BlogDescription.astro";
 import type { Mdxs } from "../../../../utils/blog";
 import type { GetStaticPathsOptions, Page } from "astro";
@@ -14,7 +14,9 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 
   return tags.map((tag) =>
     paginate(
-      posts.filter((post) => post.frontmatter.tags.includes(tag)),
+      posts.filter((post) =>
+        parseTags(post.frontmatter.tags).some((current) => current === tag)
+      ),
       {
         params: { tag },
         pageSize: 20,

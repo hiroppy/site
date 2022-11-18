@@ -1,0 +1,341 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Node.jsのECMAScript Modulesの紹介
+date: 2019-04-27
+description: Node.jsのESMのリゾルバの説明と特徴を紹介します
+image: /images/brands/nodejs.png
+tags: javascript
+hatenaPath: node-esm
+---
+
+import OG from "../../components/OG.astro";
+
+<OG url="https://www.meetup.com/ja-JP/Dublin-Node-js-Meetup/events/260666447" />
+
+ここで話したことの日本語版です。
+
+<OG url="https://blog.hiroppy.me/entry/first-speech-abroad" />
+
+## ECMAScript Modules とは？
+
+JavaScript には、AMD や UMD、CJS のような多くのモジュールシステムがあります。
+ECMAScript Modules は当初 ES2015 に入る予定でした。
+さて、ESM の仕様は WHATWG と TC39 が管理しますが、役割が違います。
+
+TC39 は ESM のシンタックスや JS のルールを管理します。
+例えば、モジュールは strict mode になるとか、`this`の扱いとか。
+
+しかし、モジュールの読み込みに関しては、WHATWG が管理します。
+理由は、ブラウザと Node.js の間でこれは処理系依存になり、異なるからです。
+
+### HTML
+
+```html
+<!-- ESMをサポートしているブラウザ -->
+<script type="module" src="esm.js"></script>
+<script nomodule src="fallback.js"></script>
+
+<!-- ESMをサポートしていないブラウザの解釈 -->
+<!-- <script type="module" src="esm.js"></script> -->
+<!-- type:moduleは存在しないため無視 -->
+<script src="fallback.js"></script>
+<!-- `nomodule`属性だけ無視して実行(type:text/javascript) -->
+```
+
+`script`タグに`type="module"`を指定することにより、ブラウザにそのファイルが ESM だということを伝えます。しかし、ESM をサポートしていないブラウザはその属性を識別できないため実行しません。
+
+なので、`nomodule`を使うことにより、ESM をサポートしていないブラウザに対応します。この場合、`type`自体は変更していないため、サポートしてないブラウザは`nomodule`属性を無視してただの`script`として実行します。また、ESM に対応しているブラウザは、この属性がある場合、この行を無視します。
+
+### 実装状況
+
+![](/images/blog/node-esm/caniuse.png)
+
+IE 以外はサポートされています。
+
+ただ、現状はパフォーマンス的にもバンドルするべきです。
+
+### ESM
+
+多くの人がすでに使っていると思います。
+
+```javascript
+import defaultExport from "module-name";
+import * as name from "module-name1";
+import { name } from "module-name2";
+import { export as alias } from "module-name";
+import "module-name";
+
+export { name as name2 };
+export let name1 = "1",
+  name2 = "2";
+export function FunctionName() {}
+export class ClassName {}
+
+(async () => {
+  const { default: foo } = await import("module-name3");
+})();
+```
+
+#### 特徴
+
+- `import` / `export` はトップレベルのみでしか宣言できない
+  - これにより実行前にエラーを発見することが可能です
+  - もし非同期で取得したい場合は、dynamic import を使ってください
+- `import` は hoisting される
+  - どこに書いても宣言がモジュールの最初で行われます
+  - これは関数と同じ挙動です
+- トップレベルの`this`は`undefined`になる
+- モジュールは strict mode になる
+
+## ESM in Node.js
+
+現在は、stability:1(実験的)のフェイズに存在します。
+
+### なぜ時間がかかったのか？
+
+Node.js には 2 つのブラウザにはない大きな問題がありました。
+
+- 読み込むときに`type`みたいな属性がつけれないので、読み込まれるファイルが ESM なのか CJS なのかわからない
+- すでに CJS というモジュールシステムが Node.js には存在する
+  - 互換を維持しなければならない
+
+### どのように Node.js では ESM と CJS を判断し解決するか？
+
+#### `.mjs` ?
+
+多くの人は過去にこのファイル名を聞いたことがあるでしょう。
+たしかに、拡張子で判断することは簡単です。`.mjs`であればそのファイルは ESM で書かれているということです。
+
+しかし、今後、ESM がデファクトスタンダードになることは容易に想像でき、`.mjs`という拡張子にしていくことが本当にいいかというと疑問です。
+我々はできれば、`.js`という拡張子を変えたくありません。(また、この問題はフロントエンドにも影響します。)
+
+そこで我々は別の解決策を模索しました。
+
+#### Package Mode
+
+詳しくは以下の記事をみてください。
+
+<OG url="https://blog.hiroppy.me/entry/nodejs-package-mode" />
+
+<br />
+
+<OG url="https://blog.hiroppy.me/entry/nodejs-experimental-modules" />
+
+<br />
+
+![](/images/blog/node-esm/flow.png)
+
+**一言で言うと、一番近くの親の package.json によってファイルのモジュールシステムが確定します。**
+
+```javascript
+/**
+├── esm
+│   ├── cjs
+│   │   ├── index.js
+│   │   └── package.json (commonjs is used because type is not specified)
+│   └── index.js
+├── package.json (type: module)
+└── root.js
+ */
+// ./root.js ----------------------------------------------------------------- 1
+import "./esm/index.js";
+import "./esm/cjs/index.js";
+console.log(
+  "root.js          :",
+  typeof module !== "undefined" ? "cjs" : "esm"
+);
+
+// ./esm/index.js ------------------------------------------------------------ 2
+// Refers to the closest parent's package.json.
+console.log("esm/index.js    :", typeof module !== "undefined" ? "cjs" : "esm");
+
+// ./esm/cjs/index.js -------------------------------------------------------- 3
+console.log("esm/cjs/index.js:", typeof module !== "undefined" ? "cjs" : "esm");
+```
+
+```shell
+$ node --experimental-modules root.js
+esm/index.js    : esm # 2
+esm/cjs/index.js: cjs # 3
+root.js         : esm # 1
+```
+
+##### package.json
+
+```json
+{
+  "type": "module" // or `commonjs`, the default is `commonjs`
+}
+```
+
+破壊的変更になるため、デフォルトは commonjs となります。
+ESM として動かしたい場合は、`module`を指定する必要があります。
+
+`type`というキー名は変わる可能性があり、現在議論中です。
+
+<OG url="https://github.com/nodejs/modules/issues/312" />
+
+この解決方法は、すでに Node.js のコアに入っているため変わることはないと思います。
+しかし、プロパティ名等は変わる可能性が高いです。
+
+##### `.mjs` と `.cjs`
+
+さて、このルールはすべてのファイルに適応されます。
+しかし、特定ファイルだけこのルールの対象にしたくない場合があります。
+その時は、拡張子をしてしてください。(`.js`はこのルールに準拠します)
+
+```javascript
+// always read as CJS
+import "./file.cjs";
+
+// always read as ESM
+import "./file.mjs";
+```
+
+### ルール
+
+#### WHATWG URL に準拠する
+
+```javascript
+import "./foo.js";
+import "file:///xxxx/foo.js";
+
+// dynamic import
+(async () => {
+  const baseURL = new URL("file://");
+  baseURL.pathname = `${process.cwd()}/foo.js`;
+
+  const foo = await import(baseURL);
+
+  console.log(foo); // [Module] { default: 'hello' }
+})();
+```
+
+相対パス、絶対パス、パッケージ名、`file`プロトコルの指定が可能です。
+
+#### 使用できない変数
+
+以下の変数は、CJS では使えますが、ESM では使えません。
+
+```javascript
+// The following variables don't exist in ESM.
+console.log(typeof require);
+console.log(typeof module);
+console.log(typeof exports);
+console.log(typeof __dirname);
+console.log(typeof __filename);
+```
+
+そのかわりに ESM では以下の値で代用します。
+
+```javascript
+// Get a path info like __dirname and __filename.
+console.log(import.meta);
+// [Object: null prototype] {
+//   url: 'file:///Users/xxxx/index.js'
+// }
+
+// Create `require` function.
+import { createRequireFromPath } from "module";
+import { fileURLToPath } from "url";
+
+// ./
+const require = createRequireFromPath(fileURLToPath(import.meta.url));
+
+// ./cjs/index.js
+require("./cjs/index.js");
+```
+
+`import.meta`は現在、tc39 の stage-3 となっています。
+`createRequireFromPath`が`module`の中に存在しており、ESM 内でも`require`関数を生成することができます。
+
+この 2 つにより、CJS で行えたことを ESM でも行えるようにします。
+
+#### 明示的
+
+CJS では、ファイル名の`index`と拡張子の`.js`, `.node`, `.json`を省略することができます。
+しかし、ESM ではこの仕様は存在せず、ブラウザと共通コードで動くことを Node.js 側も望んでいるため、今後は省略できなくなります。
+
+フラグは、`--es-module-specifier-resolution`で、`explcit`と`node`を持ち、デフォルトは`explicit`です。
+しかし、多くの存在するファイルは省略していると思うので、`node`を明示的に指定することでしょう。
+
+```javascript
+// strict/index.js
+
+import "./foo/index.js"; // --es-module-specifier-resolution=explicit
+import "./foo"; // --es-module-specifier-resolution=node
+```
+
+```shell
+$ node --experimental-modules --es-module-specifier-resolution=node ./strict/index.js
+$ node --experimental-modules  ./strict/index.js # default is `explicit`
+```
+
+#### JavaScript のみ
+
+ESM は JavaScript のみの実行を許可します。
+CJS では、JSON(`.json`)と native modules(`.node`)が実行できましたが、ESM では実行できません。
+
+もし、実行したいのであれば、ESM 内で`module.createRequireFromPath()`を使い、`require` 関数を作ることができます。
+
+しかし、JSON だけは、`--experimental-json-modules`フラグを持っています。
+今現在、ブラウザの ESM でも JSON を呼べるようにするプロポーザルが進んでいるからです。
+
+<OG url="https://github.com/whatwg/html/issues/4315" />
+
+#### CJS から ESM への呼び出しはできない
+
+```javascript
+// // Reading ESM at top-level is prohibited.
+// import foo from './esm/foo.js'; // invalid
+
+// // An error occurs because the read file is written as ESM.
+// // `require` expects read file as CJS
+// require('./esm/foo');
+//
+// // export default typeof module !== 'undefined' ? 'cjs' : 'esm';
+// // ^^^^^^
+// // SyntaxError: Unexpected token export
+
+console.log("root.js:", typeof module !== "undefined" ? "cjs" : "esm"); // cjs
+
+(async () => {
+  const { default: foo } = await import("./esm/foo.js");
+  console.log("foo.js :", foo); // esm
+})();
+
+// Conclusion
+// 🙆‍♀️ESM -> CJS
+// 🙅‍♀️CJS -> ESM (excluding dynamic import)
+```
+
+このファイルは CJS で書かれています。
+トップレベルで`import`を呼んでも、CJS にはそのシンタックスが存在しないため、エラーとなります。
+しかし、dynamic import のみは許可されています。
+
+結論として、**CJS は ESM をトップレベルでは呼べないが、dynamic import を使えば、ESM を呼び出せ、ESM は CJS も ESM も呼べます。**
+
+## ロードマップ
+
+- CJS/ESM の両パッケージ対応(現在は、type で一つしか絞れないため)
+  - https://github.com/nodejs/modules/issues/273
+- `require`の簡潔さ(`module.createRequireFromPath`めんどい)
+- package path maps
+- automatic entry point module type detection
+
+<OG url="https://github.com/nodejs/modules/blob/master/doc/announcement.md#works-in-progress" />
+
+## サマリー
+
+- 近くの親の package.json の`type:module`に依存して、ファイルは ESM か CJS になる
+- トップレベルでは CJS は ESM を呼べない
+- CJS で使えたいくつかの変数が ESM では使えない
+- フラグが外れるゴールは Node12 の LTS がリリースされる 2019/10 の予定
+
+## サンプルコード
+
+<OG url="https://github.com/hiroppy/node-esm-example" />
+
+## 全文
+
+<OG url="https://medium.com/@about_hiroppy/introduce-ecmascript-modules-of-node-js-4bf873bcb21b" />

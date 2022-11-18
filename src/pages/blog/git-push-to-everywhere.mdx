@@ -1,0 +1,39 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: PRを出したユーザーのブランチにpushする方法
+date: 2019-06-03
+description: ghを使わずに他の人のPRにコミットする方法
+image: /images/brands/github.png
+tags: git
+hatenaPath: 2019/06/03/111204
+---
+
+久しぶりに PR 出した人のブランチ使おうと思ったら忘れてしまったのでメモ。
+例えば、PR が inactive になるとか rebase するとかこちらで修正入れてしまう時とかに行います。
+
+## clone する
+
+これはめんどくさいので自分はやらないです。
+
+## remote を登録する
+
+<br />
+
+```sh
+# 相手先を自分のローカルに登録
+$ git remote add reviewee url # urlは相手先のurl
+# ローカルの状態を更新
+$ git fetch reviewee
+# remote-prは相手のPRのブランチ名, 自分のローカルのブランチ名はなんでもいい
+$ git checkout reviewee/remote-pr -b local-pr
+# ブランチが古い場合は、masterからrebaseする
+$ git rebase master local-pr # or $ git pull --rebase origin master
+# 相手のブランチにpush
+$ git push -f reviewee local-pr # or $ git push -f reviewee remote-pr
++ f4e919b...a3b06dc local-pr-> remote-pr (forced update)
+```
+
+上記を実行すると、PR に反映されます。
+これは、そのリポジトリの write 権限があるメンテナならできます。
+
+https://activemq.apache.org/components/artemis/documentation/2.1.0/hacking-guide/maintainers.html

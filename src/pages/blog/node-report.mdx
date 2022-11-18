@@ -1,0 +1,387 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Node.jsのCoreにレポート機能が入った
+date: 2019-01-24
+description: Node.jsに入ったReportという機能を紹介します
+image: /images/brands/nodejs.png
+tags: javascript
+hatenaPath: node-report
+---
+
+import OG from "../../components/OG.astro";
+
+<OG url="https://github.com/nodejs/node/pull/22712" />
+
+結構前から進行してて入れたいねーってなってたらこんなにかかってしまいました。
+
+semver-minor なので、次のリリースで入るでしょう。
+
+## 目的
+
+主な目的としては、何かのエラーで例外をキャッチしたときにその時の詳細情報をコア側から提供し、原因特定の手助けをします。
+
+## node-report
+
+node-report とは、公式が出しているレポーターです。
+
+主に以下の情報を提供します。
+
+- JavaScript Stack Trace
+- Native Stack Trace
+- JavaScript Heap and Garbage Collector
+- Resource Usage
+- Node.js libuv Handle Summary
+- System Information
+
+ネイティブのスタックトレース、ヒープ統計情報、プラットフォーム情報、リソース使用状況などが人間が読める形でレポート化されます。
+また、未処理の例外や致命的なエラーにも対応します。
+
+以下は、現在 npm に置かれているリンクです。
+(今後はコアに入りますが、npm にも publish されるかは自分は知りません)
+
+<OG url="https://www.npmjs.com/package/node-report" />
+
+node-report 単体で動かす場合は以下のように動かします。
+
+```sh
+$ npm i node-report
+$ node -r node-report test.js
+$ cat node-report.20171105.202142.9066.001.txt
+================================================================================
+==== Node Report ===============================================================
+...
+Node.js version: v9.0.0
+...
+================================================================================
+==== JavaScript Stack Trace ====================================================
+...
+================================================================================
+==== Native Stack Trace ========================================================
+...
+================================================================================
+==== JavaScript Heap and Garbage Collector =====================================
+...
+================================================================================
+==== Resource Usage ============================================================
+...
+================================================================================
+==== Node.js libuv Handle Summary ==============================================
+...
+================================================================================
+==== System Information ========================================================
+...
+================================================================================
+```
+
+注意点として、node-report はテキスト形式でしたが、コアでは json が採用されています。
+
+## 使い方
+
+ここからは、core から使う方法を説明します。
+現在、`report`は stability:1 なので、実行するときには実験中フラグ(`--experimental-report`)が必要となります。
+
+使用方法としては、CLI から指定して使う方法とコードから呼ぶ方法があります。
+
+### CLI
+
+```sh
+$ node --experimental-report --diagnostic-report-uncaught-exception \
+  --diagnostic-report-on-fatalerror --diagnostic-report-on-signal \
+  --diagnostic-report-signal=SIGUSR2  --diagnostic-report-filename=./report.json \
+  --diagnostic-report-directory=/home/nodeuser --diagnostic-report-verbose index.js
+```
+
+#### `--diagnostic-report-uncaught-exception`
+
+uncaught-exception をトリガーにします。
+
+#### `--diagnostic-report-on-signal`
+
+実行中の Node.js プロセスへの指定されたシグナルを受信したときにレポートを生成します。
+デフォルトは`SIGUSR2`です。
+この機能では、レポートを他のプログラムから起動する必要がある場合に便利で、モニタリングアプリケーションはこの機能を利用して定期的にレポートを収集することが可能です。
+
+#### `--diagnostic-report-on-fatalerror`
+
+アプリケーションの終了につながる致命的なエラー(e.g メモリ不足等の Node.js ランタイム内の内部エラー)をレポートをトリガーにします。
+
+#### `--diagnostic-report-directory `
+
+出力先のディレクトリを指定します。
+
+#### `--diagnostic-report-filename`
+
+出力のファイル名を指定します。
+
+#### `--diagnostic-report-signal`
+
+レポート生成のシグナルを設定またはリセットします。(windows サポート外)
+
+#### `--diagnostic-report-verbose`
+
+レポート生成中に追加で情報を入れます。
+
+### コードから
+
+基本的に特定箇所のエラーでレポートしてほしいときには、コードから呼ぶのがよいでしょう。
+
+```javascript
+try {
+  console.log("hi!");
+  throw new Error("bye!");
+} catch (err) {
+  // エラーオブジェクトを渡す
+  process.report.triggerReport("report.json", err);
+}
+```
+
+```sh
+$ node --experimental-report index.js
+```
+
+```json
+{
+  "header": {
+    "event": "JavaScript API",
+    "location": "TriggerReport",
+    "filename": "report.json",
+    "dumpEventTime": "2019-01-24T08:27:53Z",
+    "dumpEventTimeStamp": "1548286073604",
+    "processId": "56468",
+    "commandLine": [
+      "./node",
+      "--experimental-report",
+      "b.js"
+    ],
+    "nodejsVersion": "v12.0.0-pre",
+    "wordSize": "64 bit",
+    "componentVersions": {
+      "node": "12.0.0-pre",
+      "v8": "7.1.302.33-node.10",
+      ...
+    },
+    "osVersion": "Darwin 18.2.0 Darwin Kernel Version 18.2.0: Mon Nov 12 20:24:46 PST 2018; root:xnu-4903.231.4~2/RELEASE_X86_64",
+    "machine": "Darwin 18.2.0 Darwin Kernel Version 18.2.0: Mon Nov 12 20:24:46 PST 2018; root:xnu-4903.231.4~2/RELEASE_X86_64about-hiroppy.local x86_64"
+  },
+  "javascriptStack": {
+    "message": "Error: bye!",
+    "stack": [
+      "at Object.<anonymous> (/Users/about_hiroppy/Programming/nodejs/node/out/Release/b.js:19:9)",
+      "at Module._compile (internal/modules/cjs/loader.js:737:30)",
+      "at Object.Module._extensions..js (internal/modules/cjs/loader.js:748:10)",
+      "at Module.load (internal/modules/cjs/loader.js:629:32)",
+      "at tryModuleLoad (internal/modules/cjs/loader.js:572:12)",
+      "at Function.Module._load (internal/modules/cjs/loader.js:564:3)",
+      "at Function.Module.runMain (internal/modules/cjs/loader.js:802:12)",
+      "at executeUserCode (internal/bootstrap/node.js:497:15)"
+    ]
+  },
+  "nativeStack": [
+    " [pc=0x100130ed1] report::TriggerNodeReport(v8::Isolate*, node::Environment*, char const*, char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, v8::Local<v8::String>) [/Users/about_hiroppy/Programming/nodejs/node/out/Release/./node]",
+    ...
+  ],
+  "javascriptHeap": {
+    "totalMemory": "5603328",
+    "totalCommittedMemory": "3743952",
+    "usedMemory": "2601416",
+    "availableMemory": "1521802280",
+    "memoryLimit": "1526909922",
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": "524288",
+        "committedMemory": "39208",
+        "capacity": "515584",
+        "used": "30504",
+        "available": "485080"
+      },
+      "new_space": {
+        "memorySize": "2097152",
+        "committedMemory": "1877472",
+        "capacity": "1031168",
+        "used": "828632",
+        "available": "202536"
+      },
+      "old_space": {
+        "memorySize": "1748992",
+        "committedMemory": "1308424",
+        "capacity": "1273648",
+        "used": "1273608",
+        "available": "40"
+      },
+      "code_space": {
+        "memorySize": "696320",
+        "committedMemory": "185920",
+        "capacity": "153152",
+        "used": "153152",
+        "available": "0"
+      },
+      "map_space": {
+        "memorySize": "536576",
+        "committedMemory": "332928",
+        "capacity": "315520",
+        "used": "315520",
+        "available": "0"
+      },
+      "large_object_space": {
+        "memorySize": "0",
+        "committedMemory": "0",
+        "capacity": "1521114624",
+        "used": "0",
+        "available": "1521114624"
+      },
+      "new_large_object_space": {
+        "memorySize": "0",
+        "committedMemory": "0",
+        "capacity": "0",
+        "used": "0",
+        "available": "0"
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": "0.082528",
+    "kernelCpuSeconds": "0.022165",
+    "cpuConsumptionPercent": "0.000000",
+    "maxRss": "25232932864",
+    "pageFaults": {
+      "IORequired": "0",
+      "IONotRequired": "6375"
+    },
+    "fsActivity": {
+      "reads": "0",
+      "writes": "0"
+    }
+  },
+  "libuv": [
+    {
+      "type": "async",
+      "is_active": "1",
+      "is_referenced": "0",
+      "address": "4339086624",
+      "details": ""
+    },
+    {
+      "type": "timer",
+      "is_active": "0",
+      "is_referenced": "0",
+      "address": "140732920753032",
+      "details": "repeat: 0, timeout in: 140734958161789 ms"
+    },
+    {
+      "type": "check",
+      "is_active": "1",
+      "is_referenced": "0",
+      "address": "140732920753184",
+      "details": ""
+    },
+    {
+      "type": "idle",
+      "is_active": "0",
+      "is_referenced": "1",
+      "address": "140732920753304",
+      "details": ""
+    },
+    {
+      "type": "prepare",
+      "is_active": "0",
+      "is_referenced": "0",
+      "address": "140732920753424",
+      "details": ""
+    },
+    {
+      "type": "check",
+      "is_active": "0",
+      "is_referenced": "0",
+      "address": "140732920753544",
+      "details": ""
+    },
+    {
+      "type": "async",
+      "is_active": "1",
+      "is_referenced": "0",
+      "address": "4320933640",
+      "details": ""
+    },
+    ...
+  ],
+  "environmentVariables": {
+    "TMPDIR": "/var/folders/0k/t5s25c2d30dgvmkr26mj83_h0000gn/T/",
+    ...
+  },
+  "userLimits": {
+    "core_file_size_blocks": {
+      "soft": "",
+      "hard": "unlimited"
+    },
+    "data_seg_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "file_size_blocks": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_locked_memory_bytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_memory_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "open_files": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "stack_size_bytes": {
+      "soft": "unlimited",
+      "hard": "67104768"
+    },
+    "cpu_time_seconds": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_user_processes": {
+      "soft": "unlimited",
+      "hard": "2128"
+    },
+    "virtual_memory_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    }
+  },
+  "sharedObjects": [
+    "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+    ...
+  ]
+}
+```
+
+このように基本情報から js, native のスタック、js のヒープ関連、リソースの使われ方、イベントループ(libuv)、ユーザーリミット等を確認することができます。
+
+また、以下のように特定イベント時に取得することも可能です。
+
+```javascript
+// uncaught exceptions時のみトリガーさせる
+process.report.setDiagnosticReportOptions({ events: ["exception"] });
+
+// 内部エラーと外部のシグナル時のみトリガーさせる
+process.report.setDiagnosticReportOptions({ events: ["fatalerror", "signal"] });
+```
+
+## 余談
+
+まだ、リリースすらされてないのでライブラリを作るなら今！
+webpack-dashboard みたいなのが今後出てきそうな気がしています。
+
+## 関連記事
+
+<OG url="https://blog.hiroppy.me/entry/nodejs-event-loop" />
+
+<br />
+
+<OG url="https://blog.hiroppy.me/entry/nodejs-performance" />
+
+<br />
+
+<OG url="https://blog.hiroppy.me/entry/2017/11/06/095943#node-report" />

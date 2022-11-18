@@ -1,0 +1,157 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: テストの実行時間を2倍速くした話
+date: 2019-06-10
+description: ポートを分散させることにより並列実行できるようにする工夫を紹介します
+image: /images/blog/improving-jest/ogp.webp
+tags: javascript
+hatenaPath: 2019/06/10/094302
+---
+
+import OG from "../../components/OG.astro";
+import TwitterCard from "../../components/TwitterCard.astro";
+
+webpack-dev-server のテストを高速化しました。
+jest を使っていて、`--runInBand`を今までは使っていましたが、それを外しました。
+
+## --runInBand
+
+jest はデフォルトでワーカーを使い並列実行を行います。
+しかし、このオプションをつけるとそれが直列実行できます。
+
+理由としては、server の listen するテストが多く、mocha で書かれていたため、急に jest に移行してもコード自体が並列実行できるものではなかったからです。
+
+## PR
+
+<OG url="https://github.com/webpack/webpack-dev-server/pull/2005" />
+
+この PR はベネチアで書かれました:)
+
+<TwitterCard id="1137765296918409216" height={450} />
+
+## 結果
+
+### 直列実行
+
+```sh
+Test Suites: 1 skipped, 49 passed, 49 of 50 total
+Tests:       9 skipped, 419 passed, 428 total
+Snapshots:   152 passed, 152 total
+Time:        113.313s, estimated 173s
+Ran all test suites.
+```
+
+### 並列実行
+
+```sh
+Test Suites: 1 skipped, 49 passed, 49 of 50 total
+Tests:       9 skipped, 419 passed, 428 total
+Snapshots:   152 passed, 152 total
+Time:        60.5s
+Ran all test suites.
+```
+
+約 2 倍、速くなりました 🎉
+
+## 戦略
+
+当たり前ですが、ポートを富豪的に使うことにより、並列実行をさせます。
+
+### ポートマップ
+
+当初は個数じゃなくて、ポート番号にしてたのですが、柔軟性がなかったため、個数に変更しました。
+また、この書き方だと手書きのミスによる重複が絶対に発生しません。
+
+```javascript
+const portsList = {
+  cli: 2, // cliのテストでは、2個ポートを使う
+  sockJSClient: 1, // ファイル名が小文字だったので、別PRで直す
+  SockJSServer: 1,
+  Client: 1,
+  ClientOptions: 3,
+  MultiCompiler: 1,
+  ...
+};
+
+let startPort = 8079;
+const ports = {};
+
+Object.entries(portsList).forEach(([key, value]) => {
+  // no-plusplusの影響で ++ はなし
+  ports[key] =
+    value === 1
+      ? (startPort += 1)
+      : [...new Array(value)].map(() => (startPort += 1));
+});
+
+module.exports = ports;
+
+// const [port1, port2] = require('./ports-map')['cli'];
+```
+
+### 起動時
+
+jest には、初回起動時に一回だけ実行できる、`globalSetup`というキーが存在します。
+そして、起動時に使用するすべてのポートが空いているかを確認するスクリプトを実行させます。
+
+```javascript
+// jest.config.js globalSetup: '<rootDir>/globalSetupTest.js'
+
+// globalSetupTest.js
+
+// node.jsのネイティブでポート確認するのめんどくさいのでこのモジュールを使う
+const tcpPortUsed = require("tcp-port-used");
+const ports = require("./test/ports-map");
+
+async function validatePorts() {
+  const samples = [];
+
+  Object.entries(ports).forEach(([key, value]) => {
+    const arr = Array.isArray(value) ? value : [value];
+
+    arr.forEach((port) => {
+      const check = tcpPortUsed.check(port, "localhost").then((inUse) => {
+        if (inUse) throw new Error(`${port} has already used. [${key}]`);
+      });
+
+      samples.push(check);
+    });
+  });
+
+  try {
+    await Promise.all(samples);
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
+  }
+}
+
+module.exports = validatePorts;
+```
+
+これで、テスト実行前にテストで使用するすべてのポートが使用されていない場合のみテストを実行できるようになります。
+
+### テストコード
+
+各テストが以下のようにポートを引用すれば競合しないです。
+
+```javascript
+const [port1, port2, port3] = require("../ports-map").ClientOptions;
+```
+
+ただ、ポート込みの snapshot を取っている場合、結構更新が走りやすいので注意してください。
+一つ真ん中とかでポート増やすとずれ込みます。
+
+## さいごに
+
+まず、server が起動する多くのテストを並列実行する場合のポート管理のベストプラクティスがいまいちわからないです。
+サーバー起動ばっかりやってる参考になるプロダクトがあったら教えてください。
+
+一旦、他のメンテナの意見を待ちつつもっといい方法があれば考えます。
+この戦略は、レビューによって変わる可能性があります。
+
+けど、一番何が言いたかったかって言うと、並列実行は CPU をめっちゃ使うけどくっそ速くなるぞ！！！ってことでした。(当たり前)
+
+## 追記
+
+Node6 をサポート対象外にしたので、async/await が使えるようになりました 😁
