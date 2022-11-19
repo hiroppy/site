@@ -1,0 +1,248 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Node.jsのパフォーマンスチューニングのtips
+date: 2017-11-06
+description: Node.jsでのパフォーマンス改善の方法のtipsをまとめます
+image: /images/brands/nodejs.png
+tags: javascript
+hatenaPath: 2017/11/06/095943
+---
+
+import OG from "../../components/OG.astro";
+
+Node9 が 10/31 に出ました 🎉🎉🎉
+
+<OG url="https://nodejs.org/en/blog/release/v9.0.0" />
+
+今回は Node 単体の話なので、Express、Nginx 等のチューニングに関してはココには書きません。
+また、libuv 等のコード内部の話もしません。
+
+## --inspect, --inspect-brk
+
+もともとあった、`--debug`から移行されました。(v8.0.0 ~)
+Chrome を使いデバッグ、プロファイリング等を使えるようになります。
+ブラウザで使えるので、いつも使っている感じと同じです。
+`--inspect-brk`は`--debug-brk`と同様に最初の行にブレークポイントを設置し、起動します。
+
+```sh
+$ node --inspect test.js
+Debugger listening on ws://127.0.0.1:9229/b565921e-23f2-4cee-b124-33e97fc3aa32
+For help see https://nodejs.org/en/docs/inspector
+```
+
+chrome から`chrome://inspect/#devices`を指定すると選択肢がでるので、そこから inspect を選ぶと起動します。
+
+インスペクターのクライアント一覧:
+
+- https://nodejs.org/en/docs/guides/debugging-getting-started/#inspector-clients
+- https://nodejs.org/en/docs/inspector
+
+個人的には、NiM を入れると楽かなーと思います。
+
+<OG url="https://chrome.google.com/webstore/detail/nodejs-v8-inspector-manag/gnhhdgbaldcilmgcpfddgdbkhjohddkj" />
+
+## --trace-opt, --trace-deopt
+
+コードの最適化の解析を行います。
+
+```sh
+$ node --trace-opt test.js
+[marking 0x3ad0f4375d1 <JSFunction normalizeStringPosix (sfi = 0x3ad423d7d81)> for optimized recompilation, reason: hot and stable, ICs with typeinfo: 46/67 (68%), generic ICs: 0/67 (0%)]
+[compiling method 0x3ad0f4375d1 <JSFunction normalizeStringPosix (sfi = 0x3ad423d7d81)> using TurboFan]
+[optimizing 0x3ad0f4375d1 <JSFunction normalizeStringPosix (sfi = 0x3ad423d7d81)> - took 1.867, 1.776, 0.019 ms]
+[completed optimizing 0x3ad0f4375d1 <JSFunction normalizeStringPosix (sfi = 0x3ad423d7d81)>]
+[marking 0x3ad423fcee1 <JSFunction Module._nodeModulePaths (sfi = 0x3ad423ba5a1)> for optimized recompilation, reason: hot and stable, ICs with typeinfo: 23/23 (100%), generic ICs: 0/23 (0%)]
+[compiling method 0x3ad423fcee1 <JSFunction Module._nodeModulePaths (sfi = 0x3ad423ba5a1)> using TurboFan]
+[optimizing 0x3ad423fcee1 <JSFunction Module._nodeModulePaths (sfi = 0x3ad423ba5a1)> - took 0.659, 3.009, 0.049 ms]
+[completed optimizing 0x3ad423fcee1 <JSFunction Module._nodeModulePaths (sfi = 0x3ad423ba5a1)>]
+```
+
+marking は再コンパイル用のマーキングで、それは再コンパイルされ最適化されます。
+最適化が不可能な場合は、マーキングの代わりに`disabled optimization`というのが付きます。
+
+上記をみればわかるように、その関数が最適化されたかどうかがわかります。
+
+## --prof
+
+CPU プロファイリングです。
+V8 内のプロファイラの実行をサンプリングします。
+
+```sh
+$ node --prof test.js
+$ ls
+isolate-0x103000000-v8.log test.js
+$ node --prof-process isolate-0x103000000-v8.log # logは読みづらいので読めるようにする
+```
+
+各セクションごとに情報が分かれます。
+
+```
+ [Summary]:
+   ticks  total  nonlib   name
+      3    5.0%    5.0%  JavaScript
+     50   83.3%   83.3%  C++
+      1    1.7%    1.7%  GC
+      0    0.0%          Shared libraries
+      7   11.7%          Unaccounted
+```
+
+取得されたサンプルの比率(5.0%, 83.3%, etc...)が割合となり、その言語のコードで発生したことを示します。
+そして、各セクションを見るといいと思います。
+
+セクション例
+
+```
+   ticks parent  name
+   6326   44.2%  /lib/x86_64-linux-gnu/libm-2.15.so
+   6325  100.0%    LazyCompile: *exp native math.js:91
+   6314   99.8%      LazyCompile: *calculateMandelbrot http://localhost:8080/Demo.js:215
+
+```
+
+各セクションは、ツリーになっており、この場合は親コールの合計時間における 44.2%がシステム内の`math.exp()`を実行するのに使われています。
+関数名の前の`*`はその時間が最適化された関数で費やされていることを示し、`~`の場合は最適化された関数ではないことを示します。
+
+詳しくは公式が出している以下の記事を見ると、手順がわかりやすいと思います。
+
+<OG url="https://nodejs.org/en/docs/guides/simple-profiling" />
+
+https://github.com/v8/v8/wiki/Using%20V8%E2%80%99s%20internal%20profiler
+
+## --trace-events-enabled
+
+トレース情報を管理します。
+`--trace-events-enabled`フラグを渡すと有効化されます。
+カテゴリを指定したい場合は、`--trace-event-categories`を使い続けてカテゴリを指定します。
+カテゴリデフォルトは`node`と`v8`になります。
+chrome で`chrome://tracing/`を指定することにより、生成したのをロードすることが可能です。
+
+```sh
+$ node --trace-events-enabled test.js
+$ node --trace-events-enabled --trace-event-categories v8,custom-category test.js
+```
+
+- https://nodejs.org/api/tracing.html
+- https://github.com/nodejs/node/pull/9304
+- https://www.chromium.org/developers/how-tos/trace-event-profiling-tool
+
+## --trace-gc
+
+Garbage Collection のトレースです。
+メモリリークのデバッグに役立つでしょう。
+
+```sh
+$ node --trace-gc test.js
+[43929:0x102801c00]       39 ms: Scavenge 3.4 (6.3) -> 3.1 (7.3) MB, 0.9 / 0.0 ms  allocation failure
+[43929:0x102801c00]       50 ms: Scavenge 3.6 (7.3) -> 3.5 (8.3) MB, 1.2 / 0.0 ms  allocation failure
+
+$ node --optimize_for_size --max_old_space_size=4096 --gc_interval=100 #このようにV8のGCを操作することも可能
+```
+
+`--expose-gc`を指定することにより、手動で GC を起こすことも可能です。
+
+メモリリーク周りは以下の記事を参考にするとわかりやすくていいと思います。
+
+<OG url="http://postd.cc/simple-guide-to-finding-a-javascript-memory-leak-in-node-js" />
+
+実例
+
+<OG url="https://github.com/nodejs/help/issues/917" />
+
+## node-report
+
+公式が出しているモジュールです。
+現在、node-report は Core とは別で切り分けられておりスタンドアローンですが、将来的には Core に入る予定です。
+ネイティブのスタックトレース、ヒープ統計情報、プラットフォーム情報、リソース使用状況などが人間が読める形でレポート化されます。
+
+```sh
+$ npm i node-report
+$ node -r node-report test.js
+$ cat node-report.20171105.202142.9066.001.txt
+================================================================================
+==== Node Report ===============================================================
+...
+Node.js version: v9.0.0
+...
+================================================================================
+==== JavaScript Stack Trace ====================================================
+...
+================================================================================
+==== Native Stack Trace ========================================================
+...
+================================================================================
+==== JavaScript Heap and Garbage Collector =====================================
+...
+================================================================================
+==== Resource Usage ============================================================
+...
+================================================================================
+==== Node.js libuv Handle Summary ==============================================
+...
+================================================================================
+==== System Information ========================================================
+...
+================================================================================
+```
+
+<br />
+
+<OG url="https://github.com/nodejs/node-report" />
+
+## Performance Timing API
+
+v8.5.0 から入ったブラウザでも使われる API です。
+現在は Stability: 1(実験的)です。
+
+<OG url="https://nodejs.org/dist/latest-v8.x/docs/api/perf_hooks.html" />
+
+詳しくは以下の記事をどうぞ
+
+<OG url="http://abouthiroppy.hatenablog.jp/entry/2017/08/08/192320" />
+
+## 優しいコードの書き方へ
+
+v8.3.0 から V8 の Turbofan, Ignition がデフォルトで Crankshaft から移行され、昔のような**最適化のためのコード**の書き方をしなくても良くなりました。
+
+<OG url="http://abouthiroppy.hatenablog.jp/entry/2017/08/03/095304" />
+
+先日の Chrome Dev Summit でも V8 チームが今後はそのようなアンチパターンをなくしていくと言っています。(つまりどの書き方をしても同じ結果になる)
+また、トランスパイルは気をつけるべきです。
+Babel には babel-preset-env というターゲットバージョンによりトランスパイルをするツールがあります。
+babel-preset-env では Node のバージョンを指定することにより、V8 に優しいコードに変換することが可能です。
+すべてのコードをトランスパイルするべきではありません。
+基本的にトランスパイルされるコードは無駄な処理が多いからです。(これはそのものがエンジン側で実装されてないため)
+なので、エンジン側で未実装なもの(e.g. stage-x)だけをトランスパイルするべきです。
+
+```json
+{
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
+  ]
+}
+```
+
+https://github.com/babel/babel/tree/master/experimental/babel-preset-env
+
+先日、monorepo の babel へ移行され次のバージョンでは scoped packages になりました 🎉
+
+## v8::SnapshotCreator
+
+将来的に入るかもしれませんが、今現在、`ArrayBuffers`に関して議論中です。
+
+<OG url="https://github.com/nodejs/node/issues/13877" />
+
+## さいごに
+
+今回は、パフォーマンスチューニングをするのに手助けになる手法を数個列挙してみました。
+しかし、Node, V8 の最適化周りのオプションの話をするとまだたくさんあるとおもいますが一旦このへんで。
+詳しくは`node --v8-options`へ。`--print-code`, `--print-opt-code`, `--code-comments` `--track-heap-objects`, etc...
+その他には、I/O(libuv)とイベントループの理解も大切だと思います。
+
+もしチューニング等でお困りでしたら、[Twitter](https://twitter.com/about_hiroppy)かメールで聞いてくだされば答えれるかもしれません。

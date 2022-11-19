@@ -773,5 +773,75 @@
     "title": "10.0.0 Proposal by jasnell · Pull Request #19091 · nodejs/node",
     "description": "This is nearly ready:\n\n1st RC Build will be cut afternoon (pacific time) of April 19th\n2nd RC Build (if there are any updates landed) will be cut afternoon of April 23rd\nRelease will be afternoon o...",
     "image": "https://opengraph.githubassets.com/a432924c8cecdf4bcaeabdc604cd0a4d29f154c04b02ae6fe42f9a6e87bda616/nodejs/node/pull/19091"
+  },
+  "https://nodejs.org/dist/latest-v8.x/docs/api/perf_hooks.html": {
+    "title": "Performance Timing API | Node.js v8.17.0 Documentation",
+    "description": "",
+    "image": ""
+  },
+  "http://postd.cc/simple-guide-to-finding-a-javascript-memory-leak-in-node-js": {
+    "title": "Node.jsでのJavaScriptメモリリークを発見するための簡単ガイド | POSTD",
+    "description": "目次 初めに 極小理論 ステップ1. 問題の再現と確認 ステップ2. 最低3回のヒートダンプ採取 ステップ3. 問題の発見 ステップ4. 問題解決の確認 他のリソースへのリンク まとめ Someth…",
+    "image": "https://postd.cc/wp/wp-content/uploads/2016/05/memory-leak-500x386.png"
+  },
+  "https://nodejs.org/en/blog/release/v9.0.0": {
+    "title": "Node v9.0.0 (Current) | Node.js",
+    "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
+    "image": "https://nodejs.org/static/images/logo-hexagon-card.png"
+  },
+  "http://abouthiroppy.hatenablog.jp/entry/2017/08/03/095304": {
+    "title": "Node8.3.0でデフォルトになるTF/Iに関わるベンチマークについて - 技術探し",
+    "description": "buildersconでのスライド 8.3.0 プロポーザル TurboFan + Ignition TurboFan Ignition Flow V8の5.9は・・・？ パフォーマンス webpack 8.2.1(V8 5.8) 8.3.0(V8 6.0) 結果 ESLint 8.2.1(V8 5.8) 8.3.0(V8 6.0) 結果 まとめ buildersconでのスライド speakerdeck.com 8.3.0 プロポーザル github.com 大きな変更はやはりV8の6.0とWHATWG Encoding Standardが入ることです🎉 今回はV8の6.0の話をします。 こ…",
+    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/a/about_hiroppy/20170803/20170803092506.jpg"
+  },
+  "http://abouthiroppy.hatenablog.jp/entry/2017/08/08/192320": {
+    "title": "NodeにPerformance Timing APIが追加される - 技術探し",
+    "description": "NodeへPerformance Timing APIの初期実装が入ります。 資料 W3C NodeへのPR Performance Timing API 実装 Nodeで使ってみる 手順 コード API common now() mark(name: string) measure(name: string, startMark: string, endMark: string) get getEntries() getEntriesByType(type: string) getEntriesByName(name: string, type?: string) clear clearMa…",
+    "image": "https://ogimage.blog.st-hatena.com/10328749687208748984/8599973812286804680/1502189293"
+  },
+  "https://nodejs.org/en/docs/guides/simple-profiling": {
+    "title": "Easy profiling for Node.js Applications | Node.js",
+    "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
+    "image": "https://nodejs.org/static/images/logo-hexagon-card.png"
+  },
+  "https://github.com/nodejs/node-report": {
+    "title": "GitHub - nodejs/node-report: Delivers a human-readable diagnostic summary, written to file.",
+    "description": "Delivers a human-readable diagnostic summary, written to file. - GitHub - nodejs/node-report: Delivers a human-readable diagnostic summary, written to file.",
+    "image": "https://opengraph.githubassets.com/f81888135ecbade88272edb6f4fa70a964fb8fa779076c9c568182267665e67c/nodejs/node-report"
+  },
+  "https://github.com/nodejs/help/issues/917": {
+    "title": "Garbage collection changes in 8.7.0 · Issue #917 · nodejs/help",
+    "description": "Node.js Version: 8.7.0 OS: debian jessie armhf Scope (install, code, runtime, meta, other?): runtime After updating from Node 8.4.0 to Node 8.7.0 (and thus V8 6.0 to 6.1), I noticed some significan...",
+    "image": "https://opengraph.githubassets.com/7248990b07048276defdf2da397c6ae8dbdd74b7287e5fa40952cd91f91ea0eb/nodejs/help/issues/917"
+  },
+  "https://github.com/nodejs/node/issues/13877": {
+    "title": "Discussion/Tracking SnapshotCreator support · Issue #13877 · nodejs/node",
+    "description": "Relevant earlier discussion on #9473 . v8::SnapshotCreator is a means to capture a heap snapshot of JS, CodeGen, and C++ bindings and revive them w/o performing loading/evaluation steps that got to...",
+    "image": "https://opengraph.githubassets.com/e107a5e35930b99c9c4ba4fcd33044ddc2a1d1ef878e896ae84ef669247d6b28/nodejs/node/issues/13877"
+  },
+  "http://abouthiroppy.hatenablog.jp/entry/2017/12/01/102935": {
+    "title": "メルカリを退職した - 技術探し",
+    "description": "6ヶ月でしたが、退職することになりました。 本当にありがとうございます。 環境 アメリカと日本のプロダクトで活動していて、フロントエンドチームに所属していました。 特にメンターでチームリーダの方からは、多くの配慮をしていただき入社してからずっと助けて貰ってました。 もちろん、周りの皆さんにも助けて貰っていて、このような結果になってしまい本当に申し訳ないと思っています。 メルカリですが、日本で開発をしながら英語も使えるいい環境でした。 開発の相方が外国人の方で、英語を喋る機会が多かったです。個人的にはもっと日本の会社は多様性・グローバル化をしてほしいと思っています。 特に多様性の部分は自分が気付…",
+    "image": "https://ogimage.blog.st-hatena.com/10328749687208748984/8599973812317263849/1512167930"
+  },
+  "https://developers.google.com/web/fundamentals/performance/prpl-pattern": {
+    "title": "Apply instant loading with the PRPL pattern",
+    "description": "PRPL is an acronym that describes a pattern used to make web pages load and become interactive, faster. In this guide, learn how each of these techniques fit together but still can be used independently to achieve performance results. ",
+    "image": "https://web-dev.imgix.net/image/FNkVSAX8UDTTQWQkKftSgGe9clO2/uZ3hQS2EPrA9csOgkoXI.png?auto=format&fit=max&w=1200&fm=auto"
+  },
+  "https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest": {
+    "title": "Add a web app manifest",
+    "description": "The web app manifest is a simple JSON file that tells the browser about your web application and how it should behave when installed on the user's mobile device or desktop. ",
+    "image": "https://web-dev.imgix.net/image/FNkVSAX8UDTTQWQkKftSgGe9clO2/uZ3hQS2EPrA9csOgkoXI.png?auto=format&fit=max&w=1200&fm=auto"
+  },
+  "https://developers.google.com/web/updates/2015/11/app-shell": {
+    "title": "Instant Loading Web Apps with an Application Shell Architecture - Chrome Developers",
+    "description": "Application shell architecture is a method of building progressive web apps today, taking advantage of a range of technologies.\n",
+    "image": "https://wd.imgix.net/image/fuiz5I8Iv7bV8YbrK2PKiY3Vask2/iGPiWTtoy7iF932Xday1.png?auto=format&w=1521"
+  },
+  "https://developers.google.com/web/fundamentals/getting-started/codelabs/your-first-pwapp": {
+    "title": "Google Codelabs",
+    "description": "Google Developers Codelabs provide a guided, tutorial, hands-on coding experience. Most codelabs will step you through the process of building a small application, or adding a new feature to an existing application. They cover a wide range of topics such as Android Wear, Google Compute Engine, ARCore, and Google APIs on iOS.",
+    "image": ""
   }
 }
