@@ -7,6 +7,7 @@ import { getAllTags, parseTags, sortByDate } from "../../../../utils/blog";
 import BlogDescription from "../../../../components/BlogDescription.astro";
 import type { Mdxs } from "../../../../utils/blog";
 import type { GetStaticPathsOptions, Page } from "astro";
+import Pagination from "../../../../components/Pagination.astro";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts = sortByDate(await Astro.glob("../../*.mdx"));
@@ -47,5 +48,6 @@ const { page } = Astro.props as {
         ))
       }
     </div>
+    <Pagination prev={page.url.prev} next={page.url.next} />
   </MainLayout>
 </Layout>

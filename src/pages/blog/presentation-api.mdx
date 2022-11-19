@@ -1,0 +1,171 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Presentation APIを使ってみる
+date: 2018-08-21
+description: Presentation APIという別画面での操作を容易にするAPIを紹介します
+image: /images/brands/js.png
+tags: javascript
+hatenaPath: presentation-api
+---
+
+import OG from "../../components/OG.astro";
+
+今作っている Fusuma というスライドツールに Presentation API を追加してみました。
+
+<OG url="https://blog.hiroppy.me/entry/fusuma" />
+
+<br />
+
+<OG url="https://github.com/hiroppy/fusuma" />
+
+## Presentation API とは？
+
+<OG url="https://developer.mozilla.org/en-US/docs/Web/API/Presentation_API" />
+
+ステータスは _勧告候補_ で、今現在は chrome のみ実装されています。
+この API は、Keynote や PowerPoint でプレゼンテーションモードにすると他のディスプレイに出力できるようになる機能をブラウザで実現できます。
+ディスプレイの他にも、Chrome Cast や AirPlay 等にも映し出すことも可能です。
+
+とりあえずディスプレイが一枚繋がっているかネットワーク以下に Chrome Cast 等があれば使えます。
+
+## いままではどのようにやっていたか？
+
+今までもこのように別画面でフルスクリーンにスライドを表示する実装は出来ていました。
+これを実現するためには、localStorage でページ情報と挿入イベントのリッスンを行います。
+**大きな違いとしては、自動で他のディスプレイにフルスクリーンで表示できる点が大きいです。**
+
+今までの場合は、`window.open`でレシーバー側を表示し、それを他のディスプレイに移し、フルスクリーンにするという手順が必要でした。
+
+これからは、対応していなければ localStorage の方を使う実装となりました。
+また、Presentation API で表示されたレシーバーからは localStorage は参照できません。
+
+Chrome のサンプルコードは以下を参照
+
+<OG url="https://googlechrome.github.io/samples/presentation-api" />
+
+### コントローラー
+
+#### 接続処理
+
+##### presentation api
+
+```javascript
+async function connect() {
+  return new Promise((resolve, reject) => {
+    const presentationRequest = new PresentationRequest(["?presenter=view"]);
+
+    navigator.presentation.defaultRequest = presentationRequest;
+
+    presentationRequest.addEventListener("connectionavailable", (e) => {
+      const presentationConnection = e.connection;
+      resolve(presentationConnection); // presentationConnectionからternimate以外の操作を行う
+    });
+
+    presentationRequest.start().catch((err) => reject(err));
+  });
+}
+```
+
+##### localStorage
+
+localStorage なので特になし
+
+#### メッセージング
+
+##### presentation api
+
+```javascript
+presentationConnection.send(
+  JSON.stringify({
+    page: 1,
+  })
+);
+```
+
+##### localStorage
+
+```javascript
+localStorage.setItem(
+  "page",
+  JSON.stringify({
+    date: Date.now(),
+    page: 1,
+  })
+);
+```
+
+### レシーバー
+
+#### 接続処理
+
+##### presentation api
+
+接続という処理はなく、イベントを登録していく感じとなります。
+`navigator.presentation.receiver.connectionList` に接続されているコネクションのリストが入っています。
+
+```javascript
+function addEvent(name, cb) {
+  if (navigator.presentation && navigator.presentation.receiver) {
+    navigator.presentation.receiver.connectionList.then((list) => {
+      list.connections.forEach((connection) => {
+        connection.addEventListener(name, cb);
+      });
+
+      list.addEventListener("connectionavailable", (event) => {
+        cb(event.connection);
+      });
+    });
+  }
+}
+
+addEvent("close", (e) => {
+  console.log(e);
+});
+```
+
+##### localStorage
+
+localStorage なので特になし
+
+#### メッセージング
+
+##### presentation api
+
+```javascript
+navigator.presentation.receiver.connectionList.then((list) => {
+  list.connections.forEach((connection) => {
+    connection.addEventListener("message", (e) => {
+      const page = JSON.parse(e.data).page;
+    });
+  });
+});
+```
+
+##### localStorage
+
+```javascript
+window.addEventListener("storage", (e) => {
+  if (e.key === "page") {
+    const page = JSON.parse(e.newValue).page;
+
+    window.slide.bespoke.slide(page);
+  }
+});
+```
+
+## 問題点
+
+- ライブリロードされると、レシーバーが破棄されるため毎回開き直し
+- レシーバー側では、ショートカットキーが使えず、右クリックから検証を押さないとインスペクターが開けない
+- シークレットウィンドウだと、起動はするがメッセージが送れない
+  - ` UnknownError: Mismatch in incognito status: request = 1, response = 0`
+
+とりあえずデバッグが大変めんどくさかったです。
+
+## 今後
+
+Presentation API と localStorage の互換性があるライブラリを書くかもしれません。
+しかし、Chrome Cast などはブラウザの域から外れ、localStorage では対応できないため完璧な対応はできないと思います。
+message 周りを抽象化したいなーって実装してて感じました。
+
+すごい便利な機能なので早くほかのブラウザにも入ってほしいと思っています。

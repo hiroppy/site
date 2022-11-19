@@ -1,0 +1,73 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Node.js Package Mode について
+date: 2018-08-10
+description: Node.jsに新しく入る可能性があるpackage modeについて紹介します
+image: /images/brands/nodejs.png
+tags: javascript
+hatenaPath: nodejs-package-mode
+---
+
+import OG from "../../components/OG.astro";
+
+<OG url="https://github.com/nodejs/node/pull/18392" />
+
+<br />
+
+<OG url="https://docs.google.com/presentation/d/1xK1ana_TIxfAHX33CYVHFnJsV0If_YirLtRBBga9cv0/edit#slide=id.p" />
+
+<br />
+
+<OG url="https://slides.hiroppy.me/future-of-node/#40" />
+
+**まだ、master へ入っていないので、未確定です。**
+
+今は、Core で開発するか http2 の様な感じで upstream で開発するや semver の扱い等の開発指針を決めたところです。
+
+## 現在の Node.js の ECMAScript Modules に対する問題点
+
+ESM を使用する場合、現在はファイルの拡張子を`.mjs`にする必要があるが可能であれば、ユーザーは`.js`ファイルで書きたい。
+
+## Node.js Package Mode
+
+`mode`フラグが`esm`の場合、package.json を軸に次の package.json までにネストされたフォルダとサブフォルダをすべて ESM とみなす仕様(そしてつぎ package.json のフラグが`esm`の場合は続く)
+もし package.json がない場合は、デフォルトで`commonjs`となります。
+
+**つまり、フラグを書くことによりその package.json のフォーカスにあるプロジェクトは`.js`でも ESM として扱われます。**
+
+また、これは[`package-mimes` デザイン](https://gist.github.com/bmeck/7ee7eb2147e2dafe3167c856d9b4151a)と同様のアルゴリズムになっています。
+
+これによるユーザーランドの破壊的変更は存在せず、単純でビルドツールとの互換性もあります。
+
+## 使い方
+
+package.json に`mode`フィールドを追加する。
+
+`.js`ファイルを ESM と見てほしい場合は、以下のように書く。
+このときは、ESM なので`require`は使えない。
+
+```json
+{
+  "mode": "esm"
+}
+```
+
+`.js`ファイルを CJS と見てほしい場合は、以下のように書く。
+
+```json
+{
+  "mode": "commonjs"
+}
+```
+
+## mjs の扱い
+
+`.mjs`は CJS と ESM の両方が使われる時に使うことが理想です。
+`.mjs` + `"mode": "commonjs"` の設定になります。
+
+## さいごに
+
+ESM は今後のデファクトとなるでしょう。
+その前にまだ Node.js では決めることが多くあるので、まだ安定的には長いかもしれません。
+そして、これが導入されれば、`npm init` に`mode`フラグが追加されユーザーは簡単に ESM を扱える未来がありえます。
+この簡単なアプローチに自分は+1 です。(パフォーマンス低下が少し心配ですが。。)

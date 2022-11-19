@@ -603,5 +603,135 @@
     "title": "Tasks, microtasks, queues and schedules",
     "description": "",
     "image": "https://jakearchibald.com/c/icon-42537423.png"
+  },
+  "http://blog.hiroppy.me/entry/2018/05/25/100000": {
+    "title": "Node.jsのビルトインモジュールに名前空間が使われるかもしれない - 技術探し",
+    "description": "Node.jsのビルトインモジュールに対しての新しい提案として、名前空間で保護する案が出ている話",
+    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
+  },
+  "http://blog.hiroppy.me/entry/2017/10/23/110807#%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E5%A4%89%E6%95%B0": {
+    "title": "AyoでWorkerの実装が進んでいる - 技術探し",
+    "description": "Chrome Dev Summitのため、サンフランシスコで書いています。 Ayo側 Node側 Workerとは？ メソッド・変数 isMainThread postMessage(value[, transferList]) threadId workerData クラス MessageChannel MessagePort postMessage(value[, transferList]) Worker new Worker(filename, options) filename options Worker内の大きな違い postMessage(value[, transferLis…",
+    "image": "https://avatars2.githubusercontent.com/u/31225077?s=200&v=4"
+  },
+  "http://blog.hiroppy.me/entry/2017/10/23/110807": {
+    "title": "AyoでWorkerの実装が進んでいる - 技術探し",
+    "description": "Chrome Dev Summitのため、サンフランシスコで書いています。 Ayo側 Node側 Workerとは？ メソッド・変数 isMainThread postMessage(value[, transferList]) threadId workerData クラス MessageChannel MessagePort postMessage(value[, transferList]) Worker new Worker(filename, options) filename options Worker内の大きな違い postMessage(value[, transferLis…",
+    "image": "https://avatars2.githubusercontent.com/u/31225077?s=200&v=4"
+  },
+  "https://github.com/blake-regalia/worker.js/issues/1": {
+    "title": "npm module name / Node.js built-in `worker` module · Issue #1 · blake-regalia/worker.js",
+    "description": "Hi there! I’m currently working on built-in Worker support (as in, threaded workers rather than cluster/child process) in Node.js, and there is only little left to do for that. (It’s basically just...",
+    "image": "https://opengraph.githubassets.com/93dcb36f054a8bf228e8d64e5266c1cc60d3056e1c4c3fe15b42fdbfdf5a29a5/blake-regalia/worker.js/issues/1"
+  },
+  "https://github.com/nodejs/node/pull/20876": {
+    "title": "worker: initial implementation by addaleax · Pull Request #20876 · nodejs/node",
+    "description": "Hi everyone! 👋\nThis PR adds threading support for to Node.js. I realize that this is not exactly a small PR and is going to take a while to review, so: I appreciate comments, questions (any kind, a...",
+    "image": "https://opengraph.githubassets.com/cca92b9c8de86c6f539c868858b3e49bc23e9ed2c2fccce28468a34b09f211a7/nodejs/node/pull/20876"
+  },
+  "https://slides.hiroppy.me/future-of-node/#40": {
+    "title": "future-of-node",
+    "description": "Introduce the current stability 1 modules and hot topics.",
+    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
+  },
+  "https://docs.google.com/presentation/d/1xK1ana_TIxfAHX33CYVHFnJsV0If_YirLtRBBga9cv0/edit#slide=id.p": {
+    "title": "Node.js Package Mode",
+    "description": "Node.js Package Mode package.json { “mode”: “esm” }",
+    "image": "https://lh6.googleusercontent.com/K5le4aSawFJiXjmAayFBVPGWa72KliPXfX-XoBfupu7wg8KYe_uvfQtwCRBboLqVd400RKVOawjtVw=w1200-h630-p"
+  },
+  "https://github.com/nodejs/node/pull/18392": {
+    "title": "esm: Implement esm mode flag by guybedford · Pull Request #18392 · nodejs/node",
+    "description": "This provides a mode: \"esm\" flag for package.json files which will treat \".js\" files as ES modules within a given package boundary.\nThe package boundary of a package.json file is deemed to be all m...",
+    "image": "https://opengraph.githubassets.com/c555e3788cfc4447079d7946013109fa8d2bbda5443ec3ed803bec198e6724d3/nodejs/node/pull/18392"
+  },
+  "https://slides.hiroppy.me/future-of-node/#20": {
+    "title": "future-of-node",
+    "description": "Introduce the current stability 1 modules and hot topics.",
+    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
+  },
+  "https://blog.hiroppy.me/entry/2017/11/06/095943#--prof": {
+    "title": "Node.jsのパフォーマンスチューニングのtips - 技術探し",
+    "description": "--inspect, --inspect-brk --trace-opt, --trace-deopt --prof --trace-events-enabled --trace-gc node-report Performance Timing API 優しいコードの書き方へ v8::SnapshotCreator さいごに Node9が10/31に出ました🎉🎉🎉 Node v9.0.0 (Current) | Node.js 今回はNode単体の話なので、Express、Nginx等のチューニングに関してはココには書きません。 また、libuv等のコード内部の話もしません。 --inspe…",
+    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
+  },
+  "https://nodejs.org/en/docs/guides/debugging-getting-started/#enabling-remote-debugging-scenarios": {
+    "title": "Debugging - Getting Started | Node.js",
+    "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
+    "image": "https://nodejs.org/static/images/logo-hexagon-card.png"
+  },
+  "https://blog.hiroppy.me/entry/2017/11/06/095943": {
+    "title": "Node.jsのパフォーマンスチューニングのtips - 技術探し",
+    "description": "--inspect, --inspect-brk --trace-opt, --trace-deopt --prof --trace-events-enabled --trace-gc node-report Performance Timing API 優しいコードの書き方へ v8::SnapshotCreator さいごに Node9が10/31に出ました🎉🎉🎉 Node v9.0.0 (Current) | Node.js 今回はNode単体の話なので、Express、Nginx等のチューニングに関してはココには書きません。 また、libuv等のコード内部の話もしません。 --inspe…",
+    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
+  },
+  "https://postd.cc/simple-guide-to-finding-a-javascript-memory-leak-in-node-js": {
+    "title": "Node.jsでのJavaScriptメモリリークを発見するための簡単ガイド | POSTD",
+    "description": "目次 初めに 極小理論 ステップ1. 問題の再現と確認 ステップ2. 最低3回のヒートダンプ採取 ステップ3. 問題の発見 ステップ4. 問題解決の確認 他のリソースへのリンク まとめ Someth…",
+    "image": "https://postd.cc/wp/wp-content/uploads/2016/05/memory-leak-500x386.png"
+  },
+  "https://chrome.google.com/webstore/detail/nodejs-v8-inspector-manag/gnhhdgbaldcilmgcpfddgdbkhjohddkj": {
+    "title": "NIM (Node Inspector Manager)",
+    "description": "Node.jsのデバッグのため、 V8 Inspectorを自動で起動する拡張機能です。",
+    "image": "https://lh3.googleusercontent.com/ppIizAjSrdpl-tTKjsUtZbD7Tla7npROR3osMMzUtf72f27cLKb3de0FkCB77EKsdFrm7YPQR_ARQ86KDZ829FlYuw=w128-h128-e365-rj-sc0x00ffffff"
+  },
+  "https://github.com/mcollina/autocannon": {
+    "title": "GitHub - mcollina/autocannon: fast HTTP/1.1 benchmarking tool written in Node.js",
+    "description": "fast HTTP/1.1 benchmarking tool written in Node.js - GitHub - mcollina/autocannon: fast HTTP/1.1 benchmarking tool written in Node.js",
+    "image": "https://opengraph.githubassets.com/9ddc5b5eff5826a3634869e6c8f8c5e7b1ed1b6c64b541afafb8106a9c20fa25/mcollina/autocannon"
+  },
+  "https://github.com/nearform/node-clinic": {
+    "title": "GitHub - clinicjs/node-clinic: Clinic.js diagnoses your Node.js performance issues",
+    "description": "Clinic.js diagnoses your Node.js performance issues - GitHub - clinicjs/node-clinic: Clinic.js diagnoses your Node.js performance issues",
+    "image": "https://opengraph.githubassets.com/2f7023ec047da189e29b2f51a147586945ee7e1a1934eb3160543226989d33b4/clinicjs/node-clinic"
+  },
+  "http://www.brendangregg.com/FlameGraphs/hotcoldflamegraphs.html": {
+    "title": "Hot/Cold Flame Graphs",
+    "description": "",
+    "image": ""
+  },
+  "https://github.com/nodejs/diagnostics/issues/148": {
+    "title": "Node CPU Profiling Roadmap · Issue #148 · nodejs/diagnostics",
+    "description": "We’d like to get feedback on the status of the profiling tools landscape in Node.js today. In particular -- we want to get alignment on a roadmap which will provide a free, open source, and cross-p...",
+    "image": "https://opengraph.githubassets.com/e81395a35febb8eba22a1d72e9babe84fdaee53695c198c2f6d84d7ce9eb5d6f/nodejs/diagnostics/issues/148"
+  },
+  "https://blog.hiroppy.me/entry/fusuma": {
+    "title": "Markdownだけで綺麗なスライドを作るCLIを作っている - 技術探し",
+    "description": "Markdownだけでスライドを生成するFusumaというCLIを紹介します。 開発・ビルド・リリースをすべて1コマンドで行います。",
+    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/a/about_hiroppy/20180517/20180517085452.png"
+  },
+  "https://developer.mozilla.org/en-US/docs/Web/API/Presentation_API": {
+    "title": "Presentation API - Web APIs | MDN",
+    "description": "The Presentation API lets a user agent (such as a Web browser) effectively display web content through large presentation devices such as projectors and network-connected televisions. Supported types of multimedia devices include both displays which are wired using HDMI, DVI, or the like, or wireless, using DLNA, Chromecast, AirPlay, or Miracast.",
+    "image": "https://developer.mozilla.org/mdn-social-share.cd6c4a5a.png"
+  },
+  "https://googlechrome.github.io/samples/presentation-api": {
+    "title": "Presentation Receiver API Sample",
+    "description": "Sample illustrating the use of Presentation Receiver API.",
+    "image": ""
+  },
+  "http://blog.hiroppy.me/entry/performance-timing-api-with-node.js#Server-Side-Rendering": {
+    "title": "時間計測をしてNode.jsアプリのパフォーマンス改善の手助けをする - 技術探し",
+    "description": "Performance Timing APIの紹介とNode.jsのパフォーマンスチューニング方法について",
+    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/a/about_hiroppy/20180325/20180325094512.jpg"
+  },
+  "http://blog.hiroppy.me/entry/2017/06/19/095956": {
+    "title": "react-router, redux-sagaのテストの書き方 - 技術探し",
+    "description": "以下のリポジトリを参考にしてください github.com 記事が長くなってしまうので、プロダクションのコードは折りたたみしておきます。 使用ライブラリ Jest Enzyme jest-serializer-enzyme(enzymeでsnapshotとるため) redux-mock-store redux-saga-test-plan enzymeですが、snapshotに対応してないため react-test-rendererが最近の流れかもしれません。(むしろ推奨？) facebook.github.io github.com react-router github.com react…",
+    "image": "https://ogimage.blog.st-hatena.com/10328749687208748984/8599973812271089659/1535766760"
+  },
+  "http://blog.hiroppy.me/entry/2017/07/28/101318": {
+    "title": "PWAの実装をしてみた - 技術探し",
+    "description": "一年以上前の記事なので、コードが古いです。気をつけて読んでください。 PWAとは？ 目的 技術スタック Service Worker PWAのview App Shell Content キャッシュ戦略 読み込みフロー Web App Manifest デザイン FirefoxとChromeしかService Workerないけどどうするの？ ネットワーク 実装 ライブラリ webpack-offline 構成 ファイル ルーティング アセットのインストール API周り SSR 資料 さいごに そういえばPWAの実装したことがなかったなと思ったので少し触ってみた。 PWAとは？ PWA(Pro…",
+    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/a/about_hiroppy/20170727/20170727111537.png"
+  },
+  "https://github.com/jfairbank/redux-saga-test-plan": {
+    "title": "GitHub - jfairbank/redux-saga-test-plan: Test Redux Saga with an easy plan.",
+    "description": "Test Redux Saga with an easy plan. Contribute to jfairbank/redux-saga-test-plan development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/1b446bae058a8acc713be1fed4aa771fe1a3baf8f8a280de20fce7987c63c48b/jfairbank/redux-saga-test-plan"
+  },
+  "https://github.com/jamiebuilds/react-loadable/pull/110": {
+    "title": "Migrate to webpack@4 API by 7rulnik · Pull Request #110 · jamiebuilds/react-loadable",
+    "description": "",
+    "image": "https://opengraph.githubassets.com/77e7c4677fff5b4b9c0e2d979917a04c15309529caf0c0701ff64389647ec901/jamiebuilds/react-loadable/pull/110"
   }
 }

@@ -1,0 +1,522 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: 業務で使える簡単なSSR + SPA のテンプレートを公開した
+date: 2018-08-07
+description: パフォーマンスを考慮したSSRとSPAのテンプレートを公開しました
+image: /images/brands/js.png
+tags: javascript
+hatenaPath: ssr-sample
+---
+
+import OG from "../../components/OG.astro";
+
+久しぶりのブログです。
+
+よく Node.js の人と思われがちですが、普段は Node.js でのバックエンド開発はもちろんですが React や Vue を書いていますので、たまにはフロントエンドネタを投稿しようと思います。
+
+<OG url="https://github.com/hiroppy/ssr-sample" />
+
+リポジトリにあるコード見たほうが早いと思いますので、ここでは注意点等を列挙していこうかなと思います。
+
+# 主な技術スタック
+
+## dependencies
+
+- react@16
+- react-router-dom@4
+- react-helmet@5
+- react-loadable@5
+- redux@4
+- redux-saga@0.16
+- styled-components@3
+- express@4
+- dotenv@6
+
+## devDependencies
+
+- typescript@3
+- storybook@4.0.0-alpha.9
+- jest@23
+- ts-node@
+- webpack@4
+- workbox@3
+
+# 注意
+
+今回は、自分の好き嫌いも含め以下のことを導入しませんでした。
+
+- Atomic Design
+  - こんな簡単なコードに 5 層もいらない
+- decorators
+  - `@connect`を普段使わないのとまだ実験中なため
+- `bindActionCreators`
+  - 途中でカスタマイズが必要になってはじめ使ってて対応できなくなって結局消すため(経験談)
+- サンプルコードなので、最低限必要なものしかいれない
+
+# Server
+
+## Server Side Rendering を行う
+
+一番キモになる部分です。
+その中では、SPA 時と同様に動かすためフロントエンドのコードを使って実行します。
+
+```javascript
+// [server] renderer.ts
+
+const store = configureStore();
+const sheet = new ServerStyleSheet(); // styled-components用
+const jsx = (
+  <Provider store={store}>
+    <StaticRouter location={req.url} context={{}}>
+      <div id="root">
+        <Router />
+      </div>
+    </StaticRouter>
+  </Provider>
+);
+
+// sagaの処理が停止するとここが解決される
+store
+  .runSaga(rootSaga)
+  .done.then(() => {
+    const preloadedState = JSON.stringify(store.getState());
+    const helmetContent = Helmet.renderStatic();
+    const meta = ` // helmetからheadに入れる情報を取得する
+        ${helmetContent.title.toString()}
+        ${helmetContent.meta.toString()}
+      `.trim();
+    const style = sheet.getStyleTags();
+    const body = renderToString(jsx); // sagaにより更新されたstoreを使い再度レンダリングする
+
+    res.send(renderFullPage({ meta, assets, body, style, preloadedState })); // html生成
+  })
+  .catch((e: Error) => {
+    res.status(500).send(e.message);
+  });
+
+// redux-sagaの起動及び非同期処理とstyled-componentsがstyleを抜く作業をさせる
+renderToStaticMarkup(sheet.collectStyles(jsx));
+
+// forkで動いているredux-sagaを止める(そうしないとずっと起動していてレスポンスが返せない)
+store.close();
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/server/controllers/renderer/renderer.tsx
+
+```javascript
+// [client] configureStore.ts
+
+const sagaMiddleware = createSagaMiddleware();
+
+export const configureStore = (preloadedState: Object = {}) => {
+  const enhancer = createEnhancer();
+  const store: Store & {
+    runSaga: SagaMiddleware<typeof rootSaga>['run']; // 型を追加
+    close: () => void;
+  } = createStore(rootReducer, preloadedState, enhancer);
+
+  sagaMiddleware.run(rootSaga);
+
+  store.runSaga = sagaMiddleware.run; // renderer.tsで呼べるように追加
+  store.close = () => {  // renderer.tsからsagaを止める命令を送るメソッドを追加
+    store.dispatch(END); // forkされているsagaを止めてrenderer.tsのstore.runSaga(rootSaga).doneを解決させる
+  };
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/client/store/configureStore.ts
+
+SSR 時には`<html>`, `<head>`を含む HTML を生成しないといけないため文字列として手動で生成する必要があります。
+また、react-helmet は SSR 時には生成されないため、手動で`meta`などを抽出する必要があります。
+それ以外は、クライアント側のコードを利用します。
+
+html 生成コード は[こちら](https://github.com/hiroppy/ssr-sample/blob/master/src/server/renderFullPage.ts)。
+以下がクライアント同様に行うこととなります。
+
+### redux-saga を使って非同期処理
+
+1. render 系のメソッドを使って、redux-saga を起動させます。
+   あくまでも目的がキックであり差分更新に関する処理が必要ないため、`renderToString`より軽量な `renderToStaticMarkup`を使います。
+
+2. 処理が終わり次第、redux-saga へ止める命令を送ります。(`store.close()`を経由し、`END`アクションを発行)
+
+3. ` store.runSaga(rootSaga).done` が解決されるため、その中で更新された store のデータを抽出しクライアントに初期の state をわたすように`<script>`タグに埋め込みます。
+
+4. store が更新されたため、再度レンダリング(`renderToString`)を行い、store の結果を反映させた HTML を生成します。
+   一回目のレンダリングではもちろん store の値は空なのでその戻り値の HTML にはデータは存在しません。
+
+つまり、キック用と HTML 生成用のレンダリングが最低 2 回は必要ということです。
+
+### react-helmet を使って head タグを生成
+
+クライアントで行うときと異なって、サーバーでは head タグに対して動的差し込みができないためレンダリングをし、手動で html に差し込む必要があります。
+なので、redux-saga の一回目のレンダリングに便乗して、react-helmet の要素を抽出します。
+redux-saga の解決後、そこで必要なタグを取得(`helmetContent.title.toString()`)し HTML の生成関数へ流します。
+
+### styled-components で使われている css を抽出
+
+redux-saga の一回目のレンダリングに便乗して、styled-components で書かれたコンポーネントの css を抽出します。
+クライアントが HTML を受け取った時にレンダリングされた DOM の css がないと見た目が一致しないためです。
+そこで抽出した`style`タグを HTML の生成関数へ流し`head`へ挿入します。
+
+## Development
+
+### Hot Module Replacement を有効にする
+
+開発時には HMR を有効化するために、webpack のビルドを Node サーバー起動時に行います。(また、フロントエンドでは`hydrate`ではなく、`render`にします ※後述)
+
+```javascript
+if (process.env.NODE_ENV !== "production") {
+  const webpack = require("webpack");
+  const webpackHotMiddleware = require("webpack-hot-middleware");
+  const webpackDevMiddleware = require("webpack-dev-middleware");
+  const config = require("../../webpack.config");
+  const compiler = webpack(config);
+
+  app.use(webpackHotMiddleware(compiler));
+  app.use(
+    webpackDevMiddleware(compiler, {
+      publicPath: config.output.publicPath,
+    })
+  );
+}
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/server/server.ts#L15-L28
+
+## Production
+
+今回は、webpack をかけずに ts-node で開発も本番も起動させます。
+
+### Manifest を読み込む
+
+本番環境では、ファイル名にハッシュを含めるためコアコードは manifest ファイルを参照しクライアントに返す`<script>`を生成していきます。
+今の自分のコードでは、起動時に読み込むようにしていますが、サーバーを再起動させたくなければリクエストが来た時に fs を使って manifest を読み込むように変えればいいです。
+_基本、サーバーのコードもクライアントのコードべったりなので起動時になると思いますが。。_
+
+```javascript
+const assets = (
+  process.env.NODE_ENV === "production"
+    ? (() => {
+        const manifest = require("../../../dist/manifest");
+        return [manifest["vendor.js"], manifest["main.js"]];
+      })()
+    : ["/public/main.bundle.js"]
+)
+  .map((f) => `<script src="${f}"></script>`)
+  .join("\n");
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/server/controllers/renderer/renderer.tsx#L18-L26
+
+### Cluster を使う
+
+負荷分散のために Cluster を行います。
+
+```javascript
+const numCPUs = cpus().length;
+
+if (cluster.isMaster) {
+  [...new Array(numCPUs)].forEach(() => cluster.fork());
+
+  // もし落ちたら再起動をかける
+  cluster.on("exit", (worker, code, signal) => {
+    console.log(`Restarting ${worker.process.pid}. ${code || signal}`);
+    cluster.fork();
+  });
+} else {
+  runServer();
+}
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/server/index.ts#L13-L25
+
+### Benckmark
+
+SSR するサーバーのパフォーマンスチューニングを必要とする場面はあると思います。
+autocannon を使い、server 側のベンチマークを取ります。
+これで React から静的な HTML を生成し返すまでの Latency を計測します。
+
+<OG url="https://github.com/mcollina/autocannon" />
+
+<br />
+
+```
+> autocannon http://localhost:3000 -c100
+Running 10s test @ http://localhost:3000
+100 connections
+
+Stat         Avg     Stdev  Max
+Latency (ms) 153.89  138.41 2479.02
+Req/Sec      643.5   86.29  758
+Bytes/Sec    1.64 MB 214 kB 1.94 MB
+
+6k requests in 10s, 16.5 MB read
+```
+
+もっと詳細に知りたい場合は`perf_hooks`を使い、`renderToString`の実行時間を測ることが可能です。
+
+<OG url="http://blog.hiroppy.me/entry/performance-timing-api-with-node.js#Server-Side-Rendering" />
+
+#### 可視化する
+
+clinic を使い詳細な情報を可視化して確認することが可能です。
+
+<OG url="https://github.com/nearform/node-clinic" />
+
+<br />
+
+イベントループの情報や flame の情報を表示でき、かなりわかりやすく便利なのでオススメです。
+
+https://github.com/hiroppy/ssr-sample/blob/master/package.json#L14-L16
+
+## renderToNodeStream をなぜ使わないか？
+
+gist に貼られた以下のコードは`renderToNodeSteam`で書いたコードです。
+
+https://gist.github.com/hiroppy/1c89d73a12073bad0c187aaab4ca92c2
+
+互いに文字列を挟んで書くのが個人的に好きじゃないのと、react-helmet がまだ steam に対応していない(PR: [nfl/react-helmet#296](https://github.com/nfl/react-helmet/pull/296))のが主な理由です。
+
+```javascript
+res.write("<html><head><title>Test</title></head><body>");
+const stream = sheet.interleaveWithNodeStream(renderToNodeStream(jsx));
+stream.pipe(res, { end: false });
+stream.on("end", () => res.end("</body></html>"));
+```
+
+自分的には、パフォーマンスがやばくなってきたら考える程度の温度感です。
+
+# Client
+
+## UI 構成
+
+PWA と同様に、App Shell と Content に分けています。
+
+<OG url="http://blog.hiroppy.me/entry/2017/07/28/101318" />
+
+次のページに行った時に前のページと同じ App Shell の場合は Content だけをレンダリングします。(`connect`してある場合はその箇所だけレンダリングします)
+今回は、header が App Shell であり、Content は react-router で選ばれた dynamic import されているコンポーネントです。
+
+```javascript
+export const Main = ({ children }: Props) => (
+  <React.Fragment>
+    <Header />
+    <Container>{children}</Container> {/* このchildrenはreact-routerから来たcontent*/}
+  </React.Fragment>
+);
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/client/components/templates/Main/Main.tsx
+
+```javascript
+// App がheader等を持っている
+export const Router = () => (
+  <App>
+    <Switch>
+      <Route exact path="/" component={LoadableTop} />
+      <Route path="/orgs/:org" component={LoadableOrgs} />
+    </Switch>
+  </App>
+);
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/client/Router/Router.tsx
+
+## Meta
+
+meta タグの決定は、Atomic Design でいう`pages`で行います。
+これは SSR 時にも使われるため共通化された処理です。
+
+```javascript
+export const Top = () => (
+  <React.Fragment>
+    <Head title="top" />
+    <h1>Top</h1>
+  </React.Fragment>
+);
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/client/components/pages/Top/Top.tsx
+
+### render vs hydrate
+
+開発時には、フロントエンドのコード変更が多くサーバから作られた HTML と一致しない場面が多くなるため、`hydrate`は使いません。
+本番では、`hydrate`を使います。
+
+```javascript
+const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate;
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/client/index.tsx#L14
+
+## redux-saga のテスト
+
+自分の場合は redux-saga-test-plan を使いテストのシナリオを作ります。
+また、コード置換として[proxyquire](https://github.com/thlorenz/proxyquire)、[rewire](https://github.com/jhnns/rewire)、HTTP サーバーの mock として[nock](https://github.com/nock/nock)を使います。
+
+<OG url="https://github.com/jfairbank/redux-saga-test-plan" />
+
+<br />
+
+<OG url="http://blog.hiroppy.me/entry/2017/06/19/095956" />
+
+例えば、今回のような API を叩くテストは以下のように書きます。
+
+```javascript
+const initialState = {
+  name: "name",
+  repos: [],
+};
+
+test("should take on the FETCH_REPOS action", () => {
+  nock("https://api.github.com") // https://api.github.com/orgs/test/repos の返す値を設定する
+    .get("/orgs/test/repos")
+    .reply(200, [
+      {
+        forks_count: 100,
+        name: "foo",
+        html_url: "url",
+        language: "lang",
+        open_issues_count: 200,
+        stargazers_count: 300,
+        watchers_count: 400,
+      },
+    ]);
+
+  return expectSaga(orgsProcess)
+    .withState(initialState)
+    .put({
+      type: "FETCH_REPOS_SUCCESS",
+      payload: {
+        name: "test",
+        repos: [
+          {
+            forksCount: 100,
+            name: "foo",
+            url: "url",
+            language: "lang",
+            issuesCount: 200,
+            stargazersCount: 300,
+            watchersCount: 400,
+          },
+        ],
+      },
+    })
+    .dispatch({
+      type: "FETCH_REPOS",
+      payload: {
+        org: "test",
+      },
+    })
+    .run();
+});
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/client/sagas/orgs.test.ts
+
+# Misc
+
+## Dotenv
+
+docker-compose で起動する時や本番デプロイ時には、`.env`を使って環境変数を入れることが多いとも思います。
+今回のサンプルでは、クライアント側では[dotenv-webpack](https://github.com/mrsteele/dotenv-webpack)、サーバー側では webpack を通さないため[dotenv](https://github.com/motdotla/dotenv)を使い共通の`.env`を読み込みます。
+
+https://github.com/hiroppy/ssr-sample/blob/master/webpack.config.js#L36-L39
+
+https://github.com/hiroppy/ssr-sample/blob/be419ff689a5a6ca5e2b8beb2d8f58b7e74af803/src/server/index.ts#L10
+
+## Dynamic Import
+
+### tsconfig
+
+client と server の tsconfig を分ける必要があります。
+`"module": "commonjs",` と指定した場合、
+
+```javascript
+Promise.resolve().then(function () {
+  return require("./foo");
+});
+```
+
+と置換してしまい、**webpack でチャンクとして切れないため**です。
+webpack 側に dynamic import ということを知らせるため、`esnext`を指定し、変換をさせないようにする必要があります。
+しかし、`esnext`と書くと無変換になるため Node.js では ESM のシンタックスが存在しないため、サーバー側がエラーとなります。(つまり`commonjs`でないとダメ)
+故に、以下のように分ける必要があります。
+
+```json
+// server
+{
+  "extends": "tsconfig.base.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node"
+  }
+}
+
+// client
+{
+  "extends": "tsconfig.base.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node"
+  }
+}
+```
+
+今 Node.js では ESM が実験中で動きますが、それが本番に入ればっていう話でもなく、なぜかというと Node.js において ESM は拡張子が`.mjs`であるからです。
+なので、ts 側が吐くファイルの拡張子を`.mjs`にしないといけなく、一筋縄ではいかないように思えます。
+
+結論としては、TypeScript 使ってて webpack で dynamic import されたファイルをチャンクとして切りたい場合は、`module: esnext` にしましょう！
+
+### react-lodable
+
+活発ではなく、今から選ぶのはあまり良くないと思います。
+また、issue がないのが情報量少なく、個人的にはつらいです。
+
+#### 問題点
+
+##### webpack4 に対応していない
+
+<OG url="https://github.com/jamiebuilds/react-loadable/pull/110" />
+
+_なぜか webpack4 の PR の会話が span としてロックされた_
+
+結構致命的だと思いますが、webpack4 だと SSR 時に`Loadable.Capture`から dynamic import で使われるスクリプト名を取得できないです。
+`Lodable.Capute`を実行しなくても HTML 的には dynamic import も展開してくれるので SEO 等には問題ありません。
+HTML に script タグを埋め込まない場合、すでに読み込み済みの HTML に対して、client 側は認知していなく、dynamic import されるファイルをサーバーへ取得しにいくため、すでに表示されているのにローディングに UI を切り替えてしまうのが問題となります。
+
+##### `componentWillMount`等を使っているため警告がでる
+
+警告が出ます。
+
+##### 型定義がおかしい
+
+`render`は optional なのに、現在は必須です。
+本来、`OptionsWithoutRender `に行くべきなのに`OptionsWithRender`が優先されるのが問題です。(PR を出す必要あり)
+なので現在は、以下のように再定義を行っています。
+
+https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/react-loadable/index.d.ts#L72-L107
+
+```javascript
+export const LoadableOrgs = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "Orgs" */ '../containers/Orgs').then(({ Orgs }) => Orgs),
+  loading: () => <div>loading ...</div>
+} as Loadable.OptionsWithoutRender<unknown>);
+```
+
+https://github.com/hiroppy/ssr-sample/blob/master/src/client/Router/Routes.tsx
+
+### loadable-components
+
+<OG url="https://github.com/smooth-code/loadable-components" />
+
+API がシンプルで、すごいわかりやすく好きです。
+ただ、babel プラグインに依存しており、`loadable-components/babel` を使わないと SSR は実行できないため必須です。
+_そこだけどうにかしてほしい。。_
+
+# さいごに
+
+まだ、dynamic import 周りが自分の中で何をデファクトにするか悩んでいます。(といっても、このままいくと自然と loadable-components しかない)
+
+<OG url="https://github.com/hiroppy/ssr-sample" />
