@@ -1,0 +1,688 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Node.js v10の変更点まとめ
+date: 2018-04-20
+description: Node10で入った機能を紹介します
+image: /images/brands/nodejs.png
+tags: javascript
+hatenaPath: node10
+---
+
+import OG from "../../components/OG.astro";
+
+リリース日は 4/24(UTC)の予定です。
+この記事では、バックポート含め v9 から入ったものを上げていこうかなと思います。
+なので、Node10 の CHANGELOG からの拡張だと考えてください。
+
+<OG url="https://github.com/nodejs/node/pull/19091" />
+
+# 注目すべき変更
+
+- Assert
+  - [差分をわかりやすくするために assert.strict が追加されました](#strictの追加-v990)
+  - [promise 用に assert.rejects と assert.doesNotReject が追加されました](#rejectsとdoesNotRejectの追加-NA)
+- Console
+  - [ブラウザ同様に console.table が追加されました](#consoletableのサポート-NA)
+- EventEmitter
+  - [removeListener のエイリアスとして off が追加されました](#removeListenerのエイリアスとしてoffが追加-NA)
+- Errors
+  - [すべてリファクタリングされ、エラーコードが統一されました](#Errors)
+- FS
+  - Stability:1 [非同期の API が追加されました](#PromisesのAPIが追加-NA)
+- Module
+  - Stability:1 [ECMAScript Modules が追加されました](#Module)
+- Perf_Hooks
+  - Stability:1 [パフォーマンスを計測する API が追加されました](#perf_hooks)
+- Streams
+  - Stability:1 [readable に for-await のサポートされました](#readableにfor-awaitのサポート-NA)
+- URL
+  - [WHATWG URL がブラウザ同様にグローバルに追加されました](#WHATWG-URL%E3%81%8C%E3%82%B0%E3%83%AD%E3%83%BC%E3%83%90%E3%83%AB%E3%81%B8-NA)
+- Util
+  - [さまざまな種類をチェックする util.types が追加されました](#utiltypesの追加-NA)
+
+---
+
+# 用語
+
+## LTS (Long Term Support)
+
+<OG url="https://github.com/nodejs/Release" />
+
+4 月にリリースされる偶数バージョンが対象であり、毎年 10 月から開始されます。
+LTS には active/maintenance の二種類があり、 active は 18 ヶ月間サポートされ、その後 12 ヶ月間はメンテナンスになります。
+LTS とメンテナンスの違いは、修正度のプライオリティに依存します。
+バグ修正、セキュリティアップデート、関連されたドキュメント修正、破壊的変更がないパフォーマンス修正、etc...
+
+今後のスケジュールは以下のとおりです。
+
+v10(N/A)は 2018/10 に LTS が開始される予定です。
+v8(Carbon)は引き続き active の LTS 対象です。
+v6(Boron)は 2018/4/30 から maintenance の LTS 対象です。
+v4(Argon)は 2018/4/30 に LTS が終了されます。
+
+なので、6 以上(できれば 8 か 10)を使うことをオススメします。
+
+## Stablilty
+
+API の安定指標のことを指します。
+
+- 0: 非推奨
+- 1: 実験
+- 2: 安定
+
+v10 時点での、Stability:1 は以下のとおりです。
+
+- vm.Module
+- readable[@@asyncIterator] (Readable Streams)
+- HTTP2
+- ECMAScript Modules
+- Inspector
+- fs Promises API
+- Serialization API(V8)
+- Async Hooks
+- perf_hooks
+- Errors の一部
+
+# 変更点
+
+## 各 deps バージョン
+
+- **ICU**: 61.1
+- **nghttp2**: 1.29.0
+- **node-inspect**: 1.11.3
+- **npm**: 5.6.0
+- **libuv**: 1.20.0
+- **OpenSSL**: 1.1.0h
+- **v8**: 6.6.346.24-node.5
+
+## Assert
+
+### strict の追加 (v9.9.0)
+
+[https://github.com/nodejs/node/pull/17615:title]
+
+`assert`以下に`strict`が追加されました。
+これは、オブジェクト等の比較に有効で、差分を表示することができます。
+
+```javascript
+> assert.strict.deepEqual([[[1, 2, 3]], 4, 5], [[[1, 2, '3']], 4, 5]);
+AssertionError [ERR_ASSERTION]: Input A expected to strictly deep-equal input B:
++ expected - actual ... Lines skipped
+
+  [
+    [
+...
+        2,
+-       3
++       '3'
+      ]
+...
+    5
+  ]
+
+
+```
+
+### rejects と doesNotReject の追加 (N/A)
+
+[https://github.com/nodejs/node/pull/18023/:title]
+
+`assert.throws()`の promise 版が`assert.rejects()`となります。
+`assert.doesNotThrow()`の promise 版が`assert.doesNotReject()`となります。
+
+```javascript
+(async () => {
+  await assert.rejects(async () => {
+    throw new Error("Wrong value");
+  }, Error);
+})();
+```
+
+### assert.throws の error パラメーターに object が追加 (v9.9.0)
+
+[https://github.com/nodejs/node/pull/17584:title]
+
+今までは、RegExp か Function でしたが、object が追加されました。
+
+```javascript
+const assert = require("assert");
+
+assert.throws(
+  () => {
+    const err = new TypeError("Wrong value");
+    err.code = 404;
+    throw err;
+  },
+  {
+    name: "TypeError",
+    message: "Wrong value",
+  }
+);
+```
+
+## Buffer
+
+### node_modules 外に対しての new Buffer()の非推奨警告の出力 (N/A)
+
+[https://github.com/nodejs/node/pull/19524:title]
+
+`Buffer`(new Buffer)は非推奨ですので、`Buffer.alloc()`か`Buffer.allocUnsafe()`か`Buffer.from()`を使ってください。
+
+```
+> Buffer(10)
+<Buffer 00 00 00 00 00 00 00 00 00 00>
+> (node:23527) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use theBuffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+```
+
+## Console
+
+### console.table のサポート (N/A)
+
+[https://github.com/nodejs/node/pull/18137:title]
+
+`console.table`が追加されました。
+
+```javascript
+> console.table([{ a: 1, b: 'Y' }, { a: 'Z', b: 2 }]);
+┌─────────┬──────────────────┐
+│ (index) │      Values      │
+├─────────┼──────────────────┤
+│    0    │ { a: 1, b: 'Y' } │
+│    1    │ { a: 'Z', b: 2 } │
+└─────────┴──────────────────┘
+
+> console.table([{ a: 1, b: 'Y' }, { a: 'Z', b: 2 }], ['a']);
+┌─────────┬─────┐
+│ (index) │  a  │
+├─────────┼─────┤
+│    0    │  1  │
+│    1    │ 'Z' │
+└─────────┴─────┘
+```
+
+### 色がサポートされました (N/A)
+
+[https://github.com/nodejs/node/pull/19372/:title]
+
+`colorMode`が追加されました。デフォルトは auto です。
+また、内部では`util.formatWithOptions`が追加され、それをラップします。
+
+```javascript
+> console.log('%o with object format param', { foo: 'bar' });
+{ foo: 'bar' } with object format param // barだけ緑色になる
+```
+
+## CLI
+
+### NODE_OPTIONS に--stack-trace-limit のオプションが追加 (v9.1.0)
+
+_backport: 6, 8_
+
+[https://github.com/nodejs/node/pull/16495]
+
+V8 のオプションである`--stack-trace-limit`が有効可されました。
+スタックトレースの上限数を設定します。
+
+```
+NODE_OPTIONS=--stack-trace-limit=100 node index.js
+```
+
+### --trace-event-file-pattern のオプションが追加 (v9.8.0)
+
+[https://github.com/nodejs/node/pull/18480:title]
+
+トレースのログファイルは標準的には`node_trace.${rotation}.log`となり、rotation が加算されていくログローテーションがされています。
+
+`--trace-event-file-pattern`では、`pid`と`rotation`をサポートします。
+
+```
+node --trace-events-enabled --trace-event-file-pattern '${pid}-${rotation}.log' server.js
+```
+
+## Cluster
+
+### cluster.settings に cwd が追加 (v9.5.0)
+
+[https://github.com/nodejs/node/pull/18399:title]
+
+ワーカープロセスの現在の作業ディレクトリを返します。
+
+## EventEmitter
+
+### removeListener のエイリアスとして off が追加 (N/A)
+
+[https://github.com/nodejs/node/pull/17156:title]
+
+`EventEmitter.prototype.off`は`EventEmitter.prototype.removeListener`となります。
+
+## Errors
+
+[https://github.com/nodejs/node/issues/11273:title]
+
+エラーコードをすべて、`internal/errors.js`へ移行しました。
+文言の修正等が行われたため、エラーコードを利用しているライブラリ群には影響が出る可能性があります。
+
+詳細なドキュメントはこちら。
+[https://nodejs.org/api/errors.html:title]
+
+## FS
+
+### Promises の API が追加 (N/A)
+
+他の semver-minor と違う扱いなので、v9 には入りません。
+
+[https://github.com/nodejs/node/pull/18297:title]
+
+Node には同期、コールバックはありましたが、今まで非同期はありませんでした。
+
+```javascript
+const fs = require("fs/promises");
+
+(async () => {
+  const n = await fs.readFile("./node");
+
+  console.log(n);
+})();
+```
+
+## HTTP
+
+### カスタムレスポンスとカスタムリクエストのオプションを追加 (v9.6.0)
+
+[https://github.com/nodejs/node/pull/15752:title]
+
+`createServer`の第一引数に options として追加されました。
+`IncomingMessage`と`ServerResponse`が設定できます。
+
+```javascript
+class MyIncomingMessage extends http.IncomingMessage {
+  getUserAgent() {
+    return this.headers["user-agent"] || "unknown";
+  }
+}
+
+const server = http.createServer(
+  {
+    IncomingMessage: MyIncomingMessage,
+  },
+  (req, res) => {
+    res.statusCode = 200;
+    res.end();
+  }
+);
+
+server.listen();
+```
+
+### RFC に従い 100, 102 - 199 の処理が変更 (N/A)
+
+[https://github.com/nodejs/node/pull/18033:title]
+
+- 100 (Continue)
+  - RFC7231 Section 6.2.1
+- 102 (Processing)
+  - RFC2518
+- 103 (Early Hints)
+  - RFC8297
+- 104-199 (Unassigned)
+
+### URL のパスに 2 バイトの文字が禁止 (N/A)
+
+[https://github.com/nodejs/node/pull/16237:title]
+
+```javascript
+> http.request({path: '/thisisinvalid\uffe2'}).end();
+TypeError [ERR_UNESCAPED_CHARACTERS]: Request path contains unescaped characters
+    at new ClientRequest (_http_client.js:105:13)
+    at Object.request (http.js:41:10)
+```
+
+## Module
+
+_Stability: 1_
+
+ECMAScript Modules が Node.js にも実験的に入りました。
+以下の記事を参考にしてください。
+[http://blog.hiroppy.me/entry/nodejs-esm:embed:cite]
+
+## N-API
+
+### 安定的になった (N/A)
+
+[https://github.com/nodejs/node/pull/19262:title]
+
+Stability が 1 から 2 となり、安定した API になりました。
+
+### process.versions に n-api のバージョンが追加 (v9.5.0)
+
+_backport: 6, 8_
+
+[https://github.com/nodejs/node/pull/18067:title]
+
+```
+> process.versions
+{ http_parser: '2.8.0',
+  node: '10.0.0-pre',
+  v8: '6.6.346.24-node.3',
+  uv: '1.20.0',
+  zlib: '1.2.11',
+  ares: '1.14.0',
+  modules: '63',
+  nghttp2: '1.29.0',
+  napi: '3',
+  openssl: '1.1.0h',
+  icu: '61.1',
+  unicode: '10.0',
+  cldr: '33.0',
+  tz: '2018c' }
+```
+
+## Net
+
+### net.Socket.prototype.listen が削除 (v9.4.0)
+
+[https://github.com/nodejs/node/pull/13735:title]
+
+ドキュメント化されておらず、消しても問題ないため消されます。
+
+### ready のイベントが追加 (v9.11.0)
+
+[https://github.com/nodejs/node/pull/19408:title]
+
+fs と同様です。
+
+```javascript
+const server = net
+  .createServer((conn) => {
+    conn.end();
+    server.close();
+  })
+  .listen(0, () => {
+    const client = new net.Socket();
+
+    client.on("ready", () => {
+      client.end();
+    });
+
+    client.connect(server.address());
+  });
+```
+
+### end 後に close が発行される (N/A)
+
+[https://github.com/nodejs/node/pull/19241:title]
+
+`end`が emit された後に、`close`が発行されるように変わりました。
+
+```javascript
+server.on("connection", (socket) => {
+  let endEmitted = false;
+
+  socket.once("readable", () => {
+    setTimeout(() => {
+      socket.read();
+    }, 100);
+  });
+  socket.on("end", () => {
+    endEmitted = true;
+  });
+  socket.on("close", () => {
+    assert(endEmitted);
+    server.close();
+  });
+  socket.end("foo");
+});
+```
+
+## Perf_Hooks
+
+_Stability: 1_
+
+パフォーマンス周りの API です。
+もともと、`process`に追加していたのですが、`perf_hooks`というモジュールに切り出されました。
+以下の記事を参考にしてください。
+
+[http://blog.hiroppy.me/entry/performance-timing-api-with-node.js:embed:cite]
+
+## Process
+
+### process.ppid の追加(v9.6.0)
+
+_backport: 6, 8_
+
+[https://github.com/nodejs/node/pull/16839:title]
+
+現在の親プロセスの PID を返します。
+
+```
+> process.ppid
+73124
+```
+
+### シグナル番号によりプロセスを殺すことが可能 (v9.6.0)
+
+[https://github.com/nodejs/node/pull/16944:title]
+
+```
+> process.kill(0, 985)
+Error: kill EINVAL
+    at process.kill (internal/process.js:190:13)
+> process.kill(0, 15, 0, 15);
+[1]    39152 terminated  ./node
+```
+
+### ready のイベントが追加 (v9.11.0)
+
+[https://github.com/nodejs/node/pull/19408:title]
+
+ファイルディスクリプタが使用可能になると、発火されます。
+
+```javascript
+const readStream = fs.createReadStream("foo.txt");
+readStream.on("ready", () => {});
+
+const writeStream = fs.createWriteStream("foo.txt", { autoClose: true });
+writeStream.on("ready", () => {});
+```
+
+## Streams
+
+### writableLength と readableLength の追加 (v9.4.0)
+
+[https://github.com/nodejs/node/pull/12857:title]
+
+`res._readableState.length`から`res.readableLength`へのアクセスに変わります。
+
+### nextTick で常に readable となる (N/A)
+
+[https://github.com/nodejs/node/pull/17979:title]
+
+一回だけ、`readable._read()`を呼び出します。
+
+### readable に for-await のサポート (N/A)
+
+_Stability:1_
+
+[https://github.com/nodejs/node/pull/17755:title]
+
+async/await がサポートされました。
+
+```javascript
+const fs = require("fs");
+
+async function print(readable) {
+  readable.setEncoding("utf8");
+  let data = "";
+  for await (const k of readable) {
+    data += k;
+  }
+  console.log(data);
+}
+
+print(fs.createReadStream("file")).catch(console.log);
+```
+
+## Timers
+
+### immediate.ref と immediate.unref の追加 (v9.7.0)
+
+[https://github.com/nodejs/node/pull/18139:title]
+
+`setImmediate`は普通、スケジューリングされるとイベントループがアクティブである限り続行されます。
+この動作を操作するために追加されました。
+
+```javascript
+> setImmediate(() => {}).ref()
+....
+> setImmediate(() => {}).unref()
+Immediate {
+  _idleNext: null,
+  _idlePrev: null,
+  _onImmediate: [Function],
+  _argv: undefined,
+  _destroyed: false,
+  domain:
+   Domain {
+     domain: null,
+     _events:
+      { removeListener: [Function: updateExceptionCapture],
+        newListener: [Function: updateExceptionCapture],
+        error: [Function: debugDomainError] },
+     _eventsCount: 3,
+     _maxListeners: undefined,
+     members: [] },
+  [Symbol(refed)]: false,
+  [Symbol(asyncId)]: 665,
+  [Symbol(triggerId)]: 6 }
+```
+
+## URL
+
+### WHATWG URL がグローバルへ (N/A)
+
+[https://github.com/nodejs/node/pull/18281:title]
+
+今までは、`require(url).URL`でしたが、ブラウザ同様にグローバルに置かれます。
+後方互換のために、`url`にも置かれていますが、今後はグローバルのを使うほうが良いでしょう。
+
+```javascript
+> URL
+[Function: URL]
+> URLSearchParams
+[Function: URLSearchParams]
+> url.URL
+[Function: URL]
+> url.URLSearchParams
+[Function: URLSearchParams]
+```
+
+## Util
+
+### NODE_DEBUG にワイルドカードが使用可能 (v9.4.0)
+
+[https://github.com/nodejs/node/pull/17609:title]
+
+登録されたデバッグログ名の実行を出力させるのに、ワイルドカードが使えるようになりました。
+
+```javascript
+const util = require("util");
+const debuglog = util.debuglog("foo-bar");
+
+debuglog("hi there, it's foo-bar [%d]", 2333);
+```
+
+```
+$ NODE_DEBUG=foo* node index.js
+FOO-BAR 42404: hi there, it's foo-bar [2333]
+$ NODE_DEBUG=*oo* node index.js
+FOO-BAR 42404: hi there, it's foo-bar [2333]
+```
+
+### util.inspect に compact オプションが追加 (v9.9.0)
+
+[https://github.com/nodejs/node/pull/17576:title]
+
+`false`にすることにより、標準のインデントが変更されます。
+複数行に並べず、オブジェクトごとに改行するプロパティを一行にまとめます。
+
+デフォルトは`true`となります。
+
+```javascript
+const o = {};
+
+o.a = () => {};
+o.b = new Number(3);
+console.log(util.inspect(o, { compact: true, breakLength: 3 }));
+/*
+{ a: [Function],
+  b: [Number: 3] }
+*/
+
+console.log(util.inspect(o, { compact: false, breakLength: 3 }));
+/*
+{
+  a: [Function],
+  b: [Number: 3]
+}
+*/
+
+const a = "12 45 78 01 34 67 90 23 56 89 1234567890123 0";
+
+console.log(util.inspect(a, { compact: true, breakLength: 3 }));
+/*
+'12 45 78 01 34 67 90 23 56 89 1234567890123 0'
+*/
+
+console.log(util.inspect(a, { compact: false, breakLength: 3 }));
+/*
+'12 45 78 01 34 ' +
+  '67 90 23 56 89 ' +
+  '1234567890123 0'
+*/
+```
+
+### util.inspect が bigint の対応 (N/A)
+
+[https://github.com/nodejs/node/pull/18412:title]
+
+V8 側で bigint が対応されたので、Node 側でも対応されました。
+`--harmony-bigint`が必要です。
+
+```javascript
+> util.inspect(1n)
+'1n'
+```
+
+### util.types の追加 (N/A)
+
+[https://github.com/nodejs/node/pull/18415:title]
+
+`util.types`という型チェックをするメソッドが追加されました。
+追加されたメソッドは以下の通りです。
+
+`isExternal`, `isDate`, `isArgumentsObject`,
+`isBooleanObject`, `isNumberObject`, `isStringObject`, `isSymbolObject`,
+`isNativeError`, `isRegExp`,
+`isAsyncFunction`, `isGeneratorFunction`, `isGeneratorObject`, `isPromise`,
+`isMap`, `isSet`, `isMapIterator`, `isSetIterator`, `isWeakMap`, `isWeakSet`,
+`isArrayBuffer`, `isDataView`, `isSharedArrayBuffer`, `isProxy`,
+`isWebAssemblyCompiledModule`, `isModuleNamespaceObject`,
+`isAnyArrayBuffer`, `isArrayBufferView`, `isTypedArray`,
+`isUint8Array`, `isUint8ClampedArray`, `isUint16Array`, `isUint32Array`,
+`isInt8Array`, `isInt16Array`, `isInt32Array`, `isFloat32Array`,
+`isFloat64Array`, `isBigInt64Array`, `isBigUint64Array`
+
+```javascript
+> util.types.isPromise(new Promise(() => {}))
+true
+> util.types.isRegExp(/\*/)
+true
+```
+
+## ZLib
+
+### ArrayBuffer がサポート (v9.4.0)
+
+[https://github.com/nodejs/node/pull/16042:title]
+
+今までのサポートは Buffer、TypedArray、DataView でしたが、そこに ArrayBuffer が入りました。

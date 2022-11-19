@@ -1,0 +1,351 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Node.jsとECMAScript Modules
+date: 2018-03-22
+description: Node.jsに入るECMAScript Mdoulesの特徴を紹介します
+image: /images/brands/nodejs.png
+tags: javascript
+hatenaPath: nodejs-esm
+---
+
+import OG from "../../components/OG.astro";
+
+Node.js のバージョン 10 のリリースは 4/25 を予定しています。
+また、ECMAScript Modules は Stability1(実験的)でリリースされます。
+
+議論は以下で行われます。
+
+<OG url="https://github.com/nodejs/modules" />
+
+以下、ECMAScript Modules を ESM、 CommonJS Modules を CJS と略します。
+
+<OG url="https://nodejs.org/api/esm.html" />
+
+## 覚えておくべきこと
+
+##### ESM を使いたい場合は、拡張子を`.mjs`にする
+
+`.js`ファイルで`import/export`は使えません。
+ブラウザでは`type="module"`となりますが、Node.js では拡張子で判断します。
+
+##### `.mjs`の拡張子は省略可能である
+
+拡張子の探査順は ESM の時、`.mjs`が優先されます。
+しかし、ブラウザでもそのコードを使いたい場合、拡張子の省略は Node 独自の機構であるため省略はしないほうがいいでしょう。
+
+##### ESM のファイルをトップレベルでは CJS でインポート出来ない
+
+トップレベルで、`import`を使うことは許されません。
+しかし、`dynamic import`は例外的に CJS でも使えるので一応、CJS から ESM の読み込みは行えます。
+
+##### CJS のファイルをインポートするのに named import は行えない
+
+`import {x} from 'y'`の書き方はできません。
+CJS のオブジェクトは`default`で包まれるためです。
+なので、もし行いたい場合は、一度`default`に alias をする必要があります。
+webpack4 もそのように対応しています。
+
+<OG url="http://blog.hiroppy.me/entry/migrate-to-webpack4#モジュールタイプ" />
+
+**Babel でのトランスパイルは`import { readFile } from 'fs'`等の書き方ができてしまうため、そのまま Node へ移すと壊れます。**
+
+##### ESM のパスは whatwg url に準拠している
+
+Node9 で whawg url は Stability2 になり、ブラウザ同様にグローバルに URL オブジェクトが置かれました。
+今までは、`require('url').URL`でした。
+もしクエリー(`?`)が異なる場合は、たとえ同じファイルでも複数回ロードします。
+
+```javascript
+import "./foo?query=1"; // ?query=1としてのfooがロードされる
+import "./foo?query=2"; // ?query=2としてのfooがロードされる
+import "file:///xxx/foo";
+```
+
+##### Node の変数である、`__dirname`や`__filename`等が使えない
+
+stage-3 の`import.meta`を使いましょう。
+
+<OG url="https://github.com/tc39/proposal-import-meta" />
+
+<br />
+
+```javascript
+// index.mjs
+console.log(import.meta);
+// { url: 'file:///xxx/index.mjs' }
+```
+
+<br />
+
+##### `.mjs`は厳格モード(`use strict`)になる
+
+仕様です。
+
+---
+
+その他、挙動が違う部分は下の[早見表](#挙動の早見表)を参照してください。
+
+## 実行方法
+
+```
+$ node -v
+v10.0.0-pre
+$ node --experimental-modules index.mjs
+```
+
+このように、今現在は`--experimental-modules`というフラグが必要です。
+
+## パターンまとめ
+
+インポートされるモジュール
+
+```javascript
+// test.mjs
+export const a = 1;
+export default "dog";
+```
+
+### ルートが CJS
+
+```javascript
+// index.js
+
+// === 🙅bad ===
+
+// ESMのコードをCJSで呼び出すことはできません
+const test = require("./test"); // Must use import to load ES Module
+
+// CJSにESMのSyntaxは存在しません
+import { a } from "./test"; // SyntaxError: Unexpected token {
+
+// ---------------------------------------------------------
+
+// === 🙆 good ===
+
+console.log(this); // {}
+
+// dynamic import
+// CJS内でもdynamic importの使用は可能です
+(async () => {
+  const test = await import("./test");
+
+  console.log(test); // [Module] { a: 1, default: 'dog' }
+})();
+```
+
+### ルートが ESM
+
+```javascript
+// index.mjs
+
+// === 🙅bad ===
+
+// ESMにCJSのSyntaxは存在しません
+const test = require("./test"); // ReferenceError: require is not defined
+
+// __dirnameは定義されていないので、エラーとなります
+console.log(__dirname);
+
+// fsはNodeのネイティブモジュールであるため、CJSで書かれています
+// モジュールがCJSの場合、named importは使えません
+import { readdirSync } from "fs"; // syntaxError: The requested module 'fs' does not provide an export named 'readdirSync'
+
+// ---------------------------------------------------------
+
+// === 🙆 good ===
+
+console.log(this); // undefined
+
+import * as t from "./test";
+
+console.log(import.meta); // { url: 'file:///xxxx/index.mjs' }
+
+// whatwg urlに準拠しているので、urlと同様の書き方が可能です
+import * as t from "file:///xxx/test";
+console.log(t); // [Module] { a: 1, default: 'dog' }
+
+// =========================
+// CJSのモジュールをESMで入れる方法は以下のとおりです
+import fs from "fs";
+console.log(typeof fs.readdirSync);
+
+// CJSはdefaultに包まれる
+import * as fs from "fs";
+console.log(typeof fs.default.readdirSync);
+
+// defaultをfsにリネームする
+import { default as fs } from "fs";
+console.log(typeof fs.readdirSync);
+// =========================
+
+// dynamic import
+(async () => {
+  // whatwg urlでの指定が可能です
+  // 今現在、file以外での取得は不可能です
+  const baseURL = new URL("file://");
+  baseURL.pathname = `${process.cwd()}/test.mjs`;
+
+  const test = await import(baseURL);
+
+  console.log(test); // [Module] { a: 1, default: 'dog' }
+})();
+```
+
+## 挙動の早見表
+
+CJS にはデフォルトで厳格モードがつかないので、このテーブルは CJS は厳格モードではない状態での比較です。
+
+### モジュール
+
+| Code          | CJS   | ESM |
+| ------------- | ----- | --- |
+| `import('x')` | ok    | ok  |
+| `import 'x';` | error | ok  |
+| `export {};`  | error | ok  |
+
+### タイミング
+
+| Code            | Timing                    | Hoisted | Blocking |
+| --------------- | ------------------------- | ------- | -------- |
+| `require('x');` | sync                      | no      | yes      |
+| `import 'x';`   | untimed (async generally) | yes     | yes      |
+| `import('x');`  | async                     | no      | no       |
+
+### ESM では使えないメソッド・変数
+
+以下のメソッド・変数は、CJS でのみ存在し、ESM では存在しないため、エラーになります。
+
+- \_\_dirname
+- \_\_filename
+- require
+- exports
+- module
+- arguments
+
+### 予約語への操作
+
+e.g. `var let = 1;`
+
+| Code                          | CJS          | ESM   |
+| ----------------------------- | ------------ | ----- |
+| `arguments`                   | scope::local | error |
+| `arguments = []`              | ok           | error |
+| `try {} catch (arguments) {}` | ok           | error |
+| `eval`                        | scope::local | error |
+| `eval = eval`                 | ok           | error |
+| `try {} catch (eval) {}`      | ok           | error |
+| `implements`                  | ok           | error |
+| `interface`                   | ok           | error |
+| `package`                     | ok           | error |
+| `private`                     | ok           | error |
+| `protected`                   | ok           | error |
+| `public`                      | ok           | error |
+| `static`                      | ok           | error |
+| `await`                       | ok           | error |
+| `let`                         | ok           | error |
+| `return`                      | error        | error |
+| `yield`                       | ok           | error |
+| `await`                       | ok           | error |
+
+厳格モード時に変数として使えなくなる予約語です。
+
+- arguments
+- eval
+- implements
+- interface
+- package
+- private
+- protected
+- public
+- static
+- let
+- yield
+
+```javascript
+// index.js
+var arguments;
+arguments = [];
+
+var eval = 1;
+eval = eval;
+
+// constは予約語ですが、letは違います
+var implements, interface, package, private, protected, public,
+    static, let, yield, await;
+```
+
+### 上記以外の許容されない記法
+
+| Code                   | CJS | ESM   | SCRIPT |
+| ---------------------- | --- | ----- | ------ |
+| `with({}){}`           | ok  | error | ok     |
+| `<!--\n`               | ok  | error | ok     |
+| `-->\n`                | ok  | error | ok     |
+| `0111`                 | ok  | error | ok     |
+| `(function (_, _) {})` | ok  | error | ok     |
+
+```javascript
+// index.js
+// HTMLコメントはCJSでは使えますが、ESMでは使えません
+<!--\n
+-->\n
+```
+
+```
+# CJS
+$
+# ESM
+$ Module build failed: SyntaxError: Unexpected token (1:0)
+> 1 | <!--\n
+    | ^
+  2 | -->\n
+```
+
+```javascript
+// index.js
+0111;
+```
+
+```
+# CJS
+$
+# ESM
+$ SyntaxError: Octal literals are not allowed in strict mode.
+```
+
+### 評価に関する違い
+
+パース、実行はできるが、評価結果が異なります。
+
+| Code                                          | CJS          | ESM       | SCRIPT   |
+| --------------------------------------------- | ------------ | --------- | -------- |
+| `this`                                        | module(`{}`) | undefined | global   |
+| `(function (){return this}())`                | global       | undefined | global   |
+| `(function () {return typeof this;}).call(1)` | `object`     | `number`  | `object` |
+| `var x`                                       | local        | local     | global   |
+| `var x = 0; eval('var x = 1'); x`             | 1            | 0         | 1        |
+
+```javascript
+console.log(
+  function () {
+    return typeof this;
+  }.call(1)
+);
+```
+
+```
+# CJS
+$ object
+# ESM
+$ number
+```
+
+`call`で`this`を 1 として束縛し、スコープで包んだ`function`の`this`を返しその型を評価します。
+`this`の束縛がない場合は、スコープで包まれているため、`typeof this === '[Function]'`です。
+CJS の場合は、`[Number: 1]`となり、ESM のときは 1 となります。
+つまり、ESM のときは`new Number(1)`とならないので、`number`となります。
+
+## さいごに
+
+今後、Node 界隈では、`.mjs`という拡張子が主流になる未来が予想されます。(自分はあまり望んでませんでしたが。。。)
+このまま順当に行けば、12 には Stability2(安定的)に行ける気がするので、来年ぐらいから本番かなーと思っています:D

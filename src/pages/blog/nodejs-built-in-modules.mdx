@@ -1,0 +1,57 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Node.jsのビルトインモジュールに名前空間が使われるかもしれない
+date: 2018-05-25
+description: Node.jsにビルトイン専用の名前空間が提案されている話
+image: /images/brands/nodejs.png
+tags: javascript
+hatenaPath: 2018/05/25/100000
+---
+
+import OG from "../../components/OG.astro";
+
+注意: これはまだ未定です。
+他にいい案があれば、提案やコメントをしてほしいです。
+
+---
+
+```javascript
+"use strict";
+
+const fs = require("@nodejs/fs");
+// import fs from '@nodejs/fs';
+
+console.log(fs.readFileSync(__filename, "utf8"));
+```
+
+このように、`@nodejs`という名前空間でビルトインモジュールを保護する案が出ています。
+もちろん、過去のコードに影響はありません。
+
+PR は一旦、閉じられました。
+
+<OG url="https://github.com/nodejs/node/pull/20922" />
+
+## 発端
+
+今現在、Ayo.js(Node.js の downstream)に試験的に導入されていた`worker`が Node.js 本体に入ろうとしてしています。
+
+<OG url="https://github.com/nodejs/node/pull/20876" />
+
+Worker とはなにか？
+
+<OG url="http://blog.hiroppy.me/entry/2017/10/23/110807" />
+
+それにあたり、名前の衝突問題があります。
+
+<OG url="https://github.com/blake-regalia/worker.js/issues/1" />
+
+すでに、`worker.js`というライブラリが、npm の方に`worker`というのが登録しており、その名前を変更してもらい衝突を避ける提案です。
+しかし、作者により拒否をされてしまったため、このような名前空間を付ける案がでる流れになりました。
+
+## 将来
+
+この変更が行われると過去からあるモジュールは後方互換のために、グローバルと`@nodejs`という名前空間の 2 つが存在し、今後入るモジュールには、名前空間の中にしか存在しないこととなります。
+
+なので、これから書く新しいコードにはビルトインモジュールのインポートには名前空間を付ける習慣に変わるということが予想されます。
+
+個人的には避けたい問題だと思いますが、拒否されてしまった以上、難しそうです。

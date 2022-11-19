@@ -733,5 +733,45 @@
     "title": "Migrate to webpack@4 API by 7rulnik · Pull Request #110 · jamiebuilds/react-loadable",
     "description": "",
     "image": "https://opengraph.githubassets.com/77e7c4677fff5b4b9c0e2d979917a04c15309529caf0c0701ff64389647ec901/jamiebuilds/react-loadable/pull/110"
+  },
+  "https://github.com/nodejs/node/pull/20922": {
+    "title": "WIP: tools: add core files to @nodejs namespace by cjihrig · Pull Request #20922 · nodejs/node",
+    "description": "This is probably not the ideal solution, but I wanted to at least get the ball moving after the little bit of 'worker' module naming drama.\nThis commit allows all of Node core's public modules to b...",
+    "image": "https://opengraph.githubassets.com/959d3271aefd3150994ce5869a1f53d85ed3a401c022c64a436e91803cc81ffc/nodejs/node/pull/20922"
+  },
+  "https://nodesource.com/node-by-numbers": {
+    "title": "Node by Numbers 2018 — NodeSource",
+    "description": "Aside from sustained growth in Node.js adoption during 2018, analysis of the past year shows the impact of greater stability in the larger Node ecosystem.",
+    "image": ""
+  },
+  "http://blog.hiroppy.me/entry/migrate-to-webpack4#モジュールタイプ": {
+    "title": "webpack4への簡単なマイグレーションガイド - 技術探し",
+    "description": "webpack4への移行ガイド",
+    "image": "https://avatars1.githubusercontent.com/u/2105791?s=200&v=4"
+  },
+  "https://nodejs.org/api/esm.html": {
+    "title": "Modules: ECMAScript modules | Node.js v19.1.0 Documentation",
+    "description": "",
+    "image": ""
+  },
+  "https://github.com/nodejs/modules": {
+    "title": "GitHub - nodejs/modules: Node.js Modules Team",
+    "description": "Node.js Modules Team. Contribute to nodejs/modules development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/7f57387acccc4ea4f73a26afcfa9a778d017b3c01ce651a231942d5536350184/nodejs/modules"
+  },
+  "https://github.com/tc39/proposal-import-meta": {
+    "title": "GitHub - tc39/proposal-import-meta: import.meta proposal for JavaScript",
+    "description": "import.meta proposal for JavaScript. Contribute to tc39/proposal-import-meta development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/e1fb23f9bfd0b5f7c57ff46060c7007c398d57f54452f170c45977107bc7ff30/tc39/proposal-import-meta"
+  },
+  "https://github.com/nodejs/Release": {
+    "title": "GitHub - nodejs/Release: Node.js Release Working Group",
+    "description": "Node.js Release Working Group. Contribute to nodejs/Release development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/41cbe558588372b6a72e422c36bc470d008812e3d771ea9370dada20f90c9600/nodejs/Release"
+  },
+  "https://github.com/nodejs/node/pull/19091": {
+    "title": "10.0.0 Proposal by jasnell · Pull Request #19091 · nodejs/node",
+    "description": "This is nearly ready:\n\n1st RC Build will be cut afternoon (pacific time) of April 19th\n2nd RC Build (if there are any updates landed) will be cut afternoon of April 23rd\nRelease will be afternoon o...",
+    "image": "https://opengraph.githubassets.com/a432924c8cecdf4bcaeabdc604cd0a4d29f154c04b02ae6fe42f9a6e87bda616/nodejs/node/pull/19091"
   }
 }
