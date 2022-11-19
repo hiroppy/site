@@ -1,41 +1,221 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: サイトを作り直し、ブログをHatenaから移管しました
+title: サイトを0から作り直し、ブログをHatenaから移管しました
 date: 2022-11-17
-description: 今までのサイトを書き直し、ブログもはてなブログから統合しました
+description: AstroとTailwindを使いサイトを再構築し、ブログも統合しました。
 image: /images/blog/30-years-old/ogp.png
-tags: site
+tags: site,javascript
 ---
 
 import OG from "../../components/OG.astro";
 
-タイトルの通り、hiroppy.me のサイトを刷新しそこにブログが入ったことによりブログも移管することにしました。
+タイトルの通り hiroppy.me のサイトを 1 から刷新し、そこにブログが入ったことによりブログも移管することにしました。
 
 <OG url="https://hiroppy.me" />
 
-特に意識してなかったのですが、はてなブログの方が、ちょうど 100 記事目の時に移行するという流れになってしまいました。。
-はてなブログは有料会員で 4 年間ぐらいやっていたのですが、最近はあまり記事を書けてないために広告置いてもお金にならないですし、当初の目的である独自ドメイン対応でのはてブの通知(ブックマークや引用)も今はあまり見なくなってしまいました。
+特に意識してなかったのですが、はてなブログの方が、ちょうど [100 記事目](https://blog.hiroppy.me/about)の時に移行するという流れになってしまいました。。
+はてなブログは有料会員で 4 年間ぐらいやっていたのですが、最近はあまり記事を書けておらず、当初の目的である独自ドメイン対応でのはてブの通知も今はあまり見なくなってしまいました。
 また、ブログの名前が**技術探し**ですが、最近はプライベートの話やそもそも技術を昔以上に探せてない点があり、もう自分としては役割を終えたのかなと思っています。
 
-今後は、こちらに色々な分野の話を気ままに書いていければと思います。徐々に過去の記事もこちらへ移していこうと思いますが、量が多すぎてやる気と相談します。移行したことによって、ドメインの信頼度が低いため今後検索で記事が出てきづらくなる可能性が高くこれは大きなデメリットとなります。
+今後は、こちらに色々な分野の話を気ままに書いていければと思います。過去の記事もこちらへ移動させてますが、量が多すぎてやっと 50 記事を移動させ力尽きましたので半年ぐらいかけて古いのも移動させようかなと思います。
 
 ## Gatsby から Astro へ
 
-前のサイトは Gatsby で書かれており、今回のサイトは Astro で構築されました。理由としては、**JS がない軽量なもので良いものであった**のと**素の HTML に近いものを持っておきたかった**からです。CSS も以前は styled-components を利用していましたが、今回は tailwindcss にしました。
-これも理由が同じで素の CSS に近い状態を保持しやすいからです。
+前のサイトは Gatsby で書かれていて、今回のサイトは Astro で構築されました。**JS がない軽量なサイト(GA 除く)** で **素の HTML に近い状態のコード**を持っておきたかったのが理由です。
+それに伴って CSS も以前は styled-components を利用していましたが、今回は Tailwind にしました。
+剥がしやすさって面だと自分はその時になったらまた 0 から書くだろうしあまり気にしてませんが、CSS in JS よりは剥がしやすいかなと思います。
+
+### 設定が少なく快適
+
+画像の最適化やるにも sitemap 作るにも partytown の設置をするにも 1 行、`integrations`に追加するだけで動きます。
+Gatsby は書く設定が多く、それによりアップデートに追いつけなくなる事象が過去にあったのでこれは自分にとって必要な要素でした。
+
+### やはり Markdown で記事を作るのは難しい
+
+Astro に限らずの話ですが、素の Markdown でブログを作るのは無理だと思っていて、例えば OGP の展開はみんなどうやっているんでしょう。。
+このサイトでは MDX を使って OGP 用のコンポーネントを用意し、そこで展開しています。Twitter や Youtube は`iframe`で良いのですが、OGP が悩みどころ。
+
+もう一つの方法としては、remark で AST をいじって挿入する感じですが、これはこれで大変(+ Markdown に展開するかどうかの識別子を用意しないといけない)なので MDX が良い落ちどころとなりました。
+
+### ビルドの時間を削減するためにキャッシュを作る
+
+Astro は基本、ビルド時に全部のページをビルドしますが、そこに`fetch`を入れすぎると簡単にビルド時間が数分かかってしまいます。
+これも Astro 特有の対応というわけではないですが、例えば記事で使う外部リンクを展開するコンポーネントは以下のような処理を入れてキャッシュを作ります。
+
+```ts
+const { url } = Astro.props;
+const generatedFilePath = new URL("../../generated/ogp.json", import.meta.url);
+const ogp: OGPJson = JSON.parse(readFileSync(generatedFilePath, "utf8"));
+
+if (ogp[url]) {
+  title = ogp[url].title;
+  description = ogp[url].description;
+  image = ogp[url].image;
+} else {
+  const html = await fetch(url).then((res) => res.text());
+  const $ = load(html);
+  const ogp = JSON.parse(readFileSync(generatedFilePath, "utf8"));
+
+  writeFileSync(
+    generatedFilePath,
+    JSON.stringify({
+      ...ogp,
+      [url]: {
+        title:
+          $("meta[property='og:title']").attr("content") ?? $("title").text(),
+        description: $("meta[property='og:description']").attr("content") ?? "",
+        image: $("meta[property='og:image']").attr("content") ?? "",
+      },
+    })
+  );
+}
+```
+
+`JSON.xxx`を使ったり `sync` を使ってイベントループ的に良くないけど、ビルド時だけしか実行しないので問題ないかなと思います。
+一気に色々なところから呼ばれるため`promise`を使うと書き込みが冪等にならなず`sync`を使う必要があります。
+タイミングによっては JSON が壊れてしまう可能性があります。
+
+このサイトを構築するキャッシュは[ここ](https://github.com/hiroppy/site/tree/main/generated)に置いてあります。
 
 ## Netlify から Vercel へ
 
-これは Vercel に東京リージョンが存在するからという理由で移行しました。最初引き続き Netlify を使っていましたが、体感でわかるぐらいには遅いのがわかりました。Vercel への移行はかなり簡単でしたが、`Cache-control`が全てに対して `public, max-age=0, must-revalidate`なのは
-astro プロジェクトってことを vercel 側から自動的に判断されるので、ついでに`assets`以下は自動で値変えてほしい気持ちがありました。ちゃんとした状態にするには vercel.json は必ず使わないとダメそうです。
+これは Vercel に東京リージョンが存在するからという理由で移行しました。最初引き続き Netlify を使っていましたが、体感でわかるぐらいには遅いのがわかりました。
+Vercel への移行はかなり簡単でしたが、`Cache-control`が全てに対して `public, max-age=0, must-revalidate`なので、ちゃんとした設計にするには vercel.json 側で assets などは適した値へ変更させる必要があるなと思いました。
+(使われているフレームワークを vercel 側で判断しているので自動でこれやってほしいと思ったり。。)
 
 <OG url="https://zenn.dev/link/comments/dbecd011374263" />
 
-## Markdown でブログを書くのは難しい
+## リポジトリを極力放置したい
 
-素の Markdown でブログを作るのは無理だと思っていて、例えば OGP の展開はみんなどうやっているんでしょう。
-このサイトでは MDX を使って OGP 用のコンポーネントを用意してそこで展開しています。Twitter や Youtube は`iframe`で良いのですが、OGP が悩みどころ。もう一つの方法としては、remark で AST をいじって挿入する感じですが、これはこれで大変なので MDX が良い落ちどころとなりました。
+npm の deps のアップデートは依存している量が少なくても頻繁に発生しがちなので Renovate の auto merge に任せたいんだけど、壊れているのに気づかない可能性があります。
+なので、型チェックに加え、申し訳程度の CI を追加しておき、少しだけの安心を得るようにしました。
 
-## Deps のアップデートは自動で
+## CI
 
-Playwright の VRT を使い、テストが落ちたら修正するが落ちなかったらマージにして極力 PR を見ないようにする。
+### Visual Regression Testing
+
+最新の UI のスクリーンショットを現在と比較し diff があるかテストする手法で、一番、壊れたかどうかを判断してくれる CI です。
+今回は playwright を使って、主要画面のスクリーンショットを比較します。
+テスト自体は、以下のように簡単で、これだけで diff とかもわかります。
+
+```typescript
+for (const path of paths) {
+  test(`VRT: ${path}`, async ({ page }) => {
+    await page.goto(`http://localhost:3000${path}`);
+    await expect(page).toHaveScreenshot({
+      fullPage: true,
+      scale: "device",
+    });
+  });
+}
+```
+
+しかしながら、問題はフォントです。OS 間でフォントは異なるので playwright はスクリーンショットを OS 毎に区別します。
+メインの PC が Mac なので Actions の方も Mac にしようかと思ったけど、Win からコミットするときのことや Actions の Mac のパフォーマンスが悪いのは知っていたので docker 上の Ubuntu で生成することにしました。
+
+```sh
+$ docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:v1.28.0-focal /bin/bash -c 'npm test -- -u'
+```
+
+### Lighthouse
+
+パフォーマンスを測ったりベスプラから逸れている場合に警告してくれる CI です。デフォでブラウザから計測するときよりもルールが厳しくなっているような気がします。
+
+CI が完了すると、このようにレポートを通知してくれます。
+
+<OG url="https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1668817257600-29285.report.html" />
+
+### Pa11y
+
+<br />
+
+<OG url="https://github.com/pa11y/pa11y" />
+
+Web Content Accessibility Guidelines (WCAG) をベースに HTML のアクセシビリティを検査します。
+最低限のアクセシビリティを担保するために導入されています。
+
+<OG url="https://www.w3.org/WAI/WCAG2AA-Conformance" />
+
+## URL 移管
+
+サブドメインよりもサブディレクトリの方が SEO 的にはそのドメイン自体の評価が上がります。
+なので、blog.hiroppy.me を捨て、hiroppy.me/blog へ変更させます。
+
+しかしながら今回、blog.hiroppy.me から hiroppy.me/blog へ移動させるのは大変でした。
+通常であれば、サーバーで 301 を返すだけで良いのですが、サーバーは Hatena が管理しているのでそれはできません。
+他の方法としては、以下のように 記事上の JS のレイヤーでリダイレクトを行う方法があります。
+
+```html
+<script type="text/javascript">
+  const url = "";
+  const head = document.querySelector("head");
+
+  {
+    const link = document.querySelector("link[rel='canonical']");
+
+    link.setAttribute("href", url);
+  }
+
+  {
+    const meta = document.createElement("meta");
+
+    meta.setAttribute("name", "robots");
+    meta.setAttribute("content", "noindex");
+    head.appendChild(meta);
+  }
+
+  {
+    const meta = document.createElement("meta");
+
+    meta.setAttribute("http-equiv", "refresh");
+    meta.setAttribute("content", `0 URL=${url}`);
+    head.appendChild(meta);
+  }
+</script>
+```
+
+`<meta http-equiv="refresh" content="0 URL=xxx">` でリダイレクトさせます。
+同じ記事が重複するとコピーと判定されてしまう可能性があるため`noindex`をつけ、`canonical`で新しいブログの記事を指定します。
+
+ただ、これ入れてみて思ったんですが、一度 Hatena の画面が出て自分のブログに飛ぶ体験が最悪なんですよね。。
+これは最終手段で本来はもっと前段でハンドリングするべきなので、別の方法を考えました。
+
+### Google Domain の転送オプション
+
+Google Domain には標準でパスを引き回しつつリダイレクトをかける事ができます。
+
+<OG url="https://support.google.com/domains/answer/4522141?hl=ja" />
+
+しかしながら、Hatena のパスは `/entry/:id` となっていて、新しいパスは `/blog/:id` なのでそのままパスを引き回せずこの機能は使えません。
+
+### Firebase Hosting で redirects
+
+この方法で解決しました。Firebase でなくても良いですが、慣れてたので Firebase を選択しました。
+
+blog.hiroppy.me の向き先を Firebase へ変更し、向き先を管理します。json だけを管理するので楽です。
+
+```json
+{
+  "hosting": {
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "redirects": [
+      {
+        "source": "/entry/:page",
+        "destination": "https://hiroppy.me/blog/:page",
+        "type": 301
+      }
+    ]
+  }
+}
+```
+
+これで解決かと思いきや、一番苦労したのが自分の怠惰によって記事の custom path を指定してなかった結果、URL が`/`区切りの日付になっていました。
+e.g. `entry/2017/08/08/192320`
+
+これ普通にディレクトリなので URL をディレクトリ構造で表現する Astro だと正直やりたくないんですよね。。
+ただ、Hatena に置いてある記事の Path を変えるとリンク切れが発生するので、変更はしたくなく、結局この`redirects`の中に大量のリダイレクトを列挙することになりました。
+
+## さいごに
+
+無事、新しいブログの方に移動できました。
