@@ -88,7 +88,11 @@ export async function crawlSites(filename) {
       }
 
       if (meta.image) {
-        meta.image = await downloadImage(meta.image);
+        const imageURL = /^http/.test(meta.image)
+          ? meta.image
+          : `${new URL(url).origin}${meta.image}`;
+
+        meta.image = await downloadImage(imageURL);
       }
 
       return {
