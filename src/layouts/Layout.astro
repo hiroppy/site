@@ -11,7 +11,7 @@ type Props = {
 };
 
 const { title, description, image } = Astro.props;
-const pageTitle = title ?? Astro.url.pathname.slice(1);
+const pageTitle = title ?? Astro.url.pathname.replace(/^\/|\/$/g, "");
 const siteDescription = description ?? SITE_DESCRIPTION;
 const ogImage = image ?? "/images/me.png";
 const url = new URL(Astro.url.pathname, Astro.site);
