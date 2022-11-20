@@ -144,6 +144,9 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.u
   .blog ul {
     @apply list-hyphen pl-4 my-2;
   }
+  .blog li > ul {
+    @apply my-0;
+  }
   .blog p {
     @apply my-4;
   }
@@ -160,7 +163,7 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.u
     @apply mx-auto max-h-72;
   }
   .blog strong {
-    @apply font-semibold text-orange-400;
+    @apply font-semibold text-orange-300;
   }
   .blog blockquote {
     @apply px-4 border border-gray-600 border-l-blue-300 border-l-2;
