@@ -16,7 +16,7 @@ const siteDescription = description ?? SITE_DESCRIPTION;
 const ogImage = image ?? "/images/me.png";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const titleContent =
-  pageTitle === "" ? SITE_TITLE : `${SITE_TITLE} - ${pageTitle}`;
+  pageTitle === "" ? SITE_TITLE : `${pageTitle} - ${SITE_TITLE}`;
 ---
 
 <!DOCTYPE html>
