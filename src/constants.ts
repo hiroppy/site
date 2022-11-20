@@ -26,7 +26,7 @@ export const PAGE_LINKS = <const>[
     href: "/blog",
   },
 ];
-export const HATENA_BLOG_URL = "https://blog.hiroppy.me/entry";
+export const HATENA_BLOG_URL = "https://abouthiroppy.hatenablog.jp/entry";
 
 export type PAGE_PATH = typeof PAGE_LINKS[number]["href"];
 export type MediaType = "article" | "podcast" | "achievement" | "talk";
