@@ -1,5 +1,8 @@
 export const SITE_TITLE = "hiroppy's site";
-
+export const SITE_DESCRIPTION =
+  "Hiroppy is a JavaScript engineer and working on some OSS projects and Japanese communities.";
+export const BLOG_DESCRIPTION =
+  "This blog posts my life topic and tech topics mainly JavaScript.";
 export const PAGE_LINKS = <const>[
   {
     icon: "😵‍💫",
@@ -23,9 +26,7 @@ export const PAGE_LINKS = <const>[
     href: "/blog",
   },
 ];
+export const HATENA_BLOG_URL = "https://blog.hiroppy.me/entry";
 
 export type PAGE_PATH = typeof PAGE_LINKS[number]["href"];
-
 export type MediaType = "article" | "podcast" | "achievement" | "talk";
-
-export const HATENA_BLOG_URL = "https://blog.hiroppy.me/entry";

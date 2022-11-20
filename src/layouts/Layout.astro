@@ -2,7 +2,7 @@
 import Footer from "../components/Footer.astro";
 import GA from "../components/GA.astro";
 import Header from "../components/Header.astro";
-import { SITE_TITLE } from "../constants";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../constants";
 
 type Props = {
   title?: string;
@@ -12,11 +12,11 @@ type Props = {
 
 const { title, description, image } = Astro.props;
 const pageTitle = title ?? Astro.url.pathname.slice(1);
-const siteDescription =
-  description ??
-  "Hiroppy is a JavaScript engineer and working on some OSS projects and Japanese communities.";
+const siteDescription = description ?? SITE_DESCRIPTION;
 const ogImage = image ?? "/images/me.png";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const titleContent =
+  pageTitle === "" ? SITE_TITLE : `${SITE_TITLE} - ${pageTitle}`;
 ---
 
 <!DOCTYPE html>
@@ -29,7 +29,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="theme-color" content="#3498db" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE_TITLE} />
-    <meta property="og:title" content={`${SITE_TITLE} - ${pageTitle}`} />
+    <meta property="og:title" content={titleContent} />
     <meta property="og:description" content={siteDescription} />
     <meta property="og:image" content={ogImage} />
     <meta property="twitter:card" content="summary" />
@@ -38,7 +38,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       name="google-site-verification"
       content="5oxyYILHYb_TUbxn5n1vZlDDEj2K8BTQhwMqJnEX8CA"
     />
-    <title>{SITE_TITLE} - {pageTitle}</title>
+    <title>{titleContent}</title>
     <link rel="icon" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="canonical" href={canonicalURL} />
