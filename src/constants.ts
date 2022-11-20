@@ -22,7 +22,6 @@ export const PAGE_LINKS = <const>[
   {
     icon: "🗒",
     title: "Blog",
-    content: "",
     href: "/blog",
   },
 ];

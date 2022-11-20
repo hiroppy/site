@@ -843,5 +843,30 @@
     "title": "Google Codelabs",
     "description": "Google Developers Codelabs provide a guided, tutorial, hands-on coding experience. Most codelabs will step you through the process of building a small application, or adding a new feature to an existing application. They cover a wide range of topics such as Android Wear, Google Compute Engine, ARCore, and Google APIs on iOS.",
     "image": ""
+  },
+  "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1668817257600-29285.report.html": {
+    "title": "Lighthouse Report",
+    "description": "",
+    "image": ""
+  },
+  "https://ghost.org/": {
+    "title": "Ghost: The Creator Economy Platform",
+    "description": "The world's most popular modern publishing platform for creating a new media platform. Used by Apple, SkyNews, Buffer, OpenAI, and thousands more.",
+    "image": "https://ghost.org/images/meta/ghost.png"
+  },
+  "https://support.google.com/domains/answer/4522141?hl=ja": {
+    "title": "ドメインを URL または IP アドレスに転送する - Google Domains ヘルプ",
+    "description": "Google Domains でドメインを購入または移管すると、ドメイン名を別のアドレスに指定することで、ユーザーを 1 か所に誘導できます。\nたとえば、「www",
+    "image": ""
+  },
+  "https://github.com/pa11y/pa11y": {
+    "title": "GitHub - pa11y/pa11y: Pa11y is your automated accessibility testing pal",
+    "description": "Pa11y is your automated accessibility testing pal. Contribute to pa11y/pa11y development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/30a8d4a77d27758911c625e4feb9f83af72fb9862bf33f276f2c48ab04c61756/pa11y/pa11y"
+  },
+  "https://www.w3.org/WAI/WCAG2AA-Conformance": {
+    "title": "Web Content Accessibility Guidelines (WCAG) 2 Level AA Conformance",
+    "description": "Accessibility resources free online from the international standards organization: W3C Web Accessibility Initiative (WAI).",
+    "image": "https://www.w3.org/WAI/assets/images/social-sharing-default.jpg"
   }
 }
