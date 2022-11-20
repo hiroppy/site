@@ -6,7 +6,6 @@
   "scripts": {
     "setup": "git config --local core.hooksPath .githooks && corepack enable npm",
     "dev": "astro dev",
-    "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
@@ -15,10 +14,11 @@
     "fmt": "prettier -w .",
     "fmt:check": "prettier --check .",
     "generate:all": "node scripts/index.mjs",
-    "cache": "node scripts/generatecache.mjs",
-    "clean": "rm -r ./generated/* ./public/images/external/*"
+    "clean": "rm -r ./generated/* ./public/images/external/*",
+    "cache": "node scripts/generatecache.mjs"
   },
   "devDependencies": {
+    "@playwright/test": "^1.28.0",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.0.3",
     "emoji-js": "^3.7.0",
@@ -35,7 +35,6 @@
     "@astrojs/rss": "^1.0.3",
     "@astrojs/sitemap": "^1.0.0",
     "@astrojs/tailwind": "^2.1.2",
-    "@playwright/test": "^1.28.0",
     "astro": "^1.6.10"
   }
 }
