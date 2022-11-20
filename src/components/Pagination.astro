@@ -1,15 +1,58 @@
 ---
+import { mergeClass } from "../utils/mergeClass";
+import Arrow from "./icons/Arrow.astro";
 import Link from "./Link.astro";
 
 type Props = {
   prev?: string;
+  prevText?: string;
   next?: string;
+  nextText?: string;
+  className?: string;
 };
 
-const { prev, next } = Astro.props;
+const {
+  prev,
+  prevText = "Back",
+  next,
+  nextText = "Next Page",
+  className,
+} = Astro.props;
 ---
 
-<div class="flex justify-between items-center mt-4">
-  {prev ? <Link href={prev} name="prev">{`< back`}</Link> : <div />}
-  {next && <Link href={next} name="next">{`next page >`}</Link>}
+<div
+  class={mergeClass("flex justify-between items-center mt-4", className ?? "")}
+>
+  {
+    prev ? (
+      <Link href={prev} name="prev" className="flex items-center text-blue-300">
+        <svg
+          class="w-6 h-6 rotate-90"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <Arrow />
+        </svg>
+        {prevText}
+      </Link>
+    ) : (
+      <div />
+    )
+  }
+  {
+    next && (
+      <Link href={next} name="next" className="flex items-center text-blue-300">
+        {nextText}
+        <svg
+          class="w-6 h-6 -rotate-90"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <Arrow />
+        </svg>
+      </Link>
+    )
+  }
 </div>

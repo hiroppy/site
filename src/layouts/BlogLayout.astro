@@ -11,6 +11,7 @@ import { HATENA_BLOG_URL } from "../constants";
 import SnsIcon from "../components/SnsIcon.astro";
 import GitHub from "../components/icons/GitHub.astro";
 import BlogDescription from "../components/BlogDescription.astro";
+import Pagination from "../components/Pagination.astro";
 
 const { frontmatter, headings } =
   Astro.props as MarkdownLayoutProps<BlogFrontmatter>;
@@ -98,22 +99,19 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.u
       <ShareButtons url={`${Astro.site?.origin}${url!}`} title={title} />
       {
         index !== -1 && (
-          <div class="flex justify-between mt-10 flex-col md:flex-row gap-2 text-center">
-            {index !== 0 ? (
-              <Link
-                name={posts[index - 1].frontmatter.title}
-                href={posts[index - 1].url!}
-              >{`< ${posts[index - 1].frontmatter.title}`}</Link>
-            ) : (
-              <div />
-            )}
-            {index !== posts.length - 1 && (
-              <Link
-                name={posts[index + 1].frontmatter.title}
-                href={posts[index + 1].url!}
-              >{`${posts[index + 1].frontmatter.title} >`}</Link>
-            )}
-          </div>
+          <Pagination
+            prev={index !== 0 ? posts[index - 1].url : undefined}
+            prevText={
+              index !== 0 ? posts[index - 1].frontmatter.title : undefined
+            }
+            next={index !== posts.length - 1 ? posts[index + 1].url : undefined}
+            nextText={
+              index !== posts.length - 1
+                ? posts[index + 1].frontmatter.title
+                : undefined
+            }
+            className="mt-10 flex-col md:flex-row gap-2 text-center"
+          />
         )
       }
     </div>
