@@ -1,0 +1,21 @@
+---
+import { mergeClass } from "../utils/mergeClass";
+
+type Props = {
+  items: string[];
+  className?: string;
+};
+
+const { items, className } = Astro.props;
+---
+
+<ul class={mergeClass("flex items-center flex-row gap-2", className ?? "")}>
+  {
+    items.map((item, i) => (
+      <>
+        <li class="text-base">{item}</li>
+        {i !== items.length - 1 && <span class="text-gray-300 text-xs">/</span>}
+      </>
+    ))
+  }
+</ul>

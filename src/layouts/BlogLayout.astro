@@ -7,7 +7,7 @@ import type { MarkdownLayoutProps } from "astro/dist/@types/astro";
 import ShareButtons from "../components/ShareButtons.astro";
 import { parseTags, sortByDate } from "../utils/blog";
 import Link from "../components/Link.astro";
-import { HATENA_BLOG_URL } from "../constants";
+import { HATENA_BLOG_ENTRY_URL } from "../constants";
 import SnsIcon from "../components/SnsIcon.astro";
 import GitHub from "../components/icons/GitHub.astro";
 import BlogDescription from "../components/BlogDescription.astro";
@@ -65,7 +65,7 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.u
         <GitHub />
       </SnsIcon>
     </div>
-    <div class="flex gap-4 mb-8 flex-col">
+    <div class="flex gap-4 flex-col">
       {
         parseTags(tags).includes("javascript") && diffDate > 365 && (
           <div class="bg-yellow-500 p-3 rounded-md">
@@ -77,11 +77,11 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.u
       }
       {
         frontmatter.hatenaPath && (
-          <div class="bg-gray-800 p-3 mb-8 rounded-md text-sm">
+          <div class="bg-gray-800 p-3 rounded-md text-sm">
             💁‍♀️ This post was copied from{" "}
             <Link
               name="Hatena"
-              href={`${HATENA_BLOG_URL}/${frontmatter.hatenaPath}`}
+              href={`${HATENA_BLOG_ENTRY_URL}/${frontmatter.hatenaPath}`}
               isNoReferrer={false}
               isBlank
             >
@@ -118,6 +118,9 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.u
   </MainLayout>
 </Layout>
 <style is:global>
+  .blog {
+    @apply text-sm sm:text-base;
+  }
   .blog h1,
   .blog h2,
   .blog h3,
