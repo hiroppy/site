@@ -868,5 +868,15 @@
     "title": "Web Content Accessibility Guidelines (WCAG) 2 Level AA Conformance",
     "description": "Accessibility resources free online from the international standards organization: W3C Web Accessibility Initiative (WAI).",
     "image": "https://www.w3.org/WAI/assets/images/social-sharing-default.jpg"
+  },
+  "https://docs.astro.build/en/reference/directives-reference/#script--style-directives": {
+    "title": "Template Directives Reference",
+    "description": "Build faster websites with less client-side Javascript.",
+    "image": "https://docs.astro.build/open-graph/en/reference/directives-reference.png"
+  },
+  "https://docs.astro.build/en/core-concepts/astro-components/#client-side-scripts": {
+    "title": "Components",
+    "description": "An intro to the .astro component syntax.",
+    "image": "https://docs.astro.build/open-graph/en/core-concepts/astro-components.png"
   }
 }

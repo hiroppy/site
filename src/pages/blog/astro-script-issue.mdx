@@ -1,0 +1,137 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: AstroのScriptタグを扱うときの注意
+date: 2022-11-23
+description: AstroでのScriptタグを使う時の注意点とそれを回避する方法を紹介します
+image: /images/brands/astro.png
+tags: javascript
+---
+
+import OG from "../../components/OG.astro";
+
+Astro の`<script>`は何もインテグレーションを入れなくても使えるお手軽さがある一方、ハマるポイントがあります。
+
+<OG url="https://docs.astro.build/en/core-concepts/astro-components/#client-side-scripts" />
+
+## Script の問題点
+
+以下のコードの場合、Header は共通で使われるものではあるものの Foo は条件により`/blog`以下でしか HTML 上には出力されません。
+つまり、これは他のページではこの Foo.astro 自体が読み込まれないように期待したいところです。
+しかし、これは上手くいきません。
+
+```astro
+---
+// Foo.astro
+---
+
+<span>foo</span>
+
+<script>
+  console.log("hello");
+</script>
+```
+
+<br />
+
+```astro
+---
+// Header.astro
+
+import Foo from "./Foo.astro";
+---
+
+<header>
+  <p>site</p>
+  {Astro.url.pathname.startsWith("/blog") && <Foo />}
+</header>
+```
+
+実際の出力結果はこのようになります。このように**全てのページの HTML** にこの `<script>` が挿入されます。
+
+![script as global on html](/images/blog/astro-script-issue/global-script-on-html.png)
+
+なぜこのようになるかというと、`<script>`はデフォルトでグローバル(`is:global`)の扱いとなるためです。
+たしかに Foo.astro の中で書いたものではあるものの、どこにでも影響を与えることができてしまうので、保証できずうまく最適化できません。
+
+このサンプルの場合だと大きな影響はないですが、例えばライブラリを import したらどうでしょうか？
+
+```astro
+---
+// Foo.astro
+---
+
+<span>foo</span>
+
+<script>
+  import { App } from "octokit";
+
+  console.log("hello");
+  console.log(App);
+</script>
+```
+
+この場合は、ライブラリが hoisting され、HTML から分離されます。
+このように、ライブラリと一緒の JS へユーザーランドのコードが入ります。
+
+![hoisted js](/images/blog/astro-script-issue/hoisted.png)
+
+例えこのように JS に分解されても、やはり扱いはグローバルなのでこの JS は全ての HTML で呼び出しが行われてしまいます。
+これは`/blog`以外のページからすると見過ごせない無駄なコードとなり、最適化を行う必要があります。
+
+これを回避するには、`is:inline`(or `define:vars`)をつけることにより、そのファイルのコンポーネントだけがスコープとなります。
+しかし、次の問題は、これらはトランスパイラを通しません。つまり、絶対パスではない場合の import が読み込めなかったり、コード自体の最適化することができません。
+また、これの一番致命的な点は、**TypeScript で書けない**点です。
+
+---
+
+現段階での結論としては、以下のようになります。
+
+- TS を使いたい場合は、global を使う
+- global は全てのページに挿入されるため、副作用がありえる
+- バンドルサイズも共有されてしまうため、global では一部でしか使われないライブラリを使うべきではない
+
+と、TS + Scope を実際にはやりたいわけですが、それを叶えるのは`<script>`だけでは厳しそうです。
+
+では、どうすればよいのでしょうか？
+
+## Framework を使う
+
+今回は、React を例に見ていきます。
+
+```ts
+// Foo.tsx
+import { App } from "octokit";
+import type { FC } from "react";
+
+export const Foo: FC = () => {
+  console.log("hello");
+  console.log(App);
+
+  return <span>foo</span>;
+};
+```
+
+<br />
+
+```astro
+---
+// Header.astro
+
+import Foo from "./Foo.astro";
+---
+
+<header>
+  <p>site</p>
+  {Astro.url.pathname.startsWith("/blog") && <Foo client:load />}
+</header>
+```
+
+`client:load`を使い、React 等で閉じ込めると、以下のようになります。
+これは、`/blog`以下でしかダウンロードされない JS となるため、期待通りの挙動となります。
+
+![react](/images/blog/astro-script-issue/react.png)
+
+## まとめ
+
+Astro は JS を削ぎ落として HTML を生成することに特化していますが、ブラウザで動く JS のコードを書く場合は、ライブラリに依存したほうが良いかなと思います。
+特定の Astro ファイルに書いているので、そのコンポーネントのスコープのみの`<script>`になるかと思って書くとハマりがちです。
