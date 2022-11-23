@@ -1,0 +1,156 @@
+---
+import Search from "./icons/Search.astro";
+
+if (
+  import.meta.env.ALGOLIA_APPLICATION_ID === undefined ||
+  import.meta.env.ALGOLIA_SEARCH_ONLY_KEY === undefined
+) {
+  throw new Error(
+    "ALGOLIA_APPLICATION_ID and ALGOLIA_SEARCH_ONLY_KEY are reuired"
+  );
+}
+---
+
+<dialog id="search-dialog">
+  <div id="search">
+    <form class="search-input-box">
+      <label>
+        <svg
+          class="h-5 w-5 hover:text-blue-300 text-gray-300"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          fill="none"
+        >
+          <Search />
+        </svg>
+      </label>
+      <input id="search-input" autofocus placeholder="Search blog" />
+    </form>
+    <ul id="search-result"></ul>
+  </div>
+</dialog>
+
+<script>
+  import type {
+    AutocompleteConnector,
+    AutocompleteConnectorParams,
+    AutocompleteRenderState,
+  } from "instantsearch.js/es/connectors/autocomplete/connectAutocomplete";
+
+  const dialog = document.getElementById(
+    "search-dialog"
+  ) as HTMLDialogElement | null;
+
+  dialog?.addEventListener("click", (event) => {
+    if (event.target === dialog) {
+      dialog.close();
+    }
+  });
+
+  dialog?.addEventListener("close", () => {});
+
+  dialog?.showModal();
+
+  await a();
+
+  async function a() {
+    const [
+      { default: algoliasearch },
+      { default: instantsearch },
+      { connectAutocomplete },
+    ] = await Promise.all([
+      import("algoliasearch/lite"),
+      import("instantsearch.js"),
+      import("instantsearch.js/es/connectors"),
+    ]);
+
+    const searchClient = algoliasearch(
+      "DXC52DYOD7",
+      "d5a8d7154a3c5ffefb861e1c7caba71c"
+      // import.meta.env.ALGOLIA_APPLICATION_ID,
+      // import.meta.env.ALGOLIA_SEARCH_ONLY_KEY
+    );
+    const search = instantsearch({
+      indexName: "blog",
+      searchClient,
+      searchFunction(helper) {
+        // 起動時に送信させない
+        if (helper.state.query) {
+          helper.search();
+        }
+      },
+    });
+    const renderAutocomplete = (
+      renderOptions: AutocompleteRenderState,
+      isFirstRender: AutocompleteConnectorParams
+    ) => {
+      const { indices, refine } = renderOptions;
+      const blog = indices[0];
+      const input = document.querySelector("#search-input") as HTMLInputElement;
+      const ul = document.querySelector("#search-result") as HTMLUListElement;
+
+      if (isFirstRender) {
+        input.addEventListener("input", ({ currentTarget }) => {
+          if (currentTarget instanceof HTMLInputElement) {
+            refine(currentTarget.value);
+          }
+        });
+      }
+
+      if (blog) {
+        const fragment = document.createDocumentFragment();
+
+        blog.hits.forEach((item) => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+
+          a.setAttribute("href", item.url);
+          a.textContent = item.title;
+          li.appendChild(a);
+          fragment.appendChild(li);
+        });
+
+        ul.replaceChildren();
+        ul.appendChild(fragment);
+      }
+    };
+
+    const customAutocomplete = connectAutocomplete(renderAutocomplete);
+
+    search.addWidgets([
+      customAutocomplete({
+        container: document.querySelector("#search"),
+      }),
+    ]);
+
+    search.start();
+  }
+</script>
+
+<style is:global>
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  #search-dialog {
+    @apply m-auto h-4/5 w-4/5 md:w-3/4 lg:w-2/4 bg-gray-600 rounded-lg backdrop:bg-gray-900 backdrop:bg-opacity-60;
+  }
+  #search {
+    @apply text-gray-700 h-full;
+  }
+  .search-input-box {
+    @apply border border-blue-300 rounded-md w-full p-1 flex items-center gap-1;
+  }
+  input {
+    @apply bg-transparent flex-1 outline-0 text-gray-100;
+  }
+  #search-result {
+    @apply my-4 overflow-y-auto h-[calc(100%-44px)];
+  }
+  #search-result > li {
+    @apply py-2 text-gray-300 hover:text-blue-300;
+  }
+</style>
