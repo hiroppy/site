@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: AstroのScriptタグを扱うときの注意
 date: 2022-11-23
-description: AstroでのScriptタグを使う時の注意点とそれを回避する方法を紹介します
+description: AstroでのScriptタグのパフォーマンスの問題と環境変数の扱い方について説明します。
 image: /images/brands/astro.png
 tags: javascript
 ---
@@ -130,6 +130,79 @@ import Foo from "./Foo.astro";
 これは、`/blog`以下でしかダウンロードされない JS となるため、期待通りの挙動となります。
 
 ![react](/images/blog/astro-script-issue/react.png)
+
+## Env の扱い方
+
+`import.meta.env`は Astro 標準で準備されているものしか`<script>`内では参照できません。
+これを解決するには`define:vars`経由で入れる必要があります。
+しかし、先程の話通り、`define:vars`は TS で書けなかったりバンドラを通しません。
+
+### define:vars を利用する方法
+
+```astro
+---
+const foo = import.meta.env.FOO;
+---
+
+<script define:vars={{ foo }}>
+  console.log(import.meta.env.FOO); // これは存在しない
+  console.log(foo);
+</script>
+```
+
+これを回避する方法は、以下のように 1 段階 window に刺すレイヤーを用意して上げる方法です。
+
+### Window でラップする方法
+
+```astro
+---
+const foo = import.meta.env.FOO;
+---
+
+<script define:vars={{ foo }}>
+  window.foo = foo;
+</script>
+
+<script>
+  const foo: string = "foo";
+  console.log(window.foo);
+</script>
+```
+
+それか、Vite で回避する方法もあります。この問題自体は Vite の問題でセンシティブな情報が出てしまわないようにする制約です。
+
+### .env でフロントエンドに渡したいものに`VITE_*`をつける方法
+
+<OG url="https://vitejs.dev/guide/env-and-mode.html#env-files" />
+
+<br />
+
+```
+VITE_SOME_KEY=123
+DB_PASSWORD=foobar
+```
+
+<br />
+
+```ts
+console.log(import.meta.env.VITE_SOME_KEY); // 123
+console.log(import.meta.env.DB_PASSWORD); // undefined
+```
+
+### define で定義してあげる方法
+
+```ts
+// vite.config.ts
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  define: {
+    FOO: JSON.stringify(process.env.FOO),
+  },
+});
+```
+
+ただ基本、Astro を触っていると vite の設定は触らないのでこの書き方はあまり使わないかもしれません。
 
 ## まとめ
 

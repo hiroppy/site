@@ -878,5 +878,10 @@
     "title": "Components",
     "description": "An intro to the .astro component syntax.",
     "image": "https://docs.astro.build/open-graph/en/core-concepts/astro-components.png"
+  },
+  "https://vitejs.dev/guide/env-and-mode.html#env-files": {
+    "title": "Vite",
+    "description": "Next Generation Frontend Tooling",
+    "image": "https://vitejs.dev/og-image.png"
   }
 }
