@@ -122,6 +122,9 @@ if (
           refine(currentTarget.value);
         }
       });
+
+      // ページが戻ったりした時にinputが残っている場合も起動した時に正しい検索結果を出すようにする
+      refine(input.value);
     }
 
     if (blog) {
@@ -131,7 +134,7 @@ if (
         const li = document.createElement("li");
         const a = document.createElement("a");
 
-        a.setAttribute("href", item.path);
+        a.setAttribute("href", new URL(item.path, location.origin).href);
         a.textContent = item.title;
         li.classList.add("search-result-item");
         li.appendChild(a);
