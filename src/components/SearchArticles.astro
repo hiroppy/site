@@ -3,10 +3,7 @@ import Search from "./icons/Search.astro";
 
 const { ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_ONLY_KEY } = import.meta.env;
 
-if (
-  ALGOLIA_APPLICATION_ID === undefined ||
-  ALGOLIA_SEARCH_ONLY_KEY === undefined
-) {
+if (!ALGOLIA_APPLICATION_ID || !ALGOLIA_SEARCH_ONLY_KEY) {
   throw new Error(
     "ALGOLIA_APPLICATION_ID and ALGOLIA_SEARCH_ONLY_KEY are reuired"
   );
@@ -65,11 +62,11 @@ if (
   import { connectAutocomplete } from "instantsearch.js/es/connectors";
   import type { AutocompleteRenderState } from "instantsearch.js/es/connectors/autocomplete/connectAutocomplete";
 
-  const btn = document.querySelector<HTMLButtonElement>("#search-button")!;
-  const dialog = document.querySelector<HTMLDialogElement>("#search-dialog")!;
-  const container = document.querySelector<HTMLDivElement>("#search-box")!;
-  const input = document.querySelector<HTMLInputElement>("#search-input")!;
-  const ul = document.querySelector<HTMLUListElement>("#search-result")!;
+  const button = document.querySelector<HTMLButtonElement>("#search-button");
+  const dialog = document.querySelector<HTMLDialogElement>("#search-dialog");
+  const container = document.querySelector<HTMLDivElement>("#search-box");
+  const input = document.querySelector<HTMLInputElement>("#search-input");
+  const ul = document.querySelector<HTMLUListElement>("#search-result");
 
   const searchClient = algoliasearch(
     window.algolia.applicationId,
@@ -81,7 +78,7 @@ if (
     searchFunction(helper) {
       if (helper.state.query) {
         helper.search();
-      } else {
+      } else if (ul) {
         ul.textContent = "";
       }
     },
@@ -96,16 +93,16 @@ if (
     }),
   ]);
 
-  btn.addEventListener("click", () => {
+  button?.addEventListener("click", () => {
     if (!search.started) {
       search.start();
     }
-    dialog.showModal();
+    dialog?.showModal();
   });
 
-  dialog.addEventListener("click", (event) => {
+  dialog?.addEventListener("click", (event) => {
     if (event.target === dialog) {
-      dialog.close();
+      dialog?.close();
     }
   });
 
@@ -116,7 +113,7 @@ if (
     const { indices, refine } = renderOptions;
     const [blog] = indices;
 
-    if (isFirstRender) {
+    if (isFirstRender && input) {
       input.addEventListener("input", ({ currentTarget }) => {
         if (currentTarget instanceof HTMLInputElement) {
           refine(currentTarget.value);
@@ -141,8 +138,8 @@ if (
         fragment.appendChild(li);
       });
 
-      ul.replaceChildren();
-      ul.appendChild(fragment);
+      ul?.replaceChildren();
+      ul?.appendChild(fragment);
     }
   }
 </script>
