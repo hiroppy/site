@@ -41,7 +41,7 @@ const contents = await Promise.all(
 
     return {
       objectID: name,
-      url: `https://hiroppy.me/blog/${name}`,
+      path: `blog/${name}`,
       content: content.value,
       ...frontmatter,
     };

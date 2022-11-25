@@ -1,17 +1,16 @@
 ---
 import Search from "./icons/Search.astro";
 
+const { ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_ONLY_KEY } = import.meta.env;
+
 if (
-  import.meta.env.ALGOLIA_APPLICATION_ID === undefined ||
-  import.meta.env.ALGOLIA_SEARCH_ONLY_KEY === undefined
+  ALGOLIA_APPLICATION_ID === undefined ||
+  ALGOLIA_SEARCH_ONLY_KEY === undefined
 ) {
   throw new Error(
     "ALGOLIA_APPLICATION_ID and ALGOLIA_SEARCH_ONLY_KEY are reuired"
   );
 }
-
-const applicationId = import.meta.env.ALGOLIA_APPLICATION_ID;
-const searchOnlyKey = import.meta.env.ALGOLIA_SEARCH_ONLY_KEY;
 ---
 
 <button id="search-button" class="search-button" aria-label="Search articles">
@@ -53,10 +52,10 @@ const searchOnlyKey = import.meta.env.ALGOLIA_SEARCH_ONLY_KEY;
   </div>
 </dialog>
 
-<script define:vars={{ applicationId, searchOnlyKey }}>
+<script define:vars={{ ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_ONLY_KEY }}>
   window.algolia = {
-    applicationId,
-    searchOnlyKey,
+    applicationId: ALGOLIA_APPLICATION_ID,
+    searchOnlyKey: ALGOLIA_SEARCH_ONLY_KEY,
   };
 </script>
 
@@ -132,7 +131,7 @@ const searchOnlyKey = import.meta.env.ALGOLIA_SEARCH_ONLY_KEY;
         const li = document.createElement("li");
         const a = document.createElement("a");
 
-        a.setAttribute("href", item.url);
+        a.setAttribute("href", item.path);
         a.textContent = item.title;
         li.classList.add("search-result-item");
         li.appendChild(a);

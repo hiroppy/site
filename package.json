@@ -13,6 +13,7 @@
     "test:update": "docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:v1.28.0-focal /bin/bash -c 'npm test -- -u'",
     "fmt": "prettier -w .",
     "fmt:check": "prettier --check .",
+    "index:update": "node scripts/updateBlogOnAlgolia.mjs",
     "generate:all": "node scripts/index.mjs",
     "clean": "rm -r ./generated/* ./public/images/external/*",
     "cache": "node scripts/generatecache.mjs"
