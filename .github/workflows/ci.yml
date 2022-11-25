@@ -14,6 +14,12 @@ on:
       - "src/**"
       - "data/**"
       - ".github/workflows/ci.yml"
+
+env:
+  ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+  ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+  ALGOLIA_SEARCH_ONLY_KEY: ${{ secrets.ALGOLIA_SEARCH_ONLY_KEY }}
+
 jobs:
   lint:
     runs-on: ubuntu-latest
