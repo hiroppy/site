@@ -29,27 +29,26 @@ const searchOnlyKey = import.meta.env.ALGOLIA_SEARCH_ONLY_KEY;
 </button>
 <dialog id="search-dialog" class="search-dialog">
   <div id="search-box" class="search-box">
-    <form class="search-input-box">
-      <label>
-        <svg
-          class="h-5 w-5 hover:text-blue-300 text-gray-300"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-          stroke="currentColor"
-          fill="none"
-        >
-          <Search />
-        </svg>
-      </label>
+    <div class="search-input-box">
+      <svg
+        class="h-5 w-5 hover:text-blue-300 text-gray-300"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        fill="none"
+      >
+        <Search />
+      </svg>
       <input
         id="search-input"
         class="search-input"
         autofocus
         placeholder="Search articles"
+        aria-label="search articles by keywords"
       />
-    </form>
+    </div>
     <ul id="search-result" class="search-result"></ul>
   </div>
 </dialog>
