@@ -12,6 +12,7 @@ import SnsIcon from "../components/SnsIcon.astro";
 import GitHub from "../components/icons/GitHub.astro";
 import BlogDescription from "../components/BlogDescription.astro";
 import Pagination from "../components/Pagination.astro";
+import SearchArticles from "../components/SearchArticles.astro";
 
 const { frontmatter, headings } =
   Astro.props as MarkdownLayoutProps<BlogFrontmatter>;
@@ -35,6 +36,7 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.u
 ---
 
 <Layout title={title} description={description} image={image}>
+  <SearchArticles slot="header-action" />
   <MainLayout title={title}>
     <BlogDescription slot="description" />
     <Paper slot="optional-content">

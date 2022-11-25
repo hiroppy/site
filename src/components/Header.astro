@@ -3,7 +3,6 @@ import SnsIcon from "./SnsIcon.astro";
 import { PAGE_LINKS } from "../constants";
 import GitHub from "./icons/GitHub.astro";
 import Arrow from "./icons/Arrow.astro";
-import SearchBlog from "./SearchBlog.astro";
 
 const currentMenu = PAGE_LINKS.find(({ href }) =>
   href === "/" ? Astro.url.pathname === href : Astro.url.pathname.includes(href)
@@ -59,7 +58,7 @@ const currentMenu = PAGE_LINKS.find(({ href }) =>
       </div>
     </div>
     <div class="flex gap-4">
-      {Astro.url.pathname.startsWith("/blog") && <SearchBlog />}
+      <slot name="action" />
       <SnsIcon href="https://github.com/hiroppy/site" name="GitHub">
         <GitHub />
       </SnsIcon>

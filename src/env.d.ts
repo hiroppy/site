@@ -1,4 +1,12 @@
 /// <reference types="@astrojs/image/client" />
+
+interface Window {
+  algolia: {
+    applicationId: string;
+    searchOnlyKey: string;
+  };
+}
+
 interface ImportMetaEnv {
   readonly GITHUB_TOKEN: string;
   readonly ALGOLIA_APPLICATION_ID: string;

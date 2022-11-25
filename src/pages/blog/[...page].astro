@@ -3,6 +3,7 @@ import type { GetStaticPathsOptions, Page } from "astro";
 import BlogCardItem from "../../components/BlogCardItem.astro";
 import BlogDescription from "../../components/BlogDescription.astro";
 import Pagination from "../../components/Pagination.astro";
+import SearchArticles from "../../components/SearchArticles.astro";
 import TagsBox from "../../components/TagsBox.astro";
 import { BLOG_DESCRIPTION } from "../../constants";
 import Layout from "../../layouts/Layout.astro";
@@ -23,6 +24,7 @@ const { page } = Astro.props as {
 ---
 
 <Layout description={BLOG_DESCRIPTION}>
+  <SearchArticles slot="header-action" />
   <MainLayout title="Blog">
     <BlogDescription slot="description" />
     <TagsBox tags={allTags} slot="optional-content" />

@@ -1,0 +1,180 @@
+---
+import Search from "./icons/Search.astro";
+
+if (
+  import.meta.env.ALGOLIA_APPLICATION_ID === undefined ||
+  import.meta.env.ALGOLIA_SEARCH_ONLY_KEY === undefined
+) {
+  throw new Error(
+    "ALGOLIA_APPLICATION_ID and ALGOLIA_SEARCH_ONLY_KEY are reuired"
+  );
+}
+
+const applicationId = import.meta.env.ALGOLIA_APPLICATION_ID;
+const searchOnlyKey = import.meta.env.ALGOLIA_SEARCH_ONLY_KEY;
+---
+
+<button id="search-button" class="search-button">
+  <svg
+    class="h-5 w-5 hover:text-blue-300 text-gray-300"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    stroke-width="2"
+    stroke="currentColor"
+    fill="none"
+  >
+    <Search />
+  </svg>
+</button>
+<dialog id="search-dialog" class="search-dialog">
+  <div id="search-box" class="search-box">
+    <form class="search-input-box">
+      <label>
+        <svg
+          class="h-5 w-5 hover:text-blue-300 text-gray-300"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          fill="none"
+        >
+          <Search />
+        </svg>
+      </label>
+      <input
+        id="search-input"
+        class="search-input"
+        autofocus
+        placeholder="Search articles"
+      />
+    </form>
+    <ul id="search-result" class="search-result"></ul>
+  </div>
+</dialog>
+
+<script define:vars={{ applicationId, searchOnlyKey }}>
+  window.algolia = {
+    applicationId,
+    searchOnlyKey,
+  };
+</script>
+
+<script>
+  import algoliasearch from "algoliasearch/lite";
+  import instantsearch from "instantsearch.js/es";
+  import { connectAutocomplete } from "instantsearch.js/es/connectors";
+  import type { AutocompleteRenderState } from "instantsearch.js/es/connectors/autocomplete/connectAutocomplete";
+
+  const btn = document.querySelector<HTMLButtonElement>("#search-button")!;
+  const dialog = document.querySelector<HTMLDialogElement>("#search-dialog")!;
+  const container = document.querySelector<HTMLDivElement>("#search-box")!;
+  const input = document.querySelector<HTMLInputElement>("#search-input")!;
+  const ul = document.querySelector<HTMLUListElement>("#search-result")!;
+
+  const searchClient = algoliasearch(
+    window.algolia.applicationId,
+    window.algolia.searchOnlyKey
+  );
+  const search = instantsearch({
+    indexName: "blog",
+    searchClient,
+    searchFunction(helper) {
+      if (helper.state.query) {
+        helper.search();
+      } else {
+        ul.textContent = "";
+      }
+    },
+  });
+  const customAutocomplete = connectAutocomplete(renderAutocomplete);
+
+  search.addWidgets([
+    customAutocomplete({
+      // https://www.algolia.com/doc/api-reference/widgets/autocomplete/js/
+      // @ts-expect-error type mismatch
+      container,
+    }),
+  ]);
+
+  btn.addEventListener("click", () => {
+    if (!search.started) {
+      search.start();
+    }
+    dialog.showModal();
+  });
+
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) {
+      dialog.close();
+    }
+  });
+
+  function renderAutocomplete(
+    renderOptions: AutocompleteRenderState,
+    isFirstRender: Boolean
+  ) {
+    const { indices, refine } = renderOptions;
+    const [blog] = indices;
+
+    if (isFirstRender) {
+      input.addEventListener("input", ({ currentTarget }) => {
+        if (currentTarget instanceof HTMLInputElement) {
+          refine(currentTarget.value);
+        }
+      });
+    }
+
+    if (blog) {
+      const fragment = document.createDocumentFragment();
+
+      blog.hits.forEach((item) => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+
+        a.setAttribute("href", item.url);
+        a.textContent = item.title;
+        li.classList.add("search-result-item");
+        li.appendChild(a);
+        fragment.appendChild(li);
+      });
+
+      ul.replaceChildren();
+      ul.appendChild(fragment);
+    }
+  }
+</script>
+
+<style>
+  .search-dialog {
+    @apply m-auto h-4/5 w-4/5 md:w-3/4 lg:w-2/4 bg-gray-600 rounded-lg backdrop:bg-gray-900 backdrop:bg-opacity-60;
+  }
+  .search-box {
+    @apply text-gray-700 h-full;
+  }
+  .search-input-box {
+    @apply border border-blue-300 rounded-md w-full p-1 flex items-center gap-1;
+  }
+  .search-input {
+    @apply bg-transparent flex-1 outline-0 text-gray-100;
+  }
+  .search-result {
+    @apply my-4 overflow-y-auto h-[calc(100%-44px)];
+  }
+</style>
+
+<style is:global>
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  /* 動的に生成されたタグはscopedにできないため、globalで定義する必要がある */
+  .search-result-item {
+    @apply py-2 text-gray-300 hover:text-blue-300;
+  }
+
+  .search-result-item > a {
+    @apply block;
+  }
+</style>
