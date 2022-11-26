@@ -4,6 +4,7 @@ import Image from "../components/Image.astro";
 import GitHub from "./icons/GitHub.astro";
 import Pencil from "./icons/Pencil.astro";
 import Youtube from "./icons/Youtube.astro";
+import Link from "./Link.astro";
 import SnsIcon from "./SnsIcon.astro";
 
 type Props = {
@@ -25,6 +26,7 @@ const { items } = Astro.props;
           image,
           appendixes,
           siteName,
+          siteUrl,
           icon,
           prefixForTitle,
         },
@@ -36,11 +38,11 @@ const { items } = Astro.props;
           </span>
           <div class="ml-2">
             <Card>
-              <div class="justify-between items-center mb-3 sm:flex">
-                <time class="mb-1 text-xs font-normal sm:order-last sm:mb-0">
+              <div class="justify-between mb-3 sm:flex items-baseline gap-2">
+                <time class="mb-1 text-xs font-normal sm:order-last sm:mb-0 block">
                   {publishedAt}
                 </time>
-                <div class="text-sm font-normal">
+                <div class="text-sm font-normal flex-1">
                   {prefixForTitle}{" "}
                   <a
                     href={url}
@@ -52,7 +54,18 @@ const { items } = Astro.props;
                   {siteName && (
                     <>
                       on
-                      <span class="text-blue-200">{siteName}</span>
+                      {siteUrl ? (
+                        <Link
+                          href={siteUrl}
+                          isBlank
+                          name={siteName}
+                          className="text-blue-200"
+                        >
+                          {siteName}
+                        </Link>
+                      ) : (
+                        <span class="text-blue-200">{siteName}</span>
+                      )}
                     </>
                   )}
                 </div>
