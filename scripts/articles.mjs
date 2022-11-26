@@ -9,7 +9,7 @@ import { load } from "cheerio";
 
 const { hot: hatenaHot } = await readData("hatena");
 
-const hatenaRes = await fetch("https://blog.hiroppy.me/rss?size=100")
+const hatenaRes = await fetch("https://abouthiroppy.hatenablog.jp/rss?size=100")
   .then((res) => res.text())
   .then((res) =>
     // cheerioはlinkのタグを抽出できない
@@ -43,13 +43,21 @@ const hatena = await Promise.all(
   })
 );
 
-await getBookmark("https://hiroppy.me");
-
 const allArticles = sortItems([...(await crawlSites("articles")), ...hatena]);
 
 for (const article of allArticles) {
   if (article.hot) {
-    article.bookmark = await getBookmark(article.url);
+    const { host, pathname } = new URL(article.url);
+    const isHatena = host === "abouthiroppy.hatenablog.jp";
+    const hostname = isHatena ? "blog.hiroppy.me" : host;
+
+    article.bookmark = await getBookmark(`https://${hostname}${pathname}`);
+
+    if (isHatena) {
+      const newPathname = pathname.replace("/entry", "");
+
+      article.url = `https://hiroppy.me/blog${newPathname}`;
+    }
   }
 }
 
