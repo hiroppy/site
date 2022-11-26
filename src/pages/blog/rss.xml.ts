@@ -11,7 +11,7 @@ export const get = () =>
   rss({
     title: "hiroppy's Blog",
     description: "a blog for hiroppy's life and programming",
-    site: import.meta.env.SITE,
+    site: new URL("blog", import.meta.env.SITE).href,
     items: posts.map((post) => ({
       link: post.url ?? "",
       title: post.frontmatter.title,
