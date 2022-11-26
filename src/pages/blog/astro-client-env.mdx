@@ -1,0 +1,94 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Astroのscript内で環境変数を扱う方法
+date: 2022-11-23
+description: AstroでのScriptタグ内でどのように環境変数を扱うかを説明します。
+image: /images/brands/astro.png
+tags: javascript
+---
+
+import OG from "../../components/OG.astro";
+
+`import.meta.env`は Astro 標準で準備されているものしか`<script>`内では参照できません。
+これを解決する方法として、`define:vars`が提供されています。
+
+### define:vars を利用する方法
+
+```astro
+---
+const foo = import.meta.env.FOO;
+---
+
+<script define:vars={{ foo }}>
+  console.log(import.meta.env.FOO); // これは存在しない
+  console.log(foo); // ok
+</script>
+```
+
+しかし、`define:vars`は素の JS として扱われるので、TS で書けずバンドラも通しません。
+なので、結果的にあまり使う機会がなく、他の方法を考えることが多くなるはずです。
+
+<OG url="https://hiroppy.me/blog/astro-script-issue" />
+
+### Window でラップする方法
+
+```astro
+---
+const foo = import.meta.env.FOO;
+---
+
+<script define:vars={{ foo }}>
+  window.foo = foo;
+</script>
+
+<script>
+  const foo: string = "foo";
+  console.log(window.foo);
+</script>
+```
+
+一度、`define:vars`で環境変数を抽出し、そこで`window`に展開させ、次のメインのスクリプトに`window`経由で渡す方法です。
+この場合は、グローバルに値が露出してしまう事となり、ソースコードの書き換えではなく、ランタイムでの処理となります。
+
+### .env でフロントエンドに渡したいものに`VITE_*`をつける方法
+
+Vite で回避する方法もあります。この問題自体は Vite の問題でセンシティブな情報が出てしまわないようにする制約で実際には Astro の問題ではありません。
+環境変数の接頭語に`VITE_`をつけることにより、`import.meta.env`からアクセスが可能となります。
+
+<OG url="https://vitejs.dev/guide/env-and-mode.html#env-files" />
+
+<br />
+
+```
+VITE_SOME_KEY=123
+DB_PASSWORD=foobar
+```
+
+<br />
+
+```ts
+console.log(import.meta.env.VITE_SOME_KEY); // 123
+console.log(import.meta.env.DB_PASSWORD); // undefined
+```
+
+### define で定義してあげる方法
+
+vite.config.ts の方で`define`として定義してあげると、生成されたソースコードの方が書き換わります。
+
+```ts
+// vite.config.ts
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  define: {
+    FOO: JSON.stringify(process.env.FOO),
+  },
+});
+```
+
+ただ基本、Astro を触っていると vite の設定は触らないのでこの書き方はあまり使わないかもしれません。
+
+## まとめ
+
+Astro の`<script>`上で環境変数を扱う方法を紹介しました。
+可能であれば、`VITE_*`を環境変数名につけることをオススメします。

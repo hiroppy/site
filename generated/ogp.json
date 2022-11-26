@@ -883,5 +883,10 @@
     "title": "Vite",
     "description": "Next Generation Frontend Tooling",
     "image": "https://vitejs.dev/og-image.png"
+  },
+  "https://hiroppy.me/blog/astro-script-issue": {
+    "title": "AstroのScriptタグを扱うときの注意 - hiroppy's site",
+    "description": "AstroでのScriptタグのパフォーマンスの問題と環境変数の扱い方について説明します。",
+    "image": "/images/brands/astro.png"
   }
 }

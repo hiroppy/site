@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: AstroのScriptタグを扱うときの注意
 date: 2022-11-23
-description: AstroでのScriptタグのパフォーマンスの問題と環境変数の扱い方について説明します。
+description: AstroでのScriptタグのパフォーマンスの問題について説明します。
 image: /images/brands/astro.png
 tags: javascript
 ---
@@ -82,21 +82,53 @@ import Foo from "./Foo.astro";
 しかし、次の問題は、これらはトランスパイラを通しません。つまり、絶対パスではない場合の import が読み込めなかったり、コード自体の最適化することができません。
 また、これの一番致命的な点は、**TypeScript で書けない**点です。
 
+## 共通レイヤーで処理を分岐させない
+
+この問題を解決するには、共通レイヤーで分岐をせず、**親レイヤーで利用しない**ことを明示する必要があります。
+
+```astro
+---
+// Header.astro
 ---
 
-現段階での結論としては、以下のようになります。
+<header>
+  <p>site</p>
+  <slot name="action" />
+</header>
+```
 
-- TS を使いたい場合は、global を使う
-- global は全てのページに挿入されるため、副作用がありえる
-- バンドルサイズも共有されてしまうため、global では一部でしか使われないライブラリを使うべきではない
+<br />
 
-と、TS + Scope を実際にはやりたいわけですが、それを叶えるのは`<script>`だけでは厳しそうです。
+```astro
+---
+// Home.astro
 
-では、どうすればよいのでしょうか？
+import Foo from "./Foo.astro";
+import Header from "./Header.astro";
+---
+
+<Header>
+  <Foo slot="action" />
+</Header>
+```
+
+<br />
+
+```astro
+---
+// Blog.astro
+
+import Header from "./Header.astro";
+---
+
+<Header />
+```
+
+このように書くことにより、Home には Foo の script が入りますが、Blog には入らずバンドルサイズを最適化することができます。
 
 ## Framework を使う
 
-今回は、React を例に見ていきます。
+Framework を使ったらどうなるのでしょうか？ 今回は、React を例に見ていきます。
 
 ```ts
 // Foo.tsx
@@ -130,6 +162,14 @@ import Foo from "./Foo.astro";
 これは、`/blog`以下でしかダウンロードされない JS となるため、期待通りの挙動となります。
 
 ![react](/images/blog/astro-script-issue/react.png)
+
+## まとめ
+
+このように`<script>`を扱う場合には、注意点があります。
+
+基本、TS や import 構文を使いたい場合はデフォルトの`is:global`を使うことになりますが、その場合予期せぬバンドルサイズの増加や副作用が発生する可能性があります。
+それを回避するためにも、この例のように、**共通レイヤーでクライアントコードを含んだコンポーネントの分岐を書くのは避けるべき**です。
+ただこれは自分にとって直感に反するため、もしわかりやすくしたいのであれば React などのフレームワークを使ったほうが可読性が高いかなと思います。
 
 ## Env の扱い方
 
