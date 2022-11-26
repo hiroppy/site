@@ -48,7 +48,9 @@ const titleContent =
     <link rel="author" href="http://www.hatena.ne.jp/about_hiroppy/" />
   </head>
   <body class="font-body bg-slate-800">
-    <Header />
+    <Header>
+      <slot name="header-action" slot="action" />
+    </Header>
     <div class="container mx-auto py-4 lg:py-14 min-h-screen px-2 sm:px-4">
       <slot />
     </div>

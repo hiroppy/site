@@ -57,8 +57,11 @@ const currentMenu = PAGE_LINKS.find(({ href }) =>
         </div>
       </div>
     </div>
-    <SnsIcon href="https://github.com/hiroppy/site" name="GitHub">
-      <GitHub />
-    </SnsIcon>
+    <div class="flex gap-4">
+      <slot name="action" />
+      <SnsIcon href="https://github.com/hiroppy/site" name="GitHub">
+        <GitHub />
+      </SnsIcon>
+    </div>
   </div>
 </header>

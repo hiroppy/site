@@ -17,7 +17,7 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "cSpell.enabled": true,
-  "cSpell.words": ["astro", "astrojs", "hiroppy"],
+  "cSpell.words": ["astro", "astrojs", "hiroppy", "algoliasearch"],
   "cSpell.allowCompoundWords": true,
   "cSpell.ignorePaths": [
     "**/package-lock.json",
