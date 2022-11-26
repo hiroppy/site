@@ -1,4 +1,5 @@
 import rss from "@astrojs/rss";
+import { extname } from "node:path";
 import { Mdxs, sortByDate } from "../../utils/blog";
 
 const postImportResult = import.meta.glob("./*.mdx", {
@@ -16,5 +17,14 @@ export const get = () =>
       title: post.frontmatter.title,
       description: post.frontmatter.description,
       pubDate: new Date(post.frontmatter.date),
+      customData: `
+        <enclosure url="${import.meta.env.SITE}${post.frontmatter.image.replace(
+        /^\//,
+        ""
+      )}" length="0" type="image/${extname(post.frontmatter.image).replace(
+        /^\./,
+        ""
+      )}" />
+      `.trim(),
     })),
   });
