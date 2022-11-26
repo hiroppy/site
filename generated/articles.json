@@ -1,7 +1,7 @@
 [
   {
     "siteName": "hiroppy's Blog",
-    "siteUrl": "https://hiroppy.me/",
+    "siteUrl": "https://hiroppy.me/blog/",
     "hot": false,
     "url": "https://hiroppy.me/blog/astro-client-env/",
     "title": "Astroのscript内で環境変数を扱う方法",
@@ -11,7 +11,7 @@
   },
   {
     "siteName": "hiroppy's Blog",
-    "siteUrl": "https://hiroppy.me/",
+    "siteUrl": "https://hiroppy.me/blog/",
     "hot": false,
     "url": "https://hiroppy.me/blog/astro-script-issue/",
     "title": "AstroのScriptタグを扱うときの注意",
@@ -31,7 +31,7 @@
   },
   {
     "siteName": "hiroppy's Blog",
-    "siteUrl": "https://hiroppy.me/",
+    "siteUrl": "https://hiroppy.me/blog/",
     "hot": false,
     "url": "https://hiroppy.me/blog/migrate-blog-from-hatena/",
     "title": "Astroでサイトを作り直し、ブログをはてなから移管しました",
