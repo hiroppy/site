@@ -1,7 +1,14 @@
 <div align="center">
-  <h1>Site</h1>
+  <h1>Hiroppy's site</h1>
 </div>
 
 https://hiroppy.me
 
-This theme is the universe.
+## Setup
+
+```sh
+$ git clone git@github.com:hiroppy/site.git
+$ cd site
+$ npm i
+$ npm run setup
+```
