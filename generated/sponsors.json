@@ -36,11 +36,6 @@
       "name": "@spring-raining"
     },
     {
-      "href": "https://github.com/fukumura",
-      "avatar": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8zNTM1OTA_cz02MCZ2PTQ=.png",
-      "name": "@fukumura"
-    },
-    {
       "href": "https://github.com/numb86",
       "avatar": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8xNjcwMzMzNz9zPTYwJnY9NA==.png",
       "name": "@numb86"
@@ -54,11 +49,6 @@
       "href": "https://github.com/pluginio",
       "avatar": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS81Nzg0MDU2Mz9zPTYwJnY9NA==.png",
       "name": "@pluginio"
-    },
-    {
-      "href": "https://github.com/euxn23",
-      "avatar": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS81MjcxMDkxP3M9NjAmdj00.png",
-      "name": "@euxn23"
     },
     {
       "href": "https://github.com/37108",
@@ -157,6 +147,11 @@
       "name": "@nktaro"
     },
     {
+      "href": "https://github.com/fukumura",
+      "avatar": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8zNTM1OTA_cz02MCZ2PTQ=.png",
+      "name": "@fukumura"
+    },
+    {
       "href": "https://github.com/mbullington",
       "avatar": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS82MDY4Nzg1P3M9NjAmdj00.png",
       "name": "@mbullington"
@@ -170,6 +165,11 @@
       "href": "https://github.com/konojunya",
       "avatar": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8xMjAzNTU3OD9zPTYwJnY9NA==.png",
       "name": "@konojunya"
+    },
+    {
+      "href": "https://github.com/euxn23",
+      "avatar": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS81MjcxMDkxP3M9NjAmdj00.png",
+      "name": "@euxn23"
     },
     {
       "href": "https://github.com/marina-ki",
@@ -209,16 +209,6 @@
       "href": "https://github.com/ktsn",
       "avatar": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8yMTk0NjI0P3M9NjAmdj00.png",
       "name": "@ktsn"
-    },
-    {
-      "href": "https://github.com/kazupon",
-      "avatar": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS83Mjk4OT9zPTYwJnY9NA==.png",
-      "name": "@kazupon"
-    },
-    {
-      "href": "https://github.com/vwxyutarooo",
-      "avatar": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS81NzQ0NDExP3M9NjAmdj00.png",
-      "name": "@vwxyutarooo"
     }
   ]
 }
