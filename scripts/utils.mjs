@@ -1,11 +1,15 @@
-import { join } from "node:path";
 import { createWriteStream } from "node:fs";
+import { join, extname, basename } from "node:path";
 import { readdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { exec } from "node:child_process";
 import { promisify } from "node:util";
 import { readFile, writeFile } from "node:fs/promises";
 import { load } from "cheerio";
+import yaml from "yaml";
+import { remark } from "remark";
+import strip from "strip-markdown";
+import remarkFrontmatter from "remark-frontmatter";
 
 const promisifyExec = promisify(exec);
 
@@ -17,6 +21,10 @@ export const generatedDataPath = join(
 export const baseImageOutputPath = join(
   fileURLToPath(import.meta.url),
   "../../public/images/external"
+);
+export const blogPath = join(
+  fileURLToPath(import.meta.url),
+  "../../src/pages/blog"
 );
 
 export async function readData(filename, original = true) {
@@ -165,4 +173,41 @@ export async function getUrls() {
     .map((el) => el.children[0].data);
 
   return urls;
+}
+
+export async function getArticles() {
+  const ext = ".mdx";
+  const posts = (await readdir(blogPath)).filter(
+    (name) => extname(name) === ext
+  );
+  const contents = await Promise.all(
+    posts.map(async (filename) => {
+      const name = basename(filename, ext);
+      const md = await readFile(join(blogPath, filename), "utf-8");
+      let frontmatter = {};
+      const content = await remark()
+        .use(remarkFrontmatter, ["yaml"])
+        .use(() => (tree) => {
+          frontmatter = yaml.parse(
+            tree.children.find(({ type }) => type === "yaml").value
+          );
+
+          return {
+            ...tree,
+            children: tree.children.filter(({ type }) => type !== "yaml"),
+          };
+        })
+        .use(strip)
+        .process(md);
+
+      return {
+        objectID: name,
+        path: `blog/${name}`,
+        content: content.value,
+        ...frontmatter,
+      };
+    })
+  );
+
+  return contents;
 }

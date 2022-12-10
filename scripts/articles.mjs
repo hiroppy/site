@@ -8,9 +8,11 @@ import {
   sortItems,
   downloadImage,
   baseImageOutputPath,
+  getArticles,
 } from "./utils.mjs";
 
 const { hot: hatenaHot } = await readData("hatena");
+const baseUrl = "https://hiroppy.me";
 
 // hatena
 const hatenaArticles = await parseRss(
@@ -20,11 +22,22 @@ const hatenaArticles = await parseRss(
 );
 
 // hiroppy.me
-const blogArticles = await parseRss(
-  "https://hiroppy.me/blog/rss.xml",
-  // 2022/11/17以降の記事のみ掲示する
-  "2022-11-17"
-);
+const blogArticles = (await getArticles())
+  .filter(
+    ({ date }) => new Date("2022-11-17").getTime() <= new Date(date).getTime()
+  )
+  .map(({ path, title, image, description, date }) => ({
+    siteName: "hiroppy's Blog",
+    siteUrl: `${baseUrl}/blog/`,
+    // TODO: fix
+    hot: false,
+    url: `${baseUrl}/${path}/`,
+    title,
+    // TODO
+    image,
+    description,
+    publishedAt: date,
+  }));
 
 const allArticles = sortItems([
   ...(await crawlSites("articles")),

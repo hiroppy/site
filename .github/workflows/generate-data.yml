@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - "data/*.json"
+      - "src/pages/blog/*.mdx"
   workflow_dispatch:
 
 jobs:
@@ -25,7 +26,7 @@ jobs:
         if: contains(steps.changed-files.outputs.modified_files, 'data/achievements.json')
         run: node scripts/achievements.mjs
       - name: articles
-        if: contains(steps.changed-files.outputs.modified_files, 'data/articles.json') || contains(steps.changed-files.outputs.modified_files, 'data/hatena.json')
+        if: contains(steps.changed-files.outputs.modified_files, 'data/articles.json') || contains(steps.changed-files.outputs.modified_files, 'src/pages/blog/*.mdx')
         run: node scripts/articles.mjs
       - name: jobs
         if: contains(steps.changed-files.outputs.modified_files, 'data/jobs.json')
