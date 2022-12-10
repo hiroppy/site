@@ -33,6 +33,10 @@ if (ogp[url]) {
     "";
   image = $("meta[property='og:image']").attr("content") ?? "";
 
+  if (image && !image.startsWith("http")) {
+    image = `${new URL(url).origin}/${image}`;
+  }
+
   if (import.meta.env.PROD) {
     const ogp = JSON.parse(readFileSync(generatedFilePath, "utf8"));
 
