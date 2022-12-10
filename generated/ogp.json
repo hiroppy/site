@@ -888,5 +888,15 @@
     "title": "AstroのScriptタグを扱うときの注意 - hiroppy's site",
     "description": "AstroでのScriptタグのパフォーマンスの問題と環境変数の扱い方について説明します。",
     "image": "/images/brands/astro.png"
+  },
+  "https://happyhackingkb.com/jp/products/hybrid_types/": {
+    "title": "Happy Hacking Keyboard | HHKB HYBRID Type-S | PFU",
+    "description": "株式会社PFUがお届けする高性能コンパクトキーボード、HHKB・Happy Hacking Keyboard HYBRID Type-Sのページです。",
+    "image": "https://happyhackingkb.com//ogp.png"
+  },
+  "https://www.diatec.co.jp/products/det.php?prod_c=1319": {
+    "title": "Majestouch MINILA JP68キー 赤軸製品情報 | ダイヤテック株式会社",
+    "description": "FILCO新コンパクト！親指ダブルFnキーボード ／FILCOキーボードの製造・販売を行うダイヤテック株式会社です。",
+    "image": "https://www.diatec.co.jp/image/ogimage.jpg"
   }
 }
