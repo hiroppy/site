@@ -3,6 +3,16 @@
     "siteName": "hiroppy's Blog",
     "siteUrl": "https://hiroppy.me/blog/",
     "hot": false,
+    "url": "https://hiroppy.me/blog/hhkb/",
+    "title": "HHKBにキーボードを変えた",
+    "image": "/images/blog/hhkb/hhkb.jpg",
+    "description": "12年間使っていたMajestouchからHHKBにキーボードを変えました",
+    "publishedAt": "2022-12-10"
+  },
+  {
+    "siteName": "hiroppy's Blog",
+    "siteUrl": "https://hiroppy.me/blog/",
+    "hot": false,
     "url": "https://hiroppy.me/blog/astro-client-env/",
     "title": "Astroのscript内で環境変数を扱う方法",
     "image": "/images/brands/astro.png",
