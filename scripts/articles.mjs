@@ -33,7 +33,6 @@ const blogArticles = (await getArticles())
     hot: false,
     url: `${baseUrl}/${path}/`,
     title,
-    // TODO
     image,
     description,
     publishedAt: date,
