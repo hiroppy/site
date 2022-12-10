@@ -22,11 +22,13 @@ jobs:
         with:
           files: |
             data/*.json
+            src/pages/blog/*.mdx
+      - run: echo ${{ steps.changed-files.outputs.modified_files }}
       - name: achievements
         if: contains(steps.changed-files.outputs.modified_files, 'data/achievements.json')
         run: node scripts/achievements.mjs
       - name: articles
-        if: contains(steps.changed-files.outputs.modified_files, 'data/articles.json') || contains(steps.changed-files.outputs.modified_files, 'src/pages/blog/*.mdx')
+        if: contains(steps.changed-files.outputs.modified_files, 'data/articles.json') || contains(steps.changed-files.outputs.modified_files, 'src/pages/blog')
         run: node scripts/articles.mjs
       - name: jobs
         if: contains(steps.changed-files.outputs.modified_files, 'data/jobs.json')
