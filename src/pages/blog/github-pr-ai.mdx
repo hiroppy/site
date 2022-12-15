@@ -1,9 +1,9 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: コードレビューをAIで見てもらって楽をしてみる
-date: 2022-12-16
+title: コードレビューをAIに手伝ってもらい楽をしてみる
+date: 2022-12-15
 description: What The Diffを使って、プルリクエストにAIを導入してみた話
-image: /images/blog/30-years-old/ogp.png
+image: /images/blog/github-pr-ai/ogp.png
 tags: github
 ---
 
@@ -18,4 +18,96 @@ import OG from "../../components/OG.astro";
 
 > How many times have you submitted a change and forgot to update the unit tests? Or the documentation? Or introduced linter errors. Perhaps we can fix that for you….watch this space!
 
-自分はこの機能に一番期待しています、コンフリクトの修正や lint の修正も自動でやってくれるのは最高です。
+自分はこの機能に一番期待していて、コンフリクトの修正や lint の修正も自動でやってくれるのは最高です。
+
+まだ公式の機能は使えないので、今回は別のサービスで導入してみたいと思います。
+
+## What The Diff
+
+<br />
+
+<OG url="https://whatthediff.ai/" />
+
+数日前に友人に教えてもらったのですが、すでにあるサービスとして、what the diff があります。このサービスも PR のサポートをしてくれます。 今回は[この PR](https://github.com/hiroppy/site/pull/515)を元に見ていきましょう。
+wip のコミットだけですら内容がわかるようになります。
+
+### 色々なコミットで反応を見てみる
+
+👷‍♀️ wtd は前のコメントに上書きしていくことに注意してください。
+
+### 例 1
+
+[fa33fd424e33837529e4197ac8833b54eadb2828](https://github.com/hiroppy/site/pull/515/commits/fa33fd424e33837529e4197ac8833b54eadb2828)
+
+#### コミット内容
+
+- ブログを修正する
+- npm run build 時に mdx 内の OGP のデータをキャッシュするために json に追加する
+- VRT(Visual regression test)のために linux 上での画像をアップデートする
+
+#### WTD のコメント
+
+![wtd-comment](/images/blog/github-pr-ai/wtd-comment.png)
+
+> Add a new blog post
+
+このコミットの一つ前(PR 作成時)でブログ(`mdx`)を追加しているので、それが引き継がれています
+
+> Update the OGP data for githubnext.com/projects/ai-for-pull-requests.
+
+正解です、すごい
+
+> Visual regression test failed on Linux environment (Ubuntu 20) because of different font rendering between Mac and Ubuntu, so I updated the snapshot to fix it.
+
+正解です、しかも Mac と Linux でフォントが違うので Linux でやっているという理由まで書かれてて完璧です。
+
+### 例 2
+
+Astro と TypeScript の中身を変えてみましょう。
+
+[d2069c7d5f99f7ae1f2ab669161c111fd38284e1](https://github.com/hiroppy/site/pull/515/commits/d2069c7d5f99f7ae1f2ab669161c111fd38284e1)
+
+#### コミット内容
+
+- Astro のファイルから Tailwind で定義した言語カラーの選択箇所を三項演算子から関数化させる
+- 新しく`src/utils/getLanguageColor.ts`を作り、そこで言語の色の class を返す関数を定義する
+
+#### WTD のコメント
+
+![wtd-comment2](/images/blog/github-pr-ai/wtd-comment2.png)
+
+> Add a new blog post
+
+ここは例 1 と同じ
+
+> Change the color of language in index page to match GitHub's one
+
+これが今回の変更です、正解でしかも GitHub と同じ色を使っていることもバレました。ただその色は`tailwind.config.cjs`で定義してあるので、このコミットだけでは絶対にわかりません。
+もしかしたらリポジトリ全部見て判断してそう。
+
+> Fix VRT for blog pages (add OG component)
+
+例 1 で VRT をなぜ Linux でやっているかとかの説明があってよかったですが、なくなりました。blog ページのために VRT を直したのはあってますが、コンポーネントの追加がこれと関連付けされているのはちょっとわからないかも。。。
+
+### コードの提案してもらう
+
+コード行を指定して、`/wtd`と打つと、より良い(?)コードの提案がもらえます。
+
+[comment](https://github.com/hiroppy/site/pull/515/files#r1049536996)
+
+![wtd-suggestion](/images/blog/github-pr-ai/wtd-suggestion.png)
+
+<br />
+
+さらにこちらから具体的な変更の依頼も出すことができます。例えば、アロー関数に書き換えてもらいたいとか。
+
+[comment](https://github.com/hiroppy/site/pull/515/files#r1049538666)
+
+![wtd-suggestion2](/images/blog/github-pr-ai/wtd-suggestion2.png)
+
+## さいごに
+
+wtd には slack にその週の間の変更された内容のサマリーを送ったりと便利な機能がありました。
+コミットの内容が予想以上に精度高く自動的に書き出してくれてびっくりしました、これだったら PR の説明文を書くコストが減り自分としては助かります。
+
+今後の GitHub 公式の AI サポートが楽しみです 😄
