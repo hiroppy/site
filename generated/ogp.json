@@ -898,5 +898,15 @@
     "title": "Majestouch MINILA JP68キー 赤軸製品情報 | ダイヤテック株式会社",
     "description": "FILCO新コンパクト！親指ダブルFnキーボード ／FILCOキーボードの製造・販売を行うダイヤテック株式会社です。",
     "image": "https://www.diatec.co.jp/image/ogimage.jpg"
+  },
+  "https://githubnext.com/projects/ai-for-pull-requests/": {
+    "title": "GitHub Next | AI for Pull Requests",
+    "description": "GitHub Next Project: AI for Pull Requests wants to make GitHub Pull Requests seamless, low burden and magical.",
+    "image": "https://githubnext.com/assets/images/og/project/ai-for-pull-requests.png"
+  },
+  "https://whatthediff.ai/": {
+    "title": "What-the-Diff – AI-powered code review assistant",
+    "description": "The AI powered GitHub app that explains the changes within your pull requests in plain english",
+    "image": "https://whatthediff.ai/images/card.png"
   }
 }
