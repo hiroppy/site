@@ -3,6 +3,16 @@
     "siteName": "hiroppy's Blog",
     "siteUrl": "https://hiroppy.me/blog/",
     "hot": false,
+    "url": "https://hiroppy.me/blog/github-pr-ai/",
+    "title": "コードレビューをAIに手伝ってもらい楽をしてみる",
+    "image": "/images/blog/github-pr-ai/ogp.png",
+    "description": "What The Diffを使って、プルリクエストにAIを導入してみた話",
+    "publishedAt": "2022-12-15"
+  },
+  {
+    "siteName": "hiroppy's Blog",
+    "siteUrl": "https://hiroppy.me/blog/",
+    "hot": false,
     "url": "https://hiroppy.me/blog/hhkb/",
     "title": "HHKBにキーボードを変えた",
     "image": "/images/blog/hhkb/hhkb.jpg",
