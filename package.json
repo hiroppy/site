@@ -28,7 +28,7 @@
     "remark": "^14.0.2",
     "remark-frontmatter": "^4.0.1",
     "serve": "^14.1.2",
-    "sharp": "^0.31.2",
+    "sharp": "^0.31.3",
     "strip-markdown": "^5.0.0",
     "yaml": "^2.2.0"
   },
