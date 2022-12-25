@@ -39,7 +39,7 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.u
   <SearchArticles slot="header-action" />
   <MainLayout title={title}>
     <BlogDescription slot="description" />
-    <Paper slot="optional-content">
+    <Paper className="overflow-y-auto" slot="optional-content">
       <div class="p-4">
         <p>🔖 Index</p>
         <ol class="mt-4">

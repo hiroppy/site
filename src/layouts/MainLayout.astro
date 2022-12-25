@@ -18,13 +18,16 @@ const { title } = Astro.props;
 
 <main class="flex gap-4 items-start">
   <div class="sticky w-64 hidden lg:block shrink-0" style={{ top: "96px" }}>
-    <div class="flex flex-col gap-4">
-      <Paper>
+    <div
+      class="flex flex-col gap-4"
+      style={{ maxHeight: `calc(100vh - 96px - 16px)` }}
+    >
+      <Paper className="flex-shrink-0">
         <Accordion options={PAGE_LINKS}>
           <slot name="description" slot="description" />
         </Accordion>
       </Paper>
-      <Paper>
+      <Paper className="flex-shrink-0">
         <div class="flex justify-around items-center p-4">
           <SnsIcon href="https://twitter.com/about_hiroppy" name="Twitter">
             <Twitter />
