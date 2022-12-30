@@ -3,6 +3,16 @@
     "siteName": "hiroppy's Blog",
     "siteUrl": "https://hiroppy.me/blog/",
     "hot": false,
+    "url": "https://hiroppy.me/blog/2022/",
+    "title": "2022年を振り返る",
+    "image": "/images/blog/2021/ogp.png",
+    "description": "2022年の仕事やイベント等の振り返り",
+    "publishedAt": "2022-12-30"
+  },
+  {
+    "siteName": "hiroppy's Blog",
+    "siteUrl": "https://hiroppy.me/blog/",
+    "hot": false,
     "url": "https://hiroppy.me/blog/github-pr-ai/",
     "title": "コードレビューをAIに手伝ってもらい楽をしてみる",
     "image": "/images/blog/github-pr-ai/ogp.png",
@@ -117,7 +127,7 @@
     "url": "https://engineering.mercari.com/blog/entry/20210823-a57631d32e/",
     "hot": true,
     "publishedAt": "2021-08-23",
-    "bookmark": 376
+    "bookmark": 377
   },
   {
     "siteName": "技術探し",
@@ -457,7 +467,7 @@
     "image": "/images/external/YXZhdGFyczEuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvMjEwNTc5MT9zPTIwMCZ2PTQ=.png",
     "description": "",
     "publishedAt": "2018-12-25",
-    "bookmark": 418
+    "bookmark": 417
   },
   {
     "siteName": "技術探し",
