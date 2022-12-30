@@ -30,7 +30,7 @@
     "serve": "^14.1.2",
     "sharp": "^0.31.3",
     "strip-markdown": "^5.0.0",
-    "yaml": "^2.2.0"
+    "yaml": "^2.2.1"
   },
   "dependencies": {
     "@astrojs/image": "^0.12.1",
