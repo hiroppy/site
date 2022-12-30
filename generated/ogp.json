@@ -908,5 +908,20 @@
     "title": "What-the-Diff – AI-powered code review assistant",
     "description": "The AI powered GitHub app that explains the changes within your pull requests in plain english",
     "image": "https://whatthediff.ai/images/card.png"
+  },
+  "https://mozaic.fm/episodes/110/yearly-ecosystem-2022.html": {
+    "title": "ep110 Yearly Ecosystem 2022 | mozaic.fm",
+    "description": "第 110 回のテーマは 2022 年 の Yearly Ecosystem です。今年の 8 月に開始した Ecosystem と、今回作成したそれ以前のまとめを踏まえ、今年の Web Ecosystem を振り返ります。",
+    "image": "https://mozaic.fm/assets/img/mozaic.600x600.png"
+  },
+  "https://hiroppy.me/blog/migrate-blog-from-hatena": {
+    "title": "Astroでサイトを作り直し、ブログをはてなから移管しました - hiroppy's site",
+    "description": "AstroとTailwindでサイト・ブログを再構築しました。この記事ではどのようにブログを移管したのかを紹介します。",
+    "image": "https://hiroppy.me/images/me.png"
+  },
+  "https://yuimedi.notion.site/d8e4e0131d2e47f797ae6a161b61fb64": {
+    "title": "Notion – The all-in-one workspace for your notes, tasks, wikis, and databases.",
+    "description": "A new tool that blends your everyday work apps into one. It's the all-in-one workspace for you and your team",
+    "image": "https://www.notion.so/images/meta/default.png"
   }
 }
