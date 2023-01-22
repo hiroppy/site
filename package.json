@@ -22,7 +22,7 @@
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.0.3",
     "emoji-js": "^3.7.0",
-    "octokit": "^2.0.11",
+    "octokit": "^2.0.13",
     "prettier": "^2.8.3",
     "prettier-plugin-astro": "^0.7.2",
     "remark": "^14.0.2",
