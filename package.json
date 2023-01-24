@@ -35,7 +35,7 @@
   "dependencies": {
     "@astrojs/image": "^0.12.1",
     "@astrojs/mdx": "^0.14.0",
-    "@astrojs/partytown": "^1.0.2",
+    "@astrojs/partytown": "^1.0.3",
     "@astrojs/rss": "^2.0.0",
     "@astrojs/sitemap": "^1.0.0",
     "@astrojs/tailwind": "^2.1.3",
