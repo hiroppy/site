@@ -3,22 +3,22 @@ import BlogCardItem from "../../../../components/BlogCardItem.astro";
 import TagsBox from "../../../../components/TagsBox.astro";
 import Layout from "../../../../layouts/Layout.astro";
 import MainLayout from "../../../../layouts/MainLayout.astro";
-import { getAllTags, parseTags, sortByDate } from "../../../../utils/blog";
+import { getAllTags, getBlogs, parseTags } from "../../../../utils/blog";
 import BlogDescription from "../../../../components/BlogDescription.astro";
-import type { Mdxs } from "../../../../utils/blog";
 import type { GetStaticPathsOptions, Page } from "astro";
 import Pagination from "../../../../components/Pagination.astro";
 import { BLOG_DESCRIPTION } from "../../../../constants";
 import SearchArticles from "../../../../components/SearchArticles.astro";
+import type { CollectionEntry } from "astro:content";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const posts = sortByDate(await Astro.glob("../../*.mdx"));
+  const posts = await getBlogs();
   const tags = getAllTags(posts);
 
   return tags.map((tag) =>
     paginate(
       posts.filter((post) =>
-        parseTags(post.frontmatter.tags).some((current) => current === tag)
+        parseTags(post.data.tags).some((current) => current === tag)
       ),
       {
         params: { tag },
@@ -28,11 +28,11 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   );
 }
 
-const allPosts = sortByDate(await Astro.glob("../../*.mdx"));
+const allPosts = await getBlogs();
 const allTags = getAllTags(allPosts);
 const { tag } = Astro.params;
 const { page } = Astro.props as {
-  page: Page<Mdxs[number]>;
+  page: Page<CollectionEntry<"blog">>;
 };
 ---
 
@@ -46,8 +46,8 @@ const { page } = Astro.props as {
     >
     <div class="gap-4 flex flex-col">
       {
-        page.data.map(({ url, frontmatter }) => (
-          <BlogCardItem url={url!} frontmatter={frontmatter} />
+        page.data.map(({ data, slug }) => (
+          <BlogCardItem url={`/blog/${slug}`} frontmatter={data} />
         ))
       }
     </div>

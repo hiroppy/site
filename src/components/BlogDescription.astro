@@ -1,12 +1,10 @@
 ---
-import { sortByDate } from "../utils/blog";
+import { getBlogs } from "../utils/blog";
 import { formatDate } from "../utils/formatDate";
 import Link from "./Link.astro";
 
 // HMRで重くなるため、dev環境ではglobをさせない
-const posts = import.meta.env.PROD
-  ? sortByDate(await Astro.glob("../pages/blog/*.mdx"))
-  : [];
+const posts = import.meta.env.PROD ? await getBlogs() : [];
 ---
 
 <div class="grid grid-cols-2">
@@ -16,7 +14,7 @@ const posts = import.meta.env.PROD
   <span class="text-right"
     >{
       import.meta.env.PROD
-        ? formatDate(new Date(posts[0].frontmatter.date))
+        ? formatDate(new Date(posts[0].data.date))
         : "dev mode"
     }</span
   >

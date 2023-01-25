@@ -3,10 +3,11 @@ import Card from "./Card.astro";
 import Image from "./Image.astro";
 import { parseTags } from "../utils/blog";
 import { formatDate } from "../utils/formatDate";
+import type { CollectionEntry } from "astro:content";
 
 type Props = {
   url: string;
-  frontmatter: BlogFrontmatter;
+  frontmatter: CollectionEntry<"blog">["data"];
 };
 
 const { url, frontmatter } = Astro.props;

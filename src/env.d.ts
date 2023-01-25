@@ -1,3 +1,4 @@
+/// <reference path="../.astro/types.d.ts" />
 /// <reference types="@astrojs/image/client" />
 
 interface Window {
@@ -31,16 +32,6 @@ type DataItem = {
   hot?: boolean;
   prefixForTitle: string;
   appendixes?: Record<string, string | undefined>;
-};
-
-type BlogFrontmatter = {
-  date: string;
-  title: string;
-  description: string;
-  image: string;
-  tags: string;
-  // 以前のhatenablogのpath
-  hatenaPath?: string;
 };
 
 type OGPJson = Record<

@@ -1,11 +1,11 @@
 import rss from "@astrojs/rss";
 import { extname } from "node:path";
-import { Mdxs, sortByDate } from "../../utils/blog";
+import { Collections, sortByDate } from "../../utils/blog";
 
 const postImportResult = import.meta.glob("./*.mdx", {
   eager: true,
 });
-const posts = sortByDate(Object.values(postImportResult) as Mdxs);
+const posts = sortByDate(Object.values(postImportResult) as Collections);
 
 export const get = () =>
   rss({

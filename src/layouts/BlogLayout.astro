@@ -3,9 +3,8 @@ import { formatDate } from "../utils/formatDate";
 import Layout from "./Layout.astro";
 import MainLayout from "./MainLayout.astro";
 import Paper from "../components/Paper.astro";
-import type { MarkdownLayoutProps } from "astro/dist/@types/astro";
 import ShareButtons from "../components/ShareButtons.astro";
-import { parseTags, sortByDate } from "../utils/blog";
+import { getBlogs, parseTags } from "../utils/blog";
 import Link from "../components/Link.astro";
 import { HATENA_BLOG_ENTRY_URL } from "../constants";
 import SnsIcon from "../components/SnsIcon.astro";
@@ -13,9 +12,12 @@ import GitHub from "../components/icons/GitHub.astro";
 import BlogDescription from "../components/BlogDescription.astro";
 import Pagination from "../components/Pagination.astro";
 import SearchArticles from "../components/SearchArticles.astro";
+import type { CollectionEntry } from "astro:content";
+import type { MarkdownLayoutProps } from "astro";
 
-const { frontmatter, headings } =
-  Astro.props as MarkdownLayoutProps<BlogFrontmatter>;
+const { frontmatter, headings } = Astro.props as MarkdownLayoutProps<
+  CollectionEntry<"blog">["data"]
+>;
 const date = formatDate(new Date(frontmatter.date));
 const indices = headings.filter((heading) => heading.depth < 4);
 const diffDate =
@@ -23,12 +25,14 @@ const diffDate =
   (60 * 60 * 1000 * 24);
 const { title, url, description, image, tags } = frontmatter;
 // HMRで重くなるため、dev環境ではglobをさせない
-const posts = import.meta.env.PROD
-  ? sortByDate(await Astro.glob("../pages/blog/*.mdx"))
-  : [];
+// const posts = import.meta.env.PROD ? await getBlogs() : [];
+const posts = await getBlogs();
 const index = posts.findIndex(
-  ({ url }) => url === Astro.url.pathname.replace(/\/$/, "" /* for prod */)
+  ({ slug }) =>
+    slug ===
+    Astro.url.pathname.replace(/\/blog\//, "").replace(/\/$/, "" /* for prod */)
 );
+
 const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.url.pathname.replace(
   /(^\/|\/$)/g,
   ""
@@ -102,14 +106,14 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.u
       {
         index !== -1 && (
           <Pagination
-            prev={index !== 0 ? posts[index - 1].url : undefined}
-            prevText={
-              index !== 0 ? posts[index - 1].frontmatter.title : undefined
+            prev={index !== 0 ? posts[index - 1].slug : undefined}
+            prevText={index !== 0 ? posts[index - 1].data.title : undefined}
+            next={
+              index !== posts.length - 1 ? posts[index + 1].slug : undefined
             }
-            next={index !== posts.length - 1 ? posts[index + 1].url : undefined}
             nextText={
               index !== posts.length - 1
-                ? posts[index + 1].frontmatter.title
+                ? posts[index + 1].data.title
                 : undefined
             }
             className="mt-10 flex-col md:flex-row gap-2 text-center"

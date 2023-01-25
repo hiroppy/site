@@ -1,5 +1,6 @@
 ---
 import type { GetStaticPathsOptions, Page } from "astro";
+import type { CollectionEntry } from "astro:content";
 import BlogCardItem from "../../components/BlogCardItem.astro";
 import BlogDescription from "../../components/BlogDescription.astro";
 import Pagination from "../../components/Pagination.astro";
@@ -8,18 +9,15 @@ import TagsBox from "../../components/TagsBox.astro";
 import { BLOG_DESCRIPTION } from "../../constants";
 import Layout from "../../layouts/Layout.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
-import { getAllTags, Mdxs, sortByDate } from "../../utils/blog";
+import { getAllTags, getBlogs } from "../../utils/blog";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const posts = sortByDate(await Astro.glob("./*.mdx"));
-
-  return paginate(posts, { pageSize: 20 });
+  return paginate(await getBlogs(), { pageSize: 20 });
 }
 
-const posts = sortByDate(await Astro.glob("./*.mdx"));
-const allTags = getAllTags(posts);
+const allTags = getAllTags(await getBlogs());
 const { page } = Astro.props as {
-  page: Page<Mdxs[number]>;
+  page: Page<CollectionEntry<"blog">>;
 };
 ---
 
@@ -30,8 +28,8 @@ const { page } = Astro.props as {
     <TagsBox tags={allTags} slot="optional-content" />
     <div class="gap-4 flex flex-col">
       {
-        page.data.map(({ url, frontmatter }) => (
-          <BlogCardItem url={url!} frontmatter={frontmatter} />
+        page.data.map(({ data, slug }) => (
+          <BlogCardItem url={`/blog/${slug}`} frontmatter={data} />
         ))
       }
     </div>

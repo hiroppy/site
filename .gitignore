@@ -6,6 +6,7 @@ npm-debug.log
 .env
 .eslintcache
 dist
+.astro
 .lighthouseci
 test-results
 service_account_secret.json
