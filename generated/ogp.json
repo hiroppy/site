@@ -923,5 +923,20 @@
     "title": "Notion – The all-in-one workspace for your notes, tasks, wikis, and databases.",
     "description": "A new tool that blends your everyday work apps into one. It's the all-in-one workspace for you and your team",
     "image": "https://www.notion.so/images/meta/default.png"
+  },
+  "https://astro.build/blog/astro-2/": {
+    "title": "Astro 2.0 | Astro",
+    "description": "Astro 2.0 is here! Astro 2.0 is the first major web framework to deliver complete type-safety for Markdown and MDX. Other release highlights include: Hybrid Rendering • Redesigned Error Overlays • Improved Dev Server and HMR • Vite 4.0 • A New Public Roadmap",
+    "image": "https://astro.build/assets/social_Z2uMogB.jpeg"
+  },
+  "https://docs.astro.build/en/guides/content-collections": {
+    "title": "Content Collections",
+    "description": "Content collections help organize your Markdown and type-check your frontmatter with schemas.",
+    "image": "https://docs.astro.build/open-graph/en/guides/content-collections.png"
+  },
+  "https://github.com/hiroppy/site/pull/549": {
+    "title": "refactor: migrate to Content Collections by hiroppy · Pull Request #549 · hiroppy/site",
+    "description": "https://docs.astro.build/en/guides/content-collections",
+    "image": "https://opengraph.githubassets.com/2d0af6d097b36bc28a827d65c6c742737d9b724a42d7866a98fca880fd94c78a/hiroppy/site/pull/549"
   }
 }

@@ -25,8 +25,7 @@ const diffDate =
   (60 * 60 * 1000 * 24);
 const { title, url, description, image, tags } = frontmatter;
 // HMRで重くなるため、dev環境ではglobをさせない
-// const posts = import.meta.env.PROD ? await getBlogs() : [];
-const posts = await getBlogs();
+const posts = import.meta.env.PROD ? await getBlogs() : [];
 const index = posts.findIndex(
   ({ slug }) =>
     slug ===
