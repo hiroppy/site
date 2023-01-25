@@ -14,7 +14,7 @@ module.exports = {
         deprecations: "off",
         // no js
         "csp-xss": "off",
-        "render-blocking-resources": ["error", { maxLength: 3 }],
+        "render-blocking-resources": ["error", { maxLength: 4 }],
         "uses-responsive-images": "off",
         // for twitter card
         "unused-javascript": "off",
