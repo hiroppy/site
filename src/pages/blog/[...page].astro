@@ -26,6 +26,7 @@ const { page } = Astro.props as {
   <MainLayout title="Blog">
     <BlogDescription slot="description" />
     <TagsBox tags={allTags} slot="optional-content" />
+
     <div class="gap-4 flex flex-col">
       {
         page.data.map(({ data, slug }) => (
