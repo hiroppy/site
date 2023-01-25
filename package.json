@@ -18,7 +18,7 @@
     "cache": "node scripts/generatecache.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "^1.29.2",
+    "@playwright/test": "^1.30.0",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.0.3",
     "emoji-js": "^3.7.0",
