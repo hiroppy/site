@@ -1,6 +1,6 @@
-import type { MarkdownInstance } from "astro";
+import type { MDXInstance } from "astro";
 
-export type Mdxs = MarkdownInstance<BlogFrontmatter>[];
+export type Mdxs = MDXInstance<BlogFrontmatter>[];
 
 export function sortByDate(mdxs: Mdxs) {
   return mdxs.sort(

@@ -7,7 +7,7 @@ import image from "@astrojs/image";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://hiroppy.me",
+  site: "https://hiroppy.me/",
   integrations: [
     tailwind(),
     partytown({
