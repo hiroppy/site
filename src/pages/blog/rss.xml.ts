@@ -1,27 +1,25 @@
 import rss from "@astrojs/rss";
 import { extname } from "node:path";
-import { Collections, sortByDate } from "../../utils/blog";
+import { getBlogs } from "../../utils/blog";
 
-const postImportResult = import.meta.glob("./*.mdx", {
-  eager: true,
-});
-const posts = sortByDate(Object.values(postImportResult) as Collections);
+const posts = await getBlogs();
+const site = new URL("blog", import.meta.env.SITE).href;
 
 export const get = () =>
   rss({
     title: "hiroppy's Blog",
     description: "a blog for hiroppy's life and programming",
-    site: new URL("blog", import.meta.env.SITE).href,
+    site,
     items: posts.map((post) => ({
-      link: post.url ?? "",
-      title: post.frontmatter.title,
-      description: post.frontmatter.description,
-      pubDate: new Date(post.frontmatter.date),
+      link: `${site}/${post.slug}`,
+      title: post.data.title,
+      description: post.data.description,
+      pubDate: new Date(post.data.date),
       customData: `
-        <enclosure url="${import.meta.env.SITE}${post.frontmatter.image.replace(
+        <enclosure url="${import.meta.env.SITE}${post.data.image.replace(
         /^\//,
         ""
-      )}" length="0" type="image/${extname(post.frontmatter.image).replace(
+      )}" length="0" type="image/${extname(post.data.image).replace(
         /^\./,
         ""
       )}" />
