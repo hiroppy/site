@@ -34,13 +34,13 @@
   },
   "dependencies": {
     "@astrojs/image": "^0.13.0",
-    "@astrojs/mdx": "^0.15.0",
+    "@astrojs/mdx": "^0.15.1",
     "@astrojs/partytown": "^1.0.3",
     "@astrojs/rss": "^2.1.0",
     "@astrojs/sitemap": "^1.0.0",
     "@astrojs/tailwind": "^3.0.0",
     "algoliasearch": "^4.14.3",
-    "astro": "^2.0.1",
+    "astro": "^2.0.2",
     "instantsearch.js": "^4.50.1"
   }
 }
