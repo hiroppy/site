@@ -24,7 +24,7 @@
     "emoji-js": "^3.7.0",
     "octokit": "^2.0.14",
     "prettier": "^2.8.3",
-    "prettier-plugin-astro": "^0.7.2",
+    "prettier-plugin-astro": "^0.8.0",
     "remark": "^14.0.2",
     "remark-frontmatter": "^4.0.1",
     "serve": "^14.2.0",
