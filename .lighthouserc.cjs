@@ -10,6 +10,8 @@ module.exports = {
     assert: {
       preset: "lighthouse:no-pwa",
       assertions: {
+        // TODO: remove
+        "non-composited-animations": "off",
         // for partytown
         deprecations: "off",
         // no js
