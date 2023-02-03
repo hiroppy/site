@@ -33,8 +33,8 @@
     "yaml": "^2.2.1"
   },
   "dependencies": {
-    "@astrojs/image": "^0.13.1",
-    "@astrojs/mdx": "^0.15.2",
+    "@astrojs/image": "^0.14.0",
+    "@astrojs/mdx": "^0.16.0",
     "@astrojs/partytown": "^1.0.3",
     "@astrojs/rss": "^2.1.0",
     "@astrojs/sitemap": "^1.0.1",
