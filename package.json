@@ -40,7 +40,7 @@
     "@astrojs/sitemap": "^1.0.1",
     "@astrojs/tailwind": "^3.0.1",
     "algoliasearch": "^4.14.3",
-    "astro": "^2.0.5",
+    "astro": "^2.0.6",
     "instantsearch.js": "^4.50.2"
   }
 }
