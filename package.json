@@ -2,7 +2,7 @@
   "name": "@hiroppy/site",
   "version": "0.0.1",
   "private": true,
-  "packageManager": "npm@9.4.1",
+  "packageManager": "npm@9.4.2",
   "scripts": {
     "setup": "git config --local core.hooksPath .githooks && corepack enable npm",
     "dev": "astro dev",
@@ -23,7 +23,7 @@
     "dotenv": "^16.0.3",
     "emoji-js": "^3.7.0",
     "octokit": "^2.0.14",
-    "prettier": "^2.8.3",
+    "prettier": "^2.8.4",
     "prettier-plugin-astro": "^0.8.0",
     "remark": "^14.0.2",
     "remark-frontmatter": "^4.0.1",
@@ -33,14 +33,14 @@
     "yaml": "^2.2.1"
   },
   "dependencies": {
-    "@astrojs/image": "^0.14.0",
-    "@astrojs/mdx": "^0.16.0",
+    "@astrojs/image": "^0.14.1",
+    "@astrojs/mdx": "^0.16.2",
     "@astrojs/partytown": "^1.0.3",
     "@astrojs/rss": "^2.1.0",
     "@astrojs/sitemap": "^1.0.1",
     "@astrojs/tailwind": "^3.0.1",
     "algoliasearch": "^4.14.3",
-    "astro": "^2.0.6",
+    "astro": "^2.0.13",
     "instantsearch.js": "^4.51.0"
   }
 }
