@@ -2,7 +2,7 @@
   "name": "@hiroppy/site",
   "version": "0.0.1",
   "private": true,
-  "packageManager": "npm@9.5.0",
+  "packageManager": "npm@9.5.1",
   "scripts": {
     "setup": "git config --local core.hooksPath .githooks && corepack enable npm",
     "dev": "astro dev",
