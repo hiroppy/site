@@ -32,7 +32,7 @@ const index = posts.findIndex(
     Astro.url.pathname.replace(/\/blog\//, "").replace(/\/$/, "" /* for prod */)
 );
 
-const githubUrl = `https://github.com/hiroppy/site/tree/main/src/pages/${Astro.url.pathname.replace(
+const githubUrl = `https://github.com/hiroppy/site/tree/main/src/content/blog/${Astro.url.pathname.replace(
   /(^\/|\/$)/g,
   ""
 )}.mdx`;
