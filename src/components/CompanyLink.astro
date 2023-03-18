@@ -1,0 +1,24 @@
+---
+import Link from "../components/Link.astro";
+import Image from "./Image.astro";
+
+type Props = {
+  filename: string;
+  alt: string;
+  href: string;
+};
+
+const { filename, alt, href } = Astro.props;
+---
+
+<div class="m-auto">
+  <Link href={href} name={alt} isBlank>
+    <Image
+      src={`/images/brands/${filename}`}
+      alt={alt}
+      width={40}
+      height={40}
+      isOptimization
+    />
+  </Link>
+</div>

@@ -8,6 +8,7 @@ import articles from "../../generated/articles.json";
 import Image from "../components/Image.astro";
 import Hatena from "../components/icons/Hatena.astro";
 import Link from "../components/Link.astro";
+import Code from "../components/Code.astro";
 ---
 
 <Layout>
@@ -30,19 +31,20 @@ import Link from "../components/Link.astro";
       </div>
       <div class="flex-auto xl:text-lg">
         <p>
-          Hiroppy is a JavaScript engineer and working on some OSS projects and
+          Hiroppy is a JavaScript engineer and works on some OSS projects and
           Japanese communities. I have lived in Japan and Ireland, and now I
           work in <Link name="Yuimedi" href="https://yuimedi.com/en" isBlank>
             Yuimedi, inc
           </Link>
           that is a medical IT company as VPoE in Japan.
         </p>
+        <br />
         <p>
-          You can ping me on Twitter or
-          <code class="bg-gray-700 p-1 rounded-lg text-gray-300 text-sm"
-            >hello[at]hiroppy.me</code
-          > when you have requesting for work, speech, writing, and so on are welcome
-          😄
+          If you have requests for talking, writing, and so on, feel free to
+          ping me on Twitter or <Code>hello[at]hiroppy.me</Code> . If you would like
+          to commission some work, please check <Link name="jobs" href="/jobs">
+            my skills
+          </Link> first.
         </p>
       </div>
     </div>

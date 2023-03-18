@@ -1,3 +1,7 @@
+const Color = require("color");
+
+const darken = (clr, val) => Color(clr).darken(val).hex();
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{astro,md,mdx}"],
@@ -19,8 +23,14 @@ module.exports = {
     },
     extend: {
       colors: {
-        main: "#3498db",
-        javascript: "#f1e05a",
+        main: {
+          DEFAULT: "#3498db",
+          dark: darken("#3498db", 0.7),
+        },
+        javascript: {
+          DEFAULT: "#f1e05a",
+          dark: darken("#f1e05a", 0.7),
+        },
         typescript: "#3178c6",
         css: "#563d7c",
       },

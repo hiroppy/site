@@ -1,52 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import MainLayout from "../layouts/MainLayout.astro";
-import data from "../../generated/jobs.json";
-
-const length = 700;
-const topMargin = 60;
-const minYeah = 2010;
-const maxYeah = new Date().getFullYear();
-const monthPx = (length - topMargin) / ((maxYeah - minYeah) * 12);
-
-const jobs = Object.entries(data)
-  .map(([type, value]) => {
-    return value.map((v) => ({
-      type,
-      ...v,
-    }));
-  })
-  .flat();
-
-function calcLengthFromDate(start: string, end: string | "-") {
-  const [year, month] = start.split("-").map((v) => Number(v));
-
-  if (year < minYeah || year > maxYeah || month < 0 || month > 12) {
-    throw new Error(`Invalid number: ${year}, ${month}`);
-  }
-
-  const totalMonths = getTotalMonths(year, month);
-  const buttom = totalMonths * monthPx;
-  let height;
-
-  if (end !== "-") {
-    const [year, month] = end.split("-").map((v) => Number(v));
-    const t = getTotalMonths(year, month);
-
-    height = (t - totalMonths) * monthPx;
-  } else {
-    height = length - topMargin - buttom;
-  }
-
-  return {
-    buttom,
-    height,
-  };
-}
-
-function getTotalMonths(year: number, month: number) {
-  return (year - (minYeah + 1)) * 12 + month;
-}
+import JobHistory from "../components/JobHistory.astro";
+import Card from "../components/Card.astro";
+import SkillBox from "../components/SkillBox.astro";
+import Link from "../components/Link.astro";
+import CompanyLink from "../components/CompanyLink.astro";
+import Code from "../components/Code.astro";
 ---
 
 <Layout>
@@ -55,78 +15,169 @@ function getTotalMonths(year: number, month: number) {
       I work in Yuimedi as a VPoE and support Souzoh and Tabelog as a Techinical
       Advaser 🥸
     </span>
-    <p class="text-right mb-2">🙈 the side job shows only public</p>
-    <div class="relative overflow-auto" style={{ height: `${length}px` }}>
-      <div
-        class="flex justify-around text-lg bg-slate-700 z-30 font-semibold text-gray-200"
-      >
-        <p>Main</p>
-        <p>Side</p>
-      </div>
-      <div
-        class="border-gray-400 border-l-2 absolute left-2/4 right-2/4 h-full z-10"
-      >
-      </div>
-      {
-        [...Array(maxYeah - minYeah + 1)].map((_, i) => (
-          <div
-            class="border-gray-600 border-b-2 absolute w-full text-gray-400 text-sm select-none"
-            style={{
-              bottom: `${getTotalMonths(minYeah + i + 1, 1) * monthPx}px`,
-            }}
-          >
-            <span class="hidden md:block">{minYeah + i + 1}</span>
-          </div>
-        ))
-      }
-      {
-        jobs.map(({ name, type, start, end, level, comment, position }) => (
-          <div
-            class={`absolute h-full w-1/2 ${
-              type === "main" ? "" : "translate-x-full"
-            }`}
-            style={{
-              pointerEvents: "none",
-              zIndex: 20 - level,
-            }}
-          >
-            <div
-              class={`absolute h-28 border-2 bg-opacity-60 w-4 ${
-                type === "main" ? "right-2  border-r-0" : "border-l-0"
-              } ${
-                end === "-"
-                  ? "border-t-0 border-red-600 text-gray-50 font-semibold"
-                  : "border-cyan-600 text-gray-300"
-              }`}
-              style={{
-                bottom: `${calcLengthFromDate(start, end).buttom}px`,
-                height: `${calcLengthFromDate(start, end).height}px`,
-                left: `${type === "main" ? "inherit" : `${level * 16}px`}`,
-              }}
-            >
-              &nbsp;
-              <div
-                class={`group absolute -top-2 min-w-max cursor-pointer ${
-                  type === "main" ? "-translate-x-full pr-4" : `left-4 pl-2`
-                }`}
-                style={{
-                  pointerEvents: "all",
-                }}
-              >
-                <div class="relative">
-                  <span>{name}</span>
-                  <div class="rounded px-2 py-1 absolute -top-12 -translate-x-1/2 left-1/2 bg-gray-800 opacity-0 group-hover:opacity-100 transition pointer-events-none min-w-max text-sm text-center text-gray-300 font-normal z-20">
-                    <p>{`${start} ~ ${end === "-" ? "" : end}`.trim()}</p>
-                    <p>
-                      {position}: {comment}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))
-      }
+
+    I work in Yuimedi as VPoE and in some companies to improve product code.
+    Welcome to request a job but please check my skills first. Feel free to
+    contact me via <Link
+      name="twitter"
+      href="https://twitter.com/about_hiroppy"
+      isBlank
+    >
+      Twitter
+    </Link>
+    <Code>hello[at]hiroppy.me</Code>.
+
+    <div class="flex gap-4 mt-4 flex-col">
+      <Card title="Skills">
+        <span>
+          I started programming when I was a high school student using JS and C.
+          I have been studying image processing for four years, and I also
+          conducted research on optimization for ニコニコ動画. Currently, my
+          specialty is web performance and frontend infrastructure using tools
+          such as webpack, Turborepo, and Vite. In my main job and as a
+          technical advisor, I mainly develop products using Next.js.
+        </span>
+        <div class="grid xl:grid-cols-2 gap-4 mt-4">
+          <SkillBox
+            title="JavaScript"
+            color="bg-javascript-dark"
+            items={[
+              {
+                title: "Node.js",
+                from: 2011,
+              },
+              {
+                title: "TypeScript",
+                from: 2016,
+              },
+              {
+                title: "React",
+                from: 2015,
+              },
+              {
+                title: "Next.js",
+                from: 2017,
+              },
+              {
+                title: "Gatsby",
+                from: 2017,
+                to: 2021,
+              },
+              {
+                title: "Astro",
+                from: 2022,
+              },
+              {
+                title: "Apollo",
+                from: 2017,
+              },
+              {
+                title: "Nestjs",
+                from: 2020,
+              },
+              {
+                title: "Mui",
+                from: 2021,
+              },
+              {
+                title: "ChakraUI",
+                from: 2020,
+              },
+              {
+                title: "TailwindCSS",
+                from: 2019,
+              },
+              {
+                title: "Redux",
+                from: 2016,
+                to: 2019,
+              },
+              {
+                title: "Electron",
+                from: 2017,
+              },
+              {
+                title: "jQuery",
+                from: 2008,
+                to: 2014,
+              },
+            ]}
+          />
+          <SkillBox
+            title="Others"
+            color="bg-main-dark"
+            items={[
+              {
+                title: "Go",
+                from: 2022,
+              },
+              {
+                title: "C, C++",
+                from: 2008,
+                to: 2015,
+              },
+              {
+                title: "ActionScript",
+                from: 2010,
+                to: 2015,
+              },
+              {
+                title: "Java",
+                from: 2010,
+                to: 2012,
+              },
+              {
+                title: "OpenCV",
+                from: 2014,
+                to: 2015,
+              },
+              {
+                title: "GraphQL",
+                from: 2017,
+              },
+              {
+                title: "gRPC",
+                from: 2020,
+              },
+            ]}
+          />
+        </div>
+      </Card>
+      <Card title="Technical Advisor">
+        <div class="mt-4 grid grid-cols-5 gap-2">
+          <CompanyLink
+            filename="tabelog.jpg"
+            alt="tabelog"
+            href="https://tabelog.com/"
+          />
+          <CompanyLink
+            filename="anotherworks.webp"
+            alt="anotherworks"
+            href="https://anotherworks.co.jp/"
+          />
+          <CompanyLink
+            filename="mercari.png"
+            alt="mercari"
+            href="https://jp.mercari.com/"
+          />
+          <CompanyLink
+            filename="alpaca.jpg"
+            alt="alpaca"
+            href="https://alpaca.markets/"
+          />
+          <CompanyLink
+            filename="black.jpg"
+            alt="black"
+            href="https://by.black/"
+          />
+        </div>
+      </Card>
+      <Card title="Timeline">
+        <p class="text-right mb-2">🙈 the side job shows only public</p>
+        <div class="overflow-auto h-80">
+          <JobHistory />
+        </div>
+      </Card>
     </div>
   </MainLayout>
 </Layout>

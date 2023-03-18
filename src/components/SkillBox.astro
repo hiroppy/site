@@ -1,0 +1,27 @@
+---
+type Props = {
+  color: `bg-${string}`;
+  title: string;
+  items: {
+    title: string;
+    from: number;
+    to?: number;
+  }[];
+};
+
+const { color, title, items } = Astro.props;
+---
+
+<div class={`p-2 rounded z-0 ${color}`}>
+  <h3 class="font-bold text-slate-100">{title}</h3>
+  <div class="grid sm:grid-cols-2 gap-1 mt-2">
+    {
+      items.map(({ title, from, to = "" }) => (
+        <div class="flex justify-between px-1 items-center">
+          <span class="text-slate-100">{title}</span>
+          <span class="text-slate-300 text-sm">{`${from} - ${to}`.trim()}</span>
+        </div>
+      ))
+    }
+  </div>
+</div>

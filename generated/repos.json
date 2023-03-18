@@ -5,7 +5,7 @@
       "url": "https://github.com/nodejs/node",
       "description": "Node.js JavaScript runtime ✨🐢🚀✨",
       "language": "JavaScript",
-      "stars": 91725,
+      "stars": 94008,
       "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS85OTUwMzEzP3Y9ND9zPTQw.png"
     },
     {
@@ -13,7 +13,7 @@
       "url": "https://github.com/hiroppy/fusuma",
       "description": "✍️Fusuma makes slides with Markdown easily.",
       "language": "JavaScript",
-      "stars": 5254,
+      "stars": 5273,
       "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8zMzY3ODAxP3Y9ND9zPTQw.png"
     },
     {
@@ -21,7 +21,7 @@
       "url": "https://github.com/webpack/webpack",
       "description": "A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows for loading parts of the application on demand. Through \"loaders\", modules can be CommonJs, AMD, ES6 modules, CSS, Images, JSON, Coffeescript, LESS, ... and your custom stuff.",
       "language": "JavaScript",
-      "stars": 62111,
+      "stars": 62770,
       "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8yMTA1NzkxP3Y9ND9zPTQw.png"
     },
     {
@@ -29,7 +29,7 @@
       "url": "https://github.com/webpack/webpack-dev-server",
       "description": "Serves a webpack app. Updates the browser on changes. Documentation https://webpack.js.org/configuration/dev-server/.",
       "language": "JavaScript",
-      "stars": 7503,
+      "stars": 7593,
       "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8yMTA1NzkxP3Y9ND9zPTQw.png"
     },
     {
@@ -37,15 +37,15 @@
       "url": "https://github.com/babel/babel",
       "description": "🐠 Babel is a compiler for writing next generation JavaScript.",
       "language": "TypeScript",
-      "stars": 41645,
+      "stars": 42049,
       "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS85NjM3NjQyP3Y9ND9zPTQw.png"
     },
     {
       "name": "stylelint/stylelint",
       "url": "https://github.com/stylelint/stylelint",
-      "description": "A mighty, modern linter that helps you avoid errors and enforce conventions in your styles.",
+      "description": "A mighty CSS linter that helps you avoid errors and enforce conventions.",
       "language": "JavaScript",
-      "stars": 10013,
+      "stars": 10205,
       "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8xMDA3NjkzNT92PTQ_cz00MA==.png"
     },
     {
@@ -53,7 +53,7 @@
       "url": "https://github.com/hiroppy/the-sample-of-module-bundler",
       "description": "You will know how to make a javascript bundler",
       "language": "JavaScript",
-      "stars": 33,
+      "stars": 34,
       "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8zMzY3ODAxP3Y9ND9zPTQw.png"
     },
     {
@@ -61,7 +61,7 @@
       "url": "https://github.com/hiroppy/slides",
       "description": "My slides",
       "language": "CSS",
-      "stars": 64,
+      "stars": 65,
       "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8zMzY3ODAxP3Y9ND9zPTQw.png"
     }
   ]
