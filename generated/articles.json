@@ -3,6 +3,16 @@
     "siteName": "hiroppy's Blog",
     "siteUrl": "https://hiroppy.me/blog/",
     "hot": false,
+    "url": "https://hiroppy.me/blog/astro-content-collections/",
+    "title": "Astro v2で導入された Content Collections の移行手順まとめ",
+    "image": "/images/brands/astro.png",
+    "description": "Astro v2で導入された Content Collectionsの紹介と移行手順の仕方を説明します",
+    "publishedAt": "2023-01-26"
+  },
+  {
+    "siteName": "hiroppy's Blog",
+    "siteUrl": "https://hiroppy.me/blog/",
+    "hot": false,
     "url": "https://hiroppy.me/blog/2022/",
     "title": "2022年を振り返る",
     "image": "/images/blog/2021/ogp.png",
@@ -127,7 +137,7 @@
     "url": "https://engineering.mercari.com/blog/entry/20210823-a57631d32e/",
     "hot": true,
     "publishedAt": "2021-08-23",
-    "bookmark": 377
+    "bookmark": 380
   },
   {
     "siteName": "技術探し",
@@ -467,7 +477,7 @@
     "image": "/images/external/YXZhdGFyczEuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvMjEwNTc5MT9zPTIwMCZ2PTQ=.png",
     "description": "",
     "publishedAt": "2018-12-25",
-    "bookmark": 417
+    "bookmark": 415
   },
   {
     "siteName": "技術探し",

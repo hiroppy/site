@@ -24,7 +24,7 @@ export const baseImageOutputPath = join(
 );
 export const blogPath = join(
   fileURLToPath(import.meta.url),
-  "../../src/pages/blog"
+  "../../src/content/blog"
 );
 
 export async function readData(filename, original = true) {

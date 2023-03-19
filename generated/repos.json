@@ -5,7 +5,7 @@
       "url": "https://github.com/nodejs/node",
       "description": "Node.js JavaScript runtime ✨🐢🚀✨",
       "language": "JavaScript",
-      "stars": 94008,
+      "stars": 94025,
       "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS85OTUwMzEzP3Y9ND9zPTQw.png"
     },
     {
@@ -21,7 +21,7 @@
       "url": "https://github.com/webpack/webpack",
       "description": "A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows for loading parts of the application on demand. Through \"loaders\", modules can be CommonJs, AMD, ES6 modules, CSS, Images, JSON, Coffeescript, LESS, ... and your custom stuff.",
       "language": "JavaScript",
-      "stars": 62770,
+      "stars": 62778,
       "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8yMTA1NzkxP3Y9ND9zPTQw.png"
     },
     {
@@ -29,7 +29,7 @@
       "url": "https://github.com/webpack/webpack-dev-server",
       "description": "Serves a webpack app. Updates the browser on changes. Documentation https://webpack.js.org/configuration/dev-server/.",
       "language": "JavaScript",
-      "stars": 7593,
+      "stars": 7594,
       "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8yMTA1NzkxP3Y9ND9zPTQw.png"
     },
     {
@@ -45,7 +45,7 @@
       "url": "https://github.com/stylelint/stylelint",
       "description": "A mighty CSS linter that helps you avoid errors and enforce conventions.",
       "language": "JavaScript",
-      "stars": 10205,
+      "stars": 10206,
       "image": "/images/external/YXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8xMDA3NjkzNT92PTQ_cz00MA==.png"
     },
     {
