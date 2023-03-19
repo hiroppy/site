@@ -25,25 +25,31 @@ import Code from "../components/Code.astro";
     >
       Twitter
     </Link>
+    or
     <Code>hello[at]hiroppy.me</Code>.
 
     <div class="flex gap-4 mt-4 flex-col">
       <Card title="Skills">
-        <span>
+        <p>
           I started programming when I was a high school student using JS and C.
           I have been studying image processing for four years, and I also
-          conducted research on optimization for ニコニコ動画. Currently, my
-          specialty is web performance and frontend infrastructure using tools
-          such as webpack, Turborepo, and Vite. In my main job and as a
-          technical advisor, I mainly develop products using Next.js.
-        </span>
-        <div class="grid xl:grid-cols-2 gap-4 mt-4">
+          conducted research on optimization for ニコニコ動画.
+        </p>
+        <p>
+          Currently, my specialty is web performance and frontend infrastructure
+          using tools such as webpack, Turborepo, and Vite. In my main job and
+          as a technical advisor, I mainly develop products using Next.js.
+        </p>
+        <span class="block text-right mt-4 text-sm"
+          >👷 maintainer(including past)</span
+        >
+        <div class="grid xl:grid-cols-2 gap-4 mt-2">
           <SkillBox
             title="JavaScript"
             color="bg-javascript-dark"
             items={[
               {
-                title: "Node.js",
+                title: "Node.js 👷",
                 from: 2011,
               },
               {
@@ -59,7 +65,7 @@ import Code from "../components/Code.astro";
                 from: 2017,
               },
               {
-                title: "Gatsby",
+                title: "Gatsby 👷",
                 from: 2017,
                 to: 2021,
               },
@@ -80,7 +86,7 @@ import Code from "../components/Code.astro";
                 from: 2021,
               },
               {
-                title: "ChakraUI",
+                title: "ChakraUI 👷",
                 from: 2020,
               },
               {
@@ -95,6 +101,14 @@ import Code from "../components/Code.astro";
               {
                 title: "Electron",
                 from: 2017,
+              },
+              {
+                title: "webpack 👷",
+                from: 2017,
+              },
+              {
+                title: "Vite",
+                from: 2022,
               },
               {
                 title: "jQuery",
@@ -129,6 +143,11 @@ import Code from "../components/Code.astro";
               {
                 title: "OpenCV",
                 from: 2014,
+                to: 2015,
+              },
+              {
+                title: "Boost",
+                from: 2012,
                 to: 2015,
               },
               {
