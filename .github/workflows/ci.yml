@@ -60,7 +60,7 @@ jobs:
   vrt:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.31.2-focal
+      image: mcr.microsoft.com/playwright:v1.32.0-focal
     steps:
       - uses: actions/checkout@v3
       - run: npm i
