@@ -24,7 +24,7 @@
     "dotenv": "^16.0.3",
     "emoji-js": "^3.7.0",
     "octokit": "^2.0.14",
-    "prettier": "^2.8.6",
+    "prettier": "^2.8.7",
     "prettier-plugin-astro": "^0.8.0",
     "remark": "^14.0.2",
     "remark-frontmatter": "^4.0.1",
@@ -34,14 +34,14 @@
     "yaml": "^2.2.1"
   },
   "dependencies": {
-    "@astrojs/image": "^0.16.1",
+    "@astrojs/image": "^0.16.2",
     "@astrojs/mdx": "^0.18.2",
     "@astrojs/partytown": "^1.1.1",
     "@astrojs/rss": "^2.3.1",
     "@astrojs/sitemap": "^1.2.1",
     "@astrojs/tailwind": "^3.1.1",
     "algoliasearch": "^4.16.0",
-    "astro": "^2.1.4",
+    "astro": "^2.1.7",
     "instantsearch.js": "^4.53.0"
   }
 }
