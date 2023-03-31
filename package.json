@@ -34,14 +34,14 @@
     "yaml": "^2.2.1"
   },
   "dependencies": {
-    "@astrojs/image": "^0.16.3",
+    "@astrojs/image": "^0.16.4",
     "@astrojs/mdx": "^0.18.2",
     "@astrojs/partytown": "^1.1.1",
-    "@astrojs/rss": "^2.3.1",
+    "@astrojs/rss": "^2.3.2",
     "@astrojs/sitemap": "^1.2.1",
     "@astrojs/tailwind": "^3.1.1",
     "algoliasearch": "^4.16.0",
-    "astro": "^2.1.8",
+    "astro": "^2.1.9",
     "instantsearch.js": "^4.53.0"
   }
 }
