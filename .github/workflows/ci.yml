@@ -24,24 +24,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-          cache: npm
-      - run: npm i
-      - run: npm run check
-      - run: npm run fmt:check
+      - uses: ./.github/actions/setup-node
+      - run: pnpm check
+      - run: pnpm fmt:check
   lighthouse:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: ./.github/actions/setup-node
         with:
-          node-version: "18"
-          cache: npm
-      - run: npm i
-      - run: npm run build
-      - run: npm i -g @lhci/cli
+          build: "true"
+      - run: pnpm i -g @lhci/cli
       - run: lhci autorun --upload.target=temporary-public-storage
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
@@ -49,13 +42,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: ./.github/actions/setup-node
         with:
-          node-version: "18"
-          cache: npm
-      - run: npm i
-      - run: npm run build
-      - run: npm i -g serve pa11y-ci
+          build: "true"
+      - run: pnpm i -g serve pa11y-ci
       - run: serve dist & pa11y-ci
   vrt:
     runs-on: ubuntu-latest
@@ -63,9 +53,10 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.32.1-focal
     steps:
       - uses: actions/checkout@v3
-      - run: npm i
-      - run: npm run build
-      - run: npm test
+      - uses: ./.github/actions/setup-node
+        with:
+          build: "true"
+      - run: pnpm test
       - uses: actions/upload-artifact@v3
         if: failure()
         with:

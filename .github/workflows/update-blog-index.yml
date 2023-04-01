@@ -11,11 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-          cache: "npm"
-      - run: npm i
+      - uses: ./.github/actions/setup-node
       - run: node scripts/updateBlogOnAlgolia.mjs
         env:
           ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
