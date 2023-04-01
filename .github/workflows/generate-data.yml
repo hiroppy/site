@@ -12,11 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-          cache: "npm"
-      - run: npm i
+      - uses: ./.github/actions/setup-node
       - uses: tj-actions/changed-files@v35
         id: changed-files
         with:
@@ -41,7 +37,7 @@ jobs:
       - name: talks
         if: contains(steps.changed-files.outputs.modified_files, 'data/talks.json')
         run: node scripts/talks.mjs
-      - run: npm run fmt
+      - run: pnpm fmt
       - name: Commit to repository
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}

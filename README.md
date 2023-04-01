@@ -9,6 +9,6 @@ https://hiroppy.me
 ```sh
 $ git clone git@github.com:hiroppy/site.git
 $ cd site
-$ npm i
-$ npm run setup
+$ npm run setup # switch to pnpm
+$ pnpm i
 ```
