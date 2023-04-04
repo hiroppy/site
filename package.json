@@ -11,7 +11,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "test": "playwright test",
-    "test:update": "docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:v1.32.1-focal /bin/bash -c 'npm test -- -u'",
+    "test:update": "docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:focal /bin/bash -c 'npm test -- -u'",
     "fmt": "prettier -w .",
     "fmt:check": "prettier --check .",
     "data:generate": "node scripts/index.mjs",
