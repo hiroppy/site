@@ -35,11 +35,11 @@
     "yaml": "^2.2.1"
   },
   "dependencies": {
-    "@astrojs/image": "^0.16.4",
+    "@astrojs/image": "^0.16.5",
     "@astrojs/mdx": "^0.18.2",
     "@astrojs/partytown": "^1.2.0",
     "@astrojs/rss": "^2.3.2",
-    "@astrojs/sitemap": "^1.2.1",
+    "@astrojs/sitemap": "^1.2.2",
     "@astrojs/tailwind": "^3.1.1",
     "algoliasearch": "^4.17.0",
     "astro": "^2.1.9",
