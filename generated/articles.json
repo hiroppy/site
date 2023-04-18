@@ -1,5 +1,13 @@
 [
   {
+    "title": "プログラミングを強みに生き残れるか？ 焦燥感にとらわれた20代を越えて広がったキャリアの可能性  - Findy Engineer Lab - ファインディエンジニアラボ",
+    "description": "OSS活動をする中で知った、届かない存在に対する焦燥感。ソフトウェアエンジニアとしてプログラミングが一番の強みだという廣戸裕大（hiroppy）さんですが、IC（Individual Contributor）のキャリアを歩むなかで技術のキャッチアップにもがき、悩んだ時期もあったといいます。その焦燥感をどう解消していったのか、今につながった転機を寄稿いただきました。",
+    "image": "/images/external/Y2RuLWFrLmYuc3QtaGF0ZW5hLmNvbS9pbWFnZXMvZm90b2xpZmUvYi9ibG9nLW1lZGlhLzIwMjMwNDE3LzIwMjMwND.jpg",
+    "siteName": "Findy Engineer Lab - ファインディエンジニアラボ",
+    "url": "https://engineer-lab.findy-code.io/hiroppy",
+    "publishedAt": "2023-04-18"
+  },
+  {
     "siteName": "hiroppy's Blog",
     "siteUrl": "https://hiroppy.me/blog/",
     "hot": false,
@@ -137,7 +145,7 @@
     "url": "https://engineering.mercari.com/blog/entry/20210823-a57631d32e/",
     "hot": true,
     "publishedAt": "2021-08-23",
-    "bookmark": 380
+    "bookmark": 381
   },
   {
     "siteName": "技術探し",
@@ -477,7 +485,7 @@
     "image": "/images/external/YXZhdGFyczEuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvMjEwNTc5MT9zPTIwMCZ2PTQ=.png",
     "description": "",
     "publishedAt": "2018-12-25",
-    "bookmark": 415
+    "bookmark": 414
   },
   {
     "siteName": "技術探し",
