@@ -26,8 +26,8 @@ dependencies:
     specifier: ^2.2.0
     version: 2.2.0(sharp@0.32.0)
   instantsearch.js:
-    specifier: ^4.54.1
-    version: 4.54.1(algoliasearch@4.17.0)
+    specifier: ^4.55.0
+    version: 4.55.0(algoliasearch@4.17.0)
 
 devDependencies:
   '@playwright/test':
@@ -2689,8 +2689,8 @@ packages:
     resolution: {integrity: sha512-7NXolsK4CAS5+xvdj5OMMbI962hU/wvwoxk+LWR9Ek9bVtyuuYScDN6eS0rUm6TxApFpw7CX1o4uJzcd4AyD3Q==}
     dev: false
 
-  /instantsearch.js@4.54.1(algoliasearch@4.17.0):
-    resolution: {integrity: sha512-0nY3yktw88qdE68JNC0QMJcguJWtlCojTAoTY7RKAn1sSHOxkvoPBhkAHPb5pEPQioc3Saw0ILmLJ+FY8IrbSg==}
+  /instantsearch.js@4.55.0(algoliasearch@4.17.0):
+    resolution: {integrity: sha512-jsxhPRgzL4C4cRjhkLm/AE9BO83o7bkL8GSHncSXu1sICBhy/6xxkv0x/bXI5PxYHhb9/PsEz5jblYn1lRwOLw==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
     dependencies:
@@ -2707,7 +2707,7 @@ packages:
       htm: 3.1.1
       preact: 10.13.2
       qs: 6.9.7
-      search-insights: 2.4.0
+      search-insights: 2.6.0
     dev: false
 
   /is-alphabetical@2.0.1:
@@ -4362,8 +4362,8 @@ packages:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
     dev: false
 
-  /search-insights@2.4.0:
-    resolution: {integrity: sha512-AqXxWFEIZTfOf0brQLvoAZcotrVX0xR/VoPCzBxsTZF/yO+izIH1eFCtKizR/dGI8NCMOTdc7l90hAOI68dBbg==}
+  /search-insights@2.6.0:
+    resolution: {integrity: sha512-vU2/fJ+h/Mkm/DJOe+EaM5cafJv/1rRTZpGJTuFPf/Q5LjzgMDsqPdSaZsAe+GAWHHsfsu+rQSAn6c8IGtBEVw==}
     engines: {node: '>=8.16.0'}
     dev: false
 
