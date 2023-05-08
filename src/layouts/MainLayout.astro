@@ -8,12 +8,26 @@ import GitHub from "../components/icons/GitHub.astro";
 import Facebook from "../components/icons/Facebook.astro";
 import LinkedIn from "../components/icons/LinkedIn.astro";
 import Rss from "../components/icons/Rss.astro";
+import BlogDescription from "../components/BlogDescription.astro";
 
 type Props = {
   title: string;
 };
 
 const { title } = Astro.props;
+
+// TODO: slot in slotが現在astroのバグで動かないので、一旦ここでセットさせる
+const pathname = Astro.url.pathname;
+const Description =
+  pathname === "/"
+    ? "Hi, I'm Yuta Hiroto! I'm a Node.js and webpack committer and I like development and sleeping 😴"
+    : pathname === "/jobs"
+    ? "I work in Yuimedi as a VPoE and support Souzoh and Tabelog as a Techinical Advaser 🥸"
+    : pathname.startsWith("/media")
+    ? "I speak on Monthly Ecosystem of Podcast every month and I write a blog sometimes 😺"
+    : pathname.startsWith("/blog")
+    ? ""
+    : "";
 ---
 
 <main class="flex gap-4 items-start">
@@ -24,7 +38,13 @@ const { title } = Astro.props;
     >
       <Paper className="flex-shrink-0">
         <Accordion options={PAGE_LINKS}>
-          <slot name="description" slot="description" />
+          {
+            pathname.startsWith("/blog") ? (
+              <BlogDescription slot="description" />
+            ) : (
+              <span slot="description">{Description}</span>
+            )
+          }
         </Accordion>
       </Paper>
       <Paper className="flex-shrink-0">
