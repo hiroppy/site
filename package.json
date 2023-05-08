@@ -2,7 +2,7 @@
   "name": "@hiroppy/site",
   "version": "0.0.1",
   "private": true,
-  "packageManager": "pnpm@8.2.0",
+  "packageManager": "pnpm@8.4.0",
   "scripts": {
     "setup": "git config --local core.hooksPath .githooks && pnpm corepack",
     "corepack": "corepack enable pnpm",
@@ -12,7 +12,7 @@
     "check": "astro check",
     "test": "playwright test",
     "test:update": "docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:focal /bin/bash -c 'npm test -- -u'",
-    "fmt": "prettier -w .",
+    "fmt": "prettier -w --plugin-search-dir=. .",
     "fmt:check": "prettier --check .",
     "data:generate": "node scripts/index.mjs",
     "data:clean": "rm -r ./generated/* ./public/images/external/*",
@@ -36,13 +36,13 @@
   },
   "dependencies": {
     "@astrojs/image": "^0.16.5",
-    "@astrojs/mdx": "^0.18.2",
+    "@astrojs/mdx": "^0.19.1",
     "@astrojs/partytown": "^1.2.0",
-    "@astrojs/rss": "^2.3.2",
-    "@astrojs/sitemap": "^1.2.2",
+    "@astrojs/rss": "^2.4.1",
+    "@astrojs/sitemap": "^1.3.0",
     "@astrojs/tailwind": "^3.1.1",
     "algoliasearch": "^4.17.0",
-    "astro": "^2.2.0",
+    "astro": "^2.4.2",
     "instantsearch.js": "^4.55.0"
   }
 }
