@@ -22,6 +22,7 @@ module.exports = {
         "unused-javascript": "off",
         // for article page
         "unsized-images": "off",
+        "bf-cache": "off",
       },
     },
   },
