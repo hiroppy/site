@@ -21,7 +21,7 @@ const pathname = Astro.url.pathname;
 const Description =
   pathname === "/"
     ? "Hi, I'm Yuta Hiroto! I'm a Node.js and webpack committer and I like development and sleeping 😴"
-    : pathname === "/jobs"
+    : pathname.startsWith("/jobs")
     ? "I work in Yuimedi as a VPoE and support Souzoh and Tabelog as a Techinical Advaser 🥸"
     : pathname.startsWith("/media")
     ? "I speak on Monthly Ecosystem of Podcast every month and I write a blog sometimes 😺"
