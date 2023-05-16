@@ -26,8 +26,8 @@ dependencies:
     specifier: ^2.4.5
     version: 2.4.5(sharp@0.32.1)
   instantsearch.js:
-    specifier: ^4.55.0
-    version: 4.55.0(algoliasearch@4.17.0)
+    specifier: ^4.56.0
+    version: 4.56.0(algoliasearch@4.17.0)
 
 devDependencies:
   '@playwright/test':
@@ -1407,8 +1407,8 @@ packages:
       uri-js: 4.4.1
     dev: true
 
-  /algoliasearch-helper@3.12.0(algoliasearch@4.17.0):
-    resolution: {integrity: sha512-/j1U3PEwdan0n6P/QqSnSpNSLC5+cEMvyljd5CnmNmUjDlGrys+vFEOwjVEnqELIiAGMHEA/Nl3CiKVFBUYqyQ==}
+  /algoliasearch-helper@3.13.0(algoliasearch@4.17.0):
+    resolution: {integrity: sha512-kV3c1jMQCvkARtGsSDvAwuht4PAMSsQILqPiH4WFiARoa3jXJ/r1TQoBWAjWyWF48rsNYCv7kzxgB4LTxrvvuw==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
     dependencies:
@@ -2672,8 +2672,8 @@ packages:
     resolution: {integrity: sha512-7NXolsK4CAS5+xvdj5OMMbI962hU/wvwoxk+LWR9Ek9bVtyuuYScDN6eS0rUm6TxApFpw7CX1o4uJzcd4AyD3Q==}
     dev: false
 
-  /instantsearch.js@4.55.0(algoliasearch@4.17.0):
-    resolution: {integrity: sha512-jsxhPRgzL4C4cRjhkLm/AE9BO83o7bkL8GSHncSXu1sICBhy/6xxkv0x/bXI5PxYHhb9/PsEz5jblYn1lRwOLw==}
+  /instantsearch.js@4.56.0(algoliasearch@4.17.0):
+    resolution: {integrity: sha512-A50GZjcK9c3o3y49fqOX6ghI4leCPAiz0h5xY/yvU7mMXCwwXZw1BsUbOPM02gDvaUdYvibycW7byVQno3DK1g==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
     dependencies:
@@ -2685,7 +2685,7 @@ packages:
       '@types/hogan.js': 3.0.1
       '@types/qs': 6.9.7
       algoliasearch: 4.17.0
-      algoliasearch-helper: 3.12.0(algoliasearch@4.17.0)
+      algoliasearch-helper: 3.13.0(algoliasearch@4.17.0)
       hogan.js: 3.0.2
       htm: 3.1.1
       preact: 10.13.2
