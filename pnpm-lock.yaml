@@ -67,8 +67,8 @@ devDependencies:
     specifier: ^0.32.1
     version: 0.32.1
   strip-markdown:
-    specifier: ^5.0.0
-    version: 5.0.0
+    specifier: ^5.0.1
+    version: 5.0.1
   yaml:
     specifier: ^2.2.2
     version: 2.2.2
@@ -4566,8 +4566,8 @@ packages:
     resolution: {integrity: sha512-4gB8na07fecVVkOI6Rs4e7T6NOTki5EmL7TUduTs6bu3EdnSycntVJ4re8kgZA+wx9IueI2Y11bfbgwtzuE0KQ==}
     engines: {node: '>=0.10.0'}
 
-  /strip-markdown@5.0.0:
-    resolution: {integrity: sha512-PXSts6Ta9A/TwGxVVSRlQs1ukJTAwwtbip2OheJEjPyfykaQ4sJSTnQWjLTI2vYWNts/R/91/csagp15W8n9gA==}
+  /strip-markdown@5.0.1:
+    resolution: {integrity: sha512-IvoKZrXtWAnlEjRfDlT3yRtGRvpX3RSg+nwAHONmshpSCoxgjZV2xX9ZYvEmwupmYobJtws9oDdTwLUu/5PoMQ==}
     dependencies:
       '@types/mdast': 3.0.11
       '@types/unist': 2.0.6

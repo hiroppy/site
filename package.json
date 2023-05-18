@@ -31,7 +31,7 @@
     "remark-frontmatter": "^4.0.1",
     "serve": "^14.2.0",
     "sharp": "^0.32.1",
-    "strip-markdown": "^5.0.0",
+    "strip-markdown": "^5.0.1",
     "yaml": "^2.2.2"
   },
   "dependencies": {
