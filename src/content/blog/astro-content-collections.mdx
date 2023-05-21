@@ -137,10 +137,12 @@ const { page } = Astro.props;
   <div class="gap-4 flex flex-col">
     {
       // v1: page.data.map(({ url, frontmatter }) => (
-      page.data.map(({ data, slug }) => (
-        // v1: <BlogCardItem url={url} frontmatter={frontmatter} />
-        <BlogCardItem url={`/blog/${slug}`} frontmatter={data} />
-      ))
+      page.data.map(
+        (
+          { data, slug }
+          // v1: <BlogCardItem url={url} frontmatter={frontmatter} />
+        ) => <BlogCardItem url={`/blog/${slug}`} frontmatter={data} />
+      )
     }
   </div>
   <Pagination prev={page.url.prev} next={page.url.next} />
