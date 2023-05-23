@@ -31,8 +31,8 @@ dependencies:
 
 devDependencies:
   '@playwright/test':
-    specifier: ^1.34.0
-    version: 1.34.0
+    specifier: ^1.34.1
+    version: 1.34.1
   cheerio:
     specifier: ^1.0.0-rc.12
     version: 1.0.0-rc.12
@@ -1173,13 +1173,13 @@ packages:
       tiny-glob: 0.2.9
       tslib: 2.5.0
 
-  /@playwright/test@1.34.0:
-    resolution: {integrity: sha512-GIALJVODOIrMflLV54H3Cow635OfrTwOu24ZTDyKC66uchtFX2NcCRq83cLdakMjZKYK78lODNLQSYBj2OgaTw==}
+  /@playwright/test@1.34.1:
+    resolution: {integrity: sha512-hKBpxD79vGkmeqLkJwPBjd4DMUahf1W7ra+83lDNL4JPmLhjITMiy0HoR0WM/PGU6nqnl1cisHc3yKQQgKMxOQ==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@types/node': 18.15.11
-      playwright-core: 1.34.0
+      playwright-core: 1.34.1
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -3893,9 +3893,10 @@ packages:
       find-up: 4.1.0
     dev: false
 
-  /playwright-core@1.34.0:
-    resolution: {integrity: sha512-fMUY1+iR6kYbJF/EsOOqzBA99ZHXbw9sYPNjwA4X/oV0hVF/1aGlWYBGPVUEqxBkGANDKMziYoOdKGU5DIP5Gg==}
+  /playwright-core@1.34.1:
+    resolution: {integrity: sha512-4Y5hGLoSrnB/BXj2NFKBNWP/bI9uVejTVbso1ZBtkKZ+O2KiVIeCJ3R4c7Cf2PbP7htjLolHXY+mImt2IWOlEg==}
     engines: {node: '>=14'}
+    hasBin: true
     dev: true
 
   /postcss-import@14.1.0(postcss@8.4.23):
