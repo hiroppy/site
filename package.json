@@ -19,7 +19,7 @@
     "cache": "node scripts/generatecache.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "^1.34.0",
+    "@playwright/test": "^1.34.1",
     "cheerio": "^1.0.0-rc.12",
     "color": "^4.2.3",
     "dotenv": "^16.0.3",
@@ -32,17 +32,17 @@
     "serve": "^14.2.0",
     "sharp": "^0.32.1",
     "strip-markdown": "^5.0.1",
-    "yaml": "^2.2.2"
+    "yaml": "^2.3.0"
   },
   "dependencies": {
     "@astrojs/image": "^0.16.9",
-    "@astrojs/mdx": "^0.19.3",
+    "@astrojs/mdx": "^0.19.4",
     "@astrojs/partytown": "^1.2.2",
     "@astrojs/rss": "^2.4.3",
     "@astrojs/sitemap": "^1.3.1",
     "@astrojs/tailwind": "^3.1.3",
     "algoliasearch": "^4.17.0",
-    "astro": "^2.5.3",
+    "astro": "^2.5.5",
     "instantsearch.js": "^4.56.0"
   }
 }
