@@ -19,7 +19,7 @@
     "cache": "node scripts/generatecache.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "^1.34.1",
+    "@playwright/test": "^1.34.2",
     "cheerio": "^1.0.0-rc.12",
     "color": "^4.2.3",
     "dotenv": "^16.0.3",
