@@ -26,13 +26,13 @@
     "emoji-js": "^3.7.0",
     "octokit": "^2.0.18",
     "prettier": "^2.8.8",
-    "prettier-plugin-astro": "^0.9.0",
+    "prettier-plugin-astro": "^0.9.1",
     "remark": "^14.0.3",
     "remark-frontmatter": "^4.0.1",
     "serve": "^14.2.0",
     "sharp": "^0.32.1",
     "strip-markdown": "^5.0.1",
-    "yaml": "^2.3.0"
+    "yaml": "^2.3.1"
   },
   "dependencies": {
     "@astrojs/image": "^0.16.9",
