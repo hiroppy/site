@@ -46,8 +46,8 @@ devDependencies:
     specifier: ^3.7.0
     version: 3.7.0
   octokit:
-    specifier: ^2.0.18
-    version: 2.0.18
+    specifier: ^2.0.19
+    version: 2.0.19
   prettier:
     specifier: ^2.8.8
     version: 2.8.8
@@ -908,11 +908,11 @@ packages:
       fastq: 1.15.0
     dev: false
 
-  /@octokit/app@13.1.4:
-    resolution: {integrity: sha512-DOssIBopEpXemC1VgQ8hFAU5FP+Mo0CCRjg5Rc7mahwSvqUp0c/AFPpOuSVP9eX2bO03EOVkdmAVqLp77m8CzA==}
+  /@octokit/app@13.1.5:
+    resolution: {integrity: sha512-6qTa24S+gdQUU66SCVfqTkyt2jAr9/ZeyPqJhnNI9PZ8Wum4lQy3bPS+voGlxABNOlzRKnxbSdYKoraMr3MqBA==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/auth-app': 4.0.9
+      '@octokit/auth-app': 4.0.13
       '@octokit/auth-unauthenticated': 3.0.4
       '@octokit/core': 4.2.1
       '@octokit/oauth-app': 4.2.2
@@ -923,8 +923,8 @@ packages:
       - encoding
     dev: true
 
-  /@octokit/auth-app@4.0.9:
-    resolution: {integrity: sha512-VFpKIXhHO+kVJtane5cEvdYPtjDKCOI0uKsRrsZfJP+uEu7rcPbQCLCcRKgyT+mUIzGr1IIOmwP/lFqSip1dXA==}
+  /@octokit/auth-app@4.0.13:
+    resolution: {integrity: sha512-NBQkmR/Zsc+8fWcVIFrwDgNXS7f4XDrkd9LHdi9DPQw1NdGHLviLzRO2ZBwTtepnwHXW5VTrVU9eFGijMUqllg==}
     engines: {node: '>= 14'}
     dependencies:
       '@octokit/auth-oauth-app': 5.0.5
@@ -932,9 +932,8 @@ packages:
       '@octokit/request': 6.2.3
       '@octokit/request-error': 3.0.3
       '@octokit/types': 9.2.2
-      '@types/lru-cache': 5.1.1
       deprecation: 2.3.1
-      lru-cache: 6.0.0
+      lru-cache: 9.1.1
       universal-github-app-jwt: 1.1.1
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
@@ -1290,10 +1289,6 @@ packages:
     resolution: {integrity: sha512-c5ltxazpWabia/4UzhIoaDcIza4KViOQhdbjRlfcIGVnsE3c3brkz9Z+F/EeJIECOQP7W7US2hNE930cWWkPiw==}
     dependencies:
       '@types/node': 18.15.11
-    dev: true
-
-  /@types/lru-cache@5.1.1:
-    resolution: {integrity: sha512-ssE3Vlrys7sdIzs5LOxCzTVMsU7i9oa/IaW92wF32JFb3CVczqOkru2xspuKczHEbG3nvmPY7IFqVmGGHdNbYw==}
     dev: true
 
   /@types/mdast@3.0.11:
@@ -2969,6 +2964,11 @@ packages:
     dependencies:
       yallist: 4.0.0
 
+  /lru-cache@9.1.1:
+    resolution: {integrity: sha512-65/Jky17UwSb0BuB9V+MyDpsOtXKmYwzhyl+cOa9XUiI4uV2Ouy/2voFP3+al0BjZbJgMBD8FojMpAf+Z+qn4A==}
+    engines: {node: 14 || >=16.14}
+    dev: true
+
   /magic-string@0.27.0:
     resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==}
     engines: {node: '>=12'}
@@ -3688,11 +3688,11 @@ packages:
     engines: {node: '>= 6'}
     dev: false
 
-  /octokit@2.0.18:
-    resolution: {integrity: sha512-IR3l4RRBS7MSgMt8qngLt7URChtu1zf5MEb9SYa7Flw+jwwm7Ya4JQJ6leh/S5v1J0RV1Phmj3p+SH+jMCSrjw==}
+  /octokit@2.0.19:
+    resolution: {integrity: sha512-hSloK4MK78QGbAuBrtIir0bsxMoRVZE5CkwKSbSRH9lqv2hx9EwhCxtPqEF+BtHqLXkXdfUaGkJMyMBotYno+A==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/app': 13.1.4
+      '@octokit/app': 13.1.5
       '@octokit/core': 4.2.1
       '@octokit/oauth-app': 4.2.2
       '@octokit/plugin-paginate-rest': 6.1.0(@octokit/core@4.2.1)
