@@ -67,7 +67,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.34.3-focal
+      image: mcr.microsoft.com/playwright:v1.35.0-focal
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
