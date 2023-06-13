@@ -27,35 +27,54 @@ jobs:
       - uses: ./.github/actions/setup-node
       - run: pnpm check
       - run: pnpm fmt:check
-  lighthouse:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
+      - run: pnpm build
+      - uses: actions/upload-artifact@v3
         with:
-          build: "true"
+          name: app
+          path: ./dist
+  lighthouse:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: actions/download-artifact@v3
+        with:
+          name: app
+          path: ./dist
       - run: pnpm i -g @lhci/cli
       - run: lhci autorun --upload.target=temporary-public-storage
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
   a11y:
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
+      - uses: actions/download-artifact@v3
         with:
-          build: "true"
+          name: app
+          path: ./dist
       - run: pnpm i -g serve pa11y-ci
       - run: serve dist & pa11y-ci
   vrt:
+    needs: [build]
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.34.3-focal
+      image: mcr.microsoft.com/playwright:v1.35.0-focal
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
+      - uses: actions/download-artifact@v3
         with:
-          build: "true"
+          name: app
+          path: ./dist
       - run: pnpm test
       - uses: actions/upload-artifact@v3
         if: failure()
