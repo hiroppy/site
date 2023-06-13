@@ -1,7 +1,4 @@
 name: Setup Node
-inputs:
-  build:
-    default: "false"
 runs:
   using: "composite"
   steps:
@@ -15,7 +12,4 @@ runs:
     - run: npm run corepack
       shell: bash
     - run: pnpm i
-      shell: bash
-    - run: pnpm build
-      if: inputs.build == 'true'
       shell: bash
