@@ -24,7 +24,7 @@
     "color": "^4.2.3",
     "dotenv": "^16.1.4",
     "emoji-js": "^3.7.0",
-    "octokit": "^2.0.19",
+    "octokit": "^2.0.22",
     "prettier": "^2.8.8",
     "prettier-plugin-astro": "^0.10.0",
     "remark": "^14.0.3",
