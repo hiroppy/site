@@ -2,7 +2,7 @@
   "name": "@hiroppy/site",
   "version": "0.0.1",
   "private": true,
-  "packageManager": "pnpm@8.6.8",
+  "packageManager": "pnpm@8.6.9",
   "scripts": {
     "setup": "git config --local core.hooksPath .githooks && pnpm corepack",
     "corepack": "corepack enable pnpm",
