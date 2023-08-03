@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@astrojs/image':
-    specifier: ^0.17.2
-    version: 0.17.2(astro@2.7.4)(sharp@0.32.4)
+    specifier: ^0.17.3
+    version: 0.17.3(astro@2.7.4)(sharp@0.32.4)
   '@astrojs/mdx':
     specifier: ^0.19.7
     version: 0.19.7(astro@2.7.4)
@@ -204,10 +204,10 @@ packages:
     resolution: {integrity: sha512-/HSFkJ+Yv+WUWSq0QVsIlhBKam5VUpGV+s8MvPguC/krHmw4Ww9TIgmfJSvV8/BN0sHJB7pCgf7yInae1zb+TQ==}
     dev: false
 
-  /@astrojs/image@0.17.2(astro@2.7.4)(sharp@0.32.4):
-    resolution: {integrity: sha512-hw5vGBlyPwyt9E4ux7eej7dJrcSlTAaMYKYd8OWIJVsFSbV75sXNi+5lwbpNjDLGVIS6Baa4nzayjN5Gxo73MQ==}
+  /@astrojs/image@0.17.3(astro@2.7.4)(sharp@0.32.4):
+    resolution: {integrity: sha512-5xF4d4dmyjSdEeA0E2M8YS5Usf0SxPHUp4w/xAsbArQP27p6BcA+952Ay8+UJfRdT+9dUGGvRafDtjEZOkefxQ==}
     peerDependencies:
-      astro: ^2.7.3
+      astro: ^2.10.0
       sharp: '>=0.31.0'
     peerDependenciesMeta:
       sharp:
@@ -218,7 +218,7 @@ packages:
       http-cache-semantics: 4.1.1
       image-size: 1.0.2
       kleur: 4.1.5
-      magic-string: 0.27.0
+      magic-string: 0.30.2
       mime: 3.0.0
       sharp: 0.32.4
     dev: false
@@ -847,6 +847,10 @@ packages:
 
   /@jridgewell/sourcemap-codec@1.4.14:
     resolution: {integrity: sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw==}
+    dev: false
+
+  /@jridgewell/sourcemap-codec@1.4.15:
+    resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}
     dev: false
 
   /@jridgewell/trace-mapping@0.3.17:
@@ -2951,6 +2955,13 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.14
+    dev: false
+
+  /magic-string@0.30.2:
+    resolution: {integrity: sha512-lNZdu7pewtq/ZvWUp9Wpf/x7WzMTsR26TWV03BRZrXFsv+BI6dy8RAiKgm1uM/kyR0rCfUcqvOlXKG66KhIGug==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.4.15
     dev: false
 
   /markdown-extensions@1.1.1:
