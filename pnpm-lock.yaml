@@ -30,8 +30,8 @@ dependencies:
     specifier: ^2.7.4
     version: 2.7.4(sharp@0.32.4)
   instantsearch.js:
-    specifier: ^4.56.8
-    version: 4.56.8(algoliasearch@4.18.0)
+    specifier: ^4.56.9
+    version: 4.56.9(algoliasearch@4.18.0)
 
 devDependencies:
   '@playwright/test':
@@ -2652,8 +2652,8 @@ packages:
     resolution: {integrity: sha512-7NXolsK4CAS5+xvdj5OMMbI962hU/wvwoxk+LWR9Ek9bVtyuuYScDN6eS0rUm6TxApFpw7CX1o4uJzcd4AyD3Q==}
     dev: false
 
-  /instantsearch.js@4.56.8(algoliasearch@4.18.0):
-    resolution: {integrity: sha512-40DJ5l70ZzVzWPK3qrHTKlJLaHGq1PRZpzfL6281P2mz8G19WOHQHKAP4Zh6a4lOZaRtJQUiPjQwqCHSurXZ5g==}
+  /instantsearch.js@4.56.9(algoliasearch@4.18.0):
+    resolution: {integrity: sha512-jyRbByRUPm/ISVdRknCUDenZh65IDO2KE3GMP+RLSpcl3PV9TRfqFCbzoaSAwholbZW7sm3InBP7isCWyQMPlw==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
     dependencies:
