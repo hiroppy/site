@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@astrojs/image':
     specifier: ^0.17.3
-    version: 0.17.3(astro@2.7.4)(sharp@0.32.4)
+    version: 0.17.3(astro@2.7.4)(sharp@0.32.5)
   '@astrojs/mdx':
     specifier: ^0.19.7
     version: 0.19.7(astro@2.7.4)
@@ -28,7 +28,7 @@ dependencies:
     version: 4.18.0
   astro:
     specifier: ^2.7.4
-    version: 2.7.4(sharp@0.32.4)
+    version: 2.7.4(sharp@0.32.5)
   instantsearch.js:
     specifier: ^4.56.9
     version: 4.56.9(algoliasearch@4.18.0)
@@ -68,8 +68,8 @@ devDependencies:
     specifier: ^14.2.0
     version: 14.2.0
   sharp:
-    specifier: ^0.32.4
-    version: 0.32.4
+    specifier: ^0.32.5
+    version: 0.32.5
   strip-markdown:
     specifier: ^5.0.1
     version: 5.0.1
@@ -204,7 +204,7 @@ packages:
     resolution: {integrity: sha512-/HSFkJ+Yv+WUWSq0QVsIlhBKam5VUpGV+s8MvPguC/krHmw4Ww9TIgmfJSvV8/BN0sHJB7pCgf7yInae1zb+TQ==}
     dev: false
 
-  /@astrojs/image@0.17.3(astro@2.7.4)(sharp@0.32.4):
+  /@astrojs/image@0.17.3(astro@2.7.4)(sharp@0.32.5):
     resolution: {integrity: sha512-5xF4d4dmyjSdEeA0E2M8YS5Usf0SxPHUp4w/xAsbArQP27p6BcA+952Ay8+UJfRdT+9dUGGvRafDtjEZOkefxQ==}
     peerDependencies:
       astro: ^2.10.0
@@ -214,13 +214,13 @@ packages:
         optional: true
     dependencies:
       '@altano/tiny-async-pool': 1.0.2
-      astro: 2.7.4(sharp@0.32.4)
+      astro: 2.7.4(sharp@0.32.5)
       http-cache-semantics: 4.1.1
       image-size: 1.0.2
       kleur: 4.1.5
       magic-string: 0.30.2
       mime: 3.0.0
-      sharp: 0.32.4
+      sharp: 0.32.5
     dev: false
 
   /@astrojs/internal-helpers@0.1.1:
@@ -252,7 +252,7 @@ packages:
       astro: ^2.5.0
     dependencies:
       '@astrojs/prism': 2.1.2
-      astro: 2.7.4(sharp@0.32.4)
+      astro: 2.7.4(sharp@0.32.5)
       github-slugger: 1.5.0
       import-meta-resolve: 2.2.2
       rehype-raw: 6.1.1
@@ -330,7 +330,7 @@ packages:
       astro: ^2.6.5
       tailwindcss: ^3.0.24
     dependencies:
-      astro: 2.7.4(sharp@0.32.4)
+      astro: 2.7.4(sharp@0.32.5)
       autoprefixer: 10.4.14(postcss@8.4.24)
       postcss: 8.4.24
       postcss-load-config: 4.0.1(postcss@8.4.24)
@@ -1484,7 +1484,7 @@ packages:
     hasBin: true
     dev: false
 
-  /astro@2.7.4(sharp@0.32.4):
+  /astro@2.7.4(sharp@0.32.5):
     resolution: {integrity: sha512-LDALXeMfD4U6jkM6ZywtKuBkGMxMZjSCFqbNXEKtD3OWZr3hiLNhE3YDgUScCBkQJSROWrS0W9/UVPpsS36+ow==}
     engines: {node: '>=16.12.0', npm: '>=6.14.0'}
     hasBin: true
@@ -1538,7 +1538,7 @@ packages:
       rehype: 12.0.1
       semver: 7.5.3
       server-destroy: 1.0.1
-      sharp: 0.32.4
+      sharp: 0.32.5
       shiki: 0.14.2
       string-width: 5.1.2
       strip-ansi: 7.1.0
@@ -4428,8 +4428,8 @@ packages:
     resolution: {integrity: sha512-rb+9B5YBIEzYcD6x2VKidaa+cqYBJQKnU4oe4E3ANwRRN56yk/ua1YCJT1n21NTS8w6CcOclAKNP3PhdCXKYtQ==}
     dev: false
 
-  /sharp@0.32.4:
-    resolution: {integrity: sha512-exUnZewqVZC6UXqXuQ8fyJJv0M968feBi04jb9GcUHrWtkRoAKnbJt8IfwT4NJs7FskArbJ14JAFGVuooszoGg==}
+  /sharp@0.32.5:
+    resolution: {integrity: sha512-0dap3iysgDkNaPOaOL4X/0akdu0ma62GcdC2NBQ+93eqpePdDdr2/LM0sFdDSMmN7yS+odyZtPsb7tx/cYBKnQ==}
     engines: {node: '>=14.15.0'}
     requiresBuild: true
     dependencies:
