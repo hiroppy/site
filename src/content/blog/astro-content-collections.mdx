@@ -139,9 +139,9 @@ const { page } = Astro.props;
       // v1: page.data.map(({ url, frontmatter }) => (
       page.data.map(
         (
-          { data, slug }
+          { data, slug },
           // v1: <BlogCardItem url={url} frontmatter={frontmatter} />
-        ) => <BlogCardItem url={`/blog/${slug}`} frontmatter={data} />
+        ) => <BlogCardItem url={`/blog/${slug}`} frontmatter={data} />,
       )
     }
   </div>

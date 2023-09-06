@@ -123,7 +123,7 @@ webpack では、`__webpack_require__`という関数を用いて、依存の走
       module.exports,
       module,
       module.exports,
-      __webpack_require__
+      __webpack_require__,
     );
     module.l = true; // 読み込み済みフラグ
 
@@ -135,7 +135,7 @@ webpack では、`__webpack_require__`という関数を用いて、依存の走
     // 実行コード内の require が __webpack_require__ へ置換される
     // そして、このスコープのために作られた関数の引数にある __webpack_require__ を実行する
     eval(
-      'module.exports = __webpack_require__(/*! ./index.js */"./index.js");\n\n\n//# sourceURL=webpack:///multi_./index.js?'
+      'module.exports = __webpack_require__(/*! ./index.js */"./index.js");\n\n\n//# sourceURL=webpack:///multi_./index.js?',
     );
   },
 });
@@ -298,7 +298,7 @@ const b3 = "b3"; // ローカル変数
     "a",
     function () {
       return b1;
-    }
+    },
   );
   /* unused harmony export b2 */
   const b1 = "b1"; // a.jsによって使われている変数
@@ -316,7 +316,7 @@ const b3 = "b3"; // ローカル変数
   "a",
   function () {
     return b1;
-  }
+  },
 );
 ```
 

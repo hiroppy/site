@@ -117,7 +117,7 @@ server {
 今回は、重いアプリケーションを動かしたかったので[ここ](https://observablehq.com/@d3/hierarchical-edge-bundling)から d3 のサンプルを借りました。 これが html へレンダリングされていれば成功となります。
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -138,7 +138,7 @@ server {
           const inspect = Inspector.into(id);
 
           new Runtime().module(define, (name) =>
-            name === "chart" ? inspect() : undefined
+            name === "chart" ? inspect() : undefined,
           );
         }
       })();
@@ -156,7 +156,7 @@ const a = document.createElement("a");
 
 a.setAttribute(
   "href",
-  "https://observablehq.com/@d3/hierarchical-edge-bundling"
+  "https://observablehq.com/@d3/hierarchical-edge-bundling",
 );
 a.text = "This is hierarchical-edge-bundling, the code is here.";
 

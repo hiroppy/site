@@ -190,7 +190,7 @@ module.exports = "from module1";
 
 ```javascript
 const hasAlreadyModule = Array.from(modulesMap).some(
-  ({ path }) => path === filePath
+  ({ path }) => path === filePath,
 );
 ```
 
@@ -242,7 +242,7 @@ async function buildModulesMap(entryDir, entryFilename) {
         if (callee.type === "Identifier" && callee.name === "require") {
           const filePath = getScriptFilePath(currentDir, args[0].value);
           const hasAlreadyModule = Array.from(modulesMap).some(
-            ({ path }) => path === filePath
+            ({ path }) => path === filePath,
           );
 
           if (!hasAlreadyModule) {
@@ -304,13 +304,13 @@ for (const { id, ast, path } of modulesMap.values()) {
         const filePath = getScriptFilePath(
           // node_modulesのときはプロジェクトのベースパスではなく、そのモジュールのpathをベースにする
           isNodeModule(args[0].value) ? dirname(path) : basePath,
-          args[0].value
+          args[0].value,
         );
         const {
           id: moduleID,
         } = // ここでrequireの中身のファイルIDを手に入れる
           Array.from(modulesMap.values()).find(
-            ({ path }) => path === filePath
+            ({ path }) => path === filePath,
           ) || {};
 
         // requireの引数の中身を変更する
@@ -351,11 +351,11 @@ function convertToModuleId(basePath, modulesMap) {
             // don't reset the path when node_modules
             // because the path during searching in node_modules is the base path of modulesMap
             isNodeModule(args[0].value) ? dirname(path) : basePath,
-            args[0].value
+            args[0].value,
           );
           const { id: moduleId } =
             Array.from(modulesMap.values()).find(
-              ({ path }) => path === filePath
+              ({ path }) => path === filePath,
             ) || {};
 
           args[0].value = moduleId;
