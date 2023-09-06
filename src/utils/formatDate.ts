@@ -6,7 +6,7 @@ export function formatDate(date: Date) {
       day: "2-digit",
     })
       .formatToParts(date)
-      .map(({ type, value }) => [type, value])
+      .map(({ type, value }) => [type, value]),
   );
 
   return `${parsed.year} ${parsed.literal} ${parsed.month} ${parsed.literal} ${parsed.day}`;

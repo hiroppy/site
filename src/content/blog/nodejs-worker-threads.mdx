@@ -173,7 +173,7 @@ if (isMainThread) {
       counter(title, ++current);
     },
     1000,
-    "MainThread"
+    "MainThread",
   );
 } else {
   console.log(`worker: ${workerData}`);
@@ -183,7 +183,7 @@ if (isMainThread) {
       counter(title, ++current);
     },
     1000,
-    `worker: ${workerData}`
+    `worker: ${workerData}`,
   );
 }
 ```

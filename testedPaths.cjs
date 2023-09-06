@@ -6,7 +6,7 @@ const { readFileSync } = require("node:fs");
 const pa11y = JSON.parse(readFileSync("./.pa11yci"));
 
 const paths = pa11y.urls.map((path) =>
-  path.replace("http://localhost:3000", "")
+  path.replace("http://localhost:3000", ""),
 );
 
 module.exports = paths;

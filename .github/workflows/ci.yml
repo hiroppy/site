@@ -23,14 +23,14 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node
       - run: pnpm check
       - run: pnpm fmt:check
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node
       - run: pnpm build
       - uses: actions/upload-artifact@v3
@@ -41,7 +41,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node
       - uses: actions/download-artifact@v3
         with:
@@ -55,7 +55,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node
       - uses: actions/download-artifact@v3
         with:
@@ -67,9 +67,9 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.35.1-focal
+      image: mcr.microsoft.com/playwright:v1.37.1-focal
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node
       - uses: actions/download-artifact@v3
         with:

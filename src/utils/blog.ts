@@ -11,7 +11,7 @@ export async function getBlogs() {
 
 export function sortByDate(collections: Collections) {
   return collections.sort(
-    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
   );
 }
 
@@ -25,7 +25,7 @@ export function getAllTags(collections: Collections) {
       collections
         .map((post) => parseTags(post.data.tags))
         .flat()
-        .sort((a, b) => a.length - b.length)
+        .sort((a, b) => a.length - b.length),
     ),
   ];
 }

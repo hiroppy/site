@@ -18,13 +18,13 @@ const baseUrl = "https://hiroppy.me";
 const hatenaArticles = await parseRss(
   "https://abouthiroppy.hatenablog.jp/rss?size=100",
   undefined,
-  false
+  false,
 );
 
 // hiroppy.me
 const blogArticles = (await getArticles())
   .filter(
-    ({ date }) => new Date("2022-11-17").getTime() <= new Date(date).getTime()
+    ({ date }) => new Date("2022-11-17").getTime() <= new Date(date).getTime(),
   )
   .map(({ path, title, image, description, date }) => ({
     siteName: "hiroppy's Blog",
@@ -82,7 +82,7 @@ async function parseRss(url, skippingConditionDate, isShowDescription = true) {
       // cheerioはlinkのタグを抽出できない
       res
         .replace(/\<(link)\>/g, "<linkTag>")
-        .replace(/\<\/(link)\>/g, "</linkTag>")
+        .replace(/\<\/(link)\>/g, "</linkTag>"),
     );
   const platform = {
     siteName: removeCData(load(res)("channel > title").text()),
@@ -96,7 +96,7 @@ async function parseRss(url, skippingConditionDate, isShowDescription = true) {
           const $ = load(item);
           const link = $("linkTag").text();
           const publishedAt = `${new Date(
-            $("pubDate").text()
+            $("pubDate").text(),
           ).toISOString()}`.split("T")[0];
 
           if (
@@ -117,7 +117,7 @@ async function parseRss(url, skippingConditionDate, isShowDescription = true) {
               : "",
             publishedAt,
           };
-        })
+        }),
     )
   ).filter(Boolean);
 
