@@ -447,7 +447,7 @@ console.log(__BUNDLER_1["foo"](10)); // <--- barはもういらないのでfoo�
 
 ```javascript
 const assignment = t.identifier(
-  `${prefix}${moduleId}${name ? `[${JSON.stringify(name)}]` : ""}`
+  `${prefix}${moduleId}${name ? `[${JSON.stringify(name)}]` : ""}`,
 );
 // ImportNamespaceSpecifierは今回defaultを省いたので以下
 // replace `['foo'].foo` with `['foo']`

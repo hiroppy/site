@@ -17,12 +17,12 @@ export const get = () =>
       pubDate: new Date(post.data.date),
       customData: `
         <enclosure url="${import.meta.env.SITE}${post.data.image.replace(
-        /^\//,
-        ""
-      )}" length="0" type="image/${extname(post.data.image).replace(
-        /^\./,
-        ""
-      )}" />
+          /^\//,
+          "",
+        )}" length="0" type="image/${extname(post.data.image).replace(
+          /^\./,
+          "",
+        )}" />
       `.trim(),
     })),
   });

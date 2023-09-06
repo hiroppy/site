@@ -16,21 +16,21 @@ const promisifyExec = promisify(exec);
 export const baseDataPath = join(fileURLToPath(import.meta.url), "../../data");
 export const generatedDataPath = join(
   fileURLToPath(import.meta.url),
-  "../../generated"
+  "../../generated",
 );
 export const baseImageOutputPath = join(
   fileURLToPath(import.meta.url),
-  "../../public/images/external"
+  "../../public/images/external",
 );
 export const blogPath = join(
   fileURLToPath(import.meta.url),
-  "../../src/content/blog"
+  "../../src/content/blog",
 );
 
 export async function readData(filename, original = true) {
   const data = await readFile(
     join(original ? baseDataPath : generatedDataPath, `${filename}.json`),
-    "utf-8"
+    "utf-8",
   );
 
   return JSON.parse(data);
@@ -40,7 +40,7 @@ export async function generateData(filename, data) {
   await writeFile(
     join(generatedDataPath, `${filename}.json`),
     JSON.stringify(data, null, 2),
-    "utf-8"
+    "utf-8",
   );
 }
 
@@ -56,7 +56,7 @@ export async function getMeta(url, title) {
   // twitterはbotをつけないとogをつけない
   // nodeライブラリは基本、user-agentを変えれない
   const { stdout: html } = await promisifyExec(
-    `curl '${url}' -H 'User-Agent: bot'`
+    `curl '${url}' -H 'User-Agent: bot'`,
   );
 
   const $ = load(html);
@@ -111,7 +111,7 @@ export async function crawlSites(filename) {
         publishedAt,
         appendixes,
       };
-    }
+    },
   );
 
   return await Promise.all(promises);
@@ -120,7 +120,7 @@ export async function crawlSites(filename) {
 export function sortItems(items) {
   return items.sort(
     (a, b) =>
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
 }
 
@@ -164,7 +164,7 @@ export async function downloadImage(url) {
 export async function getUrls() {
   const xml = await readFile(
     join(fileURLToPath(import.meta.url), "../../dist/sitemap-0.xml"),
-    "utf-8"
+    "utf-8",
   );
 
   const $ = load(xml);
@@ -178,7 +178,7 @@ export async function getUrls() {
 export async function getArticles() {
   const ext = ".mdx";
   const posts = (await readdir(blogPath)).filter(
-    (name) => extname(name) === ext
+    (name) => extname(name) === ext,
   );
   const contents = await Promise.all(
     posts.map(async (filename) => {
@@ -189,7 +189,7 @@ export async function getArticles() {
         .use(remarkFrontmatter, ["yaml"])
         .use(() => (tree) => {
           frontmatter = yaml.parse(
-            tree.children.find(({ type }) => type === "yaml").value
+            tree.children.find(({ type }) => type === "yaml").value,
           );
 
           return {
@@ -206,7 +206,7 @@ export async function getArticles() {
         content: content.value,
         ...frontmatter,
       };
-    })
+    }),
   );
 
   return contents;

@@ -19,7 +19,7 @@ import { readData, generateData, downloadImage } from "./utils.mjs";
 //     }
 // `);
 const html = await fetch("https://github.com/sponsors/hiroppy#sponsors").then(
-  (res) => res.text()
+  (res) => res.text(),
 );
 const $ = load(html);
 const sponsors = {
@@ -28,7 +28,7 @@ const sponsors = {
 };
 
 const [currentSponsors, pastSponsors] = Array.from(
-  $("#sponsors-section-list > div")
+  $("#sponsors-section-list > div"),
 );
 
 {
@@ -38,7 +38,7 @@ const [currentSponsors, pastSponsors] = Array.from(
       href: `https://github.com${$$.load(el)("a").attr("href")}`,
       avatar: await downloadImage($$.load(el)("img").attr("src")),
       name: $$.load(el)("img").attr("alt"),
-    }))
+    })),
   );
 }
 {
@@ -48,7 +48,7 @@ const [currentSponsors, pastSponsors] = Array.from(
       href: `https://github.com${$$.load(el)("a").attr("href")}`,
       avatar: await downloadImage($$.load(el)("img").attr("src")),
       name: $$.load(el)("img").attr("alt"),
-    }))
+    })),
   );
 }
 

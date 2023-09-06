@@ -28,7 +28,7 @@ const res = await Promise.all(
       stars: data.stargazers_count,
       image: await downloadImage(`${data.owner.avatar_url}?s=40`),
     };
-  })
+  }),
 );
 
 await generateData("repos", {

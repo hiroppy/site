@@ -92,7 +92,7 @@ SSR で取得したデータは Store を構築し、それをクライアント
 
 ```typescript
 const initialData = JSON.parse(
-  document.getElementById("initial-data")!.getAttribute("data-json")!
+  document.getElementById("initial-data")!.getAttribute("data-json")!,
 );
 const { store } = configureStore(initialData);
 ```
@@ -480,7 +480,7 @@ new GenerateSW({
     },
     {
       urlPattern: new RegExp(
-        "https://fonts.googleapis.com|https://fonts.gstatic.com"
+        "https://fonts.googleapis.com|https://fonts.gstatic.com",
       ),
       handler: "CacheFirst", // cacheを優先する。expire設定したほうがいい
     },
