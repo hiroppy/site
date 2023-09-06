@@ -15,17 +15,19 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts = await getBlogs();
   const tags = getAllTags(posts);
 
-  return tags.map((tag) =>
-    paginate(
-      posts.filter((post) =>
-        parseTags(post.data.tags).some((current) => current === tag)
+  return tags
+    .map((tag) =>
+      paginate(
+        posts.filter((post) =>
+          parseTags(post.data.tags).some((current) => current === tag),
+        ),
+        {
+          params: { tag },
+          pageSize: 20,
+        },
       ),
-      {
-        params: { tag },
-        pageSize: 20,
-      }
     )
-  );
+    .flat();
 }
 
 const allPosts = await getBlogs();
