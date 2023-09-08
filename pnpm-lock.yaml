@@ -7,10 +7,10 @@ settings:
 dependencies:
   '@astrojs/image':
     specifier: ^0.18.0
-    version: 0.18.0(astro@3.0.10)(sharp@0.32.5)
+    version: 0.18.0(astro@3.0.12)(sharp@0.32.5)
   '@astrojs/mdx':
-    specifier: ^1.0.2
-    version: 1.0.2(astro@3.0.10)
+    specifier: ^1.0.3
+    version: 1.0.3(astro@3.0.12)
   '@astrojs/partytown':
     specifier: ^2.0.0
     version: 2.0.0
@@ -22,13 +22,13 @@ dependencies:
     version: 3.0.0
   '@astrojs/tailwind':
     specifier: ^5.0.0
-    version: 5.0.0(astro@3.0.10)(tailwindcss@3.3.3)
+    version: 5.0.0(astro@3.0.12)(tailwindcss@3.3.3)
   algoliasearch:
     specifier: ^4.19.1
     version: 4.19.1
   astro:
-    specifier: ^3.0.10
-    version: 3.0.10
+    specifier: ^3.0.12
+    version: 3.0.12
   instantsearch.js:
     specifier: ^4.56.10
     version: 4.56.10(algoliasearch@4.19.1)
@@ -205,11 +205,11 @@ packages:
     resolution: {integrity: sha512-o/ObKgtMzl8SlpIdzaxFnt7SATKPxu4oIP/1NL+HDJRzxfJcAkOTAb/ZKMRyULbz4q+1t2/DAebs2Z1QairkZw==}
     dev: true
 
-  /@astrojs/compiler@2.0.1:
-    resolution: {integrity: sha512-DfBR7Cf+tOgQ4n7TIgTtU5x5SEA/08DNshpEPcT+91A0KbBlmUOYMBM/O6qAaHkmVo1KIoXQYhAmfdTT1zx9PQ==}
+  /@astrojs/compiler@2.1.0:
+    resolution: {integrity: sha512-Mp+qrNhly+27bL/Zq8lGeUY+YrdoU0eDfIlAeGIPrzt0PnI/jGpvPUdCaugv4zbCrDkOUScFfcbeEiYumrdJnw==}
     dev: false
 
-  /@astrojs/image@0.18.0(astro@3.0.10)(sharp@0.32.5):
+  /@astrojs/image@0.18.0(astro@3.0.12)(sharp@0.32.5):
     resolution: {integrity: sha512-IAsECAGG5s0u7KItQMVVfhU8gAkIeIlzoSga6LymLvWvTWJacjxtnRYjct5uR03kuxIYAdjZhwQowKR1bYpwDA==}
     deprecated: '@astrojs/image is deprecated in favor of astro:assets. Please see the migration guide for more information: https://docs.astro.build/en/guides/upgrade-to/v3/\#removed-astrojsimage'
     peerDependencies:
@@ -220,7 +220,7 @@ packages:
         optional: true
     dependencies:
       '@altano/tiny-async-pool': 1.0.2
-      astro: 3.0.10
+      astro: 3.0.12
       http-cache-semantics: 4.1.1
       image-size: 1.0.2
       kleur: 4.1.5
@@ -233,13 +233,13 @@ packages:
     resolution: {integrity: sha512-NQ4ppp1CM0HNkKbJNM4saVSfmUYzGlRalF6wx7F6T/MYHYSWGuojY89/oFTy4t8VlOGUCUijlsVNNeziWaUo5g==}
     dev: false
 
-  /@astrojs/markdown-remark@3.0.0(astro@3.0.10):
-    resolution: {integrity: sha512-s8I49Je4++ImgYAgwL32HgN8m6we2qz3RtBpN4AjObMODPwDylmzUHZksD8Toy31q/P59ED3MuwphqOGm9l03w==}
+  /@astrojs/markdown-remark@3.1.0(astro@3.0.12):
+    resolution: {integrity: sha512-5UwamK0iFxN0n1Nw44vUk8AkQr4psKS63hM3D1/4bhhjs4ZFRyrYmg5NjScaMEXZcrd2KgGPsd+PEwNs4mlBOw==}
     peerDependencies:
-      astro: ^3.0.0
+      astro: ^3.0.11
     dependencies:
       '@astrojs/prism': 3.0.0
-      astro: 3.0.10
+      astro: 3.0.12
       github-slugger: 2.0.0
       import-meta-resolve: 3.0.0
       rehype-raw: 6.1.1
@@ -256,17 +256,16 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/mdx@1.0.2(astro@3.0.10):
-    resolution: {integrity: sha512-dcGw+Idi/xM3GF1E9b/RyRw4ot5kzVCUNZkkhSELZxiFLPa94xlAz3BcplXlUiKs7NTIOp3ehLqCmbneiC78sA==}
+  /@astrojs/mdx@1.0.3(astro@3.0.12):
+    resolution: {integrity: sha512-T+WnbBltX4COO3SZYPHLoRC8XrXSajgiKmXNtFWP5cCjIiofv86gkdSwsjqfLMCaLyGUEmd+vspoaCU0joSrOg==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
-      astro: ^3.0.10
+      astro: ^3.0.11
     dependencies:
-      '@astrojs/markdown-remark': 3.0.0(astro@3.0.10)
-      '@astrojs/prism': 3.0.0
+      '@astrojs/markdown-remark': 3.1.0(astro@3.0.12)
       '@mdx-js/mdx': 2.3.0
       acorn: 8.10.0
-      astro: 3.0.10
+      astro: 3.0.12
       es-module-lexer: 1.3.0
       estree-util-visit: 1.2.1
       github-slugger: 2.0.0
@@ -274,10 +273,8 @@ packages:
       hast-util-to-html: 8.0.4
       kleur: 4.1.5
       rehype-raw: 6.1.1
-      remark-frontmatter: 4.0.1
       remark-gfm: 3.0.1
       remark-smartypants: 2.0.0
-      shiki: 0.14.4
       source-map: 0.7.4
       unist-util-visit: 4.1.2
       vfile: 5.3.7
@@ -313,13 +310,13 @@ packages:
       zod: 3.21.1
     dev: false
 
-  /@astrojs/tailwind@5.0.0(astro@3.0.10)(tailwindcss@3.3.3):
+  /@astrojs/tailwind@5.0.0(astro@3.0.12)(tailwindcss@3.3.3):
     resolution: {integrity: sha512-bMZZNNm/SW+ijUKMQDhdiuNWDdR3CubEKUHb2Ran4Arx1ikWn/kKIkFDXUV+MUnsLa7s19x9VMRlARRyKbqMkQ==}
     peerDependencies:
       astro: ^3.0.0
       tailwindcss: ^3.0.24
     dependencies:
-      astro: 3.0.10
+      astro: 3.0.12
       autoprefixer: 10.4.15(postcss@8.4.29)
       postcss: 8.4.29
       postcss-load-config: 4.0.1(postcss@8.4.29)
@@ -1591,14 +1588,14 @@ packages:
     hasBin: true
     dev: false
 
-  /astro@3.0.10:
-    resolution: {integrity: sha512-LxLlFksTUn3B3Xi3KBirRBg1QI8t2lvOijfODor1OSpAnlEZUzToyLxbdzR2dBVLF5reAoi7LJNKsQouPnMXlg==}
+  /astro@3.0.12:
+    resolution: {integrity: sha512-nDLI9OGEjYIX90a1Md1orqyurPxqXTWTy7Sm3ZsWl5dpzSjcUXo3VB/GTvNjAMS9sE40BOxhay7/hnnQuI8p7A==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
-      '@astrojs/compiler': 2.0.1
+      '@astrojs/compiler': 2.1.0
       '@astrojs/internal-helpers': 0.2.0
-      '@astrojs/markdown-remark': 3.0.0(astro@3.0.10)
+      '@astrojs/markdown-remark': 3.1.0(astro@3.0.12)
       '@astrojs/telemetry': 3.0.1
       '@babel/core': 7.22.15
       '@babel/generator': 7.22.15
@@ -2423,6 +2420,7 @@ packages:
     resolution: {integrity: sha512-WtySTkS4OKev5JtpHXnib4Gxiurzh5NCGvWrFaZ34m6JehfTUhKZvn9njTfw48t6JumVQOmrKqpmGcdwxnhqBQ==}
     dependencies:
       format: 0.2.2
+    dev: true
 
   /fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
@@ -2457,6 +2455,7 @@ packages:
   /format@0.2.2:
     resolution: {integrity: sha512-wzsgA6WOq+09wrU1tsJ09udeR/YZRaeArL9e1wPbFg3GG2yDnC2ldKpxs4xunpFF9DgqCqOIra3bc1HWrJ37Ww==}
     engines: {node: '>=0.4.x'}
+    dev: true
 
   /fraction.js@4.2.0:
     resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
@@ -3116,6 +3115,7 @@ packages:
       '@types/mdast': 3.0.11
       mdast-util-to-markdown: 1.5.0
       micromark-extension-frontmatter: 1.1.0
+    dev: true
 
   /mdast-util-gfm-autolink-literal@1.0.3:
     resolution: {integrity: sha512-My8KJ57FYEy2W2LyNom4n3E7hKTuQk/0SES0u16tjA9Z3oFkF4RrC/hPAPgjlSpezsOvI8ObcXcElo92wn5IGA==}
@@ -3299,6 +3299,7 @@ packages:
       micromark-util-character: 1.1.0
       micromark-util-symbol: 1.0.1
       micromark-util-types: 1.0.2
+    dev: true
 
   /micromark-extension-gfm-autolink-literal@1.0.3:
     resolution: {integrity: sha512-i3dmvU0htawfWED8aHMMAzAVp/F0Z+0bPh3YrbTPPL1v4YAlCZpy5rBO5p0LPYiZo0zFVkoYh7vDU7yQSiCMjg==}
@@ -4239,6 +4240,7 @@ packages:
       mdast-util-frontmatter: 1.0.1
       micromark-extension-frontmatter: 1.1.0
       unified: 10.1.2
+    dev: true
 
   /remark-gfm@3.0.1:
     resolution: {integrity: sha512-lEFDoi2PICJyNrACFOfDD3JlLkuSbOa5Wd8EPt06HUdptv8Gn0bxYTdbU/XXQ3swAPkEaGxxPN9cbnMHvVu1Ig==}
