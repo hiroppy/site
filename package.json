@@ -42,7 +42,7 @@
     "@astrojs/sitemap": "^3.0.0",
     "@astrojs/tailwind": "^5.0.0",
     "algoliasearch": "^4.19.1",
-    "astro": "^3.0.12",
+    "astro": "^3.0.13",
     "instantsearch.js": "^4.56.10"
   }
 }
