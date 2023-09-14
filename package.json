@@ -2,7 +2,7 @@
   "name": "@hiroppy/site",
   "version": "0.0.1",
   "private": true,
-  "packageManager": "pnpm@8.7.4",
+  "packageManager": "pnpm@8.7.5",
   "scripts": {
     "setup": "git config --local core.hooksPath .githooks && pnpm corepack",
     "corepack": "corepack enable pnpm",
@@ -19,12 +19,12 @@
     "cache": "node scripts/generatecache.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "^1.37.1",
+    "@playwright/test": "^1.38.0",
     "cheerio": "^1.0.0-rc.12",
     "color": "^4.2.3",
     "dotenv": "^16.3.1",
     "emoji-js": "^3.7.0",
-    "octokit": "^2.1.0",
+    "octokit": "^3.1.0",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.0",
     "remark": "^14.0.3",
@@ -36,13 +36,13 @@
   },
   "dependencies": {
     "@astrojs/image": "^0.18.0",
-    "@astrojs/mdx": "^1.0.0",
+    "@astrojs/mdx": "^1.0.3",
     "@astrojs/partytown": "^2.0.0",
     "@astrojs/rss": "^3.0.0",
     "@astrojs/sitemap": "^3.0.0",
     "@astrojs/tailwind": "^5.0.0",
     "algoliasearch": "^4.19.1",
-    "astro": "^3.0.8",
-    "instantsearch.js": "^4.56.10"
+    "astro": "^3.0.13",
+    "instantsearch.js": "^4.56.11"
   }
 }
