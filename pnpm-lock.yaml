@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@astrojs/image':
     specifier: ^0.18.0
-    version: 0.18.0(astro@3.1.0)(sharp@0.32.5)
+    version: 0.18.0(astro@3.1.0)(sharp@0.32.6)
   '@astrojs/mdx':
     specifier: ^1.1.0
     version: 1.1.0(astro@3.1.0)
@@ -68,8 +68,8 @@ devDependencies:
     specifier: ^14.2.1
     version: 14.2.1
   sharp:
-    specifier: ^0.32.5
-    version: 0.32.5
+    specifier: ^0.32.6
+    version: 0.32.6
   strip-markdown:
     specifier: ^5.0.1
     version: 5.0.1
@@ -209,7 +209,7 @@ packages:
     resolution: {integrity: sha512-Mp+qrNhly+27bL/Zq8lGeUY+YrdoU0eDfIlAeGIPrzt0PnI/jGpvPUdCaugv4zbCrDkOUScFfcbeEiYumrdJnw==}
     dev: false
 
-  /@astrojs/image@0.18.0(astro@3.1.0)(sharp@0.32.5):
+  /@astrojs/image@0.18.0(astro@3.1.0)(sharp@0.32.6):
     resolution: {integrity: sha512-IAsECAGG5s0u7KItQMVVfhU8gAkIeIlzoSga6LymLvWvTWJacjxtnRYjct5uR03kuxIYAdjZhwQowKR1bYpwDA==}
     deprecated: '@astrojs/image is deprecated in favor of astro:assets. Please see the migration guide for more information: https://docs.astro.build/en/guides/upgrade-to/v3/\#removed-astrojsimage'
     peerDependencies:
@@ -226,7 +226,7 @@ packages:
       kleur: 4.1.5
       magic-string: 0.30.2
       mime: 3.0.0
-      sharp: 0.32.5
+      sharp: 0.32.6
     dev: false
 
   /@astrojs/internal-helpers@0.2.0:
@@ -1658,7 +1658,7 @@ packages:
       yargs-parser: 21.1.1
       zod: 3.21.1
     optionalDependencies:
-      sharp: 0.32.5
+      sharp: 0.32.6
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -4556,8 +4556,8 @@ packages:
     resolution: {integrity: sha512-rb+9B5YBIEzYcD6x2VKidaa+cqYBJQKnU4oe4E3ANwRRN56yk/ua1YCJT1n21NTS8w6CcOclAKNP3PhdCXKYtQ==}
     dev: false
 
-  /sharp@0.32.5:
-    resolution: {integrity: sha512-0dap3iysgDkNaPOaOL4X/0akdu0ma62GcdC2NBQ+93eqpePdDdr2/LM0sFdDSMmN7yS+odyZtPsb7tx/cYBKnQ==}
+  /sharp@0.32.6:
+    resolution: {integrity: sha512-KyLTWwgcR9Oe4d9HwCwNM2l7+J0dUQwn/yf7S0EnTtb0eVS4RxO0eUSvxPtzT4F3SY+C4K6fqdv/DO27sJ/v/w==}
     engines: {node: '>=14.15.0'}
     requiresBuild: true
     dependencies:
