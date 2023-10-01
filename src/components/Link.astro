@@ -5,8 +5,6 @@ type Props = {
   isBlank?: boolean;
   isNoReferrer?: boolean;
   className?: string;
-  // TODO: astroのバグ
-  text?: string;
 };
 
 const {
@@ -15,7 +13,6 @@ const {
   isBlank = false,
   isNoReferrer = true,
   className,
-  text,
 } = Astro.props;
 ---
 
@@ -25,8 +22,6 @@ const {
   class={className ?? "text-blue-300"}
   rel={isNoReferrer ? "noreferrer" : undefined}
   aria-label={`Link for ${name}`}
-  >{
-    // TODO: astroのバグ
-    text ? text : <slot />
-  }
+>
+  <slot />
 </a>
