@@ -36,13 +36,13 @@
   },
   "dependencies": {
     "@astrojs/image": "^0.18.0",
-    "@astrojs/mdx": "^1.1.0",
-    "@astrojs/partytown": "^2.0.0",
+    "@astrojs/mdx": "^1.1.1",
+    "@astrojs/partytown": "^2.0.1",
     "@astrojs/rss": "^3.0.0",
-    "@astrojs/sitemap": "^3.0.0",
-    "@astrojs/tailwind": "^5.0.0",
+    "@astrojs/sitemap": "^3.0.1",
+    "@astrojs/tailwind": "^5.0.1",
     "algoliasearch": "^4.20.0",
-    "astro": "^3.2.2",
+    "astro": "^3.2.3",
     "instantsearch.js": "^4.57.0"
   }
 }
