@@ -40,9 +40,9 @@
     "@astrojs/partytown": "^2.0.1",
     "@astrojs/rss": "^3.0.0",
     "@astrojs/sitemap": "^3.0.1",
-    "@astrojs/tailwind": "^5.0.1",
+    "@astrojs/tailwind": "^5.0.2",
     "algoliasearch": "^4.20.0",
-    "astro": "^3.2.3",
+    "astro": "^3.2.4",
     "instantsearch.js": "^4.57.0"
   }
 }
