@@ -39,7 +39,7 @@
     "@astrojs/mdx": "^1.1.2",
     "@astrojs/partytown": "^2.0.1",
     "@astrojs/rss": "^3.0.0",
-    "@astrojs/sitemap": "^3.0.1",
+    "@astrojs/sitemap": "^3.0.2",
     "@astrojs/tailwind": "^5.0.2",
     "algoliasearch": "^4.20.0",
     "astro": "^3.2.4",
