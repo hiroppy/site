@@ -9,8 +9,8 @@ dependencies:
     specifier: ^0.18.0
     version: 0.18.0(astro@3.2.4)(sharp@0.32.6)
   '@astrojs/mdx':
-    specifier: ^1.1.2
-    version: 1.1.2(astro@3.2.4)
+    specifier: ^1.1.3
+    version: 1.1.3(astro@3.2.4)
   '@astrojs/partytown':
     specifier: ^2.0.1
     version: 2.0.1
@@ -281,11 +281,11 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/mdx@1.1.2(astro@3.2.4):
-    resolution: {integrity: sha512-W+CXjdrfbIAUEDUedNOeZvpxyg+6Coji5NaOvF4e3jNhcOMtCWXpTKZTuzkFe25/uIzV2huuUl3ICJnp7qdWFA==}
+  /@astrojs/mdx@1.1.3(astro@3.2.4):
+    resolution: {integrity: sha512-5U5l6bCmywF2IOO8T7oIeStrRB16cxlGCz02U2akpEkLw93dmn5QcHjr4Cwem0bSKROEjYqZ7DxN8t8YAAV2qA==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
-      astro: ^3.3.0
+      astro: ^3.3.4
     dependencies:
       '@astrojs/markdown-remark': 3.3.0(astro@3.2.4)
       '@mdx-js/mdx': 2.3.0
