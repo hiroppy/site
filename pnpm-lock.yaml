@@ -30,8 +30,8 @@ dependencies:
     specifier: ^3.2.4
     version: 3.2.4
   instantsearch.js:
-    specifier: ^4.57.0
-    version: 4.57.0(algoliasearch@4.20.0)
+    specifier: ^4.59.0
+    version: 4.59.0(algoliasearch@4.20.0)
 
 devDependencies:
   '@playwright/test':
@@ -173,15 +173,15 @@ packages:
       '@algolia/requester-common': 4.20.0
     dev: false
 
-  /@algolia/ui-components-highlight-vdom@1.2.1:
-    resolution: {integrity: sha512-IlYgIaCUEkz9ezNbwugwKv991oOHhveyq6nzL0F1jDzg1p3q5Yj/vO4KpNG910r2dwGCG3nEm5GtChcLnarhFA==}
+  /@algolia/ui-components-highlight-vdom@1.2.2:
+    resolution: {integrity: sha512-/+7jh7cd5rR2yQC7ME4SDcnAMiD1Ofn5Qq+E7afTJx9XSMOHkLR77/o6YcuJ60TfD1S+9lr7yjBLACon8gOuzQ==}
     dependencies:
-      '@algolia/ui-components-shared': 1.2.1
+      '@algolia/ui-components-shared': 1.2.2
       '@babel/runtime': 7.21.0
     dev: false
 
-  /@algolia/ui-components-shared@1.2.1:
-    resolution: {integrity: sha512-a7mYHf/GVQfhAx/HRiMveKkFvHspQv/REdG+C/FIOosiSmNZxX7QebDwJkrGSmDWdXO12D0Qv1xn3AytFcEDlQ==}
+  /@algolia/ui-components-shared@1.2.2:
+    resolution: {integrity: sha512-FYwEG5sbr8p4V8mqP0iUaKgmWfcrMXRXwp7e6iBuB65P/7QyL8pT4I6/iGb85Q5mNH+UtYYSmLZhKjEblllKEQ==}
     dev: false
 
   /@alloc/quick-lru@5.2.0:
@@ -1546,8 +1546,8 @@ packages:
       uri-js: 4.4.1
     dev: true
 
-  /algoliasearch-helper@3.14.2(algoliasearch@4.20.0):
-    resolution: {integrity: sha512-FjDSrjvQvJT/SKMW74nPgFpsoPUwZCzGbCqbp8HhBFfSk/OvNFxzCaCmuO0p7AWeLy1gD+muFwQEkBwcl5H4pg==}
+  /algoliasearch-helper@3.15.0(algoliasearch@4.20.0):
+    resolution: {integrity: sha512-DGUnK3TGtDQsaUE4ayF/LjSN0DGsuYThB8WBgnnDY0Wq04K6lNVruO3LfqJOgSfDiezp+Iyt8Tj4YKHi+/ivSA==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
     dependencies:
@@ -2907,20 +2907,20 @@ packages:
     resolution: {integrity: sha512-7NXolsK4CAS5+xvdj5OMMbI962hU/wvwoxk+LWR9Ek9bVtyuuYScDN6eS0rUm6TxApFpw7CX1o4uJzcd4AyD3Q==}
     dev: false
 
-  /instantsearch.js@4.57.0(algoliasearch@4.20.0):
-    resolution: {integrity: sha512-oaWmX4gUI4U8fcj77FmR3UPHfHOYpJoeHhek+9wM4bZ+VJ8uAQZOV/aBGka7Kmvln8NLZ7rqn+Hm84tDunIBog==}
+  /instantsearch.js@4.59.0(algoliasearch@4.20.0):
+    resolution: {integrity: sha512-tMOLCXQRjOtXAi77kERx4gqHWuVtI8fzEbOzb9Fu6PFNj7MEikEQEnw9zglxnbPph52rMM1t5AN77/NMwY1krg==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
     dependencies:
       '@algolia/events': 4.0.1
-      '@algolia/ui-components-highlight-vdom': 1.2.1
-      '@algolia/ui-components-shared': 1.2.1
+      '@algolia/ui-components-highlight-vdom': 1.2.2
+      '@algolia/ui-components-shared': 1.2.2
       '@types/dom-speech-recognition': 0.0.1
       '@types/google.maps': 3.52.4
       '@types/hogan.js': 3.0.1
       '@types/qs': 6.9.7
       algoliasearch: 4.20.0
-      algoliasearch-helper: 3.14.2(algoliasearch@4.20.0)
+      algoliasearch-helper: 3.15.0(algoliasearch@4.20.0)
       hogan.js: 3.0.2
       htm: 3.1.1
       preact: 10.13.2
