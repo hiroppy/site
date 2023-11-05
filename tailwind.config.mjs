@@ -1,9 +1,9 @@
-const Color = require("color");
+import Color from "color";
 
 const darken = (clr, val) => Color(clr).darken(val).hex();
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ["./src/**/*.{astro,md,mdx}"],
   theme: {
     fontFamily: {
