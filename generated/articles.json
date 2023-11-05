@@ -1,5 +1,13 @@
 [
   {
+    "title": "ROUTE06 CTOが考えていること（2023年9月） - ROUTE06 Tech Blog",
+    "description": "おはようございますこんにちはこんばんは。ROUTE06 取締役 CTO の重岡です。 前回の記事から 4 か月が経過しました。その期間の振り返りと、現在考えていることについてご紹介します。 プロダクト開発の現在地 エンタープライズ向け SaaS「Plain EDI」の開発 まだまだ課題は多いものの、「Plain」という大きなプラットフォームの構想の初手として、足元ではクラウドEDIを中心とした商取引DXを注力領域に定め、エンタープライズ特化のVertical SaaSを提供しながらその価値を最大限活かすための要件定義/デザイン/データ分析などの事業支援を行うアプローチへの実効性も高まりつつある…",
+    "image": "/images/external/Y2RuLnVzZXIuYmxvZy5zdC1oYXRlbmEuY29tL2RlZmF1bHRfZW50cnlfb2dfaW1hZ2UvMTU5MDMzMjcwLzE2NzcyMz.png",
+    "siteName": "ROUTE06 Tech Blog",
+    "url": "https://tech.route06.co.jp/entry/2023/09/07/091000",
+    "publishedAt": "2023-09-07"
+  },
+  {
     "title": "プログラミングを強みに生き残れるか？ 焦燥感にとらわれた20代を越えて広がったキャリアの可能性  - Findy Engineer Lab - ファインディエンジニアラボ",
     "description": "OSS活動をする中で知った、届かない存在に対する焦燥感。ソフトウェアエンジニアとしてプログラミングが一番の強みだという廣戸裕大（hiroppy）さんですが、IC（Individual Contributor）のキャリアを歩むなかで技術のキャッチアップにもがき、悩んだ時期もあったといいます。その焦燥感をどう解消していったのか、今につながった転機を寄稿いただきました。",
     "image": "/images/external/Y2RuLWFrLmYuc3QtaGF0ZW5hLmNvbS9pbWFnZXMvZm90b2xpZmUvYi9ibG9nLW1lZGlhLzIwMjMwNDE3LzIwMjMwND.jpg",
@@ -174,6 +182,14 @@
     "publishedAt": "2021-08-12"
   },
   {
+    "title": "「新会社ソウゾウ立ち上げ期、いま率直にどうですか？」をメンバーに聞いてみた！ | mercan (メルカン)",
+    "description": "2021年1月28日に設立された「株式会社ソウゾウ(souzoh)」。 メルカリグループの次の柱となる事業を目指して発足。具体的な事業内容は明らかにされていませんが、着々とプロダクトリリースへの準備が進められています。 今回の記事では、そんなソウゾウに集う一部メンバーのプロフィー\n",
+    "image": "/images/external/c3RvcmFnZS5nb29nbGVhcGlzLmNvbS9wcmQtbWVyY2FuLWFzc2V0LzIwMjEvMDQvZTQ2OWI5ZTUtZXllY2F0Y2gtdj.png",
+    "siteName": "mercan (メルカン) | メルカリの「人」を伝える",
+    "url": "https://mercan.mercari.com/articles/28113/",
+    "publishedAt": "2021-04-28"
+  },
+  {
     "siteName": "技術探し",
     "siteUrl": "https://abouthiroppy.hatenablog.jp/",
     "hot": false,
@@ -222,6 +238,14 @@
     "image": "/images/external/YXZhdGFyczMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvMTc3ODkzNT9zPTIwMCZ2PTQ=.png",
     "description": "",
     "publishedAt": "2020-09-01"
+  },
+  {
+    "title": "レガシーなフロントエンド環境をリプレースするためにチームでやっていること｜食べログ フロントエンドエンジニアブログ",
+    "description": "はじめに   はじめまして！食べログFE（フロントエンド）チームの金野と申します。 普段は、食べログフロントエンドの設計・開発や、新規事業・食べログテイクアウトの技術サポートなどを行っています。  食べログテイクアウトについては、Nuxt.js + TypeScriptの開発について記事を書いているので、興味がある方はぜひ御覧ください。     \n\n\nNuxt.js+TypeScriptのアプリケーションのためのコーディングガイドライン - Qiita\n\n\nこの記事は食べログ Advent Calendar 2019 3日目の記事です。  はじめまして。食べログのフロントエンド\n\n\nq",
+    "image": "/images/external/YXNzZXRzLnN0LW5vdGUuY29tL3Byb2R1Y3Rpb24vdXBsb2Fkcy9pbWFnZXMvMzcyMTI4NjUvcmVjdGFuZ2xlX2xhcm.png",
+    "siteName": "note（ノート）",
+    "url": "https://note.com/tabelog_frontend/n/n21b819c09121",
+    "publishedAt": "2020-08-31"
   },
   {
     "siteName": "技術探し",

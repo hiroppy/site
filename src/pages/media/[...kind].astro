@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import MediaLayout from "../../layouts/MediaLayout.astro";
-import type { MediaType } from "../../constants";
+import { HATENA_BLOG_URL, type MediaType } from "../../constants";
 import { sortItems } from "../../utils/sortItems";
 import Image from "../../components/Image.astro";
 
@@ -41,13 +41,24 @@ const items: DataItem[] = await (async () => {
 })();
 
 async function getData(kind: Exclude<Kind, undefined>) {
-  return (await import(`../../../generated/${kind}.json`)).default.map(
+  const res = (await import(`../../../generated/${kind}.json`)).default.map(
     (item: Record<string, string>) => ({
       ...item,
       icon: getMediaIcon(kind),
       prefixForTitle: getPrefixForTitle(kind),
     }),
   );
+
+  if (kind === "articles") {
+    return res.filter(({ siteUrl }: any) => {
+      return !(
+        siteUrl?.startsWith(import.meta.env.SITE) ||
+        siteUrl?.startsWith(HATENA_BLOG_URL)
+      );
+    });
+  }
+
+  return res;
 }
 
 function getMediaIcon(type: MediaType) {

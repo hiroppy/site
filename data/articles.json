@@ -1,5 +1,9 @@
 [
   {
+    "publishedAt": "2023-09-07",
+    "url": "https://tech.route06.co.jp/entry/2023/09/07/091000"
+  },
+  {
     "publishedAt": "2023-04-18",
     "url": "https://findy-code.io/engineer-lab/hiroppy"
   },
@@ -17,6 +21,14 @@
     "publishedAt": "2021-08-23",
     "url": "https://engineering.mercari.com/blog/entry/20210823-a57631d32e/",
     "hot": true
+  },
+  {
+    "publishedAt": "2021-04-28",
+    "url": "https://mercan.mercari.com/articles/28113/"
+  },
+  {
+    "publishedAt": "2020-08-31",
+    "url": "https://note.com/tabelog_frontend/n/n21b819c09121"
   },
   {
     "publishedAt": "2020-02-03",
