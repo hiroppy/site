@@ -1,8 +1,9 @@
 ---
+import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 
 type Props = {
-  src: string;
+  src: string | ImageMetadata;
   alt: string;
   className?: string;
   lazy?: boolean;
@@ -53,7 +54,7 @@ if (isOptimization && (!width || !height)) {
     />
   ) : (
     <img
-      src={src}
+      src={src as string}
       class={className}
       decoding="async"
       alt={alt}

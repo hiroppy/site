@@ -36,6 +36,7 @@ export default {
       },
       animation: {
         "fade-in": "fadeIn 0.3s ease-in-out",
+        "focus-in": "text-focus-in 0.5s linear both",
       },
       keyframes: {
         fadeIn: {
@@ -44,6 +45,16 @@ export default {
           },
           "100%": {
             opacity: 1,
+          },
+        },
+        "focus-in": {
+          "0%": {
+            filter: "blur(12px)",
+            opacity: "0",
+          },
+          to: {
+            filter: "blur(0)",
+            opacity: "1",
           },
         },
       },

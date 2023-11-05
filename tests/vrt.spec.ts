@@ -1,5 +1,4 @@
 import { test, expect } from "@playwright/test";
-// @ts-expect-error
 import paths from "../testedPaths.cjs";
 
 for (const path of paths) {
