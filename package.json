@@ -30,7 +30,6 @@
     "remark": "^15.0.1",
     "remark-frontmatter": "^5.0.0",
     "serve": "^14.2.1",
-    "sharp": "^0.32.6",
     "strip-markdown": "^6.0.0",
     "yaml": "^2.3.3"
   },

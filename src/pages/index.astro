@@ -8,13 +8,14 @@ import articles from "../../generated/articles.json";
 import Image from "../components/Image.astro";
 import Hatena from "../components/icons/Hatena.astro";
 import Link from "../components/Link.astro";
-import Code from "../components/Code.astro";
+
+const formUri = "https://forms.gle/8RWCDQzDDTnv3inX8";
 ---
 
 <Layout>
   <MainLayout title="About">
     <span slot="description">
-      Hi, I'm Yuta Hiroto! I'm a Node.js and webpack committer and I like
+      Hi, I'm Hiroppy! I'm a Node.js and webpack committer and I like
       development and sleeping 😴
     </span>
     <div class="flex gap-5 flex-col sm:flex-row max-w-fit mx-auto items-center">
@@ -31,20 +32,25 @@ import Code from "../components/Code.astro";
       </div>
       <div class="flex-auto xl:text-lg">
         <p>
-          Hiroppy is a JavaScript engineer and works on some OSS projects and
-          Japanese communities. I have lived in Japan and Ireland, and now I
-          work in <Link name="Yuimedi" href="https://yuimedi.com/en" isBlank>
+          Hiroppy (Yuta hiroto) is a JavaScript engineer and works on some OSS
+          projects and Japanese communities. I have lived in Japan and Ireland,
+          and now I work in <Link
+            name="Yuimedi"
+            href="https://yuimedi.com/en"
+            isBlank
+          >
             Yuimedi, inc
           </Link>
-          that is a medical IT company as VPoE in Japan.
+           that is a medical IT company as VPoE in Japan.
         </p>
         <br />
         <p>
-          If you have requests for talking, writing, and so on, feel free to
-          ping me on Twitter or <Code>hello[at]hiroppy.me</Code> . If you would like
-          to commission some work, please check <Link name="jobs" href="/jobs">
-            my skills
-          </Link> first.
+          If you have a request for a technical advisor, talking, writing, etc,
+          feel free to submit <Link name="request-job" href={formUri} isBlank>
+            this form
+          </Link>. Please check
+          <Link name="jobs" href="/jobs">my job history and skills</Link>
+           if you need them.
         </p>
       </div>
     </div>
@@ -59,7 +65,7 @@ import Code from "../components/Code.astro";
                   <Link
                     name={title}
                     href={url}
-                    isBlank
+                    isBlank={!url.startsWith("https://hiroppy.me")}
                     className="text-blue-200"
                   >
                     {title}
@@ -143,7 +149,7 @@ import Code from "../components/Code.astro";
                     </div>
                   </div>
                 </li>
-              )
+              ),
             )
           }
         </ol>
