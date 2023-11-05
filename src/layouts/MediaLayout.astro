@@ -1,7 +1,8 @@
 ---
+import type { MediaType } from "../constants";
 import MainLayout from "./MainLayout.astro";
 
-type Path = "" | "/articles" | "/talks" | "/podcasts" | "/achievements";
+type Path = "" | `/${MediaType}`;
 
 // buildのときだけ、/が最後につく
 const currentPath = Astro.url.pathname.replace("/media", "").replace(/\/$/, "");

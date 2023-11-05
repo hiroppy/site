@@ -1,0 +1,132 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import MediaLayout from "../../layouts/MediaLayout.astro";
+import type { MediaType } from "../../constants";
+import { sortItems } from "../../utils/sortItems";
+import Image from "../../components/Image.astro";
+
+type Kind = MediaType | undefined;
+
+export function getStaticPaths(): Array<{ params: { kind: Kind } }> {
+  return [
+    { params: { kind: undefined } },
+    { params: { kind: "talks" } },
+    { params: { kind: "articles" } },
+    { params: { kind: "podcasts" } },
+    { params: { kind: "achievements" } },
+  ];
+}
+
+const { kind } = Astro.params;
+const items: DataItem[] = await (async () => {
+  switch (kind) {
+    case undefined:
+      return sortItems([
+        ...(await getData("talks")),
+        ...(await getData("articles")),
+        ...(await getData("podcasts")),
+        ...(await getData("achievements")),
+      ]);
+    case "talks":
+      return await getData("talks");
+    case "articles":
+      return await getData("articles");
+    case "podcasts":
+      return await getData("podcasts");
+    case "achievements":
+      return await getData("achievements");
+    default:
+      throw new Error(`Unknown kind: ${kind}`);
+  }
+})();
+
+async function getData(kind: Exclude<Kind, undefined>) {
+  return (await import(`../../../generated/${kind}.json`)).default.map(
+    (item: Record<string, string>) => ({
+      ...item,
+      icon: getMediaIcon(kind),
+      prefixForTitle: getPrefixForTitle(kind),
+    }),
+  );
+}
+
+function getMediaIcon(type: MediaType) {
+  switch (type) {
+    case "articles":
+      return "✏️";
+    case "podcasts":
+      return "🎧";
+    case "achievements":
+      return "🎉";
+    case "talks":
+      return "👨‍🏫";
+    default:
+      return "😵‍💫";
+  }
+}
+
+function getPrefixForTitle(type: MediaType) {
+  switch (type) {
+    case "articles":
+      return "Posted";
+    case "podcasts":
+    case "talks":
+      return "Talked";
+    case "achievements":
+      return "Achieved";
+    default:
+      return "😵‍💫";
+  }
+}
+---
+
+<Layout>
+  <MediaLayout>
+    <div
+      class="grid gap-4 auto-rows-max grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
+    >
+      {
+        items.map(({ title, description, image, icon, url, publishedAt }) => (
+          <a
+            href={url}
+            target={url.startsWith(import.meta.env.SITE) ? undefined : "_blank"}
+            aria-label={title}
+          >
+            <div class="group relative h-52 border border-gray-600 hover:border-2 hover:border-blue-300">
+              <div class="absolute z-30 bg-gray-600 -left-3 -top-3 rounded-full border-2 border-gray-600 w-10 h-10 flex items-center justify-center gruop-hover:border-2 group-hover:border-blue-300">
+                <span class="text-xl">{icon}</span>
+              </div>
+              <div class="absolute top-0 flex items-center justify-center w-full h-full bg-gray-700 overflow-hidden">
+                <div class="absolute hidden z-20 group-hover:block bg-gray-900/90 w-full h-full">
+                  <div class="flex justify-center text-sm py-10 px-2 h-full overflow-scroll">
+                    <p>{description}</p>
+                  </div>
+                </div>
+                <Image
+                  src={image ?? ""}
+                  alt={title}
+                  isOptimization
+                  width={100}
+                  height={100}
+                />
+              </div>
+              <div class="absolute bottom-0 z-10 w-full text-sm">
+                <div class="text-right">
+                  <span class="bg-gray-900/90 p-1">{publishedAt}</span>
+                </div>
+                <div class="bg-gray-900/90 h-16 px-2 py-1 overflow-hidden flex items-center">
+                  <h3
+                    class="overflow-hidden"
+                    style="display: -webkit-box; -webkit-box-orient: vertical;  -webkit-line-clamp: 2;"
+                  >
+                    {title}
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </MediaLayout>
+</Layout>

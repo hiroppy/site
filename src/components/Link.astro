@@ -1,4 +1,6 @@
 ---
+import { mergeClass } from "../utils/mergeClass";
+
 type Props = {
   name: string;
   href: string;
@@ -19,7 +21,10 @@ const {
 <a
   href={href}
   target={isBlank ? "_blank" : undefined}
-  class={className ?? "text-blue-300 no-underline hover:underline"}
+  class={mergeClass(
+    "text-blue-300 no-underline hover:underline",
+    className ?? "",
+  )}
   rel={isNoReferrer ? "noreferrer" : undefined}
   aria-label={`Link for ${name}`}
 >
