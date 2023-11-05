@@ -28,5 +28,7 @@ export const PAGE_LINKS = <const>[
 export const HATENA_BLOG_URL = "https://abouthiroppy.hatenablog.jp";
 export const HATENA_BLOG_ENTRY_URL = `${HATENA_BLOG_URL}/entry`;
 
+export const JOB_FORM = "https://forms.gle/8RWCDQzDDTnv3inX8";
+
 export type PAGE_PATH = (typeof PAGE_LINKS)[number]["href"];
 export type MediaType = "article" | "podcast" | "achievement" | "talk";

@@ -8,8 +8,7 @@ import articles from "../../generated/articles.json";
 import Image from "../components/Image.astro";
 import Hatena from "../components/icons/Hatena.astro";
 import Link from "../components/Link.astro";
-
-const formUri = "https://forms.gle/8RWCDQzDDTnv3inX8";
+import { JOB_FORM } from "../constants";
 ---
 
 <Layout>
@@ -46,7 +45,7 @@ const formUri = "https://forms.gle/8RWCDQzDDTnv3inX8";
         <br />
         <p>
           If you have a request for a technical advisor, talking, writing, etc,
-          feel free to submit <Link name="request-job" href={formUri} isBlank>
+          feel free to submit <Link name="request-job" href={JOB_FORM} isBlank>
             this form
           </Link>. Please check
           <Link name="jobs" href="/jobs">my job history and skills</Link>

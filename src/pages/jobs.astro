@@ -6,7 +6,7 @@ import Card from "../components/Card.astro";
 import SkillBox from "../components/SkillBox.astro";
 import Link from "../components/Link.astro";
 import CompanyLink from "../components/CompanyLink.astro";
-import Code from "../components/Code.astro";
+import { JOB_FORM } from "../constants";
 ---
 
 <Layout>
@@ -16,15 +16,13 @@ import Code from "../components/Code.astro";
       Advaser 🥸
     </span>
 
-     I work in Yuimedi as VPoE and in some companies to improve product code. Welcome
-    to request a job but please check my skills first. Feel free to contact me via
-
-
-    <Link name="twitter" href="https://twitter.com/about_hiroppy" isBlank>
-      Twitter
+     I work as a VPoE at
+    <Link name="Yuimedi" href="https://yuimedi.com/en" isBlank>
+      Yuimedi, inc
     </Link>
-     or
-    <Code>hello[at]hiroppy.me</Code>.
+     and provide frontend development support as a technical advisor for several
+    companies. Welcome to request anything so feel free to submit
+    <Link name="request-job" href={JOB_FORM} isBlank>this form</Link>.
 
     <div class="flex gap-4 mt-4 flex-col">
       <Card title="Skills">
