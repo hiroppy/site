@@ -9,6 +9,7 @@ import Image from "../components/Image.astro";
 import Hatena from "../components/icons/Hatena.astro";
 import Link from "../components/Link.astro";
 import { JOB_FORM } from "../constants";
+import meImage from "../assets/images/me.png";
 ---
 
 <Layout>
@@ -20,7 +21,7 @@ import { JOB_FORM } from "../constants";
     <div class="flex gap-5 flex-col sm:flex-row max-w-fit mx-auto items-center">
       <div class="m-auto min-w-fit">
         <Image
-          src="/images/me.png"
+          src={meImage}
           className="rounded-full w-24 h-24 md:w-32 md:h-32 drop-shadow-[0_4px_30px_#0369a1]"
           alt="hiroppy"
           width={32 * 4}

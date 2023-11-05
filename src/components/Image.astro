@@ -24,10 +24,6 @@ const {
 const placeholderColor =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcfPRvPQAHHgLWeG8FbgAAAABJRU5ErkJggg==";
 const loading = lazy ? "lazy" : "eager";
-
-if (isOptimization && (!width || !height)) {
-  throw new Error("width/height should be required");
-}
 ---
 
 {
