@@ -5,7 +5,7 @@ const { ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_ONLY_KEY } = import.meta.env;
 
 if (!ALGOLIA_APPLICATION_ID || !ALGOLIA_SEARCH_ONLY_KEY) {
   throw new Error(
-    "ALGOLIA_APPLICATION_ID and ALGOLIA_SEARCH_ONLY_KEY are reuired"
+    "ALGOLIA_APPLICATION_ID and ALGOLIA_SEARCH_ONLY_KEY are reuired",
   );
 }
 ---
@@ -70,7 +70,7 @@ if (!ALGOLIA_APPLICATION_ID || !ALGOLIA_SEARCH_ONLY_KEY) {
 
   const searchClient = algoliasearch(
     window.algolia.applicationId,
-    window.algolia.searchOnlyKey
+    window.algolia.searchOnlyKey,
   );
   const search = instantsearch({
     indexName: "blog",
@@ -108,7 +108,7 @@ if (!ALGOLIA_APPLICATION_ID || !ALGOLIA_SEARCH_ONLY_KEY) {
 
   function renderAutocomplete(
     renderOptions: AutocompleteRenderState,
-    isFirstRender: Boolean
+    isFirstRender: Boolean,
   ) {
     const { indices, refine } = renderOptions;
     const [blog] = indices;
@@ -149,7 +149,7 @@ if (!ALGOLIA_APPLICATION_ID || !ALGOLIA_SEARCH_ONLY_KEY) {
     @apply m-auto h-4/5 w-4/5 md:w-3/4 lg:w-2/4 bg-gray-600 rounded-lg backdrop:bg-gray-900 backdrop:bg-opacity-60;
   }
   .search-box {
-    @apply text-gray-700 h-full;
+    @apply text-gray-700 h-full p-4;
   }
   .search-input-box {
     @apply border border-blue-300 rounded-md w-full p-1 flex items-center gap-1;
