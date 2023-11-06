@@ -6,7 +6,7 @@ type Props = {
 };
 
 const { tag } = Astro.props;
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname.replace(/\/$/, "");
 const basePath = "/blog/tags/";
 const href = `${basePath}${tag}`;
 const active = currentPath.startsWith(basePath) && currentPath === href;
