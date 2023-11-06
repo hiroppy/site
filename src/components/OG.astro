@@ -2,6 +2,7 @@
 import { load } from "cheerio";
 import Image from "./Image.astro";
 import { writeFileSync, readFileSync } from "node:fs";
+import Link from "../components/Link.astro";
 
 type Props = {
   url: string;
@@ -11,7 +12,7 @@ const { url } = Astro.props;
 const generatedFilePath = new URL(
   "../../generated/ogp.json",
   // astroはbuild時に自身ではなくdist/entry.mjsに向けてしまう
-  import.meta.url
+  import.meta.url,
 );
 const ogp: OGPJson = JSON.parse(readFileSync(generatedFilePath, "utf8"));
 let title: string = "";
@@ -52,18 +53,18 @@ if (ogp[url]) {
           },
         },
         null,
-        2
-      )
+        2,
+      ),
     );
   }
 }
 ---
 
-<div class="flex border border-gray-600 p-4 gap-4 justify-between">
+<div
+  class="flex border border-gray-600 p-4 gap-4 justify-between bg-gray-700 rounded-sm"
+>
   <div class="flex flex-col gap-2 flex-1">
-    <a href={url} target="_blank" class="font-semibold">
-      {title}
-    </a>
+    <Link href={url} name={title} className="font-semibold">{title}</Link>
     <span class="text-sm"
       >{
         description && description.length > 100

@@ -5,27 +5,23 @@ type Props = {
   name: string;
   href: string;
   isBlank?: boolean;
-  isNoReferrer?: boolean;
   className?: string;
 };
 
-const {
-  name,
-  href,
-  isBlank = false,
-  isNoReferrer = true,
-  className,
-} = Astro.props;
+const { name, href, isBlank, className } = Astro.props;
+const isNeedTargetBlank =
+  isBlank ??
+  (href.startsWith("http") && !href.startsWith(import.meta.env.SITE));
 ---
 
 <a
   href={href}
-  target={isBlank ? "_blank" : undefined}
+  target={isNeedTargetBlank ? "_blank" : undefined}
   class={mergeClass(
     "text-blue-300 no-underline hover:underline",
     className ?? "",
   )}
-  rel={isNoReferrer ? "noreferrer" : undefined}
+  rel={isNeedTargetBlank ? "noreferrer" : undefined}
   aria-label={`Link for ${name}`}
 >
   <slot />

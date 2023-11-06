@@ -1,7 +1,6 @@
 ---
 import { getBlogs } from "../utils/blog";
 import { formatDate } from "../utils/formatDate";
-import Link from "./Link.astro";
 
 // HMRで重くなるため、dev環境ではglobをさせない
 const posts = import.meta.env.PROD ? await getBlogs() : [];
@@ -18,15 +17,4 @@ const posts = import.meta.env.PROD ? await getBlogs() : [];
         : "dev mode"
     }</span
   >
-  <span>Previous blog</span>
-  <span class="text-right"
-    ><Link
-      href="https://abouthiroppy.hatenablog.jp/"
-      name="技術探し"
-      isBlank
-      className="text-inherit hover:text-blue-300"
-    >
-      技術探し
-    </Link>
-  </span>
 </div>

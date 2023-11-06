@@ -1,0 +1,25 @@
+---
+import { mergeClass } from "../utils/mergeClass";
+
+type Props = {
+  tag: string;
+};
+
+const { tag } = Astro.props;
+const currentPath = Astro.url.pathname;
+const basePath = "/blog/tags/";
+const href = `${basePath}${tag}`;
+const active = currentPath.startsWith(basePath) && currentPath === href;
+---
+
+<a
+  class={mergeClass(
+    "py-1 px-3 rounded-lg shadow-sm border text-sm",
+    active
+      ? "bg-sky-700 text-gray-100 border-gray-500"
+      : "bg-gray-700 text-gray-300  border-gray-600  hover:text-blue-300",
+  )}
+  href={href}
+>
+  {tag}
+</a>

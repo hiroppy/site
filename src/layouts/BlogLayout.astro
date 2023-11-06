@@ -14,6 +14,7 @@ import Pagination from "../components/Pagination.astro";
 import SearchArticles from "../components/SearchArticles.astro";
 import type { CollectionEntry } from "astro:content";
 import type { MarkdownLayoutProps } from "astro";
+import { mergeClass } from "../utils/mergeClass";
 
 const { frontmatter, headings } = Astro.props as MarkdownLayoutProps<
   CollectionEntry<"blog">["data"]
@@ -29,12 +30,14 @@ const posts = import.meta.env.PROD ? await getBlogs() : [];
 const index = posts.findIndex(
   ({ slug }) =>
     slug ===
-    Astro.url.pathname.replace(/\/blog\//, "").replace(/\/$/, "" /* for prod */)
+    Astro.url.pathname
+      .replace(/\/blog\//, "")
+      .replace(/\/$/, "" /* for prod */),
 );
 
 const githubUrl = `https://github.com/hiroppy/site/tree/main/src/content/${Astro.url.pathname.replace(
   /(^\/|\/$)/g,
-  ""
+  "",
 )}.mdx`;
 ---
 
@@ -45,12 +48,25 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/content/${Astro
     <Paper className="overflow-y-auto" slot="optional-content">
       <div class="p-4">
         <p>🔖 Index</p>
-        <ol class="mt-4">
+        <ol class="mt-2">
           {
             indices.map(({ slug, text, depth }) => (
-              <li style={{ marginLeft: `${(depth - 1) * 12}px` }}>
-                <a href={`#${slug}`} class="text-sm hover:text-blue-300">
-                  - {text}
+              <li
+                class={mergeClass(
+                  "border-l-2 py-1",
+                  depth === 2 ? "border-sky-600" : "border-gray-300",
+                )}
+              >
+                <a
+                  href={`#${slug}`}
+                  class={mergeClass(
+                    "text-sm hover:text-blue-300 ml-2 block",
+                    depth === 2
+                      ? "font-semibold text-gray-300"
+                      : "text-gray-400",
+                  )}
+                >
+                  {text}
                 </a>
               </li>
             ))
@@ -82,13 +98,11 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/content/${Astro
       }
       {
         frontmatter.hatenaPath && (
-          <div class="bg-gray-800 p-3 rounded-md text-sm">
+          <div class="bg-gray-700 p-3 rounded-md text-sm">
             💁‍♀️ This post was copied from{" "}
             <Link
               name="Hatena"
               href={`${HATENA_BLOG_ENTRY_URL}/${frontmatter.hatenaPath}`}
-              isNoReferrer={false}
-              isBlank
             >
               Hatena Blog
             </Link>

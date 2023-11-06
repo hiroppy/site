@@ -1,9 +1,11 @@
 ---
 import Card from "./Card.astro";
 import Image from "./Image.astro";
+import Link from "../components/Link.astro";
 import { parseTags } from "../utils/blog";
 import { formatDate } from "../utils/formatDate";
 import type { CollectionEntry } from "astro:content";
+import BlogTag from "./BlogTag.astro";
 
 type Props = {
   url: string;
@@ -14,16 +16,16 @@ const { url, frontmatter } = Astro.props;
 ---
 
 <Card>
-  <a href={url}>
+  <Link href={url} name={frontmatter.title}>
     <h2 class="text-blue-300">{frontmatter.title}</h2>
-  </a>
+  </Link>
   <div class="flex justify-between gap-2 mt-2">
     <div class="flex justify-between gap-4 flex-col">
       <p class="text-sm">{frontmatter.description}</p>
       <div class="flex gap-3 items-center text-gray-300 text-sm">
         <span>{formatDate(new Date(frontmatter.date))}</span>
         <div class="flex gap-2">
-          {parseTags(frontmatter.tags).map((tag) => <span>#{tag}</span>)}
+          {parseTags(frontmatter.tags).map((tag) => <BlogTag tag={tag} />)}
         </div>
       </div>
     </div>
