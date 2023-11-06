@@ -22,8 +22,8 @@ const { options } = Astro.props;
     return (
       <div>
         <a
-          class={`flex items-center justify-between w-full p-4 font-medium text-left hover:bg-slate-600 transition ${
-            isOpen ? "bg-slate-600 text-blue-200" : ""
+          class={`flex items-center justify-between w-full p-4 font-medium text-left hover:bg-gray-700 transition ${
+            isOpen ? "bg-gray-700 text-blue-300" : ""
           }`}
           aria-expanded={isOpen ? "true" : "false"}
           href={href}
@@ -45,7 +45,7 @@ const { options } = Astro.props;
           class={isOpen ? "" : "hidden"}
           aria-labelledby="accordion-collapse-heading"
         >
-          <div class="px-4 py-3 font-light bg-gray-500 text-sm text-gray-50">
+          <div class="px-4 py-3 font-light bg-gray-600 text-sm text-gray-50">
             <slot name="description" />
           </div>
         </div>

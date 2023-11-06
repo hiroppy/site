@@ -21,7 +21,7 @@ import { JOB_FORM } from "../constants";
       <div class="m-auto min-w-fit">
         <Image
           src="/images/me.png"
-          className="rounded-full w-24 h-24 md:w-32 md:h-32"
+          className="rounded-full w-24 h-24 md:w-32 md:h-32 drop-shadow-[0_4px_30px_#0369a1]"
           alt="hiroppy"
           width={32 * 4}
           height={32 * 4}
@@ -65,7 +65,7 @@ import { JOB_FORM } from "../constants";
             articles
               .filter(({ hot }) => !!hot)
               .map(({ url, title, image, bookmark }) => (
-                <li class="flex flex-col gap-4 items-start bg-slate-600 p-2 sm:p-3 rounded-lg justify-between">
+                <li class="flex flex-col gap-4 items-start bg-gray-700 p-2 sm:p-3 rounded-lg justify-between">
                   <Link
                     name={title}
                     href={url}
@@ -99,7 +99,7 @@ import { JOB_FORM } from "../constants";
           {
             repos.hot.map(
               ({ name, image, description, url, stars, language }) => (
-                <li class="flex gap-2 bg-slate-600 p-2 sm:p-3 rounded-lg">
+                <li class="flex gap-2 bg-gray-700 p-2 sm:p-3 rounded-lg">
                   <Image
                     src={image}
                     className="w-8 h-8 rounded-full"

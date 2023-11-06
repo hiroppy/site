@@ -1,13 +1,18 @@
 ---
+import { mergeClass } from "../utils/mergeClass";
+
 type Props = {
   className?: string;
 };
 
-const { className = "" } = Astro.props;
+const { className } = Astro.props;
 ---
 
 <div
-  class={`bg-slate-700 rounded-lg text-gray-200 shadow-lg ring-white/5 overflow-hidden ${className}`.trim()}
+  class={mergeClass(
+    "bg-gray-800 rounded-lg text-gray-200 shadow-lg ring-white/5 overflow-hidden",
+    className ?? "",
+  )}
 >
   <slot />
 </div>

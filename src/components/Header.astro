@@ -5,7 +5,9 @@ import GitHub from "./icons/GitHub.astro";
 import Arrow from "./icons/Arrow.astro";
 
 const currentMenu = PAGE_LINKS.find(({ href }) =>
-  href === "/" ? Astro.url.pathname === href : Astro.url.pathname.includes(href)
+  href === "/"
+    ? Astro.url.pathname === href
+    : Astro.url.pathname.includes(href),
 ) ?? {
   icon: "😵",
   title: "not found",
@@ -13,20 +15,10 @@ const currentMenu = PAGE_LINKS.find(({ href }) =>
 ---
 
 <header
-  class="h-10 border-b-2 border-b-slate-700 sticky top-0 z-50 backdrop-blur transition-colors duration-500 bg-slate-800/70"
+  class="h-10 border-b-2 border-b-slate-700 sticky top-0 z-50 backdrop-blur transition-colors duration-500 bg-gray-800/70"
 >
   <div class="container mx-auto px-4 flex items-center justify-between h-full">
     <div class="text-gray-300">
-      <!-- <Link name="top" href="/" className="hidden lg:block w-7 h-7">
-        <Image
-          src="/images/me.png"
-          isOptimization
-          alt="me"
-          width={16}
-          height={16}
-          className="rounded-full"
-        />
-      </Link> -->
       <div class="flex lg:hidden items-center gap-1">
         <input id="check" type="checkbox" name="menu" class="hidden peer" />
         <label for="check" class="select-none"
