@@ -1,5 +1,3 @@
-import { unlink } from "node:fs/promises";
-import { join, basename } from "node:path";
 import { load } from "cheerio";
 import {
   crawlSites,
@@ -7,7 +5,6 @@ import {
   generateData,
   sortItems,
   downloadImage,
-  baseImageOutputPath,
   getArticles,
 } from "./utils.mjs";
 

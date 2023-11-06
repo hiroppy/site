@@ -1,4 +1,4 @@
-import { readData, generateData, crawlSites } from "./utils.mjs";
+import { generateData, crawlSites } from "./utils.mjs";
 
 const data = await crawlSites("talks");
 const errors = [];

@@ -1,5 +1,5 @@
 import { load } from "cheerio";
-import { readData, generateData, downloadImage } from "./utils.mjs";
+import { generateData, downloadImage } from "./utils.mjs";
 
 // github apiでは過去に寄付してくれた方を取得できないのでhtmlから取る
 // await octokit.graphql(`

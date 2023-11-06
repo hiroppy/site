@@ -1,6 +1,6 @@
 ---
 import type { ImageMetadata } from "astro";
-import { Image } from "astro:assets";
+import { Image as AstroImage } from "astro:assets";
 
 type Props = {
   src: string | ImageMetadata;
@@ -40,13 +40,13 @@ const loading = lazy ? "lazy" : "eager";
       class={className}
     />
   ) : isOptimization ? (
-    <Image
+    // @ts-expect-error TODO: fix
+    <AstroImage
       src={src}
-      className={className}
+      class={className}
       alt={alt}
       width={width! * 4}
       height={height! * 4}
-      isOptimization
     />
   ) : (
     <img
