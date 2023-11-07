@@ -46,7 +46,7 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/content/${Astro
   <MainLayout title={title}>
     <BlogDescription slot="description" />
     <Paper className="overflow-y-auto" slot="optional-content">
-      <div class="p-4">
+      <div class="p-4 blog-index">
         <p>🔖 Index</p>
         <ol class="mt-2">
           {
@@ -54,7 +54,7 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/content/${Astro
               <li
                 class={mergeClass(
                   "border-l-2 py-1",
-                  depth === 2 ? "border-sky-600" : "border-gray-300",
+                  depth === 2 ? "border-sky-600 section" : "border-gray-300",
                 )}
               >
                 <a
@@ -135,8 +135,56 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/content/${Astro
       }
     </div>
   </MainLayout>
+  <script is:inline>
+    document.addEventListener(
+      "astro:page-load",
+      () => {
+        const activeId = "blog-index-active";
+        const h2 = document.querySelectorAll(".blog h2");
+        const sections = document.querySelectorAll(".section");
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            const el = entry.target;
+
+            if (el instanceof HTMLElement) {
+              const index = Number(el.dataset.index);
+
+              if (entry.isIntersecting) {
+                sections.forEach((section, i) => {
+                  if (i === index) {
+                    section.setAttribute("id", activeId);
+                  } else {
+                    section.removeAttribute("id");
+                  }
+                });
+
+                return;
+              }
+            }
+          });
+        });
+
+        h2.forEach((el, i) => {
+          if (el instanceof HTMLElement) {
+            el.dataset.index = `${i}`;
+            observer.observe(el);
+          }
+        });
+      },
+      { once: true },
+    );
+  </script>
 </Layout>
+
 <style is:global>
+  #blog-index-active {
+    @apply border-orange-500;
+  }
+
+  #blog-index-active > a {
+    @apply text-blue-300;
+  }
+
   .blog {
     font-size: 15px;
     @apply sm:text-base;
