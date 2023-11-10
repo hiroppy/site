@@ -23,6 +23,9 @@ module.exports = {
         // for article page
         "unsized-images": "off",
         "bf-cache": "off",
+        // the default of astro image component
+        "lcp-lazy-loaded": "off",
+        "image-aspect-ratio": "off",
       },
     },
   },

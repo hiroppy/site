@@ -20,7 +20,7 @@ export const generatedDataPath = join(
 );
 export const baseImageOutputPath = join(
   fileURLToPath(import.meta.url),
-  "../../public/images/external",
+  "../../src/assets/images/external",
 );
 export const blogPath = join(
   fileURLToPath(import.meta.url),

@@ -9,7 +9,7 @@ import Image from "../components/Image.astro";
 import Hatena from "../components/icons/Hatena.astro";
 import Link from "../components/Link.astro";
 import { JOB_FORM } from "../constants";
-import meImage from "../assets/images/me.png";
+import meImage from "../assets/images/meta/me.png";
 ---
 
 <Layout>
@@ -25,7 +25,6 @@ import meImage from "../assets/images/me.png";
           alt="hiroppy"
           width={32 * 4}
           height={32 * 4}
-          isOptimization
           lazy={false}
         />
       </div>
@@ -71,7 +70,6 @@ import meImage from "../assets/images/me.png";
                       alt={title}
                       width={160}
                       height={80}
-                      isOptimization
                       lazy={false}
                     />
                     <div class="flex items-center text-sm gap-2">
@@ -96,7 +94,6 @@ import meImage from "../assets/images/me.png";
                     alt={name}
                     width={8 * 4}
                     height={8 * 4}
-                    isOptimization
                   />
                   <div class="flex flex-col text-sm flex-1 gap-2">
                     <Link
@@ -157,7 +154,6 @@ import meImage from "../assets/images/me.png";
                   src={avatar}
                   alt={name}
                   className="rounded-full w-12 h-12"
-                  isOptimization
                   width={12 * 4}
                   height={12 * 4}
                 />
@@ -171,7 +167,6 @@ import meImage from "../assets/images/me.png";
                   src={avatar ?? ""}
                   alt={name ?? "private user"}
                   className="rounded-full w-12 h-12"
-                  isOptimization
                   width={12 * 4}
                   height={12 * 4}
                 />

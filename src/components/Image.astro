@@ -1,34 +1,23 @@
 ---
 import type { ImageMetadata } from "astro";
 import { Image as AstroImage } from "astro:assets";
+import { importAssets } from "../utils/importAssets";
 
 type Props = {
   src: string | ImageMetadata;
   alt: string;
   className?: string;
   lazy?: boolean;
-  isOptimization: boolean;
   width?: number;
   height?: number;
 };
 
-const {
-  src,
-  alt,
-  className,
-  lazy = true,
-  isOptimization,
-  width,
-  height,
-} = Astro.props;
+const { src, alt, className, lazy = true, width, height } = Astro.props;
 const placeholderColor =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcfPRvPQAHHgLWeG8FbgAAAABJRU5ErkJggg==";
 const loading = lazy ? "lazy" : "eager";
 ---
 
-{
-  /* astro/image は大きさがわからないものを扱うのは難しいので、native imageも用意しておく */
-}
 {
   src === "" ? (
     <div
@@ -39,21 +28,13 @@ const loading = lazy ? "lazy" : "eager";
       }}
       class={className}
     />
-  ) : isOptimization ? (
-    // @ts-expect-error TODO: fix
-    <AstroImage
-      src={src}
-      class={className}
-      alt={alt}
-      width={width! * 4}
-      height={height! * 4}
-    />
   ) : (
-    <img
-      src={src as string}
+    <AstroImage
+      src={importAssets(src) as /*  astroの型が一致していない */ any}
       class={className}
-      decoding="async"
       alt={alt}
+      width={(width ?? 0) * 4}
+      height={(height ?? 0) * 4}
       loading={loading}
       onerror={`this.onerror=null; this.src='${placeholderColor}'`}
     />

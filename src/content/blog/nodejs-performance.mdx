@@ -169,15 +169,15 @@ For help, see: https://nodejs.org/en/docs/inspector
 
 `inspect`がリンクになっているので、クリックをすると Chrome の devtools が別 window で起動します。
 
-![](/images/blog/nodejs-performance/devtool.png)
+![](../../assets/images/blog/nodejs-performance/devtool.png)
 
 先程の、`cont`は右ツールバーの一番左のボタンを押すことにより進めることができます。
 
-![](/images/blog/nodejs-performance/devtool2.png)
+![](../../assets/images/blog/nodejs-performance/devtool2.png)
 
 進むと以下のようになります。 簡単にファイルから読み取った中身(`data`)が表示されました。
 
-![](/images/blog/nodejs-performance/devtool3.png)
+![](../../assets/images/blog/nodejs-performance/devtool3.png)
 
 ## 終了しないコードの値を見る
 
@@ -253,7 +253,7 @@ debug> .exit
 Node 関係なく、行番号の部分をクリックすることにより、設置できます。
 そうすると、右下の Breakpoints の枠に入ったのがわかります。
 
-![](/images/blog/nodejs-performance/breakpoint.png)
+![](../../assets/images/blog/nodejs-performance/breakpoint.png)
 
 ## 便利なツール
 
@@ -348,7 +348,7 @@ V8 内のプロファイラの実行をサンプリングします。
 
 `inspect`で起動させ、Profiler タブから記録を取ります。(web 開発同様)
 
-![](/images/blog/nodejs-performance/profile.png)
+![](../../assets/images/blog/nodejs-performance/profile.png)
 
 ### フレームグラフを見る
 
@@ -358,7 +358,7 @@ V8 内のプロファイラの実行をサンプリングします。
 $ clinic flame -- node index.js
 ```
 
-![](/images/blog/nodejs-performance/flamegraph.png)
+![](../../assets/images/blog/nodejs-performance/flamegraph.png)
 
 x 軸はサンプルが占める割合、y 軸が stack trace を示します。
 `--prof`の表記と同様に、`*` は最適化済みを示し、`~`は非最適化を示します。
@@ -373,11 +373,11 @@ x 軸はサンプルが占める割合、y 軸が stack trace を示します。
 chrome の devtools にある memory から snapshot を取得します。
 そこから比較をしていきメモリリークなどの発見を行います。
 
-![](/images/blog/nodejs-performance/memory.png)
+![](../../assets/images/blog/nodejs-performance/memory.png)
 
 <br />
 
-![](/images/blog/nodejs-performance/memory2.png)
+![](../../assets/images/blog/nodejs-performance/memory2.png)
 
 また、メモリリークを発見する手法として、`--trace-gc`, `--expose-gc` を使った方法もあります。
 
@@ -401,7 +401,7 @@ clinic doctor -- node server.js
 
 実行が短いプログラムには使えないことに注意してください。
 
-![](/images/blog/nodejs-performance/clinic.png)
+![](../../assets/images/blog/nodejs-performance/clinic.png)
 
 イベントループの遅延が見えるのがありがたいです。
 
@@ -451,12 +451,12 @@ render(Main(1000000));
 これは clinic が作った手法で、Node のプロセスを可視化します。
 非同期処理を監視し、マッピングします。
 
-![](/images/blog/nodejs-performance/bubbleprof.png)
+![](../../assets/images/blog/nodejs-performance/bubbleprof.png)
 
 userland, dependencies, Node Core でそれぞれ処理にかかった時間がわかります。
 また、非同期処理の実行回数と時間もわかります。
 
-![](/images/blog/nodejs-performance/async.png)
+![](../../assets/images/blog/nodejs-performance/async.png)
 
 この場合だとファイル読み込みに 6.8ms かかったことになります。
 

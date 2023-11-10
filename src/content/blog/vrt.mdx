@@ -3,12 +3,13 @@ layout: ../../layouts/BlogLayout.astro
 title: VRT
 date: 1992-04-29
 description: test as VRT
-image: /images/me.png
+image: /images/meta/me.png
 tags: site
 hatenaPath: foo
 ---
 
 import OG from "../../components/OG.astro";
+import Image from "../../components/Image.astro";
 
 ## Test
 
@@ -20,7 +21,7 @@ This article is for VRT.
 <br />
 <br />
 
-<img src="/images/me.png" class="w-10" alt="me" />
+<Image alt="me" src="/images/meta/me.png" className="w-10" />
 
 <br />
 

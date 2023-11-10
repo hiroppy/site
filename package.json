@@ -15,7 +15,7 @@
     "fmt": "prettier -w --plugin-search-dir=. .",
     "fmt:check": "prettier --check .",
     "data:generate": "node scripts/index.mjs",
-    "data:clean": "rm -r ./generated/* ./public/images/external/*",
+    "data:clean": "rm -r ./generated/* ./src/assets/images/external/*",
     "cache": "node scripts/generatecache.mjs"
   },
   "devDependencies": {

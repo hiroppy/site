@@ -15,7 +15,7 @@ import TwitterCard from "../../components/TwitterCard.astro";
 
 この手法は Dynamic Rendering と呼ばれ、SSR に対応してないサイトに対しての SEO 対策として有効です。Dynamic Rendering とは一言でいうと、サーバーで Node 単体ではなく、ブラウザを動かすイメージです。 これは SSR みたいな Node.js のコードを書くことないため、導入コストは低いです。
 
-![](/images/blog/rendertron/flow.png)
+![](../../assets/images/blog/rendertron/flow.png)
 
 詳しくは、以下の google の記事を読んでください。
 
@@ -39,7 +39,7 @@ puppeteer をラップした api server みたいなもので内部は koa が�
 
 上記のリポジトリでは docker-compose で簡単な構成を作りました。
 
-![](/images/blog/rendertron/arch.png)
+![](../../assets/images/blog/rendertron/arch.png)
 
 - `https://foo.com`へアクセスが来たとき、Nginx で bot かどうかを判断する
   - bot の場合は、rendertron(internal)のサーバーへ
@@ -193,19 +193,19 @@ document.querySelector("head").appendChild(fragment);
 
 ### ユーザーがアクセスした場合
 
-![](/images/blog/rendertron/res-by-user.png)
+![](../../assets/images/blog/rendertron/res-by-user.png)
 
 まんま上記の html が出力されただけとなり、CSR です。
 
 ### bot がアクセスした場合
 
-![](/images/blog/rendertron/res-by-bot.png)
+![](../../assets/images/blog/rendertron/res-by-bot.png)
 
 meta に`og`や body の中に d3 の結果出力コードが出ていて SSR が成功しました。
 
 また、画面でみてもユーザーのアクセスと同様の画面となります。
 
-![](/images/blog/rendertron/res-on-browser.png)
+![](../../assets/images/blog/rendertron/res-on-browser.png)
 
 これで google ボットや Twitter などの ogp にも対応することが可能です。
 
@@ -213,7 +213,7 @@ meta に`og`や body の中に d3 の結果出力コードが出ていて SSR �
 
 体感的に、SSR よりは遅く感じます。SSR は最適化しやすいのもあると思いますが。
 
-![](/images/blog/rendertron/res-on-network.png)
+![](../../assets/images/blog/rendertron/res-on-network.png)
 
 SSR よりは楽な分、効率が悪いようにみえますが、今後 ssr-server と rendertron で同じ鯖スペックでどれぐらい捌けるのかも含め実験してみたいなーって思ったりします。
 

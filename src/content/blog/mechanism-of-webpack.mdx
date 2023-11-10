@@ -100,7 +100,7 @@ webpack では、`__webpack_require__`という関数を用いて、依存の走
 
 少し語弊がありますが、図は以下のような感じになります。
 
-![entrypoint](/images/blog/mechanism-of-webpack/entrypoint.png)
+![entrypoint](../../assets/images/blog/mechanism-of-webpack/entrypoint.png)
 
 長いので部分的に省略していますが、コードにすると以下のような感じです。
 
@@ -164,12 +164,12 @@ webpack がファイル変更を監視し、変更があればコンパイルし
 
 以下のような仕組みになっていて、websocket で会話しつつ、webpack plugin で仕込んだ Runtime と呼ばれる部分で webpack-dev-server で配信された新しいアセットを取得しにいきます。
 
-![hmr](/images/blog/mechanism-of-webpack/hmr.png)
+![hmr](../../assets/images/blog/mechanism-of-webpack/hmr.png)
 
 ここの websocket では、次に Runtime が取りに行く hashID を送ります。
 この hashID をファイル名につけて、webpack-dev-server へ fetch を行います。
 
-![hmr-network](/images/blog/mechanism-of-webpack/hmr-network.png)
+![hmr-network](../../assets/images/blog/mechanism-of-webpack/hmr-network.png)
 
 配信される JavaScript と json の中身は以下のようになります。
 
@@ -366,7 +366,7 @@ ESM を使うことによりインポートチェーンをフラット化し、1
 以下の難しいグラフを見てみます。
 特に何も書かれていないものは ESM を使っています。
 
-![scope-hoisting](/images/blog/mechanism-of-webpack/scope-hoisting.png)
+![scope-hoisting](../../assets/images/blog/mechanism-of-webpack/scope-hoisting.png)
 
 この構造の問題点があります。
 
@@ -376,12 +376,12 @@ ESM を使うことによりインポートチェーンをフラット化し、1
 
 これらを単純にチャンク分解すると以下のようになります。
 
-![scope-hoisting](/images/blog/mechanism-of-webpack/scope-hoisting2.png)
+![scope-hoisting](../../assets/images/blog/mechanism-of-webpack/scope-hoisting2.png)
 
 しかし、ESM 同士は静的解析するためビルド時にモジュール解決を行うことができます。
 なので、さらにチャンク内で ESM の同レイヤーのスコープ同士をくっつけることが可能です。
 
-![scope-hoisting](/images/blog/mechanism-of-webpack/scope-hoisting3.png)
+![scope-hoisting](../../assets/images/blog/mechanism-of-webpack/scope-hoisting3.png)
 
 つまり、上記のように同一スコープをまとめることが可能です。
 

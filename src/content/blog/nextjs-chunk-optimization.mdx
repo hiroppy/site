@@ -199,11 +199,11 @@ function d() {
 import { useAQuery } from "../generated/hooks";
 ```
 
-![](/images/blog/nextjs-chunk-optimization/20210811232045.png)
+![](../../assets/images/blog/nextjs-chunk-optimization/20210811232045.png)
 
 <br />
 
-![](/images/blog/nextjs-chunk-optimization/20210811232053.png)
+![](../../assets/images/blog/nextjs-chunk-optimization/20210811232053.png)
 
 ## この問題を解決するには？
 
@@ -218,11 +218,11 @@ import { useAQuery } from "../generated/hooks";
 
 app は特殊なファイルとして位置づけられ、すべてのファイルで呼び出されます。つまり、app でこの大規模な 1 ファイルを呼ぶと各エントリーポイントにある`../generated/hooks`が昇格し、\_app の中に入り各エントリーポイントからいなくなります。**各エントリーポイントからすると、app を読み込んだときに不要な query が大量に入ることは変わらないですが、app はどこでも使うファイルなので一回読み込めばそのコード自体がキャッシュが効くためネットワーク効率は上がります。**
 
-![](/images/blog/nextjs-chunk-optimization/20210811232317.png)
+![](../../assets/images/blog/nextjs-chunk-optimization/20210811232317.png)
 
 <br />
 
-![](/images/blog/nextjs-chunk-optimization/20210811232422.png)
+![](../../assets/images/blog/nextjs-chunk-optimization/20210811232422.png)
 
 ### 大規模生成ファイルを分割する
 
@@ -264,7 +264,7 @@ documents/
 
 それを各エントリーポイントが import すればそのファイルだけが読み込まれるためファイルサイズは最小限となり、不要な query の定義も入ることはありません。また完全に無駄がなくなり scope hoisting されるため結合され無駄な関数実行が減ります。
 
-![](/images/blog/nextjs-chunk-optimization/20210812072524.png)
+![](../../assets/images/blog/nextjs-chunk-optimization/20210812072524.png)
 
 concatenated と書かれている場合は、scope hoisting が効いてることがわかり、この例だと親のエントリーポイントとの結合がされています。
 

@@ -28,7 +28,7 @@ https://whatwg.github.io/loader/#browser-loader-prototype-@@resolve
 取得するライブラリはすでに bundle 済みなため、その中には同じライブラリが存在することが多いです。
 ユーザーは重複するライブラリ(e.g. react, react-dom, etc.)の取得を行う可能性が高いため、その最適化を行うのが Module Federation です。
 
-![](/images/blog/module-federation/arch.png)
+![](../../assets/images/blog/module-federation/arch.png)
 
 上記の図だと、main.js で使っている緑のライブラリは lib-a でも lib-b でも使っていて、それを 3 つダウンロードするのは無駄なので main.js がダウンロードしている緑に lib-a/b が依存すればネットワークの最適化ができます。
 
@@ -70,7 +70,7 @@ top-level での import もビルドはできますが、同期チャンクと�
 そして、ローカルもリモートになることが可能なため、各チャンクは立ち位置がその場の状況によって変化します。
 ローカルと決めてたチャンクに exposes を設定すればそれがリモートチャンクとなるということです。
 
-![](/images/blog/module-federation/chunk.png)
+![](../../assets/images/blog/module-federation/chunk.png)
 
 この場合だと、左のノードがその例で、`/sub`へアクセスした場合は Local という扱いになりますが、`/`へアクセスすると左のノードはリモートという扱いになります。(下のノードから見てリモート)
 
@@ -198,7 +198,7 @@ main.js.LICENSE.txt  790 bytes  [compared for emit]
 
 上記のコードでは、このオプションを入れる前の Network は以下のようになります。
 
-![](/images/blog/module-federation/network-remote.png)
+![](../../assets/images/blog/module-federation/network-remote.png)
 
 579.js というリモートの JS に注目してください。このファイルは page1RemoteEntry.js から呼び出されます。
 この 579.js に React のライブラリソースコードが入っています。(main.js の中にも同様のコードが入っている)
@@ -216,12 +216,12 @@ new ModuleFederationPlugin({
 これは、React ライブラリのソースコードがなくなり、579.js が main.js に含まれている React のライブラリコードを参照しているという状態です。
 この 579.js に残っているコードは`const Page1 = () => <h1>This is Page1</h1>;`のみとなります。
 
-![](/images/blog/module-federation/network-remote2.png)
+![](../../assets/images/blog/module-federation/network-remote2.png)
 
 では、リモート側には`shared: ['react']`を付け、ローカル側をなくすとどうなるでしょう？
 最初に説明したとおり、ローカル側が`shared`を設定してなかった場合は、リモート側が自身の URL から React ライブラリをダウンロードするようにフォールバックが行われます。
 
-![](/images/blog/module-federation/network-remote3.png)
+![](../../assets/images/blog/module-federation/network-remote3.png)
 
 この 466.js が React のライブラリコードとなります。
 これらはコンテナである page1RemoteEntry.js が管理していて、リモートに同一のライブラリがないのでこのコンテナが 466.js をダウンロードする処理を行います。

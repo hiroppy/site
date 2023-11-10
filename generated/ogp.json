@@ -542,7 +542,7 @@
   "https://hiroppy.me": {
     "title": "hiroppy's site",
     "description": "Hiroppy is a JavaScript engineer and working on some OSS projects and Japanese communities.",
-    "image": "/images/me.png"
+    "image": "/images/meta/me.png"
   },
   "http://docs.libuv.org/en/v1.x/design.html": {
     "title": "Design overview — libuv documentation",
