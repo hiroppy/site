@@ -2,7 +2,7 @@
   "name": "@hiroppy/site",
   "version": "0.0.1",
   "private": true,
-  "packageManager": "pnpm@8.10.0",
+  "packageManager": "pnpm@8.10.2",
   "scripts": {
     "setup": "git config --local core.hooksPath .githooks && pnpm corepack",
     "corepack": "corepack enable pnpm",
@@ -31,17 +31,17 @@
     "remark-frontmatter": "^5.0.0",
     "serve": "^14.2.1",
     "strip-markdown": "^6.0.0",
-    "yaml": "^2.3.3"
+    "yaml": "^2.3.4"
   },
   "dependencies": {
     "@astrojs/check": "^0.3.1",
-    "@astrojs/mdx": "^1.1.3",
-    "@astrojs/partytown": "^2.0.1",
+    "@astrojs/mdx": "^1.1.4",
+    "@astrojs/partytown": "^2.0.2",
     "@astrojs/rss": "^3.0.0",
-    "@astrojs/sitemap": "^3.0.2",
+    "@astrojs/sitemap": "^3.0.3",
     "@astrojs/tailwind": "^5.0.2",
     "algoliasearch": "^4.20.0",
-    "astro": "^3.4.0",
+    "astro": "^3.4.4",
     "instantsearch.js": "^4.59.0",
     "sharp": "^0.32.6",
     "typescript": "^5.2.2"
