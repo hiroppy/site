@@ -2,7 +2,7 @@
   "name": "@hiroppy/site",
   "version": "0.0.1",
   "private": true,
-  "packageManager": "pnpm@8.10.3",
+  "packageManager": "pnpm@8.10.4",
   "scripts": {
     "setup": "git config --local core.hooksPath .githooks && pnpm corepack",
     "corepack": "corepack enable pnpm",
@@ -26,7 +26,7 @@
     "emoji-js": "^3.7.0",
     "octokit": "^3.1.1",
     "prettier": "^3.0.3",
-    "prettier-plugin-astro": "^0.12.1",
+    "prettier-plugin-astro": "^0.12.2",
     "remark": "^15.0.1",
     "remark-frontmatter": "^5.0.0",
     "serve": "^14.2.1",
