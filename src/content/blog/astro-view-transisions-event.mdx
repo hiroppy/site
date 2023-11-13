@@ -1,0 +1,47 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: AstroでのView Transitions イベント の注意点
+date: 2023-11-07
+description: AstroでScript内での View Transitions イベントの扱いについて説明します
+image: /images/brands/astro.png
+tags: javascript
+---
+
+import OG from "../../components/OG.astro";
+
+## View Transitions
+
+このサイトもview transisions に対応しており、大変良いユーザー体験となっています。
+
+<OG url="https://developer.chrome.com/docs/web-platform/view-transitions/" />
+
+Astroの場合はとても簡単で以下を行うだけで完成です。
+
+```astro
+---
+import { ViewTransitions } from "astro:transitions";
+---
+
+<html lang="ja">
+  <head>
+    <title>私のホームページ</title>
+    <ViewTransitions />
+  </head>
+  <body>
+    <h1>私のウェブサイトへようこそ！</h1>
+  </body>
+</html>
+```
+
+<br />
+
+<OG url="https://docs.astro.build/ja/guides/view-transitions/" />
+
+しかしながら、view transisionsが有効になっているときにはページ遷移自体が通常の挙動と異なる点に注意が必要です。
+
+## ナビゲーション
+
+Astroの場合、以下の挙動となります。
+
+- `<a>` をホバーすると、次のページのHTMLをprefetchする
+  - `data-astro-reload` をつけると無効にできる

@@ -132,14 +132,14 @@ export async function downloadImage(url) {
   const ext = url.includes(".jpg")
     ? ".jpg"
     : url.includes(".jpeg")
-    ? ".jpg"
-    : url.includes(".png")
-    ? ".png"
-    : url.includes(".webp")
-    ? ".webp"
-    : url.includes(".gif")
-    ? ".gif"
-    : ".png";
+      ? ".jpg"
+      : url.includes(".png")
+        ? ".png"
+        : url.includes(".webp")
+          ? ".webp"
+          : url.includes(".gif")
+            ? ".gif"
+            : ".png";
   const filename = `${Buffer.from(url.replace(/https?:\/\//, ""))
     .toString("base64")
     .replace("/", "_")
