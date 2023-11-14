@@ -252,9 +252,11 @@ const Routes = () => (
       path="/"
       render={() => (
         <LazyRoute
-          component={import(
-            /* webpackChunkName: 'List.content' */ "./components/contents/List"
-          )}
+          component={
+            import(
+              /* webpackChunkName: 'List.content' */ "./components/contents/List"
+            )
+          }
         />
       )}
     />
@@ -262,9 +264,11 @@ const Routes = () => (
       path="/argon"
       render={() => (
         <LazyRoute
-          component={import(
-            /* webpackChunkName: 'Argon.content' */ "./components/contents/Argon"
-          )}
+          component={
+            import(
+              /* webpackChunkName: 'Argon.content' */ "./components/contents/Argon"
+            )
+          }
         />
       )}
     />
