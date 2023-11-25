@@ -1,5 +1,10 @@
 [
   {
+    "publishedAt": "2022-07-26",
+    "url": "https://www.youtube.com/watch?v=QbWjVloaAuY",
+    "siteName": "https://cybozu.github.io/frontend-monthly/posts/2022-07/"
+  },
+  {
     "publishedAt": "2021-09-15",
     "url": "https://www.youtube.com/watch?v=1uCWzfaIedE",
     "siteName": "https://mercari.connpass.com/event/221980/",
@@ -39,6 +44,12 @@
     "url": "https://slides.hiroppy.me/sourcemap-v3/",
     "siteName": "https://techfeed.connpass.com/event/213218/",
     "title": "Source Maps v3"
+  },
+  {
+    "publishedAt": "2021-05-07",
+    "url": "https://connpass.com/event/211877/",
+    "siteName": "https://togetter.com/li/1708701",
+    "title": "Web24 (Frontend Tooling)"
   },
   {
     "publishedAt": "2021-01-25",

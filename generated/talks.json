@@ -1,5 +1,14 @@
 [
   {
+    "title": "［7/26］Cybozu Frontend Monthly#25 (ゲスト：株式会社Yuimedi)",
+    "description": "2022年7月26日(火) 17時開催Cybozu Frontend Monthly#25 (ゲスト：株式会社Yuimedi)のライブ配信ですイベントの詳細：https://cybozu.connpass.com/event/254325/ライブ配信は、16時50分からスタートする予定です（イベントは17時から）...",
+    "image": "/images/external/aS55dGltZy5jb20vdmkvUWJXalZsb2FBdVkvbWF4cmVzZGVmYXVsdC5qcGc=.jpg",
+    "siteName": "Cybozu Frontend Monthly #25",
+    "siteUrl": "https://cybozu.github.io/frontend-monthly/posts/2022-07/",
+    "url": "https://www.youtube.com/watch?v=QbWjVloaAuY",
+    "publishedAt": "2022-07-26"
+  },
+  {
     "title": "Souzoh Tech Talk #05:Infrastructure",
     "description": "9/15（水）に行われたSouzoh Tech Talk #05:Infrastructureの様子です。ぜひご覧ください！",
     "image": "/images/external/aS55dGltZy5jb20vdmkvMXVDV3pmYUllZEUvaHFkZWZhdWx0LmpwZw==.jpg",
@@ -59,6 +68,15 @@
     "siteUrl": "https://techfeed.connpass.com/event/213218/",
     "url": "https://slides.hiroppy.me/sourcemap-v3/",
     "publishedAt": "2021-05-26"
+  },
+  {
+    "title": "Web24 (Frontend Tooling)",
+    "description": "# Web24  ## tl;dr;    * Web のことをただひたすら 24 時間議論する   * 5/7 18:00 ~ 5/8: 18:00   * YouTube Live, 無料, アーカイブなし   * 登壇者の発言は個人のものであり所属する組織とは関係なし  ## 配信 URL    * https://bit.ly/web24live     * 連続配信の仕様のため Youtube Live の URL は途中で変わります     * Youtube Live の URL が変わったらこの bitly の遷移先を書き換えます     * シェアなどにはこの短縮 UR...",
+    "image": "/images/external/bWVkaWEuY29ubnBhc3MuY29tL3RodW1icy82Ny81Ny82NzU3MDZlZWYwZTBkNDk1NTc1ZTQ2MzdiN2UyZWE5ZC5wbm.png",
+    "siteName": "Web24 - Frontend Tooling",
+    "siteUrl": "https://togetter.com/li/1708701",
+    "url": "https://connpass.com/event/211877/",
+    "publishedAt": "2021-05-07"
   },
   {
     "title": "a deep dive into module graph",

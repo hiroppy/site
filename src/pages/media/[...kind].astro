@@ -110,7 +110,7 @@ function getPrefixForTitle(type: MediaType) {
               <div class="absolute top-0 flex items-center justify-center w-full h-full bg-gray-700 overflow-hidden">
                 <div class="absolute hidden z-20 group-hover:block bg-gray-900/90 w-full h-full">
                   <div class="flex justify-center text-sm py-10 px-2 h-full overflow-scroll">
-                    <p>{description}</p>
+                    <p class="break-all">{description}</p>
                   </div>
                 </div>
                 <Image src={image ?? ""} alt={title} width={100} height={100} />
