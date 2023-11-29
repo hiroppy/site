@@ -67,7 +67,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.40.0
+      image: mcr.microsoft.com/playwright:v1.40.1
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node
