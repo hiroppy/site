@@ -7,6 +7,13 @@ import mdx from "@astrojs/mdx";
 // https://astro.build/config
 export default defineConfig({
   site: "https://hiroppy.me/",
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "ja"],
+    routing: {
+      prefixDefaultLocale: true,
+    },
+  },
   integrations: [
     tailwind(),
     partytown({

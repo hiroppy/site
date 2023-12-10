@@ -1,19 +1,35 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import MainLayout from "../layouts/MainLayout.astro";
-import Card from "../components/Card.astro";
-import SkillBox from "../components/SkillBox.astro";
-import Link from "../components/Link.astro";
-import CompanyLink from "../components/CompanyLink.astro";
-import { JOB_FORM } from "../constants";
-import tabelogImage from "../assets/images/brands/tabelog.jpg";
-import mercariImage from "../assets/images/brands/mercari.png";
-import alpacaImage from "../assets/images/brands/alpaca.jpg";
-import blackImage from "../assets/images/brands/black.jpg";
-import anotherworksImage from "../assets/images/brands/anotherworks.webp";
-import rebaseImage from "../assets/images/brands/rebase.png";
-import route06Image from "../assets/images/brands/route06.jpg";
-import runpeaceImage from "../assets/images/brands/runpeace.jpg";
+import Layout from "../../layouts/Layout.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import Card from "../../components/Card.astro";
+import SkillBox from "../../components/SkillBox.astro";
+import Link from "../../components/Link.astro";
+import CompanyLink from "../../components/CompanyLink.astro";
+import { JOB_FORM } from "../../constants";
+import tabelogImage from "../../assets/images/brands/tabelog.jpg";
+import mercariImage from "../../assets/images/brands/mercari.png";
+import alpacaImage from "../../assets/images/brands/alpaca.jpg";
+import blackImage from "../../assets/images/brands/black.jpg";
+import anotherworksImage from "../../assets/images/brands/anotherworks.webp";
+import rebaseImage from "../../assets/images/brands/rebase.png";
+import route06Image from "../../assets/images/brands/route06.jpg";
+import runpeaceImage from "../../assets/images/brands/runpeace.jpg";
+import { useTranslations } from "../../utils/i18n";
+
+export { getStaticPaths } from "../../utils/i18n";
+
+const i18n = {
+  ja: {
+    title: "仕事",
+    test: "a",
+  },
+  en: {
+    title: "Jobs",
+    test: "b",
+  },
+} as const;
+
+const { t } = useTranslations(Astro.url, i18n);
 ---
 
 <Layout>
@@ -34,9 +50,7 @@ import runpeaceImage from "../assets/images/brands/runpeace.jpg";
     <div class="flex gap-4 mt-4 flex-col">
       <Card title="Skills">
         <p>
-          I started programming when I was a high school student using JS and C.
-          I have been studying image processing for four years, and I also
-          conducted research on optimization for ニコニコ動画.
+          {t("title")}
         </p>
         <p>
           Currently, my specialty is web performance and frontend infrastructure
