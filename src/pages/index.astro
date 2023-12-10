@@ -162,7 +162,14 @@ import meImage from "../assets/images/meta/me.png";
           }
           {
             sponsors.past.map(({ name, href, avatar }) => (
-              <Link href={href} name={name ?? "private user"}>
+              <Link
+                href={
+                  href.includes("https://docs.github.com/sponsors")
+                    ? "https://github.com"
+                    : href
+                }
+                name={name ?? "private user"}
+              >
                 <Image
                   src={avatar ?? ""}
                   alt={name ?? "private user"}
