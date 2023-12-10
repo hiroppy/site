@@ -25,7 +25,7 @@ export async function importAssets(
     if (kind === "brands" || kind === "external" || kind === "meta") {
       switch (ext) {
         case ".webp":
-          return import(`../../assets/images/${kind}/${name}.webp`);
+          return import(`../assets/images/${kind}/${name}.webp`);
         case ".jpg":
           return import(`../assets/images/${kind}/${name}.jpg`);
         case ".png":
