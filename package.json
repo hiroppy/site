@@ -35,13 +35,13 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.3.1",
-    "@astrojs/mdx": "^2.0.0",
+    "@astrojs/mdx": "^2.0.1",
     "@astrojs/partytown": "^2.0.2",
     "@astrojs/rss": "^4.0.1",
     "@astrojs/sitemap": "^3.0.3",
     "@astrojs/tailwind": "^5.0.3",
     "algoliasearch": "^4.20.0",
-    "astro": "^4.0.3",
+    "astro": "^4.0.4",
     "instantsearch.js": "^4.62.0",
     "sharp": "^0.33.0",
     "typescript": "^5.3.3"
