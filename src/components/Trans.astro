@@ -1,0 +1,32 @@
+---
+import { useTranslations } from "../utils/i18n";
+import type { I18n } from "../utils/i18n";
+
+type Props = {
+  i18nKey: string;
+  i18n: I18n;
+};
+
+const { i18nKey, i18n } = Astro.props;
+const { t } = useTranslations(Astro.currentLocale, i18n);
+
+async function replaceWithComponent(str: string) {
+  const parts = str.split(/\{\{(.*?)\}\}/g);
+
+  for (let i = 1; i < parts.length; i += 2) {
+    const key = parts[i].trim();
+
+    if (!Astro.slots.has(key)) {
+      throw new Error(`not found ${key}`);
+    }
+
+    parts[i] = await Astro.slots.render(key);
+  }
+
+  return parts.join("");
+}
+
+const res = await replaceWithComponent(t(i18nKey));
+---
+
+<Fragment set:html={res} />

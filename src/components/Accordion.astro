@@ -6,6 +6,7 @@ type Props = {
     icon: string;
     title: string;
     href: string;
+    isOpen?: boolean;
   }[];
 };
 
@@ -13,12 +14,7 @@ const { options } = Astro.props;
 ---
 
 {
-  options.map(({ icon, title, href }) => {
-    const isOpen =
-      href === "/"
-        ? Astro.url.pathname === href
-        : Astro.url.pathname.includes(href);
-
+  options.map(({ icon, title, href, isOpen }) => {
     return (
       <div>
         <a

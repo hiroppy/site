@@ -3,6 +3,11 @@ import SnsIcon from "./SnsIcon.astro";
 import { PAGE_LINKS } from "../constants";
 import GitHub from "./icons/GitHub.astro";
 import Arrow from "./icons/Arrow.astro";
+import LanguagePicker from "./LanguagePicker.astro";
+
+type Props = {
+  isShowLanguagePicker?: boolean;
+};
 
 const currentMenu = PAGE_LINKS.find(({ href }) =>
   href === "/"
@@ -12,6 +17,7 @@ const currentMenu = PAGE_LINKS.find(({ href }) =>
   icon: "😵",
   title: "not found",
 };
+const { isShowLanguagePicker = true } = Astro.props;
 ---
 
 <header
@@ -50,6 +56,7 @@ const currentMenu = PAGE_LINKS.find(({ href }) =>
       </div>
     </div>
     <div class="flex gap-4">
+      {isShowLanguagePicker && <LanguagePicker />}
       <slot name="action" />
       <SnsIcon href="https://github.com/hiroppy/site" name="GitHub">
         <GitHub />

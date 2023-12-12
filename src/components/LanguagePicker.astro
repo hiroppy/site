@@ -1,0 +1,31 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const path = Astro.url.pathname.replace(`/${Astro.currentLocale}`, "");
+const options = [
+  {
+    lang: "en",
+    label: "🇺🇸 English",
+    value: getRelativeLocaleUrl("en", path),
+  },
+  {
+    lang: "ja",
+    label: "🇯🇵 日本語",
+    value: getRelativeLocaleUrl("ja", path),
+  },
+] as const;
+---
+
+<select
+  onchange="location = this.value"
+  class="rounded-full text-xs font-semibold bg-slate-600 text-white px-2 py-1"
+  aria-label="Language selection"
+>
+  {
+    options.map(({ lang, label, value }) => (
+      <option value={value} selected={Astro.currentLocale === lang}>
+        {label}
+      </option>
+    ))
+  }
+</select>

@@ -14,7 +14,8 @@ import anotherworksImage from "../../assets/images/brands/anotherworks.webp";
 import rebaseImage from "../../assets/images/brands/rebase.png";
 import route06Image from "../../assets/images/brands/route06.jpg";
 import runpeaceImage from "../../assets/images/brands/runpeace.jpg";
-import { useTranslations } from "../../utils/i18n";
+import { useTranslations, type I18n } from "../../utils/i18n";
+import Trans from "../../components/Trans.astro";
 
 export { getStaticPaths } from "../../utils/i18n";
 
@@ -22,14 +23,37 @@ const i18n = {
   ja: {
     title: "仕事",
     test: "a",
+    yuimedi: "株式会社Yuimedi",
+    form: "こちら",
+    description: `
+      現在、{{yuimedi}}でVPoEとして働いており、複数の会社でも技術顧問として活動しています。
+      お仕事の依頼等は{{form}}からお願いします。
+    `,
+    skill: `
+      私の専門は Web パフォーマンスとフロントエンド インフラストラクチャです。
+      webpack、Turborepo、Vite などのツールを使用します。 本業と
+      テクニカルアドバイザーとして、主にNext.jsを使ったプロダクト開発を行っています。
+    `,
   },
   en: {
     title: "Jobs",
     test: "b",
+    yuimedi: "Yuimedi, inc",
+    form: "this form",
+    description: `
+      I work as a VPoE at {{yuimedi}} and
+      provide frontend development support as a technical advisor for several companies.
+      Welcome to request anything so feel free to submit {{form}}.
+    `,
+    skill: `
+      Currently, my specialty is web performance and frontend infrastructure
+      using tools such as webpack, Turborepo, and Vite. In my main job and
+      as a technical advisor, I mainly develop products using Next.js.
+    `,
   },
-} as const;
+} as const satisfies I18n;
 
-const { t } = useTranslations(Astro.url, i18n);
+const { t } = useTranslations(Astro.currentLocale, i18n);
 ---
 
 <Layout>
@@ -39,23 +63,34 @@ const { t } = useTranslations(Astro.url, i18n);
        🐈 Web technical advisor
     </span>
 
-     I work as a VPoE at
-    <Link name="Yuimedi" href="https://yuimedi.com/en">Yuimedi, inc</Link>
-     and provide frontend development support as a technical advisor for several
-    companies. Welcome to request anything so feel free to submit
-    <Link name="request-job" href={JOB_FORM} className="text-orange-300 italic">
-      this form
-    </Link>.
+    <p>
+      <Trans i18n={i18n} i18nKey="description">
+        <slot slot="yuimedi">
+          <Link
+            name="Yuimedi"
+            href={`https://yuimedi.com/${
+              Astro.currentLocale === "en" ? "en" : ""
+            }`}
+          >
+            {t("yuimedi")}
+          </Link>
+        </slot>
+        <slot slot="form">
+          <Link
+            name="request-job"
+            href={JOB_FORM}
+            className="text-orange-300 italic"
+          >
+            {t("form")}
+          </Link>
+        </slot>
+      </Trans>
+    </p>
 
     <div class="flex gap-4 mt-4 flex-col">
       <Card title="Skills">
         <p>
-          {t("title")}
-        </p>
-        <p>
-          Currently, my specialty is web performance and frontend infrastructure
-          using tools such as webpack, Turborepo, and Vite. In my main job and
-          as a technical advisor, I mainly develop products using Next.js.
+          {t("skill")}
         </p>
         <span class="block text-right mt-4 text-sm"
           >👷 maintainer(including past)</span
@@ -219,12 +254,6 @@ const { t } = useTranslations(Astro.url, i18n);
           <CompanyLink src={blackImage} alt="black" href="https://by.black/" />
         </div>
       </Card>
-      <!-- <Card title="Timeline">
-        <p class="text-right mb-2">🙈 the side job shows only public</p>
-        <div class="overflow-auto h-80">
-          <JobHistory />
-        </div>
-      </Card> -->
     </div>
   </MainLayout>
 </Layout>

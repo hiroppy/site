@@ -8,21 +8,25 @@ export const PAGE_LINKS = <const>[
     icon: "😵‍💫",
     title: "About",
     href: "/",
+    isRoot: false,
   },
   {
     icon: "👨‍💻",
     title: "Jobs",
     href: "/jobs",
+    isRoot: false,
   },
   {
     icon: "📣",
     title: "Media",
     href: "/media",
+    isRoot: false,
   },
   {
     icon: "🗒",
     title: "Blog",
     href: "/blog",
+    isRoot: true,
   },
 ];
 export const HATENA_BLOG_URL = "https://abouthiroppy.hatenablog.jp";

@@ -1,25 +1,33 @@
-import { ui, defaultLang } from "./ui";
+// これもいいけど、結局保証できない
+// import config from '../../astro.config.mjs'
+// const a = config.i18n?.locales;
+const langs = <const>["en", "ja"];
 
-type I18n = Record<"en" | "ja", any>;
+type Lang = (typeof langs)[number];
 
-export function getLangFromUrl(url: URL): "en" | "ja" {
-  const [, lang] = url.pathname.split("/");
+export type I18n = Record<Lang, any>;
 
-  if (lang in ui) {
-    return lang as "en" | "ja";
+export function useTranslations<T extends I18n>(
+  lang: string | undefined,
+  i18n: T,
+) {
+  if (!langs.includes(lang as Lang)) {
+    throw new Error(`"${lang}" is not supported`);
   }
 
-  return defaultLang as "en";
-}
-
-export function useTranslations<T extends I18n>(url: URL, i18n: T) {
-  const lang = getLangFromUrl(url);
+  const currentLang = lang as Lang;
 
   function t(key: keyof (typeof i18n)["en"]) {
-    return i18n[lang][key] ?? i18n[defaultLang as "en"][key];
+    const text = i18n[currentLang][key];
+
+    if (text === undefined) {
+      throw new Error(`not found "${key as string}" in ${lang}`);
+    }
+
+    return i18n[currentLang][key];
   }
 
-  return { t };
+  return <const>{ t };
 }
 
 export function getStaticPaths() {
