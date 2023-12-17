@@ -32,22 +32,19 @@ import meImage from "../assets/images/meta/me.png";
         <p>
           Hiroppy is a JavaScript engineer and works on some OSS projects and
           Japanese communities. I have lived in Japan and Ireland, and now I
-          work in <Link name="Yuimedi" href="https://yuimedi.com/en">
-            Yuimedi, inc
-          </Link>
+          work in <Link href="https://yuimedi.com/en">Yuimedi, inc</Link>
            that is a medical IT company in Japan as VPoE.
         </p>
         <br />
         <p>
           If you have a request for a technical advisor, talking, writing, etc,
           feel free to submit <Link
-            name="request-job"
             href={JOB_FORM}
             className="text-orange-300 italic"
           >
             this form
           </Link>. Please check
-          <Link name="jobs" href="/jobs">my job history and skills</Link>
+          <Link href="/jobs">my job history and skills</Link>
            if you need them.
         </p>
       </div>
@@ -60,7 +57,7 @@ import meImage from "../assets/images/meta/me.png";
               .filter(({ hot }) => !!hot)
               .map(({ url, title, image, bookmark }) => (
                 <li class="flex flex-col gap-4 items-start bg-gray-700 p-2 sm:p-3 rounded-lg justify-between">
-                  <Link name={title} href={url} className="text-blue-200">
+                  <Link href={url} className="text-blue-200">
                     {title}
                   </Link>
                   <div class="flex justify-between w-full items-end text-gray-300">
@@ -96,11 +93,7 @@ import meImage from "../assets/images/meta/me.png";
                     height={8 * 4}
                   />
                   <div class="flex flex-col text-sm flex-1 gap-2">
-                    <Link
-                      name={name}
-                      href={url}
-                      className="text-blue-200 text-lg"
-                    >
+                    <Link href={url} className="text-blue-200 text-lg">
                       {name}
                     </Link>
                     <span class="break-all flex-1">{description}</span>
@@ -149,7 +142,7 @@ import meImage from "../assets/images/meta/me.png";
         <div class="flex flex-wrap sm:gap-2 gap-1">
           {
             sponsors.current.map(({ name, href, avatar }) => (
-              <Link name={name} href={href}>
+              <Link href={href}>
                 <Image
                   src={avatar}
                   alt={name}
@@ -168,7 +161,7 @@ import meImage from "../assets/images/meta/me.png";
                     ? "https://github.com"
                     : href
                 }
-                name={name ?? "private user"}
+                ariaLabel={name === undefined ? "private user" : undefined}
               >
                 <Image
                   src={avatar ?? ""}
