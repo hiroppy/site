@@ -7,8 +7,9 @@ runs:
         version: 8
     - uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version-file: ".nvmrc"
         cache: pnpm
+        cache-dependency-path: "pnpm-lock.yaml"
     - run: npm run corepack
       shell: bash
     - run: pnpm i

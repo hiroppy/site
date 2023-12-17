@@ -47,8 +47,7 @@ jobs:
         with:
           name: app
           path: ./dist
-      - run: pnpm i -g @lhci/cli
-      - run: lhci autorun --upload.target=temporary-public-storage
+      - run: npx lhci autorun --upload.target=temporary-public-storage
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
   a11y:
@@ -61,8 +60,7 @@ jobs:
         with:
           name: app
           path: ./dist
-      - run: pnpm i -g serve pa11y-ci
-      - run: serve dist & pa11y-ci
+      - run: npx serve dist & npx pa11y-ci
   vrt:
     needs: [build]
     runs-on: ubuntu-latest

@@ -19,18 +19,22 @@
     "cache": "node scripts/generatecache.mjs"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.13.0",
     "@playwright/test": "^1.40.1",
     "cheerio": "^1.0.0-rc.12",
     "color": "^4.2.3",
     "dotenv": "^16.3.1",
     "emoji-js": "^3.8.0",
     "octokit": "^3.1.2",
+    "pa11y-ci": "^3.1.0",
     "prettier": "^3.1.1",
     "prettier-plugin-astro": "^0.12.2",
     "remark": "^15.0.1",
     "remark-frontmatter": "^5.0.0",
     "serve": "^14.2.1",
+    "sharp": "^0.33.0",
     "strip-markdown": "^6.0.0",
+    "typescript": "^5.3.3",
     "yaml": "^2.3.4"
   },
   "dependencies": {
@@ -42,8 +46,6 @@
     "@astrojs/tailwind": "^5.0.3",
     "algoliasearch": "^4.22.0",
     "astro": "^4.0.6",
-    "instantsearch.js": "^4.62.0",
-    "sharp": "^0.33.0",
-    "typescript": "^5.3.3"
+    "instantsearch.js": "^4.62.0"
   }
 }
