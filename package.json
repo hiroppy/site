@@ -32,7 +32,7 @@
     "remark": "^15.0.1",
     "remark-frontmatter": "^5.0.0",
     "serve": "^14.2.1",
-    "sharp": "^0.33.0",
+    "sharp": "^0.33.1",
     "strip-markdown": "^6.0.0",
     "typescript": "^5.3.3",
     "yaml": "^2.3.4"
