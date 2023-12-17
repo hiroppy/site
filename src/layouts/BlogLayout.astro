@@ -100,10 +100,7 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/content/${Astro
         frontmatter.hatenaPath && (
           <div class="bg-gray-700 p-3 rounded-md text-sm">
             💁‍♀️ This post was copied from{" "}
-            <Link
-              name="Hatena"
-              href={`${HATENA_BLOG_ENTRY_URL}/${frontmatter.hatenaPath}`}
-            >
+            <Link href={`${HATENA_BLOG_ENTRY_URL}/${frontmatter.hatenaPath}`}>
               Hatena Blog
             </Link>
           </div>

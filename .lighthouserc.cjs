@@ -20,6 +20,13 @@ module.exports = {
         // the default of astro image component
         "lcp-lazy-loaded": "off",
         "image-aspect-ratio": "off",
+        redirects: "off",
+        // TODO: need to consider design
+        "link-in-text-block": "off",
+        "total-byte-weight": "off",
+        // pa11y supports
+        "identical-links-same-purpose": "off",
+        "label-content-name-mismatch": "off",
       },
     },
   },

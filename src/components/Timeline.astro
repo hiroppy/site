@@ -55,11 +55,7 @@ const { items } = Astro.props;
                     <>
                       on
                       {siteUrl ? (
-                        <Link
-                          href={siteUrl}
-                          name={siteName}
-                          className="text-blue-200"
-                        >
+                        <Link href={siteUrl} className="text-blue-200">
                           {siteName}
                         </Link>
                       ) : (

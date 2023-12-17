@@ -16,5 +16,6 @@
     "strict": true,
     "strictNullChecks": true,
     "types": ["astro/client"]
-  }
+  },
+  "exclude": ["dist"]
 }
