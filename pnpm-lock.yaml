@@ -30,8 +30,8 @@ dependencies:
     specifier: ^4.0.6
     version: 4.0.6(typescript@5.3.3)
   instantsearch.js:
-    specifier: ^4.62.0
-    version: 4.62.0(algoliasearch@4.22.0)
+    specifier: ^4.63.0
+    version: 4.63.0(algoliasearch@4.22.0)
 
 devDependencies:
   '@lhci/cli':
@@ -1893,8 +1893,8 @@ packages:
       uri-js: 4.4.1
     dev: true
 
-  /algoliasearch-helper@3.16.0(algoliasearch@4.22.0):
-    resolution: {integrity: sha512-RxOtBafSQwyqD5BLO/q9VsVw/zuNz8kjb51OZhCIWLr33uvKB+vrRis+QK+JFlNQXbXf+w28fsTWiBupc1pHew==}
+  /algoliasearch-helper@3.16.1(algoliasearch@4.22.0):
+    resolution: {integrity: sha512-qxAHVjjmT7USVvrM8q6gZGaJlCK1fl4APfdAA7o8O6iXEc68G0xMNrzRkxoB/HmhhvyHnoteS/iMTiHiTcQQcg==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
     dependencies:
@@ -3874,8 +3874,8 @@ packages:
       through: 2.3.8
     dev: true
 
-  /instantsearch.js@4.62.0(algoliasearch@4.22.0):
-    resolution: {integrity: sha512-zq8kQpLR8xuWH59UtkJmr0iJs/M0VlvBVeMzVmpwkbfUNPpAcYPSjxw0iBR4QgqeyOUqWnZfhLJHUVmD+H+lLg==}
+  /instantsearch.js@4.63.0(algoliasearch@4.22.0):
+    resolution: {integrity: sha512-Bk46LO6hpaFHkeDIjAV7+xgq+1a5zOq7lKUen9KfW4EoA1JVn26HEeAjW8cvHwHp1phL9mgu/Q3CQ075+6V9hg==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
     dependencies:
@@ -3887,12 +3887,12 @@ packages:
       '@types/hogan.js': 3.0.1
       '@types/qs': 6.9.7
       algoliasearch: 4.22.0
-      algoliasearch-helper: 3.16.0(algoliasearch@4.22.0)
+      algoliasearch-helper: 3.16.1(algoliasearch@4.22.0)
       hogan.js: 3.0.2
       htm: 3.1.1
       preact: 10.13.2
       qs: 6.9.7
-      search-insights: 2.6.0
+      search-insights: 2.13.0
     dev: false
 
   /intl-messageformat@10.5.8:
@@ -6152,9 +6152,8 @@ packages:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
     dev: false
 
-  /search-insights@2.6.0:
-    resolution: {integrity: sha512-vU2/fJ+h/Mkm/DJOe+EaM5cafJv/1rRTZpGJTuFPf/Q5LjzgMDsqPdSaZsAe+GAWHHsfsu+rQSAn6c8IGtBEVw==}
-    engines: {node: '>=8.16.0'}
+  /search-insights@2.13.0:
+    resolution: {integrity: sha512-Orrsjf9trHHxFRuo9/rzm0KIWmgzE8RMlZMzuhZOJ01Rnz3D0YBAe+V6473t6/H6c7irs6Lt48brULAiRWb3Vw==}
     dev: false
 
   /section-matter@1.0.0:

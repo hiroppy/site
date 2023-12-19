@@ -46,6 +46,6 @@
     "@astrojs/tailwind": "^5.0.3",
     "algoliasearch": "^4.22.0",
     "astro": "^4.0.6",
-    "instantsearch.js": "^4.62.0"
+    "instantsearch.js": "^4.63.0"
   }
 }
