@@ -16,7 +16,10 @@
     "fmt:check": "prettier --check .",
     "data:generate": "node scripts/index.mjs",
     "data:clean": "rm -r ./generated/* ./src/assets/images/external/*",
-    "cache": "node scripts/generatecache.mjs"
+    "cache": "node scripts/generatecache.mjs",
+    "serve": "serve dist",
+    "a11y": "pa11y-ci",
+    "lh": "lhci autorun"
   },
   "devDependencies": {
     "@lhci/cli": "^0.13.0",
