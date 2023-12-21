@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@astrojs/check':
-    specifier: ^0.3.3
-    version: 0.3.3(prettier-plugin-astro@0.12.2)(prettier@3.1.1)(typescript@5.3.3)
+    specifier: ^0.3.4
+    version: 0.3.4(prettier-plugin-astro@0.12.2)(prettier@3.1.1)(typescript@5.3.3)
   '@astrojs/mdx':
     specifier: ^2.0.2
     version: 2.0.2(astro@4.0.7)
@@ -206,13 +206,13 @@ packages:
       '@jridgewell/trace-mapping': 0.3.19
     dev: false
 
-  /@astrojs/check@0.3.3(prettier-plugin-astro@0.12.2)(prettier@3.1.1)(typescript@5.3.3):
-    resolution: {integrity: sha512-IpglE0PNWEXmRY0y67EYuLwiyMxRUuZuG1oP+tIgqeQEy45g1pBMIWpGnNXdoVRbChHDWMSFd2kLUtgzBUHnRQ==}
+  /@astrojs/check@0.3.4(prettier-plugin-astro@0.12.2)(prettier@3.1.1)(typescript@5.3.3):
+    resolution: {integrity: sha512-Wi4KwW38J3GCd/U6LH2UuU4uc4P/K1WYaqhoKm2o7rVoGhQfO+RWrSO26rUPRXYbmae8JugAgpCmsHC8bt5RlA==}
     hasBin: true
     peerDependencies:
       typescript: ^5.0.0
     dependencies:
-      '@astrojs/language-server': 2.5.4(prettier-plugin-astro@0.12.2)(prettier@3.1.1)(typescript@5.3.3)
+      '@astrojs/language-server': 2.5.5(prettier-plugin-astro@0.12.2)(prettier@3.1.1)(typescript@5.3.3)
       chokidar: 3.5.3
       fast-glob: 3.3.2
       kleur: 4.1.5
@@ -234,8 +234,8 @@ packages:
     resolution: {integrity: sha512-06DD2ZnItMwUnH81LBLco3tWjcZ1lGU9rLCCBaeUCGYe9cI0wKyY2W3kDyoW1I6GmcWgt1fu+D1CTvz+FIKf8A==}
     dev: false
 
-  /@astrojs/language-server@2.5.4(prettier-plugin-astro@0.12.2)(prettier@3.1.1)(typescript@5.3.3):
-    resolution: {integrity: sha512-diTs8AW5TvpO6LWEyuAMAC1ydH1tnVJmv2dRrcczklJZcfY9/eYLbGtKiC9rEQH3BwvFdnphroMUEprzCiqSMg==}
+  /@astrojs/language-server@2.5.5(prettier-plugin-astro@0.12.2)(prettier@3.1.1)(typescript@5.3.3):
+    resolution: {integrity: sha512-hk7a8S7bpf//BOA6mMjiYqi/eiYtGPfUfw59eVXdutdRFdwDHtu4jcsLu43ZaId56pAcE8qFjIvJxySvzcxiUA==}
     hasBin: true
     peerDependencies:
       prettier: ^3.0.0
