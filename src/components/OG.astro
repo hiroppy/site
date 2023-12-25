@@ -75,13 +75,15 @@ if (ogp[url]) {
   </div>
   {
     image && (
-      <Image
-        src={image}
-        className="h-10 object-contain sm:h-24"
-        alt="title"
-        width={60}
-        height={40}
-      />
+      <div class="max-w-52 max-h-40 h-32 hidden sm:block">
+        <Image
+          src={image}
+          alt="title"
+          className="object-cover h-full w-full rounded-sm"
+          width={60}
+          height={40}
+        />
+      </div>
     )
   }
 </div>

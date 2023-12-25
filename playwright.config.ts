@@ -1,4 +1,4 @@
-import type { PlaywrightTestConfig } from "@playwright/test";
+import { devices, type PlaywrightTestConfig } from "@playwright/test";
 
 const config: PlaywrightTestConfig = {
   fullyParallel: true,
@@ -8,6 +8,20 @@ const config: PlaywrightTestConfig = {
     port: 3000,
     reuseExistingServer: true,
   },
+  projects: [
+    {
+      name: "chrome",
+      use: {
+        ...devices["Desktop Chrome"],
+      },
+    },
+    {
+      name: "android",
+      use: {
+        ...devices["Pixel 7"],
+      },
+    },
+  ],
 };
 
 export default config;
