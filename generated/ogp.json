@@ -938,5 +938,30 @@
     "title": "refactor: migrate to Content Collections by hiroppy · Pull Request #549 · hiroppy/site",
     "description": "https://docs.astro.build/en/guides/content-collections",
     "image": "https://opengraph.githubassets.com/2d0af6d097b36bc28a827d65c6c742737d9b724a42d7866a98fca880fd94c78a/hiroppy/site/pull/549"
+  },
+  "https://findy-code.io/engineer-lab/influential-books-3": {
+    "title": "あなたのキャリアに影響を与えた本は何ですか？ 著名エンジニアの方々に聞いてみた【第三弾】 - Findy Engineer Lab - ファインディエンジニアラボ",
+    "description": "過去にエンジニアラボに登場した、8人の著名なエンジニアのキャリアに影響を与えた“珠玉の書籍”を、ご本人にまつわるエピソードとともに紹介してもらいました。",
+    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/m/marikaakamatsu/20231109/20231109110540.jpg"
+  },
+  "https://prtimes.jp/main/html/rd/p/000000097.000021828.html": {
+    "title": "株式会社Rebaseの技術顧問に廣戸裕大（Hiroppy）氏が就任",
+    "description": "株式会社Rebaseのプレスリリース（2023年12月15日 14時00分）株式会社Rebaseの技術顧問に廣戸裕大（Hiroppy）氏が就任",
+    "image": "https://prcdn.freetls.fastly.net/release_image/21828/97/21828-97-28c42bc1c46e009f26ef0df502fa047e-1280x720.png?format=jpeg&auto=webp&fit=bounds&width=480&height=360"
+  },
+  "https://findy-code.io/engineer-lab/hiroppy": {
+    "title": "プログラミングを強みに生き残れるか？ 焦燥感にとらわれた20代を越えて広がったキャリアの可能性  - Findy Engineer Lab - ファインディエンジニアラボ",
+    "description": "OSS活動をする中で知った、届かない存在に対する焦燥感。ソフトウェアエンジニアとしてプログラミングが一番の強みだという廣戸裕大（hiroppy）さんですが、IC（Individual Contributor）のキャリアを歩むなかで技術のキャッチアップにもがき、悩んだ時期もあったといいます。その焦燥感をどう解消していったのか、今につながった転機を寄稿いただきました。",
+    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/b/blog-media/20230417/20230417144638.jpg"
+  },
+  "https://hiroppy.me/blog/2022": {
+    "title": "2022年を振り返る - hiroppy's site",
+    "description": "2022年の仕事やイベント等の振り返り",
+    "image": "https://hiroppy.me/_astro/ogp.llFle8Is.png"
+  },
+  "https://mozaic.fm/episodes/137/yearly-ecosystem-2023.html": {
+    "title": "ep137 Yearly Ecosystem 2023 | mozaic.fm",
+    "description": "第 137 回のテーマは 2023 年を振り返る Yearly Ecosystem です。",
+    "image": "https://mozaic.fm/assets/img/mozaic.600x600.png"
   }
 }
