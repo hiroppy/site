@@ -12,7 +12,7 @@
     "check": "astro check",
     "test": "playwright test",
     "test:update": "docker build -f snapshot.dockerfile -t snapshot-update . && docker run --rm --network host -v $(pwd):/work/ -w /work/ -it snapshot-update",
-    "fmt": "prettier -w --plugin-search-dir=. .",
+    "fmt": "prettier -w .",
     "fmt:check": "prettier --check .",
     "data:generate": "node scripts/index.mjs",
     "data:clean": "rm -r ./generated/* ./src/assets/images/external/*",
