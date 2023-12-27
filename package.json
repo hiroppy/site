@@ -46,7 +46,7 @@
     "@astrojs/partytown": "^2.0.2",
     "@astrojs/rss": "^4.0.1",
     "@astrojs/sitemap": "^3.0.3",
-    "@astrojs/tailwind": "^5.0.4",
+    "@astrojs/tailwind": "^5.1.0",
     "algoliasearch": "^4.22.0",
     "astro": "^4.0.7",
     "instantsearch.js": "^4.63.0"
