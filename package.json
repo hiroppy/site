@@ -12,7 +12,7 @@
     "check": "astro check",
     "test": "playwright test",
     "test:update": "docker build -f snapshot.dockerfile -t snapshot-update . && docker run --rm --network host -v $(pwd):/work/ -w /work/ -it snapshot-update",
-    "fmt": "prettier -w --plugin-search-dir=. .",
+    "fmt": "prettier -w .",
     "fmt:check": "prettier --check .",
     "data:generate": "node scripts/index.mjs",
     "data:clean": "rm -r ./generated/* ./src/assets/images/external/*",
@@ -31,7 +31,7 @@
     "octokit": "^3.1.2",
     "pa11y-ci": "^3.1.0",
     "prettier": "^3.1.1",
-    "prettier-plugin-astro": "^0.12.2",
+    "prettier-plugin-astro": "^0.12.3",
     "remark": "^15.0.1",
     "remark-frontmatter": "^5.0.0",
     "serve": "^14.2.1",
@@ -42,13 +42,13 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.3.4",
-    "@astrojs/mdx": "^2.0.2",
-    "@astrojs/partytown": "^2.0.2",
+    "@astrojs/mdx": "^2.0.3",
+    "@astrojs/partytown": "^2.0.3",
     "@astrojs/rss": "^4.0.1",
-    "@astrojs/sitemap": "^3.0.3",
+    "@astrojs/sitemap": "^3.0.4",
     "@astrojs/tailwind": "^5.1.0",
     "algoliasearch": "^4.22.0",
-    "astro": "^4.0.7",
+    "astro": "^4.0.8",
     "instantsearch.js": "^4.63.0"
   }
 }
