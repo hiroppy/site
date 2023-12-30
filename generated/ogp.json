@@ -963,5 +963,10 @@
     "title": "ep137 Yearly Ecosystem 2023 | mozaic.fm",
     "description": "第 137 回のテーマは 2023 年を振り返る Yearly Ecosystem です。",
     "image": "https://mozaic.fm/assets/img/mozaic.600x600.png"
+  },
+  "https://hiroppy.me/blog/nodejs-esm": {
+    "title": "Node.jsとECMAScript Modules - hiroppy's site",
+    "description": "Node.jsに入るECMAScript Mdoulesの特徴を紹介します",
+    "image": "https://hiroppy.me/_astro/nodejs.2_oGYeR4.png"
   }
 }

@@ -1,0 +1,185 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: CJSとESMの挙動早見表
+date: 2023-12-30
+description: CJSとESMで挙動が異なる点をまとめました
+image: /images/brands/nodejs.png
+tags: javascript
+---
+
+import OG from "../../components/OG.astro";
+
+## モジュール
+
+使えるモジュールのシンタックスです。
+
+| Code           | CJS   | ESM   |
+| -------------- | ----- | ----- |
+| `require('x')` | ok    | error |
+| `import('x')`  | ok    | ok    |
+| `import 'x';`  | error | ok    |
+| `export {};`   | error | ok    |
+
+## タイミング
+
+モジュールの実行タイミングです。
+
+| Code            | Timing                    | Hoisted | Blocking |
+| --------------- | ------------------------- | ------- | -------- |
+| `require('x');` | sync                      | no      | yes      |
+| `import 'x';`   | untimed (async generally) | yes     | yes      |
+| `import('x');`  | async                     | no      | no       |
+
+## ESM では使えないメソッド・変数
+
+以下のメソッド・変数は、CJS でのみ存在し、ESM では存在しないため、エラーになります。
+
+- `__dirname`
+- `__filename`
+- `require`
+- `exports`
+- `module`
+- `arguments`
+
+## 予約語への操作
+
+予約語が変数として操作可能かどうかです。
+e.g. `var let = 1;`
+
+| Code                          | CJS          | ESM   |
+| ----------------------------- | ------------ | ----- |
+| `arguments`                   | scope::local | error |
+| `arguments = []`              | ok           | error |
+| `try {} catch (arguments) {}` | ok           | error |
+| `eval`                        | scope::local | error |
+| `eval = eval`                 | ok           | error |
+| `try {} catch (eval) {}`      | ok           | error |
+| `implements`                  | ok           | error |
+| `interface`                   | ok           | error |
+| `package`                     | ok           | error |
+| `private`                     | ok           | error |
+| `protected`                   | ok           | error |
+| `public`                      | ok           | error |
+| `static`                      | ok           | error |
+| `await`                       | ok           | error |
+| `let`                         | ok           | error |
+| `return`                      | error        | error |
+| `yield`                       | ok           | error |
+| `await`                       | ok           | error |
+
+厳格モード時に変数として使えなくなる予約語です。
+
+- `arguments`
+- `eval`
+- `implements`
+- `interface`
+- `package`
+- `private`
+- `protected`
+- `public`
+- `static`
+- `let`
+- `yield`
+
+```javascript
+// index.js
+var arguments;
+arguments = [];
+
+var eval = 1;
+eval = eval;
+
+// constは予約語ですが、letは違います
+var implements,
+  interface,
+  package,
+  private,
+  protected,
+  public,
+  static,
+  let,
+  yield,
+  await;
+```
+
+## 上記以外の許容されない記法
+
+特殊な記法のケースです。
+
+| Code                   | CJS | ESM   | SCRIPT |
+| ---------------------- | --- | ----- | ------ |
+| `with({}){}`           | ok  | error | ok     |
+| `<!--\n`               | ok  | error | ok     |
+| `-->\n`                | ok  | error | ok     |
+| `0111`                 | ok  | error | ok     |
+| `(function (_, _) {})` | ok  | error | ok     |
+
+```javascript
+// index.js
+// HTMLコメントはCJSでは使えますが、ESMでは使えません
+<!--\n
+-->\n
+```
+
+```
+# CJS
+$
+# ESM
+$ Module build failed: SyntaxError: Unexpected token (1:0)
+> 1 | <!--\n
+    | ^
+  2 | -->\n
+```
+
+```javascript
+// index.js
+0111;
+```
+
+```
+# CJS
+$
+# ESM
+$ SyntaxError: Octal literals are not allowed in strict mode.
+```
+
+## 評価に関する違い
+
+パース、実行はできるが、評価結果が異なります。
+
+| Code                                          | CJS          | ESM       | SCRIPT   |
+| --------------------------------------------- | ------------ | --------- | -------- |
+| `this`                                        | module(`{}`) | undefined | global   |
+| `(function (){return this}())`                | global       | undefined | global   |
+| `(function () {return typeof this;}).call(1)` | `object`     | `number`  | `object` |
+| `var x`                                       | local        | local     | global   |
+| `var x = 0; eval('var x = 1'); x`             | 1            | 0         | 1        |
+
+```javascript
+console.log(
+  function () {
+    return typeof this;
+  }.call(1),
+);
+```
+
+```
+# CJS
+$ object
+# ESM
+$ number
+```
+
+このケースでは、`call`で`this`を 1 として束縛し、スコープで包んだ`function`の`this`を返しその型を評価します。
+`this`の束縛がない場合は、スコープで包まれているため、`typeof this === '[Function]'`です。
+CJS の場合は、`[Number: 1]`となり、ESM のときは 1 となります。
+つまり、ESM のときは`new Number(1)`とならないので、`number`となります。
+
+<br />
+
+---
+
+過去のブログからのコピーですが、よく見るので検索しやすいように別の記事として残しておきます。
+内容が古い可能性があるので注意してください。
+
+<OG url="https://hiroppy.me/blog/nodejs-esm" />
