@@ -19,12 +19,14 @@ import OG from "../../components/OG.astro";
 
 使えるモジュールのシンタックスです。
 
-| Code           | CJS   | ESM   |
-| -------------- | ----- | ----- |
-| `require('x')` | ok    | error |
-| `import('x')`  | ok    | ok    |
-| `import 'x';`  | error | ok    |
-| `export {};`   | error | ok    |
+| Code             | CJS   | ESM   |
+| ---------------- | ----- | ----- |
+| `require('x')`   | ok    | error |
+| `import('x')`    | ok    | ok    |
+| `import 'x';`    | error | ok    |
+| `exports`        | ok    | error |
+| `module.exports` | ok    | error |
+| `export {};`     | error | ok    |
 
 ## タイミング
 
