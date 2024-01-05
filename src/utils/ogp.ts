@@ -8,7 +8,7 @@ import me from "../assets/images/meta/me.png";
 const font = await readFile(
   join(
     fileURLToPath(import.meta.url),
-    "../../../public/Noto_Sans_JP/static/NotoSansJP-Medium.ttf",
+    "../../../src/assets/fonts/Noto_Sans_JP/static/NotoSansJP-Medium.ttf",
   ),
 );
 const icon = new Uint8Array(
