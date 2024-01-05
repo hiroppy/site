@@ -1,4 +1,7 @@
 ---
+import { writeFile, mkdir } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 import { formatDate } from "../utils/formatDate";
 import Layout from "./Layout.astro";
 import MainLayout from "./MainLayout.astro";
@@ -15,6 +18,7 @@ import SearchArticles from "../components/SearchArticles.astro";
 import type { CollectionEntry } from "astro:content";
 import type { MarkdownLayoutProps } from "astro";
 import { mergeClass } from "../utils/mergeClass";
+import { generateOgImage } from "../utils/ogp";
 
 const { frontmatter, headings } = Astro.props as MarkdownLayoutProps<
   CollectionEntry<"blog">["data"]
@@ -43,9 +47,26 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/content/${Astro
   /(^\/|\/$)/g,
   "",
 )}.mdx`;
+
+// og:image
+const ogImageFileName = `og-${Buffer.from(`${title}${tags}`).toString(
+  "hex",
+)}.png`;
+const ogImageDistRelativePath = `../../ogp/${url}`;
+const ogImageDistAbsolutePath = join(ogImageDistRelativePath, ogImageFileName);
+
+if (import.meta.env.PROD) {
+  const buf = await generateOgImage(title, tags.split(","));
+  const fileDir = join(fileURLToPath(import.meta.url), ogImageDistRelativePath);
+
+  await mkdir(fileDir, {
+    recursive: true,
+  });
+  await writeFile(join(fileDir, ogImageFileName), buf);
+}
 ---
 
-<Layout title={title} description={description} image={image}>
+<Layout title={title} description={description} image={ogImageDistAbsolutePath}>
   <SearchArticles slot="header-action" />
   <MainLayout title={title}>
     <BlogDescription slot="description" />
