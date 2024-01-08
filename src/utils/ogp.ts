@@ -5,15 +5,29 @@ import satori from "satori";
 import sharp from "sharp";
 import me from "../assets/images/meta/me.png";
 
-const font = await readFile(
-  join(
-    fileURLToPath(import.meta.url),
-    "../../../src/assets/fonts/Noto_Sans_JP/static/NotoSansJP-Medium.ttf",
-  ),
-);
-const icon = new Uint8Array(
-  await readFile(join(fileURLToPath(import.meta.url), "../../", me.src)),
-).buffer;
+const { font, icon } = await (async () => {
+  if (import.meta.env.PROD) {
+    const font = await readFile(
+      join(
+        fileURLToPath(import.meta.url),
+        "../../../src/assets/fonts/Noto_Sans_JP/static/NotoSansJP-Medium.ttf",
+      ),
+    );
+    const icon = new Uint8Array(
+      await readFile(join(fileURLToPath(import.meta.url), "../../", me.src)),
+    ).buffer;
+
+    return {
+      font,
+      icon,
+    };
+  }
+
+  return {
+    font: null,
+    icon: null,
+  };
+})();
 
 export async function generateOgImage(title: string, tags: string[]) {
   const svg = await satori(
@@ -130,7 +144,7 @@ export async function generateOgImage(title: string, tags: string[]) {
       fonts: [
         {
           name: "NotoSansJP",
-          data: font,
+          data: font!,
           style: "normal",
         },
       ],
