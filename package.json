@@ -46,7 +46,7 @@
     "@astrojs/rss": "^4.0.1",
     "@astrojs/sitemap": "^3.0.4",
     "@astrojs/tailwind": "^5.1.0",
-    "algoliasearch": "^4.22.0",
+    "algoliasearch": "^4.22.1",
     "astro": "^4.1.1",
     "instantsearch.js": "^4.63.0",
     "satori": "^0.10.11",
