@@ -968,5 +968,10 @@
     "title": "Node.jsとECMAScript Modules - hiroppy's site",
     "description": "Node.jsに入るECMAScript Mdoulesの特徴を紹介します",
     "image": "https://hiroppy.me/_astro/nodejs.2_oGYeR4.png"
+  },
+  "https://nextjs-app-router-training.vercel.app/": {
+    "title": "Next.js App Router Training",
+    "description": "Introducing various basic patterns using Next.js' app router with simplified code.",
+    "image": "https://nextjs-app-router-training.vercel.app/opengraph-image.png?fcd239148f85b301"
   }
 }

@@ -1,0 +1,48 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Nex.jsのApp Routerの機能別コードサンプル集を作った
+date: 2024-01-10
+description: Next.jsでJSファイルチャンクをどのように最適化するかを紹介します
+image: /images/brands/next.png
+tags: javascript
+---
+
+import OG from "../../components/OG.astro";
+
+3連休を使って、サンプル集のサイトを作りました。
+
+<OG url="https://nextjs-app-router-training.vercel.app/" />
+
+ディレクトリ作って、コード書いたら新しいサンプル追加できるので、[追加ウェルカム](https://github.com/hiroppy/nextjs-app-router-training#adding-a-new-sample)です！
+
+## 目的
+
+- 自分の検証サンドボックスがほしかった
+- 公式ドキュメント含め、解説と参考コードはあるが、実際に動いている状態とコードを同時に見たい
+- 簡潔な短いコードで早く理解を促したい
+
+一番の目的は、初学者にApp Routerの機能を説明するときにこのサイトである程度、網羅されており実行されているコードとその状態が見えるものが欲しかったというのが主な理由です。
+
+逆にあまり説明は書きたくなく、それは公式ドキュメントや他の方のブログで説明されているのでそちらを読んでもらいたいです。
+
+## 知見 / 感想
+
+- 仕事で使っていない Intercepting Routes を初めて使ったが面白い
+- devとprodでは挙動が異なることがよくある
+  - キャッシュ関連ではない
+- import文のソート機能が欲しかったので、[biome](https://github.com/biomejs/biome)入れたら速かった
+  - ただmarkdownやyaml等のサポートがないので、prettierと併用するためvscodeの設定で言語分けが必要
+  - lint速いの良い
+  - [next lintとの互換性問題](https://github.com/vercel/next.js/discussions/59347)
+- [shiki](https://github.com/shikijs/shiki)を普段使っていたが、clien componentだと動かない
+  - wasmを `.next` へcopyすれば動くがそれもな。。
+- shikiのかわりにhighlight.jsを利用したが、jsxのサポートが弱い
+  - lib的には、xmlとして扱われるのでコメントとかは色がつかない
+  - shikiの問題を解消次第、移行したい
+
+## さいごに
+
+最初は、ファイルルーティングだけやろうと思ったんですが、App Routerには色々な機能があるのでせっかくだし広く手を出してしまいました。
+特にReactのapiなども含まれていたり、Next.jsの機能じゃないじゃんっていうのもありますが、公式ドキュメントにもあるしまぁいいかなと。。
+
+まだまだ足りないサンプルが多いので、自分の勉強のためにも徐々に増やしていこうかなと思います。
