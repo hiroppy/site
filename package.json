@@ -41,13 +41,13 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.4.1",
-    "@astrojs/mdx": "^2.0.3",
+    "@astrojs/mdx": "^2.0.4",
     "@astrojs/partytown": "^2.0.3",
-    "@astrojs/rss": "^4.0.1",
+    "@astrojs/rss": "^4.0.2",
     "@astrojs/sitemap": "^3.0.4",
     "@astrojs/tailwind": "^5.1.0",
     "algoliasearch": "^4.22.1",
-    "astro": "^4.1.1",
+    "astro": "^4.1.2",
     "instantsearch.js": "^4.63.0",
     "satori": "^0.10.11",
     "sharp": "^0.33.1"
