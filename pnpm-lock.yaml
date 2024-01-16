@@ -10,10 +10,10 @@ dependencies:
     version: 0.4.1(prettier-plugin-astro@0.12.3)(prettier@3.1.1)(typescript@5.3.3)
   '@astrojs/mdx':
     specifier: ^2.0.4
-    version: 2.0.4(astro@4.1.2)
+    version: 2.0.4(astro@4.1.3)
   '@astrojs/partytown':
-    specifier: ^2.0.3
-    version: 2.0.3
+    specifier: ^2.0.4
+    version: 2.0.4
   '@astrojs/rss':
     specifier: ^4.0.2
     version: 4.0.2
@@ -22,13 +22,13 @@ dependencies:
     version: 3.0.4
   '@astrojs/tailwind':
     specifier: ^5.1.0
-    version: 5.1.0(astro@4.1.2)(tailwindcss@3.3.3)
+    version: 5.1.0(astro@4.1.3)(tailwindcss@3.3.3)
   algoliasearch:
     specifier: ^4.22.1
     version: 4.22.1
   astro:
-    specifier: ^4.1.2
-    version: 4.1.2(typescript@5.3.3)
+    specifier: ^4.1.3
+    version: 4.1.3(typescript@5.3.3)
   instantsearch.js:
     specifier: ^4.63.0
     version: 4.63.0(algoliasearch@4.22.1)
@@ -294,7 +294,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/mdx@2.0.4(astro@4.1.2):
+  /@astrojs/mdx@2.0.4(astro@4.1.3):
     resolution: {integrity: sha512-8q8p7AfiGa6CEKUEEWDLZ7HsfonmZlzx8HITZp8eJnkh+n6mmD9vQTpuFNjJc3hiiMEEKLGTIjOUGAU4aGBkrA==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
@@ -303,7 +303,7 @@ packages:
       '@astrojs/markdown-remark': 4.0.1
       '@mdx-js/mdx': 3.0.0
       acorn: 8.11.2
-      astro: 4.1.2(typescript@5.3.3)
+      astro: 4.1.3(typescript@5.3.3)
       es-module-lexer: 1.4.1
       estree-util-visit: 2.0.0
       github-slugger: 2.0.0
@@ -320,8 +320,8 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/partytown@2.0.3:
-    resolution: {integrity: sha512-N7bQUxr4TQJKFiOnAr2cvvK9OrCWz2PwsTPTnGr9tRn+f3WCQN4jed9BB4yw9WdWcitYc/N2ECW7u09cg93tgg==}
+  /@astrojs/partytown@2.0.4:
+    resolution: {integrity: sha512-yC1smFLOBn7CWNAzaigXAr4bSJSgRJYF4g9jDuSR0NbShLd1SVUpRm9QOmOIrfSFGh2YtZEW8gnwvI5SZw+WmA==}
     dependencies:
       '@builder.io/partytown': 0.8.0
       mrmime: 1.0.1
@@ -348,13 +348,13 @@ packages:
       zod: 3.22.4
     dev: false
 
-  /@astrojs/tailwind@5.1.0(astro@4.1.2)(tailwindcss@3.3.3):
+  /@astrojs/tailwind@5.1.0(astro@4.1.3)(tailwindcss@3.3.3):
     resolution: {integrity: sha512-BJoCDKuWhU9FT2qYg+fr6Nfb3qP4ShtyjXGHKA/4mHN94z7BGcmauQK23iy+YH5qWvTnhqkd6mQPQ1yTZTe9Ig==}
     peerDependencies:
       astro: ^3.0.0 || ^4.0.0
       tailwindcss: ^3.0.24
     dependencies:
-      astro: 4.1.2(typescript@5.3.3)
+      astro: 4.1.3(typescript@5.3.3)
       autoprefixer: 10.4.15(postcss@8.4.32)
       postcss: 8.4.32
       postcss-load-config: 4.0.2(postcss@8.4.32)
@@ -2044,8 +2044,8 @@ packages:
     hasBin: true
     dev: false
 
-  /astro@4.1.2(typescript@5.3.3):
-    resolution: {integrity: sha512-C/CrsIjRnRZYsLIBquAoTKj3ZPyGPVRByEcPMs6CrJLiHmcYnjpRMVd7oBFepU6772U1ZcXLy0zdxoRYjHFf5w==}
+  /astro@4.1.3(typescript@5.3.3):
+    resolution: {integrity: sha512-9i8l0mEnpAOAi9F3DMkHGaZ4q56TGtt71XaAxhPXAlhZrVR/6ruobCyYdYwL1Fo0ATpuGXdaod1I7FFxFMcQbw==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
