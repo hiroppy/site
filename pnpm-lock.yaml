@@ -30,8 +30,8 @@ dependencies:
     specifier: ^4.1.3
     version: 4.1.3(typescript@5.3.3)
   instantsearch.js:
-    specifier: ^4.63.1
-    version: 4.63.1(algoliasearch@4.22.1)
+    specifier: ^4.64.0
+    version: 4.64.0(algoliasearch@4.22.1)
   satori:
     specifier: ^0.10.11
     version: 0.10.11
@@ -3930,8 +3930,8 @@ packages:
       through: 2.3.8
     dev: true
 
-  /instantsearch.js@4.63.1(algoliasearch@4.22.1):
-    resolution: {integrity: sha512-40pUYH0oG1BACUf7Ae05cEIFXFqZKBGdP2dqWLjiFx6hCRxRz0QDNF0QxC64k17BfkPOpElzYHZh4q4MZ79hqw==}
+  /instantsearch.js@4.64.0(algoliasearch@4.22.1):
+    resolution: {integrity: sha512-JQjq8jF98JktNvRxCYL7DM3eLFUVURxwnaPRbqa0Tw0S/u1rypCQBymvx7ROzfqGXJpmSmnvZzMYmAW0DWzGNw==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
     dependencies:
