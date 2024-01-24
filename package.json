@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.4.1",
-    "@astrojs/mdx": "^2.0.4",
+    "@astrojs/mdx": "^2.1.0",
     "@astrojs/partytown": "^2.0.4",
     "@astrojs/rss": "^4.0.2",
     "@astrojs/sitemap": "^3.0.4",
