@@ -61,9 +61,9 @@ if (ogp[url]) {
 ---
 
 <div
-  class="flex border border-gray-600 p-4 gap-4 justify-between bg-gray-700 rounded-sm"
+  class="flex justify-between gap-4 rounded-sm border border-gray-600 bg-gray-700 p-4"
 >
-  <div class="flex flex-col gap-2 flex-1">
+  <div class="flex flex-1 flex-col gap-2">
     <Link href={url} className="font-semibold">{title}</Link>
     <span class="text-sm"
       >{
@@ -75,7 +75,7 @@ if (ogp[url]) {
   </div>
   {
     image && (
-      <div class="max-w-52 max-h-40 h-32 hidden sm:block">
+      <div class="max-w-52 hidden h-32 max-h-40 sm:block">
         <Image
           src={image}
           alt="title"

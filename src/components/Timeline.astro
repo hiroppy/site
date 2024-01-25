@@ -14,7 +14,7 @@ type Props = {
 const { items } = Astro.props;
 ---
 
-<ol class="relative border-l border-gray-500 ml-4">
+<ol class="relative ml-4 border-l border-gray-500">
   {
     items.map(
       (
@@ -32,17 +32,17 @@ const { items } = Astro.props;
         },
         i,
       ) => (
-        <li class="mb-10 ml-6 relative">
-          <span class="flex absolute -left-11 justify-center items-center w-10 h-10 bg-slate-700 rounded-full text-lg border-gray-500 border-2">
+        <li class="relative mb-10 ml-6">
+          <span class="absolute -left-11 flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-500 bg-slate-700 text-lg">
             {icon}
           </span>
           <div class="ml-2">
             <Card>
-              <div class="justify-between mb-3 sm:flex items-baseline gap-2">
-                <time class="mb-1 text-xs font-normal sm:order-last sm:mb-0 block">
+              <div class="mb-3 items-baseline justify-between gap-2 sm:flex">
+                <time class="mb-1 block text-xs font-normal sm:order-last sm:mb-0">
                   {publishedAt}
                 </time>
-                <div class="text-sm font-normal flex-1">
+                <div class="flex-1 text-sm font-normal">
                   {prefixForTitle}{" "}
                   <a
                     href={url}
@@ -77,7 +77,7 @@ const { items } = Astro.props;
                   />
                 )}
                 <div class="flex-1">
-                  <p class="text-gray-100 text-xs">{description}</p>
+                  <p class="text-xs text-gray-100">{description}</p>
                   {appendixes && (
                     <div class="mt-4">
                       {Object.entries(appendixes).map(([key, value]) => (

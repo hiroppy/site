@@ -94,7 +94,7 @@ function getPrefixForTitle(type: MediaType) {
 <Layout>
   <MediaLayout>
     <div
-      class="grid gap-4 auto-rows-max grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
+      class="grid auto-rows-max grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4"
     >
       {
         items.map(({ title, description, image, icon, url, publishedAt }) => (
@@ -104,12 +104,12 @@ function getPrefixForTitle(type: MediaType) {
             aria-label={title}
           >
             <div class="group relative h-52 border border-gray-600 hover:border-2 hover:border-blue-300">
-              <div class="absolute z-30 bg-gray-600 -left-3 -top-3 rounded-full border-2 border-gray-600 w-10 h-10 flex items-center justify-center gruop-hover:border-2 group-hover:border-blue-300">
+              <div class="gruop-hover:border-2 absolute -left-3 -top-3 z-30 flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-600 bg-gray-600 group-hover:border-blue-300">
                 <span class="text-xl">{icon}</span>
               </div>
-              <div class="absolute top-0 flex items-center justify-center w-full h-full bg-gray-700 overflow-hidden">
-                <div class="absolute hidden z-20 group-hover:block bg-gray-900/90 w-full h-full">
-                  <div class="flex justify-center text-sm py-10 px-2 h-full overflow-scroll">
+              <div class="absolute top-0 flex h-full w-full items-center justify-center overflow-hidden bg-gray-700">
+                <div class="absolute z-20 hidden h-full w-full bg-gray-900/90 group-hover:block">
+                  <div class="flex h-full justify-center overflow-scroll px-2 py-10 text-sm">
                     <p class="break-all">{description}</p>
                   </div>
                 </div>
@@ -119,7 +119,7 @@ function getPrefixForTitle(type: MediaType) {
                 <div class="text-right">
                   <span class="bg-gray-900/90 p-1">{publishedAt}</span>
                 </div>
-                <div class="bg-gray-900/90 h-16 px-2 py-1 overflow-hidden flex items-center">
+                <div class="flex h-16 items-center overflow-hidden bg-gray-900/90 px-2 py-1">
                   <h2
                     class="overflow-hidden"
                     style="display: -webkit-box; -webkit-box-orient: vertical;  -webkit-line-clamp: 2;"

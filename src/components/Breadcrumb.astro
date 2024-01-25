@@ -14,7 +14,7 @@ const { items, className } = Astro.props;
     items.map((item, i) => (
       <>
         <li class="text-base">{item}</li>
-        {i !== items.length - 1 && <span class="text-gray-300 text-xs">/</span>}
+        {i !== items.length - 1 && <span class="text-xs text-gray-300">/</span>}
       </>
     ))
   }

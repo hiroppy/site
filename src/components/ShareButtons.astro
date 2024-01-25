@@ -17,14 +17,14 @@ const twitterFollow =
 const hatena = `https://b.hatena.ne.jp/entry/panel/?url=${url}&title=${sharedTitle}#bbutton`;
 ---
 
-<div class="share-buttons flex flex-row gap-4 mt-4 items-center justify-center">
+<div class="share-buttons mt-4 flex flex-row items-center justify-center gap-4">
   <SnsIcon name="twitter" href={twitter} text="Tweet">
     <Twitter />
   </SnsIcon>
   <SnsIcon name="twitter" href={twitterFollow} text="Follow">
     <Twitter />
   </SnsIcon>
-  <SnsIcon name="hatena" href={hatena} text="Bookmark" className="w-4 h-4">
+  <SnsIcon name="hatena" href={hatena} text="Bookmark" className="h-4 w-4">
     <Hatena />
   </SnsIcon>
 </div>

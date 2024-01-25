@@ -16,8 +16,8 @@ type Props = {
 const { title } = Astro.props;
 ---
 
-<main class="flex gap-4 items-start">
-  <div class="sticky w-64 hidden lg:block shrink-0" style={{ top: "96px" }}>
+<main class="flex items-start gap-4">
+  <div class="sticky hidden w-64 shrink-0 lg:block" style={{ top: "96px" }}>
     <div
       class="flex flex-col gap-4"
       style={{ maxHeight: `calc(100vh - 96px - 16px)` }}
@@ -28,7 +28,7 @@ const { title } = Astro.props;
         </Accordion>
       </Paper>
       <Paper className="flex-shrink-0">
-        <div class="flex justify-around items-center p-4">
+        <div class="flex items-center justify-around p-4">
           <SnsIcon href="https://twitter.com/about_hiroppy" name="Twitter">
             <Twitter />
           </SnsIcon>
@@ -52,10 +52,10 @@ const { title } = Astro.props;
       <slot name="optional-content" />
     </div>
   </div>
-  <div class="flex-1 w-full overflow-hidden">
+  <div class="w-full flex-1 overflow-hidden">
     <Paper>
-      <div class="p-4 sm:p-4 text-gray-300">
-        <h1 class="text-2xl font-semibold mb-8 text-gray-100">{title}</h1>
+      <div class="p-4 text-gray-300 sm:p-4">
+        <h1 class="mb-8 text-2xl font-semibold text-gray-100">{title}</h1>
         <slot />
       </div>
     </Paper>

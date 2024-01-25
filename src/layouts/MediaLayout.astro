@@ -22,12 +22,12 @@ const kinds: Record<Path, string> = {
   <span slot="description"
     >A monthly podcast about new frontend news! 👉 <Link
       href="https://mozaic.fm/"
-      className="text-gray-100 font-semibold"
+      className="font-semibold text-gray-100"
     >
       Mozaic.fm
     </Link></span
   >
-  <div class="my-5 flex gap-3 md:gap-2 overflow-x-auto p-2">
+  <div class="my-5 flex gap-3 overflow-x-auto p-2 md:gap-2">
     {
       Object.entries(kinds).map(([kind, href]) => (
         <a

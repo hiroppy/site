@@ -71,7 +71,7 @@ if (import.meta.env.PROD) {
   <MainLayout title={title}>
     <BlogDescription slot="description" />
     <Paper className="overflow-y-auto" slot="optional-content">
-      <div class="p-4 blog-index">
+      <div class="blog-index p-4">
         <p>🔖 Index</p>
         <ol class="mt-2">
           {
@@ -79,13 +79,13 @@ if (import.meta.env.PROD) {
               <li
                 class={mergeClass(
                   "border-l-2 py-1",
-                  depth === 2 ? "border-sky-600 section" : "border-gray-300",
+                  depth === 2 ? "section border-sky-600" : "border-gray-300",
                 )}
               >
                 <a
                   href={`#${slug}`}
                   class={mergeClass(
-                    "text-sm hover:text-blue-300 ml-2 block",
+                    "ml-2 block text-sm hover:text-blue-300",
                     depth === 2
                       ? "font-semibold text-gray-300"
                       : "text-gray-400",
@@ -99,23 +99,23 @@ if (import.meta.env.PROD) {
         </ol>
       </div>
     </Paper>
-    <div class="flex gap-4 mb-10 justify-end items-center text-sm">
+    <div class="mb-10 flex items-center justify-end gap-4 text-sm">
       <p>{date}</p>
       <SnsIcon
         name="GitHub"
         href={githubUrl}
         text="Edit"
-        className="w-4 h-4 text-blue-300"
+        className="h-4 w-4 text-blue-300"
         textClassName="text-blue-300"
       >
         <GitHub />
       </SnsIcon>
     </div>
-    <div class="flex gap-4 flex-col">
+    <div class="flex flex-col gap-4">
       {
         parseTags(tags).includes("javascript") && diffDate > 365 && (
-          <div class="bg-yellow-500 p-3 rounded-md">
-            <span class="text-gray-800 text-sm">
+          <div class="rounded-md bg-yellow-500 p-3">
+            <span class="text-sm text-gray-800">
               🚨 This article hasn't been updated in over a year
             </span>
           </div>
@@ -123,7 +123,7 @@ if (import.meta.env.PROD) {
       }
       {
         frontmatter.hatenaPath && (
-          <div class="bg-gray-700 p-3 rounded-md text-sm">
+          <div class="rounded-md bg-gray-700 p-3 text-sm">
             💁‍♀️ This post was copied from{" "}
             <Link href={`${HATENA_BLOG_ENTRY_URL}/${frontmatter.hatenaPath}`}>
               Hatena Blog
@@ -135,7 +135,7 @@ if (import.meta.env.PROD) {
     <div class="blog text-gray-300">
       <slot />
     </div>
-    <hr class="border-gray-600 mt-12" />
+    <hr class="mt-12 border-gray-600" />
     <div>
       <ShareButtons url={`${Astro.site?.origin}${url!}`} title={title} />
       {
@@ -215,7 +215,7 @@ if (import.meta.env.PROD) {
   .blog h2,
   .blog h3,
   .blog h4 {
-    @apply font-semibold text-gray-50 mt-10 mb-1;
+    @apply mb-1 mt-10 font-semibold text-gray-50;
   }
   .blog h1 {
     @apply text-2xl;
@@ -230,10 +230,10 @@ if (import.meta.env.PROD) {
     @apply text-base;
   }
   .blog code:not(pre > *) {
-    @apply text-gray-200  bg-gray-600 mx-1 px-1 rounded-sm shadow-lg ring-white/5;
+    @apply mx-1  rounded-sm bg-gray-600 px-1 text-gray-200 shadow-lg ring-white/5;
   }
   .blog ul {
-    @apply list-hyphen pl-4 my-2;
+    @apply my-2 list-hyphen pl-4;
   }
 
   .blog li {
@@ -244,7 +244,7 @@ if (import.meta.env.PROD) {
     @apply my-4;
   }
   .blog pre {
-    @apply p-4 text-sm rounded-lg my-4;
+    @apply my-4 rounded-lg p-4 text-sm;
   }
   .blog a {
     @apply text-blue-300;
@@ -259,13 +259,13 @@ if (import.meta.env.PROD) {
     @apply font-semibold text-orange-300;
   }
   .blog blockquote {
-    @apply px-4 border border-gray-600 border-l-blue-300 border-l-2;
+    @apply border border-l-2 border-gray-600 border-l-blue-300 px-4;
   }
   .blog table {
-    @apply block sm:table border-collapse table-auto w-full text-sm whitespace-nowrap overflow-x-auto my-4;
+    @apply my-4 block w-full table-auto border-collapse overflow-x-auto whitespace-nowrap text-sm sm:table;
   }
   .blog th {
-    @apply border-b border-gray-600  p-4 pl-8 pt-0 text-gray-200 text-left;
+    @apply border-b border-gray-600  p-4 pl-8 pt-0 text-left text-gray-200;
   }
   .blog tbody {
     @apply bg-gray-800;

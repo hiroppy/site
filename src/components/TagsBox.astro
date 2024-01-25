@@ -12,7 +12,7 @@ const { tags } = Astro.props;
 <Paper>
   <div class="p-4">
     <p>🏷 Tags</p>
-    <div class="flex gap-2 mt-4 flex-wrap">
+    <div class="mt-4 flex flex-wrap gap-2">
       {tags.map((tag) => <BlogTag tag={tag}>{tag}</BlogTag>)}
     </div>
   </div>

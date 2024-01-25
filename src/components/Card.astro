@@ -7,8 +7,8 @@ const { title } = Astro.props;
 ---
 
 <div
-  class="p-2 sm:p-4 rounded-lg border shadow-sm border-gray-600 text-gray-300"
+  class="rounded-lg border border-gray-600 p-2 text-gray-300 shadow-sm sm:p-4"
 >
-  {title && <h2 class="text-lg font-semibold mb-4 text-gray-200">{title}</h2>}
+  {title && <h2 class="mb-4 text-lg font-semibold text-gray-200">{title}</h2>}
   <slot />
 </div>
