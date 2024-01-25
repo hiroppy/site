@@ -1,5 +1,42 @@
 [
   {
+    "title": "This Week In React #171: Expo, React Conf, React 19 preview, Next.js, React-Email, Storybook, Panda, Nexar, React-Query, TypeScript, Vocs, Skottie, Harmony, VisionOS... | This Week In React",
+    "description": "Hi everyone!",
+    "image": "/images/external/dGhpc3dlZWtpbnJlYWN0LmNvbS9pbWcvVFdJUl9QT1NULmpwZw==.jpg",
+    "url": "https://thisweekinreact.com/newsletter/171",
+    "publishedAt": "2024-01-24"
+  },
+  {
+    "siteName": "hiroppy's Blog",
+    "siteUrl": "https://hiroppy.me/blog/",
+    "hot": false,
+    "url": "https://hiroppy.me/blog/nextjs-app-router-training/",
+    "title": "Next.jsのApp Routerの機能別コードサンプル集を作った",
+    "image": "/images/brands/next.png",
+    "description": "Next.jsでJSファイルチャンクをどのように最適化するかを紹介します",
+    "publishedAt": "2024-01-10"
+  },
+  {
+    "siteName": "hiroppy's Blog",
+    "siteUrl": "https://hiroppy.me/blog/",
+    "hot": false,
+    "url": "https://hiroppy.me/blog/cjs-esm-reference-chart-of-behavior/",
+    "title": "CJSとESMの挙動早見表",
+    "image": "/images/brands/nodejs.png",
+    "description": "CJSとESMで挙動が異なる点をまとめました",
+    "publishedAt": "2023-12-30"
+  },
+  {
+    "siteName": "hiroppy's Blog",
+    "siteUrl": "https://hiroppy.me/blog/",
+    "hot": false,
+    "url": "https://hiroppy.me/blog/2023/",
+    "title": "2023年を振り返る",
+    "image": "/images/blog/2021/ogp.png",
+    "description": "2023年の仕事やイベント等の振り返り",
+    "publishedAt": "2023-12-25"
+  },
+  {
     "title": "株式会社Rebaseの技術顧問に廣戸裕大（Hiroppy）氏が就任",
     "description": "株式会社Rebaseのプレスリリース（2023年12月15日 14時00分）株式会社Rebaseの技術顧問に廣戸裕大（Hiroppy）氏が就任",
     "image": "/images/external/cHJjZG4uZnJlZXRscy5mYXN0bHkubmV0L3JlbGVhc2VfaW1hZ2UvMjE4MjgvOTcvMjE4MjgtOTctMjhjNDJiYzFjND.png",
@@ -112,7 +149,7 @@
     "publishedAt": "2022-11-17"
   },
   {
-    "title": "エンジニア座談会後編〜開発組織編〜",
+    "title": "エンジニア座談会後編〜開発組織編〜 | Notion",
     "description": "Yuimedi は「エンジニア集団が医療に挑む！」をブランディングに掲げ、デジタル化の潮流に取り残されている日本の・世界の医療業界に真のデジタルツールを導入することを成し遂げたいと考えています。",
     "image": "/images/external/eXVpbWVkaS5ub3Rpb24uc2l0ZS9pbWFnZS9odHRwcyUzQSUyRiUyRnMzLXVzLXdlc3QtMi5hbWF6b25hd3MuY29tJT.jpg",
     "siteName": "Yuimedi",
@@ -120,7 +157,7 @@
     "publishedAt": "2022-11-10"
   },
   {
-    "title": "エンジニア座談会前編〜事業・エンジニアリング編〜",
+    "title": "エンジニア座談会前編〜事業・エンジニアリング編〜 | Notion",
     "description": "Yuimedi は「エンジニア集団が医療に挑む！」をブランディングに掲げ、デジタル化の潮流に取り残されている日本の・世界の医療業界に真のデジタルツールを導入することを成し遂げたいと考えています。",
     "image": "/images/external/eXVpbWVkaS5ub3Rpb24uc2l0ZS9pbWFnZS9odHRwcyUzQSUyRiUyRnMzLXVzLXdlc3QtMi5hbWF6b25hd3MuY29tJT.jpg",
     "siteName": "Yuimedi",
@@ -178,10 +215,9 @@
     "publishedAt": "2021-12-27"
   },
   {
-    "title": "メルカリShops のフロントエンド",
+    "title": "メルカリShops のフロントエンド | メルカリエンジニアリング",
     "description": "こんにちは。ソウゾウの Software Engineer の hiroppy です。「連載：「メルカリ Shops」プレオープンまでの開発の裏側」 の最後は、Web フロントエンドの紹介をしたいと思います。メルカリ Shops は既存のメ",
-    "image": "/images/external/c3RvcmFnZS5nb29nbGVhcGlzLmNvbS9wcmQtZW5naW5lZXJpbmctYXNzZXQvMjAyMS8wOC9lM2VlZTY0NS1oaXJvcH.png",
-    "siteName": "メルカリエンジニアリング",
+    "image": "/images/external/ZW5naW5lZXJpbmcubWVyY2FyaS5jb20vL2ltZy9vZ3Avb2dwX2EuanBn.jpg",
     "url": "https://engineering.mercari.com/blog/entry/20210823-a57631d32e/",
     "hot": true,
     "publishedAt": "2021-08-23",
@@ -333,8 +369,8 @@
     "publishedAt": "2020-04-14"
   },
   {
-    "title": "退勤後、深夜のプルリク対応。それでも楽しいOSSコミュニティ運営の魅力【kazupon×Hiroppy】｜OPENSOURCE.TOKYO｜note",
-    "description": "「才能が公正に評価され、どこでも誰とでも働けるプラットフォームを作る」–––オープンソースプロジェクトのための報賞金サービス『IssueHunt』を開発・運営する、BoostIO株式会社のミッションです。達成に向けて、いかなる社会変革が必要なのでしょうか。オープンソースを日本の“文化”へと昇華させるべく、先進的な取り組みを紹介していきます。 BoostIOは、「OPENSOURCE.TOKYO MEETUP」と題し、オープンソースの現在地と未来を語るイベントを定期的に開催しています。第4回は「オープンソースのつらいことをあれこれ話そう！」をテーマに、Vue.js core team &amp;",
+    "title": "退勤後、深夜のプルリク対応。それでも楽しいOSSコミュニティ運営の魅力【kazupon×Hiroppy】｜OPENSOURCE.TOKYO",
+    "description": "「才能が公正に評価され、どこでも誰とでも働けるプラットフォームを作る」–––オープンソースプロジェクトのための報賞金サービス『IssueHunt』を開発・運営する、BoostIO株式会社のミッションです。達成に向けて、いかなる社会変革が必要なのでしょうか。オープンソースを日本の“文化”へと昇華させるべく、先進的な取り組みを紹介していきます。 BoostIOは、「OPENSOURCE.TOKYO MEETUP」と題し、オープンソースの現在地と未来を語るイベントを定期的に開催しています。第4回は「オープンソースのつらいことをあれこれ話そう！」をテーマに、Vue.js core team &",
     "image": "/images/external/YXNzZXRzLnN0LW5vdGUuY29tL3Byb2R1Y3Rpb24vdXBsb2Fkcy9pbWFnZXMvMTg1MDg2MzUvcmVjdGFuZ2xlX2xhcm.png",
     "siteName": "note（ノート）",
     "url": "https://note.com/osstokyo/n/n01a333562fad",
@@ -549,7 +585,7 @@
     "image": "/images/external/YXZhdGFyczEuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvMjEwNTc5MT9zPTIwMCZ2PTQ=.png",
     "description": "",
     "publishedAt": "2018-12-25",
-    "bookmark": 416
+    "bookmark": 417
   },
   {
     "siteName": "技術探し",
