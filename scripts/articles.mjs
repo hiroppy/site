@@ -54,6 +54,14 @@ for (const article of allArticles) {
 
       article.url = `https://hiroppy.me/blog${newPathname}`;
     }
+    if (
+      article.url ===
+      "https://engineering.mercari.com/blog/entry/20210823-a57631d32e/"
+    ) {
+      article.image =
+        "/images/external/c3RvcmFnZS5nb29nbGVhcGlzLmNvbS9wcmQtZW5naW5lZXJpbmctYXNzZXQvMjAyMS8wOC9lM2VlZTY0NS1oaXJvcH.png";
+      article.title = "メルカリShops のフロントエンド";
+    }
   }
 }
 
