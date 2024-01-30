@@ -33,8 +33,8 @@ dependencies:
     specifier: ^4.64.1
     version: 4.64.1(algoliasearch@4.22.1)
   satori:
-    specifier: ^0.10.11
-    version: 0.10.11
+    specifier: ^0.10.13
+    version: 0.10.13
   sharp:
     specifier: ^0.33.2
     version: 0.33.2
@@ -6279,8 +6279,8 @@ packages:
     dependencies:
       suf-log: 2.5.3
 
-  /satori@0.10.11:
-    resolution: {integrity: sha512-yLm1xPRPZUaKcBZJ6nmezoJjHB4MqV8x7Mu0PyZUJodRWRDD27UbeMwzuY9LEGG57WYLO4CQsGPlbHWV1Ex9TQ==}
+  /satori@0.10.13:
+    resolution: {integrity: sha512-klCwkVYMQ/ZN5inJLHzrUmGwoRfsdP7idB5hfpJ1jfiJk1ErDitK8Hkc6Kll1+Ox2WtqEuGecSZLnmup3CGzvQ==}
     engines: {node: '>=16'}
     dependencies:
       '@shuding/opentype.js': 1.4.0-beta.0
