@@ -41,7 +41,7 @@
     "yaml": "^2.3.4"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.2",
+    "@astrojs/check": "^0.5.3",
     "@astrojs/mdx": "^2.1.1",
     "@astrojs/partytown": "^2.0.4",
     "@astrojs/rss": "^4.0.5",
