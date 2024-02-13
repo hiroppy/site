@@ -2,7 +2,7 @@
   "name": "@hiroppy/site",
   "version": "0.0.1",
   "private": true,
-  "packageManager": "pnpm@8.15.1",
+  "packageManager": "pnpm@8.15.2",
   "scripts": {
     "setup": "git config --local core.hooksPath .githooks && pnpm corepack",
     "corepack": "corepack enable pnpm",
@@ -26,7 +26,7 @@
     "@playwright/test": "^1.41.2",
     "cheerio": "^1.0.0-rc.12",
     "color": "^4.2.3",
-    "dotenv": "^16.4.2",
+    "dotenv": "^16.4.3",
     "emoji-js": "^3.8.0",
     "octokit": "^3.1.2",
     "pa11y-ci": "^3.1.0",
