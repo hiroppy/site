@@ -30,8 +30,8 @@ dependencies:
     specifier: ^4.3.7
     version: 4.3.7(typescript@5.3.3)
   instantsearch.js:
-    specifier: ^4.64.3
-    version: 4.64.3(algoliasearch@4.22.1)
+    specifier: ^4.65.0
+    version: 4.65.0(algoliasearch@4.22.1)
   satori:
     specifier: ^0.10.13
     version: 0.10.13
@@ -186,17 +186,6 @@ packages:
       '@algolia/cache-common': 4.22.1
       '@algolia/logger-common': 4.22.1
       '@algolia/requester-common': 4.22.1
-    dev: false
-
-  /@algolia/ui-components-highlight-vdom@1.2.2:
-    resolution: {integrity: sha512-/+7jh7cd5rR2yQC7ME4SDcnAMiD1Ofn5Qq+E7afTJx9XSMOHkLR77/o6YcuJ60TfD1S+9lr7yjBLACon8gOuzQ==}
-    dependencies:
-      '@algolia/ui-components-shared': 1.2.2
-      '@babel/runtime': 7.21.0
-    dev: false
-
-  /@algolia/ui-components-shared@1.2.2:
-    resolution: {integrity: sha512-FYwEG5sbr8p4V8mqP0iUaKgmWfcrMXRXwp7e6iBuB65P/7QyL8pT4I6/iGb85Q5mNH+UtYYSmLZhKjEblllKEQ==}
     dev: false
 
   /@alloc/quick-lru@5.2.0:
@@ -568,13 +557,6 @@ packages:
       '@babel/helper-plugin-utils': 7.22.5
       '@babel/plugin-syntax-jsx': 7.22.5(@babel/core@7.23.5)
       '@babel/types': 7.23.5
-    dev: false
-
-  /@babel/runtime@7.21.0:
-    resolution: {integrity: sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      regenerator-runtime: 0.13.11
     dev: false
 
   /@babel/template@7.22.15:
@@ -3945,14 +3927,16 @@ packages:
       through: 2.3.8
     dev: true
 
-  /instantsearch.js@4.64.3(algoliasearch@4.22.1):
-    resolution: {integrity: sha512-vqXlfQWOCRZRujzsVK0dn+N/fBrBLa6rdwnsie1f4hE+95SEc3I8qAi/c3lQXrU9PXGLlBMnJBKrysauFix0uw==}
+  /instantsearch-ui-components@0.3.0:
+    resolution: {integrity: sha512-PCVvw9L0YHZs99ZZNRzmF4ghre6SVq2tiz7yCPIamMR+2pccpFXwtdJ2Gmdg+FF4SLif4d8TldvxWFOB0+L5gg==}
+    dev: false
+
+  /instantsearch.js@4.65.0(algoliasearch@4.22.1):
+    resolution: {integrity: sha512-LCJErlVwmsh/41CiEJRcoVPxfa+06yb1qmZfcvzXOMwC6ydb/yfBlFxQgjsQKYA2adwH40c3YF34Jq+V5YiaMg==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
     dependencies:
       '@algolia/events': 4.0.1
-      '@algolia/ui-components-highlight-vdom': 1.2.2
-      '@algolia/ui-components-shared': 1.2.2
       '@types/dom-speech-recognition': 0.0.1
       '@types/google.maps': 3.52.4
       '@types/hogan.js': 3.0.1
@@ -3961,6 +3945,7 @@ packages:
       algoliasearch-helper: 3.16.2(algoliasearch@4.22.1)
       hogan.js: 3.0.2
       htm: 3.1.1
+      instantsearch-ui-components: 0.3.0
       preact: 10.13.2
       qs: 6.9.7
       search-insights: 2.13.0
@@ -6000,10 +5985,6 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
-    dev: false
-
-  /regenerator-runtime@0.13.11:
-    resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
     dev: false
 
   /registry-auth-token@3.3.2:
