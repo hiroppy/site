@@ -1,0 +1,284 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Webサービスを作るときのテンプレートを作った
+date: 2024-02-16
+description: create-next-appをベースにWebサービスを作るのに必要なライブラリの導入や環境構築を行うテンプレートを紹介します
+image: /images/brands/next.png
+tags: javascript,github
+---
+
+import OG from "../../components/OG.astro";
+import Image from "../../components/Image.astro";
+import TwitterCard from "../../components/TwitterCard.astro";
+
+<div class="flex flex-col gap-4 md:flex-row">
+  <div>
+    <p>
+      週末に自分がよく使っている技術をまとめたら反応が良かったので、テンプレートを作りました。
+      なにかWebサービスを作るときに、自分はこれらのライブラリを基本的には入れます。
+    </p>
+    <p>
+      ベースはcreate-next-appとなりますが、そこで生成された状態だと認証もDBも何もありません。
+      しかし、サービスを作るにあたって必要なケースがほとんどです。
+      このテンプレートには特定のライブラリを入れると毎回書かないといけない項目等を事前に作っておき、
+      開発に集中できる仕組みを作るのがゴールとなります。また、例を示しつつ削除するコード量を最小限に抑えます。
+    </p>
+    <p>
+      主にNext.js固有のハマるポイントや環境構築などめんどくさいけど毎回書いている点をカバーします。
+    </p>
+    <ul>
+      <li>linterと関連があるVSCode, pre-commit等の設定</li>
+      <li>NextAuthに指定されたDB Schemaの作成やAPI routeの設置</li>
+      <li>開発、テストのDBのセットアップ</li>
+      <li>DBを利用したunit, e2eの環境構築</li>
+      <li>CI環境の構築</li>
+    </ul>
+  </div>
+  <TwitterCard id="1756840738242134441" height="500" />
+</div>
+
+## 何で作るか？
+
+JavaScript 界隈は、scaffoldingのツールは[Yo](https://github.com/yeoman/yo)や[Plop](https://github.com/plopjs/plop)などがあります。最近だと、[Turborepo](https://github.com/vercel/turbo)にも`gen`が入りました。
+
+今回はあえてそれらを使わず、GitHub Templateを利用しようと思います。
+本当は質問形式にしたほうがプロジェクト名など絶対に変わる値や利用しないパッケージはファイルを配置しないみたいな柔軟な方が利用者にとってはよいのかもしれません。
+_(過去、今回同様にYoのWebサイト作成generatorを作ったことがあります)_
+
+選んだ理由は単純ですが、
+
+- 自分がGitHub Templateを利用したことがなかった
+- 何も実行ライブラリを入れずにGitHubでリポジトリを作るときにボタン押すだけで良いため他の人にも配布しやすい
+- 質問等もなく簡素な分、メンテナンスコストが減る
+
+## 中身を見る
+
+以下のリポジトリがGitHub Templateとなり、誰でもこのテンプレートを利用し新しい開発が行えます。
+
+<OG url="https://github.com/hiroppy/web-app-template" />
+
+改めて見ると、設定ファイル量が多いですね。。
+
+テンプレートを作ってやらなくて良くなった一例を紹介します。
+
+<details>
+<summary>VSCodeにおけるBiome, Prettier, Prismaの言語振り分け</summary>
+
+```json
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>PlaywrightのPage object models雛形</summary>
+
+[Page object models(通称ポム)](https://playwright.dev/docs/pom) はroleを隠蔽することにより、値が変わっても影響範囲を最小限に抑えテストの保守性を高めます。
+
+```ts
+export class Base {
+  protected page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
+
+  async init() {
+    await this.page.goto("http://localhost:3000");
+    await this.page.waitForLoadState("networkidle");
+  }
+
+  async addItem(content: string) {
+    expect(
+      await this.page
+        .getByRole("link", { name: "Add an item" })
+        .getAttribute("href"),
+    ).toBe("/create");
+    await this.page.getByRole("link", { name: "Add an item" }).click();
+
+    await this.page.getByLabel("New Memo").fill(content);
+    await this.page.keyboard.press("Enter");
+    await this.page.waitForLoadState("networkidle");
+    await this.page.goto("/");
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>NextAuthが要求するPrisma Schema</summary>
+
+NextAuthが認証情報やアカウント情報を保持するためには、[指定されたスキーマ](https://authjs.dev/reference/adapter/prisma#create-the-prisma-schema-from-scratch)が必要です。
+
+```prisma
+model Account {
+  id                 String    @id @default(cuid())
+  userId             String
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  expires      DateTime
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationRequest {
+  id         String   @id @default(cuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, token])
+}
+```
+
+</details>
+
+<details>
+<summary>PrismaのスキーマからED図を作成</summary>
+
+```prisma
+generator erd {
+  provider = "prisma-erd-generator"
+  theme = "forest"
+  output = "ERD.md"
+  includeRelationFromFields = true
+}
+```
+
+</details>
+
+<details>
+<summary>HMRでPrismaがクラッシュする対応</summary>
+
+HMR(Hot Module Replacement)でコネクションプールが枯渇する[問題](https://www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextjs-prisma-client-dev-practices)がある。
+この方法だと、動くけどVSCodeの補完でこのファイルが出てこなくて厳しいが公式の対応を今は待つしかない。
+
+```ts
+import { PrismaClient } from "@prisma/client";
+
+export let prisma: PrismaClient;
+
+if (process.env.NODE_ENV === "production") {
+  prisma = new PrismaClient();
+} else {
+  if (!global.prisma) {
+    global.prisma = new PrismaClient();
+  }
+
+  prisma = global.prisma;
+}
+```
+
+</details>
+
+<details>
+<summary>NextAuthのAPI route設置</summary>
+
+`api/auth/[...nextauth]`に置くのが推奨される。
+
+```ts
+import { options } from "@/app/_clients/nextAuth";
+import NextAuth from "next-auth/next";
+
+const handler = NextAuth(options);
+
+export { handler as GET, handler as POST };
+```
+
+</details>
+
+この一例だけでも、毎回手で書くのがめんどくさくなりますね。
+まだ、Docker Composeやe2eでのGoogle認証回避等もあります。
+
+## FAQ
+
+### Biome, Prettier, ESLintの役割分担は？
+
+もともとBiomeの導入をした理由は、ESLintをなくしたかったのが大きいです。
+しかし、Next.jsが提供する`next/core-web-vitals`のために、ESLintもこのテンプレートには入ってしまっています。
+
+Formatterの方は、Prettierで満足していましたが、importのソート、今後入るTailwindのクラス名ソートの機能が欲しかったため、
+TypeScriptのフォーマットはBiomeに任せています。ただ、Biomeはymlやmarkdownのサポートはないため、そちらはPrettierに今も任せています。
+
+現在は過渡期で、テンプレートの中に同じ役割を行うライブラリが複数入っているように見えますが、役割は重複していません。
+しかし、言語単位でツールを分けているためにVSCodeやlint-stagedの設定が複雑なのです。
+
+### React Hook Formまだいる？
+
+Server Actionsの登場により、`useFormState`, `useFormStatus`(or `useTransision`) で十分に見えるかもしれませんが、決してそんな事はありません。
+やっぱり、現実的にバリデーションしたり、`useArrayFields`を利用したUIを作りたくなるケースがあり、便利なので手放せません。
+ただ可能であれば、`form action`でserver actionを渡し、極力server componentにしておきたいです。
+
+### Next.jsのapp routerは安定している？
+
+基本的な機能は安定しているように感じますが、intercepting routeがまだ安定しないように見えます。特にgroupingと組み合わせると動かなくなる問題があるのがちょっと厳しいかも。。
+FYI: [#54636](https://github.com/vercel/next.js/issues/54636), [#53170](https://github.com/vercel/next.js/issues/53170).
+
+[Partial Prerendering](https://nextjs.org/docs/app/api-reference/next-config-js/partial-prerendering)が安定になるまで、様子見してもいいと思います。
+
+あと、結構難しいのが、開発環境と本番環境でキャッシュの挙動が変わるケースがあり、build/startしたら自分の思ってた通りの挙動じゃないみたいなケースがあります。
+どうしても頭の中だとデフォルトでレスポンス等もbuild時にキャッシュされるってのを忘れがちだったり、
+`headers(), cookies()`があるためにdynamicへ切り替わる等コードから読み解かないといけなかったり、そういう見逃しが未だにあります。
+
+## まとめ
+
+10年前に作ったYoのジェネレーターはメンテできなかったけど、今回はGitHub Templateでrenovateでdepsの管理もしているし、
+数年ぐらいは頑張れる気がしてきた。
+
+自分が普段使っている技術スタックや設定が参考になれば幸いです。
+
+<OG url="https://github.com/hiroppy/web-app-template" />

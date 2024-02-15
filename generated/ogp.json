@@ -973,5 +973,10 @@
     "title": "Next.js App Router Training",
     "description": "Introducing various basic patterns using Next.js' app router with simplified code.",
     "image": "https://nextjs-app-router-training.vercel.app/opengraph-image.png?fcd239148f85b301"
+  },
+  "https://github.com/hiroppy/web-app-template": {
+    "title": "GitHub - hiroppy/web-app-template: A minimal template for web app including DataBase, Google Auth, and frontend infrastructure 🎃",
+    "description": "A minimal template for web app including DataBase, Google Auth, and frontend infrastructure 🎃 - hiroppy/web-app-template",
+    "image": "https://opengraph.githubassets.com/4584148c0168cfc08cd062b0a9af325add885c235574e1b9b11a1e526e517c35/hiroppy/web-app-template"
   }
 }
