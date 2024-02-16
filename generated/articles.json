@@ -1,5 +1,22 @@
 [
   {
+    "siteName": "hiroppy's Blog",
+    "siteUrl": "https://hiroppy.me/blog/",
+    "hot": false,
+    "url": "https://hiroppy.me/blog/web-app-minimum-template/",
+    "title": "Webサービスを作るときのテンプレートを作った",
+    "image": "/images/brands/next.png",
+    "description": "create-next-appをベースにWebサービスを作るのに必要なライブラリの導入や環境構築を行うテンプレートを紹介します",
+    "publishedAt": "2024-02-16"
+  },
+  {
+    "title": "Next.js(App Router) の活用について_技術顧問hiroppyさんとの取り組み | 株式会社Rebase",
+    "description": "こんにちは！エンジニアの髙橋です。Rebase は 2023年12月より hiroppy さんを技術顧問に迎え、プロダクト開発体制の強化に取り組んでいます。hiroppy さんとの定例及び非同期...",
+    "image": "/images/external/aW1hZ2VzLndhbnRlZGx5LmNvbS9pL0cyRjVZN3c_dz0xMjAwJmg9NjMwJnN0eWxlPWNvdmVy.png",
+    "url": "https://www.wantedly.com/companies/rebase/post_articles/887970",
+    "publishedAt": "2024-02-15"
+  },
+  {
     "title": "This Week In React #171: Expo, React Conf, React 19 preview, Next.js, React-Email, Storybook, Panda, Nexar, React-Query, TypeScript, Vocs, Skottie, Harmony, VisionOS... | This Week In React",
     "description": "Hi everyone!",
     "image": "/images/external/dGhpc3dlZWtpbnJlYWN0LmNvbS9pbWcvVFdJUl9QT1NULmpwZw==.jpg",
