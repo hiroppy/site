@@ -41,14 +41,14 @@
     "yaml": "^2.3.4"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.4",
+    "@astrojs/check": "^0.5.5",
     "@astrojs/mdx": "^2.1.1",
     "@astrojs/partytown": "^2.0.4",
     "@astrojs/rss": "^4.0.5",
     "@astrojs/sitemap": "^3.0.5",
     "@astrojs/tailwind": "^5.1.0",
     "algoliasearch": "^4.22.1",
-    "astro": "^4.4.0",
+    "astro": "^4.4.1",
     "instantsearch.js": "^4.65.0",
     "satori": "^0.10.13",
     "sharp": "^0.33.2"
