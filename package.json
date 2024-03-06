@@ -37,7 +37,7 @@
     "remark-frontmatter": "^5.0.0",
     "serve": "^14.2.1",
     "strip-markdown": "^6.0.0",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.2",
     "yaml": "^2.4.1"
   },
   "dependencies": {
