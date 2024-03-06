@@ -32,13 +32,13 @@
     "pa11y-ci": "^3.1.0",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0",
-    "prettier-plugin-tailwindcss": "^0.5.11",
+    "prettier-plugin-tailwindcss": "^0.5.12",
     "remark": "^15.0.1",
     "remark-frontmatter": "^5.0.0",
     "serve": "^14.2.1",
     "strip-markdown": "^6.0.0",
     "typescript": "^5.3.3",
-    "yaml": "^2.4.0"
+    "yaml": "^2.4.1"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.6",
@@ -48,7 +48,7 @@
     "@astrojs/sitemap": "^3.1.1",
     "@astrojs/tailwind": "^5.1.0",
     "algoliasearch": "^4.22.1",
-    "astro": "^4.4.12",
+    "astro": "^4.4.13",
     "instantsearch.js": "^4.66.0",
     "satori": "^0.10.13",
     "sharp": "^0.33.2"
