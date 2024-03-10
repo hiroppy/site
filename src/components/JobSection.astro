@@ -1,0 +1,103 @@
+---
+import { type JobContent, meta } from "../../data/jobs";
+import Image from "./Image.astro";
+import { remark } from "remark";
+import rehypeStringify from "rehype-stringify";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { formatDate } from "../utils/formatDate";
+import Youtube from "./icons/Youtube.astro";
+import SnsIcon from "./SnsIcon.astro";
+import Pencil from "./icons/Pencil.astro";
+
+type Props = {
+  title: "Main Job" | "Side Job";
+  items: JobContent[];
+};
+
+let { title, items } = Astro.props;
+
+items = items.map(({ description, ...rest }) => {
+  return {
+    ...rest,
+    description: remark()
+      .use(remarkParse)
+      .use(remarkRehype)
+      .use(rehypeStringify)
+      .processSync(description.trim())
+      .toString(),
+  };
+});
+---
+
+<div class="space-y-4">
+  <h3 class="font-semibold">{title}</h3>
+  {
+    items.map(({ name, company, description, start, end, position, links }) => (
+      <div class="flex items-start gap-4 break-all">
+        {meta[company] && (
+          <Image
+            src={`./images/brands/${meta[company].image}`}
+            alt={name}
+            width={16}
+            height={16}
+            className="rounded"
+          />
+        )}
+        <div class="w-full space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="font-semibold text-blue-400 hover:text-blue-300">
+              <a href={meta[company].url} target="_blank">
+                {name}
+              </a>
+            </h4>
+            <span
+              class={[
+                "text-xs",
+                end === null ? "text-blue-300" : "text-gray-400",
+              ].join(" ")}
+            >
+              {formatDate(start)} ~ {end ? formatDate(end) : ""}
+            </span>
+          </div>
+          <span class="rounded-full bg-gray-700 px-2 py-1 text-xs font-semibold">
+            {position}
+          </span>
+          <div
+            class="job-history text-sm text-gray-400"
+            set:html={description}
+          />
+          <ul class="flex items-center gap-2">
+            {links.map((url) => (
+              <li>
+                {url.startsWith("https://www.youtube.com/") ? (
+                  <SnsIcon href={url} name="youtube">
+                    <Youtube />
+                  </SnsIcon>
+                ) : (
+                  <SnsIcon href={url} name="link">
+                    <Pencil />
+                  </SnsIcon>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    ))
+  }
+  <slot />
+</div>
+<style is:global>
+  .job-history ul li {
+    margin-left: 8px;
+  }
+
+  .job-history a {
+    text-decoration: underline;
+  }
+
+  .job-history a:hover {
+    color: #93c5fd;
+  }
+</style>

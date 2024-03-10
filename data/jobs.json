@@ -1,4 +1,54 @@
 {
+  "meta": {
+    "mercari": {
+      "image": "mercari.png",
+      "url": "https://about.mercari.com/"
+    },
+    "yuimedi": {
+      "image": "yuimedi.png",
+      "url": "https://yuimedi.com/"
+    },
+    "dwango": {
+      "image": "dwango.png",
+      "url": "https://dwango.co.jp/"
+    },
+    "rebase": {
+      "image": "rebase.png",
+      "url": "https://rebase.co.jp/"
+    },
+    "route06": {
+      "image": "route06.png",
+      "url": "https://route06.co.jp/"
+    },
+    "anotherworks": {
+      "image": "anotherworks.png",
+      "url": "https://anotherworks.co.jp/"
+    },
+    "alpaca": {
+      "image": "alpaca.jpg",
+      "url": "https://alpc.tokyo/"
+    },
+    "black": {
+      "image": "black.png",
+      "url": "https://by.black/"
+    },
+    "kakakucom": {
+      "image": "kakakucom.png",
+      "url": "https://corporate.kakaku.com/"
+    },
+    "bizreach": {
+      "image": "bizreach.png",
+      "url": "https://www.bizreach.co.jp/"
+    },
+    "eyesjapan": {
+      "image": "eyesjapan.png",
+      "url": "https://www.nowhere.co.jp/"
+    },
+    "cyberagent": {
+      "image": "cyberagent.png",
+      "url": "https://www.cyberagent.co.jp/"
+    }
+  },
   "main": [
     {
       "name": "Yuimedi",
@@ -40,6 +90,18 @@
     }
   ],
   "side": [
+    {
+      "name": "Rebase",
+      "start": "2023-07-01",
+      "end": "-",
+      "position": "technical adviser"
+    },
+    {
+      "name": "ROUTE06",
+      "start": "2023-07-01",
+      "end": "-",
+      "position": "technical adviser"
+    },
     {
       "name": "Anotherworks",
       "start": "2023-02-01",

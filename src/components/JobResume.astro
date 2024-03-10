@@ -1,0 +1,13 @@
+---
+import { history } from "../../data/jobs";
+import JobSection from "./JobSection.astro";
+---
+
+<div class="grid divide-gray-600 lg:grid-cols-2 lg:divide-x">
+  <div class="lg:pr-3">
+    <JobSection title="Main Job" items={history.main} />
+  </div>
+  <div class="mt-4 lg:mt-0 lg:pl-3">
+    <JobSection title="Side Job" items={history.side} />
+  </div>
+</div>

@@ -4,16 +4,8 @@ import MainLayout from "../layouts/MainLayout.astro";
 import Card from "../components/Card.astro";
 import SkillBox from "../components/SkillBox.astro";
 import Link from "../components/Link.astro";
-import CompanyLink from "../components/CompanyLink.astro";
 import { JOB_FORM } from "../constants";
-import tabelogImage from "../assets/images/brands/tabelog.jpg";
-import mercariImage from "../assets/images/brands/mercari.png";
-import alpacaImage from "../assets/images/brands/alpaca.jpg";
-import blackImage from "../assets/images/brands/black.jpg";
-import anotherworksImage from "../assets/images/brands/anotherworks.webp";
-import rebaseImage from "../assets/images/brands/rebase.png";
-import route06Image from "../assets/images/brands/route06.jpg";
-import runpeaceImage from "../assets/images/brands/runpeace.jpg";
+import JobResume from "../components/JobResume.astro";
 ---
 
 <Layout>
@@ -100,6 +92,14 @@ import runpeaceImage from "../assets/images/brands/runpeace.jpg";
                 to: 2019,
               },
               {
+                title: "Prisma",
+                from: 2022,
+              },
+              {
+                title: "NextAuth.js",
+                from: 2022,
+              },
+              {
                 title: "Electron",
                 from: 2017,
               },
@@ -163,52 +163,9 @@ import runpeaceImage from "../assets/images/brands/runpeace.jpg";
           />
         </div>
       </Card>
-      <Card title="Technical Advisor">
-        <div class="mt-4 grid grid-cols-3 gap-2 md:grid-cols-4 xl:grid-cols-6">
-          <CompanyLink
-            src={tabelogImage}
-            alt="tabelog"
-            href="https://tabelog.com/"
-          />
-          <CompanyLink
-            src={mercariImage}
-            alt="mercari"
-            href="https://jp.mercari.com/"
-          />
-          <CompanyLink
-            src={rebaseImage}
-            alt="rebase"
-            href="https://www.rebase.co.jp/"
-          />
-          <CompanyLink
-            src={runpeaceImage}
-            alt="runpeace"
-            href="https://www.runpeace.biz/"
-          />
-          <CompanyLink
-            src={route06Image}
-            alt="route06"
-            href="https://route06.co.jp/"
-          />
-          <CompanyLink
-            src={anotherworksImage}
-            alt="anotherworks"
-            href="https://anotherworks.co.jp/"
-          />
-          <CompanyLink
-            src={alpacaImage}
-            alt="alpaca"
-            href="https://alpaca.markets/"
-          />
-          <CompanyLink src={blackImage} alt="black" href="https://by.black/" />
-        </div>
+      <Card title="Resume">
+        <JobResume />
       </Card>
-      <!-- <Card title="Timeline">
-        <p class="text-right mb-2">🙈 the side job shows only public</p>
-        <div class="overflow-auto h-80">
-          <JobHistory />
-        </div>
-      </Card> -->
     </div>
   </MainLayout>
 </Layout>
