@@ -1,13 +1,39 @@
 ---
-import { history } from "../../data/jobs";
+import { meta, history } from "../../data/jobs";
+import Image from "./Image.astro";
 import JobSection from "./JobSection.astro";
 ---
 
-<div class="grid divide-gray-600 lg:grid-cols-2 lg:divide-x">
-  <div class="lg:pr-3">
-    <JobSection title="Main Job" items={history.main} />
+<div>
+  <div class="py-4">
+    <h3 class="font-semibold">Technical Advisor</h3>
+    <ul class="mt-4 flex gap-2">
+      {
+        history.side
+          .filter(({ position }) => position === "Technical Advisor")
+          .sort((a, b) => b.name.localeCompare(a.name))
+          .map(({ name, company }) => (
+            <li>
+              <a href={meta[company].url} target="_blank">
+                <Image
+                  src={`./images/brands/${meta[company].image}`}
+                  alt={name}
+                  width={20}
+                  height={20}
+                  className="rounded-full"
+                />
+              </a>
+            </li>
+          ))
+      }
+    </ul>
   </div>
-  <div class="mt-4 lg:mt-0 lg:pl-3">
-    <JobSection title="Side Job" items={history.side} />
+  <div class="grid divide-gray-600 lg:grid-cols-2 lg:divide-x">
+    <div class="lg:pr-3">
+      <JobSection title="Main Job" items={history.main} />
+    </div>
+    <div class="mt-4 lg:mt-0 lg:pl-3">
+      <JobSection title="Side Job" items={history.side} />
+    </div>
   </div>
 </div>
