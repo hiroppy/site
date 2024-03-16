@@ -50,9 +50,7 @@
     "algoliasearch": "^4.22.1",
     "astro": "^4.4.15",
     "instantsearch.js": "^4.66.0",
-    "rehype-stringify": "^10.0.0",
-    "remark-parse": "^11.0.0",
-    "remark-rehype": "^11.1.0",
+    "marked": "^12.0.1",
     "satori": "^0.10.13",
     "sharp": "^0.33.2"
   }

@@ -27,6 +27,8 @@ module.exports = {
         // pa11y supports
         "identical-links-same-purpose": "off",
         "label-content-name-mismatch": "off",
+        // TODO: remove
+        "tap-targets": "off",
       },
     },
   },

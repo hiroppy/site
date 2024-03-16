@@ -32,15 +32,9 @@ dependencies:
   instantsearch.js:
     specifier: ^4.66.0
     version: 4.66.0(algoliasearch@4.22.1)
-  rehype-stringify:
-    specifier: ^10.0.0
-    version: 10.0.0
-  remark-parse:
-    specifier: ^11.0.0
-    version: 11.0.0
-  remark-rehype:
-    specifier: ^11.1.0
-    version: 11.1.0
+  marked:
+    specifier: ^12.0.1
+    version: 12.0.1
   satori:
     specifier: ^0.10.13
     version: 0.10.13
@@ -4416,6 +4410,12 @@ packages:
 
   /markdown-table@3.0.3:
     resolution: {integrity: sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==}
+    dev: false
+
+  /marked@12.0.1:
+    resolution: {integrity: sha512-Y1/V2yafOcOdWQCX0XpAKXzDakPOpn6U0YLxTJs3cww6VxOzZV1BTOOYWLvH3gX38cq+iLwljHHTnMtlDfg01Q==}
+    engines: {node: '>= 18'}
+    hasBin: true
     dev: false
 
   /marky@1.2.5:
