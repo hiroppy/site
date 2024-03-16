@@ -1,0 +1,173 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: 新しくなるCJSからESMへの読み込み方法の紹介
+date: 2024-03-16
+description: Node.jsでCJSからESMを呼び出す際の仕組みが代わる提案が出てきました。この記事ではその提案について紹介します
+image: /images/brands/nodejs.png
+tags: javascript
+---
+
+import OG from "../../components/OG.astro";
+
+新しくCJSとESMの間での解決方法が変わる提案が出てきました。
+マージされてませんが、この方針から変わることはないように見えるので紹介したいと思います。
+
+<OG url="https://github.com/nodejs/node/pull/51977" />
+
+## 新しい提案
+
+この仕組みを利用する場合、少なくとも１年は、`--experimental-require-module`フラグが必要となります。
+
+以下は、わかりやすいようにpackage typeを指定せずにデフォルトはCJSで行います。
+
+```js
+// cjs.js (entry point)
+
+"use strict";
+
+// !!! 今までこれが行えなかった !!!
+const esm = require("./esm.mjs");
+
+console.log(esm);
+// [Module: null prototype] {
+//   default: 'default',
+//   named: [AsyncFunction: named]
+// }
+```
+
+```js
+// esm.mjs
+
+export async function named() {
+  return "named";
+}
+
+const defaultValue = "default";
+
+export default defaultValue;
+```
+
+このように今までできなかったCJSからESMを`require`経由で入れれるようになり、後述する既存の仕組みを破壊せずにシンプルに解決することができます。
+
+しかし、Top Level Awaitだけは引き続き、インポートできない点に注意です。
+`require`はあくまでも同期な関数なので、そのファイル自体を非同期に変えてしまうTLAはサポートされません。(`require`に関わらずCJS自体がTLAをサポートしてません)
+
+```js
+// esm.mjs
+export async function named() {
+  return "named";
+}
+
+await named();
+```
+
+```sh
+node:internal/modules/esm/module_job:290
+    this.module.instantiateSync();
+                ^
+
+Error: require() cannot be used on an ESM graph with top-level await. Use import() instead. To see where the top-level await comes from, use --experimental-print-required-tla.
+    at ModuleJobSync.runSync (node:internal/modules/esm/module_job:290:17)
+    at ModuleLoader.importSyncForRequire (node:internal/modules/esm/loader:301:16)
+    at Object.loadESMFromCJS [as .mjs] (node:internal/modules/cjs/loader:1289:32)
+    at Module.load (node:internal/modules/cjs/loader:1238:32)
+    at Module._load (node:internal/modules/cjs/loader:1054:12)
+    at Module.require (node:internal/modules/cjs/loader:1263:19)
+    at require (node:internal/modules/helpers:179:18)
+    at Object.<anonymous> (/Users/cont-y-hiroto/node/a/index.js:3:13)
+    at Module._compile (node:internal/modules/cjs/loader:1420:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1498:10) {
+  code: 'ERR_REQUIRE_ASYNC_MODULE'
+}
+```
+
+新しくエラーコードとして、`ERR_REQUIRE_ASYNC_MODULE`が追加されました。
+
+しかし、PRでJoyeeが書いている通り、TLAは基本的にエントリーポイントでしか利用されないのでこのケースは無視できるレベルです。
+**つまり今後、CJSを利用する際にほぼ大半のケースでimportされるファイルがESMかどうかを気にしなくて良くなります。**
+
+> This PR tries to keep it simple - only load ESM synchronously when we know it's synchronous (which is part of the design of ESM and is supported by the V8 API), and if it contains TLA, we throw. That should at least address the majority of use cases of ESM (TLA in a module that's supposed to be import'ed is already not a great idea, they are more meant for entry points. If they are really needed, users can use import() to make that asynchronicity explicit).
+
+TLAの場合は、引き続きdynamic importを利用してください。
+
+## 今までの仕組み
+
+今日まで、`.js`ファイルにおいてモジュールが変動的に変わる点、またCJSとESMの相互運用性が難しい点がありました。
+
+### モジュールの決定
+
+以下の条件でそのファイルのモジュールは決定され、importする場合はそれに準拠した方法で行わないと動きません。
+
+#### Package Type (旧 Package Mode) での決定
+
+`package.json`に`type`を追加すると、一番近くの親の`package.json`によってファイルのモジュールシステムが確定します。
+デフォルトは互換を保つため、CJSとなっており、ESMを利用したい場合は、`type:module`を追加する必要があります。
+
+![pacakge type flow](../../assets/images/blog/nodejs-new-module-algorithm/flow.png)
+
+詳しくは以下の記事を参考にしてください。
+
+<OG url="https://hiroppy.me/blog/nodejs-experimental-modules" />
+
+#### ファイル拡張子でそのファイルのみモジュールを固定する
+
+ESMにしたい場合は`.mjs`、CJSにしたい場合は`.cjs`を利用することで、そのファイルのモジュールシステムを固定することができます。
+
+### CJSとESM間の解決方法
+
+今まで理解するのに難しかった問題は、CJSとESMの相互運用性です。
+なぜ難しいかというと、ホストがCJSの場合にimportされるモジュールがESMなのかCJSなのかによって書き方が変わってしまうからです。
+
+#### import CJS from ESM
+
+ESMからCJSをimportする場合は、特に難しくなく、そのまま`import`を利用しいれることが可能です。
+
+#### import ESM from CJS
+
+CJSからESMをimportする場合は、`require`を利用することができません。唯一インポートする方法は、dynamic importを利用することです。
+
+```js
+// // Reading ESM at top-level is prohibited.
+// import foo from './esm/foo.js'; // invalid
+
+// // An error occurs because the read file is written as ESM.
+// // `require` expects read file as CJS
+// require('./esm/foo');
+//
+// // export default typeof module !== 'undefined' ? 'cjs' : 'esm';
+// // ^^^^^^
+// // SyntaxError: Unexpected token export
+
+console.log("root.js:", typeof module !== "undefined" ? "cjs" : "esm"); // cjs
+
+(async () => {
+  const { default: foo } = await import("./esm/foo.js");
+  console.log("foo.js :", foo); // esm
+})();
+
+// Conclusion
+// 🙆‍♀️ESM -> CJS
+// 🙅‍♀️CJS -> ESM (excluding dynamic import)
+```
+
+もっと詳しく現行のNode.jsのモジュールについて詳しく知りたい場合は、以下の記事を参考にしてください。
+
+<OG url="https://hiroppy.me/blog/node-esm" />
+
+## まとめ
+
+このアイディア自体は[2019年](https://github.com/nodejs/node/issues/49450)からあり、2018年から始まったModuleワーキンググループでも議論した結果、当時は入れれず今のような仕組みになりました。
+2024年になっても、今の複雑な仕組みは利用者にとって苦痛となっているので今回、シンプル化に再度倒れる形となりました。
+
+最初から、このような仕組みにできたのではないか？という疑問は誰しもが思うかもしれませんが、当時から議論している経緯があったことだけは確かです。
+
+---
+
+- 今まで
+  - CJSからESMを読み込むときは、`require`を利用することができず、dynamic importを利用する必要があった
+  - CJSからなにかファイルを読み込むときに、そのファイルがESMかCJSかを気にしなければならなかった
+- これから
+  - CJSからESMを読み込むときは、`require`を利用することができる
+  - `require`で読み込むときに、TLAを利用している場合はエラーが発生する
+    - 引き続きdynamic importを利用する
+  - CJSからなにかファイルを読み込むときに、そのファイルがCJSかESMかを気にする必要がほぼなくなった
