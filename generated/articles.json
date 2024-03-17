@@ -3,6 +3,16 @@
     "siteName": "hiroppy's Blog",
     "siteUrl": "https://hiroppy.me/blog/",
     "hot": false,
+    "url": "https://hiroppy.me/blog/nodejs-new-module-algorithm/",
+    "title": "Node.jsに入る新しいCJSからESMへの読み込み方法の紹介",
+    "image": "/images/brands/nodejs.png",
+    "description": "Node.jsでCJSからESMを呼び出す際の仕組みが代わる提案が出てきました。この記事ではその提案について紹介します",
+    "publishedAt": "2024-03-17"
+  },
+  {
+    "siteName": "hiroppy's Blog",
+    "siteUrl": "https://hiroppy.me/blog/",
+    "hot": false,
     "url": "https://hiroppy.me/blog/web-app-minimum-template/",
     "title": "Webサービスを作るときのテンプレートを作った",
     "image": "/images/brands/next.png",
@@ -651,7 +661,7 @@
     "image": "/images/external/Y2RuLWFrLmYuc3QtaGF0ZW5hLmNvbS9pbWFnZXMvZm90b2xpZmUvYS9hYm91dF9oaXJvcHB5LzIwMTgwOTI1LzIwMT.png",
     "description": "",
     "publishedAt": "2018-09-26",
-    "bookmark": 341
+    "bookmark": 342
   },
   {
     "siteName": "技術探し",
