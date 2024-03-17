@@ -81,13 +81,12 @@ Error: require() cannot be used on an ESM graph with top-level await. Use import
 }
 ```
 
-新しくエラーコードとして、`ERR_REQUIRE_ASYNC_MODULE`が追加されました。
+このように新しくエラーコードとして、`ERR_REQUIRE_ASYNC_MODULE`が追加されました。
 
-しかし、PRでJoyeeが書いている通り、TLAは基本的にエントリーポイントでしか利用されず、importされるケースは殆ど無いため致命的な問題ではないと判断されました。
+PRでJoyeeが書いている通り、TLAは基本的にエントリーポイントでしか利用されず、importされるケースは殆ど無いため致命的な問題ではないと判断されました。
+TLAの場合は、引き続きdynamic importを利用してください。
 
 > This PR tries to keep it simple - only load ESM synchronously when we know it's synchronous (which is part of the design of ESM and is supported by the V8 API), and if it contains TLA, we throw. That should at least address the majority of use cases of ESM (TLA in a module that's supposed to be import'ed is already not a great idea, they are more meant for entry points. If they are really needed, users can use import() to make that asynchronicity explicit).
-
-TLAの場合は、引き続きdynamic importを利用してください。
 
 **一言でまとめると今後は、CJSを利用する際にimportされるファイルがESMかどうかをほぼ気にせずに`require`を書けるようになります。**
 
