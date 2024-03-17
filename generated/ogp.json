@@ -993,5 +993,10 @@
     "title": "module: support require()ing synchronous ESM graphs by joyeecheung · Pull Request #51977 · nodejs/node",
     "description": "Summary\nThis patch adds require() support for synchronous ESM graphs under\nthe flag --experimental-require-module\nThis is based on the the following design aspect of ESM:\n\nThe resolution can be syn...",
     "image": "https://opengraph.githubassets.com/bf29d92f5a9a877b509142212f03a67b81b226e66a8e14a6821aff285d9a37ee/nodejs/node/pull/51977"
+  },
+  "https://mozaic.fm/episodes/144/monthly-ecosystem-202403.html": {
+    "title": "ep144 Monthly Ecosystem 202403 | mozaic.fm",
+    "description": "第 143 回のテーマは 2024 年 3 月の Monthly Ecosystem です。",
+    "image": "https://mozaic.fm/assets/img/mozaic.600x600.png"
   }
 }
