@@ -978,5 +978,25 @@
     "title": "GitHub - hiroppy/web-app-template: A minimal template for web app including DataBase, Google Auth, and frontend infrastructure 🎃",
     "description": "A minimal template for web app including DataBase, Google Auth, and frontend infrastructure 🎃 - hiroppy/web-app-template",
     "image": "https://opengraph.githubassets.com/4584148c0168cfc08cd062b0a9af325add885c235574e1b9b11a1e526e517c35/hiroppy/web-app-template"
+  },
+  "https://hiroppy.me/blog/nodejs-experimental-modules": {
+    "title": "Node.jsの新しいモジュール方式の実験的導入 - hiroppy's site",
+    "description": "Node.jsに新しく入るESMのアルゴリズムと仕組みを紹介します",
+    "image": "https://hiroppy.me/ogp/blog/nodejs-experimental-modules/og-4e6f64652e6a73e381aee696b0e38197e38184e383a2e382b8e383a5e383bce383abe696b9e5bc8fe381aee5ae9fe9a893e79a84e5b08ee585a56a617661736372697074.png"
+  },
+  "https://hiroppy.me/blog/node-esm": {
+    "title": "Node.jsのECMAScript Modulesの紹介 - hiroppy's site",
+    "description": "Node.jsのESMのリゾルバの説明と特徴を紹介します",
+    "image": "https://hiroppy.me/ogp/blog/node-esm/og-4e6f64652e6a73e381ae45434d41536372697074204d6f64756c6573e381aee7b4b9e4bb8b6a617661736372697074.png"
+  },
+  "https://github.com/nodejs/node/pull/51977": {
+    "title": "module: support require()ing synchronous ESM graphs by joyeecheung · Pull Request #51977 · nodejs/node",
+    "description": "Summary\nThis patch adds require() support for synchronous ESM graphs under\nthe flag --experimental-require-module\nThis is based on the the following design aspect of ESM:\n\nThe resolution can be syn...",
+    "image": "https://opengraph.githubassets.com/bf29d92f5a9a877b509142212f03a67b81b226e66a8e14a6821aff285d9a37ee/nodejs/node/pull/51977"
+  },
+  "https://mozaic.fm/episodes/144/monthly-ecosystem-202403.html": {
+    "title": "ep144 Monthly Ecosystem 202403 | mozaic.fm",
+    "description": "第 143 回のテーマは 2024 年 3 月の Monthly Ecosystem です。",
+    "image": "https://mozaic.fm/assets/img/mozaic.600x600.png"
   }
 }
