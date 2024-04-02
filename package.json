@@ -49,7 +49,7 @@
     "@astrojs/tailwind": "^5.1.0",
     "algoliasearch": "^4.23.2",
     "astro": "^4.5.13",
-    "instantsearch.js": "^4.66.0",
+    "instantsearch.js": "^4.66.1",
     "marked": "^12.0.1",
     "satori": "^0.10.13",
     "sharp": "^0.33.3"
