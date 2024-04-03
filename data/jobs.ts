@@ -19,6 +19,10 @@ export const meta = {
     image: "dwango.jpeg",
     url: "https://dwango.co.jp/",
   },
+  estie: {
+    image: "estie.png",
+    url: "https://www.estie.jp/",
+  },
   runpeace: {
     image: "runpeace.jpg",
     url: "https://www.runpeace.biz/",
@@ -197,6 +201,18 @@ Ruby on RailsからNext.jsへの移行方針の提案、実装サポート。ま
       `,
       links: [],
       company: "mercari",
+    },
+    {
+      name: "estie",
+      start: new Date("2024-04-01"),
+      end: null,
+      position: "Technical Advisor",
+      initialState: "100",
+      description: `
+フロントエンド改善支援
+      `,
+      links: [],
+      company: "estie",
     },
     {
       name: "Rebase",

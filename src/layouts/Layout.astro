@@ -11,14 +11,19 @@ type Props = {
   title?: string;
   description?: string;
   image?: string;
+  isOptimizedImage?: boolean;
 };
 
-const { title, description, image } = Astro.props;
+const { title, description, image, isOptimizedImage = true } = Astro.props;
 const pageTitle = title ?? Astro.url.pathname.replace(/^\/|\/$/g, "");
 const siteDescription = description ?? SITE_DESCRIPTION;
 const ogImage = new URL(
-  image ? getImageSrc(await importAssets(image)) : meImage.src,
-  Astro.site?.origin!,
+  image
+    ? isOptimizedImage
+      ? getImageSrc(await importAssets(image))
+      : image
+    : meImage.src,
+  Astro.site?.origin as string,
 );
 
 const url = new URL(Astro.url.pathname, Astro.site);

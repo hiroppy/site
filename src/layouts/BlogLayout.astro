@@ -48,11 +48,8 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/content/${Astro
   "",
 )}.mdx`;
 
-// og:image
-const ogImageFileName = `og-${Buffer.from(`${title}${tags}`).toString(
-  "hex",
-)}.png`;
-const ogImageDistRelativePath = `../../ogp/${url}`;
+const ogImageFileName = "og.png";
+const ogImageDistRelativePath = `../../${url}`;
 const ogImageDistAbsolutePath = join(ogImageDistRelativePath, ogImageFileName);
 
 if (import.meta.env.PROD) {
@@ -66,7 +63,12 @@ if (import.meta.env.PROD) {
 }
 ---
 
-<Layout title={title} description={description} image={ogImageDistAbsolutePath}>
+<Layout
+  title={title}
+  description={description}
+  image={ogImageDistAbsolutePath}
+  isOptimizedImage={false}
+>
   <SearchArticles slot="header-action" />
   <MainLayout title={title}>
     <BlogDescription slot="description" />

@@ -49,7 +49,10 @@ if (!ALGOLIA_APPLICATION_ID || !ALGOLIA_SEARCH_ONLY_KEY) {
   </div>
 </dialog>
 
-<script define:vars={{ ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_ONLY_KEY }}>
+<script
+  define:vars={{ ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_ONLY_KEY }}
+  is:inline
+>
   window.algolia = {
     applicationId: ALGOLIA_APPLICATION_ID,
     searchOnlyKey: ALGOLIA_SEARCH_ONLY_KEY,

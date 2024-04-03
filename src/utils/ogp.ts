@@ -10,7 +10,7 @@ const { font, icon } = await (async () => {
     const font = await readFile(
       join(
         fileURLToPath(import.meta.url),
-        "../../../src/assets/fonts/Noto_Sans_JP/static/NotoSansJP-Medium.ttf",
+        "../../../src/assets/fonts/NotoSansJP-SemiBold.ttf",
       ),
     );
     const icon = new Uint8Array(
@@ -38,64 +38,32 @@ export async function generateOgImage(title: string, tags: string[]) {
           display: "flex",
           justifyContent: "space-between",
           flexDirection: "column",
-          padding: "40px 60px",
+          padding: "60px 80px",
           width: "100%",
           height: "100%",
           backgroundImage: "linear-gradient(120deg, #075985, #1f2937 60%)",
         },
         children: [
           {
-            type: "h2",
-            props: {
-              style: {
-                display: "flex",
-                width: "100%",
-                fontSize: "60px",
-                color: "#f3f4f6",
-                textOverflow: "ellipsis",
-              },
-              children: title,
-            },
-          },
-          {
             type: "div",
             props: {
               style: {
                 display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-end",
-                fontSize: "40px",
-                width: "100%",
+                flexDirection: "column",
+                gap: 20,
               },
               children: [
                 {
-                  type: "div",
+                  type: "h2",
                   props: {
                     style: {
                       display: "flex",
+                      width: "100%",
+                      fontSize: "60px",
+                      color: "#f3f4f6",
+                      textOverflow: "ellipsis",
                     },
-                    children: [
-                      {
-                        type: "span",
-                        props: {
-                          style: {
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: 4,
-                          },
-                          children: tags.map((tag) => ({
-                            type: "div",
-                            props: {
-                              style: {
-                                display: "flex",
-                                color: "#e5e7eb",
-                              },
-                              children: `# ${tag}`,
-                            },
-                          })),
-                        },
-                      },
-                    ],
+                    children: title,
                   },
                 },
                 {
@@ -103,7 +71,51 @@ export async function generateOgImage(title: string, tags: string[]) {
                   props: {
                     style: {
                       display: "flex",
-                      justifyContent: "space-between",
+                      gap: 20,
+                    },
+                    children: tags.map((tag) => ({
+                      type: "div",
+                      props: {
+                        style: {
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "#f5f5f4",
+                          background: "#64748b",
+                          padding: "8px 24px",
+                          borderRadius: 48,
+                        },
+                        children: {
+                          type: "span",
+                          props: {
+                            children: tag,
+                            style: {
+                              fontSize: 32,
+                            },
+                          },
+                        },
+                      },
+                    })),
+                  },
+                },
+              ],
+            },
+          },
+          {
+            type: "div",
+            props: {
+              style: {
+                display: "flex",
+                flexDirection: "column",
+                fontSize: "40px",
+                gap: 20,
+              },
+              children: [
+                {
+                  type: "div",
+                  props: {
+                    style: {
+                      display: "flex",
                       alignItems: "center",
                       gap: 20,
                     },
@@ -144,8 +156,7 @@ export async function generateOgImage(title: string, tags: string[]) {
       fonts: [
         {
           name: "NotoSansJP",
-          data: font!,
-          style: "normal",
+          data: font as Buffer,
         },
       ],
     },

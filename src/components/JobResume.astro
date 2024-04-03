@@ -11,6 +11,10 @@ import JobSection from "./JobSection.astro";
       {
         history.side
           .filter(({ position }) => position === "Technical Advisor")
+          .filter(
+            (element, index, self) =>
+              self.findIndex((e) => e.company === element.company) === index,
+          )
           .sort((a, b) => b.name.localeCompare(a.name))
           .map(({ name, company }) => (
             <li>
@@ -18,8 +22,8 @@ import JobSection from "./JobSection.astro";
                 <Image
                   src={`./images/brands/${meta[company].image}`}
                   alt={name}
-                  width={20}
-                  height={20}
+                  width={80}
+                  height={80}
                   className="rounded-full"
                 />
               </a>
