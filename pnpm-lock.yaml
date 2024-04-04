@@ -62,8 +62,8 @@ devDependencies:
     specifier: ^3.8.0
     version: 3.8.0
   octokit:
-    specifier: ^3.1.2
-    version: 3.1.2
+    specifier: ^3.2.0
+    version: 3.2.0
   pa11y-ci:
     specifier: ^3.1.0
     version: 3.1.0
@@ -5286,8 +5286,8 @@ packages:
     resolution: {integrity: sha512-5qoj1RUiKOMsCCNLV1CBiPYE10sziTsnmNxkAI/rZhiD63CF7IqdFGC/XzjWjpSgLf0LxXX3bDFIh0E18f6UhQ==}
     dev: true
 
-  /octokit@3.1.2:
-    resolution: {integrity: sha512-MG5qmrTL5y8KYwFgE1A4JWmgfQBaIETE/lOlfwNYx1QOtCQHGVxkRJmdUJltFc1HVn73d61TlMhMyNTOtMl+ng==}
+  /octokit@3.2.0:
+    resolution: {integrity: sha512-f25eJ/8ITwF2BdwymOjK9I5ll9Azt8UbfHE2u5ho0gVdgfpIZkUgMGbQjbvgOYGbtIAYxh7ghH3BUbZrYal1Gw==}
     engines: {node: '>= 18'}
     dependencies:
       '@octokit/app': 14.0.2
