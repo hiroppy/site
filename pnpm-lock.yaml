@@ -74,16 +74,16 @@ devDependencies:
     specifier: 0.5.13
     version: 0.5.13(prettier-plugin-astro@0.13.0)(prettier@3.2.5)
   remark:
-    specifier: ^15.0.1
+    specifier: 15.0.1
     version: 15.0.1
   remark-frontmatter:
-    specifier: ^5.0.0
+    specifier: 5.0.0
     version: 5.0.0
   serve:
     specifier: 14.2.1
     version: 14.2.1
   strip-markdown:
-    specifier: ^6.0.0
+    specifier: 6.0.0
     version: 6.0.0
   typescript:
     specifier: 5.4.4
@@ -6061,7 +6061,7 @@ packages:
       '@types/mdast': 4.0.0
       mdast-util-frontmatter: 2.0.1
       micromark-extension-frontmatter: 2.0.0
-      unified: 11.0.3
+      unified: 11.0.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -6130,7 +6130,7 @@ packages:
       '@types/mdast': 4.0.0
       remark-parse: 11.0.0
       remark-stringify: 11.0.0
-      unified: 11.0.3
+      unified: 11.0.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -7039,18 +7039,6 @@ packages:
       trough: 2.1.0
       vfile: 5.3.7
     dev: false
-
-  /unified@11.0.3:
-    resolution: {integrity: sha512-jlCV402P+YDcFcB2VcN/n8JasOddqIiaxv118wNBoZXEhOn+lYG7BR4Bfg2BwxvlK58dwbuH2w7GX2esAjL6Mg==}
-    dependencies:
-      '@types/unist': 3.0.0
-      bail: 2.0.2
-      devlop: 1.1.0
-      extend: 3.0.2
-      is-plain-obj: 4.1.0
-      trough: 2.1.0
-      vfile: 6.0.1
-    dev: true
 
   /unified@11.0.4:
     resolution: {integrity: sha512-apMPnyLjAX+ty4OrNap7yumyVAMlKx5IWU2wlzzUdYJO9A8f1p9m/gywF/GM2ZDFcjQPrx59Mc90KwmxsoklxQ==}
