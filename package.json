@@ -26,7 +26,6 @@
     "@playwright/test": "^1.43.0",
     "cheerio": "^1.0.0-rc.12",
     "color": "^4.2.3",
-    "dotenv": "^16.4.5",
     "emoji-js": "^3.8.0",
     "octokit": "^3.2.0",
     "pa11y-ci": "^3.1.0",

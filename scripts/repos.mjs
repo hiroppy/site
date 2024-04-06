@@ -1,9 +1,8 @@
 import { Octokit } from "octokit";
 import EmojiConvertor from "emoji-js";
-import { config } from "dotenv";
 import { readData, generateData, downloadImage } from "./utils.mjs";
 
-config();
+process.loadEnvFile();
 
 const repos = await readData("repos");
 const emoji = new EmojiConvertor();

@@ -1,8 +1,7 @@
 import algoliasearch from "algoliasearch";
-import { config } from "dotenv";
 import { getArticles } from "./utils.mjs";
 
-config();
+process.loadEnvFile();
 
 const articles = await getArticles();
 const contents = articles.map(
