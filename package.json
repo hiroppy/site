@@ -34,7 +34,7 @@
     "prettier-plugin-tailwindcss": "0.5.14",
     "remark": "15.0.1",
     "remark-frontmatter": "5.0.0",
-    "serve": "14.2.2",
+    "serve": "14.2.3",
     "strip-markdown": "6.0.0",
     "typescript": "5.4.5",
     "yaml": "2.4.1"

@@ -82,8 +82,8 @@ importers:
         specifier: 5.0.0
         version: 5.0.0
       serve:
-        specifier: 14.2.2
-        version: 14.2.2
+        specifier: 14.2.3
+        version: 14.2.3
       strip-markdown:
         specifier: 6.0.0
         version: 6.0.0
@@ -1007,8 +1007,8 @@ packages:
   '@vscode/l10n@0.0.18':
     resolution: {integrity: sha512-KYSIHVmslkaCDyw013pphY+d7x1qV8IZupYfeIfzNA+nsaWHbn5uPuQRvdRFsa9zFzGeudPuoGoZ1Op4jrJXIQ==}
 
-  '@zeit/schemas@2.29.0':
-    resolution: {integrity: sha512-g5QiLIfbg3pLuYUJPlisNKY+epQJTcMDsOnVNkscrDP1oi7vmJnzOANYJI/1pZcVJ6umUkBv3aFtlg1UvUHGzA==}
+  '@zeit/schemas@2.36.0':
+    resolution: {integrity: sha512-7kjMwcChYEzMKjeex9ZFXkt1AyNov9R5HZtjBKVsmVpw7pa7ZtlCGvCBC2vnnXctaYN+aRI61HjIqeetZW5ROg==}
 
   abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -3409,8 +3409,8 @@ packages:
     resolution: {integrity: sha512-XGuRDNjXUijsUL0vl6nSD7cwURuzEgglbOaFuZM9g3kwDXOWVTck0jLzjPzGD+TazWbboZYu52/9/XPdUgne9g==}
     engines: {node: '>= 0.8.0'}
 
-  serve@14.2.2:
-    resolution: {integrity: sha512-MktTGv3ooijGxd67iQVocNdiHaOdNnEApGj7At4qHUN44XDaLFfrqbEtj5mXf+QNqyig/VdHYMRTXWRQj6TEbw==}
+  serve@14.2.3:
+    resolution: {integrity: sha512-VqUFMC7K3LDGeGnJM9h56D3XGKb6KGgOw0cVNtA26yYXHCcpxf3xwCTUaQoWlVS7i8Jdh3GjQkOB23qsXyjoyQ==}
     engines: {node: '>= 14'}
     hasBin: true
 
@@ -5205,7 +5205,7 @@ snapshots:
 
   '@vscode/l10n@0.0.18': {}
 
-  '@zeit/schemas@2.29.0': {}
+  '@zeit/schemas@2.36.0': {}
 
   abbrev@1.1.1: {}
 
@@ -5511,7 +5511,7 @@ snapshots:
     dependencies:
       ansi-align: 3.0.1
       camelcase: 7.0.1
-      chalk: 5.0.1
+      chalk: 5.3.0
       cli-boxes: 3.0.0
       string-width: 5.1.2
       type-fest: 2.19.0
@@ -8219,9 +8219,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  serve@14.2.2:
+  serve@14.2.3:
     dependencies:
-      '@zeit/schemas': 2.29.0
+      '@zeit/schemas': 2.36.0
       ajv: 8.12.0
       arg: 5.0.2
       boxen: 7.0.0
