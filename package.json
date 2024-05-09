@@ -40,14 +40,14 @@
     "yaml": "2.4.2"
   },
   "dependencies": {
-    "@astrojs/check": "0.5.10",
+    "@astrojs/check": "0.6.0",
     "@astrojs/mdx": "2.3.1",
     "@astrojs/partytown": "2.1.0",
     "@astrojs/rss": "4.0.5",
     "@astrojs/sitemap": "3.1.4",
     "@astrojs/tailwind": "5.1.0",
     "algoliasearch": "4.23.3",
-    "astro": "4.7.1",
+    "astro": "4.8.0",
     "instantsearch.js": "4.68.1",
     "marked": "12.0.2",
     "satori": "0.10.13",
