@@ -4,7 +4,7 @@
   "private": true,
   "packageManager": "pnpm@9.1.0",
   "scripts": {
-    "setup": "git config --local core.hooksPath .githooks && pnpm corepack",
+    "setup": "git config --local core.hooksPath .githooks && npm run corepack",
     "corepack": "corepack enable pnpm",
     "dev": "astro dev",
     "build": "astro build",
