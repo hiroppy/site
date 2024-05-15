@@ -13,25 +13,25 @@ importers:
         version: 0.6.0(prettier-plugin-astro@0.13.0)(prettier@3.2.5)(typescript@5.4.5)
       '@astrojs/mdx':
         specifier: 3.0.0
-        version: 3.0.0(astro@4.8.3(@types/node@20.12.7)(typescript@5.4.5))
+        version: 3.0.0(astro@4.8.4(@types/node@20.12.7)(typescript@5.4.5))
       '@astrojs/partytown':
         specifier: 2.1.0
         version: 2.1.0
       '@astrojs/rss':
-        specifier: 4.0.5
-        version: 4.0.5
+        specifier: 4.0.6
+        version: 4.0.6
       '@astrojs/sitemap':
         specifier: 3.1.4
         version: 3.1.4
       '@astrojs/tailwind':
         specifier: 5.1.0
-        version: 5.1.0(astro@4.8.3(@types/node@20.12.7)(typescript@5.4.5))(tailwindcss@3.4.3)
+        version: 5.1.0(astro@4.8.4(@types/node@20.12.7)(typescript@5.4.5))(tailwindcss@3.4.3)
       algoliasearch:
         specifier: 4.23.3
         version: 4.23.3
       astro:
-        specifier: 4.8.3
-        version: 4.8.3(@types/node@20.12.7)(typescript@5.4.5)
+        specifier: 4.8.4
+        version: 4.8.4(@types/node@20.12.7)(typescript@5.4.5)
       instantsearch.js:
         specifier: 4.68.1
         version: 4.68.1(algoliasearch@4.23.3)
@@ -198,8 +198,8 @@ packages:
     resolution: {integrity: sha512-Z9IYjuXSArkAUx3N6xj6+Bnvx8OdUSHA8YoOgyepp3+zJmtVYJIl/I18GozdJVW1p5u/CNpl3Km7/gwTJK85cw==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
 
-  '@astrojs/rss@4.0.5':
-    resolution: {integrity: sha512-IyJVL6z09AQtxbgLaAwebT3T5YKe4oTHDesqydJv1KLHw+zEzzMCFuuNsEyxjiqu7df9+DDCpDXLj/WRiEUXvw==}
+  '@astrojs/rss@4.0.6':
+    resolution: {integrity: sha512-hpfHz6OZVD4ME1ZmpNQim0yV0AOetVFUHv0vmL8+Bw4GNcmL0ibGkGtMv+PY72HLJUVfDtizrBjfN5HHg+LScA==}
 
   '@astrojs/sitemap@3.1.4':
     resolution: {integrity: sha512-po8CqDCK14O6phU1mB5C8SyVLyQEa+7pJM8oXxs1mVh8DgvxxaA5E7lak1vzOmBcyyyHBW32jakGqNYc66sBRw==}
@@ -1268,8 +1268,8 @@ packages:
     resolution: {integrity: sha512-ISvCdHdlTDlH5IpxQJIex7BWBywFWgjJSVdwst+/iQCoEYnyOaQ95+X1JGshuBjGp6nxKUy1jMgE3zPqN7fQdg==}
     hasBin: true
 
-  astro@4.8.3:
-    resolution: {integrity: sha512-pgIKopkmAUXY3EJHdG7zQpudtBzYAsd94A1R7jmLpH2LFZvzHEkAdHnunmSVmgikJCNqtEo3bUCHgLnCPQaN1g==}
+  astro@4.8.4:
+    resolution: {integrity: sha512-3UExI/Pq47tvdSmYJTDkoyuygIibO+293MBkwc5iUzK5Cu/U4H7P3LwTyP8Gp/wQX+2zBEUifEb4oNO1HfUn2g==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -3475,11 +3475,6 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  semver@7.6.1:
-    resolution: {integrity: sha512-f/vbBsu+fOiYt+lmwZV0rVwJScl46HppnOA1ZvIuBWKOTlllpyJ3bfVax76/OrhCH38dyxoDIA8K7uB963IYgA==}
-    engines: {node: '>=10'}
-    hasBin: true
-
   semver@7.6.2:
     resolution: {integrity: sha512-FNAIBWCx9qcRhoHcgcJ0gvU7SN1lYU2ZXuSfl04bSC5OpvDHFyJCjdNHomPXxjQlCBU67YW64PzY7/VIEH7F2w==}
     engines: {node: '>=10'}
@@ -4361,12 +4356,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@3.0.0(astro@4.8.3(@types/node@20.12.7)(typescript@5.4.5))':
+  '@astrojs/mdx@3.0.0(astro@4.8.4(@types/node@20.12.7)(typescript@5.4.5))':
     dependencies:
       '@astrojs/markdown-remark': 5.1.0
       '@mdx-js/mdx': 3.0.1
       acorn: 8.11.3
-      astro: 4.8.3(@types/node@20.12.7)(typescript@5.4.5)
+      astro: 4.8.4(@types/node@20.12.7)(typescript@5.4.5)
       es-module-lexer: 1.5.2
       estree-util-visit: 2.0.0
       github-slugger: 2.0.0
@@ -4391,7 +4386,7 @@ snapshots:
     dependencies:
       prismjs: 1.29.0
 
-  '@astrojs/rss@4.0.5':
+  '@astrojs/rss@4.0.6':
     dependencies:
       fast-xml-parser: 4.3.6
       kleur: 4.1.5
@@ -4402,9 +4397,9 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 3.23.4
 
-  '@astrojs/tailwind@5.1.0(astro@4.8.3(@types/node@20.12.7)(typescript@5.4.5))(tailwindcss@3.4.3)':
+  '@astrojs/tailwind@5.1.0(astro@4.8.4(@types/node@20.12.7)(typescript@5.4.5))(tailwindcss@3.4.3)':
     dependencies:
-      astro: 4.8.3(@types/node@20.12.7)(typescript@5.4.5)
+      astro: 4.8.4(@types/node@20.12.7)(typescript@5.4.5)
       autoprefixer: 10.4.19(postcss@8.4.38)
       postcss: 8.4.38
       postcss-load-config: 4.0.2(postcss@8.4.38)
@@ -5473,7 +5468,7 @@ snapshots:
 
   astring@1.8.6: {}
 
-  astro@4.8.3(@types/node@20.12.7)(typescript@5.4.5):
+  astro@4.8.4(@types/node@20.12.7)(typescript@5.4.5):
     dependencies:
       '@astrojs/compiler': 2.8.0
       '@astrojs/internal-helpers': 0.4.0
@@ -8288,8 +8283,6 @@ snapshots:
     dependencies:
       lru-cache: 6.0.0
 
-  semver@7.6.1: {}
-
   semver@7.6.2: {}
 
   send@0.18.0:
@@ -8689,7 +8682,7 @@ snapshots:
 
   typescript-auto-import-cache@0.3.2:
     dependencies:
-      semver: 7.6.1
+      semver: 7.6.2
 
   typescript@5.4.5: {}
 
@@ -8916,7 +8909,7 @@ snapshots:
   volar-service-typescript@0.0.43(@volar/language-service@2.2.1):
     dependencies:
       path-browserify: 1.0.1
-      semver: 7.6.1
+      semver: 7.6.2
       typescript-auto-import-cache: 0.3.2
       vscode-languageserver-textdocument: 1.0.11
       vscode-nls: 5.2.0
