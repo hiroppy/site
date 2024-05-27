@@ -47,7 +47,7 @@
     "@astrojs/sitemap": "3.1.5",
     "@astrojs/tailwind": "5.1.0",
     "algoliasearch": "4.23.3",
-    "astro": "4.9.1",
+    "astro": "4.9.2",
     "instantsearch.js": "4.69.0",
     "marked": "12.0.2",
     "satori": "0.10.13",
