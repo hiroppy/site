@@ -29,7 +29,7 @@
     "emoji-js": "3.8.0",
     "octokit": "4.0.2",
     "pa11y-ci": "3.1.0",
-    "prettier": "3.3.1",
+    "prettier": "3.3.2",
     "prettier-plugin-astro": "0.14.0",
     "prettier-plugin-tailwindcss": "0.6.2",
     "remark": "15.0.1",
