@@ -22,8 +22,8 @@
     "lh": "lhci autorun"
   },
   "devDependencies": {
-    "@lhci/cli": "0.13.0",
-    "@playwright/test": "1.44.1",
+    "@lhci/cli": "0.14.0",
+    "@playwright/test": "1.45.0",
     "cheerio": "1.0.0-rc.12",
     "color": "4.2.3",
     "emoji-js": "3.8.0",
@@ -36,7 +36,7 @@
     "remark-frontmatter": "5.0.0",
     "serve": "14.2.3",
     "strip-markdown": "6.0.0",
-    "typescript": "5.4.5",
+    "typescript": "5.5.2",
     "yaml": "2.4.5"
   },
   "dependencies": {
@@ -46,9 +46,9 @@
     "@astrojs/rss": "4.0.7",
     "@astrojs/sitemap": "3.1.6",
     "@astrojs/tailwind": "5.1.0",
-    "algoliasearch": "4.23.3",
-    "astro": "4.10.3",
-    "instantsearch.js": "4.71.1",
+    "algoliasearch": "4.24.0",
+    "astro": "4.11.3",
+    "instantsearch.js": "4.72.2",
     "marked": "13.0.1",
     "satori": "0.10.13",
     "sharp": "0.33.4"
