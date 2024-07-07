@@ -1,14 +1,14 @@
 ---
 import Card from "../components/Card.astro";
 import Image from "../components/Image.astro";
-import GitHub from "./icons/GitHub.astro";
-import Pencil from "./icons/Pencil.astro";
-import Youtube from "./icons/Youtube.astro";
+// import GitHub from "./icons/GitHub.astro";
+// import Pencil from "./icons/Pencil.astro";
+// import Youtube from "./icons/Youtube.astro";
 import Link from "./Link.astro";
-import SnsIcon from "./SnsIcon.astro";
+// import SnsIcon from "./SnsIcon.astro";
 
 type Props = {
-  items: DataItem[];
+  items: [];
 };
 
 const { items } = Astro.props;
@@ -80,13 +80,13 @@ const { items } = Astro.props;
                   <p class="text-xs text-gray-100">{description}</p>
                   {appendixes && (
                     <div class="mt-4">
-                      {Object.entries(appendixes).map(([key, value]) => (
+                      {/* {Object.entries(appendixes).map(([key, value]) => (
                         <SnsIcon href={value!} name={key}>
                           {key === "github" && <GitHub />}
                           {key === "youtube" && <Youtube />}
                           {key === "blog" && <Pencil />}
                         </SnsIcon>
-                      ))}
+                      ))} */}
                     </div>
                   )}
                 </div>

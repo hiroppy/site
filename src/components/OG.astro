@@ -14,10 +14,10 @@ const generatedFilePath = new URL(
   // astroはbuild時に自身ではなくdist/entry.mjsに向けてしまう
   import.meta.url,
 );
-const ogp: OGPJson = JSON.parse(readFileSync(generatedFilePath, "utf8"));
-let title: string = "";
-let description: string = "";
-let image: string = "";
+const ogp = JSON.parse(readFileSync(generatedFilePath, "utf8"));
+let title = "";
+let description = "";
+let image = "";
 
 if (ogp[url]) {
   title = ogp[url].title;

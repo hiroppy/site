@@ -19,6 +19,7 @@ export const ui = <const>{
     "top.description3": ".",
     "top.description4": "Please check",
     "top.description5": "my job history and skills!",
+    "top.description6": "",
     "jobs.description":
       "I work as a VPoE at Yuimedi, inc and provide frontend development support as a technical advisor for several companies.",
     "jobs.skill1": `
