@@ -10,12 +10,15 @@ import Hatena from "../components/icons/Hatena.astro";
 import Link from "../components/Link.astro";
 import { JOB_FORM } from "../constants";
 import meImage from "../assets/images/meta/me.png";
+import { useTranslations } from "../i18n/util";
+
+const t = useTranslations();
 ---
 
 <Layout>
   <MainLayout title="About">
     <span slot="description">
-      Welcome my site 👏 I'm Yuta. I'm a javascript junkie 🍵
+      {t("sidebar.top")}
     </span>
     <div class="mx-auto flex max-w-fit flex-col items-center gap-5 sm:flex-row">
       <div class="m-auto min-w-fit">
@@ -28,24 +31,19 @@ import meImage from "../assets/images/meta/me.png";
           lazy={false}
         />
       </div>
-      <div class="flex-auto xl:text-lg">
+      <div class="flex-auto">
         <p>
-          Hiroppy is a JavaScript engineer and works on some OSS projects and
-          Japanese communities. I have lived in Japan and Ireland, and now I
-          work in <Link href="https://yuimedi.com/en">Yuimedi, inc</Link>
-          that is a medical IT company in Japan as VPoE.
+          {t("top.description")}
         </p>
         <br />
         <p>
-          If you have a request for a technical advisor, talking, writing, etc,
-          feel free to submit <Link
-            href={JOB_FORM}
-            className="italic text-orange-300"
-          >
-            this form
-          </Link>. Please check
-          <Link href="/jobs">my job history and skills</Link>
-          if you need them.
+          {t("top.description1")}
+          <Link href={JOB_FORM} className="italic text-orange-300">
+            {t("top.description2")}
+          </Link>{t("top.description3")}
+          {t("top.description4")}
+          <Link href="/jobs">{t("top.description5")}</Link>
+          {t("top.description6")}
         </p>
       </div>
     </div>

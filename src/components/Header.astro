@@ -1,8 +1,9 @@
 ---
 import SnsIcon from "./SnsIcon.astro";
-import { PAGE_LINKS } from "../constants";
+import { JOB_FORM, PAGE_LINKS } from "../constants";
 import GitHub from "./icons/GitHub.astro";
 import Arrow from "./icons/Arrow.astro";
+import Link from "./Link.astro";
 
 const currentMenu = PAGE_LINKS.find(({ href }) =>
   href === "/"
@@ -48,6 +49,9 @@ const currentMenu = PAGE_LINKS.find(({ href }) =>
           </ul>
         </div>
       </div>
+      <Link href={JOB_FORM} className="hidden text-sm lg:block"
+        >📮 お問い合わせ</Link
+      >
     </div>
     <div class="flex gap-4">
       <slot name="action" />

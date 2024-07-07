@@ -3,9 +3,10 @@ import Layout from "../layouts/Layout.astro";
 import MainLayout from "../layouts/MainLayout.astro";
 import Card from "../components/Card.astro";
 import SkillBox from "../components/SkillBox.astro";
-import Link from "../components/Link.astro";
-import { JOB_FORM } from "../constants";
 import JobResume from "../components/JobResume.astro";
+import { useTranslations } from "../i18n/util";
+
+const t = useTranslations();
 ---
 
 <Layout>
@@ -14,24 +15,16 @@ import JobResume from "../components/JobResume.astro";
       🐕 VPoE at Yuimedi, inc <br />
       🐈 Web technical advisor
     </span>
-
-    I work as a VPoE at
-    <Link href="https://yuimedi.com/en">Yuimedi, inc</Link>
-    and provide frontend development support as a technical advisor for several companies.
-    Welcome to request anything so feel free to submit
-    <Link href={JOB_FORM} className="italic text-orange-300">this form</Link>.
-
+    <p>
+      {t("jobs.description")}
+    </p>
     <div class="mt-4 flex flex-col gap-4">
       <Card title="Skills">
         <p>
-          I started programming when I was a high school student using JS and C.
-          I have been studying image processing for four years, and I also
-          conducted research on optimization for ニコニコ動画.
+          {t("jobs.skill1")}
         </p>
         <p>
-          Currently, my specialty is web performance and frontend infrastructure
-          using tools such as webpack, Turborepo, and Vite. In my main job and
-          as a technical advisor, I mainly develop products using Next.js.
+          {t("jobs.skill2")}
         </p>
         <span class="mt-4 block text-right text-sm"
           >👷 maintainer(including past)</span

@@ -195,8 +195,7 @@ Ruby on RailsからNext.jsへの移行方針の提案、実装サポート。ま
       position: "Technical Advisor",
       initialState: "100",
       description: `
-退職後引き続き、Architectとして社内のフロントエンドサポート。
-
+退職後引き続き、Architectとして社内のフロントエンドサポートと大規模な処理に耐えれるようにパフォーマンスチューニング。
 エンジニア採用のサポート。
       `,
       links: [],
