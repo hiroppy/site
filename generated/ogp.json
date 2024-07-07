@@ -998,5 +998,10 @@
     "title": "ep144 Monthly Ecosystem 202403 | mozaic.fm",
     "description": "第 143 回のテーマは 2024 年 3 月の Monthly Ecosystem です。",
     "image": "https://mozaic.fm/assets/img/mozaic.600x600.png"
+  },
+  "https://github.com/nodejs/node/pull/53725": {
+    "title": "module: add --experimental-strip-types by marco-ippolito · Pull Request #53725 · nodejs/node",
+    "description": "It is possible to execute TypeScript files by setting the experimental flag --experimental-strip-types.\nNode.js will transpile TypeScript source code into JavaScript source code.\nDuring the transpi...",
+    "image": "https://opengraph.githubassets.com/681ef38b64e53e0bc990116e3f9a86f6ca6af68a55ca9ac111b866180eef7693/nodejs/node/pull/53725"
   }
 }

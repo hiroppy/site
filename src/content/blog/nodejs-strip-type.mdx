@@ -1,0 +1,225 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Node.jsでTypeScriptのコードを実行できるようになるかも
+date: 2024-07-08
+description: Node.jsでTypeScriptのコードを実行できるような機能が提案されました
+image: /images/brands/nodejs.png
+tags: javascript
+---
+
+import OG from "../../components/OG.astro";
+
+<OG url="https://github.com/nodejs/node/pull/53725" />
+
+💁‍♀️ まだマージされてない点に注意してください
+
+`--experimental-strip-types`というフラグを実行時に付けることにより、Node.jsでTypeScriptのコードを実行できるようになるPRが出てきました。
+
+## 背景
+
+TC39でも[型注釈の話題](https://github.com/tc39/proposal-type-annotations)(議事録を読むとなかなかブラウザとの兼ね合いがありネイティブは難しそうですが)が存在するほどJSのコードにおいて、型は必須のものとなっています。
+Node.jsと同じ立ち位置であるDenoやBunはTypeScriptをネイティブサポートしていますが、Node.jsはサポートしていません。
+なので普段、TypeScriptを利用するときには[ts-node](https://github.com/TypeStrong/ts-node)や[tsx](https://github.com/privatenumber/tsx)などのエグゼキューター、[esbuild-register](https://github.com/egoist/esbuild-register)のようなレジスターを利用するかと思います。
+時代的に必須のものとなっている以上、Node.jsにもネイティブで入れていくべきでは？というのが背景となります。
+
+## どのように動作するか？
+
+Node.jsの内部では、[@swc/wasm-typescript](https://swc.rs/docs/references/wasm-typescript)を動かし、
+TypeScriptの型を落とします。`swc/core`や`esbuild`も検討したとのことですが、RustやGolangをツールチェーンに追加しないといけなく、
+Wasmとなりました。Node.jsはC++がベースなのでWasmは良い使い方だと感じます。結果的にDenoもRustベースで`swc`を利用しているので、似たようなアプローチになりました。
+
+ちなみに`tsc`は、8.5MBもあるので、利用しなかったとのことです。
+
+案外、その内部実装はシンプルで、以下はCJSへの変換例です。ESMはもう少し複雑です。
+内部のmodule loaderに`.ts`か`.cts`拡張子ならトランスパイルをするという処理が追加されています。
+
+<details>
+
+<summary>lib/internal/modules/cjs/loader.js</summary>
+
+```js
+Module._extensions[".ts"] = function (module, filename) {
+  const content = getMaybeCachedSource(module, filename);
+  const { parseTScode } = require("internal/modules/typescript/typescript");
+  const code = parseTScode(content);
+  const pkg = packageJsonReader.getNearestParentPackageJSON(filename);
+  // Function require shouldn't be used in ES modules.
+  if (pkg?.data.type === "module") {
+    if (getOptionValue("--experimental-require-module")) {
+      module._compile(content, filename, "module");
+      return;
+    }
+    const parent = module[kModuleParent];
+    const parentPath = parent?.filename;
+    const packageJsonPath = path.resolve(pkg.path, "package.json");
+    const usesEsm = containsModuleSyntax(code, filename);
+    const err = new ERR_REQUIRE_ESM(
+      filename,
+      usesEsm,
+      parentPath,
+      packageJsonPath,
+    );
+    throw err;
+  }
+  module._compile(code, filename, "commonjs");
+};
+
+Module._extensions[".cts"] = function (module, filename) {
+  const content = getMaybeCachedSource(module, filename);
+  const { parseTScode } = require("internal/modules/typescript/typescript");
+  const code = parseTScode(content);
+  module._compile(code, filename, "commonjs");
+};
+```
+
+</details>
+
+<details>
+
+<summary>lib/internal/modules/typescript/typescript.js</summary>
+
+```js
+"use strict";
+
+const { stringify } = require("internal/modules/helpers");
+const { transformSync } = require("internal/deps/swc/wasm");
+
+function parseTScode(source) {
+  const result = transformSync(stringify(source), {
+    mode: "strip-only",
+  });
+  return result;
+}
+
+module.exports = {
+  parseTScode,
+};
+```
+
+</details>
+
+サポートされている拡張子も、`.ts`をはじめ`.cts`, `.mts`が一部サポートされているので、変換後のJSはCJS、ESMのどちらにも対応しています。
+
+## 注意点
+
+まだ初期PRなので、今後改善されていくはずですが、現段階だと以下のような制限があります。
+
+### 型検査ができない
+
+`tsc`を使ってないので、型が正しいかを確認することはできません。
+このアプローチはNext.jsとかと同様であくまでもTypeScriptからJavaScriptへ変換するだけなので、`tsc`は引き続き利用するかと思います。
+
+```ts
+// index.ts
+const foo: string = 1;
+
+console.log(foo);
+```
+
+```sh
+$ ./node --experimental-strip-types index.ts
+1
+```
+
+Node.jsもこの流れになると、またこれを機会に[stc](https://github.com/dudykr/stc)みたいなすごいチャレンジャーが出てくるかもしれません。
+
+### 拡張子を省略した場合
+
+最初のリリース時は、拡張子を見てTSかどうかの判断を行うため、拡張子がない場合はエラーとなるだろうと思います。
+理想的には、拡張子は書かなくても動くことなので、[nodejs/loaders側](https://github.com/nodejs/loaders/issues/208)でこれから議論がなされていきます。
+
+```ts
+// index.ts
+
+// Error: Must use .ts extension when using TypeScript files
+import { getDate } from "./getDate";
+
+console.log(getDate());
+```
+
+```sh
+$ ./node --experimental-strip-types index.ts
+
+node:internal/modules/run_main:121
+    triggerUncaughtException(
+    ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/hiroppy/node/getDate' imported from /Users/hiroppy/node/index.ts
+Did you mean to import "./getDate.ts"?
+    at finalizeResolution (node:internal/modules/esm/resolve:260:11)
+    at moduleResolve (node:internal/modules/esm/resolve:921:10)
+    at defaultResolve (node:internal/modules/esm/resolve:1120:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:557:12)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:526:25)
+    at ModuleLoader.getModuleJob (node:internal/modules/esm/loader:249:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:126:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///Users/hiroppy/node/getDate'
+}
+
+Node.js v23.0.0-pre
+```
+
+importするファイルに拡張子をつけると動きます。
+
+```ts
+// index.ts
+
+import { getDate } from "./getDate.ts";
+
+console.log(getDate());
+```
+
+```sh
+2024-07-07T13:22:29.663Z
+```
+
+### TypeScript固有の機能は使えない
+
+`Enum`, `experimentalDecorators`, `namespaces`などのTypeScript固有の機能はサポートされていません。
+
+```ts
+// index.ts
+
+enum Fruits {
+  Apple,
+  Orange,
+  Pineapple,
+}
+```
+
+```sh
+$ ./node --experimental-strip-types index.ts
+
+node:internal/modules/run_main:121
+    triggerUncaughtException(
+    ^
+  x TypeScript enum is not supported in strip-only mode
+   ,-[1:1]
+ 1 | ,-> enum Fruits {
+ 2 | |     Apple,
+ 3 | |     Orange,
+ 4 | |     Pineapple
+ 5 | `-> };
+   `----
+
+(Use `node --trace-uncaught ...` to show where the exception was thrown)
+
+Node.js v23.0.0-pre
+```
+
+### その他
+
+- REPL, `--print`, `--check`, `inspect`では利用できない
+- ソースマップがサポートされていない
+
+## まとめ
+
+- まだマージされるかわからないが、Node.jsで直接TypeScriptのコードを実行できるようになるかもしれない
+- 利用できる拡張子は、`.ts`, `.cts`, `.mts`
+- 型検査は行えないので、別途`tsc`を利用する必要がある
+- 現段階では、拡張子を書かないとTypeScriptとして判断しない
+- TypeScript固有の機能はサポートされていない
+
+ファイル量によってはパフォーマンスの問題が出てしまうかもしれないですが、
+将来的にnode_modules内のコードがTypeScriptで書かれている場合でもユーザーランドでトランスパイルせずに実行できるかもと思うと楽しみですね。
