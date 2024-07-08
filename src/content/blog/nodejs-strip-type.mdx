@@ -17,7 +17,7 @@ import OG from "../../components/OG.astro";
 
 ## 背景
 
-TC39でも[型注釈の話題](https://github.com/tc39/proposal-type-annotations)(議事録を読むとなかなかブラウザとの兼ね合いがありネイティブは難しそうですが)が存在するほどJSのコードにおいて、型は必須のものとなっています。
+TC39でも[型注釈の話題](https://github.com/tc39/proposal-type-annotations)(議事録を読むとブラウザとの兼ね合いもあり道のりは長そう)が存在するほどJSのコードにおいて、型は当たり前となっています。
 Node.jsと同じ立ち位置であるDenoやBunはTypeScriptをネイティブサポートしていますが、Node.jsはサポートしていません。
 なので普段、TypeScriptを利用するときには[ts-node](https://github.com/TypeStrong/ts-node)や[tsx](https://github.com/privatenumber/tsx)などのエグゼキューター、[esbuild-register](https://github.com/egoist/esbuild-register)のようなレジスターを利用するかと思います。
 時代的に必須のものとなっている以上、Node.jsにもネイティブで入れていくべきでは？というのが背景となります。
@@ -104,6 +104,8 @@ module.exports = {
 
 まだ初期PRなので、今後改善されていくはずですが、現段階だと以下のような制限があります。
 
+<OG url="https://github.com/nodejs/loaders/issues/208" />
+
 ### 型検査ができない
 
 `tsc`を使ってないので、型が正しいかを確認することはできません。
@@ -123,7 +125,7 @@ $ ./node --experimental-strip-types index.ts
 
 Node.jsもこの流れになると、またこれを機会に[stc](https://github.com/dudykr/stc)みたいなすごいチャレンジャーが出てくるかもしれません。
 
-### 拡張子を省略した場合
+### 拡張子は省略できない
 
 最初のリリース時は、拡張子を見てTSかどうかの判断を行うため、拡張子がない場合はエラーとなるだろうと思います。
 理想的には、拡張子は書かなくても動くことなので、[nodejs/loaders側](https://github.com/nodejs/loaders/issues/208)でこれから議論がなされていきます。
@@ -223,3 +225,4 @@ Node.js v23.0.0-pre
 
 ファイル量によってはパフォーマンスの問題が出てしまうかもしれないですが、
 将来的にnode_modules内のコードがTypeScriptで書かれている場合でもユーザーランドでトランスパイルせずに実行できるかもと思うと楽しみですね。
+すでにissueとしてはこちらも上がっているので、今後も注目したい機能です。
