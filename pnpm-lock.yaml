@@ -33,8 +33,8 @@ importers:
         specifier: 4.11.5
         version: 4.11.5(@types/node@20.12.7)(typescript@5.5.3)
       instantsearch.js:
-        specifier: 4.73.0
-        version: 4.73.0(algoliasearch@4.24.0)
+        specifier: 4.73.1
+        version: 4.73.1(algoliasearch@4.24.0)
       marked:
         specifier: 13.0.2
         version: 13.0.2
@@ -2120,8 +2120,8 @@ packages:
   instantsearch-ui-components@0.7.0:
     resolution: {integrity: sha512-4dHmCFbKWap5iSR2VmF5pSBECGQbAa8sPMoazMihYY2/0ahVzdHrOOtT8/hferG1A/xTT8nzfU7PIg+8lomNsA==}
 
-  instantsearch.js@4.73.0:
-    resolution: {integrity: sha512-rL2oiIJZR8W5LcqJbxkNQr5KredSHNSJlxpmgk16+gSCcvCJzvM4EMoL7AotJFopDVABrvNXefPoCTNY3zRYLg==}
+  instantsearch.js@4.73.1:
+    resolution: {integrity: sha512-sO+eck5STiHiDFaNNoYzd62RDJwINgoi3yyOcEBi7PCs0rrpcj4hw0lTuw30cqloNjcM63exGdcRXX5r7Hl49g==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
 
@@ -3312,8 +3312,8 @@ packages:
   sax@1.3.0:
     resolution: {integrity: sha512-0s+oAmw9zLl1V1cS9BtZN7JAd0cW5e0QH4W3LWEK6a4LaLEA2OTpGYWDY+6XasBLtz6wkm3u1xRw95mRuJ59WA==}
 
-  search-insights@2.13.0:
-    resolution: {integrity: sha512-Orrsjf9trHHxFRuo9/rzm0KIWmgzE8RMlZMzuhZOJ01Rnz3D0YBAe+V6473t6/H6c7irs6Lt48brULAiRWb3Vw==}
+  search-insights@2.15.0:
+    resolution: {integrity: sha512-ch2sPCUDD4sbPQdknVl9ALSi9H7VyoeVbsxznYz6QV55jJ8CI3EtwpO1i84keN4+hF5IeHWIeGvc08530JkVXQ==}
 
   section-matter@1.0.0:
     resolution: {integrity: sha512-vfD3pmTzGpufjScBh50YHKzEu2lxBWhVEHsNGoEXmCmn2hKGfeNLYMzCJpe8cD7gqX7TJluOVpBkAequ6dgMmA==}
@@ -6485,7 +6485,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.4
 
-  instantsearch.js@4.73.0(algoliasearch@4.24.0):
+  instantsearch.js@4.73.1(algoliasearch@4.24.0):
     dependencies:
       '@algolia/events': 4.0.1
       '@types/dom-speech-recognition': 0.0.1
@@ -6499,7 +6499,7 @@ snapshots:
       instantsearch-ui-components: 0.7.0
       preact: 10.20.2
       qs: 6.9.7
-      search-insights: 2.13.0
+      search-insights: 2.15.0
 
   intl-messageformat@10.5.11:
     dependencies:
@@ -8009,7 +8009,7 @@ snapshots:
 
   sax@1.3.0: {}
 
-  search-insights@2.13.0: {}
+  search-insights@2.15.0: {}
 
   section-matter@1.0.0:
     dependencies:
