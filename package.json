@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@lhci/cli": "0.14.0",
-    "@playwright/test": "1.45.2",
+    "@playwright/test": "1.45.3",
     "cheerio": "1.0.0-rc.12",
     "color": "4.2.3",
     "emoji-js": "3.8.0",
@@ -36,7 +36,7 @@
     "remark-frontmatter": "5.0.0",
     "serve": "14.2.3",
     "strip-markdown": "6.0.0",
-    "typescript": "5.5.3",
+    "typescript": "5.5.4",
     "yaml": "2.4.5"
   },
   "dependencies": {
