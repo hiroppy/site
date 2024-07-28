@@ -49,7 +49,7 @@
     "algoliasearch": "4.24.0",
     "astro": "4.12.2",
     "instantsearch.js": "4.73.2",
-    "marked": "13.0.2",
+    "marked": "13.0.3",
     "satori": "0.10.14",
     "sharp": "0.33.4"
   }
