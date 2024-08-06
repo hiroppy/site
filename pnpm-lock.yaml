@@ -33,8 +33,8 @@ importers:
         specifier: 4.13.1
         version: 4.13.1(@types/node@20.12.7)(typescript@5.5.4)
       instantsearch.js:
-        specifier: 4.73.3
-        version: 4.73.3(algoliasearch@4.24.0)
+        specifier: 4.73.4
+        version: 4.73.4(algoliasearch@4.24.0)
       marked:
         specifier: 13.0.3
         version: 13.0.3
@@ -2131,8 +2131,8 @@ packages:
   instantsearch-ui-components@0.8.0:
     resolution: {integrity: sha512-EzV7cR5+18sjmR6DMdv8yL9WuS2hUxrkqbByiLmHnJFbB4TZ4Q7oZDAn43bOItWZ2TxMK3GoxNbB/ZhWjsptPg==}
 
-  instantsearch.js@4.73.3:
-    resolution: {integrity: sha512-lhI3XyZITdd0Nu4iUCEW5ZfbDmW9/BeNdH6cFfluxjWYAO2TX94x9JJ1lEnfoWnKT25qvqHUCooQIpwkftKqEg==}
+  instantsearch.js@4.73.4:
+    resolution: {integrity: sha512-QdvExJthRBXpRaX9lzey+2sqUIzlOZEpd8N5wZyLYYs6WjDHIwrNPOzmOv7VHLBBHGqZ6YkXoCoegj5zm9QI8g==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
 
@@ -6481,7 +6481,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.4
 
-  instantsearch.js@4.73.3(algoliasearch@4.24.0):
+  instantsearch.js@4.73.4(algoliasearch@4.24.0):
     dependencies:
       '@algolia/events': 4.0.1
       '@types/dom-speech-recognition': 0.0.1
