@@ -210,7 +210,7 @@ Ruby on RailsからNext.jsへの移行方針の提案、実装サポート。ま
       description: `
 フロントエンド改善支援
       `,
-      links: [],
+      links: ["https://www.estie.jp/blog/entry/2024/08/05/183235"],
       company: "estie",
     },
     {

@@ -1003,5 +1003,10 @@
     "title": "module: add --experimental-strip-types by marco-ippolito · Pull Request #53725 · nodejs/node",
     "description": "It is possible to execute TypeScript files by setting the experimental flag --experimental-strip-types.\nNode.js will transpile TypeScript source code into JavaScript source code.\nDuring the transpi...",
     "image": "https://opengraph.githubassets.com/681ef38b64e53e0bc990116e3f9a86f6ca6af68a55ca9ac111b866180eef7693/nodejs/node/pull/53725"
+  },
+  "https://github.com/nodejs/loaders/issues/208": {
+    "title": "Support typescript  with --experimental-strip-types  · Issue #208 · nodejs/loaders",
+    "description": "Add this issue to keep track of the work for supporting typescript out of the box, in the PR you can find documentation etc... The main idea is to use type-stripping. This is achieved ideally throu...",
+    "image": "https://opengraph.githubassets.com/72dae0e2e43ffa1a83a13f92f46717ce3a0dac0b1b03a94c8aaa6d397b3213a9/nodejs/loaders/issues/208"
   }
 }
