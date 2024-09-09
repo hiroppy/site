@@ -59,6 +59,7 @@ if (import.meta.env.PROD) {
   await mkdir(fileDir, {
     recursive: true,
   });
+  // @ts-expect-error No overload matches this call.
   await writeFile(join(fileDir, ogImageFileName), buf);
 }
 ---
