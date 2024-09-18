@@ -7,6 +7,10 @@ export type Meta = Record<
 >;
 
 export const meta = {
+  aidemy: {
+    image: "aidemy.png",
+    url: "https://aidemy.net/",
+  },
   mercari: {
     image: "mercari.png",
     url: "https://about.mercari.com/",
