@@ -33,8 +33,8 @@ importers:
         specifier: 4.15.9
         version: 4.15.9(@types/node@20.12.7)(rollup@4.21.0)(typescript@5.6.2)
       instantsearch.js:
-        specifier: 4.74.1
-        version: 4.74.1(algoliasearch@4.24.0)
+        specifier: 4.74.2
+        version: 4.74.2(algoliasearch@4.24.0)
       marked:
         specifier: 14.1.2
         version: 14.1.2
@@ -73,8 +73,8 @@ importers:
         specifier: 0.14.1
         version: 0.14.1
       prettier-plugin-tailwindcss:
-        specifier: 0.6.6
-        version: 0.6.6(prettier-plugin-astro@0.14.1)(prettier@3.3.3)
+        specifier: 0.6.8
+        version: 0.6.8(prettier-plugin-astro@0.14.1)(prettier@3.3.3)
       remark:
         specifier: 15.0.1
         version: 15.0.1
@@ -2129,8 +2129,8 @@ packages:
   instantsearch-ui-components@0.9.0:
     resolution: {integrity: sha512-ugQ+XdPx3i3Sxu+woRo6tPE0Fz/kWd4KblTUfZD1TZZBsm/8qFvcbg5dVBDvXX9v7ntoyugXCzC/XCZMzrSkig==}
 
-  instantsearch.js@4.74.1:
-    resolution: {integrity: sha512-PUHvuwzkA6SA52SFCYw5ubVU4ydw+/JGsDnlYXQSRKWXfpy4R99f3R4NmVR/69v0yIprIE8sq03dWeILjaAZ7Q==}
+  instantsearch.js@4.74.2:
+    resolution: {integrity: sha512-wBRUCfVTeVkv2Ec/v2NGScZUT4LHCxu15U8DaNf9YW9ASfi9vCZACrcAc4sA5HOFsloE5RXr6I9ZrKTrMmGQQQ==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
 
@@ -3019,8 +3019,8 @@ packages:
     resolution: {integrity: sha512-RiBETaaP9veVstE4vUwSIcdATj6dKmXljouXc/DDNwBSPTp8FRkLGDSGFClKsAFeeg+13SB0Z1JZvbD76bigJw==}
     engines: {node: ^14.15.0 || >=16.0.0}
 
-  prettier-plugin-tailwindcss@0.6.6:
-    resolution: {integrity: sha512-OPva5S7WAsPLEsOuOWXATi13QrCKACCiIonFgIR6V4lYv4QLp++UXVhZSzRbZxXGimkQtQT86CC6fQqTOybGng==}
+  prettier-plugin-tailwindcss@0.6.8:
+    resolution: {integrity: sha512-dGu3kdm7SXPkiW4nzeWKCl3uoImdd5CTZEJGxyypEPL37Wj0HT2pLqjrvSei1nTeuQfO4PUfjeW5cTUNRLZ4sA==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
@@ -6552,7 +6552,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.4
 
-  instantsearch.js@4.74.1(algoliasearch@4.24.0):
+  instantsearch.js@4.74.2(algoliasearch@4.24.0):
     dependencies:
       '@algolia/events': 4.0.1
       '@types/dom-speech-recognition': 0.0.1
@@ -7712,7 +7712,7 @@ snapshots:
       prettier: 3.3.3
       sass-formatter: 0.7.9
 
-  prettier-plugin-tailwindcss@0.6.6(prettier-plugin-astro@0.14.1)(prettier@3.3.3):
+  prettier-plugin-tailwindcss@0.6.8(prettier-plugin-astro@0.14.1)(prettier@3.3.3):
     dependencies:
       prettier: 3.3.3
     optionalDependencies:
