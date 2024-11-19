@@ -31,7 +31,7 @@
     "pa11y-ci": "3.1.0",
     "prettier": "3.3.3",
     "prettier-plugin-astro": "0.14.1",
-    "prettier-plugin-tailwindcss": "0.6.8",
+    "prettier-plugin-tailwindcss": "0.6.9",
     "remark": "15.0.1",
     "remark-frontmatter": "5.0.0",
     "serve": "14.2.4",
