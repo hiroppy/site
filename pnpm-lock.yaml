@@ -36,8 +36,8 @@ importers:
         specifier: 4.75.7
         version: 4.75.7(algoliasearch@4.24.0)
       marked:
-        specifier: 14.1.4
-        version: 14.1.4
+        specifier: 15.0.6
+        version: 15.0.6
       satori:
         specifier: 0.12.1
         version: 0.12.1
@@ -2429,8 +2429,8 @@ packages:
   markdown-table@3.0.3:
     resolution: {integrity: sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==}
 
-  marked@14.1.4:
-    resolution: {integrity: sha512-vkVZ8ONmUdPnjCKc5uTRvmkRbx4EAi2OkTOXmfTDhZz3OFqMNBM1oTTWwTr4HY4uAEojhzPf+Fy8F1DWa3Sndg==}
+  marked@15.0.6:
+    resolution: {integrity: sha512-Y07CUOE+HQXbVDCGl3LXggqJDbXDP2pArc2C1N1RRMN0ONiShoSsIInMd5Gsxupe7fKLpgimTV+HOJ9r7bA+pg==}
     engines: {node: '>= 18'}
     hasBin: true
 
@@ -6931,7 +6931,7 @@ snapshots:
 
   markdown-table@3.0.3: {}
 
-  marked@14.1.4: {}
+  marked@15.0.6: {}
 
   marky@1.2.5: {}
 
