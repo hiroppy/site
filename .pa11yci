@@ -5,5 +5,13 @@
     "http://localhost:3000/media/achievements",
     "http://localhost:3000/blog",
     "http://localhost:3000/blog/vrt"
-  ]
+  ],
+  "defaults": {
+    "chromeLaunchConfig": {
+      "args": [
+        "--no-sandbox"
+      ]
+    },
+    "timeout": 10000
+  }
 }
