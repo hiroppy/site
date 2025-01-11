@@ -19,15 +19,7 @@ const kinds: Record<Path, string> = {
 <MainLayout
   title={`Media / ${currentPath === "" ? "all" : currentPath.replace("/", "")}`}
 >
-  <span slot="description"
-    >A monthly podcast about new frontend news! 👉 <Link
-      href="https://mozaic.fm/"
-      className="font-semibold text-gray-100"
-    >
-      Mozaic.fm
-    </Link></span
-  >
-  <div class="my-5 flex gap-3 overflow-x-auto p-2 md:gap-2">
+  <div class="flex flex-col gap-3 overflow-x-auto p-2 md:gap-2" slot="sidebar">
     {
       Object.entries(kinds).map(([kind, href]) => (
         <a

@@ -17,162 +17,164 @@ const t = useTranslations();
 
 <Layout>
   <MainLayout title="About">
-    <span slot="description">
-      {t("sidebar.top")}
-    </span>
-    <div class="mx-auto flex max-w-fit flex-col items-center gap-5 sm:flex-row">
-      <div class="m-auto min-w-fit">
-        <Image
-          src={meImage}
-          className="h-24 w-24 rounded-full drop-shadow-[0_4px_30px_#0369a1] md:h-32 md:w-32"
-          alt="hiroppy"
-          width={32 * 4}
-          height={32 * 4}
-          lazy={false}
-        />
+    <div class="space-y-4">
+      <div
+        class="mx-auto flex max-w-fit flex-col items-center gap-5 sm:flex-row"
+      >
+        <div class="m-auto min-w-fit">
+          <Image
+            src={meImage}
+            className="h-24 w-24 rounded-full drop-shadow-[0_4px_30px_#0369a1] md:h-32 md:w-32"
+            alt="hiroppy"
+            width={32 * 4}
+            height={32 * 4}
+            lazy={false}
+          />
+        </div>
+        <div class="flex-auto">
+          <p>
+            {t("top.description")}
+          </p>
+          <br />
+          <p>
+            {t("top.description1")}
+            <Link href={JOB_FORM} className="italic text-orange-300">
+              {t("top.description2")}
+            </Link>{t("top.description3")}
+            {t("top.description4")}
+            <Link href="/jobs">{t("top.description5")}</Link>
+            {t("top.description6")}
+          </p>
+        </div>
       </div>
-      <div class="flex-auto">
-        <p>
-          {t("top.description")}
-        </p>
-        <br />
-        <p>
-          {t("top.description1")}
-          <Link href={JOB_FORM} className="italic text-orange-300">
-            {t("top.description2")}
-          </Link>{t("top.description3")}
-          {t("top.description4")}
-          <Link href="/jobs">{t("top.description5")}</Link>
-          {t("top.description6")}
-        </p>
-      </div>
-    </div>
-    <div class="mt-8 flex flex-col gap-4">
-      <Card title="Popular Articles">
-        <ol class="grid grid-cols-1 gap-4 xl:grid-cols-2">
-          {
-            articles
-              .filter(({ hot }) => !!hot)
-              .map(({ url, title, image, bookmark }) => (
-                <li class="flex flex-col items-start justify-between gap-4 rounded-lg bg-gray-700 p-2 sm:p-3">
-                  <Link href={url} className="text-blue-200">
-                    {title}
-                  </Link>
-                  <div class="flex w-full items-end justify-between text-gray-300">
+      <div class="grid grid-cols-5 gap-4">
+        <Card title="Popular Articles" className="col-span-5 lg:col-span-2">
+          <ol class="space-y-4">
+            {
+              articles
+                .filter(({ hot }) => !!hot)
+                .map(({ url, title, image, bookmark }) => (
+                  <li class="flex flex-col items-start justify-between gap-4 rounded-lg bg-gray-700 p-2 sm:p-3">
+                    <Link href={url} className="text-blue-200">
+                      {title}
+                    </Link>
+                    <div class="flex w-full items-end justify-between text-gray-300">
+                      <Image
+                        src={image}
+                        className="object-contain w-40 h-20"
+                        alt={title}
+                        width={160}
+                        height={80}
+                        lazy={false}
+                      />
+                      <div class="flex items-center gap-2 text-sm">
+                        <Hatena />
+                        <span>{bookmark}</span>
+                      </div>
+                    </div>
+                  </li>
+                ))
+            }
+          </ol>
+        </Card>
+        <Card title="Top Repositories" className="col-span-5 lg:col-span-3">
+          <ol class="grid grid-cols-1 gap-4 xl:grid-cols-2">
+            {
+              repos.hot.map(
+                ({ name, image, description, url, stars, language }) => (
+                  <li class="flex gap-2 rounded-lg bg-gray-700 p-2 sm:p-3">
                     <Image
                       src={image}
-                      className="object-contain w-40 h-20"
-                      alt={title}
-                      width={160}
-                      height={80}
-                      lazy={false}
+                      className="w-8 h-8 rounded-full"
+                      alt={name}
+                      width={8 * 4}
+                      height={8 * 4}
                     />
-                    <div class="flex items-center gap-2 text-sm">
-                      <Hatena />
-                      <span>{bookmark}</span>
+                    <div class="flex flex-1 flex-col gap-2 text-sm">
+                      <Link href={url} className="text-blue-200 text-lg">
+                        {name}
+                      </Link>
+                      <span class="flex-1 break-all">{description}</span>
+                      <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                          <svg
+                            class="h-4 w-4 text-gray-300"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            stroke-width="2"
+                            stroke="currentColor"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" />{" "}
+                            <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
+                          </svg>
+                          <span>{stars.toLocaleString()}</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                          <div
+                            class={`${
+                              language === "JavaScript"
+                                ? "bg-javascript"
+                                : language === "TypeScript"
+                                  ? "bg-typescript"
+                                  : language === "CSS"
+                                    ? "bg-css"
+                                    : ""
+                            } h-2 w-2 rounded-full`}
+                          />
+                          <span>{language}</span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </li>
-              ))
-          }
-        </ol>
-      </Card>
-      <Card title="Top Repositories">
-        <ol class="grid grid-cols-1 gap-4 xl:grid-cols-2">
-          {
-            repos.hot.map(
-              ({ name, image, description, url, stars, language }) => (
-                <li class="flex gap-2 rounded-lg bg-gray-700 p-2 sm:p-3">
+                  </li>
+                ),
+              )
+            }
+          </ol>
+        </Card>
+
+        <Card title="Sponsors" className="col-span-5">
+          <p class="my-3">Thank you for your support 🥰</p>
+          <div class="flex flex-wrap gap-1 sm:gap-2">
+            {
+              sponsors.current.map(({ name, href, avatar }) => (
+                <Link href={href}>
                   <Image
-                    src={image}
-                    className="w-8 h-8 rounded-full"
+                    src={avatar}
                     alt={name}
-                    width={8 * 4}
-                    height={8 * 4}
+                    className="rounded-full w-12 h-12"
+                    width={12 * 4}
+                    height={12 * 4}
                   />
-                  <div class="flex flex-1 flex-col gap-2 text-sm">
-                    <Link href={url} className="text-blue-200 text-lg">
-                      {name}
-                    </Link>
-                    <span class="flex-1 break-all">{description}</span>
-                    <div class="flex items-center justify-between">
-                      <div class="flex items-center gap-2">
-                        <svg
-                          class="h-4 w-4 text-gray-300"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          stroke-width="2"
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" />{" "}
-                          <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
-                        </svg>
-                        <span>{stars.toLocaleString()}</span>
-                      </div>
-                      <div class="flex items-center gap-1">
-                        <div
-                          class={`${
-                            language === "JavaScript"
-                              ? "bg-javascript"
-                              : language === "TypeScript"
-                                ? "bg-typescript"
-                                : language === "CSS"
-                                  ? "bg-css"
-                                  : ""
-                          } h-2 w-2 rounded-full`}
-                        />
-                        <span>{language}</span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              ),
-            )
-          }
-        </ol>
-      </Card>
-      <Card title="Sponsors">
-        <p class="my-3">Thank you for your support 🥰</p>
-        <div class="flex flex-wrap gap-1 sm:gap-2">
-          {
-            sponsors.current.map(({ name, href, avatar }) => (
-              <Link href={href}>
-                <Image
-                  src={avatar}
-                  alt={name}
-                  className="rounded-full w-12 h-12"
-                  width={12 * 4}
-                  height={12 * 4}
-                />
-              </Link>
-            ))
-          }
-          {
-            sponsors.past.map(({ name, href, avatar }) => (
-              <Link
-                href={
-                  href.includes("https://docs.github.com/sponsors")
-                    ? "https://github.com"
-                    : href
-                }
-                ariaLabel={name === undefined ? "private user" : undefined}
-              >
-                <Image
-                  src={avatar ?? ""}
-                  alt={name ?? "private user"}
-                  className="rounded-full w-12 h-12"
-                  width={12 * 4}
-                  height={12 * 4}
-                />
-              </Link>
-            ))
-          }
-        </div>
-      </Card>
+                </Link>
+              ))
+            }
+            {
+              sponsors.past.map(({ name, href, avatar }) => (
+                <Link
+                  href={
+                    href.includes("https://docs.github.com/sponsors")
+                      ? "https://github.com"
+                      : href
+                  }
+                  ariaLabel={name === undefined ? "private user" : undefined}
+                >
+                  <Image
+                    src={avatar ?? ""}
+                    alt={name ?? "private user"}
+                    className="rounded-full w-12 h-12"
+                    width={12 * 4}
+                    height={12 * 4}
+                  />
+                </Link>
+              ))
+            }
+          </div>
+        </Card>
+      </div>
     </div>
   </MainLayout>
 </Layout>

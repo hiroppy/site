@@ -1,5 +1,6 @@
 ---
-import Accordion from "../components/Accordion.astro";
+// これいらないかも
+
 import SnsIcon from "../components/SnsIcon.astro";
 import Paper from "../components/Paper.astro";
 import { PAGE_LINKS } from "../constants";
@@ -14,20 +15,34 @@ type Props = {
 };
 
 const { title } = Astro.props;
+const hasSidebar = Astro.slots.has("sidebar");
 ---
 
-<main class="flex items-start gap-4">
-  <div class="sticky hidden w-64 shrink-0 lg:block" style={{ top: "96px" }}>
-    <div
+<main class="flex flex-col gap-8 p-4 text-gray-300 sm:p-4">
+  <h1 class="sticky top-[120px] text-2xl font-semibold text-gray-100">
+    {title}
+  </h1>
+  {
+    hasSidebar ? (
+      <div class="flex gap-4">
+        <div class="sticky top-[180px] hidden w-64 md:block">
+          <slot name="sidebar" />
+        </div>
+        <div class="flex-1 overflow-y-auto">
+          <slot />
+        </div>
+      </div>
+    ) : (
+      <slot />
+    )
+  }
+</main>
+
+<!-- <div
       class="flex flex-col gap-4"
       style={{ maxHeight: `calc(100vh - 96px - 16px)` }}
     >
-      <Paper className="flex-shrink-0">
-        <Accordion options={PAGE_LINKS}>
-          <slot name="description" slot="description" />
-        </Accordion>
-      </Paper>
-      <Paper className="flex-shrink-0">
+      <!-- <Paper className="flex-shrink-0">
         <div class="flex items-center justify-around p-4">
           <SnsIcon href="https://twitter.com/about_hiroppy" name="Twitter">
             <Twitter />
@@ -48,16 +63,6 @@ const { title } = Astro.props;
             <Rss />
           </SnsIcon>
         </div>
-      </Paper>
-      <slot name="optional-content" />
-    </div>
-  </div>
-  <div class="w-full flex-1 overflow-hidden">
-    <Paper>
-      <div class="p-4 text-gray-300 sm:p-4">
-        <h1 class="mb-8 text-2xl font-semibold text-gray-100">{title}</h1>
-        <slot />
-      </div>
-    </Paper>
-  </div>
-</main>
+      </Paper> -->
+<!-- <slot name="optional-content" /> -->
+-->

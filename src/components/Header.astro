@@ -2,62 +2,65 @@
 import SnsIcon from "./SnsIcon.astro";
 import { JOB_FORM, PAGE_LINKS } from "../constants";
 import GitHub from "./icons/GitHub.astro";
-import Arrow from "./icons/Arrow.astro";
 import Link from "./Link.astro";
-
-const currentMenu = PAGE_LINKS.find(({ href }) =>
-  href === "/"
-    ? Astro.url.pathname === href
-    : Astro.url.pathname.includes(href),
-) ?? {
-  icon: "😵",
-  title: "not found",
-};
 ---
 
 <header
-  class="sticky top-0 z-50 h-10 border-b-2 border-b-slate-700 bg-gray-800/70 backdrop-blur transition-colors duration-500"
+  class="sticky top-0 z-50 border-b border-b-gray-800 bg-gray-900/80 py-4 backdrop-blur transition-colors duration-500"
 >
-  <div class="container mx-auto flex h-full items-center justify-between px-4">
-    <div class="text-gray-300">
-      <div class="flex items-center gap-1 lg:hidden">
-        <input id="check" type="checkbox" name="menu" class="peer hidden" />
-        <label for="check" class="select-none"
-          >{currentMenu.icon} {currentMenu.title}</label
-        >
-        <svg
-          class="h-4 w-4 shrink-0 text-gray-400 peer-checked:rotate-180"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <Arrow />
-        </svg>
-        <div
-          class="absolute top-10 z-50 hidden w-32 rounded-lg border border-gray-600 bg-gray-700 py-2 shadow-sm peer-checked:block"
-        >
-          <ul class="flex flex-col gap-2">
-            {
-              PAGE_LINKS.map(({ title, href, icon }) => (
-                <li class="mx-2">
-                  <a href={href} class="block w-full">
-                    {icon} {title}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
+  <div class="space-y-4 divide-y divide-gray-800">
+    <div class="container mx-auto flex items-center justify-between">
+      <div class="text-gray-300">
+        <div class="flex items-center gap-1 lg:hidden">
+          <input id="check" type="checkbox" name="menu" class="peer hidden" />
+          <div
+            class="absolute top-10 z-50 hidden w-32 rounded-lg border border-gray-600 bg-gray-700 py-2 shadow-sm peer-checked:block"
+          >
+            <ul class="flex flex-col gap-2">
+              {
+                PAGE_LINKS.map(({ title, href, icon }) => (
+                  <li class="mx-2">
+                    <a href={href} class="block w-full">
+                      {icon} {title}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
         </div>
       </div>
-      <Link href={JOB_FORM} className="hidden text-sm lg:block"
-        >📮 お問い合わせ</Link
-      >
+      <div class="flex gap-4">
+        <slot name="action" />
+        <Link href={JOB_FORM} className="hidden text-sm lg:block"
+          >📮 お問い合わせ</Link
+        >
+        <SnsIcon href="https://github.com/hiroppy/site" name="GitHub">
+          <GitHub />
+        </SnsIcon>
+      </div>
     </div>
-    <div class="flex gap-4">
-      <slot name="action" />
-      <SnsIcon href="https://github.com/hiroppy/site" name="GitHub">
-        <GitHub />
-      </SnsIcon>
-    </div>
+    <menu class="flex items-center justify-center gap-4 pt-4">
+      {
+        PAGE_LINKS.map(({ title, href }) => (
+          <li class="">
+            <a
+              href={href}
+              class={[
+                (
+                  href === "/"
+                    ? Astro.url.pathname === href
+                    : Astro.url.pathname.includes(href)
+                )
+                  ? "font-semibold text-blue-300"
+                  : "text-gray-400",
+              ].join(" ")}
+            >
+              {title}
+            </a>
+          </li>
+        ))
+      }
+    </menu>
   </div>
 </header>
