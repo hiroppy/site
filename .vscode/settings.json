@@ -23,7 +23,9 @@
     "hiroppy",
     "algoliasearch",
     "pnpm",
-    "hatena"
+    "hatena",
+    "mozaic",
+    "yuimedi"
   ],
   "cSpell.allowCompoundWords": true,
   "cSpell.ignorePaths": [
