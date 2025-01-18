@@ -48,7 +48,7 @@
     "@astrojs/tailwind": "5.1.4",
     "algoliasearch": "4.24.0",
     "astro": "5.1.7",
-    "instantsearch.js": "4.75.7",
+    "instantsearch.js": "4.77.0",
     "marked": "15.0.6",
     "satori": "0.12.1",
     "sharp": "0.33.5"
