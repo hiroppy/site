@@ -80,9 +80,144 @@ const prisma = new PrismaClient({
 これにより、prismaのクライアント自体もURLを切り替えた状態で作成でき、テスト内ではこのクライアントを利用します。
 そしてそれぞれのテストスイート事にDBが隔離され、安全に並列実行できるようになります。
 
+## 実際のコード例
+
+### compose.yml
+
+```yaml
+volumes:
+  db-data:
+
+services:
+  db:
+    image: postgres:17
+    ports:
+      - ${DATABASE_PORT:-5432}:5432
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_DB}
+```
+
+### db.setup.ts
+
+これはunitだけでなく、e2eでも利用可能なので自分は汎用的にしています。
+
+```ts
+import { exec } from "node:child_process";
+import { promisify } from "node:util";
+import { Prisma, PrismaClient } from "@prisma/client";
+import { DockerComposeEnvironment, Wait } from "testcontainers";
+import { createDBUrl } from "../src/app/_utils/db";
+
+const execAsync = promisify(exec);
+
+export async function setupDB({ port }: { port: "random" | number }) {
+  const container = await new DockerComposeEnvironment(".", "compose.yml")
+    .withEnvironmentFile(".env.test")
+    // overwrite environment variables
+    .withEnvironment({
+      DATABASE_PORT: port === "random" ? "0" : `${port}`,
+    })
+    .withWaitStrategy("db", Wait.forListeningPorts())
+    .up(["db"]);
+  const dbContainer = container.getContainer("db-1");
+  const mappedPort = dbContainer.getMappedPort(5432);
+  const url = createDBUrl({
+    host: dbContainer.getHost(),
+    port: mappedPort,
+  });
+
+  await execAsync(`DATABASE_URL=${url} npx prisma db push`);
+
+  const prisma = new PrismaClient({
+    datasources: {
+      db: {
+        url,
+      },
+    },
+  });
+
+  async function down() {
+    await prisma.$disconnect();
+    await container.down();
+  }
+
+  return <const>{
+    container,
+    port,
+    prisma,
+    truncate: () => truncate(prisma),
+    down,
+    async [Symbol.asyncDispose]() {
+      await down();
+    },
+  };
+}
+
+export async function truncate(prisma: PrismaClient) {
+  const tableNames = Prisma.dmmf.datamodel.models.map((model) => {
+    return model.dbName || model.name.toLowerCase();
+  });
+  const truncateQuery = `TRUNCATE TABLE ${tableNames.map((name) => `"${name}"`).join(", ")} CASCADE`;
+
+  await prisma.$executeRawUnsafe(truncateQuery);
+}
+```
+
+### vitest.helper.ts
+
+実際のDBセットアップからtruncate、downまでをまとめたヘルパー関数です。`vi.hoisted`を利用する必要があります。
+
+```ts
+import type { User } from "next-auth";
+import { afterAll, afterEach, expect, vi } from "vitest";
+
+export async function setup() {
+  const { container, prisma, truncate, down } = await vi.hoisted(async () => {
+    const { setupDB } = await import("../../../tests/db.setup");
+
+    return await setupDB({ port: "random" });
+  });
+
+  vi.mock("../_clients/prisma", () => ({
+    prisma,
+  }));
+
+  afterAll(async () => {
+    await down();
+  });
+
+  afterEach(async () => {
+    await truncate();
+  });
+
+  return <const>{
+    container,
+    prisma,
+    truncate,
+    down,
+    mock,
+  };
+}
+```
+
+### テストスイート
+
+```ts
+import { beforeEach, describe, expect, test } from "vitest";
+import { setup } from "./test.helper";
+
+const { prisma, mock, createUser } = await setup();
+
+describe("actions/items", () => {
+  // ...
+}):
+```
+
 ---
 
-コード一覧は以下のページやリポジトリを参照。
+コード全体の一覧は以下のページやリポジトリを参照
 
 <OG url="https://hiroppy.github.io/web-app-template/features/unit-testing.html" />
 
