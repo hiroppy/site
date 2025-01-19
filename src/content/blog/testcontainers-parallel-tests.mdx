@@ -59,6 +59,7 @@ const container = await new DockerComposeEnvironment(".", "compose.yml")
   .withWaitStrategy("db", Wait.forListeningPorts())
   .up(["db"]);
 const dbContainer = container.getContainer("db-1");
+// これで実際にhost側にbindされたランダムなポートを得る
 const mappedPort = dbContainer.getMappedPort(5432);
 const url = createDBUrl({
   host: dbContainer.getHost(),
@@ -71,6 +72,7 @@ await execAsync(`DATABASE_URL=${url} npx prisma db push`);
 const prisma = new PrismaClient({
   datasources: {
     db: {
+      // prisma clientの初期URLはschemaに書かれたものなので上書きする必要がある
       url,
     },
   },
