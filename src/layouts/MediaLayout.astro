@@ -19,7 +19,10 @@ const kinds: Record<Path, string> = {
 <MainLayout
   title={`Media / ${currentPath === "" ? "all" : currentPath.replace("/", "")}`}
 >
-  <div class="flex flex-col gap-3 overflow-x-auto p-2 md:gap-2" slot="sidebar">
+  <div
+    class="sticky top-[120px] flex flex-col gap-3 overflow-x-auto p-2 md:gap-2"
+    slot="sidebar"
+  >
     {
       Object.entries(kinds).map(([kind, href]) => (
         <a

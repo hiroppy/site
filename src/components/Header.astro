@@ -40,10 +40,10 @@ import Link from "./Link.astro";
         </SnsIcon>
       </div>
     </div>
-    <menu class="flex items-center justify-center gap-4 pt-4">
+    <ul class="flex items-center justify-center gap-4 pt-4">
       {
         PAGE_LINKS.map(({ title, href }) => (
-          <li class="">
+          <li>
             <a
               href={href}
               class={[
@@ -61,6 +61,6 @@ import Link from "./Link.astro";
           </li>
         ))
       }
-    </menu>
+    </ul>
   </div>
 </header>
