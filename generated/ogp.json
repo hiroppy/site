@@ -1008,5 +1008,15 @@
     "title": "Support typescript  with --experimental-strip-types  · Issue #208 · nodejs/loaders",
     "description": "Add this issue to keep track of the work for supporting typescript out of the box, in the PR you can find documentation etc... The main idea is to use type-stripping. This is achieved ideally throu...",
     "image": "https://opengraph.githubassets.com/72dae0e2e43ffa1a83a13f92f46717ce3a0dac0b1b03a94c8aaa6d397b3213a9/nodejs/loaders/issues/208"
+  },
+  "https://hiroppy.github.io/web-app-template/features/unit-testing.html": {
+    "title": "Unit Testing | Web App Template",
+    "description": "From Zero to Service: Build with Best Practices, Minimal Code, and Essential Tools.",
+    "image": ""
+  },
+  "https://testcontainers.com/": {
+    "title": "Testcontainers",
+    "description": "Testcontainers is an opensource library for providing lightweight, throwaway instances of common databases, Selenium web browsers, or anything else that can run in a Docker container.",
+    "image": "https://testcontainers.com//images/share-image.png"
   }
 }

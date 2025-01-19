@@ -1,0 +1,91 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Testcontainersを利用し実際のデータベースを用いたテストを並列実行する
+date: 2025-01-20
+description: 開発時の環境と同じ実際のデータベースを用いて、テストを並列に実行する方法を紹介
+image: /images/brands/docker.png
+tags: javascript
+---
+
+import OG from "../../components/OG.astro";
+
+自分はDBをモックしてテストを行うのが嫌いですが、もし実際のDBを利用し並列実行する場合にポートやtruncate周りの問題が発生します。
+今回は、それを解決するためにTestcontainersとVitestを利用したコードで解決します。
+
+## Testcontiners
+
+Docker社が買収したTestcontainersは、Dockerコンテナをテストで利用しやすくするライブラリです。
+開発時に`docker compose`を利用している人が多いと思うので、そこで利用している`compose.yaml`の定義をまんまテストで再利用できる点も便利かなと思います。
+
+<OG url="https://testcontainers.com/" />
+
+## ポート衝突の問題
+
+一般的に開発時は固定のポートを利用するため、テストを並列で実行する場合にポートが衝突する問題が発生します。
+
+なので、`${DATABASE_PORT:-5432}:5432`と書くことにより`DATABASE_PORT`という環境変数を尊重し、ない場合はデフォルトのポートを参照するように変更します。
+これにより、普段の開発時には`DATABASE_PORT`を指定せず、テスト実行時だけそれぞれのテストスイートが実行時に指定できるようになります。
+
+```yaml
+services:
+  db:
+    image: postgres:17
+    ports:
+      - ${DATABASE_PORT:-5432}:5432
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_DB}
+```
+
+この環境変数をTestcontainersでコンテナ起動時に上書きすることによりポートを動的に切り替えます。
+
+```ts
+// https://github.com/hiroppy/web-app-template/blob/main/tests/db.setup.ts
+
+import { exec } from "node:child_process";
+import { promisify } from "node:util";
+import { Prisma, PrismaClient } from "@prisma/client";
+import { DockerComposeEnvironment, Wait } from "testcontainers";
+import { createDBUrl } from "../src/app/_utils/db";
+
+const execAsync = promisify(exec);
+
+const container = await new DockerComposeEnvironment(".", "compose.yml")
+  .withEnvironmentFile(".env.test")
+  .withEnvironment({
+    DATABASE_PORT: port === "random" ? "0" : `${port}`, // 環境変数を差し込み、ポートを動的に変更
+  })
+  .withWaitStrategy("db", Wait.forListeningPorts())
+  .up(["db"]);
+const dbContainer = container.getContainer("db-1");
+const mappedPort = dbContainer.getMappedPort(5432);
+const url = createDBUrl({
+  host: dbContainer.getHost(),
+  port: mappedPort,
+});
+
+// migration
+await execAsync(`DATABASE_URL=${url} npx prisma db push`);
+
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url,
+    },
+  },
+});
+```
+
+これにより、prismaのクライアント自体もURLを切り替えた状態で作成でき、テスト内ではこのクライアントを利用します。
+そしてそれぞれのテストスイート事にDBが隔離され、安全に並列実行できるようになります。
+
+---
+
+コード一覧は以下のページやリポジトリを参照。
+
+<OG url="https://hiroppy.github.io/web-app-template/features/unit-testing.html" />
+
+<br />
+
+<OG url="https://github.com/hiroppy/web-app-template" />
