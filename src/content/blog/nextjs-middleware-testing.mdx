@@ -1,0 +1,111 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Next.jsのMiddlewareを単体テストする
+date: 2025-01-21
+description: Next.jsに実験的に新しく入ったヘルパーを紹介します
+image: /images/brands/next.png
+tags: javascript
+---
+
+import OG from "../../components/OG.astro";
+
+Next.js@15.1から実験的にミドルウェアのテストヘルパーが追加されました。
+なぜかv15.1の[リリースノート](https://nextjs.org/blog/next-15-1)にも書かれてないため、まだまだ破壊的な変更が入るかもしれない点に注意が必要です。
+このヘルパーはApp Router, Pages Router両方共に対応しています。
+
+<OG url="https://nextjs.org/docs/app/building-your-application/routing/middleware#unit-testing-experimental" />
+
+## 提供されているヘルパー
+
+2つのヘルパーが提供され、2軸でのテストを行っていきます。
+
+- `unstable_doesMiddlewareMatch`
+  - そのミドルウェアがリクエストにマッチするかどうかをテストする
+  - ミドルウェアの`config` と `next.config.ts` での `rewrites` の両方共を確認できる
+  - **あくまでも中身のロジックを確認するわけではない**
+- `isRewrite`, `getRewrittenUrl`
+  - そのミドルウェアが実際に期待している挙動をするかどうかをテストする
+
+## コード例
+
+### middleware.ts
+
+```ts
+import NextAuth from "next-auth";
+import { NextResponse } from "next/server";
+import { config as authConfig } from "./app/_clients/nextAuthConfig";
+
+const { auth } = NextAuth(authConfig);
+
+export const config = { matcher: ["/me"] };
+
+export default auth(async function middleware(req) {
+  if (req.auth?.user.role === "user") {
+    return NextResponse.next();
+  }
+
+  return NextResponse.rewrite(new URL("/signin", req.url));
+});
+```
+
+### middleware.test.ts
+
+```ts
+import type { NextAuthResult } from "next-auth";
+import type { AppRouteHandlerFn } from "next/dist/server/route-modules/app-route/module";
+import {
+  getRewrittenUrl,
+  isRewrite,
+  unstable_doesMiddlewareMatch,
+} from "next/experimental/testing/server.js";
+import { NextRequest, type NextResponse } from "next/server";
+import { describe, expect, test, vi } from "vitest";
+import nextConfig from "../next.config";
+import middleware, { config } from "./middleware";
+
+describe("middleware", () => {
+  // 期待したパスのときに実行対象か確認する
+  test("should execute middleware when paths are specified by configs", () => {
+    expect(
+      unstable_doesMiddlewareMatch({
+        config,
+        nextConfig,
+        url: "/",
+      }),
+    ).toEqual(false);
+
+    expect(
+      unstable_doesMiddlewareMatch({
+        config,
+        nextConfig,
+        url: "/me",
+      }),
+    ).toEqual(true);
+  });
+
+  // サインインしてない場合は、/signinにリダイレクトする
+  test("should route /signin to when fallback", async () => {
+    const req = new NextRequest("http://localhost:3000");
+    const res = await middleware(req, {});
+
+    expect(isRewrite(res)).toEqual(true);
+    expect(getRewrittenUrl(res)).toEqual("http://localhost:3000/signin");
+  });
+
+  // サインインしている場合は、そのまま次の処理に進む(rewriteされない)
+  test("should accept only users having the role of user", async () => {
+    const req = new NextRequest("http://localhost:3000");
+
+    req.auth = {
+      user: {
+        role: "user",
+      },
+    };
+
+    const res = await middleware(req, {});
+
+    expect(isRewrite(res)).toEqual(false);
+    expect(getRewrittenUrl(res)).toEqual(null);
+  });
+});
+```
