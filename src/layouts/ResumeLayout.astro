@@ -55,7 +55,13 @@ const { frontmatter } = Astro.props;
     }
   </style>
   <div class="container mx-auto my-6 px-6">
-    <h1 class="text-3xl">{frontmatter.title}</h1>
+    <div class="flex items-center justify-between">
+      <h1 class="text-3xl">{frontmatter.title}</h1>
+      <a
+        href="https://github.com/hiroppy/site/tree/main/src/pages/resume.md"
+        class="text-sm text-blue-600">Edit this Markdown</a
+      >
+    </div>
     <div class="mt-6">
       <slot />
     </div>
