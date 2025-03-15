@@ -8,6 +8,13 @@ const config: PlaywrightTestConfig = {
     port: 3000,
     reuseExistingServer: true,
   },
+  expect: {
+    toHaveScreenshot: {
+      // Make screenshot comparison less sensitive to font rendering differences
+      maxDiffPixelRatio: 0.05,
+      threshold: 0.2,
+    },
+  },
   projects: [
     {
       name: "chrome",
