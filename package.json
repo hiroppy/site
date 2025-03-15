@@ -25,7 +25,7 @@
     "@lhci/cli": "0.14.0",
     "@playwright/test": "1.51.0",
     "cheerio": "1.0.0",
-    "color": "4.2.3",
+    "color": "5.0.0",
     "emoji-js": "3.8.1",
     "octokit": "4.1.2",
     "pa11y-ci": "3.1.0",
