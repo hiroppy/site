@@ -21,8 +21,8 @@ importers:
         specifier: 4.0.11
         version: 4.0.11
       '@astrojs/sitemap':
-        specifier: 3.2.1
-        version: 3.2.1
+        specifier: 3.3.0
+        version: 3.3.0
       '@astrojs/tailwind':
         specifier: 6.0.1
         version: 6.0.1(astro@5.5.4(@types/node@20.12.7)(jiti@1.21.0)(rollup@4.30.1)(typescript@5.8.2)(yaml@2.7.0))(tailwindcss@3.4.3)
@@ -197,8 +197,8 @@ packages:
   '@astrojs/rss@4.0.11':
     resolution: {integrity: sha512-3e3H8i6kc97KGnn9iaZBJpIkdoQi8MmR5zH5R+dWsfCM44lLTszOqy1OBfGGxDt56mpQkYVtZJWoxMyWuUZBfw==}
 
-  '@astrojs/sitemap@3.2.1':
-    resolution: {integrity: sha512-uxMfO8f7pALq0ADL6Lk68UV6dNYjJ2xGUzyjjVj60JLBs5a6smtlkBYv3tQ0DzoqwS7c9n4FUx5lgv0yPo/fgA==}
+  '@astrojs/sitemap@3.3.0':
+    resolution: {integrity: sha512-nYE4lKQtk+Kbrw/w0G0TTgT724co0jUsU4tPlHY9au5HmTBKbwiCLwO/15b1/y13aZ4Kr9ZbMeMHlXuwn0ty4Q==}
 
   '@astrojs/tailwind@6.0.1':
     resolution: {integrity: sha512-jYrqG6dXwRnS3xUcRIoeYGFB2L2SISuTNaqMMFp0otW55HQ4fhiz941VaE9EVbs49tF2+1aAZCT3xgt2l/j5tQ==}
@@ -4328,11 +4328,11 @@ snapshots:
       fast-xml-parser: 4.5.0
       kleur: 4.1.5
 
-  '@astrojs/sitemap@3.2.1':
+  '@astrojs/sitemap@3.3.0':
     dependencies:
       sitemap: 8.0.0
       stream-replace-string: 2.0.0
-      zod: 3.23.8
+      zod: 3.24.2
 
   '@astrojs/tailwind@6.0.1(astro@5.5.4(@types/node@20.12.7)(jiti@1.21.0)(rollup@4.30.1)(typescript@5.8.2)(yaml@2.7.0))(tailwindcss@3.4.3)':
     dependencies:
