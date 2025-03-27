@@ -50,7 +50,7 @@
     "astro": "5.5.5",
     "instantsearch.js": "4.78.1",
     "marked": "15.0.7",
-    "satori": "0.12.1",
+    "satori": "0.12.2",
     "sharp": "0.33.5"
   }
 }
