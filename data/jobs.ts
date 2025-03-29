@@ -7,6 +7,14 @@ export type Meta = Record<
 >;
 
 export const meta = {
+  ship: {
+    image: "ship.png",
+    url: "https://www.shipinc.jp/",
+  },
+  stract: {
+    image: "stract.png",
+    url: "https://stract.co.jp/",
+  },
   aidemy: {
     image: "aidemy.png",
     url: "https://aidemy.net/",
@@ -206,18 +214,6 @@ Ruby on RailsからNext.jsへの移行方針の提案、実装サポート。ま
       company: "mercari",
     },
     {
-      name: "estie",
-      start: new Date("2024-04-01"),
-      end: null,
-      position: "Technical Advisor",
-      initialState: "100",
-      description: `
-フロントエンド改善支援
-      `,
-      links: ["https://www.estie.jp/blog/entry/2024/08/05/183235"],
-      company: "estie",
-    },
-    {
       name: "Rebase",
       start: new Date("2023-07-01"),
       end: null,
@@ -253,6 +249,30 @@ ADRの各意思決定の確認や議論、今後スケールする組織のた�
       company: "route06",
     },
     {
+      name: "Stract",
+      start: new Date("2025-03-01"),
+      end: null,
+      position: "Technical Advisor",
+      initialState: "0",
+      description: `
+フロントエンド、Node.js、パフォーマンス支援
+      `,
+      links: [],
+      company: "stract",
+    },
+    {
+      name: "Ship",
+      start: new Date("2025-03-01"),
+      end: null,
+      position: "Technical Advisor",
+      initialState: "0",
+      description: `
+フロントエンド、Node.js、パフォーマンス支援
+      `,
+      links: [],
+      company: "ship",
+    },
+    {
       name: "Runpeace",
       start: new Date("2023-07-01"),
       end: null,
@@ -263,6 +283,18 @@ App Routerを利用したtoBサービスの開発、サポート。
       `,
       links: [],
       company: "runpeace",
+    },
+    {
+      name: "estie",
+      start: new Date("2024-04-01"),
+      end: new Date("2024-08-31"),
+      position: "Technical Advisor",
+      initialState: "100",
+      description: `
+フロントエンド改善支援
+      `,
+      links: ["https://www.estie.jp/blog/entry/2024/08/05/183235"],
+      company: "estie",
     },
     {
       name: "Anotherworks",
