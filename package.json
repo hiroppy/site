@@ -37,7 +37,7 @@
     "serve": "14.2.4",
     "strip-markdown": "6.0.0",
     "typescript": "5.8.2",
-    "yaml": "2.7.0"
+    "yaml": "2.7.1"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
