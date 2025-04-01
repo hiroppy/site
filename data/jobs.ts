@@ -7,6 +7,10 @@ export type Meta = Record<
 >;
 
 export const meta = {
+  layerX: {
+    image: "layerx.png",
+    url: "https://layerx.co.jp/",
+  },
   ship: {
     image: "ship.png",
     url: "https://www.shipinc.jp/",
@@ -87,7 +91,13 @@ export type JobContent = {
   description: string;
   start: Date;
   end: Date | null;
-  position: "VPoE" | "Technical Advisor" | "Architect" | "Engineer" | "Intern";
+  position:
+    | "VPoE"
+    | "Technical Advisor"
+    | "Architect"
+    | "Engineer"
+    | "Intern"
+    | "Enabling Team (Frontend/LLM)";
   initialState: "0" | "1-100" | "100";
   links: string[];
   company: keyof typeof meta;
@@ -98,7 +108,7 @@ export const history: Job = {
     {
       name: "Yuimedi",
       start: new Date("2022-08-01"),
-      end: null,
+      end: new Date("2025-03-31"),
       position: "VPoE",
       initialState: "0",
       description: `
@@ -212,6 +222,18 @@ Ruby on RailsからNext.jsへの移行方針の提案、実装サポート。ま
       `,
       links: [],
       company: "mercari",
+    },
+    {
+      name: "LayerX",
+      start: new Date("2025-04-01"),
+      end: null,
+      position: "Enabling Team (Frontend/LLM)",
+      initialState: "100",
+      description: `
+Enabling Teamとして、フロントエンド開発の支援、LLMの検証等を行う。
+      `,
+      links: [],
+      company: "layerX",
     },
     {
       name: "Rebase",

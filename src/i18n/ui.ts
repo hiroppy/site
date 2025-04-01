@@ -47,7 +47,7 @@ export const ui = <const>{
     "top.description5": "私の職歴とスキル",
     "top.description6": "をご確認ください。",
     "jobs.description":
-      "株式会社YuimediでVPoEとして働いており、複数の企業でフロントエンド/バックエンド開発のサポートを行っています。",
+      "技術顧問の会社で多くの会社様と取引させていただいております。",
     "jobs.skill1": `
         2008年頃からJavaScriptとCを使ってプログラミングを始め、4年間画像処理を研究し、ニコニコ生放送の動画最適化についても研究をしていました。
       `.trim(),
