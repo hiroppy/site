@@ -47,10 +47,10 @@
     "@astrojs/sitemap": "3.3.0",
     "@astrojs/tailwind": "6.0.2",
     "algoliasearch": "4.24.0",
-    "astro": "5.5.6",
+    "astro": "5.6.1",
     "instantsearch.js": "4.78.1",
     "marked": "15.0.7",
     "satori": "0.12.2",
-    "sharp": "0.33.5"
+    "sharp": "0.34.0"
   }
 }
