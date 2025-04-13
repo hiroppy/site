@@ -1,0 +1,97 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: 独立
+date: 2025-04-14
+description: 独立し、フリーランスとして活動を始めました
+image: /images/blog/init-coder-penguin/ogp.jpg
+tags: life
+---
+
+import Image from "../../components/Image.astro";
+import OG from "../../components/OG.astro";
+import { meta } from "../../../data/jobs";
+import YoutubeCard from "../../components/YoutubeCard.astro";
+
+4月1日から独立し、自分が今まで副業で使っていた会社を本業として切り替え、フリーランスとして活動を始めました。
+
+引き続きフルリモートで柔軟に働きながら、いろんな会社のプロジェクトに参加していく予定です。
+「AIにエンジニアは淘汰されるから今フリーランスになるのは危ない」ってちょくちょく聞きますが、まぁその時になったら考えればいいやと思っています。
+数年後にはエンジニアの働き方がどうなっているのか予想できない状況の中、少しでも多くの会社の方と関わっていくことに価値をおいていきたいと考えています。
+
+桜井政博さんみたいに、「私のように一つのディレクターが単体でぶらぶらしているのも面白いかと思いそうしています」と動画で仰ってますが、自分も一度はそれをやってみてもいいのかもなと思いました。
+もしフリーランスが自分にあまりにも向いてなかったらまた会社員に戻るのだろうと思います。
+
+<br />
+
+<YoutubeCard id="S2nmLVRcWKA" />
+
+<br />
+
+フルタイムではなくなるので、他の方よりもパフォーマンスを出すことが難しくなるだろう容易に想像できると思います。
+ただそれでも常に学び続け、少なくとも同等のパフォーマンスを出せるように頑張れとある種のプレッシャーを自分に課せれるいい刺激の環境ではないかと考えています。
+
+## 今現在の活動
+
+大きなプロジェクトとしては2つあります。引き続きフロントエンドとLLMを中心に活動していきます。
+
+- **Mercari**
+  - 実質2019年からの正社員の続きですが、2022年8月から業務委託になり、引き続き新規機能開発とEnablingを担当
+  - [Mercari Shops](https://mercari-shops.com/)
+- **LayerX**
+  - 2025年4月から、Enablingチーム及びfukkyyさん(CEO)直下チームでBPOの開発を担当
+  - AI-BPO, [バクラク](https://bakuraku.jp/)
+
+<OG url="https://www.nikkei.com/article/DGXZQOUC02ASK0S5A400C2000000/" />
+
+また複数社の技術顧問をさせていただいています。
+
+<div className="grid grid-cols-4 gap-4 md:grid-cols-6 lg:grid-cols-8">
+  {
+    (() => {
+      const companies = [
+        "mercari",
+        "layerX",
+        "kakakucom",
+        "rebase",
+        "stract",
+        "route06",
+        "ship",
+        "runpeace"
+      ];
+
+      return companies.map((company) => {
+        return (
+          <a href={meta[company].url} target="_blank" rel="noopener noreferrer" className="flex gap-2 flex-col items-center">
+            <Image
+              src={`./images/brands/${meta[company].image}`}
+              alt={company}
+              width={80}
+              height={80}
+              className="h-20 w-20 rounded bg-white"
+            />
+            <span className="text-sm">{company}</span>
+          </a>
+        )
+      })
+    })()
+
+}
+
+</div>
+
+<p className="mt-2 text-right text-sm">※ 公開可能な企業様のみ掲載</p>
+
+各社、フロントエンドエンジニアの採用を行っていますので、もし話を聞いてみたい会社あればお気軽に[DM](https://x.com/about_hiroppy)ください。
+
+## 仕事の募集状況
+
+今は技術顧問を含めお仕事を募集していませんが、今後は何があるのかわかりません。
+もしその時が来て自分がお役に立てそうであれば、お声をかけていただけると嬉しいです。(Xでは告知します)
+
+現在依頼できる案件は、[こちら](https://coder-penguin.com/#%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B)から確認してください。
+
+---
+
+<OG url="https://coder-penguin.com/" />
+
+始まったばかりで不安な面も多いですが、人生の中での挑戦として楽しみたいと思います。
