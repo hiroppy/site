@@ -1,0 +1,27 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: SPA + SSR + PWA の作り方とセキュリティについて
+date: 2025-04-29
+description: SPA, SSR, PWAをどのように安全に作るかを解説します
+image: /images/blog/ssr-example-2/score.png
+tags: javascript
+---
+
+import OG from "../../components/OG.astro";
+
+## evalなどのInjection Sinks
+
+{/* --disallow_code_generation_from_strings */}
+
+## Monkey Patching
+
+{/* --frozen-intrinsics */}
+
+## プロトタイプ汚染
+
+{/* Object#__proto__ */}
+{/* node --disable-proto=throw index.mjs */}
+
+## File System
+
+{/* node --permission index.mjs */}
