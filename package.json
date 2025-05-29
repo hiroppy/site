@@ -27,7 +27,7 @@
     "cheerio": "1.0.0",
     "color": "5.0.0",
     "emoji-js": "3.8.1",
-    "octokit": "4.1.4",
+    "octokit": "5.0.3",
     "pa11y-ci": "3.1.0",
     "prettier": "3.5.3",
     "prettier-plugin-astro": "0.14.1",
