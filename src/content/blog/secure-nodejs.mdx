@@ -1,0 +1,132 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: 簡単に導入できるNode.js のセキュリティ強化
+date: 2025-06-12
+description: SPA, SSR, PWAをどのように安全に作るかを解説します
+image: /images/brands/nodejs.png
+tags: node.js
+---
+
+import OG from "../../components/OG.astro";
+
+今回は **CLI オプションだけで導入できる Node.js のセキュリティ強化** をまとめます。
+「動いたけど危険だった」コードを本番に送り込まないために、**CI〜本番まで同じフラグ** を徹底しましょう。
+
+|  §  | テーマ                          | 重点フラグ                                    |
+| :-: | :------------------------------ | :-------------------------------------------- |
+|  1  | Injection Sinks (eval など)     | `--disallow-code-generation-from-strings`     |
+|  2  | Monkey Patching                 | `--frozen-intrinsics`                         |
+|  3  | Prototype Pollution             | `--disable-proto=throw`                       |
+|  4  | Permission Model                | `--permission`                                |
+|  5  | **Secure Heap**                 | `--secure-heap`                               |
+|  6  | **Policy & Integrity Manifest** | `--experimental-policy`, `--policy-integrity` |
+
+---
+
+## Injection Sinks
+
+```js
+// ?q=process.mainModule.require('fs').readFileSync('/etc/passwd','utf8')
+eval(`db.find("${req.query.q}")`); // ← RCE
+```
+
+```sh
+$ node --disallow-code-generation-from-strings index.mjs
+```
+
+## Monkey Patching
+
+依存ライブラリが `Array.prototype.push = …` を上書きすると、他ライブラリや Node.js コアの前提が崩壊。
+
+```sh
+$ node --frozen-intrinsics app.mjs
+```
+
+- すべてのビルトイン (Object, Array, Date …) を再帰的に `Object.freeze()`
+- 必要な polyfill は **`--require core-js`** などで「凍結前」にロード
+
+## Prototype Pollution
+
+```sh
+$ node --disable-proto=throw --frozen-intrinsics server.mjs
+```
+
+- `__proto__` 参照・代入時に即例外
+- マージは `structuredClone` + 展開、または `lodash.mergeWith`
+- 入力は JSON Schema / Ajv でバリデート
+
+## Permission Model
+
+ファイル＆サブプロセスをホワイトリスト化
+
+```sh
+node --permission \
+     --allow-fs-read=/var/data \
+     --allow-child-process \
+     api.mjs
+```
+
+- デフォルトで **全権限拒否**、個別に `--allow-*` で解放
+- v21.6.0 以降は相対パス許可が強化
+
+---
+
+## Secure Heap
+
+ヒープダンプや隣接メモリ破壊から **秘密鍵流出 (CWE‑284)** を守る。
+
+```bash
+# 16 MiB の Secure Heap（最小ブロック 4 KiB）
+node --secure-heap=16777216 --secure-heap-min=4096 app.mjs
+```
+
+Linux/macOS 専用。枯渇すると OpenSSL API がエラーを返す。
+
+## TODO: ちょうさ Policy & Integrity Manifest — Require/Import をハッシュ検証
+
+`policy.json` 例:
+
+```json
+{
+  "onerror": "exit",
+  "resources": {
+    "./app/server.js": {
+      "integrity": "sha256-<SRI>",
+      "dependencies": { "./router": "./app/router.js" }
+    },
+    "./app/router.js": { "integrity": "sha256-<SRI>" }
+  }
+}
+```
+
+```bash
+node --experimental-policy=policy.json \
+     --policy-integrity=sha256-<policySRI> \
+     app/server.js
+```
+
+未許可のパス・ハッシュは即例外。
+
+## --max-http-header-size
+
+## CI に組み込む推奨セット
+
+```bash
+NODE_OPTIONS="\
+  --disallow-code-generation-from-strings \
+  --frozen-intrinsics \
+  --disable-proto=throw \
+  --permission \
+  --secure-heap=16777216 --secure-heap-min=4096" \
+  npm test
+```
+
+## 参考リンク
+
+{/* - Node.js CLI Flags — <https://nodejs.org/api/cli.html> */}
+{/* - Permissions API — <https://nodejs.org/api/permissions.html> */}
+{/* - Policy Manifest — <https://nodejs.org/api/policy.html> */}
+{/* - Secure Heap — <https://nodejs.org/api/cli.html#--secure-heap-size> */}
+{/* - Prototype Pollution (PortSwigger) — <https://portswigger.net/web-security/prototype-pollution> */}
+{/* - Memory Access Violation (CWE‑284) — <https://nodejs.org/ja/learn/getting-started/security-best-practices#memory-access-violation-cwe-284> */}
+{/* - Node.js Debugger / Inspector — <https://nodejs.org/api/debugger.html> */}
