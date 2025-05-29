@@ -1,12 +1,20 @@
 [
   {
-    "title": "本当にそれはエラーなのか？",
-    "description": "本当にそれは エラーなのか？ 2025/03/28 @hiroppy",
-    "image": "/images/external/bGg3LXVzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9kb2NzL0FIa2J3eUk4cFVtZ1VvSmFoWlZsUktzY2RsTlp0VjFaZE.png",
-    "siteName": "noren.ts #1 〜TypeScriptのエラーハンドリングを極める〜",
-    "siteUrl": "https://dinii.connpass.com/event/348179/",
-    "url": "https://docs.google.com/presentation/d/1WxxeCzsjgZS_vjInk_NO-NLYCJEj-DblswDEHeBXhjE/edit",
-    "publishedAt": "2025-03-28"
+    "title": "Node.js 🤝 TypeScript",
+    "description": "Node.js TypeScript 2025/05/19 @hiroppy TODO: スライド + スピーカーノートからLLMでブログに書き起こせるのか検証",
+    "image": "/images/external/bGg3LXVzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9kb2NzL0FIa2J3eUtFZzcwYV9ZTnl0bDNMQmxxX2VWbTlYeGc0bV.png",
+    "siteName": "カンファレンス直前！スタートアップのTypeScript実践Tips",
+    "siteUrl": "https://stract.connpass.com/event/354163/",
+    "url": "https://docs.google.com/presentation/d/128j6TkIx9RvAvsukcqcKHf7mp6eU2MPTN94NZ__zYFI/edit",
+    "publishedAt": "2025-05-19"
+  },
+  {
+    "title": "eval is evil",
+    "description": "eval is Evil 2025/04/02 LT @hiroppy (4/1から入った業務委託、enabling teamにいます)",
+    "image": "/images/external/bGg3LXVzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9kb2NzL0FIa2J3eUs0Rjd0ZGd3QVp5Z29Yc21nVzU5M3p2bm5UcH.png",
+    "siteName": "Google Docs",
+    "url": "https://docs.google.com/presentation/d/1z6aZSNjSyhdF52fNS3bPrA8eUcoUtG2mjlDh6wj1OzY/edit",
+    "publishedAt": "2025-04-02"
   },
   {
     "title": "Trusted Types & Dynamic Code Brand Checks",
