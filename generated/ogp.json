@@ -1023,5 +1023,15 @@
     "title": "Routing: Middleware | Next.js",
     "description": "Learn how to use Middleware to run code before a request is completed.",
     "image": "https://nextjs.org/api/docs-og?title=Routing:%20Middleware"
+  },
+  "https://www.nikkei.com/article/DGXZQOUC02ASK0S5A400C2000000/": {
+    "title": "LayerX、AIエージェントに参入　請求書受け取り代行など - 日本経済新聞",
+    "description": "支出管理システムのLayerX（レイヤーエックス、東京・中央）は2025年度中に人工知能（AI）エージェント事業に参入する。同社の既存サービスの請求書受領システムと連携させ、AIエージェントが企業の請求書受け取り代行を担うサービスなどを始める。30年には関連事業で500億円の売り上げを目指す。AIエージェントを活用して企業の間接業務を請け負うビジネス・プロセス・ア",
+    "image": "https://article-image-ix.nikkei.com/https%3A%2F%2Fimgix-proxy.n8s.jp%2FDSXZQO6225661004042025000000-1.jpg?auto=format&bg=FFFF&crop=focalpoint&fit=crop&fp-x=0.1&fp-y=0.14&h=630&w=1200&s=05e25f4d44cac486b64ac8cdb4619913"
+  },
+  "https://coder-penguin.com/": {
+    "title": "合同会社Coder Penguin",
+    "description": "合同会社Coder Penguinは、主にフロントエンドやNode.jsのパフォーマンス改善、技術選定サポート、組織課題解決、エンジニア採用など多岐にわたる支援を行っている会社です。",
+    "image": "https://coder-penguin.com/_astro/ogp.BoPtfs6M.jpg"
   }
 }
