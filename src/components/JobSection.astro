@@ -19,6 +19,8 @@ const { title, items, meta } = Astro.props;
 const history: JobContent = [];
 
 for (const item of items) {
+  // TODO:
+  // @ts-expect-error
   history.push({
     ...item,
     description: await marked.parse(item.description),
@@ -32,9 +34,9 @@ for (const item of items) {
     history.map(
       ({ name, company, description, start, end, position, links }) => (
         <div class="flex items-start gap-4 break-all">
-          {meta[company] && (
+          {(meta as any)[company] && (
             <Image
-              src={`./images/brands/${meta[company].image}`}
+              src={`./images/brands/${(meta as any)[company].image}`}
               alt={name}
               width={60}
               height={60}
@@ -44,7 +46,7 @@ for (const item of items) {
           <div class="w-full space-y-2">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between">
               <h4 class="font-semibold text-blue-400 hover:text-blue-300">
-                <a href={meta[company].url} target="_blank">
+                <a href={(meta as any)[company].url} target="_blank">
                   {name}
                 </a>
               </h4>

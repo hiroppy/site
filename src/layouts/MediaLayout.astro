@@ -9,6 +9,7 @@ type Path = "" | `/${MediaType}`;
 const currentPath = Astro.url.pathname.replace("/media", "").replace(/\/$/, "");
 const kinds: Record<Path, string> = {
   "": "/media",
+  // @ts-expect-error
   "/articles": "/media/articles",
   "/talks": "/media/talks",
   "/podcasts": "/media/podcasts",
