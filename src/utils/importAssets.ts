@@ -62,6 +62,31 @@ export async function importAssets(
       }
     }
 
+    if (image.startsWith("/images")) {
+      switch (ext) {
+        case ".webp":
+          return import(
+            `../../node_modules/hiroppy/generated/images/${name}.webp`
+          );
+        case ".jpg":
+          return import(
+            `../../node_modules/hiroppy/generated/images/${name}.jpg`
+          );
+        case ".png":
+          return import(
+            `../../node_modules/hiroppy/generated/images/${name}.png`
+          );
+        case ".svg":
+          return import(
+            `../../node_modules/hiroppy/generated/images/${name}.svg`
+          );
+        default:
+          return import(
+            `../../node_modules/hiroppy/generated/images/${name}.jpg`
+          );
+      }
+    }
+
     return image;
   } catch (e) {
     if (e instanceof Error) {

@@ -2,15 +2,15 @@
 import Layout from "../layouts/Layout.astro";
 import MainLayout from "../layouts/MainLayout.astro";
 import Card from "../components/Card.astro";
-import repos from "../../generated/repos.json";
-import sponsors from "../../generated/sponsors.json";
-import articles from "../../generated/articles.json";
 import Image from "../components/Image.astro";
 import Hatena from "../components/icons/Hatena.astro";
 import Link from "../components/Link.astro";
 import { JOB_FORM } from "../constants";
 import meImage from "../assets/images/meta/me.png";
 import { useTranslations } from "../i18n/util";
+import articles from "../../node_modules/hiroppy/generated/articles.json";
+import sponsors from "../../node_modules/hiroppy/generated/sponsors.json";
+import repos from "../../node_modules/hiroppy/generated/repos.json";
 
 const t = useTranslations();
 ---

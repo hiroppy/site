@@ -2,3 +2,4 @@ onlyBuiltDependencies:
   - esbuild
   - puppeteer
   - sharp
+  - hiroppy

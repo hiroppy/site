@@ -1,5 +1,5 @@
 ---
-import { type JobContent, meta } from "../../data/jobs";
+import type JobMeta from "hiroppy/generated/jobs.json";
 import Image from "./Image.astro";
 import { formatDate } from "../utils/formatDate";
 import Youtube from "./icons/Youtube.astro";
@@ -7,13 +7,16 @@ import SnsIcon from "./SnsIcon.astro";
 import Pencil from "./icons/Pencil.astro";
 import { marked } from "marked";
 
+type JobContent = (typeof JobMeta)["main"] | (typeof JobMeta)["side"];
+
 type Props = {
   title: "Main Job" | "Side Job";
-  items: JobContent[];
+  items: JobContent;
+  meta: (typeof JobMeta)["meta"];
 };
 
-const { title, items } = Astro.props;
-const history: JobContent[] = [];
+const { title, items, meta } = Astro.props;
+const history: JobContent = [];
 
 for (const item of items) {
   history.push({
@@ -51,7 +54,8 @@ for (const item of items) {
                   end === null ? "text-blue-300" : "text-gray-400",
                 ].join(" ")}
               >
-                {formatDate(start)} ~ {end ? formatDate(end) : ""}
+                {formatDate(new Date(start))} ~{" "}
+                {end ? formatDate(new Date(end)) : ""}
               </span>
             </div>
             <span class="rounded-full bg-gray-700 px-2 py-1 text-xs font-semibold">
@@ -62,7 +66,7 @@ for (const item of items) {
               set:html={description}
             />
             <ul class="flex items-center gap-2">
-              {links.map((url) => (
+              {links.map(({ siteUrl: url }) => (
                 <li>
                   {url.startsWith("https://www.youtube.com/") ? (
                     <SnsIcon href={url} name="youtube">

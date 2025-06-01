@@ -32,4 +32,4 @@ export const JOB_FORM =
   "https://coder-penguin.com/#%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B";
 
 export type PAGE_PATH = (typeof PAGE_LINKS)[number]["href"];
-export type MediaType = "articles" | "podcasts" | "achievements" | "talks";
+export type MediaType = "media" | "podcasts" | "talks";

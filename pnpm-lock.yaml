@@ -32,6 +32,9 @@ importers:
       astro:
         specifier: 5.8.1
         version: 5.8.1(@types/node@20.12.7)(jiti@1.21.0)(rollup@4.41.1)(typescript@5.8.3)(yaml@2.8.0)
+      hiroppy:
+        specifier: 1.0.12
+        version: 1.0.12
       instantsearch.js:
         specifier: 4.78.3
         version: 4.78.3(algoliasearch@4.24.0)
@@ -2194,6 +2197,9 @@ packages:
   hex-rgb@4.3.0:
     resolution: {integrity: sha512-Ox1pJVrDCyGHMG9CFg1tmrRUMRPRsAWYc/PinY0XzJU4K7y7vjNoLKIQ7BR5UJMCxNN8EM1MNDmHWA/B3aZUuw==}
     engines: {node: '>=6'}
+
+  hiroppy@1.0.12:
+    resolution: {integrity: sha512-bTT6Bbrh4iRv8nHNO9FEfELGmjEovKiZ/gaqICxsWtIrrv4yLrUHf9Xo6APWQ6WXEWx0/6ZoOqqfC87N43AxDg==}
 
   hogan.js@3.0.2:
     resolution: {integrity: sha512-RqGs4wavGYJWE07t35JQccByczmNUXQT0E12ZYV1VKYu5UiAU9lsos/yBAcf840+zrUQQxgVduCR5/B8nNtibg==}
@@ -6796,6 +6802,8 @@ snapshots:
       space-separated-tokens: 2.0.2
 
   hex-rgb@4.3.0: {}
+
+  hiroppy@1.0.12: {}
 
   hogan.js@3.0.2:
     dependencies:
