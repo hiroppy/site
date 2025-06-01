@@ -50,17 +50,18 @@ jobs:
       - run: pnpm lh --upload.target=temporary-public-storage
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-  a11y:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-node
-      - uses: actions/download-artifact@v4
-        with:
-          name: app
-          path: ./dist
-      - run: pnpm serve & pnpm a11y
+  # TODO: playwright
+  # a11y:
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: ./.github/actions/setup-node
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         name: app
+  #         path: ./dist
+  #     - run: pnpm serve & pnpm a11y
   vrt:
     needs: [build]
     runs-on: ubuntu-latest

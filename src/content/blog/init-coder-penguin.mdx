@@ -9,8 +9,8 @@ tags: life
 
 import Image from "../../components/Image.astro";
 import OG from "../../components/OG.astro";
-import { meta } from "../../../data/jobs";
 import YoutubeCard from "../../components/YoutubeCard.astro";
+import jobs from "../../../node_modules/hiroppy/generated/jobs.json";
 
 4月1日から独立し、フリーランスとして活動を始めました。
 
@@ -61,9 +61,9 @@ import YoutubeCard from "../../components/YoutubeCard.astro";
 
       return companies.map((company) => {
         return (
-          <a href={meta[company].url} target="_blank" rel="noopener noreferrer" className="flex gap-2 flex-col items-center">
+          <a href={jobs.meta[company].url} target="_blank" rel="noopener noreferrer" className="flex gap-2 flex-col items-center">
             <Image
-              src={`./images/brands/${meta[company].image}`}
+              src={`./images/brands/${jobs.meta[company].image}`}
               alt={company}
               width={80}
               height={80}

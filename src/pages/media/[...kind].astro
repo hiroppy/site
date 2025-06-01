@@ -11,9 +11,9 @@ export function getStaticPaths(): Array<{ params: { kind: Kind } }> {
   return [
     { params: { kind: undefined } },
     { params: { kind: "talks" } },
-    { params: { kind: "articles" } },
+    // TODO: fix
+    { params: { kind: "articles" as "media" } },
     { params: { kind: "podcasts" } },
-    { params: { kind: "achievements" } },
   ];
 }
 
@@ -23,33 +23,31 @@ const items: DataItem[] = await (async () => {
     case undefined:
       return sortItems([
         ...(await getData("talks")),
-        ...(await getData("articles")),
+        ...(await getData("media")),
         ...(await getData("podcasts")),
-        ...(await getData("achievements")),
       ]);
     case "talks":
       return await getData("talks");
-    case "articles":
-      return await getData("articles");
+    // TODO: fix
+    case "articles" as "media":
+      return await getData("media");
     case "podcasts":
       return await getData("podcasts");
-    case "achievements":
-      return await getData("achievements");
     default:
       throw new Error(`Unknown kind: ${kind}`);
   }
 })();
 
 async function getData(kind: Exclude<Kind, undefined>) {
-  const res = (await import(`../../../generated/${kind}.json`)).default.map(
-    (item: Record<string, string>) => ({
-      ...item,
-      icon: getMediaIcon(kind),
-      prefixForTitle: getPrefixForTitle(kind),
-    }),
-  );
+  const res = (
+    await import(`../../../node_modules/hiroppy/generated/${kind}.json`)
+  ).default.map((item: Record<string, string>) => ({
+    ...item,
+    icon: getMediaIcon(kind),
+    prefixForTitle: getPrefixForTitle(kind),
+  }));
 
-  if (kind === "articles") {
+  if (kind === "media") {
     return res.filter(({ siteUrl }: any) => {
       return !(
         siteUrl?.startsWith(import.meta.env.SITE) ||
@@ -63,12 +61,10 @@ async function getData(kind: Exclude<Kind, undefined>) {
 
 function getMediaIcon(type: MediaType) {
   switch (type) {
-    case "articles":
+    case "media":
       return "✏️";
     case "podcasts":
       return "🎧";
-    case "achievements":
-      return "🎉";
     case "talks":
       return "👨‍🏫";
     default:
@@ -78,13 +74,11 @@ function getMediaIcon(type: MediaType) {
 
 function getPrefixForTitle(type: MediaType) {
   switch (type) {
-    case "articles":
+    case "media":
       return "Posted";
     case "podcasts":
     case "talks":
       return "Talked";
-    case "achievements":
-      return "Achieved";
     default:
       return "😵‍💫";
   }
