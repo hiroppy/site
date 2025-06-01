@@ -60,6 +60,7 @@ jobs:
         with:
           name: app
           path: ./dist
+      - run: npx puppeteer browsers install chrome
       - run: pnpm serve & pnpm a11y
   vrt:
     needs: [build]
