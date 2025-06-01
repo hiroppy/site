@@ -10,7 +10,7 @@ COPY . /app
 WORKDIR /app
 
 RUN npm i corepack -g
-RUN npm run corepack
+RUN npx corepack enable
 
 FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
@@ -23,4 +23,7 @@ RUN apt-get update && apt-get install -y fonts-noto-cjk fonts-noto-color-emoji
 COPY --from=build /app/node_modules /app/node_modules
 COPY --from=build /app/dist /app/dist
 
-CMD ["pnpm", "test", "--", "-u"]
+# Install Playwright browsers
+RUN npx playwright install
+
+CMD ["pnpm", "test"]
