@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
-import paths from "../testedPaths.cjs";
+
+const paths = ["/", "/jobs", "/blog", "/blog/vrt"];
 
 for (const path of paths) {
   test(`VRT: ${path}`, async ({ page }) => {
