@@ -1,11 +1,10 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import urls from "../testedPaths.cjs";
 
-const paths = ["/", "/jobs", "/blog", "/blog/vrt"];
-
-for (const path of paths) {
-  test(`A11y: ${path}`, async ({ page }) => {
-    await page.goto(`http://localhost:3000${path}`, {
+for (const url of urls) {
+  test(`A11y: ${url}`, async ({ page }) => {
+    await page.goto(url, {
       waitUntil: "networkidle",
     });
 
