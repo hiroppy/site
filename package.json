@@ -4,7 +4,7 @@
   "private": true,
   "packageManager": "pnpm@10.11.1",
   "engines": {
-    "node": "22.x"
+    "node": "22.16.0"
   },
   "scripts": {
     "setup": "git config --local core.hooksPath .githooks && npm run corepack",
