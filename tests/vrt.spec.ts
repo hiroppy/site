@@ -10,6 +10,10 @@ for (const path of paths) {
     await expect(page).toHaveScreenshot({
       fullPage: true,
       scale: "device",
+      mask: [
+        page.locator('[data-testid="bookmark-count"]'),
+        page.locator('[data-testid="star-count"]'),
+      ],
     });
   });
 }

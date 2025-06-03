@@ -11,8 +11,27 @@ import { useTranslations } from "../i18n/util";
 import articles from "../../node_modules/hiroppy/generated/articles.json";
 import sponsors from "../../node_modules/hiroppy/generated/sponsors.json";
 import repos from "../../node_modules/hiroppy/generated/repos.json";
+import { getBookmark, getStarCount } from "hiroppy";
 
 const t = useTranslations();
+
+const hotArticles = articles.filter(({ hot }) => !!hot);
+const articlesWithBookmarks = await Promise.all(
+  hotArticles.map(async (article) => ({
+    ...article,
+    bookmark: await getBookmark(article.url),
+  })),
+);
+
+const reposWithStars = await Promise.all(
+  repos.hot.map(async (repo) => {
+    const [, , , owner, repoName] = repo.url.split("/");
+    return {
+      ...repo,
+      stars: await getStarCount(owner, repoName),
+    };
+  }),
+);
 ---
 
 <Layout>
@@ -51,37 +70,35 @@ const t = useTranslations();
       <Card title="Popular Articles">
         <ol class="grid grid-cols-1 gap-4 xl:grid-cols-2">
           {
-            articles
-              .filter(({ hot }) => !!hot)
-              .map(({ url, title, image, bookmark }) => (
-                <li class="flex flex-col items-start justify-between gap-4 rounded-lg bg-gray-700 p-2 sm:p-3">
-                  <Link href={url} className="text-blue-200">
-                    {title}
-                  </Link>
-                  <div class="flex w-full items-end justify-between text-gray-300">
-                    <Image
-                      src={image}
-                      className="object-contain w-40 h-20"
-                      alt={title}
-                      width={160}
-                      height={80}
-                      lazy={false}
-                    />
-                    <div class="flex items-center gap-2 text-sm">
-                      <Hatena />
-                      <span>{bookmark}</span>
-                    </div>
+            articlesWithBookmarks.map(({ url, title, image, bookmark }) => (
+              <li class="flex flex-col items-start justify-between gap-4 rounded-lg bg-gray-700 p-2 sm:p-3">
+                <Link href={url} className="text-blue-200">
+                  {title}
+                </Link>
+                <div class="flex w-full items-end justify-between text-gray-300">
+                  <Image
+                    src={image}
+                    className="object-contain w-40 h-20"
+                    alt={title}
+                    width={160}
+                    height={80}
+                    lazy={false}
+                  />
+                  <div class="flex items-center gap-2 text-sm">
+                    <Hatena />
+                    <span data-testid="bookmark-count">{bookmark}</span>
                   </div>
-                </li>
-              ))
+                </div>
+              </li>
+            ))
           }
         </ol>
       </Card>
       <Card title="Top Repositories">
         <ol class="grid grid-cols-1 gap-4 xl:grid-cols-2">
           {
-            repos.hot.map(
-              ({ name, image, description, url, stars, language }) => (
+            reposWithStars.map(
+              ({ name, image, description, url, language, stars }) => (
                 <li class="flex gap-2 rounded-lg bg-gray-700 p-2 sm:p-3">
                   <Image
                     src={image}
@@ -111,7 +128,7 @@ const t = useTranslations();
                           <path stroke="none" d="M0 0h24v24H0z" />{" "}
                           <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
                         </svg>
-                        <span>{stars.toLocaleString()}</span>
+                        <span data-testid="star-count">{`${stars}`}</span>
                       </div>
                       <div class="flex items-center gap-1">
                         <div
