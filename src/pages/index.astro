@@ -11,7 +11,8 @@ import { useTranslations } from "../i18n/util";
 import articles from "../../node_modules/hiroppy/generated/articles.json";
 import sponsors from "../../node_modules/hiroppy/generated/sponsors.json";
 import repos from "../../node_modules/hiroppy/generated/repos.json";
-import { getBookmark, getStarCount } from "hiroppy";
+import { getStarCount } from "../utils/github";
+import { getBookmark } from "../utils/hatena";
 
 const t = useTranslations();
 
