@@ -33,8 +33,8 @@ importers:
         specifier: 5.8.1
         version: 5.8.1(@types/node@20.12.7)(jiti@1.21.0)(rollup@4.41.1)(typescript@5.8.3)(yaml@2.8.0)
       hiroppy:
-        specifier: 1.0.24
-        version: 1.0.24
+        specifier: 1.0.27
+        version: 1.0.27
       instantsearch.js:
         specifier: 4.78.3
         version: 4.78.3(algoliasearch@4.24.0)
@@ -2161,8 +2161,8 @@ packages:
     resolution: {integrity: sha512-Ox1pJVrDCyGHMG9CFg1tmrRUMRPRsAWYc/PinY0XzJU4K7y7vjNoLKIQ7BR5UJMCxNN8EM1MNDmHWA/B3aZUuw==}
     engines: {node: '>=6'}
 
-  hiroppy@1.0.24:
-    resolution: {integrity: sha512-TMxGiLPSioxHBEAELgGCHZ2VdZR9NwlHFi5/tCIZvdM8BZ+fDFnxFQSBZHYIAWwd5JGGCiG2bJA45A3o86BSvA==}
+  hiroppy@1.0.27:
+    resolution: {integrity: sha512-cti1mEy9Oo+EosOH573kK7EEutoAwQc+AkabdESub/US6BEwLqVGz7AsGE7gH5j1d2K6ey/8E7fKG8ijPRTXwg==}
 
   hogan.js@3.0.2:
     resolution: {integrity: sha512-RqGs4wavGYJWE07t35JQccByczmNUXQT0E12ZYV1VKYu5UiAU9lsos/yBAcf840+zrUQQxgVduCR5/B8nNtibg==}
@@ -6631,7 +6631,7 @@ snapshots:
 
   hex-rgb@4.3.0: {}
 
-  hiroppy@1.0.24:
+  hiroppy@1.0.27:
     dependencies:
       octokit: 5.0.3
 

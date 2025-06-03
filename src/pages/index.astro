@@ -11,6 +11,7 @@ import { useTranslations } from "../i18n/util";
 import articles from "../../node_modules/hiroppy/generated/articles.json";
 import sponsors from "../../node_modules/hiroppy/generated/sponsors.json";
 import repos from "../../node_modules/hiroppy/generated/repos.json";
+import { getBookmark, getStarCount } from "hiroppy";
 
 const t = useTranslations();
 ---
@@ -53,7 +54,7 @@ const t = useTranslations();
           {
             articles
               .filter(({ hot }) => !!hot)
-              .map(({ url, title, image, bookmark }) => (
+              .map(({ url, title, image }) => (
                 <li class="flex flex-col items-start justify-between gap-4 rounded-lg bg-gray-700 p-2 sm:p-3">
                   <Link href={url} className="text-blue-200">
                     {title}
@@ -69,7 +70,7 @@ const t = useTranslations();
                     />
                     <div class="flex items-center gap-2 text-sm">
                       <Hatena />
-                      <span>{bookmark}</span>
+                      {/* <span>{bookmark}</span> */}
                     </div>
                   </div>
                 </li>
@@ -80,58 +81,56 @@ const t = useTranslations();
       <Card title="Top Repositories">
         <ol class="grid grid-cols-1 gap-4 xl:grid-cols-2">
           {
-            repos.hot.map(
-              ({ name, image, description, url, stars, language }) => (
-                <li class="flex gap-2 rounded-lg bg-gray-700 p-2 sm:p-3">
-                  <Image
-                    src={image}
-                    className="w-8 h-8 rounded-full"
-                    alt={name}
-                    width={8 * 4}
-                    height={8 * 4}
-                  />
-                  <div class="flex flex-1 flex-col gap-2 text-sm">
-                    <Link href={url} className="text-blue-200 text-lg">
-                      {name}
-                    </Link>
-                    <span class="flex-1 break-all">{description}</span>
-                    <div class="flex items-center justify-between">
-                      <div class="flex items-center gap-2">
-                        <svg
-                          class="h-4 w-4 text-gray-300"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          stroke-width="2"
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" />{" "}
-                          <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
-                        </svg>
-                        <span>{stars.toLocaleString()}</span>
-                      </div>
-                      <div class="flex items-center gap-1">
-                        <div
-                          class={`${
-                            language === "JavaScript"
-                              ? "bg-javascript"
-                              : language === "TypeScript"
-                                ? "bg-typescript"
-                                : language === "CSS"
-                                  ? "bg-css"
-                                  : ""
-                          } h-2 w-2 rounded-full`}
-                        />
-                        <span>{language}</span>
-                      </div>
+            repos.hot.map(({ name, image, description, url, language }) => (
+              <li class="flex gap-2 rounded-lg bg-gray-700 p-2 sm:p-3">
+                <Image
+                  src={image}
+                  className="w-8 h-8 rounded-full"
+                  alt={name}
+                  width={8 * 4}
+                  height={8 * 4}
+                />
+                <div class="flex flex-1 flex-col gap-2 text-sm">
+                  <Link href={url} className="text-blue-200 text-lg">
+                    {name}
+                  </Link>
+                  <span class="flex-1 break-all">{description}</span>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <svg
+                        class="h-4 w-4 text-gray-300"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" />{" "}
+                        <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
+                      </svg>
+                      {/* <span>{stars.toLocaleString()}</span> */}
+                    </div>
+                    <div class="flex items-center gap-1">
+                      <div
+                        class={`${
+                          language === "JavaScript"
+                            ? "bg-javascript"
+                            : language === "TypeScript"
+                              ? "bg-typescript"
+                              : language === "CSS"
+                                ? "bg-css"
+                                : ""
+                        } h-2 w-2 rounded-full`}
+                      />
+                      <span>{language}</span>
                     </div>
                   </div>
-                </li>
-              ),
-            )
+                </div>
+              </li>
+            ))
           }
         </ol>
       </Card>

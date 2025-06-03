@@ -36,7 +36,7 @@ for (const item of items) {
         <div class="flex items-start gap-4 break-all">
           {(meta as any)[company] && (
             <Image
-              src={`./images/brands/${(meta as any)[company].image}`}
+              src={(meta as any)[company].image}
               alt={name}
               width={60}
               height={60}
