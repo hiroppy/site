@@ -23,7 +23,7 @@
     "lh": "lhci autorun"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.10.1",
+    "@axe-core/playwright": "4.10.2",
     "@lhci/cli": "0.14.0",
     "@playwright/test": "1.52.0",
     "cheerio": "1.0.0",
