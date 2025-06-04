@@ -1,0 +1,15 @@
+---
+export interface Props {
+  class?: string;
+  level?: 1 | 2 | 3 | 4 | 5 | 6;
+}
+
+const { class: className = "", level = 3 } = Astro.props;
+const Tag = `h${level}` as const;
+---
+
+<Tag
+  class={`font-semibold leading-none tracking-tight text-gray-900 dark:text-white ${className}`}
+>
+  <slot />
+</Tag>

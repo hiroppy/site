@@ -1,15 +1,15 @@
 ---
-import BlogCardItem from "../../../../components/BlogCardItem.astro";
-import TagsBox from "../../../../components/TagsBox.astro";
-import Layout from "../../../../layouts/Layout.astro";
-import MainLayout from "../../../../layouts/MainLayout.astro";
-import { getAllTags, getBlogs, parseTags } from "../../../../utils/blog";
-import BlogDescription from "../../../../components/BlogDescription.astro";
 import type { GetStaticPathsOptions, Page } from "astro";
-import Pagination from "../../../../components/Pagination.astro";
-import { BLOG_DESCRIPTION } from "../../../../constants";
-import SearchArticles from "../../../../components/SearchArticles.astro";
 import type { CollectionEntry } from "astro:content";
+import Pagination from "../../../../components/Pagination.astro";
+import SearchArticles from "../../../../components/SearchArticles.astro";
+import TagsBox from "../../../../components/TagsBox.astro";
+import BlogCard from "../../../../components/BlogCard.astro";
+import BlogBadge from "../../../../components/BlogBadge.astro";
+import Button from "../../../../components/Button.astro";
+import { BLOG_DESCRIPTION } from "../../../../constants";
+import Layout from "../../../../layouts/Layout.astro";
+import { getAllTags, getBlogs, parseTags } from "../../../../utils/blog";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts = await getBlogs();
@@ -39,20 +39,77 @@ const { page } = Astro.props as {
 ---
 
 <Layout description={BLOG_DESCRIPTION}>
-  <SearchArticles slot="header-action" />
-  <MainLayout title={`Blog / ${tag}`}>
-    <BlogDescription slot="description" />
-    <TagsBox tags={allTags} slot="optional-content" />
-    <a class="mb-4 block text-right text-blue-300" href="/blog"
-      >👋 Go back to blog/</a
-    >
-    <div class="flex flex-col gap-4">
+  <div
+    class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
+  >
+    <main class="container mx-auto px-4 py-8">
+      <!-- Back Button -->
+      <div class="mb-8">
+        <a href="/blog" aria-label="ブログ一覧ページに戻る">
+          <Button
+            variant="ghost"
+            class="text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400"
+          >
+            <svg class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              ></path>
+            </svg>
+            ブログ一覧に戻る
+          </Button>
+        </a>
+      </div>
+
+      <!-- Page Header -->
+      <div class="py-12 text-center">
+        <div class="mb-4 flex justify-center">
+          <BlogBadge variant="primary" class="px-4 py-2 text-lg">
+            {tag}
+          </BlogBadge>
+        </div>
+        <h1 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+          タグ: {tag}
+        </h1>
+        <p class="mx-auto max-w-2xl text-xl text-gray-600 dark:text-gray-300">
+          「{tag}」に関連する記事一覧（{page.data.length}件）
+        </p>
+      </div>
+
+      <!-- Search and Filter -->
+      <div class="mb-8 space-y-4">
+        <div class="relative mx-auto max-w-md">
+          <SearchArticles />
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-2">
+          <TagsBox tags={allTags} />
+        </div>
+      </div>
+
+      <!-- Blog Posts Grid -->
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {page.data.map((post) => <BlogCard post={post} currentTag={tag} />)}
+      </div>
+
+      <!-- Empty State -->
       {
-        page.data.map(({ data, slug }) => (
-          <BlogCardItem url={`/blog/${slug}`} frontmatter={data} />
-        ))
+        page.data.length === 0 && (
+          <div class="py-16 text-center">
+            <div class="mb-4 text-6xl opacity-20">📝</div>
+            <h2 class="mb-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
+              記事が見つかりません
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400">
+              「{tag}」タグに関連する記事がありません
+            </p>
+          </div>
+        )
       }
-    </div>
-    <Pagination prev={page.url.prev} next={page.url.next} />
-  </MainLayout>
+
+      <!-- Pagination -->
+      <div class="mt-12">
+        <Pagination prev={page.url.prev} next={page.url.next} />
+      </div>
+    </main>
+  </div>
 </Layout>

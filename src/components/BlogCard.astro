@@ -1,0 +1,92 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Card from "./Card.astro";
+import CardContent from "./CardContent.astro";
+import CardDescription from "./CardDescription.astro";
+import CardHeader from "./CardHeader.astro";
+import CardTitle from "./CardTitle.astro";
+import Image from "./Image.astro";
+import Icon from "./Icon.astro";
+import BlogBadge from "./BlogBadge.astro";
+import { parseTags } from "../utils/blog";
+import { formatDate } from "../utils/formatDate";
+
+export interface Props {
+  post: CollectionEntry<"blog">;
+  currentTag?: string;
+}
+
+const { post, currentTag } = Astro.props;
+const { data, slug } = post;
+---
+
+<a
+  href={`/blog/${slug}`}
+  class="block h-full"
+  aria-label={`記事「${data.title}」を読む`}
+>
+  <Card variant="interactive" class="flex h-full flex-col">
+    <CardHeader class="p-0">
+      <div class="relative overflow-hidden">
+        {
+          data.image && (
+            <Image
+              src={data.image}
+              alt={data.title}
+              width={400}
+              height={200}
+              class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          )
+        }
+        {
+          !data.image && (
+            <div class="flex h-48 w-full items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600">
+              <div class="text-6xl opacity-20 dark:opacity-10">📝</div>
+            </div>
+          )
+        }
+        <BlogBadge variant="primary" class="absolute left-3 top-3">
+          {parseTags(data.tags)?.[0] || "記事"}
+        </BlogBadge>
+      </div>
+    </CardHeader>
+    <CardContent class="flex flex-grow flex-col p-6">
+      <div
+        class="mb-3 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400"
+      >
+        <div class="flex items-center space-x-1" data-testid="blog-date">
+          <Icon icon="mdi:calendar" width="16" height="16" />
+          <span>{formatDate(data.date)}</span>
+        </div>
+      </div>
+
+      <CardTitle
+        level={2}
+        class="mb-3 line-clamp-2 text-xl leading-relaxed transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-500"
+      >
+        {data.title}
+      </CardTitle>
+
+      <CardDescription class="mb-4 line-clamp-3">
+        {data.description}
+      </CardDescription>
+
+      <div class="mt-auto flex flex-wrap gap-2">
+        {
+          parseTags(data.tags)
+            .slice(0, 3)
+            .map((tag: string) => (
+              <BlogBadge
+                variant={
+                  currentTag && tag === currentTag ? "primary" : "secondary"
+                }
+              >
+                {tag}
+              </BlogBadge>
+            ))
+        }
+      </div>
+    </CardContent>
+  </Card>
+</a>

@@ -1,0 +1,22 @@
+---
+export interface Props {
+  class?: string;
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+}
+
+const { class: className = "", size = "md" } = Astro.props;
+
+const sizes = {
+  xs: "h-6 w-6",
+  sm: "h-8 w-8",
+  md: "h-10 w-10",
+  lg: "h-12 w-12",
+  xl: "h-32 w-32",
+};
+
+const classes = `relative flex shrink-0 overflow-hidden rounded-full ${sizes[size]} ${className}`;
+---
+
+<span class={classes}>
+  <slot />
+</span>

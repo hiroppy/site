@@ -1,14 +1,19 @@
 ---
-type Props = {
-  title?: string;
-};
+export interface Props {
+  class?: string;
+  variant?: "default" | "interactive";
+}
 
-const { title } = Astro.props;
+const { class: className = "", variant = "default" } = Astro.props;
+
+const variants = {
+  default:
+    "rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-card-foreground shadow",
+  interactive:
+    "group overflow-hidden rounded-xl border-0 bg-white shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-blue-100 dark:bg-slate-800 dark:hover:shadow-blue-900",
+};
 ---
 
-<div
-  class="rounded-lg border border-gray-600 p-2 text-gray-300 shadow-sm sm:p-4"
->
-  {title && <h2 class="mb-4 text-lg font-semibold text-gray-200">{title}</h2>}
+<div class={`${variants[variant]} ${className}`}>
   <slot />
 </div>

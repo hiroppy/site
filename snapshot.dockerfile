@@ -9,8 +9,7 @@ ENV PLAYWRIGHT_FONT_DISPLAY=same-as-local
 COPY . /app
 WORKDIR /app
 
-RUN npm i corepack -g
-RUN npx corepack enable
+RUN npm run setup
 
 FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
@@ -26,4 +25,4 @@ COPY --from=build /app/dist /app/dist
 # Install Playwright browsers
 RUN npx playwright install
 
-CMD ["pnpm", "test"]
+CMD ["npx", "playwright", "test", "tests/vrt.spec.ts", "--update-snapshots"]

@@ -1,5 +1,5 @@
 ---
-import Search from "./icons/Search.astro";
+import Icon from "./Icon.astro";
 
 const { ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_ONLY_KEY } = import.meta.env;
 
@@ -10,44 +10,34 @@ if (!ALGOLIA_APPLICATION_ID || !ALGOLIA_SEARCH_ONLY_KEY) {
 }
 ---
 
-<button id="search-button" class="search-button" aria-label="Search articles">
-  <svg
-    class="h-5 w-5 text-gray-300 hover:text-blue-300"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    stroke-width="2"
-    stroke="currentColor"
-    fill="none"
+<div class="relative">
+  <Icon
+    icon="mdi:magnify"
+    class="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400"
+    width="16"
+    height="16"
+  />
+  <input
+    id="search-input"
+    placeholder="記事を検索..."
+    class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 pl-10 text-sm text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+  />
+  <!-- Search Results Dropdown -->
+  <div
+    id="search-results"
+    class="absolute left-0 right-0 top-full z-10 mt-1 hidden max-h-96 overflow-y-auto rounded-md border border-gray-300 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800"
   >
-    <Search />
-  </svg>
-</button>
-<dialog id="search-dialog" class="search-dialog">
-  <div id="search-box" class="search-box">
-    <div class="search-input-box">
-      <svg
-        class="h-5 w-5 text-gray-300 hover:text-blue-300"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        stroke-width="2"
-        stroke="currentColor"
-        fill="none"
-      >
-        <Search />
-      </svg>
-      <input
-        id="search-input"
-        class="search-input"
-        autofocus
-        placeholder="Search articles"
-        aria-label="search articles by keywords"
-      />
+    <ul id="search-result" class="py-2">
+      <!-- Results will be inserted here -->
+    </ul>
+    <div
+      id="no-results"
+      class="hidden p-4 text-center text-gray-500 dark:text-gray-400"
+    >
+      該当する記事が見つかりませんでした
     </div>
-    <ul id="search-result" class="search-result"></ul>
   </div>
-</dialog>
+</div>
 
 <script
   define:vars={{ ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_ONLY_KEY }}
@@ -65,114 +55,157 @@ if (!ALGOLIA_APPLICATION_ID || !ALGOLIA_SEARCH_ONLY_KEY) {
   import { connectAutocomplete } from "instantsearch.js/es/connectors";
   import type { AutocompleteRenderState } from "instantsearch.js/es/connectors/autocomplete/connectAutocomplete";
 
-  const button = document.querySelector<HTMLButtonElement>("#search-button");
-  const dialog = document.querySelector<HTMLDialogElement>("#search-dialog");
-  const container = document.querySelector<HTMLDivElement>("#search-box");
-  const input = document.querySelector<HTMLInputElement>("#search-input");
-  const ul = document.querySelector<HTMLUListElement>("#search-result");
+  function initializeSearch() {
+    // Check if already initialized
+    if (window.searchInitialized) {
+      return;
+    }
 
-  const searchClient = algoliasearch(
-    window.algolia.applicationId,
-    window.algolia.searchOnlyKey,
-  );
-  const search = instantsearch({
-    indexName: "blog",
-    searchClient,
-    searchFunction(helper) {
-      if (helper.state.query) {
-        helper.search();
-      } else if (ul) {
-        ul.textContent = "";
-      }
-    },
-  });
-  const customAutocomplete = connectAutocomplete(renderAutocomplete);
+    const input = document.querySelector<HTMLInputElement>("#search-input");
+    const ul = document.querySelector<HTMLUListElement>("#search-result");
+    const searchResults =
+      document.querySelector<HTMLDivElement>("#search-results");
+    const noResults = document.querySelector<HTMLDivElement>("#no-results");
 
-  search.addWidgets([
-    customAutocomplete({
-      // https://www.algolia.com/doc/api-reference/widgets/autocomplete/js/
-      // @ts-expect-error type mismatch
-      container,
-    }),
-  ]);
+    // Exit if elements not found
+    if (!input || !ul || !searchResults || !noResults) {
+      console.warn("Search elements not found");
+      return;
+    }
 
-  button?.addEventListener("click", () => {
-    if (!search.started) {
+    // Exit if algolia config not available
+    if (!window.algolia) {
+      console.warn("Algolia config not available");
+      return;
+    }
+
+    try {
+      const searchClient = algoliasearch(
+        window.algolia.applicationId,
+        window.algolia.searchOnlyKey,
+      );
+      const search = instantsearch({
+        indexName: "blog",
+        searchClient,
+        searchFunction(helper) {
+          if (helper.state.query && helper.state.query.length > 0) {
+            helper.search();
+          } else {
+            hideResults();
+          }
+        },
+      });
+      const customAutocomplete = connectAutocomplete(renderAutocomplete);
+
+      search.addWidgets([
+        customAutocomplete({
+          // @ts-expect-error type mismatch
+          container: document.createElement("div"),
+        }),
+      ]);
+
+      // Start search
       search.start();
-    }
-    dialog?.showModal();
-  });
 
-  dialog?.addEventListener("click", (event) => {
-    if (event.target === dialog) {
-      dialog?.close();
-    }
-  });
-
-  function renderAutocomplete(
-    renderOptions: AutocompleteRenderState,
-    isFirstRender: Boolean,
-  ) {
-    const { indices, refine } = renderOptions;
-    const [blog] = indices;
-
-    if (isFirstRender && input) {
-      input.addEventListener("input", ({ currentTarget }) => {
-        if (currentTarget instanceof HTMLInputElement) {
-          refine(currentTarget.value);
+      // Hide results when clicking outside
+      document.addEventListener("click", (event) => {
+        if (
+          !searchResults?.contains(event.target as Node) &&
+          event.target !== input
+        ) {
+          hideResults();
         }
       });
 
-      // ページが戻ったりした時にinputが残っている場合も起動した時に正しい検索結果を出すようにする
-      refine(input.value);
-    }
-
-    if (blog) {
-      const fragment = document.createDocumentFragment();
-
-      blog.hits.forEach((item) => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-
-        a.setAttribute("href", new URL(item.path, location.origin).href);
-        a.textContent = item.title;
-        li.classList.add("search-result-item");
-        li.appendChild(a);
-        fragment.appendChild(li);
+      // Show results when input is focused and has content
+      input?.addEventListener("focus", () => {
+        if (input.value.length > 0 && ul && ul.children.length > 0) {
+          showResults();
+        }
       });
 
-      ul?.replaceChildren();
-      ul?.appendChild(fragment);
+      function showResults() {
+        searchResults?.classList.remove("hidden");
+      }
+
+      function hideResults() {
+        searchResults?.classList.add("hidden");
+      }
+
+      function renderAutocomplete(
+        renderOptions: AutocompleteRenderState,
+        isFirstRender: Boolean,
+      ) {
+        const { indices, refine } = renderOptions;
+        const [blog] = indices;
+
+        if (isFirstRender && input) {
+          input.addEventListener("input", ({ currentTarget }) => {
+            if (currentTarget instanceof HTMLInputElement) {
+              const query = currentTarget.value.trim();
+              if (query.length > 0) {
+                refine(query);
+              } else {
+                hideResults();
+              }
+            }
+          });
+        }
+
+        if (blog && input && input.value.length > 0) {
+          const fragment = document.createDocumentFragment();
+
+          if (blog.hits.length === 0) {
+            noResults?.classList.remove("hidden");
+            ul?.classList.add("hidden");
+          } else {
+            noResults?.classList.add("hidden");
+            ul?.classList.remove("hidden");
+
+            blog.hits.forEach((item) => {
+              const li = document.createElement("li");
+              const a = document.createElement("a");
+
+              a.setAttribute("href", new URL(item.path, location.origin).href);
+              a.textContent = item.title;
+              li.classList.add("search-result-item");
+              li.appendChild(a);
+              fragment.appendChild(li);
+            });
+
+            ul?.replaceChildren();
+            ul?.appendChild(fragment);
+          }
+
+          showResults();
+        }
+      }
+
+      // Mark as initialized
+      window.searchInitialized = true;
+    } catch (error) {
+      console.error("Search initialization failed:", error);
     }
   }
+
+  // Initialize on DOM ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeSearch);
+  } else {
+    initializeSearch();
+  }
+
+  // Re-initialize on page transitions (ViewTransitions)
+  document.addEventListener("astro:page-load", () => {
+    window.searchInitialized = false;
+    initializeSearch();
+  });
 </script>
 
-<style>
-  .search-dialog {
-    @apply m-auto h-4/5 w-4/5 rounded-lg bg-gray-600 backdrop:bg-gray-900 backdrop:bg-opacity-60 md:w-3/4 lg:w-2/4;
-  }
-  .search-box {
-    @apply h-full p-4 text-gray-700;
-  }
-  .search-input-box {
-    @apply flex w-full items-center gap-1 rounded-md border border-blue-300 p-1;
-  }
-  .search-input {
-    @apply flex-1 bg-transparent text-gray-100 outline-0;
-  }
-  .search-result {
-    @apply my-4 h-[calc(100%-44px)] overflow-y-auto;
-  }
-</style>
-
 <style is:global>
-  html:has(dialog[open]) {
-    overflow: hidden;
-  }
-
   /* 動的に生成されたタグはscopedにできないため、globalで定義する必要がある */
   .search-result-item {
-    @apply py-2 text-gray-300 hover:text-blue-300;
+    @apply px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700;
   }
 
   .search-result-item > a {

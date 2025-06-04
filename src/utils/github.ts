@@ -1,5 +1,22 @@
 import { Octokit } from "octokit";
 
+interface RepositoryInfo {
+  name: string;
+  url: string;
+  description: string | null;
+  language: string | null;
+  stars: number;
+  forks: number;
+  openIssues: number;
+  defaultBranch: string;
+  createdAt: string;
+  updatedAt: string;
+  avatar: string;
+  homepage: string | null;
+  topics: string[];
+  archived: boolean;
+}
+
 let octokit: Octokit | null = null;
 
 function getOctokit(): Octokit {
@@ -42,41 +59,6 @@ export async function getStarCount(
  * @param repos - Array of repository names in "owner/repo" format
  * @returns Promise<Record<string, number>> - Object mapping repo names to star counts
  */
-export async function getStarCounts(
-  repos: string[],
-): Promise<Record<string, string>> {
-  const results: Record<string, string> = {};
-
-  const promises = repos.map(async (repoName) => {
-    const [owner, repo] = repoName.split("/");
-    if (!owner || !repo) {
-      console.warn(
-        `Invalid repository name format: ${repoName}. Expected "owner/repo"`,
-      );
-      return;
-    }
-
-    const stars = await getStarCount(owner, repo);
-    results[repoName] = stars;
-  });
-
-  await Promise.all(promises);
-  return results;
-}
-
-export interface RepositoryInfo {
-  name: string;
-  url: string;
-  description: string | null;
-  language: string | null;
-  stars: number;
-  forks: number;
-  openIssues: number;
-  defaultBranch: string;
-  createdAt: string;
-  updatedAt: string;
-  avatar: string;
-}
 
 /**
  * Get repository information including star count
@@ -107,6 +89,9 @@ export async function getRepositoryInfo(
       createdAt: data.created_at,
       updatedAt: data.updated_at,
       avatar: data.owner.avatar_url,
+      homepage: data.homepage,
+      topics: data.topics || [],
+      archived: data.archived,
     };
   } catch (error) {
     console.error(

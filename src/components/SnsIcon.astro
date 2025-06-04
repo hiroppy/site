@@ -1,20 +1,27 @@
 ---
+import Link from "./Link.astro";
+
 type Props = {
   href: string;
   name: string;
   text?: string;
-  className?: string;
-  textClassName?: string;
+  class?: string;
+  textClass?: string;
 };
 
-const { href, name, text, className = "w-5 h-5", textClassName } = Astro.props;
+const {
+  href,
+  name,
+  text,
+  class: className = "w-5 h-5",
+  textClass,
+} = Astro.props;
 ---
 
-<a
+<Link
   href={href}
-  target="_blank"
-  class="flex items-center gap-2 text-gray-300 hover:text-blue-300"
-  aria-label={`Link for ${name}`}
+  class="flex items-center gap-2 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-300"
+  ariaLabel={`Link for ${name}`}
 >
   <svg
     class={className}
@@ -27,5 +34,5 @@ const { href, name, text, className = "w-5 h-5", textClassName } = Astro.props;
   >
     <slot />
   </svg>
-  {text && <span class={textClassName}>{text}</span>}
-</a>
+  {text && <span class={textClass}>{text}</span>}
+</Link>

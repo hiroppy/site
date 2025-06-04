@@ -7,7 +7,7 @@ runs:
       with:
         node-version-file: .node-version
         cache: pnpm
-    - run: npm run corepack
+    - run: npx corepack enable
       shell: bash
     - run: pnpm i
       shell: bash

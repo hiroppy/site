@@ -1,16 +1,9 @@
 import { getCollection } from "astro:content";
-import type { CollectionEntry } from "astro:content";
-
-export type Collections = CollectionEntry<"blog">[];
 
 export async function getBlogs() {
   const posts = await getCollection("blog");
 
-  return sortByDate(posts);
-}
-
-export function sortByDate(collections: Collections) {
-  return collections.sort(
+  return posts.sort(
     (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
   );
 }
@@ -19,7 +12,7 @@ export function parseTags(tags: string) {
   return tags.split(",").map((v) => v.trim());
 }
 
-export function getAllTags(collections: Collections) {
+export function getAllTags(collections: Awaited<ReturnType<typeof getBlogs>>) {
   return [
     ...new Set(
       collections

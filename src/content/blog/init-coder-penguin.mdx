@@ -45,7 +45,7 @@ import jobs from "../../../node_modules/hiroppy/generated/jobs.json";
 
 また複数社の技術顧問をさせていただいています。
 
-<div className="grid grid-cols-4 gap-4 md:grid-cols-6 lg:grid-cols-8">
+<div class="grid grid-cols-4 gap-4 md:grid-cols-6 lg:grid-cols-8">
   {
     (() => {
       const companies = [
@@ -61,15 +61,15 @@ import jobs from "../../../node_modules/hiroppy/generated/jobs.json";
 
       return companies.map((company) => {
         return (
-          <a href={jobs.meta[company].url} target="_blank" rel="noopener noreferrer" className="flex gap-2 flex-col items-center">
+          <a href={jobs.meta[company].url} target="_blank" rel="noopener noreferrer" class="flex gap-2 flex-col items-center">
             <Image
               src={jobs.meta[company].image}
               alt={company}
               width={80}
               height={80}
-              className="h-20 w-20 rounded bg-white"
+              class="h-20 w-20 rounded bg-white"
             />
-            <span className="text-sm">{company}</span>
+            <span class="text-sm">{company}</span>
           </a>
         )
       })
@@ -79,7 +79,7 @@ import jobs from "../../../node_modules/hiroppy/generated/jobs.json";
 
 </div>
 
-<p className="mt-2 text-right text-sm">※ 公開可能な企業様のみ掲載</p>
+<p class="mt-2 text-right text-sm">※ 公開可能な企業様のみ掲載</p>
 
 各社、フロントエンドエンジニアの採用を行っていますので、もし話を聞いてみたい会社あればお気軽に[DM](https://x.com/about_hiroppy)ください。
 

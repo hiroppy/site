@@ -1,7 +1,8 @@
 ---
 import SnsIcon from "./SnsIcon.astro";
-import Twitter from "./icons/Twitter.astro";
+import Icon from "./Icon.astro";
 import Hatena from "./icons/Hatena.astro";
+import Link from "./Link.astro";
 import { SITE_TITLE } from "../constants";
 
 type Props = {
@@ -17,14 +18,24 @@ const twitterFollow =
 const hatena = `https://b.hatena.ne.jp/entry/panel/?url=${url}&title=${sharedTitle}#bbutton`;
 ---
 
-<div class="share-buttons mt-4 flex flex-row items-center justify-center gap-4">
-  <SnsIcon name="twitter" href={twitter} text="Tweet">
-    <Twitter />
-  </SnsIcon>
-  <SnsIcon name="twitter" href={twitterFollow} text="Follow">
-    <Twitter />
-  </SnsIcon>
-  <SnsIcon name="hatena" href={hatena} text="Bookmark" className="h-4 w-4">
+<div class="share-buttons flex flex-row items-center justify-center gap-4">
+  <Link
+    href={twitter}
+    class="flex items-center gap-2 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-300"
+    aria-label="Tweet"
+  >
+    <Icon icon="mdi:twitter" width="20" height="20" />
+    <span>Tweet</span>
+  </Link>
+  <Link
+    href={twitterFollow}
+    class="flex items-center gap-2 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-300"
+    aria-label="Follow on Twitter"
+  >
+    <Icon icon="mdi:twitter" width="20" height="20" />
+    <span>Follow</span>
+  </Link>
+  <SnsIcon name="hatena" href={hatena} text="Bookmark" class="h-4 w-4">
     <Hatena />
   </SnsIcon>
 </div>

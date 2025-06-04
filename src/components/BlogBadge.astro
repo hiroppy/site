@@ -1,0 +1,24 @@
+---
+export interface Props {
+  variant?: "primary" | "secondary";
+  class?: string;
+}
+
+const { variant = "secondary", class: className = "" } = Astro.props;
+
+const baseStyles =
+  "inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-semibold transition-colors";
+
+const variants = {
+  primary:
+    "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600",
+  secondary:
+    "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-slate-700 dark:text-gray-300 dark:hover:bg-slate-600",
+};
+
+const classes = `${baseStyles} ${variants[variant]} ${className}`;
+---
+
+<div class={classes}>
+  <slot />
+</div>
