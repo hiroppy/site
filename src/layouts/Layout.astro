@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from "astro:transitions";
 import Footer from "../components/Footer.astro";
 import GA from "../components/GA.astro";
 import Header from "../components/Header.astro";
@@ -62,6 +63,7 @@ const titleContent =
     <link rel="dns-prefetch" href="//b.hatena.ne.jp" />
     <link rel="preconnect" href="//b.hatena.ne.jp" />
     <link rel="author" href="http://www.hatena.ne.jp/about_hiroppy/" />
+    <ViewTransitions />
     <script is:inline>
       // Theme initialization - runs before body loads to prevent FOUC
       (function () {
