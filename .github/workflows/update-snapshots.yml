@@ -8,6 +8,11 @@ permissions:
   contents: write
   pull-requests: write
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+  ALGOLIA_SEARCH_ONLY_KEY: ${{ secrets.ALGOLIA_SEARCH_ONLY_KEY }}
+
 jobs:
   update-snapshots:
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/update')
@@ -39,8 +44,6 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
       - run: pnpm build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Update snapshots
         run: npx playwright test tests/vrt.spec.ts --update-snapshots
       - name: Check for changes
