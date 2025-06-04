@@ -6,13 +6,13 @@ import { importAssets } from "../utils/importAssets";
 type Props = {
   src: string | ImageMetadata;
   alt: string;
-  className?: string;
+  class?: string;
   lazy?: boolean;
   width?: number;
   height?: number;
 };
 
-const { src, alt, className, lazy = true, width, height } = Astro.props;
+const { src, alt, class: className, lazy = true, width, height } = Astro.props;
 const placeholderColor =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcfPRvPQAHHgLWeG8FbgAAAABJRU5ErkJggg==";
 const loading = lazy ? "lazy" : "eager";

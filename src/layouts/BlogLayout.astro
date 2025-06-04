@@ -4,20 +4,19 @@ import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { formatDate } from "../utils/formatDate";
 import Layout from "./Layout.astro";
-import MainLayout from "./MainLayout.astro";
-import Paper from "../components/Paper.astro";
 import ShareButtons from "../components/ShareButtons.astro";
 import { getBlogs, parseTags } from "../utils/blog";
 import Link from "../components/Link.astro";
 import { HATENA_BLOG_ENTRY_URL } from "../constants";
-import SnsIcon from "../components/SnsIcon.astro";
-import GitHub from "../components/icons/GitHub.astro";
-import BlogDescription from "../components/BlogDescription.astro";
-import Pagination from "../components/Pagination.astro";
-import SearchArticles from "../components/SearchArticles.astro";
+import BlogBadge from "../components/BlogBadge.astro";
+import Button from "../components/Button.astro";
+import Card from "../components/Card.astro";
+import CardContent from "../components/CardContent.astro";
+import Avatar from "../components/Avatar.astro";
+import Image from "../components/Image.astro";
+import Icon from "../components/Icon.astro";
 import type { CollectionEntry } from "astro:content";
 import type { MarkdownLayoutProps } from "astro";
-import { mergeClass } from "../utils/mergeClass";
 import { generateOgImage } from "../utils/ogp";
 
 const { frontmatter, headings } = Astro.props as MarkdownLayoutProps<
@@ -48,6 +47,20 @@ const githubUrl = `https://github.com/hiroppy/site/tree/main/src/content/${Astro
   "",
 )}.mdx`;
 
+// Get related posts
+const relatedPosts = posts
+  .filter(
+    (blog) =>
+      blog.slug !==
+      Astro.url.pathname.replace(/\/blog\//, "").replace(/\/$/, ""),
+  )
+  .filter((blog) => {
+    const currentTags = parseTags(tags);
+    const blogTags = parseTags(blog.data.tags);
+    return currentTags.some((tag: string) => blogTags.includes(tag));
+  })
+  .slice(0, 2);
+
 const ogImageFileName = "og.png";
 const ogImageDistRelativePath = `../../${url}`;
 const ogImageDistAbsolutePath = join(ogImageDistRelativePath, ogImageFileName);
@@ -59,8 +72,7 @@ if (import.meta.env.PROD) {
   await mkdir(fileDir, {
     recursive: true,
   });
-  // @ts-expect-error No overload matches this call.
-  await writeFile(join(fileDir, ogImageFileName), buf);
+  await writeFile(join(fileDir, ogImageFileName), new Uint8Array(buf));
 }
 ---
 
@@ -70,215 +82,390 @@ if (import.meta.env.PROD) {
   image={ogImageDistAbsolutePath}
   isOptimizedImage={false}
 >
-  <SearchArticles slot="header-action" />
-  <MainLayout title={title}>
-    <BlogDescription slot="description" />
-    <Paper className="overflow-y-auto" slot="optional-content">
-      <div class="blog-index p-4">
-        <p>🔖 Index</p>
-        <ol class="mt-2">
-          {
-            indices.map(({ slug, text, depth }) => (
-              <li
-                class={mergeClass(
-                  "border-l-2 py-1",
-                  depth === 2 ? "section border-sky-600" : "border-gray-300",
-                )}
-              >
-                <a
-                  href={`#${slug}`}
-                  class={mergeClass(
-                    "ml-2 block text-sm hover:text-blue-300",
-                    depth === 2
-                      ? "font-semibold text-gray-300"
-                      : "text-gray-400",
-                  )}
-                >
-                  {text}
-                </a>
-              </li>
-            ))
-          }
-        </ol>
+  <div
+    class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
+  >
+    <main class="container mx-auto max-w-6xl px-4 py-8">
+      <!-- Back Button -->
+      <div class="mb-8">
+        <a href="/blog">
+          <Button
+            variant="ghost"
+            class="text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400"
+          >
+            <Icon icon="mdi:arrow-left" class="mr-2" width="16" height="16" />
+            ブログ一覧に戻る
+          </Button>
+        </a>
       </div>
-    </Paper>
-    <div class="mb-10 flex items-center justify-end gap-4 text-sm">
-      <p>{date}</p>
-      <SnsIcon
-        name="GitHub"
-        href={githubUrl}
-        text="Edit"
-        className="h-4 w-4 text-blue-300"
-        textClassName="text-blue-300"
+
+      <!-- Article Header -->
+      <article
+        class="overflow-hidden rounded-2xl bg-white shadow-lg dark:bg-slate-800"
       >
-        <GitHub />
-      </SnsIcon>
-    </div>
-    <div class="flex flex-col gap-4">
-      {
-        parseTags(tags).includes("javascript") && diffDate > 365 && (
-          <div class="rounded-md bg-yellow-500 p-3">
-            <span class="text-sm text-gray-800">
-              🚨 This article hasn't been updated in over a year
-            </span>
-          </div>
-        )
-      }
-      {
-        frontmatter.hatenaPath && (
-          <div class="rounded-md bg-gray-700 p-3 text-sm">
-            💁‍♀️ This post was copied from{" "}
-            <Link href={`${HATENA_BLOG_ENTRY_URL}/${frontmatter.hatenaPath}`}>
-              Hatena Blog
-            </Link>
-          </div>
-        )
-      }
-    </div>
-    <div class="blog text-gray-300">
-      <slot />
-    </div>
-    <hr class="mt-12 border-gray-600" />
-    <div>
-      <ShareButtons url={`${Astro.site?.origin}${url!}`} title={title} />
-      {
-        index !== -1 && (
-          <Pagination
-            prev={index !== 0 ? posts[index - 1].slug : undefined}
-            prevText={index !== 0 ? posts[index - 1].data.title : undefined}
-            next={
-              index !== posts.length - 1 ? posts[index + 1].slug : undefined
-            }
-            nextText={
-              index !== posts.length - 1
-                ? posts[index + 1].data.title
-                : undefined
-            }
-            className="mt-10 flex-col md:flex-row gap-2 text-center"
-          />
-        )
-      }
-    </div>
-  </MainLayout>
-  <script is:inline>
-    document.addEventListener(
-      "astro:page-load",
-      () => {
-        const activeId = "blog-index-active";
-        const h2 = document.querySelectorAll(".blog h2");
-        const sections = document.querySelectorAll(".section");
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            const el = entry.target;
-
-            if (el instanceof HTMLElement) {
-              const index = Number(el.dataset.index);
-
-              if (entry.isIntersecting) {
-                sections.forEach((section, i) => {
-                  if (i === index) {
-                    section.setAttribute("id", activeId);
-                  } else {
-                    section.removeAttribute("id");
-                  }
-                });
-
-                return;
-              }
-            }
-          });
-        });
-
-        h2.forEach((el, i) => {
-          if (el instanceof HTMLElement) {
-            el.dataset.index = `${i}`;
-            observer.observe(el);
+        <div class="relative">
+          {
+            frontmatter.image && (
+              <Image
+                src={frontmatter.image}
+                alt={title}
+                width={800}
+                height={400}
+                class="h-64 w-full object-cover md:h-80"
+              />
+            )
           }
-        });
-      },
-      { once: true },
-    );
-  </script>
+          {
+            !frontmatter.image && (
+              <div class="flex h-64 w-full items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 md:h-80">
+                <div class="text-8xl opacity-30">📝</div>
+              </div>
+            )
+          }
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"
+          >
+          </div>
+          <div class="absolute bottom-6 left-6 right-6">
+            <BlogBadge variant="primary" class="mb-4">
+              {parseTags(tags)?.[0] || "記事"}
+            </BlogBadge>
+            <h1 class="mb-4 text-3xl font-bold text-white md:text-4xl">
+              {title}
+            </h1>
+            <div class="flex items-center space-x-6 text-white/90">
+              <div class="flex items-center space-x-2">
+                <Icon icon="mdi:calendar" width="16" height="16" />
+                <span>{date}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-8">
+          <!-- Author Info -->
+          <div
+            class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <div class="flex items-center space-x-4">
+              <Avatar class="h-12 w-12">
+                <Image
+                  src="/images/meta/me.png"
+                  alt="Hiroppy"
+                  class="h-12 w-12 rounded-full"
+                />
+              </Avatar>
+              <div>
+                <p class="font-semibold text-gray-900 dark:text-white">
+                  Hiroppy
+                </p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  JavaScript Engineer
+                </p>
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <ShareButtons
+                url={`${Astro.site?.origin}${url!}`}
+                title={title}
+              />
+              <Link href={githubUrl} class="flex items-center">
+                <Button variant="outline" size="sm" class="px-4 py-1">
+                  <Icon icon="mdi:github" class="mr-1" width="14" height="14" />
+                  Edit
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          <hr class="mb-8 border-gray-200 dark:border-gray-700" />
+
+          <!-- Table of Contents -->
+          {
+            indices.length > 0 && (
+              <div class="mb-8 rounded-lg bg-gray-50 p-6 dark:bg-slate-700">
+                <h2 class="mb-4 font-semibold text-gray-900 dark:text-white">
+                  📖 目次
+                </h2>
+                <nav>
+                  <ul class="space-y-1">
+                    {indices
+                      .filter((h) => h.depth <= 3)
+                      .map((heading) => (
+                        <li
+                          class={
+                            heading.depth === 1
+                              ? "text-sm font-semibold"
+                              : heading.depth === 2
+                                ? "ml-4 border-l-2 border-gray-300 pl-3 text-sm dark:border-gray-600"
+                                : "ml-8 border-l-2 border-gray-200 pl-3 text-xs dark:border-gray-700"
+                          }
+                        >
+                          <a
+                            href={`#${heading.slug}`}
+                            class={
+                              heading.depth === 1
+                                ? "text-gray-900 hover:text-blue-600 dark:text-white dark:hover:text-blue-400"
+                                : "text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400"
+                            }
+                          >
+                            {heading.text}
+                          </a>
+                        </li>
+                      ))}
+                  </ul>
+                </nav>
+              </div>
+            )
+          }
+
+          <!-- Warnings -->
+          <div class="mb-8 space-y-4">
+            {
+              parseTags(tags).includes("javascript") && diffDate > 365 && (
+                <div class="rounded-lg border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-800 dark:bg-yellow-900/20">
+                  <div class="flex items-center">
+                    <Icon
+                      icon="mdi:alert-triangle"
+                      class="mr-2 text-yellow-600 dark:text-yellow-400"
+                      width="20"
+                      height="20"
+                    />
+                    <span class="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+                      🚨 この記事は1年以上更新されていません
+                    </span>
+                  </div>
+                </div>
+              )
+            }
+            {
+              frontmatter.hatenaPath && (
+                <div class="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900/20">
+                  <div class="flex items-center">
+                    <Icon
+                      icon="mdi:check-circle"
+                      class="mr-2 text-blue-600 dark:text-blue-400"
+                      width="20"
+                      height="20"
+                    />
+                    <span class="text-sm text-blue-800 dark:text-blue-200">
+                      💁‍♀️ この記事は{" "}
+                      <Link
+                        href={`${HATENA_BLOG_ENTRY_URL}/${frontmatter.hatenaPath}`}
+                        class="underline"
+                      >
+                        Hatena Blog
+                      </Link>{" "}
+                      からの移行記事です
+                    </span>
+                  </div>
+                </div>
+              )
+            }
+          </div>
+
+          <!-- Article Content -->
+          <div class="prose prose-lg dark:prose-invert max-w-none">
+            <slot />
+          </div>
+
+          <hr class="my-8 border-gray-200 dark:border-gray-700" />
+
+          <!-- Tags -->
+          <div class="mb-8">
+            <h2
+              class="mb-4 text-lg font-semibold text-gray-900 dark:text-white"
+            >
+              🏷️ タグ
+            </h2>
+            <div class="flex flex-wrap gap-2">
+              {
+                parseTags(tags).map((tag: string) => (
+                  <BlogBadge variant="secondary" class="px-3 py-1.5 text-sm">
+                    <a href={`/blog/tags/${tag}`}>{tag}</a>
+                  </BlogBadge>
+                ))
+              }
+            </div>
+
+            <div
+              class="flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
+            >
+              <ShareButtons
+                url={`${Astro.site?.origin}${url!}`}
+                title={title}
+              />
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          {
+            index !== -1 && (
+              <div class="mb-8">
+                <h2 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+                  📚 前後の記事
+                </h2>
+                <div class="grid gap-4 md:grid-cols-2">
+                  {index !== 0 && (
+                    <Card class="group transition-all duration-300 hover:shadow-lg dark:bg-slate-700">
+                      <CardContent class="p-4">
+                        <div class="mb-2 text-xs text-gray-500 dark:text-gray-400">
+                          ← 前の記事
+                        </div>
+                        <h3 class="line-clamp-2 text-sm font-semibold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-blue-500">
+                          <a href={`/blog/${posts[index - 1].slug}`}>
+                            {posts[index - 1].data.title}
+                          </a>
+                        </h3>
+                      </CardContent>
+                    </Card>
+                  )}
+                  {index !== posts.length - 1 && (
+                    <Card class="group transition-all duration-300 hover:shadow-lg dark:bg-slate-700">
+                      <CardContent class="p-4">
+                        <div class="mb-2 text-xs text-gray-500 dark:text-gray-400">
+                          次の記事 →
+                        </div>
+                        <h3 class="line-clamp-2 text-sm font-semibold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-blue-500">
+                          <a href={`/blog/${posts[index + 1].slug}`}>
+                            {posts[index + 1].data.title}
+                          </a>
+                        </h3>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              </div>
+            )
+          }
+        </div>
+      </article>
+
+      <!-- Related Posts -->
+      {
+        relatedPosts.length > 0 && (
+          <section class="mt-12">
+            <h2 class="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
+              関連記事
+            </h2>
+            <div class="grid gap-6 md:grid-cols-2">
+              {relatedPosts.map((post) => (
+                <Card class="group transition-all duration-300 hover:shadow-lg dark:bg-slate-800">
+                  <CardContent class="p-0">
+                    <div class="flex">
+                      {post.data.image && (
+                        <Image
+                          src={post.data.image}
+                          alt={post.data.title}
+                          width={120}
+                          height={80}
+                          class="h-20 w-24 rounded-l-lg object-cover"
+                        />
+                      )}
+                      {!post.data.image && (
+                        <div class="flex h-20 w-24 items-center justify-center rounded-l-lg bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600">
+                          <div class="text-2xl opacity-30">📝</div>
+                        </div>
+                      )}
+                      <div class="flex-1 p-4">
+                        <BlogBadge variant="secondary" class="mb-2 text-xs">
+                          {parseTags(post.data.tags)?.[0] || "記事"}
+                        </BlogBadge>
+                        <h3 class="line-clamp-2 text-sm font-semibold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-blue-500">
+                          <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+                        </h3>
+                        <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                          {formatDate(post.data.date)}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+        )
+      }
+    </main>
+  </div>
 </Layout>
 
 <style is:global>
-  #blog-index-active {
-    @apply border-orange-500;
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    @apply mb-4 mt-8 font-bold text-gray-900 dark:text-white;
   }
-
-  #blog-index-active > a {
-    @apply text-blue-300;
+  .prose h1 {
+    @apply text-3xl;
   }
-
-  .blog {
-    font-size: 15px;
-    @apply sm:text-base;
-  }
-  .blog h1,
-  .blog h2,
-  .blog h3,
-  .blog h4 {
-    @apply mb-1 mt-10 font-semibold text-gray-50;
-  }
-  .blog h1 {
+  .prose h2 {
     @apply text-2xl;
   }
-  .blog h2 {
+  .prose h3 {
     @apply text-xl;
   }
-  .blog h3 {
+  .prose h4 {
     @apply text-lg;
   }
-  .blog h4 {
-    @apply border-l-2 border-l-gray-600 pl-3 text-base;
+  .prose p {
+    @apply my-4 text-gray-700 dark:text-gray-300;
   }
-  .blog code:not(pre > *) {
-    @apply mx-1 rounded-sm bg-gray-600 px-1 text-gray-200 shadow-lg ring-white/5;
+  .prose ul,
+  .prose ol {
+    @apply mb-4 pl-6 text-gray-700 dark:text-gray-300;
   }
-  .blog ul {
-    @apply my-2 list-hyphen pl-4;
+  .prose ul {
+    list-style-type: disc;
   }
-
-  .blog li {
-    @apply my-1;
+  .prose ol {
+    list-style-type: decimal;
   }
-
-  .blog p {
-    @apply my-4;
+  .prose li {
+    @apply mb-2;
   }
-  .blog pre {
-    @apply my-4 rounded-lg p-4 text-sm;
+  .prose a {
+    @apply text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300;
   }
-  .blog a {
-    @apply text-blue-300;
+  .prose code:not(pre code) {
+    @apply rounded bg-gray-100 px-1 py-0.5 text-sm text-gray-800 dark:bg-gray-700 dark:text-gray-200;
   }
-  .blog hr {
-    @apply my-4 border-gray-500;
+  .prose pre {
+    @apply mb-4 overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100;
   }
-  .blog img {
+  .prose blockquote {
+    @apply border-l-4 border-blue-500 bg-blue-50 py-2 pl-4 italic text-blue-800 dark:border-blue-400 dark:bg-blue-900/20 dark:text-blue-200;
+  }
+  .prose img {
+    @apply mx-auto rounded-lg shadow-md;
+  }
+  .prose iframe {
     @apply mx-auto;
   }
-  .blog strong {
-    @apply font-semibold text-orange-300;
+  .prose .twitter-tweet {
+    @apply mx-auto;
   }
-  .blog blockquote {
-    @apply border border-l-2 border-gray-600 border-l-blue-300 px-4;
+  .prose .youtube-embed {
+    @apply mx-auto;
   }
-  .blog table {
-    @apply my-4 block w-full table-auto border-collapse overflow-x-auto whitespace-nowrap text-sm sm:table;
+  .prose table {
+    @apply w-full border-collapse border border-gray-300 dark:border-gray-600;
   }
-  .blog th {
-    @apply border-b border-gray-600 p-4 pl-8 pt-0 text-left text-gray-200;
+  .prose th,
+  .prose td {
+    @apply border border-gray-300 px-4 py-2 dark:border-gray-600;
   }
-  .blog tbody {
-    @apply bg-gray-800;
+  .prose th {
+    @apply bg-gray-100 font-semibold text-gray-900 dark:bg-gray-700 dark:text-white;
   }
-  .blog td {
-    @apply border-b border-slate-700 p-4 pl-8 text-gray-400;
+  .prose td {
+    @apply text-gray-700 dark:text-gray-300;
   }
-
-  .blog iframe {
-    max-width: 100%;
-    margin: auto;
+  .prose strong {
+    @apply font-semibold text-gray-900 dark:text-gray-100;
+  }
+  .prose hr {
+    @apply my-8 border-gray-300 dark:border-gray-600;
   }
 </style>

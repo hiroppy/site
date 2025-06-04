@@ -3,6 +3,7 @@ interface Window {
     applicationId: string;
     searchOnlyKey: string;
   };
+  searchInitialized?: boolean;
 }
 
 declare global {

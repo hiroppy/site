@@ -1,18 +1,16 @@
 ---
 import type { GetStaticPathsOptions, Page } from "astro";
 import type { CollectionEntry } from "astro:content";
-import BlogCardItem from "../../components/BlogCardItem.astro";
-import BlogDescription from "../../components/BlogDescription.astro";
 import Pagination from "../../components/Pagination.astro";
 import SearchArticles from "../../components/SearchArticles.astro";
 import TagsBox from "../../components/TagsBox.astro";
+import BlogCard from "../../components/BlogCard.astro";
 import { BLOG_DESCRIPTION } from "../../constants";
 import Layout from "../../layouts/Layout.astro";
-import MainLayout from "../../layouts/MainLayout.astro";
 import { getAllTags, getBlogs } from "../../utils/blog";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  return paginate(await getBlogs(), { pageSize: 20 });
+  return paginate(await getBlogs(), { pageSize: 21 });
 }
 
 const allTags = getAllTags(await getBlogs());
@@ -22,18 +20,42 @@ const { page } = Astro.props as {
 ---
 
 <Layout description={BLOG_DESCRIPTION}>
-  <SearchArticles slot="header-action" />
-  <MainLayout title="Blog">
-    <BlogDescription slot="description" />
-    <TagsBox tags={allTags} slot="optional-content" />
+  <div
+    class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
+  >
+    <main class="container mx-auto px-4 py-8">
+      <!-- Page Header -->
+      <div class="py-12 text-center">
+        <h1 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+          Tech Blog
+        </h1>
+        <p class="mx-auto max-w-2xl text-xl text-gray-600 dark:text-gray-300">
+          Node.js, React, Next.jsなどのJavaScript関連について書いています
+        </p>
+      </div>
 
-    <div class="flex flex-col gap-4">
-      {
-        page.data.map(({ data, slug }) => (
-          <BlogCardItem url={`/blog/${slug}`} frontmatter={data} />
-        ))
-      }
-    </div>
-    <Pagination prev={page.url.prev} next={page.url.next} />
-  </MainLayout>
+      <!-- Search and Filter (Sticky) -->
+      <div
+        class="sticky top-16 z-40 mb-8 space-y-4 bg-white/60 py-6 backdrop-blur-lg dark:bg-slate-900/60"
+      >
+        <div class="relative mx-auto max-w-md">
+          <SearchArticles />
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-2">
+          <TagsBox tags={allTags} />
+        </div>
+      </div>
+
+      <!-- Blog Posts Grid -->
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {page.data.map((post) => <BlogCard post={post} />)}
+      </div>
+
+      <!-- Pagination -->
+      <div class="mt-12">
+        <Pagination prev={page.url.prev} next={page.url.next} />
+      </div>
+    </main>
+  </div>
 </Layout>

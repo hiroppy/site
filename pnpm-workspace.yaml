@@ -1,5 +1,6 @@
 onlyBuiltDependencies:
+  - "@tailwindcss/oxide"
   - esbuild
+  - hiroppy
   - puppeteer
   - sharp
-  - hiroppy

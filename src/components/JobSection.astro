@@ -2,15 +2,16 @@
 import type JobMeta from "hiroppy/generated/jobs.json";
 import Image from "./Image.astro";
 import { formatDate } from "../utils/formatDate";
-import Youtube from "./icons/Youtube.astro";
-import SnsIcon from "./SnsIcon.astro";
-import Pencil from "./icons/Pencil.astro";
+import Icon from "./Icon.astro";
+import Link from "./Link.astro";
 import { marked } from "marked";
+import Card from "./Card.astro";
+import CardContent from "./CardContent.astro";
 
 type JobContent = (typeof JobMeta)["main"] | (typeof JobMeta)["side"];
 
 type Props = {
-  title: "Main Job" | "Side Job";
+  title: "Main Job" | "My Company";
   items: JobContent;
   meta: (typeof JobMeta)["meta"];
 };
@@ -28,77 +29,169 @@ for (const item of items) {
 }
 ---
 
-<div class="space-y-4">
-  <h3 class="font-semibold">{title}</h3>
-  {
-    history.map(
-      ({ name, company, description, start, end, position, links }) => (
-        <div class="flex items-start gap-4 break-all">
-          {(meta as any)[company] && (
-            <Image
-              src={(meta as any)[company].image}
-              alt={name}
-              width={60}
-              height={60}
-              className="rounded w-16 h-16 bg-white"
-            />
-          )}
-          <div class="w-full space-y-2">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-              <h4 class="font-semibold text-blue-400 hover:text-blue-300">
-                <a href={(meta as any)[company].url} target="_blank">
-                  {name}
-                </a>
-              </h4>
-              <span
-                class={[
-                  "text-xs",
-                  end === null ? "text-blue-300" : "text-gray-400",
-                ].join(" ")}
-              >
-                {formatDate(new Date(start))} ~{" "}
-                {end ? formatDate(new Date(end)) : ""}
-              </span>
-            </div>
-            <span class="rounded-full bg-gray-700 px-2 py-1 text-xs font-semibold">
-              {position}
-            </span>
-            <div
-              class="job-history text-sm text-gray-400"
-              set:html={description}
-            />
-            <ul class="flex items-center gap-2">
-              {links.map(({ siteUrl: url }) => (
-                <li>
-                  {url.startsWith("https://www.youtube.com/") ? (
-                    <SnsIcon href={url} name="youtube">
-                      <Youtube />
-                    </SnsIcon>
-                  ) : (
-                    <SnsIcon href={url} name="link">
-                      <Pencil />
-                    </SnsIcon>
+<div class="space-y-6">
+  <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+    {title}
+  </h3>
+  <div class="space-y-6">
+    {
+      history.map(
+        ({ name, company, description, start, end, position, links }) => {
+          const isCurrentJob = end === null;
+          return (
+            <Card class="group shadow-sm transition-all duration-300 hover:shadow-md">
+              <CardContent class="p-6">
+                <div class="flex items-start gap-4">
+                  {(meta as any)[company] && (
+                    <div class="flex-shrink-0">
+                      <Image
+                        src={(meta as any)[company].image}
+                        alt={name}
+                        width={60}
+                        height={60}
+                        class="h-16 w-16 rounded-lg bg-white p-2 shadow-sm transition-transform group-hover:scale-105"
+                      />
+                    </div>
                   )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      ),
-    )
-  }
+                  <div class="min-w-0 flex-1 space-y-3">
+                    <div class="flex flex-col space-y-2 md:flex-row md:items-start md:justify-between md:space-y-0">
+                      <div class="space-y-1">
+                        <h4 class="text-lg font-semibold">
+                          <Link
+                            href={(meta as any)[company].url}
+                            class="flex items-center space-x-2 text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                          >
+                            <span>{name}</span>
+                            <Icon
+                              icon="mdi:open-in-new"
+                              class="opacity-0 transition-opacity group-hover:opacity-100"
+                              width="16"
+                              height="16"
+                            />
+                          </Link>
+                        </h4>
+                        <div class="flex items-center space-x-2">
+                          <span
+                            class={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
+                              isCurrentJob
+                                ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+                                : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300"
+                            }`}
+                          >
+                            {position}
+                          </span>
+                          {isCurrentJob && (
+                            <div class="flex items-center space-x-1 text-xs text-green-600 dark:text-green-400">
+                              <div class="h-2 w-2 animate-pulse rounded-full bg-green-500" />
+                              <span>Current</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div class="flex flex-col items-start md:items-end">
+                        <span
+                          class={`text-sm font-medium ${
+                            isCurrentJob
+                              ? "text-green-600 dark:text-green-400"
+                              : "text-gray-500 dark:text-gray-400"
+                          }`}
+                        >
+                          {formatDate(new Date(start))} -{" "}
+                          {end ? formatDate(new Date(end)) : "Present"}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div
+                      class="job-history prose prose-sm dark:prose-invert max-w-none text-gray-600 dark:text-gray-300"
+                      set:html={description}
+                    />
+
+                    {links.length > 0 && (
+                      <div class="flex items-center space-x-3 pt-2">
+                        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                          Links:
+                        </span>
+                        <ul class="flex items-center space-x-2">
+                          {links.map(({ siteUrl: url }) => (
+                            <li>
+                              <Link
+                                href={url}
+                                class="flex rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-50 hover:text-blue-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-blue-300"
+                                aria-label={
+                                  url.startsWith("https://www.youtube.com/")
+                                    ? "YouTube"
+                                    : "Link"
+                                }
+                              >
+                                {url.startsWith("https://www.youtube.com/") ? (
+                                  <Icon
+                                    icon="mdi:youtube"
+                                    width="20"
+                                    height="20"
+                                  />
+                                ) : (
+                                  <Icon
+                                    icon="mdi:pencil"
+                                    width="20"
+                                    height="20"
+                                  />
+                                )}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        },
+      )
+    }
+  </div>
   <slot />
 </div>
 <style is:global>
+  .job-history ul {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
   .job-history ul li {
-    margin-left: 8px;
+    margin-bottom: 0.25rem;
+    line-height: 1.5;
   }
 
   .job-history a {
+    color: #3b82f6;
     text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s ease;
   }
 
   .job-history a:hover {
+    color: #1d4ed8;
+  }
+
+  .dark .job-history a {
+    color: #60a5fa;
+  }
+
+  .dark .job-history a:hover {
     color: #93c5fd;
+  }
+
+  .job-history p {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .job-history p:last-child {
+    margin-bottom: 0;
   }
 </style>

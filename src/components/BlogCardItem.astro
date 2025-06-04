@@ -17,7 +17,7 @@ const { url, frontmatter } = Astro.props;
 
 <Card>
   <Link href={url}>
-    <h2 class="text-blue-300">{frontmatter.title}</h2>
+    <h2 class="text-blue-600 dark:text-blue-300">{frontmatter.title}</h2>
   </Link>
   <div class="mt-2 flex justify-between gap-2">
     <div class="flex flex-col justify-between gap-4">
@@ -32,7 +32,7 @@ const { url, frontmatter } = Astro.props;
     <Image
       src={frontmatter.image}
       alt={frontmatter.title}
-      className="h-20 w-20"
+      class="h-20 w-20"
       width={20 * 4}
       height={20 * 4}
     />

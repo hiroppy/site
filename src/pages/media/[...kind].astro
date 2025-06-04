@@ -1,5 +1,4 @@
 ---
-import Layout from "../../layouts/Layout.astro";
 import MediaLayout from "../../layouts/MediaLayout.astro";
 import { HATENA_BLOG_URL, type MediaType } from "../../constants";
 import { sortItems } from "../../utils/sortItems";
@@ -62,7 +61,7 @@ async function getData(kind: Exclude<Kind, undefined>) {
 function getMediaIcon(type: MediaType) {
   switch (type) {
     case "media":
-      return "✏️";
+      return "📣";
     case "podcasts":
       return "🎧";
     case "talks":
@@ -85,47 +84,72 @@ function getPrefixForTitle(type: MediaType) {
 }
 ---
 
-<Layout>
-  <MediaLayout>
-    <div
-      class="grid auto-rows-max grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4"
-    >
-      {
-        items.map(({ title, description, image, icon, url, publishedAt }) => (
-          <a
-            href={url}
-            target={url.startsWith(import.meta.env.SITE) ? undefined : "_blank"}
-            aria-label={title}
-          >
-            <div class="group relative h-52 border border-gray-600 hover:border-2 hover:border-blue-300">
-              <div class="gruop-hover:border-2 absolute -left-3 -top-3 z-30 flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-600 bg-gray-600 group-hover:border-blue-300">
-                <span class="text-xl">{icon}</span>
+<MediaLayout>
+  <!-- Modern Grid Layout -->
+  <div
+    class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+  >
+    {
+      items.map(({ title, description, image, icon, url, publishedAt }) => (
+        <a
+          href={url}
+          target={url.startsWith(import.meta.env.SITE) ? undefined : "_blank"}
+          aria-label={`${title} - ${description}`}
+          class="group block h-full"
+        >
+          <div class="flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all duration-300 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+            <div class="relative flex h-48 items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600">
+              <div class="absolute left-3 top-3 z-10">
+                <div class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white/90 text-lg backdrop-blur-sm dark:border-gray-600 dark:bg-gray-900/90">
+                  {icon}
+                </div>
               </div>
-              <div class="absolute top-0 flex h-full w-full items-center justify-center overflow-hidden bg-gray-700">
-                <div class="absolute z-20 hidden h-full w-full bg-gray-900/90 group-hover:block">
-                  <div class="flex h-full justify-center overflow-scroll px-2 py-10 text-sm">
-                    <p class="break-all">{description}</p>
-                  </div>
-                </div>
-                <Image src={image ?? ""} alt={title} width={100} height={100} />
-              </div>
-              <div class="absolute bottom-0 z-10 w-full text-sm">
-                <div class="text-right">
-                  <span class="bg-gray-900/90 p-1">{publishedAt}</span>
-                </div>
-                <div class="flex h-16 items-center overflow-hidden bg-gray-900/90 px-2 py-1">
-                  <h2
-                    class="overflow-hidden"
-                    style="display: -webkit-box; -webkit-box-orient: vertical;  -webkit-line-clamp: 2;"
-                  >
-                    {title}
-                  </h2>
-                </div>
+              {image && (
+                <Image
+                  src={image}
+                  alt={title}
+                  width={200}
+                  height={120}
+                  class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              )}
+              {!image && (
+                <div class="text-6xl opacity-20 dark:opacity-10">{icon}</div>
+              )}
+              <div class="absolute inset-0 flex items-center justify-center bg-black/60 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <p class="line-clamp-4 text-center text-sm leading-relaxed text-white">
+                  {description}
+                </p>
               </div>
             </div>
-          </a>
-        ))
-      }
-    </div>
-  </MediaLayout>
-</Layout>
+
+            <div class="flex flex-grow flex-col justify-between p-4">
+              <div class="mb-2 flex items-center justify-between">
+                <span class="rounded-md bg-gray-100 px-2 py-1 text-xs text-gray-500 dark:bg-gray-700 dark:text-gray-400">
+                  {publishedAt}
+                </span>
+              </div>
+              <h2 class="line-clamp-2 text-sm font-semibold leading-tight text-gray-900 transition-colors group-hover:text-blue-600 dark:text-gray-100 dark:group-hover:text-blue-400">
+                {title}
+              </h2>
+            </div>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+
+  {
+    items.length === 0 && (
+      <div class="py-16 text-center">
+        <div class="mb-4 text-6xl opacity-20">📝</div>
+        <h2 class="mb-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
+          No items found
+        </h2>
+        <p class="text-gray-600 dark:text-gray-400">
+          該当するメディアが見つかりませんでした
+        </p>
+      </div>
+    )
+  }
+</MediaLayout>

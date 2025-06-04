@@ -1,8 +1,3 @@
-export const languages = <const>{
-  en: "English",
-  ja: "Japanese",
-};
-
 export const defaultLang = "ja";
 
 export const ui = <const>{

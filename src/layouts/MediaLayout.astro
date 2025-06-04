@@ -1,7 +1,7 @@
 ---
-import Link from "../components/Link.astro";
+import Layout from "./Layout.astro";
+import Button from "../components/Button.astro";
 import type { MediaType } from "../constants";
-import MainLayout from "./MainLayout.astro";
 
 type Path = "" | `/${MediaType}`;
 
@@ -14,32 +14,86 @@ const kinds: Record<Path, string> = {
   "/talks": "/media/talks",
   "/podcasts": "/media/podcasts",
 };
+
+const getKindLabel = (kind: string): string => {
+  switch (kind) {
+    case "":
+      return "すべて";
+    case "/articles":
+      return "記事";
+    case "/talks":
+      return "登壇";
+    case "/podcasts":
+      return "ポッドキャスト";
+    default:
+      return kind.replace(/^\//, "");
+  }
+};
+
+const getDescription = (): string => {
+  switch (currentPath) {
+    case "":
+      return "登壇・プレス・ポッドキャストなどのメディア活動を紹介";
+    case "/articles":
+      return "プレスや外部記事のまとめ";
+    case "/talks":
+      return "カンファレンスやイベントでの登壇資料のまとめ";
+    case "/podcasts":
+      return "Mozaic.fmをはじめとしたポッドキャスト出演のまとめ";
+    default:
+      return "メディア活動をまとめています";
+  }
+};
 ---
 
-<MainLayout
+<Layout
   title={`Media / ${currentPath === "" ? "all" : currentPath.replace("/", "")}`}
+  description={getDescription()}
 >
-  <span slot="description"
-    >A monthly podcast about new frontend news! 👉 <Link
-      href="https://mozaic.fm/"
-      className="font-semibold text-gray-100"
-    >
-      Mozaic.fm
-    </Link></span
+  <div
+    class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
   >
-  <div class="my-5 flex gap-3 overflow-x-auto p-2 md:gap-2">
-    {
-      Object.entries(kinds).map(([kind, href]) => (
-        <a
-          href={href}
-          class={`font-semibold ${
-            currentPath === kind ? "text-blue-300" : "text-gray-100"
-          }`}
+    <main class="container mx-auto px-4 py-8">
+      <!-- Page Header -->
+      <div class="py-12 text-center">
+        <h1 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+          Media & Activities
+        </h1>
+        <p class="mx-auto max-w-2xl text-xl text-gray-600 dark:text-gray-300">
+          {getDescription()}
+        </p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="mb-8 flex justify-center">
+        <div
+          class="flex flex-wrap gap-2 rounded-lg bg-white p-2 shadow-md dark:bg-slate-800"
         >
-          {kind === "" ? "all" : kind.replace(/^\//, "")}
-        </a>
-      ))
-    }
+          {
+            Object.entries(kinds).map(([kind, href]) => (
+              <a
+                href={href}
+                aria-label={`${getKindLabel(kind)}のメディア活動を表示`}
+              >
+                <Button
+                  variant={currentPath === kind ? "default" : "ghost"}
+                  size="sm"
+                  class={`${
+                    currentPath === kind
+                      ? "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400"
+                      : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+                  }`}
+                >
+                  {getKindLabel(kind)}
+                </Button>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Content -->
+      <slot />
+    </main>
   </div>
-  <slot />
-</MainLayout>
+</Layout>

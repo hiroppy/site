@@ -1,0 +1,23 @@
+---
+import Icon from "./Icon.astro";
+
+type Props = {
+  type: "star" | "fork";
+  count: number | string;
+  class?: string;
+};
+
+const { type, count, class: className = "" } = Astro.props;
+
+const iconName = type === "star" ? "mdi:star" : "mdi:source-fork";
+const formattedCount =
+  typeof count === "string" ? count : count.toLocaleString();
+---
+
+<div
+  class={`flex items-center space-x-1 ${className}`}
+  data-testid={`github-${type}-count`}
+>
+  <Icon icon={iconName} width="16" height="16" />
+  <span>{formattedCount}</span>
+</div>

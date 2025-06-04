@@ -1,20 +1,23 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import MainLayout from "../layouts/MainLayout.astro";
 import Card from "../components/Card.astro";
+import CardContent from "../components/CardContent.astro";
+import Avatar from "../components/Avatar.astro";
+import Button from "../components/Button.astro";
 import Image from "../components/Image.astro";
 import Hatena from "../components/icons/Hatena.astro";
+import Icon from "../components/Icon.astro";
 import Link from "../components/Link.astro";
-import { JOB_FORM } from "../constants";
+import Section from "../components/Section.astro";
+import GitHubStats from "../components/GitHubStats.astro";
 import meImage from "../assets/images/meta/me.png";
-import { useTranslations } from "../i18n/util";
 import articles from "../../node_modules/hiroppy/generated/articles.json";
 import sponsors from "../../node_modules/hiroppy/generated/sponsors.json";
 import repos from "../../node_modules/hiroppy/generated/repos.json";
+import meta from "../../node_modules/hiroppy/generated/meta.json";
 import { getStarCount } from "../utils/github";
 import { getBookmark } from "../utils/hatena";
-
-const t = useTranslations();
+import { getLanguageColorClass } from "../utils/languageColors";
 
 const hotArticles = articles.filter(({ hot }) => !!hot);
 const articlesWithBookmarks = await Promise.all(
@@ -36,161 +39,261 @@ const reposWithStars = await Promise.all(
 ---
 
 <Layout>
-  <MainLayout title="About">
-    <span slot="description">
-      {t("sidebar.top")}
-    </span>
-    <div class="mx-auto flex max-w-fit flex-col items-center gap-5 sm:flex-row">
-      <div class="m-auto min-w-fit">
-        <Image
-          src={meImage}
-          className="h-24 w-24 rounded-full drop-shadow-[0_4px_30px_#0369a1] md:h-32 md:w-32"
-          alt="hiroppy"
-          width={32 * 4}
-          height={32 * 4}
-          lazy={false}
-        />
+  <div class="container mx-auto space-y-12 px-4 py-8">
+    <!-- Hero Section -->
+    <section class="py-12 text-center">
+      <div class="mx-auto max-w-4xl">
+        <div class="mb-6">
+          <Avatar
+            size="xl"
+            class="mx-auto ring-4 ring-blue-500 ring-offset-4 ring-offset-white dark:ring-offset-slate-900"
+          >
+            <Image
+              src={meImage}
+              class="h-full w-full object-cover"
+              alt="hiroppy"
+              width={128}
+              height={128}
+              lazy={false}
+            />
+          </Avatar>
+        </div>
+        <h1 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+          Welcome to hiroppy's site 👋
+        </h1>
+        <div class="mb-8 flex justify-center space-x-4">
+          <Button href={meta.sns.twitter} variant="social">
+            <Icon icon="mdi:twitter" class="mr-2" width="20" height="20" />
+            Twitter
+          </Button>
+          <Button href={meta.sns.github} variant="social">
+            <Icon icon="mdi:github" class="mr-2" width="20" height="20" />
+            GitHub
+          </Button>
+          <Button href={meta.sns.linkedin} variant="social">
+            <Icon icon="mdi:linkedin" class="mr-2" width="20" height="20" />
+            LinkedIn
+          </Button>
+        </div>
       </div>
-      <div class="flex-auto">
-        <p>
-          {t("top.description")}
-        </p>
-        <br />
-        <p>
-          {t("top.description1")}
-          <Link href={JOB_FORM} className="italic text-orange-300">
-            {t("top.description2")}
-          </Link>{t("top.description3")}
-          {t("top.description4")}
-          <Link href="/jobs">{t("top.description5")}</Link>
-          {t("top.description6")}
-        </p>
-      </div>
-    </div>
-    <div class="mt-8 flex flex-col gap-4">
-      <Card title="Popular Articles">
-        <ol class="grid grid-cols-1 gap-4 xl:grid-cols-2">
-          {
-            articlesWithBookmarks.map(({ url, title, image, bookmark }) => (
-              <li class="flex flex-col items-start justify-between gap-4 rounded-lg bg-gray-700 p-2 sm:p-3">
-                <Link href={url} className="text-blue-200">
-                  {title}
-                </Link>
-                <div class="flex w-full items-end justify-between text-gray-300">
-                  <Image
-                    src={image}
-                    className="object-contain w-40 h-20"
-                    alt={title}
-                    width={160}
-                    height={80}
-                    lazy={false}
-                  />
-                  <div class="flex items-center gap-2 text-sm">
-                    <Hatena />
-                    <span data-testid="bookmark-count">{bookmark}</span>
-                  </div>
+    </section>
+
+    <!-- Popular Articles Section -->
+    <Section title="Popular Articles">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {
+          articlesWithBookmarks.map(({ url, title, image, bookmark }) => (
+            <Card class="group flex h-full flex-col border-0 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-200/60 dark:bg-slate-800 dark:hover:shadow-blue-900/40">
+              <div class="relative overflow-hidden rounded-t-lg">
+                <Image
+                  src={image}
+                  class="h-32 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  alt={title}
+                  width={300}
+                  height={160}
+                  lazy={false}
+                />
+              </div>
+              <CardContent class="flex flex-grow flex-col p-4">
+                <h3 class="mb-2 flex-grow text-lg leading-relaxed text-gray-900 transition-colors group-hover:text-blue-600 dark:text-gray-100 dark:group-hover:text-blue-400">
+                  <Link href={url} class="font-medium">
+                    {title}
+                  </Link>
+                </h3>
+                <div class="mt-auto flex items-center justify-end text-sm text-gray-500 dark:text-gray-400">
+                  <Hatena />
+                  <span data-testid="bookmark-count" class="ml-1">
+                    {bookmark} bookmarks
+                  </span>
                 </div>
-              </li>
-            ))
-          }
-        </ol>
-      </Card>
-      <Card title="Top Repositories">
-        <ol class="grid grid-cols-1 gap-4 xl:grid-cols-2">
-          {
-            reposWithStars.map(
-              ({ name, image, description, url, language, stars }) => (
-                <li class="flex gap-2 rounded-lg bg-gray-700 p-2 sm:p-3">
-                  <Image
-                    src={image}
-                    className="w-8 h-8 rounded-full"
-                    alt={name}
-                    width={8 * 4}
-                    height={8 * 4}
-                  />
-                  <div class="flex flex-1 flex-col gap-2 text-sm">
-                    <Link href={url} className="text-blue-200 text-lg">
-                      {name}
-                    </Link>
-                    <span class="flex-1 break-all">{description}</span>
-                    <div class="flex items-center justify-between">
-                      <div class="flex items-center gap-2">
-                        <svg
-                          class="h-4 w-4 text-gray-300"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          stroke-width="2"
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" />{" "}
-                          <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
-                        </svg>
-                        <span data-testid="star-count">{`${stars}`}</span>
-                      </div>
-                      <div class="flex items-center gap-1">
-                        <div
-                          class={`${
-                            language === "JavaScript"
-                              ? "bg-javascript"
-                              : language === "TypeScript"
-                                ? "bg-typescript"
-                                : language === "CSS"
-                                  ? "bg-css"
-                                  : ""
-                          } h-2 w-2 rounded-full`}
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
+    </Section>
+    <!-- Top Repositories Section -->
+    <Section title="Top Repositories">
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {
+          reposWithStars.map(
+            ({ name, image, description, url, language, stars }) => (
+              <Card class="group border-0 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-200/60 dark:bg-slate-800 dark:hover:shadow-blue-900/40">
+                <CardContent class="p-4">
+                  <div class="flex gap-3">
+                    <Avatar size="sm">
+                      <Image
+                        src={image}
+                        class="h-full w-full object-cover"
+                        alt={name}
+                        width={32}
+                        height={32}
+                      />
+                    </Avatar>
+                    <div class="min-w-0 flex-1">
+                      <h3 class="mb-2 text-lg font-semibold leading-relaxed transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        <Link href={url}>{name}</Link>
+                      </h3>
+                      <p class="mb-3 line-clamp-2 text-sm text-gray-600 dark:text-gray-300">
+                        {description}
+                      </p>
+                      <div class="flex items-center justify-between text-sm">
+                        <GitHubStats
+                          type="star"
+                          count={stars}
+                          class="text-gray-500 dark:text-gray-400"
                         />
-                        <span>{language}</span>
+                        <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+                          <div
+                            class={`${getLanguageColorClass(language)} h-2 w-2 rounded-full`}
+                          />
+                          <span class="text-xs">{language}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </li>
+                </CardContent>
+              </Card>
+            ),
+          )
+        }
+      </div>
+    </Section>
+    <!-- GitHub Sponsors Section -->
+    <section
+      class="rounded-2xl bg-gradient-to-r from-purple-600 to-purple-700 p-8 text-center text-white dark:from-purple-700 dark:to-purple-800"
+    >
+      <div class="mx-auto max-w-3xl">
+        <div
+          class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/20"
+        >
+          <Icon icon="mdi:heart" width="32" height="32" />
+        </div>
+        <h2 class="mb-4 text-3xl font-bold">Thank you for your support!</h2>
+        <div class="mb-6 flex flex-wrap justify-center gap-3">
+          {
+            [...sponsors.current, ...sponsors.past].map(
+              ({ name, href, avatar }) => (
+                <div>
+                  <Link
+                    href={
+                      href?.includes("https://docs.github.com/sponsors")
+                        ? "https://github.com"
+                        : href || "https://github.com"
+                    }
+                    ariaLabel={name === undefined ? "private user" : undefined}
+                  >
+                    <Avatar
+                      size="lg"
+                      class="ring-2 ring-white/30 transition-all duration-200 hover:ring-white/60"
+                    >
+                      <Image
+                        src={avatar ?? ""}
+                        alt={name ?? "private user"}
+                        class="h-full w-full object-cover"
+                        width={48}
+                        height={48}
+                      />
+                    </Avatar>
+                  </Link>
+                </div>
               ),
             )
           }
-        </ol>
-      </Card>
-      <Card title="Sponsors">
-        <p class="my-3">Thank you for your support 🥰</p>
-        <div class="flex flex-wrap gap-1 sm:gap-2">
-          {
-            sponsors.current.map(({ name, href, avatar }) => (
-              <Link href={href}>
-                <Image
-                  src={avatar}
-                  alt={name}
-                  className="rounded-full w-12 h-12"
-                  width={12 * 4}
-                  height={12 * 4}
-                />
-              </Link>
-            ))
-          }
-          {
-            sponsors.past.map(({ name, href, avatar }) => (
-              <Link
-                href={
-                  href.includes("https://docs.github.com/sponsors")
-                    ? "https://github.com"
-                    : href
-                }
-                ariaLabel={name === undefined ? "private user" : undefined}
-              >
-                <Image
-                  src={avatar ?? ""}
-                  alt={name ?? "private user"}
-                  className="rounded-full w-12 h-12"
-                  width={12 * 4}
-                  height={12 * 4}
-                />
-              </Link>
-            ))
-          }
         </div>
-      </Card>
-    </div>
-  </MainLayout>
+      </div>
+    </section>
+
+    <!-- Company CTA Section -->
+    <section
+      class="rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 p-8 text-center text-white dark:from-blue-700 dark:to-blue-800"
+    >
+      <div class="mx-auto max-w-3xl">
+        <div
+          class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/20"
+        >
+          <Icon icon="mdi:office-building" width="32" height="32" />
+        </div>
+        <h2 class="mb-4 text-3xl font-bold">合同会社Coder Penguin</h2>
+        <div class="mb-6 text-xl text-blue-100 dark:text-blue-200">
+          <p>技術顧問、エンジニア組織、採用支援を行う会社を運営しています。</p>
+          <p>
+            開発も空き状況によっては可能なので、お気軽にお問い合わせください。
+          </p>
+        </div>
+        <Link href={meta.form.request}>
+          <Button variant="cta-white">
+            <Icon
+              icon="mdi:email-outline"
+              class="mr-2"
+              width="20"
+              height="20"
+            />
+            お問い合わせ
+          </Button>
+        </Link>
+      </div>
+    </section>
+  </div>
 </Layout>
+
+<script>
+  // Handle header avatar visibility based on hero avatar (only on index page)
+  function initializeAvatarVisibility() {
+    const headerAvatar = document.getElementById("header-avatar");
+    const headerText = document.getElementById("header-text");
+
+    if (!headerAvatar || !headerText) return;
+
+    // Check if we're on the index page
+    if (window.location.pathname !== "/") {
+      // On other pages, always show header avatar and text
+      headerAvatar.classList.remove("opacity-0");
+      headerAvatar.classList.add("opacity-100");
+      headerText.classList.remove("opacity-0");
+      headerText.classList.add("opacity-100");
+      return;
+    }
+
+    // Only on index page, use intersection observer
+    const heroAvatar = document.querySelector("section.py-12 .mx-auto.ring-4");
+    if (!heroAvatar) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Hero avatar is visible, hide header avatar and text
+            headerAvatar.classList.remove("opacity-100");
+            headerAvatar.classList.add("opacity-0");
+            headerText.classList.remove("opacity-100");
+            headerText.classList.add("opacity-0");
+          } else {
+            // Hero avatar is not visible, show header avatar and text
+            headerAvatar.classList.remove("opacity-0");
+            headerAvatar.classList.add("opacity-100");
+            headerText.classList.remove("opacity-0");
+            headerText.classList.add("opacity-100");
+          }
+        });
+      },
+      {
+        // Trigger when the hero avatar is completely out of view
+        rootMargin: "0px",
+        threshold: 0,
+      },
+    );
+
+    observer.observe(heroAvatar);
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeAvatarVisibility);
+  } else {
+    initializeAvatarVisibility();
+  }
+
+  // Re-initialize on page transitions (ViewTransitions)
+  document.addEventListener("astro:page-load", initializeAvatarVisibility);
+</script>

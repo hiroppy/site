@@ -16,6 +16,7 @@ on:
       - ".github/workflows/ci.yml"
 
 env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
   ALGOLIA_SEARCH_ONLY_KEY: ${{ secrets.ALGOLIA_SEARCH_ONLY_KEY }}
 
@@ -27,6 +28,7 @@ jobs:
       - uses: ./.github/actions/setup-node
       - run: pnpm check
       - run: pnpm fmt:check
+      - run: pnpm lint
   build:
     runs-on: ubuntu-latest
     steps:
@@ -74,7 +76,9 @@ jobs:
         with:
           name: app
           path: ./dist
-      - run: pnpm test
+      - run: npx playwright test tests/vrt.spec.ts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

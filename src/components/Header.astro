@@ -1,63 +1,167 @@
 ---
-import SnsIcon from "./SnsIcon.astro";
-import { JOB_FORM, PAGE_LINKS } from "../constants";
-import GitHub from "./icons/GitHub.astro";
-import Arrow from "./icons/Arrow.astro";
-import Link from "./Link.astro";
+import Avatar from "./Avatar.astro";
+import Button from "./Button.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import Icon from "./Icon.astro";
+import meImage from "../assets/images/meta/me.png";
+import meta from "../../node_modules/hiroppy/generated/meta.json";
 
-const currentMenu = PAGE_LINKS.find(({ href }) =>
-  href === "/"
-    ? Astro.url.pathname === href
-    : Astro.url.pathname.includes(href),
-) ?? {
-  icon: "😵",
-  title: "not found",
-};
+const currentPath = Astro.url.pathname;
 ---
 
 <header
-  class="sticky top-0 z-50 h-10 border-b-2 border-b-slate-700 bg-gray-800/70 backdrop-blur transition-colors duration-500"
+  class="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md dark:border-slate-700 dark:bg-slate-900/80"
 >
-  <div class="container mx-auto flex h-full items-center justify-between px-4">
-    <div class="text-gray-300">
-      <div class="flex items-center gap-1 lg:hidden">
-        <input id="check" type="checkbox" name="menu" class="peer hidden" />
-        <label for="check" class="select-none"
-          >{currentMenu.icon} {currentMenu.title}</label
-        >
-        <svg
-          class="h-4 w-4 shrink-0 text-gray-400 peer-checked:rotate-180"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <Arrow />
-        </svg>
-        <div
-          class="absolute top-10 z-50 hidden w-32 rounded-lg border border-gray-600 bg-gray-700 py-2 shadow-sm peer-checked:block"
-        >
-          <ul class="flex flex-col gap-2">
-            {
-              PAGE_LINKS.map(({ title, href, icon }) => (
-                <li class="mx-2">
-                  <a href={href} class="block w-full">
-                    {icon} {title}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </div>
-      <Link href={JOB_FORM} className="hidden text-sm lg:block"
-        >📮 お問い合わせ</Link
+  <div class="container mx-auto px-4 py-4">
+    <div class="flex items-center justify-between">
+      <a
+        href="/"
+        class="flex items-center space-x-3"
+        aria-label="Hiroppy ホームページに戻る"
       >
+        <div
+          id="header-avatar"
+          class="opacity-0 transition-opacity duration-300"
+        >
+          <Avatar class="ring-2 ring-blue-500">
+            <img
+              src={meImage.src}
+              alt="Hiroppy"
+              class="h-full w-full object-cover"
+            />
+          </Avatar>
+        </div>
+        <div id="header-text" class="opacity-0 transition-opacity duration-300">
+          <h1 class="text-xl font-bold text-gray-900 dark:text-white">
+            Hiroppy
+          </h1>
+          <p class="text-sm text-gray-600 dark:text-gray-300">
+            JavaScript Engineer
+          </p>
+        </div>
+      </a>
+      <nav class="hidden items-center space-x-2 md:flex">
+        <Button variant={currentPath === "/" ? "nav-active" : "nav"} href="/">
+          About
+        </Button>
+        <Button
+          variant={currentPath.startsWith("/blog") ? "nav-active" : "nav"}
+          href="/blog"
+        >
+          Blog
+        </Button>
+        <Button
+          variant={currentPath.startsWith("/media") ? "nav-active" : "nav"}
+          href="/media"
+        >
+          Media
+        </Button>
+        <Button
+          variant={currentPath === "/jobs" ? "nav-active" : "nav"}
+          href="/jobs"
+        >
+          Projects
+        </Button>
+      </nav>
+      <div class="flex items-center space-x-2">
+        <button
+          id="mobile-menu-button"
+          type="button"
+          class="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 dark:text-gray-300 dark:hover:bg-gray-800 md:hidden"
+          aria-expanded="false"
+        >
+          <span class="sr-only">メニューを開く</span>
+          <Icon icon="mdi:menu" width="24" height="24" />
+        </button>
+        <ThemeToggle />
+        <Button
+          variant="contact"
+          size="sm"
+          href={meta.form.request}
+          class="hidden md:flex"
+        >
+          <Icon icon="mdi:email-outline" class="mr-2" width="16" height="16" />
+          お問い合わせ
+        </Button>
+      </div>
     </div>
-    <div class="flex gap-4">
-      <slot name="action" />
-      <SnsIcon href="https://github.com/hiroppy/site" name="GitHub">
-        <GitHub />
-      </SnsIcon>
-    </div>
+    <!-- Mobile menu -->
+    <nav id="mobile-menu" class="hidden md:hidden">
+      <div class="space-y-1 px-2 pb-3 pt-2">
+        <Button
+          variant={currentPath === "/" ? "nav-mobile-active" : "nav-mobile"}
+          href="/"
+        >
+          About
+        </Button>
+        <Button
+          variant={currentPath.startsWith("/blog")
+            ? "nav-mobile-active"
+            : "nav-mobile"}
+          href="/blog"
+        >
+          Blog
+        </Button>
+        <Button
+          variant={currentPath === "/jobs" ? "nav-mobile-active" : "nav-mobile"}
+          href="/jobs"
+        >
+          Projects
+        </Button>
+        <Button
+          variant={currentPath.startsWith("/media")
+            ? "nav-mobile-active"
+            : "nav-mobile"}
+          href="/media"
+        >
+          Media
+        </Button>
+        <Button variant="nav-mobile" href={meta.form.request}>
+          <Icon icon="mdi:email-outline" class="mr-2" width="16" height="16" />
+          お問い合わせ
+        </Button>
+      </div>
+    </nav>
   </div>
 </header>
+
+<script>
+  function initializeMobileMenu() {
+    const mobileMenuButton = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    if (!mobileMenuButton || !mobileMenu) {
+      return;
+    }
+
+    // Remove existing event listeners to prevent duplicates
+    const newButton = mobileMenuButton.cloneNode(true) as HTMLButtonElement;
+    mobileMenuButton.parentNode?.replaceChild(newButton, mobileMenuButton);
+
+    // Add click event listener
+    newButton.addEventListener("click", () => {
+      const isExpanded = newButton.getAttribute("aria-expanded") === "true";
+      newButton.setAttribute("aria-expanded", (!isExpanded).toString());
+      mobileMenu?.classList.toggle("hidden");
+    });
+
+    // Close menu when clicking nav links
+    const navLinks = mobileMenu.querySelectorAll("a");
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.add("hidden");
+        newButton.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeMobileMenu);
+  } else {
+    initializeMobileMenu();
+  }
+
+  // Re-initialize on page transitions (ViewTransitions)
+  document.addEventListener("astro:page-load", initializeMobileMenu);
+</script>

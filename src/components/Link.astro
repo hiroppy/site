@@ -4,11 +4,11 @@ import { mergeClass } from "../utils/mergeClass";
 type Props = {
   href: string;
   isBlank?: boolean;
-  className?: string;
+  class?: string;
   ariaLabel?: string;
 };
 
-const { href, isBlank, className, ariaLabel } = Astro.props;
+const { href, isBlank, class: className, ariaLabel } = Astro.props;
 const isNeedTargetBlank =
   isBlank ??
   (href.startsWith("http") && !href.startsWith(import.meta.env.SITE));
@@ -18,7 +18,7 @@ const isNeedTargetBlank =
   href={href}
   target={isNeedTargetBlank ? "_blank" : undefined}
   class={mergeClass(
-    "text-blue-300 no-underline hover:underline",
+    "text-blue-600 dark:text-blue-300 no-underline hover:underline",
     className ?? "",
   )}
   rel={isNeedTargetBlank ? "noreferrer" : undefined}

@@ -1,6 +1,6 @@
 ---
 import { mergeClass } from "../utils/mergeClass";
-import Arrow from "./icons/Arrow.astro";
+import Icon from "./Icon.astro";
 import Link from "./Link.astro";
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
   prevText?: string;
   next?: string;
   nextText?: string;
-  className?: string;
+  class?: string;
 };
 
 const {
@@ -16,7 +16,7 @@ const {
   prevText = "Back",
   next,
   nextText = "Next Page",
-  className,
+  class: className,
 } = Astro.props;
 ---
 
@@ -25,15 +25,11 @@ const {
 >
   {
     prev ? (
-      <Link href={prev} className="flex items-center text-blue-300">
-        <svg
-          class="h-6 w-6 rotate-90"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <Arrow />
-        </svg>
+      <Link
+        href={prev}
+        class="flex items-center text-blue-600 dark:text-blue-300"
+      >
+        <Icon icon="mdi:chevron-left" width="24" height="24" />
         {prevText}
       </Link>
     ) : (
@@ -42,16 +38,12 @@ const {
   }
   {
     next && (
-      <Link href={next} className="flex items-center text-blue-300">
+      <Link
+        href={next}
+        class="flex items-center text-blue-600 dark:text-blue-300"
+      >
         {nextText}
-        <svg
-          class="h-6 w-6 -rotate-90"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <Arrow />
-        </svg>
+        <Icon icon="mdi:chevron-right" width="24" height="24" />
       </Link>
     )
   }
