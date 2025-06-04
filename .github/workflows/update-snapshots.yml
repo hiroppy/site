@@ -4,15 +4,16 @@ on:
   issue_comment:
     types: [created]
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   update-snapshots:
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/update')
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-      pull-requests: write
-
+    container:
+      image: mcr.microsoft.com/playwright:v1.52.0
     steps:
       - name: Get PR information
         id: pr
@@ -29,21 +30,19 @@ jobs:
               head_sha: pullRequest.head.sha,
               base_ref: pullRequest.base.ref
             };
-
       - name: Checkout PR branch
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: ${{ fromJson(steps.pr.outputs.result).head_ref }}
-
       - uses: ./.github/actions/setup-node
-
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
-
+      - run: pnpm build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Update snapshots
-        run: pnpm test --update-snapshots
-
+        run: npx playwright test tests/vrt.spec.ts --update-snapshots
       - name: Check for changes
         id: changes
         run: |
@@ -52,7 +51,6 @@ jobs:
           else
             echo "has_changes=true" >> $GITHUB_OUTPUT
           fi
-
       - name: Commit and push changes
         if: steps.changes.outputs.has_changes == 'true'
         run: |
@@ -64,8 +62,8 @@ jobs:
           🤖 Generated with GitHub Actions
 
           Co-Authored-By: GitHub Action <action@github.com>"
+          git pull --rebase origin ${{ fromJson(steps.pr.outputs.result).head_ref }}
           git push
-
       - name: Comment on PR - Success
         if: steps.changes.outputs.has_changes == 'true'
         uses: actions/github-script@v7
@@ -77,7 +75,6 @@ jobs:
               issue_number: context.issue.number,
               body: '✅ Snapshots have been updated and committed to this PR.'
             });
-
       - name: Comment on PR - No changes
         if: steps.changes.outputs.has_changes == 'false'
         uses: actions/github-script@v7
