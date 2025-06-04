@@ -13,7 +13,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "test": "playwright test --update-snapshots",
+    "test": "playwright test",
     "test:update": "docker build -f snapshot.dockerfile -t snapshot-update . && docker run --rm --network host -v $(pwd):/app/ -w /app/ -it snapshot-update && docker rmi snapshot-update",
     "fmt": "prettier -w .",
     "fmt:check": "prettier --check .",
