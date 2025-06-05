@@ -50,7 +50,7 @@ if (!ALGOLIA_APPLICATION_ID || !ALGOLIA_SEARCH_ONLY_KEY) {
 </script>
 
 <script>
-  import algoliasearch from "algoliasearch/lite";
+  import { liteClient as algoliasearch } from "algoliasearch/lite";
   import instantsearch from "instantsearch.js/es";
   import { connectAutocomplete } from "instantsearch.js/es/connectors";
   import type { AutocompleteRenderState } from "instantsearch.js/es/connectors/autocomplete/connectAutocomplete";
