@@ -13,12 +13,15 @@ export function parseTags(tags: string) {
 }
 
 export function getAllTags(collections: Awaited<ReturnType<typeof getBlogs>>) {
-  return [
-    ...new Set(
-      collections
-        .map((post) => parseTags(post.data.tags))
-        .flat()
-        .sort((a, b) => a.length - b.length),
-    ),
-  ];
+  const allTags = collections.map((post) => parseTags(post.data.tags)).flat();
+
+  const tagCounts = allTags.reduce(
+    (acc, tag) => {
+      acc[tag] = (acc[tag] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
+
+  return Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]);
 }
