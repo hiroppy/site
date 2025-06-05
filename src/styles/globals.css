@@ -14,6 +14,13 @@
   --color-c: #555555;
   --color-shell: #89e051;
   --color-html: #e34c26;
+  --color-python: #3776ab;
+  --color-java: #ed8b00;
+  --color-php: #777bb4;
+  --color-ruby: #cc342d;
+  --color-swift: #fa7343;
+  --color-kotlin: #a97bff;
+  --color-dart: #0175c2;
   
   --font-family-body: system-ui, Arial, Helvetica, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Meiryo,sans-serif', sans-serif;
   
