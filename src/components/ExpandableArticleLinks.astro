@@ -1,0 +1,163 @@
+---
+import Link from "./Link.astro";
+import Icon from "./Icon.astro";
+import Image from "./Image.astro";
+
+type ArticleLink = {
+  title?: string;
+  description?: string;
+  image?: string;
+  siteName?: string;
+  siteUrl: string;
+};
+
+type Props = {
+  links: ArticleLink[];
+  companyName: string;
+};
+
+const { links, companyName } = Astro.props;
+const uniqueId = `article-${companyName.replace(/\s+/g, "-").toLowerCase()}-${Math.random().toString(36).substring(2, 11)}`;
+
+// Filter links that have enough metadata for card display
+const articleLinks = links.filter((link) => link.title && link.description);
+---
+
+{
+  articleLinks.length > 0 && (
+    <div class="mt-4 border-t border-gray-200 pt-4 dark:border-gray-700">
+      <details class="group">
+        <summary class="flex cursor-pointer items-center justify-between rounded-lg p-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800">
+          <div class="flex items-center space-x-2">
+            <Icon
+              icon="mdi:newspaper-variant-outline"
+              width="18"
+              height="18"
+              class="text-gray-500 dark:text-gray-400"
+              decorative={false}
+            />
+            <span>関連記事 ({articleLinks.length}件)</span>
+          </div>
+          <Icon
+            icon="mdi:chevron-down"
+            width="20"
+            height="20"
+            class="text-gray-400 transition-transform duration-200 group-open:rotate-180 dark:text-gray-500"
+            decorative={false}
+          />
+        </summary>
+
+        <div class="mt-3">
+          <div
+            id={uniqueId}
+            class="flex gap-4 overflow-x-auto scroll-smooth pb-4"
+            style="scrollbar-width: thin; scrollbar-color: rgba(156, 163, 175, 0.5) transparent;"
+          >
+            {articleLinks.map((link) => (
+              <Link
+                href={link.siteUrl}
+                class="group/card block w-40 flex-shrink-0 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
+                ariaLabel={`${link.title}を読む`}
+              >
+                <div class="relative h-24 overflow-hidden bg-gray-100 dark:bg-gray-900">
+                  {link.image ? (
+                    <Image
+                      src={link.image}
+                      alt={link.title || "記事画像"}
+                      width={160}
+                      height={96}
+                      class="h-full w-full object-cover transition-transform duration-300 group-hover/card:scale-105"
+                    />
+                  ) : (
+                    <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+                      <Icon
+                        icon="mdi:newspaper-variant-outline"
+                        width="32"
+                        height="32"
+                        class="text-gray-400 dark:text-gray-600"
+                        decorative={false}
+                      />
+                    </div>
+                  )}
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity group-hover/card:opacity-100" />
+                </div>
+
+                <div class="p-2">
+                  {link.siteName && (
+                    <div class="mb-1 flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-400">
+                      <Icon
+                        icon="mdi:domain"
+                        width="10"
+                        height="10"
+                        decorative={false}
+                      />
+                      <span class="truncate text-xs">{link.siteName}</span>
+                    </div>
+                  )}
+
+                  <h5 class="mb-1 line-clamp-2 text-xs font-semibold text-gray-900 transition-colors group-hover/card:text-blue-600 dark:text-gray-100 dark:group-hover/card:text-blue-400">
+                    {link.title}
+                  </h5>
+
+                  <p class="line-clamp-2 text-xs text-gray-600 dark:text-gray-300">
+                    {link.description}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </details>
+    </div>
+  )
+}
+
+<style>
+  /* Custom scrollbar for webkit browsers */
+  .flex::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .flex::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .flex::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 3px;
+  }
+
+  .flex::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(156, 163, 175, 0.7);
+  }
+
+  .dark .flex::-webkit-scrollbar-thumb {
+    background-color: rgba(75, 85, 99, 0.5);
+  }
+
+  .dark .flex::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(75, 85, 99, 0.7);
+  }
+
+  /* Force horizontal scroll container to not affect parent layout */
+  [id^="article-"] {
+    width: 0;
+    min-width: 100%;
+    max-width: none;
+  }
+
+  /* Line clamp utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
