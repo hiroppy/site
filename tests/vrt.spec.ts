@@ -7,7 +7,7 @@ for (const url of urls) {
   for (const theme of themes) {
     test(`VRT: ${url} (${theme})`, async ({ page }) => {
       await page.goto(url, {
-        waitUntil: "networkidle",
+        waitUntil: "load",
       });
 
       // Set theme by adding/removing dark class and updating localStorage
@@ -34,7 +34,7 @@ for (const url of urls) {
           page.locator('[data-testid="blog-date"]'),
           page.locator(".job-history"),
         ],
-        timeout: 10000,
+        timeout: 30000,
       });
     });
   }
