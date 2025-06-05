@@ -12,8 +12,16 @@ const { tags } = Astro.props;
 <Card>
   <div class="p-4">
     <p class="text-gray-900 dark:text-white">🏷 Tags</p>
-    <div class="mt-4 flex flex-wrap gap-2">
-      {tags.map((tag) => <BlogTag tag={tag}>{tag}</BlogTag>)}
+    <div class="scrollbar-hide mt-4 overflow-x-auto md:overflow-visible">
+      <div class="flex gap-2 pb-2 md:flex-wrap">
+        {
+          tags.map((tag) => (
+            <BlogTag tag={tag} class="flex-shrink-0 md:flex-shrink">
+              {tag}
+            </BlogTag>
+          ))
+        }
+      </div>
     </div>
   </div>
 </Card>

@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import Footer from "../components/Footer.astro";
 import GA from "../components/GA.astro";
 import Header from "../components/Header.astro";
@@ -63,7 +63,7 @@ const titleContent =
     <link rel="dns-prefetch" href="//b.hatena.ne.jp" />
     <link rel="preconnect" href="//b.hatena.ne.jp" />
     <link rel="author" href="http://www.hatena.ne.jp/about_hiroppy/" />
-    <ViewTransitions />
+    <ClientRouter />
     <script is:inline>
       // Theme initialization - runs before body loads to prevent FOUC
       (function () {
@@ -76,9 +76,8 @@ const titleContent =
     class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 font-body dark:from-slate-900 dark:to-slate-800"
   >
     <Header />
-    <div class="container mx-auto min-h-screen px-4 py-8">
-      <slot />
-    </div>
+    {/*TODO: 全ページこっちにmargin寄せる */}
+    <slot />
     <Footer />
     {import.meta.env.PROD && <GA />}
     <script is:inline>

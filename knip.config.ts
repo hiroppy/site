@@ -1,35 +1,32 @@
 import type { KnipConfig } from "knip";
 
 const config: KnipConfig = {
-  entry: ["src/pages/**/*.{astro,ts}"],
+  entry: [
+    "src/pages/**/*.{astro,ts}",
+    "src/content/**/*.{md,mdx}",
+    "src/layouts/**/*.astro",
+  ],
   project: ["src/**/*.{astro,ts,tsx,js,jsx,mdx}"],
   ignore: [
-    "tests/**",
-    "scripts/**",
     "generated/**",
-    // MDX files with external imports
+    // mdx uses theme files
+    "src/components/BlogCardItem.astro",
+    // Unlisted dependencies
     "src/content/blog/cjs-esm-reference-chart-of-behavior.mdx",
     "src/content/blog/create-module-bundler-esm.mdx",
     "src/content/blog/nodejs-esm.mdx",
-    // Unused files kept for future use
-    "src/components/BlogCardItem.astro",
-    "src/components/Code.astro",
-    "src/components/ShareButtons.astro",
-    "src/components/SnsIcon.astro",
-    "src/layouts/BlogLayout.astro",
-    "src/layouts/ResumeLayout.astro",
-    "src/utils/ogp.ts",
-    "src/constants.ts",
   ],
   ignoreDependencies: [
-    // OGP generation
-    "satori",
-    "sharp",
+    // for playwright
+    "serve",
     // Tailwind config
     "color",
   ],
   astro: {
     config: ["astro.config.mjs"],
+  },
+  compilers: {
+    mdx: true,
   },
 };
 

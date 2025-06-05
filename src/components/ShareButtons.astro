@@ -1,5 +1,4 @@
 ---
-import SnsIcon from "./SnsIcon.astro";
 import Icon from "./Icon.astro";
 import Hatena from "./icons/Hatena.astro";
 import Link from "./Link.astro";
@@ -35,7 +34,12 @@ const hatena = `https://b.hatena.ne.jp/entry/panel/?url=${url}&title=${sharedTit
     <Icon icon="mdi:twitter" width="20" height="20" />
     <span>Follow</span>
   </Link>
-  <SnsIcon name="hatena" href={hatena} text="Bookmark" class="h-4 w-4">
-    <Hatena />
-  </SnsIcon>
+  <Link
+    href={hatena}
+    class="flex items-center gap-2 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-300"
+    aria-label="Link for hatena"
+  >
+    <Hatena className="h-4 w-4" />
+    <span>Bookmark</span>
+  </Link>
 </div>

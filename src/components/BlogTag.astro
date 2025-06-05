@@ -1,11 +1,13 @@
 ---
 import { mergeClass } from "../utils/mergeClass";
+import Link from "./Link.astro";
 
 type Props = {
   tag: string;
+  class?: string;
 };
 
-const { tag } = Astro.props;
+const { tag, class: className } = Astro.props;
 const currentPath = Astro.url.pathname.replace(/\/$/, "");
 const basePath = "/blog/tags/";
 const tagPath = `${basePath}${tag}`;
@@ -13,16 +15,17 @@ const active = currentPath.startsWith(basePath) && currentPath === tagPath;
 const href = active ? "/blog" : tagPath;
 ---
 
-<a
+<Link
   class={mergeClass(
-    "py-1 px-3 rounded-lg shadow-sm border text-sm transition-colors",
-    active
-      ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 hover:border-blue-700 dark:bg-blue-500 dark:border-blue-500 dark:hover:bg-blue-600 dark:hover:border-blue-600"
-      : "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-gray-200 dark:hover:bg-gray-600",
+    `py-1 px-3 rounded-lg shadow-sm border text-sm transition-colors hover:no-underline ${
+      active
+        ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 hover:border-blue-700 dark:text-white dark:bg-blue-500 dark:border-blue-500 dark:hover:bg-blue-600 dark:hover:border-blue-600"
+        : "bg-white text-gray-700 dark:bg-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-gray-50 dark:hover:bg-gray-600"
+    }`,
+    className ?? "",
   )}
   href={href}
-  title={active ? "クリックして全ての記事を表示" : `${tag}の記事を表示`}
-  aria-label={active ? "クリックして全ての記事を表示" : `${tag}の記事を表示`}
+  ariaLabel={active ? "クリックして全ての記事を表示" : `${tag}の記事を表示`}
 >
   {tag}
-</a>
+</Link>

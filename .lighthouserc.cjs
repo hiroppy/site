@@ -10,6 +10,9 @@ module.exports = {
     assert: {
       preset: "lighthouse:no-pwa",
       assertions: {
+        // Image optimization improvements allow for better LCP thresholds
+        "largest-contentful-paint": ["warn", { minScore: 0.6 }], // Improved from 0.51 baseline
+        interactive: ["warn", { minScore: 0.85 }], // Slightly better threshold
         // no js
         "csp-xss": "off",
         "uses-responsive-images": "off",
@@ -24,19 +27,12 @@ module.exports = {
         // TODO: need to consider design
         "link-in-text-block": "off",
         "total-byte-weight": "off",
-        // pa11y supports
-        "identical-links-same-purpose": "off",
         "label-content-name-mismatch": "off",
         // TODO: remove
         "tap-targets": "off",
-        // Fixed in code
-        // "heading-order": "off",  // ✅ Fixed
-        // Temporary disable - needs comprehensive accessibility audit
-        "link-name": "off", // TODO: Fix remaining link accessibility issues
         "color-contrast": "off", // Design system limitation - needs design review
         "non-composited-animations": "off",
         "prioritize-lcp-image": "off",
-        "uses-rel-preconnect": "off",
       },
     },
   },

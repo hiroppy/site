@@ -1,558 +1,171 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import MainLayout from "../layouts/MainLayout.astro";
 import SkillBox from "../components/SkillBox.astro";
 import JobResume from "../components/JobResume.astro";
-import { useTranslations } from "../i18n/util";
-import Badge from "../components/Badge.astro";
-import Button from "../components/Button.astro";
-import Icon from "../components/Icon.astro";
-import Card from "../components/Card.astro";
-import CardContent from "../components/CardContent.astro";
 import Section from "../components/Section.astro";
-import Link from "../components/Link.astro";
-import Image from "../components/Image.astro";
-import GitHubStats from "../components/GitHubStats.astro";
-import { getRepositoryInfo } from "../utils/github";
-import { getLanguageDot } from "../utils/languageColors";
-import reposData from "../../node_modules/hiroppy/generated/repos.json";
-
-const t = useTranslations();
-
-// Define repositories to fetch
-const repositoriesToFetch = [
-  "hiroppy/fusuma",
-  "hiroppy/web-app-template",
-  "hiroppy/nextjs-app-router-training",
-  "hiroppy/the-sample-of-module-bundler",
-];
-
-// Fetch repository information from GitHub
-const projectsFromGitHub = await Promise.all(
-  repositoriesToFetch.map(async (repo) => {
-    const [owner, name] = repo.split("/");
-    try {
-      const repoInfo = await getRepositoryInfo(owner, name);
-      return {
-        id: repositoriesToFetch.indexOf(repo) + 1,
-        name: name,
-        fullName: repoInfo.name,
-        description: repoInfo.description,
-        stars: repoInfo.stars,
-        forks: repoInfo.forks,
-        language: repoInfo.language,
-        url: repoInfo.url,
-        avatar: repoInfo.avatar,
-        homepage: repoInfo.homepage,
-        topics: repoInfo.topics,
-        lastUpdated: repoInfo.updatedAt.split("T")[0],
-        status: repoInfo.archived ? "Archived" : "Active",
-      };
-    } catch (error) {
-      console.error(`Failed to fetch ${repo}:`, error);
-      // Fallback to static data for this repo
-      return null;
-    }
-  }),
-).then((results) =>
-  results.filter(
-    (project): project is NonNullable<typeof project> => project !== null,
-  ),
-);
-
-// Use GitHub data as projects
-const projects = projectsFromGitHub;
-
-// Use maintaining data from repos.json for OSS Contributions and fetch GitHub stats
-const contributions = await Promise.all(
-  reposData.maintaining.map(async (repo) => {
-    const [owner, repoName] = repo.name.split("/");
-    try {
-      const repoInfo = await getRepositoryInfo(owner, repoName);
-      return {
-        name: repo.name,
-        description: repo.description,
-        role: "Maintainer",
-        url: repo.url,
-        image: repo.image,
-        language: repo.language,
-        stars: repoInfo.stars,
-        forks: repoInfo.forks,
-      };
-    } catch (error) {
-      console.error(`Failed to fetch GitHub stats for ${repo.name}:`, error);
-      return {
-        name: repo.name,
-        description: repo.description,
-        role: "Maintainer",
-        url: repo.url,
-        image: repo.image,
-        language: repo.language,
-        stars: 0,
-        forks: 0,
-      };
-    }
-  }),
-);
 ---
 
-<Layout>
-  <div class="min-h-screen">
-    <main class="container mx-auto px-4 py-8">
-      <!-- Page Header -->
-      <div class="py-12 text-center">
-        <h1 class="mb-4 text-4xl font-bold text-gray-900 dark:text-gray-100">
-          Projects & Contributions
-        </h1>
-        <p class="mx-auto max-w-2xl text-xl text-gray-600 dark:text-gray-400">
-          オープンソースプロジェクトと個人開発したツールの紹介
-        </p>
-      </div>
-
-      <!-- My Projects -->
-      <Section title="My Projects" class="mb-16">
-        <div class="grid gap-6 md:grid-cols-2">
+<MainLayout title="Skills & Work Experience">
+  <!-- Skills Section -->
+  <Section title="Technical Skills" class="mb-16">
+    <div class="mb-4 space-y-2">
+      <p class="text-gray-600 dark:text-gray-300">
+        2008年頃からJavaScriptとCを使ってプログラミングを始め、4年間画像処理を研究し、ニコニコ生放送の動画最適化についても研究をしていました。
+      </p>
+      <p class="text-gray-600 dark:text-gray-300">
+        現在は、主にwebpack、Turborepo、Viteなどのツールを使ったWebパフォーマンスとフロントエンドインフラストラクチャの構築が専門です。Next.jsとGraphQLを2017年から利用しており、様々な製品開発を行っています。
+      </p>
+    </div>
+    <div class="mb-6 flex items-center justify-end">
+      <span
+        class="inline-flex items-center space-x-1 rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-400"
+      >
+        <span>👷</span>
+        <span>maintainer(including past)</span>
+      </span>
+    </div>
+    <div class="grid gap-6 xl:grid-cols-2">
+      <SkillBox
+        title="JavaScript"
+        color="bg-yellow-500"
+        items={[
           {
-            projects.map((project) => (
-              <Card variant="interactive" class="flex h-full flex-col">
-                <CardContent class="flex flex-col space-y-1.5 p-6">
-                  <div class="flex items-start justify-between">
-                    <div class="flex items-center space-x-2">
-                      <Icon
-                        icon="mdi:github"
-                        class="text-gray-600 dark:text-gray-400"
-                        width="20"
-                        height="20"
-                      />
-                      <h3 class="text-lg font-semibold">
-                        <Link
-                          href={project.url}
-                          class="text-gray-900 transition-colors hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-500"
-                        >
-                          {project.name}
-                        </Link>
-                      </h3>
-                      <Badge
-                        variant={
-                          project.status === "Active"
-                            ? "default"
-                            : project.status === "Maintenance"
-                              ? "secondary"
-                              : project.status === "Archived"
-                                ? "secondary"
-                                : "outline"
-                        }
-                        class={
-                          project.status === "Active"
-                            ? "bg-green-500 text-white hover:bg-green-600 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/40"
-                            : project.status === "Archived"
-                              ? "bg-orange-100 text-orange-800 hover:bg-orange-200 dark:bg-orange-900/30 dark:text-orange-400 dark:hover:bg-orange-900/40"
-                              : ""
-                        }
-                      >
-                        {project.status}
-                      </Badge>
-                    </div>
-                    <div class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-                      <GitHubStats type="star" count={project.stars} />
-                      <GitHubStats type="fork" count={project.forks} />
-                    </div>
-                  </div>
-                </CardContent>
-                <CardContent class="flex flex-grow flex-col p-6 pt-0">
-                  <p class="mb-4 line-clamp-2 text-gray-600 dark:text-gray-400">
-                    {project.description}
-                  </p>
-
-                  {project.topics && project.topics.length > 0 && (
-                    <div class="mb-4 flex flex-wrap gap-2">
-                      {project.topics.map((topic: string) => (
-                        <Badge variant="secondary" class="text-xs">
-                          {topic}
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
-
-                  <div class="mb-4 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                    <div class="flex items-center space-x-4">
-                      <div class="flex items-center space-x-1">
-                        <div class={getLanguageDot(project.language)} />
-                        <span>{project.language}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="mt-auto flex items-center space-x-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      class="flex-1"
-                      href={project.url}
-                    >
-                      <Icon
-                        icon="mdi:github"
-                        class="mr-2"
-                        width="16"
-                        height="16"
-                      />
-                      GitHub
-                    </Button>
-                    {project.homepage && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        class="flex-1"
-                        href={project.homepage}
-                      >
-                        <Icon
-                          icon="mdi:open-in-new"
-                          class="mr-2"
-                          width="16"
-                          height="16"
-                        />
-                        Site
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))
-          }
-        </div>
-      </Section>
-
-      <!-- OSS Contributions -->
-      <Section title="OSS Contributions" class="mb-16">
-        <div id="oss-contributions-container" class="space-y-4">
+            title: "Node.js 👷",
+            from: 2011,
+          },
           {
-            contributions.slice(0, 5).map((contrib) => (
-              <Card variant="interactive" class="oss-contribution-item">
-                <CardContent class="p-6">
-                  <div class="flex items-start space-x-3">
-                    <div class="flex-shrink-0">
-                      <Image
-                        src={contrib.image}
-                        alt={`${contrib.name} logo`}
-                        width={60}
-                        height={60}
-                        class="h-16 w-16 rounded-lg"
-                      />
-                    </div>
-                    <div class="min-w-0 flex-1">
-                      <div class="mb-2 flex items-center justify-between">
-                        <div class="flex items-center space-x-2">
-                          <h3 class="text-lg font-semibold">
-                            <Link
-                              href={contrib.url}
-                              class="text-gray-900 transition-colors hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-500"
-                            >
-                              {contrib.name}
-                            </Link>
-                          </h3>
-                          <Badge
-                            variant="secondary"
-                            class="bg-gray-100 text-xs text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
-                          >
-                            {contrib.role}
-                          </Badge>
-                        </div>
-                        <div class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-                          <GitHubStats type="star" count={contrib.stars} />
-                          <GitHubStats type="fork" count={contrib.forks} />
-                        </div>
-                      </div>
-                      <p class="mb-2 line-clamp-2 text-gray-600 dark:text-gray-400">
-                        {contrib.description}
-                      </p>
-                      {contrib.language && (
-                        <div class="flex items-center space-x-1 text-sm text-gray-500 dark:text-gray-400">
-                          <div class={getLanguageDot(contrib.language)} />
-                          <span>{contrib.language}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))
-          }
+            title: "TypeScript",
+            from: 2016,
+          },
           {
-            contributions.slice(5).map((contrib) => (
-              <Card variant="interactive" class="oss-contribution-item hidden">
-                <CardContent class="p-6">
-                  <div class="flex items-start space-x-3">
-                    <div class="flex-shrink-0">
-                      <Image
-                        src={contrib.image}
-                        alt={`${contrib.name} logo`}
-                        width={60}
-                        height={60}
-                        class="h-16 w-16 rounded-lg"
-                      />
-                    </div>
-                    <div class="min-w-0 flex-1">
-                      <div class="mb-2 flex items-center justify-between">
-                        <div class="flex items-center space-x-2">
-                          <h3 class="text-lg font-semibold">
-                            <Link
-                              href={contrib.url}
-                              class="text-gray-900 transition-colors hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-500"
-                            >
-                              {contrib.name}
-                            </Link>
-                          </h3>
-                          <Badge
-                            variant="secondary"
-                            class="bg-gray-100 text-xs text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
-                          >
-                            {contrib.role}
-                          </Badge>
-                        </div>
-                        <div class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-                          <GitHubStats type="star" count={contrib.stars} />
-                          <GitHubStats type="fork" count={contrib.forks} />
-                        </div>
-                      </div>
-                      <p class="mb-2 line-clamp-2 text-gray-600 dark:text-gray-400">
-                        {contrib.description}
-                      </p>
-                      {contrib.language && (
-                        <div class="flex items-center space-x-1 text-sm text-gray-500 dark:text-gray-400">
-                          <div class={getLanguageDot(contrib.language)} />
-                          <span>{contrib.language}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))
-          }
-        </div>
-        {
-          contributions.length > 5 && (
-            <div class="mt-6 text-center">
-              <button
-                id="toggle-contributions-btn"
-                class="inline-flex items-center space-x-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-              >
-                <span id="toggle-text">Show More</span>
-                <Icon
-                  icon="mdi:chevron-down"
-                  width="16"
-                  height="16"
-                  class="toggle-icon"
-                />
-              </button>
-            </div>
-          )
-        }
-      </Section>
+            title: "React",
+            from: 2015,
+          },
+          {
+            title: "Next.js",
+            from: 2017,
+          },
+          {
+            title: "Gatsby 👷",
+            from: 2017,
+            to: 2021,
+          },
+          {
+            title: "Astro",
+            from: 2022,
+          },
+          {
+            title: "Apollo",
+            from: 2017,
+          },
+          {
+            title: "Nestjs",
+            from: 2020,
+          },
+          {
+            title: "Mui",
+            from: 2021,
+          },
+          {
+            title: "ChakraUI 👷",
+            from: 2020,
+          },
+          {
+            title: "TailwindCSS",
+            from: 2019,
+          },
+          {
+            title: "Redux",
+            from: 2016,
+            to: 2019,
+          },
+          {
+            title: "Prisma",
+            from: 2022,
+          },
+          {
+            title: "NextAuth.js",
+            from: 2022,
+          },
+          {
+            title: "Electron",
+            from: 2017,
+          },
+          {
+            title: "webpack 👷",
+            from: 2017,
+          },
+          {
+            title: "Vite",
+            from: 2022,
+          },
+          {
+            title: "jQuery",
+            from: 2008,
+            to: 2014,
+          },
+        ]}
+      />
+      <SkillBox
+        title="Others"
+        color="bg-purple-500"
+        items={[
+          {
+            title: "Go",
+            from: 2022,
+          },
+          {
+            title: "C, C++",
+            from: 2008,
+            to: 2015,
+          },
+          {
+            title: "ActionScript",
+            from: 2010,
+            to: 2015,
+          },
+          {
+            title: "Java",
+            from: 2010,
+            to: 2012,
+          },
+          {
+            title: "OpenCV",
+            from: 2014,
+            to: 2015,
+          },
+          {
+            title: "Boost",
+            from: 2012,
+            to: 2015,
+          },
+          {
+            title: "GraphQL",
+            from: 2017,
+          },
+          {
+            title: "gRPC",
+            from: 2020,
+          },
+          {
+            title: "Terraform",
+            from: 2022,
+          },
+          {
+            title: "PostgreSQL",
+            from: 2014,
+          },
+          {
+            title: "DuckDB",
+            from: 2022,
+          },
+        ]}
+      />
+    </div>
+  </Section>
 
-      <!-- Skills Section -->
-      <Section title="Technical Skills" class="mb-16">
-        <div class="p-6">
-          <div class="mb-4 space-y-2">
-            <p class="text-gray-600 dark:text-gray-300">
-              {t("jobs.skill1")}
-            </p>
-            <p class="text-gray-600 dark:text-gray-300">
-              {t("jobs.skill2")}
-            </p>
-          </div>
-          <div class="mb-6 flex items-center justify-end">
-            <span
-              class="inline-flex items-center space-x-1 rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-400"
-            >
-              <span>👷</span>
-              <span>maintainer(including past)</span>
-            </span>
-          </div>
-          <div class="grid gap-6 xl:grid-cols-2">
-            <SkillBox
-              title="JavaScript"
-              color="bg-yellow-500"
-              items={[
-                {
-                  title: "Node.js 👷",
-                  from: 2011,
-                },
-                {
-                  title: "TypeScript",
-                  from: 2016,
-                },
-                {
-                  title: "React",
-                  from: 2015,
-                },
-                {
-                  title: "Next.js",
-                  from: 2017,
-                },
-                {
-                  title: "Gatsby 👷",
-                  from: 2017,
-                  to: 2021,
-                },
-                {
-                  title: "Astro",
-                  from: 2022,
-                },
-                {
-                  title: "Apollo",
-                  from: 2017,
-                },
-                {
-                  title: "Nestjs",
-                  from: 2020,
-                },
-                {
-                  title: "Mui",
-                  from: 2021,
-                },
-                {
-                  title: "ChakraUI 👷",
-                  from: 2020,
-                },
-                {
-                  title: "TailwindCSS",
-                  from: 2019,
-                },
-                {
-                  title: "Redux",
-                  from: 2016,
-                  to: 2019,
-                },
-                {
-                  title: "Prisma",
-                  from: 2022,
-                },
-                {
-                  title: "NextAuth.js",
-                  from: 2022,
-                },
-                {
-                  title: "Electron",
-                  from: 2017,
-                },
-                {
-                  title: "webpack 👷",
-                  from: 2017,
-                },
-                {
-                  title: "Vite",
-                  from: 2022,
-                },
-                {
-                  title: "jQuery",
-                  from: 2008,
-                  to: 2014,
-                },
-              ]}
-            />
-            <SkillBox
-              title="Others"
-              color="bg-purple-500"
-              items={[
-                {
-                  title: "Go",
-                  from: 2022,
-                },
-                {
-                  title: "C, C++",
-                  from: 2008,
-                  to: 2015,
-                },
-                {
-                  title: "ActionScript",
-                  from: 2010,
-                  to: 2015,
-                },
-                {
-                  title: "Java",
-                  from: 2010,
-                  to: 2012,
-                },
-                {
-                  title: "OpenCV",
-                  from: 2014,
-                  to: 2015,
-                },
-                {
-                  title: "Boost",
-                  from: 2012,
-                  to: 2015,
-                },
-                {
-                  title: "GraphQL",
-                  from: 2017,
-                },
-                {
-                  title: "gRPC",
-                  from: 2020,
-                },
-                {
-                  title: "Terraform",
-                  from: 2022,
-                },
-                {
-                  title: "PostgreSQL",
-                  from: 2014,
-                },
-                {
-                  title: "DuckDB",
-                  from: 2022,
-                },
-              ]}
-            />
-          </div>
-        </div>
-      </Section>
-
-      <!-- Resume Section -->
-      <Section title="Work Experience" class="mb-16">
-        <JobResume />
-      </Section>
-    </main>
-  </div>
-</Layout>
-
-<script>
-  function initializeContributionsToggle() {
-    const toggleBtn = document.getElementById("toggle-contributions-btn");
-    const toggleText = document.getElementById("toggle-text");
-    const toggleIcon = document.querySelector(".toggle-icon");
-    const hiddenItems = document.querySelectorAll(
-      ".oss-contribution-item.hidden",
-    );
-
-    if (!toggleBtn || !toggleText || !toggleIcon || hiddenItems.length === 0)
-      return;
-
-    let isExpanded = false;
-
-    toggleBtn.addEventListener("click", () => {
-      isExpanded = !isExpanded;
-
-      hiddenItems.forEach((item) => {
-        if (isExpanded) {
-          item.classList.remove("hidden");
-        } else {
-          item.classList.add("hidden");
-        }
-      });
-
-      // Update button text and icon
-      toggleText.textContent = isExpanded ? "Show Less" : "Show More";
-      (toggleIcon as HTMLElement).style.transform = isExpanded
-        ? "rotate(180deg)"
-        : "rotate(0deg)";
-    });
-  }
-
-  // Initialize on page load
-  document.addEventListener("DOMContentLoaded", initializeContributionsToggle);
-
-  // Re-initialize after view transitions
-  document.addEventListener("astro:after-swap", initializeContributionsToggle);
-</script>
+  <!-- Resume Section -->
+  <Section title="Work Experience" class="mb-16">
+    <JobResume />
+  </Section>
+</MainLayout>

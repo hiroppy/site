@@ -1,52 +1,592 @@
 {
-  "https://blog.hiroppy.me/entry/mechanism-of-webpack": {
-    "title": "webpackの仕組みを簡潔に説明する - 技術探し",
-    "description": "webpackの仕組みを説明します。",
-    "image": "https://avatars1.githubusercontent.com/u/2105791?s=200&v=4"
+  "https://www.nikkei.com/article/DGXZQOUC02ASK0S5A400C2000000/": {
+    "title": "LayerX、AIエージェントに参入　請求書受け取り代行など - 日本経済新聞",
+    "description": "支出管理システムのLayerX（レイヤーエックス、東京・中央）は2025年度中に人工知能（AI）エージェント事業に参入する。同社の既存サービスの請求書受領システムと連携させ、AIエージェントが企業の請求書受け取り代行を担うサービスなどを始める。30年には関連事業で500億円の売り上げを目指す。AIエージェントを活用して企業の間接業務を請け負うビジネス・プロセス・ア",
+    "image": "https://article-image-ix.nikkei.com/https%3A%2F%2Fimgix-proxy.n8s.jp%2FDSXZQO6225661004042025000000-1.jpg?auto=format&bg=FFFF&crop=focalpoint&fit=crop&fp-x=0.1&fp-y=0.14&h=630&w=1200&s=05e25f4d44cac486b64ac8cdb4619913"
+  },
+  "https://coder-penguin.com/": {
+    "title": "合同会社Coder Penguin",
+    "description": "合同会社Coder Penguinは、主にフロントエンドやNode.jsのパフォーマンス改善、技術選定サポート、組織課題解決、エンジニア採用など多岐にわたる支援を行っている会社です。",
+    "image": "https://coder-penguin.com/_astro/ogp.BoPtfs6M.jpg"
+  },
+  "https://nextjs.org/docs/app/building-your-application/routing/middleware#unit-testing-experimental": {
+    "title": "Routing: Middleware | Next.js",
+    "description": "Learn how to use Middleware to run code before a request is completed.",
+    "image": "https://nextjs.org/api/docs-og?title=Routing:%20Middleware"
+  },
+  "https://hiroppy.github.io/web-app-template/features/unit-testing.html": {
+    "title": "Unit Testing | Web App Template",
+    "description": "From Zero to Service: Build with Best Practices, Minimal Code, and Essential Tools.",
+    "image": ""
+  },
+  "https://testcontainers.com/": {
+    "title": "Testcontainers",
+    "description": "Testcontainers is an opensource library for providing lightweight, throwaway instances of common databases, Selenium web browsers, or anything else that can run in a Docker container.",
+    "image": "https://testcontainers.com//images/share-image.png"
+  },
+  "https://github.com/hiroppy/web-app-template": {
+    "title": "GitHub - hiroppy/web-app-template: A minimal web service template 🎃  \"npx create-app-foundation@latest\" !",
+    "description": "A minimal web service template 🎃  \"npx create-app-foundation@latest\" ! - hiroppy/web-app-template",
+    "image": "https://opengraph.githubassets.com/c5f9f1880e6af10f3a56d7250b44eab4dee5fb6136f048151c8ee9df697b326b/hiroppy/web-app-template"
+  },
+  "https://github.com/nodejs/loaders/issues/208": {
+    "title": "Support typescript  with --experimental-strip-types  · Issue #208 · nodejs/loaders",
+    "description": "Add this issue to keep track of the work for supporting typescript out of the box, in the PR you can find documentation etc... The main idea is to use type-stripping. This is achieved ideally throu...",
+    "image": "https://opengraph.githubassets.com/38aa30159f279b4476d4a74d52b903f1cd7e1dd2d667a211a95536324c87bb66/nodejs/loaders/issues/208"
+  },
+  "https://github.com/nodejs/node/pull/53725": {
+    "title": "module: add --experimental-strip-types by marco-ippolito · Pull Request #53725 · nodejs/node",
+    "description": "It is possible to execute TypeScript files by setting the experimental flag --experimental-strip-types.\nNode.js will transpile TypeScript source code into JavaScript source code.\nDuring the transpi...",
+    "image": "https://opengraph.githubassets.com/d1ee73882c56109916d38372e9dfb202165dcc5ad4e576a75c89a00c5fad8071/nodejs/node/pull/53725"
+  },
+  "https://mozaic.fm/episodes/144/monthly-ecosystem-202403.html": {
+    "title": "ep144 Monthly Ecosystem 202403 | mozaic.fm",
+    "description": "第 144 回のテーマは 2024 年 3 月の Monthly Ecosystem です。",
+    "image": "https://mozaic.fm/assets/img/mozaic.600x600.png"
+  },
+  "https://hiroppy.me/blog/node-esm": {
+    "title": "Node.jsのECMAScript Modulesの紹介 - hiroppy's site",
+    "description": "Node.jsのESMのリゾルバの説明と特徴を紹介します",
+    "image": "https://hiroppy.me/blog/node-esm/og.png"
+  },
+  "https://hiroppy.me/blog/nodejs-experimental-modules": {
+    "title": "Node.jsの新しいモジュール方式の実験的導入 - hiroppy's site",
+    "description": "Node.jsに新しく入るESMのアルゴリズムと仕組みを紹介します",
+    "image": "https://hiroppy.me/blog/nodejs-experimental-modules/og.png"
+  },
+  "https://github.com/nodejs/node/pull/51977": {
+    "title": "module: support require()ing synchronous ESM graphs by joyeecheung · Pull Request #51977 · nodejs/node",
+    "description": "Summary\nThis patch adds require() support for synchronous ESM graphs under\nthe flag --experimental-require-module\nThis is based on the the following design aspect of ESM:\n\nThe resolution can be syn...",
+    "image": "https://opengraph.githubassets.com/0175c1df1e4f2d7d3ca1a486b1f3ebd4b6065ac00cae1ef4312066406147d58e/nodejs/node/pull/51977"
+  },
+  "https://nextjs-app-router-training.vercel.app/": {
+    "title": "Next.js App Router Training",
+    "description": "Introducing various basic patterns using Next.js' app router with simplified code.",
+    "image": "https://nextjs-app-router-training.vercel.app/opengraph-image.png?fcd239148f85b301"
+  },
+  "https://hiroppy.me/blog/nodejs-esm": {
+    "title": "Node.jsとECMAScript Modules - hiroppy's site",
+    "description": "Node.jsに入るECMAScript Mdoulesの特徴を紹介します",
+    "image": "https://hiroppy.me/blog/nodejs-esm/og.png"
+  },
+  "https://mozaic.fm/episodes/137/yearly-ecosystem-2023.html": {
+    "title": "ep137 Yearly Ecosystem 2023 | mozaic.fm",
+    "description": "第 137 回のテーマは 2023 年を振り返る Yearly Ecosystem です。",
+    "image": "https://mozaic.fm/assets/img/mozaic.600x600.png"
+  },
+  "https://hiroppy.me/blog/2022": {
+    "title": "2022年を振り返る - hiroppy's site",
+    "description": "2022年の仕事やイベント等の振り返り",
+    "image": "https://hiroppy.me/blog/2022/og.png"
+  },
+  "https://prtimes.jp/main/html/rd/p/000000097.000021828.html": {
+    "title": "株式会社Rebaseの技術顧問に廣戸裕大（Hiroppy）氏が就任",
+    "description": "株式会社Rebaseのプレスリリース（2023年12月15日 14時00分）株式会社Rebaseの技術顧問に廣戸裕大（Hiroppy）氏が就任",
+    "image": "https://prcdn.freetls.fastly.net/release_image/21828/97/21828-97-28c42bc1c46e009f26ef0df502fa047e-1280x720.png?format=jpeg&auto=webp&fit=bounds&width=2400&height=1260"
+  },
+  "https://findy-code.io/engineer-lab/hiroppy": {
+    "title": "プログラミングを強みに生き残れるか？ 焦燥感にとらわれた20代を越えて広がったキャリアの可能性  - Findy Engineer Lab",
+    "description": "OSS活動をする中で知った、届かない存在に対する焦燥感。ソフトウェアエンジニアとしてプログラミングが一番の強みだという廣戸裕大（hiroppy）さんですが、IC（Individual Contributor）のキャリアを歩むなかで技術のキャッチアップにもがき、悩んだ時期もあったといいます。その焦燥感をどう解消していったのか、今につながった転機を寄稿いただきました。",
+    "image": "https://cdn.image.st-hatena.com/image/scale/af9bcba3d16ab86e9f98688da2791fa29b6963ce/backend=imagemagick;version=1;width=1300/https%3A%2F%2Fcdn-ak.f.st-hatena.com%2Fimages%2Ffotolife%2Fb%2Fblog-media%2F20230417%2F20230417144638.jpg"
+  },
+  "https://findy-code.io/engineer-lab/influential-books-3": {
+    "title": "あなたのキャリアに影響を与えた本は何ですか？ 著名エンジニアの方々に聞いてみた【第三弾】 - Findy Engineer Lab",
+    "description": "過去にエンジニアラボに登場した、8人の著名なエンジニアのキャリアに影響を与えた“珠玉の書籍”を、ご本人にまつわるエピソードとともに紹介してもらいました。",
+    "image": "https://cdn.image.st-hatena.com/image/scale/f578e2642dd134d1f77ad02939f4120407607282/backend=imagemagick;version=1;width=1300/https%3A%2F%2Fcdn-ak.f.st-hatena.com%2Fimages%2Ffotolife%2Fm%2Fmarikaakamatsu%2F20231109%2F20231109110540.jpg"
+  },
+  "https://astro.build/blog/astro-2/": {
+    "title": "Astro 2.0 | Astro",
+    "description": "Astro 2.0 is here! Astro 2.0 is the first major web framework to deliver complete type-safety for Markdown and MDX. Other release highlights include: Hybrid Rendering • Redesigned Error Overlays • Improved Dev Server and HMR • Vite 4.0 • A New Public Roadmap",
+    "image": "https://astro.build/_astro/social.DcY0mjEo.webp"
+  },
+  "https://docs.astro.build/en/guides/content-collections": {
+    "title": "Content collections",
+    "description": "Manage your content with type safety.",
+    "image": "https://docs.astro.build/open-graph/en/guides/content-collections.webp"
+  },
+  "https://github.com/hiroppy/site/pull/549": {
+    "title": "refactor: migrate to Content Collections by hiroppy · Pull Request #549 · hiroppy/site",
+    "description": "https://docs.astro.build/en/guides/content-collections",
+    "image": "https://opengraph.githubassets.com/2d0af6d097b36bc28a827d65c6c742737d9b724a42d7866a98fca880fd94c78a/hiroppy/site/pull/549"
+  },
+  "https://mozaic.fm/episodes/110/yearly-ecosystem-2022.html": {
+    "title": "ep110 Yearly Ecosystem 2022 | mozaic.fm",
+    "description": "第 110 回のテーマは 2022 年 の Yearly Ecosystem です。今年の 8 月に開始した Ecosystem と、今回作成したそれ以前のまとめを踏まえ、今年の Web Ecosystem を振り返ります。",
+    "image": "https://mozaic.fm/assets/img/mozaic.600x600.png"
+  },
+  "https://hiroppy.me/blog/migrate-blog-from-hatena": {
+    "title": "Astroでサイトを作り直し、ブログをはてなから移管しました - hiroppy's site",
+    "description": "AstroとTailwindでサイト・ブログを再構築しました。この記事ではどのようにブログを移管したのかを紹介します。",
+    "image": "https://hiroppy.me/blog/migrate-blog-from-hatena/og.png"
+  },
+  "https://yuimedi.notion.site/d8e4e0131d2e47f797ae6a161b61fb64": {
+    "title": "The AI workspace that works for you. | Notion",
+    "description": "A tool that connects everyday work into one space. It gives you and your teams AI tools—search, writing, note-taking—inside an all-in-one, flexible workspace.",
+    "image": "https://www.notion.so/images/meta/default.png"
+  },
+  "https://whatthediff.ai/": {
+    "title": "What-the-Diff – AI-powered code review assistant",
+    "description": "The AI powered GitHub and Gitlab app that explains the changes within your pull requests in plain english",
+    "image": "https://whatthediff.ai/images/card.png"
+  },
+  "https://githubnext.com/projects/ai-for-pull-requests/": {
+    "title": "GitHub Next",
+    "description": "GitHub Next investigates the future of software development",
+    "image": "https://githubnext.com/assets/images/share-image.png"
+  },
+  "https://happyhackingkb.com/jp/products/hybrid_types/": {
+    "title": "Happy Hacking Keyboard | HHKB HYBRID Type-S | PFU",
+    "description": "株式会社PFUがお届けする高性能コンパクトキーボード、HHKB・Happy Hacking Keyboard HYBRID Type-Sのページです。",
+    "image": "https://happyhackingkb.com/ogp.png"
+  },
+  "https://www.diatec.co.jp/products/det.php?prod_c=1319": {
+    "title": "Majestouch MINILA JP68キー 赤軸製品情報 | ダイヤテック株式会社",
+    "description": "FILCO新コンパクト！親指ダブルFnキーボード ／FILCOキーボードの製造・販売を行うダイヤテック株式会社です。",
+    "image": "https://www.diatec.co.jp/image/ogimage.jpg"
+  },
+  "https://hiroppy.me/blog/astro-script-issue": {
+    "title": "AstroのScriptタグを扱うときの注意 - hiroppy's site",
+    "description": "AstroでのScriptタグのパフォーマンスの問題について説明します",
+    "image": "https://hiroppy.me/blog/astro-script-issue/og.png"
+  },
+  "https://vitejs.dev/guide/env-and-mode.html#env-files": {
+    "title": "Env Variables and Modes",
+    "description": "Next Generation Frontend Tooling",
+    "image": "https://vite.dev/og-image.jpg"
+  },
+  "https://docs.astro.build/en/core-concepts/astro-components/#client-side-scripts": {
+    "title": "Components",
+    "description": "An introduction to Astro components.",
+    "image": "https://docs.astro.build/open-graph/en/basics/astro-components.webp"
+  },
+  "https://www.w3.org/WAI/WCAG2AA-Conformance": {
+    "title": "Web Content Accessibility Guidelines (WCAG) 2 Level AA Conformance",
+    "description": "Accessibility resources free online from the international standards organization: W3C Web Accessibility Initiative (WAI).",
+    "image": "https://www.w3.org/WAI/assets/images/social-sharing-default.jpg"
+  },
+  "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1668817257600-29285.report.html": {
+    "title": "",
+    "description": "",
+    "image": ""
+  },
+  "https://ghost.org/": {
+    "title": "Ghost: The best open source blog & newsletter platform",
+    "description": "Beautiful, modern publishing with email newsletters and paid subscriptions built-in. Used by Platformer, 404Media, Lever News, Tangle, The Browser, and thousands more.",
+    "image": "https://ghost.org/images/meta/ghost.png"
+  },
+  "https://github.com/pa11y/pa11y": {
+    "title": "GitHub - pa11y/pa11y: Pa11y is your automated accessibility testing pal",
+    "description": "Pa11y is your automated accessibility testing pal. Contribute to pa11y/pa11y development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/0d5a6986d304f9863e4014f41f89d096e29393ea007aa044630a9d830b06f47d/pa11y/pa11y"
+  },
+  "https://support.google.com/domains/answer/4522141?hl=ja": {
+    "title": "Google ヘルプ",
+    "description": "",
+    "image": ""
+  },
+  "https://yuimedi.com": {
+    "title": "株式会社Yuimedi｜データで医療・ヘルスケアの世界をひとつに結う",
+    "description": "Yuimedi（ユイメディ）は、「データで医療・ヘルスケアの世界をひとつに結う」をミッションに掲げ、データの流通を加速させ、新たな価値を生み出す「医療・ヘルスケアデータ利活用エコシステムの創出」を目指しています。",
+    "image": "https://storage.googleapis.com/production-os-assets/assets/47875122-18dd-464d-9995-1e433ba77be1"
+  },
+  "https://engineering.mercari.com/blog/entry/20210812-team-topologies-in-souzoh": {
+    "title": "Team Topologies in Souzoh | メルカリエンジニアリング",
+    "description": "こんにちは。ソウゾウの Software Engineer / Engineering Manager の@motokieeです。連載：「メルカリShops」プレオープンまでの開発の裏側の4日目を担当します。4日目は、ソウゾウがどのような体",
+    "image": "https://storage.googleapis.com/prd-engineering-asset/2021/08/f3d874ee-motokiee_1200x630.png"
+  },
+  "https://engineering.mercari.com/blog/entry/20210810-mercari-shops-tech-stack": {
+    "title": "メルカリShops の技術スタックと、その選定理由 | メルカリエンジニアリング",
+    "description": "こんにちは。ソウゾウの Software Engineer (CTO) の @suguru です。連載：「メルカリShops」プレオープンまでの開発の裏側の1日目を担当させていただきます。7月末にメルカリShopsという新しいサービスが公開",
+    "image": "https://storage.googleapis.com/prd-engineering-asset/2021/08/ffbe8824-suguru_1200x630.png"
+  },
+  "https://engineering.mercari.com/blog/entry/20210810-the-new-mercari-web": {
+    "title": "新しいメルカリ Web の話 | メルカリエンジニアリング",
+    "description": "@1000ch です、今回は新しいメルカリ Web について書きます。この大きなプロジェクトのリリースは、多くの人の多大なる貢献によって成されたものです。そのプロジェクトの立ち上がりから今日まで、リードする役割でプロジェクトを見てきた一部始",
+    "image": "https://storage.googleapis.com/prd-engineering-asset/2021/08/f7f7dc07-overall-architecture.png"
+  },
+  "https://blog.hiroppy.me/entry/2017/12/01/102935": {
+    "title": "メルカリを退職した - hiroppy's site",
+    "description": "2017/06/01に入社したメルカリを退社しました",
+    "image": "https://hiroppy.me/blog/left-from-mercari/og.png"
+  },
+  "https://blog.watilde.com/2022/04/01/aws-to-yuimedi": {
+    "title": "https://blog.watilde.com/2022/04/01/aws-to-yuimedi",
+    "description": "",
+    "image": ""
+  },
+  "https://engineering.mercari.com/blog/entry/20220218-mercari-shops-automation": {
+    "title": "メルカリ Shops の開発を支える Automation 化 | メルカリエンジニアリング",
+    "description": "こんにちは。ソウゾウで Software Engineer をしている @sottar です。連載：メルカリShops 開発の裏側 Vol.2の 5 日目を担当させていただきます。この記事ではメルカリShops における、開発をサポートする",
+    "image": "https://storage.googleapis.com/prd-engineering-asset/2022/02/90752eb8-08_sottar.jpeg"
+  },
+  "https://engineering.mercari.com/blog/entry/20210823-a57631d32e": {
+    "title": "メルカリShops のフロントエンド | メルカリエンジニアリング",
+    "description": "こんにちは。ソウゾウの Software Engineer の hiroppy です。「連載：「メルカリ Shops」プレオープンまでの開発の裏側」 の最後は、Web フロントエンドの紹介をしたいと思います。メルカリ Shops は既存のメ",
+    "image": "https://storage.googleapis.com/prd-engineering-asset/2021/08/e3eee645-hiroppy_1200x630.png"
+  },
+  "https://blog.hiroppy.me/entry/current-status-and-future-of-oss": {
+    "title": "OSSの現状と今後 - hiroppy's site",
+    "description": "どのようにOSSのメンテナーを広げていくかの戦略の一例",
+    "image": "https://hiroppy.me/blog/current-status-and-future-of-oss/og.png"
+  },
+  "https://blog.hiroppy.me/entry/first-speech-abroad": {
+    "title": "初めて海外で登壇してきました - hiroppy's site",
+    "description": "アイルランドのダブリンでNode.jsについて話してきました",
+    "image": "https://hiroppy.me/blog/first-speech-abroad/og.png"
+  },
+  "https://blog.hiroppy.me/entry/eye": {
+    "title": "健康を考えるステージになった - hiroppy's site",
+    "description": "体にガタが来る歳",
+    "image": "https://hiroppy.me/blog/eye/og.png"
+  },
+  "https://github.com/swc-project/swc/tree/main/crates/swc_webpack_ast": {
+    "title": "File not found · swc-project/swc",
+    "description": "Rust-based platform for the Web. Contribute to swc-project/swc development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/a6c34c975b56b1e561ed53bb6190f5ca0b203488f7ae7e4e3645fde1427f051a/swc-project/swc"
+  },
+  "https://v4.webpack.js.org/vote": {
+    "title": "Vote | webpack",
+    "description": "webpack is a module bundler. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable of transforming, bundling, or packaging just about any resource or asset.",
+    "image": "https://v4.webpack.js.org//aad9d51e01a0dcc2caf5bee43dc8e647.svg"
+  },
+  "https://github.com/webpack-contrib/terser-webpack-plugin#swc": {
+    "title": "GitHub - webpack-contrib/terser-webpack-plugin: Terser Plugin",
+    "description": "Terser Plugin. Contribute to webpack-contrib/terser-webpack-plugin development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/2525b01b0900349ee6406bdd591c4852f57957c1ce352f52ff6150c158020686/webpack-contrib/terser-webpack-plugin"
+  },
+  "https://github.com/webpack/webpack/issues/13425": {
+    "title": "swc as a javascript parser · Issue #13425 · webpack/webpack",
+    "description": "Feature request Follow up of #13408 (reply in thread) I'm author of the swc project and I'm looking for way to improve the performance of webpack. Parsing something in javascript is a very expensiv...",
+    "image": "https://opengraph.githubassets.com/162ed70aa13db7f0397bd5d04b7b0ddd1acc1e041ecca54703df42a8330aecca/webpack/webpack/issues/13425"
+  },
+  "https://www.bleepingcomputer.com/news/security/npm-dependency-is-breaking-some-react-apps-today-heres-the-fix": {
+    "title": "npm dependency is breaking some React apps today — here's the fix",
+    "description": "Tons of users are reporting their Facebook Create React App builds are failing since yesterday. The cause has been traced down to a dependency used by create-react-app, the latest version of which is breaking developers' apps.",
+    "image": "https://www.bleepstatic.com/content/hl-images/2019/08/21/NPM.jpg"
+  },
+  "https://type.jp/et/feature/17462": {
+    "title": "【名村卓】ソウゾウCTOへの移籍で再認識した「高くて健全なプライド」をエンジニアが持つ意味 - エンジニアtype | 転職type",
+    "description": "メルカリからソウゾウCTOのポジションへと移った今、名村さんは自らのミッションを何だと考えるのか。移籍を決意した背景や、これからつくっていきたいというソウゾウらしいエンジニア組織のあり方、これからの活躍が期待されるソフトウェアエンジニアの条件を聞いた。\n",
+    "image": "https://type.jp/et/feature/wp-content/uploads/2021/09/souzouog.jpg"
+  },
+  "https://mercan.mercari.com/articles/28113": {
+    "title": "「新会社ソウゾウ立ち上げ期、いま率直にどうですか？」をメンバーに聞いてみた！ | mercan (メルカン)",
+    "description": "2021年1月28日に設立された「株式会社ソウゾウ(souzoh)」。 メルカリグループの次の柱となる事業を目指して発足。具体的な事業内容は明らかにされていませんが、着々とプロダクトリリースへの準備が進められています。  …\n",
+    "image": "https://storage.googleapis.com/prd-mercan-asset/2021/04/e469b9e5-eyecatch-v2-768x403.png"
+  },
+  "https://connpass.com/event/211877": {
+    "title": "Web24 (2021/05/07 18:00〜)",
+    "description": "# Web24  ## tl;dr;    * Web のことをただひたすら 24 時間議論する   * 5/7 18:00 ~ 5/8: 18:00   * YouTube Live, 無料, アーカイブなし   * 登壇者の発言は個人のものであり所属する組織とは関係なし  ## 配信 URL    * https://bit.ly/web24live     * 連続配信の仕様のため Youtube Live の URL は途中で変わります     * Youtube Live の URL が変わったらこの bitly の遷移先を書き換えます     * シェアなどにはこの短縮 UR...",
+    "image": "https://media.connpass.com/thumbs/92/6a/926ae974a0e4eb72776a55190043b1f5.png"
+  },
+  "https://techfeed.connpass.com/event/213218": {
+    "title": "TechFeed Summit#6 - v16リリース記念！Node.jsの最新動向を語り尽くす！ (2021/05/26 19:30〜)",
+    "description": "## エキスパートだらけのカンファレンス  TechFeed Summitのコンセプトは、「エキスパートだらけのカンファレンス」。エキスパート向けの情報サービスであるTechFeed Pro、そしてそれを支えるエキスパートコミュニティの魅力を存分に凝縮したオンラインイベントを目指しています。  ## TechFeed Summit #6のテーマはNode.js v16リリース  Yosuke Furukawa さん​、Masashi Hirano さん​、Yuta Hiroto さん​をお招きして、Node.js v16リリースの注目ポイントやNode.jsの最新動向まで、余すことなくお...",
+    "image": "https://media.connpass.com/thumbs/9c/e7/9ce7e94ba0c9474ce8858a046a293cad.png"
+  },
+  "https://www.graphql-code-generator.com": {
+    "title": "GitHubCloud Security Alliance Star Level One BadgeGitHubDiscord",
+    "description": "",
+    "image": ""
+  },
+  "https://www.graphql-code-generator.com/docs/presets/near-operation-file": {
+    "title": "Cloud Security Alliance Star Level One BadgeGitHubDiscord",
+    "description": "",
+    "image": ""
+  },
+  "https://blog.hiroppy.me/entry/2018": {
+    "title": "2018年を振り返る - hiroppy's site",
+    "description": "2018年の仕事やイベント等の振り返り",
+    "image": "https://hiroppy.me/blog/2018/og.png"
+  },
+  "https://blog.hiroppy.me/entry/2019/09/05/110756": {
+    "title": "アイルランドから帰ってきた - hiroppy's site",
+    "description": "1年のビザを使って長期滞在していたアイルランドを去ることになりました",
+    "image": "https://hiroppy.me/blog/ireland/og.png"
+  },
+  "https://blog.hiroppy.me/entry/2019/07/30/102311": {
+    "title": "エンジニアの自分が思う「焦燥感」 - hiroppy's site",
+    "description": "日々感じている焦燥感について考えてみます",
+    "image": "https://hiroppy.me/blog/impatience/og.png"
+  },
+  "https://github.com/sponsors/hiroppy": {
+    "title": "Sponsor @hiroppy on GitHub Sponsors",
+    "description": "Hi, I'm hiroppy and working on Node.js and webpack.",
+    "image": "https://avatars.githubusercontent.com/u/3367801?s=400&v=4"
+  },
+  "https://blog.hiroppy.me/entry/first-social-game": {
+    "title": "初めてソシャゲというものをやった - hiroppy's site",
+    "description": "ソシャゲ楽しい！",
+    "image": "https://hiroppy.me/blog/first-social-game/og.png"
+  },
+  "https://github.com/hiroppy/fusuma": {
+    "title": "GitHub - hiroppy/fusuma: ✍️ Fusuma makes slides with Markdown easily.",
+    "description": "✍️ Fusuma makes slides with Markdown easily. Contribute to hiroppy/fusuma development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/8b50786472ff9c0bc360eaacb3ddd6fa5a4cc4099742a78db260cfea4817a636/hiroppy/fusuma"
+  },
+  "https://blog.hiroppy.me/entry/webpack-persistent-caching": {
+    "title": "webpack@5で入るPersistent Cachingについて - hiroppy's site",
+    "description": "新しく入ったPersistent cachingの機能について紹介します",
+    "image": "https://hiroppy.me/blog/webpack-persistent-caching/og.png"
+  },
+  "https://blog.hiroppy.me/entry/webpack-asset-modules": {
+    "title": "webpackの次のバージョンで入るassetModulesの紹介 - hiroppy's site",
+    "description": "新しく入ったAsset Modulesの機能について紹介します",
+    "image": "https://hiroppy.me/blog/webpack-asset-modules/og.png"
+  },
+  "https://blog.hiroppy.me/entry/module-federation": {
+    "title": "webpack@5で入るModule Federationについて - hiroppy's site",
+    "description": "新しく入ったModule Federationの機能について紹介します",
+    "image": "https://hiroppy.me/blog/module-federation/og.png"
+  },
+  "https://github.com/browserslist/browserslist": {
+    "title": "GitHub - browserslist/browserslist: 🦔 Share target browsers between different front-end tools, like Autoprefixer, Stylelint and babel-preset-env",
+    "description": "🦔 Share target browsers between different front-end tools, like Autoprefixer, Stylelint and babel-preset-env - browserslist/browserslist",
+    "image": "https://opengraph.githubassets.com/5fc3212e0a6ffc8217cf5ad37665a544904b764c7b71692728b762ea64b04f05/browserslist/browserslist"
+  },
+  "https://github.com/tc39/proposal-top-level-await": {
+    "title": "GitHub - tc39/proposal-top-level-await: top-level `await` proposal for ECMAScript (stage 4)",
+    "description": "top-level `await` proposal for ECMAScript (stage 4) - tc39/proposal-top-level-await",
+    "image": "https://opengraph.githubassets.com/a4cd827988af1eb40749efea585a91af24a1b99069231677620f83e7cf439997/tc39/proposal-top-level-await"
+  },
+  "https://github.com/webpack/node-libs-browser": {
+    "title": "GitHub - webpack/node-libs-browser: [DEPRECATED] The node core libs for in browser usage.",
+    "description": "[DEPRECATED] The node core libs for in browser usage. - webpack/node-libs-browser",
+    "image": "https://opengraph.githubassets.com/0cc553080d0bc9bd792e867d140447161418d18bcedc5f10befe9ca640546839/webpack/node-libs-browser"
+  },
+  "https://github.com/webpack/webpack/issues/11406": {
+    "title": "webpack 5 release plan · Issue #11406 · webpack/webpack",
+    "description": "TL;DR: release planned for 2020-10-10 After nearly 1 year of beta testing and about 2 years of development we feel that it's time to release webpack 5 soon. As promised we do announce the release a...",
+    "image": "https://opengraph.githubassets.com/557838115ca43a5bc90861a341be7966a6b8fd5df78cf08b708e1447fbbe8a79/webpack/webpack/issues/11406"
+  },
+  "https://webpack.js.org/configuration/other-options/#cache": {
+    "title": "Other Options | webpack",
+    "description": "webpack is a module bundler. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable of transforming, bundling, or packaging just about any resource or asset.",
+    "image": "https://webpack.js.org/icon-pwa-512x512.934507c816afbcdb.png"
+  },
+  "https://github.com/hiroppy/dynamic-rendering-sample": {
+    "title": "GitHub - hiroppy/dynamic-rendering-sample: This repo introduces how to realize dynamic rendering.",
+    "description": "This repo introduces how to realize dynamic rendering. - hiroppy/dynamic-rendering-sample",
+    "image": "https://opengraph.githubassets.com/4932ee4f8a44e65e1fce73b056a79c5fde6d637e8e2932c916154698abba7666/hiroppy/dynamic-rendering-sample"
+  },
+  "https://github.com/GoogleChrome/rendertron": {
+    "title": "GitHub - GoogleChrome/rendertron: A Headless Chrome rendering solution",
+    "description": "A Headless Chrome rendering solution. Contribute to GoogleChrome/rendertron development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/bfe9bb8d0fd56c80386f868acc0e5c2cbaa87a5c45ccf3d15f1166016e3e193e/GoogleChrome/rendertron"
+  },
+  "https://developers.google.com/search/docs/guides/dynamic-rendering": {
+    "title": "استخدام العرض الديناميكي كحل بديل | مجموعة خدمات بحث Google  |  Documentation  |  Google for Developers",
+    "description": "كان العرض الديناميكي حلاً بديلاً للمواقع الإلكترونية التي تواجه مشاكل بخصوص المحتوى المستند إلى JavaScript.",
+    "image": "https://developers.google.com/static/search/images/home-social-share-lockup.jpg?hl=ar"
+  },
+  "https://webpack.js.org/guides/asset-modules": {
+    "title": "Asset Modules | webpack",
+    "description": "webpack is a module bundler. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable of transforming, bundling, or packaging just about any resource or asset.",
+    "image": "https://webpack.js.org/icon-pwa-512x512.934507c816afbcdb.png"
+  },
+  "https://github.com/webpack/webpack/pull/8983": {
+    "title": "add experimental asset support by hiroppy · Pull Request #8983 · webpack/webpack",
+    "description": "module.exports = {\n  output: {\n    assetModuleFilename: &quot;images/[hash][ext]&quot;\n  },\n  module: {\n    rules: [\n      {\n        test: /\\.(png|jpg|svg)$/,\n        type: &quot;asset/resource&quo...",
+    "image": "https://opengraph.githubassets.com/25a211d1046122aff61005516618f238d80d7cfaea7b744c9e6da22100fb2694/webpack/webpack/pull/8983"
+  },
+  "https://blog.hiroppy.me/entry/node-esm": {
+    "title": "Node.jsのECMAScript Modulesの紹介 - hiroppy's site",
+    "description": "Node.jsのESMのリゾルバの説明と特徴を紹介します",
+    "image": "https://hiroppy.me/blog/node-esm/og.png"
+  },
+  "https://blog.hiroppy.me/entry/create-module-bundler-preparation": {
+    "title": "module bundlerの作り方(準備編) - hiroppy's site",
+    "description": "Bundlerの内部アルゴリズムを解説します",
+    "image": "https://hiroppy.me/blog/create-module-bundler-preparation/og.png"
   },
   "https://github.com/hiroppy/the-sample-of-module-bundler": {
     "title": "GitHub - hiroppy/the-sample-of-module-bundler: You will know how to make a javascript bundler",
     "description": "You will know how to make a javascript bundler. Contribute to hiroppy/the-sample-of-module-bundler development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/e699689e9e38a9caf300a01c368fb3504320521339a1cb864241469c5a2a0009/hiroppy/the-sample-of-module-bundler"
+    "image": "https://opengraph.githubassets.com/53073e444a21738b0f67e687fc6e1a6a6ea2b88ec93a4c91cd9dec14a241a5a0/hiroppy/the-sample-of-module-bundler"
   },
-  "https://github.blog/2017-07-06-introducing-code-owners": {
-    "title": "Introducing code owners | The GitHub Blog",
-    "description": "While effective code review is essential to every successful project, it’s not always clear who should review files—even with GitHub’s reviewer suggestions. Now repository maintainers can define exactly which people and teams need to review projects using code owners. This new feature automatically requests reviews from the code owners when a pull request changes any […]",
-    "image": "https://github.blog/wp-content/uploads/2017/07/27803645-87c9a9c8-5ff8-11e7-91d7-2fa0718e6871.png"
+  "https://github.com/hiroppy/the-sample-of-module-bundler/pull/1": {
+    "title": "implement ESM by hiroppy · Pull Request #1 · hiroppy/the-sample-of-module-bundler",
+    "description": "output\n((modules) =&gt; {\n  const usedModules = {};\n\n  function require(moduleId) {\n    if (usedModules[moduleId]) {\n      return usedModules[moduleId].exports;\n    }\n\n    const module = (usedModul...",
+    "image": "https://opengraph.githubassets.com/6000cd9eaffb54173295c819ea3b59f1636f968409efa0654c046643c6265079/hiroppy/the-sample-of-module-bundler/pull/1"
   },
-  "https://octoverse.github.com": {
-    "title": "Octoverse 2022: The state of open source",
-    "description": "How open source is changing software development including at companies.",
-    "image": "https://octoverse.github.com/assets/images/social-card-2022.png"
+  "https://developer.mozilla.org/ja/docs/Web/JavaScript/Enumerability_and_ownership_of_properties": {
+    "title": "プロパティの列挙可能性と所有権 - JavaScript | MDN",
+    "description": "列挙可能プロパティは、内部の列挙可能（enumerable）フラグが true に設定されているプロパティです。これは、単純な代入や初期化で作成されたプロパティのデフォルトです (Object.defineProperty で追加したプロパティはデフォルトで列挙可能性が false になります）。プロパティのキーが Symbol でない限り、列挙可能なプロパティは for...in ループにの対象になります。プロパティの所有権は、プロパティがプロトタイプチェーンではなく、オブジェクトに直接属しているかどうかによって決まります。オブジェクトのプロパティはまとめて取り扱うこともでき、プロパティを検出、反復、列挙、取得するための多くの組み込み機能があります。以下に、使用可能なチャートと不足しているカテゴリを取得する方法を示すサンプルコードを示します。",
+    "image": "https://developer.mozilla.org/mdn-social-share.d893525a4fb5fb1f67a2.png"
   },
-  "https://github.com/gatsbyjs/gatsby": {
-    "title": "GitHub - gatsbyjs/gatsby: The fastest frontend for the headless web. Build modern websites with React.",
-    "description": "The fastest frontend for the headless web. Build modern websites with React. - GitHub - gatsbyjs/gatsby: The fastest frontend for the headless web. Build modern websites with React.",
-    "image": "https://opengraph.githubassets.com/fb44b6fff772590cd7952f6958ad7bca83fade5d9c4f2b874bb2d37abc9b083f/gatsbyjs/gatsby"
+  "https://astexplorer.net": {
+    "title": "AST explorer",
+    "description": "An online AST explorer.",
+    "image": ""
   },
-  "https://github.com/webpack-contrib/mocha-loader/pull/76#issuecomment-467005601": {
-    "title": "Mark mocha@6 compatibility and upgrade all dependencies by AviVahl · Pull Request #76 · webpack-contrib/mocha-loader",
-    "description": "fixed lint warnings in EnhancedMocha.js\nupdated bundle snapshot\nswitched to @webpack-contrib/defaults\n\n\nThis PR contains a:\n\n bugfix\n new feature\n code refactor\n test update \n typo fix\n metadata up...",
-    "image": "https://opengraph.githubassets.com/c0b22f999606f3991a809790d6f159bd64ed079773960aab0caae76b39a98f2c/webpack-contrib/mocha-loader/pull/76"
+  "https://blog.hiroppy.me/entry/mechanism-of-webpack": {
+    "title": "webpackの仕組みを簡潔に説明する - hiroppy's site",
+    "description": "webpackの内部で動いているアルゴリズムの解説をします",
+    "image": "https://hiroppy.me/blog/mechanism-of-webpack/og.png"
   },
-  "https://blog.hiroppy.me/entry/nodejs-esm": {
-    "title": "Node.jsとECMAScript Modules - 技術探し",
-    "description": "覚えておくべきこと ESMを使いたい場合は、拡張子を.mjsにする .mjsの拡張子は省略可能である ESMのファイルをトップレベルではCJSでインポート出来ない CJSのファイルをインポートするのにnamed importは行えない ESMのパスはwhatwg urlに準拠している Nodeの変数である、__dirnameや__filename等が使えない .mjsは厳格モード(use strict)になる 実行方法 パターンまとめ ルートがCJS ルートがESM 挙動の早見表 モジュール タイミング ESMでは使えないメソッド・変数 予約語への操作 上記以外の許容されない記法 評価に関する…",
-    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
+  "https://github.com/webpack/changelog-v5/blob/master/guides/module-federation.md#low-level-concepts": {
+    "title": "changelog-v5/guides/module-federation.md at master · webpack/changelog-v5",
+    "description": "Temporary repo for the changelog for webpack 5. Contribute to webpack/changelog-v5 development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/ef929df85f4031964a8e31dd0c747678992775e5d2d4a749ca6d27fe20015380/webpack/changelog-v5"
+  },
+  "https://micro-frontends.org": {
+    "title": "Micro Frontends - extending the microservice idea to frontend development",
+    "description": "Techniques, strategies and recipes for building a modern web app with multiple teams using different JavaScript frameworks.",
+    "image": "https://micro-frontends.org//ressources/screen/three-teams.png"
+  },
+  "https://github.com/hiroppy/webpack-mfe-sample": {
+    "title": "GitHub - hiroppy/webpack-mfe-sample",
+    "description": "Contribute to hiroppy/webpack-mfe-sample development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/74190bd896b3e47fa0f0be67e8e26c33392e193418962f894373e65665afaf59/hiroppy/webpack-mfe-sample"
+  },
+  "https://github.com/webpack/webpack/issues/10352": {
+    "title": "Merge Proposal: Module federation and code sharing between bundles. Many builds act as one · Issue #10352 · webpack/webpack",
+    "description": "This is a proposal to merge my existing work into the Webpack core. The base concept is federated application orchestration at runtime. What I hope will provide a new era for how we build apps at s...",
+    "image": "https://opengraph.githubassets.com/15a721519dc141eafee33e0bcf7e6c937c650d2dc7278da7a98da17ff90aa34f/webpack/webpack/issues/10352"
+  },
+  "https://nodejs.org/api/policy.html": {
+    "title": "",
+    "description": "",
+    "image": ""
+  },
+  "https://docs.google.com/document/d/1h__FmXsEWRuNrzAV_l3Iw9i_z8fCXSokGfBiW8-nDNg/edit#heading=h.m7xhvpd3gmjw": {
+    "title": "A Node.js Security Model",
+    "description": "A Node.js Security Model Intent This document proposes a way to introduce a set of features to Node.js in order to achieve a reasonable security model based upon the Object-Capability Model and verification of resources loaded by Node.js. Node.js was not designed to be a sandbox, and the usage of...",
+    "image": "https://lh7-us.googleusercontent.com/docs/AHkbwyJiAH-pUmrbyu4ODDXhGR6wI0V2jErwVp5WgDXUFfTjpP77IIR82QOJCNJY2r6qvFpu9k2A69B5Mra1ZuBq35zY2-Yn9dvWcAB67jHLhDX4wIrwcA6F=w1200-h630-p"
+  },
+  "https://blog.hiroppy.me/entry/react-apollo3.3.0": {
+    "title": "",
+    "description": "",
+    "image": ""
+  },
+  "https://developer.mozilla.org/ja/docs/Web/HTTP/CSP": {
+    "title": "コンテンツセキュリティポリシー (CSP) - HTTP | MDN",
+    "description": "コンテンツセキュリティポリシー (CSP) は、特定の種類のセキュリティ脅威のリスクを防止または最小限に抑えるのに役立つ機能です。これは、ウェブサイトからブラウザーへの一連の指示で構成されており、サイトを構成するコードが実行できることを制限するようにブラウザーに指示します。",
+    "image": "https://developer.mozilla.org/mdn-social-share.d893525a4fb5fb1f67a2.png"
+  },
+  "https://qiita.com/koba04/items/e9de79b517662f3d9922": {
+    "title": "JSONをサーバーとフロント側で安全に共有する - Qiita",
+    "description": "こんな感じかなと思いつつ、ベスト・プラクティスってありますか？追記: @ngyuki さんがコメントしてくださったものの方がよさそうなのでそちらを紹介しておきます属性値として設定してHTML e…",
+    "image": "https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-user-contents.imgix.net%2Fhttps%253A%252F%252Fcdn.qiita.com%252Fassets%252Fpublic%252Farticle-ogp-background-afbab5eb44e0b055cce1258705637a91.png%3Fixlib%3Drb-4.0.0%26w%3D1200%26blend64%3DaHR0cHM6Ly9xaWl0YS11c2VyLXByb2ZpbGUtaW1hZ2VzLmltZ2l4Lm5ldC9odHRwcyUzQSUyRiUyRnFpaXRhLWltYWdlLXN0b3JlLnMzLmFtYXpvbmF3cy5jb20lMkYwJTJGNDY3NyUyRnByb2ZpbGUtaW1hZ2VzJTJGMTQ3MzY4MDczNT9peGxpYj1yYi00LjAuMCZhcj0xJTNBMSZmaXQ9Y3JvcCZtYXNrPWVsbGlwc2UmZm09cG5nMzImcz0zZWVlYWFiZTc0ODdlM2Y2M2RlODFkZDkyYWE4ZGQ1MQ%26blend-x%3D120%26blend-y%3D462%26blend-w%3D90%26blend-h%3D90%26blend-mode%3Dnormal%26mark64%3DaHR0cHM6Ly9xaWl0YS1vcmdhbml6YXRpb24taW1hZ2VzLmltZ2l4Lm5ldC9odHRwcyUzQSUyRiUyRnMzLWFwLW5vcnRoZWFzdC0xLmFtYXpvbmF3cy5jb20lMkZxaWl0YS1vcmdhbml6YXRpb24taW1hZ2UlMkZkZTk1YzU4MmM0OTI5MGE4ZmJiMTk2ZTZjMTJhM2JlZjY3ODhhZDMwJTJGb3JpZ2luYWwuanBnJTNGMTUwMjMzNDQ1MD9peGxpYj1yYi00LjAuMCZ3PTQ0Jmg9NDQmZml0PWNyb3AmbWFzaz1jb3JuZXJzJmNvcm5lci1yYWRpdXM9OCZib3JkZXI9MiUyQ0ZGRkZGRiZmbT1wbmczMiZzPWUxNTRkMDgyOTJiN2M3NTZiNjU5Y2E0ZWQ0YWZiY2I4%26mark-x%3D186%26mark-y%3D515%26mark-w%3D40%26mark-h%3D40%26s%3Dbb8a90bcd7140b2ca3dbf7cd3ba1cc0a?ixlib=rb-4.0.0&w=1200&fm=jpg&mark64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjAuMCZ3PTk2MCZoPTMyNCZ0eHQ9SlNPTiVFMyU4MiU5MiVFMyU4MiVCNSVFMyU4MyVCQyVFMyU4MyU5MCVFMyU4MyVCQyVFMyU4MSVBOCVFMyU4MyU5NSVFMyU4MyVBRCVFMyU4MyVCMyVFMyU4MyU4OCVFNSU4MSVCNCVFMyU4MSVBNyVFNSVBRSU4OSVFNSU4NSVBOCVFMyU4MSVBQiVFNSU4NSVCMSVFNiU5QyU4OSVFMyU4MSU5OSVFMyU4MiU4QiZ0eHQtYWxpZ249bGVmdCUyQ3RvcCZ0eHQtY29sb3I9JTIzMUUyMTIxJnR4dC1mb250PUhpcmFnaW5vJTIwU2FucyUyMFc2JnR4dC1zaXplPTU2JnR4dC1wYWQ9MCZzPTYxM2NlNmFkYzFlZTFhYjg5NGIzODk5OGU4MWY1ZWI3&mark-x=120&mark-y=112&blend64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjAuMCZ3PTgzOCZoPTU4JnR4dD0lNDBrb2JhMDQmdHh0LWNvbG9yPSUyMzFFMjEyMSZ0eHQtZm9udD1IaXJhZ2lubyUyMFNhbnMlMjBXNiZ0eHQtc2l6ZT0zNiZ0eHQtcGFkPTAmcz1lMmM0MzU1MDhiZmY1ZWQzZjg3YTk4M2I2NzJmMzE2MA&blend-x=242&blend-y=454&blend-w=838&blend-h=46&blend-fit=crop&blend-crop=left%2Cbottom&blend-mode=normal&txt64=5qCq5byP5Lya56S-U21hcnRIUg&txt-x=242&txt-y=539&txt-width=838&txt-clip=end%2Cellipsis&txt-color=%231E2121&txt-font=Hiragino%20Sans%20W6&txt-size=28&s=219e3259c7ea2d2bac7e4d9f7f15e196"
+  },
+  "https://blog.hiroppy.me/entry/ssr-sample": {
+    "title": "業務で使える簡単なSSR + SPA のテンプレートを公開した - hiroppy's site",
+    "description": "パフォーマンスを考慮したSSRとSPAのテンプレートを公開しました",
+    "image": "https://hiroppy.me/blog/ssr-sample/og.png"
+  },
+  "https://w3c.github.io/manifest": {
+    "title": "\n      Web Application Manifest\n    ",
+    "description": "",
+    "image": ""
+  },
+  "https://github.com/hiroppy/ssr-sample": {
+    "title": "GitHub - hiroppy/ssr-sample: A minimum sample of Server-Side-Rendering, Single-Page-Application and Progressive Web App",
+    "description": "A minimum sample of Server-Side-Rendering, Single-Page-Application and Progressive Web App - hiroppy/ssr-sample",
+    "image": "https://opengraph.githubassets.com/e238d65910518b6582adeea8589ecdddd862ea3ffccbefb5bd4541013c983115/hiroppy/ssr-sample"
+  },
+  "https://github.com/smooth-code/loadable-components": {
+    "title": "GitHub - gregberge/loadable-components: The recommended Code Splitting library for React ✂️✨",
+    "description": "The recommended Code Splitting library for React ✂️✨ - gregberge/loadable-components",
+    "image": "https://repository-images.githubusercontent.com/95196818/9cab6800-1a7b-11ea-9b20-b47d65e66bd2"
+  },
+  "https://developer.mozilla.org/ja/docs/Web/Manifest": {
+    "title": "ウェブアプリマニフェスト - プログレッシブウェブアプリ (PWA) | MDN",
+    "description": "ウェブアプリマニフェストは、 Web Application Manifest 仕様書で定義されており、ウェブアプリケーションについての情報を提供する JSON テキストファイルです。",
+    "image": "https://developer.mozilla.org/mdn-social-share.d893525a4fb5fb1f67a2.png"
+  },
+  "https://developers.google.com/web/tools/workbox": {
+    "title": "Workbox  |  Chrome for Developers",
+    "description": "יצירת אפליקציות מסוג Progressive Web App (PWA) באמצעות Workbox – ספריית Service Worker מצוות Chrome",
+    "image": ""
+  },
+  "https://inside.pixiv.blog/kobo/5137": {
+    "title": "Content Security Policy Level 3におけるXSS対策 - pixiv inside",
+    "description": "こんにちは、セキュリティエンジニアのkoboです。ピクシブには2018年4月に入社しており、セキュリティ観点でのアプリケーション開発や脆弱性報奨金制度の運用などを行っています。 本記事では、現在ピクシブの一部のサービスで取り組んでいるContent Security Policyについて知見を共有します。 概要 Content Security Policy (CSP) は、XSSを主としたウェブアプリケーションセキュリティの問題を軽減するために考案されたブラウザのセキュリティ機構です。 ウェブアプリケーションは、 Content-Security-Policy ヘッダをHTTPレスポンスに含…",
+    "image": "https://cdn.image.st-hatena.com/image/scale/c5e8adf7cd0463dbf03c969e96e1e6ad8b601fe0/backend=imagemagick;version=1;width=1300/https%3A%2F%2Fcdn-ak.f.st-hatena.com%2Fimages%2Ffotolife%2Fp%2Fpxv%2F20191224%2F20191224220953.png"
+  },
+  "https://github.com/reduxjs/redux/issues/3313": {
+    "title": "Discussion: revamped docs content, structure, and teaching flow · Issue #3313 · reduxjs/redux",
+    "description": "Per discussion in #2590 , we'd like to rethink the Redux docs content and structure pretty much from the ground up. Now that we've got the new docs site up and running, it's time to start brainstor...",
+    "image": "https://opengraph.githubassets.com/fbc97b0d0114d549b4a7b99c8f38ca635cffac567d1df5216a1d5519fef754b5/reduxjs/redux/issues/3313"
+  },
+  "https://github.com/facebook/react/pull/17285": {
+    "title": "[Flight] Basic Streaming Suspense Support by sebmarkbage · Pull Request #17285 · facebook/react",
+    "description": "This adds basic Suspense support to Flight by streaming the response.\nFirst it sends one line with the root JSON model. Within the model holes are replaced with &quot;$&quot; followed by a hex ID. ...",
+    "image": "https://opengraph.githubassets.com/73588f9d7164e471038efc3a5b035046d9864878d19fd4b5b5fd03c6b68e9a0a/facebook/react/pull/17285"
+  },
+  "https://blog.hiroppy.me/entry/2018/04/23/100031": {
+    "title": "エンジニア採用のための仕組みづくり - hiroppy's site",
+    "description": "どのようにエンジニアを採用していけばよいのかを考えます",
+    "image": "https://hiroppy.me/blog/how-to-hire-engineers/og.png"
+  },
+  "https://motida-japan.hatenablog.com/entry/2017/12/02/010000": {
+    "title": "キャリアパスどうするねん問題 - アナログ金木犀",
+    "description": "釘宮です。こんにちは。 この記事は SHIROBAKO Advent Calendar 2017 の 二日目の記事です。昨日のkonifarさんの 武蔵野アニメーション総務 興津由佳の左眼について という記事からスタートしました。 ベスト・オブ・興津 はあれ一択ですよね。さすが、わかってらっしゃる。 さて。 キャリアパス悩む— 有象無象 (@kgmyshin) 2017年11月28日 キャリアパス悩みますよね。 なのでSHIROBAKOを見てみました。 なぜかというと、SHIROBAKOの主題を一言で表すと(浅はかかもですが)、 みゃーもりのキャリアパスどうするねん問題 に尽きるからです。1話…",
+    "image": "https://cdn.image.st-hatena.com/image/scale/05b28d35fa93a3ec514a78d509059d63949b0e19/backend=imagemagick;version=1;width=1300/https%3A%2F%2Fcdn-ak.f.st-hatena.com%2Fimages%2Ffotolife%2Fk%2Fkgmyshin%2F20171201%2F20171201141230.jpg"
+  },
+  "https://logmi.jp/tech/articles/321591": {
+    "title": "エンジニアキャリアにおける焦燥感との向き合い方 | ログミーBusiness",
+    "description": "エンジニアキャリアにおける「焦燥感」花谷拓磨氏：ではさっそく「エンジニアキャリアにおける焦燥感との向き合いかた」というテーマで、私、花谷拓磨が話させていただければと思います。まずはじめに、簡単に自己紹介をさせていただきます。私、花谷拓磨と申...",
+    "image": "https://images.logmi.jp/media/article/321591/images/QsG1nN3TyziTq9UCbX8A6m.jpg"
+  },
+  "https://github.com/webpack/webpack-dev-server/pull/2005": {
+    "title": "test: don't use --runInBand and improve execution performance by hiroppy · Pull Request #2005 · webpack/webpack-dev-server",
+    "description": "This is a bugfix\n This is a feature\n This is a code refactor\n This is a test update\n This is a docs update\n This is a metadata update\n\nFor Bugs and Features; did you add new tests?\nmodify only\n\nMot...",
+    "image": "https://opengraph.githubassets.com/64080e19da4dedcf1d709354736d7dbd48da7a42a922ea54debc3e325d810113/webpack/webpack-dev-server/pull/2005"
+  },
+  "https://blog.hiroppy.me/entry/nodejs-experimental-modules": {
+    "title": "Node.jsの新しいモジュール方式の実験的導入 - hiroppy's site",
+    "description": "Node.jsに新しく入るESMのアルゴリズムと仕組みを紹介します",
+    "image": "https://hiroppy.me/blog/nodejs-experimental-modules/og.png"
   },
   "https://blog.hiroppy.me/entry/nodejs-package-mode": {
-    "title": "Node.js Package Mode について - 技術探し",
-    "description": "Node.js Package Mode について",
-    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
+    "title": "Node.js Package Mode について - hiroppy's site",
+    "description": "Node.jsに新しく入る可能性があるpackage modeについて紹介します",
+    "image": "https://hiroppy.me/blog/nodejs-package-mode/og.png"
+  },
+  "https://github.com/hiroppy/node-esm-example": {
+    "title": "GitHub - hiroppy/node-esm-example",
+    "description": "Contribute to hiroppy/node-esm-example development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/f47eb86a64790c178dd79efae1997e776e6f276a75af0d63ce4e3251488d1668/hiroppy/node-esm-example"
+  },
+  "https://medium.com/@about_hiroppy/introduce-ecmascript-modules-of-node-js-4bf873bcb21b": {
+    "title": "Introduce ECMAScript Modules of Node.js",
+    "description": "I talked about ECMAScript Modules at Dubin Node.js meetup. I made comments to deepen your understanding.",
+    "image": "https://miro.medium.com/v2/resize:fit:1200/1*O2uOdSMrwF0qeX2BF-VC3g.png"
+  },
+  "https://github.com/nodejs/modules/issues/312": {
+    "title": "Rename configuration options to avoid \"type\" term · Issue #312 · nodejs/modules",
+    "description": "We have seen this in a few places, but it seems we should discuss why to use the term \"type\" if it is used for determining how to interpret contents. We have seen arguments about familiarity in thi...",
+    "image": "https://opengraph.githubassets.com/fcfcc98f33882308956491f0f3205e87e254f15eea77baa62b5c68c11dafd049/nodejs/modules/issues/312"
+  },
+  "https://www.meetup.com/ja-JP/Dublin-Node-js-Meetup/events/260666447": {
+    "title": "Login to Meetup | Meetup",
+    "description": "Not a Meetup member yet? Log in and find groups that host online or in person events and meet people in your local community who share your interests.",
+    "image": "https://secure.meetupstatic.com/next/images/shared/meetup-logo.jpg"
+  },
+  "https://github.com/nodejs/modules/blob/master/doc/announcement.md#works-in-progress": {
+    "title": "File not found · nodejs/modules",
+    "description": "Node.js Modules Team. Contribute to nodejs/modules development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/7e5e8a34a3337385d53028e98677966f386eaee7257301aa8d3255a632564418/nodejs/modules"
+  },
+  "https://github.com/whatwg/html/issues/4315": {
+    "title": "JSON modules · Issue #4315 · whatwg/html",
+    "description": "Hey All, I'd like to explore support for importing json, similar to how Node.js currently support require('./some.json') Expected behavior: imported json would export an object or array with the co...",
+    "image": "https://opengraph.githubassets.com/afbeb858bef1d3f39f5ebab63d4e19d055b3173f265a7ca0da5e72d45f1fb643/whatwg/html/issues/4315"
+  },
+  "https://blog.hiroppy.me/entry/nodejs-esm": {
+    "title": "Node.jsとECMAScript Modules - hiroppy's site",
+    "description": "Node.jsに入るECMAScript Mdoulesの特徴を紹介します",
+    "image": "https://hiroppy.me/blog/nodejs-esm/og.png"
   },
   "https://github.com/nodejs/modules/blob/master/doc/plan-for-new-modules-implementation.md": {
-    "title": "modules/plan-for-new-modules-implementation.md at main · nodejs/modules",
+    "title": "modules/doc/plan-for-new-modules-implementation.md at main · nodejs/modules",
     "description": "Node.js Modules Team. Contribute to nodejs/modules development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/7f57387acccc4ea4f73a26afcfa9a778d017b3c01ce651a231942d5536350184/nodejs/modules"
+    "image": "https://opengraph.githubassets.com/7e5e8a34a3337385d53028e98677966f386eaee7257301aa8d3255a632564418/nodejs/modules"
   },
   "https://github.com/nodejs/ecmascript-modules/pull/32": {
     "title": "Entry points proposal spec and implementation by guybedford · Pull Request #32 · nodejs/ecmascript-modules",
-    "description": "This implements a top-level --type flag for --experimental-modules with the following behaviours.\nIn addition \"type\": \"esm\" in the package.json is renamed to \"type\": \"module\", and a new extension ....",
+    "description": "This implements a top-level --type flag for --experimental-modules with the following behaviours.\nIn addition &quot;type&quot;: &quot;esm&quot; in the package.json is renamed to &quot;type&quot;: &...",
     "image": "https://opengraph.githubassets.com/297cf1ebc9077c7b77ca9d0513edc1209c4abfcfebb16d638c5c3356df1028f0/nodejs/ecmascript-modules/pull/32"
   },
   "https://github.com/nodejs/node/pull/26745": {
@@ -54,540 +594,175 @@
     "description": "This PR updates the current --experimental-modules implementation based on the work of the modules team and reflects Phase 2 of our new modules plan.\nA longer form description of these changes can ...",
     "image": "https://opengraph.githubassets.com/39a1f2e85aec07fa7173e7651d71393bbb3599773645017659ca4aabcac615e1/nodejs/node/pull/26745"
   },
-  "https://blog.hiroppy.me/entry/current-status-and-future-of-oss": {
-    "title": "OSSの現状と今後 - 技術探し",
-    "description": "Gatsbyのコミュニティの仕組みとOSSの現状・今後についての考察",
-    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/a/about_hiroppy/20190228/20190228090334.png"
-  },
-  "https://webpack.js.org/configuration/other-options/#cache": {
-    "title": "Other Options | webpack",
-    "description": "webpack is a module bundler. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable of transforming, bundling, or packaging just about any resource or asset.",
-    "image": "https://webpack.js.org/icon-pwa-512x512.d3dae4189855b3a72ff9.png"
-  },
-  "https://blog.hiroppy.me/entry/create-module-bundler-preparation": {
-    "title": "module bundlerの作り方(準備編) - 技術探し",
-    "description": "module bundlerの作り方の基礎を解説します。",
-    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/a/about_hiroppy/20200519/20200519095516.png"
-  },
-  "https://blog.hiroppy.me/entry/node-esm": {
-    "title": "Node.jsのECMAScript Modulesの紹介 - 技術探し",
-    "description": "Node.jsのESMについて紹介します。",
-    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
-  },
-  "https://github.com/hiroppy/the-sample-of-module-bundler/pull/1": {
-    "title": "implement ESM by hiroppy · Pull Request #1 · hiroppy/the-sample-of-module-bundler",
-    "description": "output\n((modules) => {\n  const usedModules = {};\n\n  function require(moduleId) {\n    if (usedModules[moduleId]) {\n      return usedModules[moduleId].exports;\n    }\n\n    const module = (usedModules[...",
-    "image": "https://opengraph.githubassets.com/6000cd9eaffb54173295c819ea3b59f1636f968409efa0654c046643c6265079/hiroppy/the-sample-of-module-bundler/pull/1"
-  },
-  "https://astexplorer.net": {
-    "title": "AST explorer",
-    "description": "An online AST explorer.",
-    "image": ""
-  },
-  "https://developer.mozilla.org/ja/docs/Web/JavaScript/Enumerability_and_ownership_of_properties": {
-    "title": "プロパティの列挙可能性と所有権 - JavaScript | MDN",
-    "description": "列挙可能プロパティは、内部の列挙可能（enumerable）フラグが true に設定されているプロパティです。これは、単純な代入や初期化で作成されたプロパティのデフォルトです (Object.defineProperty で追加したプロパティはデフォルトで列挙可能性が false になります）。プロパティのキーが Symbol でない限り、列挙可能なプロパティは for...in ループにの対象になります。プロパティの所有権は、プロパティがプロトタイプチェーンではなく、オブジェクトに直接属しているかどうかによって決まります。オブジェクトのプロパティはまとめて取り扱うこともでき、プロパティを検出、反復、列挙、取得するための多くの組み込み機能があります。以下に、使用可能なチャートと不足しているカテゴリを取得する方法を示すサンプルコードを示します。",
-    "image": "https://developer.mozilla.org/mdn-social-share.cd6c4a5a.png"
-  },
-  "https://www.graphql-code-generator.com": {
-    "title": "Home – GraphQL Code Generator",
-    "description": "GraphQL Code Generator Documentation",
-    "image": "https://open-graph-image.theguild.workers.dev/?product=CODEGEN&title=Home"
-  },
-  "https://www.graphql-code-generator.com/docs/presets/near-operation-file": {
-    "title": "near-operation-file-preset – GraphQL Code Generator",
-    "description": "GraphQL Code Generator Documentation",
-    "image": "https://open-graph-image.theguild.workers.dev/?product=CODEGEN&title=near-operation-file-preset"
-  },
-  "https://webpack.js.org/guides/asset-modules": {
-    "title": "Asset Modules | webpack",
-    "description": "webpack is a module bundler. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable of transforming, bundling, or packaging just about any resource or asset.",
-    "image": "https://webpack.js.org/icon-pwa-512x512.d3dae4189855b3a72ff9.png"
-  },
-  "https://github.com/webpack/webpack/pull/8983": {
-    "title": "add experimental asset support by hiroppy · Pull Request #8983 · webpack/webpack",
-    "description": "module.exports = {\n  output: {\n    assetModuleFilename: \"images/[hash][ext]\"\n  },\n  module: {\n    rules: [\n      {\n        test: /\\.(png|jpg|svg)$/,\n        type: \"asset/resource\"\n      }\n    ]\n  }...",
-    "image": "https://opengraph.githubassets.com/25a211d1046122aff61005516618f238d80d7cfaea7b744c9e6da22100fb2694/webpack/webpack/pull/8983"
-  },
-  "https://github.com/swc-project/swc/tree/main/crates/swc_webpack_ast": {
-    "title": "Build software better, together",
-    "description": "GitHub is where people build software. More than 94 million people use GitHub to discover, fork, and contribute to over 330 million projects.",
-    "image": "https://github.githubassets.com/images/modules/open_graph/github-logo.png"
-  },
-  "https://github.com/webpack-contrib/terser-webpack-plugin#swc": {
-    "title": "GitHub - webpack-contrib/terser-webpack-plugin: Terser Plugin",
-    "description": "Terser Plugin. Contribute to webpack-contrib/terser-webpack-plugin development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/c481a70059d36c8e9f21574892bdbb9b940c7d38199fac75387cf5b2f72925c6/webpack-contrib/terser-webpack-plugin"
-  },
-  "https://github.com/webpack/webpack/issues/13425": {
-    "title": "swc as a javascript parser · Issue #13425 · webpack/webpack",
-    "description": "Feature request Follow up of #13408 (reply in thread) I&#39;m author of the swc project and I&#39;m looking for way to improve the performance of webpack. Parsing something in javascript is a very ...",
-    "image": "https://opengraph.githubassets.com/a754b545cc8ef5ad2638a7543df578f3e3767963df0362cb630bbf9e1546f2ff/webpack/webpack/issues/13425"
-  },
-  "https://www.bleepingcomputer.com/news/security/npm-dependency-is-breaking-some-react-apps-today-heres-the-fix": {
-    "title": "npm dependency is breaking some React apps today — here's the fix",
-    "description": "Tons of users are reporting their Facebook Create React App builds are failing since yesterday. The cause has been traced down to a dependency used by create-react-app, the latest version of which is breaking developers' apps.",
-    "image": "https://www.bleepstatic.com/content/hl-images/2019/08/21/NPM.jpg"
-  },
-  "https://v4.webpack.js.org/vote": {
-    "title": "Vote | webpack",
-    "description": "webpack is a module bundler. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable of transforming, bundling, or packaging just about any resource or asset.",
-    "image": "/aad9d51e01a0dcc2caf5bee43dc8e647.svg"
-  },
-  "https://medium.com/@Rich_Harris/tree-shaking-versus-dead-code-elimination-d3765df85c80": {
-    "title": "Tree-shaking versus dead code elimination",
-    "description": "I’ve been working (albeit sporadically of late, admittedly) on a tool called Rollup, which bundles together JavaScript modules. One of its…",
-    "image": ""
-  },
-  "https://webpack.js.org/api/compiler-hooks/#hooks": {
-    "title": "Compiler Hooks | webpack",
-    "description": "webpack is a module bundler. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable of transforming, bundling, or packaging just about any resource or asset.",
-    "image": "https://webpack.js.org/icon-pwa-512x512.d3dae4189855b3a72ff9.png"
-  },
-  "https://github.com/webpack/changelog-v5/blob/master/README.md": {
-    "title": "changelog-v5/README.md at master · webpack/changelog-v5",
-    "description": "Temporary repo for the changelog for webpack 5. Contribute to webpack/changelog-v5 development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/b24016269f689f6935d9f844ce60d240e984cf27635de883fcbddbe1101e746e/webpack/changelog-v5"
-  },
-  "https://github.com/webpack/webpack/tree/master/examples/scope-hoisting": {
-    "title": "webpack/examples/scope-hoisting at main · webpack/webpack",
-    "description": "A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows for loading parts of the application on demand. Through &quot;loaders&quot;, modules can be...",
-    "image": "https://opengraph.githubassets.com/f1b4769b11e759f00c788d4ec8cca87f81d2a2cc3e095852fad9f0084bb50447/webpack/webpack"
-  },
-  "https://github.com/webpack/webpack/pull/6447": {
-    "title": "[WIP] feat(html): add HTML module support (`html`) by michael-ciniawsky · Pull Request #6447 · webpack/webpack",
-    "description": "This PR attempts to add support for a new module type (module.type === 'html')  to support HTML 'natively', replacing the need for loaders/plugins like the html-loader/html-webpack-plugin and  addi...",
-    "image": "https://opengraph.githubassets.com/9b689116c3c925cbdb3c66562e638e3f961ec1ad12113e28d40de406ef0ac2fc/webpack/webpack/pull/6447"
-  },
-  "https://events.html5j.org/conference/2018/11/session/#a5": {
-    "title": "HTML5 Conference",
-    "description": "HTML5 Conference - 2018年11月25日（日）東京電機大学 千住キャンパスにて開催。",
-    "image": "http://events.html5j.org/conference/2018/11/assets/img/ogp.png"
-  },
-  "https://github.com/webpack/webpack/pull/6446": {
-    "title": "feat(url): add asset module support (`url`) by michael-ciniawsky · Pull Request #6446 · webpack/webpack",
-    "description": "This PR attempts to add support for a new module type (module.type === 'url/experimental')  to handle 'assets' (Images, Fonts, SVG, ...) 'natively', replacing the need for loaders like the url/file...",
-    "image": "https://opengraph.githubassets.com/26236d7a5b12b777fe395c2ab98a9334dbbedfd1645cec59c42e740854ab13a8/webpack/webpack/pull/6446"
-  },
-  "https://github.com/webpack/webpack/pull/6448": {
-    "title": "[WIP] feat(css): add CSS module support (`css`) by michael-ciniawsky · Pull Request #6448 · webpack/webpack",
-    "description": "This PR attempts to add support for a new module type (module.type === 'css')  to support CSS 'natively', replacing the need for loaders/plugins like the css-loader/mini-css-extract-plugin and  eve...",
-    "image": "https://opengraph.githubassets.com/643209a5a965b86afaeb775f300310b35d8a16b12810d29c656d35b9d72786d2/webpack/webpack/pull/6448"
-  },
-  "https://medium.com/@about_hiroppy/introduce-ecmascript-modules-of-node-js-4bf873bcb21b": {
-    "title": "Introduce ECMAScript Modules of Node.js",
-    "description": "I talked about ECMAScript Modules at Dubin Node.js meetup. I made comments to deepen your understanding.",
-    "image": "https://miro.medium.com/max/1200/1*O2uOdSMrwF0qeX2BF-VC3g.png"
-  },
-  "https://github.com/webpack/changelog-v5/blob/master/guides/module-federation.md#low-level-concepts": {
-    "title": "changelog-v5/module-federation.md at master · webpack/changelog-v5",
-    "description": "Temporary repo for the changelog for webpack 5. Contribute to webpack/changelog-v5 development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/b24016269f689f6935d9f844ce60d240e984cf27635de883fcbddbe1101e746e/webpack/changelog-v5"
-  },
-  "https://github.com/hiroppy/webpack-mfe-sample": {
-    "title": "GitHub - hiroppy/webpack-mfe-sample",
-    "description": "Contribute to hiroppy/webpack-mfe-sample development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/74190bd896b3e47fa0f0be67e8e26c33392e193418962f894373e65665afaf59/hiroppy/webpack-mfe-sample"
-  },
-  "https://micro-frontends.org": {
-    "title": "Micro Frontends - extending the microservice idea to frontend development",
-    "description": "Techniques, strategies and recipes for building a modern web app with multiple teams using different JavaScript frameworks.",
-    "image": "/ressources/screen/three-teams.png"
-  },
-  "https://github.com/webpack/webpack/issues/10352": {
-    "title": "Merge Proposal: Module federation and code sharing between bundles. Many builds act as one · Issue #10352 · webpack/webpack",
-    "description": "This is a proposal to merge my existing work into the Webpack core. The base concept is federated application orchestration at runtime. What I hope will provide a new era for how we build apps at s...",
-    "image": "https://opengraph.githubassets.com/15a721519dc141eafee33e0bcf7e6c937c650d2dc7278da7a98da17ff90aa34f/webpack/webpack/issues/10352"
-  },
-  "https://www.patreon.com/hiroppy": {
-    "title": "hiroppy is creating OSS | Patreon",
-    "description": "Become a patron of hiroppy today: Get access to exclusive content and experiences on the world’s largest membership platform for artists and creators.",
-    "image": "https://c10.patreonusercontent.com/4/patreon-media/p/campaign/2527464/9a70fbd2536c45bc9a6a6a69acdefde8/eyJ3Ijo5NjAsIndlIjoxfQ==/1.png?token-time=1670112000&token-hash=buY9fLoWQGjh6Fgq2wAPIsKlJlIeHsd0zDvMFnrXV1g%3D"
+  "https://summerofcode.withgoogle.com/organizations/6230025286713344": {
+    "title": "Google Summer of Code",
+    "description": "Google Summer of Code is a global program focused on bringing more developers into open source software development.",
+    "image": "https://summerofcode.withgoogle.com/static/img/og-image.png"
   },
   "https://ja.wikipedia.org/wiki/Google_Summer_of_Code": {
     "title": "Google Summer of Code - Wikipedia",
     "description": "",
     "image": ""
   },
-  "https://opencollective.com/webpack": {
-    "title": "webpack - Open Collective",
-    "description": "webpack is THE build solution for modern web applications.",
-    "image": "https://images.opencollective.com/webpack/ecb7672/background.jpg"
+  "https://www.patreon.com/hiroppy": {
+    "title": "Get more from hiroppy on Patreon",
+    "description": "creating OSS",
+    "image": "https://c7.patreon.com/https%3A%2F%2Fwww.patreon.com%2F%2Fcard-teaser-image%2Fcreator%2F2527464%3Fc=1681640892293347329/selector/%23creator-teaser%2C.png"
   },
   "https://opencollective.com/webpack/expenses/7189": {
     "title": "major contributions to webpack or its ecosystem · Expense #7189 - Open Collective",
     "description": "webpack is THE build solution for modern web applications.",
     "image": "https://images.opencollective.com/webpack/ecb7672/background.jpg"
   },
-  "https://summerofcode.withgoogle.com/organizations/6230025286713344": {
-    "title": "Google Summer of Code",
-    "description": "Google Summer of Code is a global program focused on bringing more developers into open source software development.",
-    "image": "https://summerofcode.withgoogle.com/static/img/og-image.png"
+  "https://opencollective.com/webpack": {
+    "title": "webpack - Open Collective",
+    "description": "webpack is THE build solution for modern web applications.",
+    "image": "https://images.opencollective.com/webpack/ecb7672/background.jpg"
   },
-  "https://github.com/webpack/webpack-dev-server/pull/2005": {
-    "title": "test: don't use --runInBand and improve execution performance by hiroppy · Pull Request #2005 · webpack/webpack-dev-server",
-    "description": "This is a bugfix\n This is a feature\n This is a code refactor\n This is a test update\n This is a docs update\n This is a metadata update\n\nFor Bugs and Features; did you add new tests?\nmodify only\n\nMot...",
-    "image": "https://opengraph.githubassets.com/64080e19da4dedcf1d709354736d7dbd48da7a42a922ea54debc3e325d810113/webpack/webpack-dev-server/pull/2005"
+  "https://octoverse.github.com": {
+    "title": "Octoverse 2024: The state of open source",
+    "description": "Find out how AI and a rapidly growing global developer community are coming together with compounding results.",
+    "image": "https://octoverse.github.com/assets/images/social-card.png"
   },
-  "https://developer.mozilla.org/ja/docs/Web/Manifest": {
-    "title": "ウェブアプリマニフェスト | MDN",
-    "description": "ウェブアプリマニフェストは、プログレッシブウェブアプリ (PWA) と呼ばれる一連のウェブ技術の一部であり、アプリストアを通さずに端末のホーム画面にインストールすることができるものです。単純なホーム画面リンクやブックマークを持つ通常のウェブアプリとは異なり、 PWA は事前にダウンロードしてオフラインでも動作するだけでなく、通常の Web API を使用することもできます。",
-    "image": "https://developer.mozilla.org/mdn-social-share.cd6c4a5a.png"
+  "https://github.blog/2017-07-06-introducing-code-owners": {
+    "title": "Introducing code owners",
+    "description": "While effective code review is essential to every successful project, it’s not always clear who should review files—even with GitHub’s reviewer suggestions. Now repository maintainers can define exactly which people…",
+    "image": "https://github.blog/wp-content/uploads/2017/07/27803645-87c9a9c8-5ff8-11e7-91d7-2fa0718e6871.png"
   },
-  "https://developer.mozilla.org/ja/docs/Web/HTTP/CSP": {
-    "title": "コンテンツセキュリティポリシー (CSP) - HTTP | MDN",
-    "description": "コンテンツセキュリティポリシー (CSP) は、クロスサイトスクリプティング (Cross-site_scripting) やデータインジェクション攻撃などのような、特定の種類の攻撃を検知し、影響を軽減するために追加できるセキュリティレイヤーです。これらの攻撃はデータの窃取からサイトの改ざん、マルウェアの拡散に至るまで、様々な目的に用いられます。",
-    "image": "https://developer.mozilla.org/mdn-social-share.cd6c4a5a.png"
+  "https://github.com/gatsbyjs/gatsby": {
+    "title": "GitHub - gatsbyjs/gatsby: The best React-based framework with performance, scalability and security built in.",
+    "description": "The best React-based framework with performance, scalability and security built in. - gatsbyjs/gatsby",
+    "image": "https://opengraph.githubassets.com/e91b531ec382a9744ad6d7f7e36528e73277c21e735df98956be6348255466fb/gatsbyjs/gatsby"
   },
-  "https://blog.hiroppy.me/entry/react-apollo3.3.0": {
-    "title": "react-apollo@3.0.0へ移行する - 技術探し",
-    "description": "react-apolloの最新版である3.0.0の説明。",
-    "image": "https://avatars2.githubusercontent.com/u/17189275?s=200&v=4"
-  },
-  "https://blog.hiroppy.me/entry/ssr-sample": {
-    "title": "業務で使える簡単なSSR + SPA のテンプレートを公開した - 技術探し",
-    "description": "typescript + react + react-router-dom + react-helmet + redux + redux-saga + styled-componets + express + webpack + workbox で構築された業務でも使えるSSR + SPAの簡潔なテンプレートを紹介します。",
-    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/a/about_hiroppy/20180807/20180807080521.png"
-  },
-  "https://inside.pixiv.blog/kobo/5137": {
-    "title": "Content Security Policy Level 3におけるXSS対策 - pixiv inside",
-    "description": "こんにちは、セキュリティエンジニアのkoboです。ピクシブには2018年4月に入社しており、セキュリティ観点でのアプリケーション開発や脆弱性報奨金制度の運用などを行っています。 本記事では、現在ピクシブの一部のサービスで取り組んでいるContent Security Policyについて知見を共有します。 概要 Content Security Policy (CSP) は、XSSを主としたウェブアプリケーションセキュリティの問題を軽減するために考案されたブラウザのセキュリティ機構です。 ウェブアプリケーションは、 Content-Security-Policy ヘッダをHTTPレスポンスに含…",
-    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/p/pxv/20191224/20191224220953.png"
-  },
-  "https://w3c.github.io/manifest": {
-    "title": "\n      Web Application Manifest\n    ",
-    "description": "",
-    "image": ""
-  },
-  "https://github.com/sponsors/hiroppy": {
-    "title": "Sponsor @hiroppy on GitHub Sponsors",
-    "description": "Hi, I'm hiroppy and working on Node.js and webpack.",
-    "image": "https://avatars.githubusercontent.com/u/3367801?s=400&v=4"
-  },
-  "https://github.com/hiroppy/ssr-sample": {
-    "title": "GitHub - hiroppy/ssr-sample: A minimum sample of Server-Side-Rendering, Single-Page-Application and Progressive Web App",
-    "description": "A minimum sample of Server-Side-Rendering, Single-Page-Application and Progressive Web App - GitHub - hiroppy/ssr-sample: A minimum sample of Server-Side-Rendering, Single-Page-Application and Prog...",
-    "image": "https://opengraph.githubassets.com/d781fa6c5ce08f54b75a2cf0d354c03562a97330d495df8c53f7f9c2430865a2/hiroppy/ssr-sample"
-  },
-  "https://developers.google.com/web/tools/workbox": {
-    "title": "Workbox - Chrome Developers",
-    "description": "Production-ready service worker libraries and tooling.",
-    "image": "https://wd.imgix.net/image/QMjXarRXcMarxQddwrEdPvHVM242/ZUBXF0hK0jo9q4RvELUs.png?auto=format&w=1521"
-  },
-  "https://github.com/smooth-code/loadable-components": {
-    "title": "GitHub - gregberge/loadable-components: The recommended Code Splitting library for React ✂️✨",
-    "description": "The recommended Code Splitting library for React ✂️✨ - GitHub - gregberge/loadable-components: The recommended Code Splitting library for React ✂️✨",
-    "image": "https://repository-images.githubusercontent.com/95196818/9cab6800-1a7b-11ea-9b20-b47d65e66bd2"
-  },
-  "https://github.com/reduxjs/redux/issues/3313": {
-    "title": "Discussion: revamped docs content, structure, and teaching flow · Issue #3313 · reduxjs/redux",
-    "description": "Per discussion in #2590 , we&#39;d like to rethink the Redux docs content and structure pretty much from the ground up. Now that we&#39;ve got the new docs site up and running, it&#39;s time to sta...",
-    "image": "https://opengraph.githubassets.com/fbc97b0d0114d549b4a7b99c8f38ca635cffac567d1df5216a1d5519fef754b5/reduxjs/redux/issues/3313"
-  },
-  "https://github.com/facebook/react/pull/17285": {
-    "title": "[Flight] Basic Streaming Suspense Support by sebmarkbage · Pull Request #17285 · facebook/react",
-    "description": "This adds basic Suspense support to Flight by streaming the response.\nFirst it sends one line with the root JSON model. Within the model holes are replaced with \"$\" followed by a hex ID. E.g. \"$12A...",
-    "image": "https://opengraph.githubassets.com/73588f9d7164e471038efc3a5b035046d9864878d19fd4b5b5fd03c6b68e9a0a/facebook/react/pull/17285"
-  },
-  "https://qiita.com/koba04/items/e9de79b517662f3d9922": {
-    "title": "JSONをサーバーとフロント側で安全に共有する - Qiita",
-    "description": "こんな感じかなと思いつつ、ベスト・プラクティスってありますか？\n\n追記: @ngyuki さんがコメントしてくださったものの方がよさそうなのでそちらを紹介しておきます \n\n属性値として設定してHTML escapeする\n\n\nserve...",
-    "image": "https://qiita-user-contents.imgix.net/https%3A%2F%2Fcdn.qiita.com%2Fassets%2Fpublic%2Farticle-ogp-background-9f5428127621718a910c8b63951390ad.png?ixlib=rb-4.0.0&w=1200&mark64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjAuMCZ3PTkxNiZ0eHQ9SlNPTiVFMyU4MiU5MiVFMyU4MiVCNSVFMyU4MyVCQyVFMyU4MyU5MCVFMyU4MyVCQyVFMyU4MSVBOCVFMyU4MyU5NSVFMyU4MyVBRCVFMyU4MyVCMyVFMyU4MyU4OCVFNSU4MSVCNCVFMyU4MSVBNyVFNSVBRSU4OSVFNSU4NSVBOCVFMyU4MSVBQiVFNSU4NSVCMSVFNiU5QyU4OSVFMyU4MSU5OSVFMyU4MiU4QiZ0eHQtY29sb3I9JTIzMjEyMTIxJnR4dC1mb250PUhpcmFnaW5vJTIwU2FucyUyMFc2JnR4dC1zaXplPTU2JnR4dC1jbGlwPWVsbGlwc2lzJnR4dC1hbGlnbj1sZWZ0JTJDdG9wJnM9NGUxN2UzMzdjOTFkYzhkYWFkYWQ1OTRhNjEzODJjMDU&mark-x=142&mark-y=112&blend64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjAuMCZ3PTYxNiZ0eHQ9JTQwa29iYTA0JnR4dC1jb2xvcj0lMjMyMTIxMjEmdHh0LWZvbnQ9SGlyYWdpbm8lMjBTYW5zJTIwVzYmdHh0LXNpemU9MzYmdHh0LWFsaWduPWxlZnQlMkN0b3Amcz1jZjVkMDEzOTlkNTE4MGUyNjg2YjhiODVmZGQ0ODVhMA&blend-x=142&blend-y=491&blend-mode=normal&s=0a42e62e669b4cbea504c6148137f551"
-  },
-  "https://blog.hiroppy.me/entry/first-speech-abroad": {
-    "title": "初めて海外で登壇してきました - 技術探し",
-    "description": "ダブリンのNode.js meetupで登壇してきた話",
-    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/a/about_hiroppy/20190426/20190426003128.png"
-  },
-  "https://blog.hiroppy.me/entry/eye": {
-    "title": "健康を考えるステージになった - 技術探し",
-    "description": "💁‍♀️ ブログが移管されたので，5秒後に移動します // copied from https://blog.ottijp.com/2019/10/09/hatenablog-canonical/ if (document.getElementsByClassName('page-entry').length > 0) { const targetUrl = 'https://hiroppy.me/blog/bad-eyes'; const head = document.getElementsByTagName('head')[0]; const meta = document.create…",
-    "image": "https://ogimage.blog.st-hatena.com/10328749687208748984/13574176438052865712/1668659777"
-  },
-  "https://blog.hiroppy.me/entry/2017/12/01/102935": {
-    "title": "メルカリを退職した - 技術探し",
-    "description": "6ヶ月でしたが、退職することになりました。 本当にありがとうございます。 環境 アメリカと日本のプロダクトで活動していて、フロントエンドチームに所属していました。 特にメンターでチームリーダの方からは、多くの配慮をしていただき入社してからずっと助けて貰ってました。 もちろん、周りの皆さんにも助けて貰っていて、このような結果になってしまい本当に申し訳ないと思っています。 メルカリですが、日本で開発をしながら英語も使えるいい環境でした。 開発の相方が外国人の方で、英語を喋る機会が多かったです。個人的にはもっと日本の会社は多様性・グローバル化をしてほしいと思っています。 特に多様性の部分は自分が気付…",
-    "image": "https://ogimage.blog.st-hatena.com/10328749687208748984/8599973812317263849/1512167930"
-  },
-  "https://yuimedi.com": {
-    "title": "株式会社Yuimedi｜データで医療・ヘルスケアの世界をひとつに結う",
-    "description": "Yuimedi（ユイメディ）は、データクレンジングソフトウェアの開発、データ活用のコンサルティングを行なっているスタートアップです。",
-    "image": "https://storage.googleapis.com/production-os-assets/assets/9fb1802c-d28d-46e7-8cc1-68b77225616f"
-  },
-  "https://engineering.mercari.com/blog/entry/20220218-mercari-shops-automation": {
-    "title": "メルカリ Shops の開発を支える Automation 化",
-    "description": "こんにちは。ソウゾウで Software Engineer をしている @sottar です。連載：メルカリShops 開発の裏側 Vol.2の 5 日目を担当させていただきます。この記事ではメルカリShops における、開発をサポートする",
-    "image": "https://storage.googleapis.com/prd-engineering-asset/2022/02/90752eb8-08_sottar.jpeg"
-  },
-  "https://engineering.mercari.com/blog/entry/20210812-team-topologies-in-souzoh": {
-    "title": "Team Topologies in Souzoh",
-    "description": "こんにちは。ソウゾウの Software Engineer / Engineering Manager の@motokieeです。連載：「メルカリShops」プレオープンまでの開発の裏側の4日目を担当します。4日目は、ソウゾウがどのような体",
-    "image": "https://storage.googleapis.com/prd-engineering-asset/2021/08/f3d874ee-motokiee_1200x630.png"
-  },
-  "https://engineering.mercari.com/blog/entry/20210810-mercari-shops-tech-stack": {
-    "title": "メルカリShops の技術スタックと、その選定理由",
-    "description": "こんにちは。ソウゾウの Software Engineer (CTO) の @suguru です。連載：「メルカリShops」プレオープンまでの開発の裏側の1日目を担当させていただきます。7月末にメルカリShopsという新しいサービスが公開",
-    "image": "https://storage.googleapis.com/prd-engineering-asset/2021/08/ffbe8824-suguru_1200x630.png"
-  },
-  "https://engineering.mercari.com/blog/entry/20210810-the-new-mercari-web": {
-    "title": "新しいメルカリ Web の話",
-    "description": "@1000ch です、今回は新しいメルカリ Web について書きます。この大きなプロジェクトのリリースは、多くの人の多大なる貢献によって成されたものです。そのプロジェクトの立ち上がりから今日まで、リードする役割でプロジェクトを見てきた一部始",
-    "image": "https://storage.googleapis.com/prd-engineering-asset/2021/08/f7f7dc07-overall-architecture.png"
-  },
-  "https://blog.watilde.com/2022/04/01/aws-to-yuimedi": {
-    "title": "AWSを退職してYuimediに入社します",
-    "description": "こんにちは。@watildeです。 世界で一人目となるDeveloper Relations Engineer…",
-    "image": "https://i0.wp.com/blog.watilde.com/wp-content/uploads/2022/04/pc-9fdc9925587486dbf2e1fd46b8c7b967-5d53a654758addd879173211864b8e14-1.jpeg?fit=300%2C300&ssl=1"
-  },
-  "https://engineering.mercari.com/blog/entry/20210823-a57631d32e": {
-    "title": "メルカリShops のフロントエンド",
-    "description": "こんにちは。ソウゾウの Software Engineer の hiroppy です。「連載：「メルカリ Shops」プレオープンまでの開発の裏側」 の最後は、Web フロントエンドの紹介をしたいと思います。メルカリ Shops は既存のメ",
-    "image": "https://storage.googleapis.com/prd-engineering-asset/2021/08/e3eee645-hiroppy_1200x630.png"
-  },
-  "https://docs.google.com/document/d/1h__FmXsEWRuNrzAV_l3Iw9i_z8fCXSokGfBiW8-nDNg/edit#heading=h.m7xhvpd3gmjw": {
-    "title": "A Node.js Security Model",
-    "description": "A Node.js Security Model Intent This document proposes a way to introduce a set of features to Node.js in order to achieve a reasonable security model based upon the Object-Capability Model and verification of resources loaded by Node.js. Node.js was not designed to be a sandbox, and the usage of...",
-    "image": "https://lh3.googleusercontent.com/AnKTzE7t8tolsSYozulj9gu42WmguVZfOgIowuezhC8UBvUajLTR_Lyn5WoACE6IBrANaGnJVh-mWw=w1200-h630-p"
-  },
-  "https://nodejs.org/api/policy.html": {
-    "title": "Policies | Node.js v19.1.0 Documentation",
-    "description": "",
-    "image": ""
-  },
-  "https://blog.hiroppy.me/entry/nodejs-event-loop": {
-    "title": "Node.jsでのイベントループの仕組みとタイマーについて - 技術探し",
-    "description": "Node.jsでのイベントループとタイマーを解説します。",
-    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/a/about_hiroppy/20180925/20180925083813.png"
-  },
-  "https://blog.hiroppy.me/entry/nodejs-performance": {
-    "title": "Node.jsのアプリケーションデバッグ・改善方法をおさらいする - 技術探し",
-    "description": "Node.jsで作られたアプリケーションのデバッグ方法とパフォーマンス改善を手助けする手法をおさらいする。",
-    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/a/about_hiroppy/20180918/20180918091655.png"
+  "https://github.com/webpack-contrib/mocha-loader/pull/76#issuecomment-467005601": {
+    "title": "Mark mocha@6 compatibility and upgrade all dependencies by AviVahl · Pull Request #76 · webpack-contrib/mocha-loader",
+    "description": "fixed lint warnings in EnhancedMocha.js\nupdated bundle snapshot\nswitched to @webpack-contrib/defaults\n\n\nThis PR contains a:\n\n bugfix\n new feature\n code refactor\n test update \n typo fix\n metadata up...",
+    "image": "https://opengraph.githubassets.com/c0b22f999606f3991a809790d6f159bd64ed079773960aab0caae76b39a98f2c/webpack-contrib/mocha-loader/pull/76"
   },
   "https://blog.hiroppy.me/entry/2017/11/06/095943#node-report": {
-    "title": "Node.jsのパフォーマンスチューニングのtips - 技術探し",
-    "description": "--inspect, --inspect-brk --trace-opt, --trace-deopt --prof --trace-events-enabled --trace-gc node-report Performance Timing API 優しいコードの書き方へ v8::SnapshotCreator さいごに Node9が10/31に出ました🎉🎉🎉 Node v9.0.0 (Current) | Node.js 今回はNode単体の話なので、Express、Nginx等のチューニングに関してはココには書きません。 また、libuv等のコード内部の話もしません。 --inspe…",
-    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
+    "title": "Node.jsのパフォーマンスチューニングのtips - hiroppy's site",
+    "description": "Node.jsでのパフォーマンス改善の方法のtipsをまとめます",
+    "image": "https://hiroppy.me/blog/nodejs-performance-tips/og.png"
+  },
+  "https://blog.hiroppy.me/entry/nodejs-event-loop": {
+    "title": "Node.jsでのイベントループの仕組みとタイマーについて - hiroppy's site",
+    "description": "Node.jsのベースにあるイベントループがどのように動いているのかを解説します",
+    "image": "https://hiroppy.me/blog/nodejs-event-loop/og.png"
+  },
+  "https://blog.hiroppy.me/entry/nodejs-performance": {
+    "title": "Node.jsのアプリケーションデバッグ・改善方法をおさらいする - hiroppy's site",
+    "description": "Node.jsでどのようにデバッグをしたりパフォーマンスを改善させるかの方法を紹介します",
+    "image": "https://hiroppy.me/blog/nodejs-performance/og.png"
   },
   "https://www.npmjs.com/package/node-report": {
     "title": "node-report",
-    "description": "Diagnostic Report for Node.js. Latest version: 2.2.11, last published: 2 years ago. Start using node-report in your project by running `npm i node-report`. There are 18 other projects in the npm registry using node-report.",
-    "image": "https://static.npmjs.com/338e4905a2684ca96e08c7780fc68412.png"
+    "description": "Diagnostic Report for Node.js. Latest version: 2.2.11, last published: 5 years ago. Start using node-report in your project by running `npm i node-report`. There are 17 other projects in the npm registry using node-report.",
+    "image": "https://static-production.npmjs.com/338e4905a2684ca96e08c7780fc68412.png"
   },
   "https://github.com/nodejs/node/pull/22712": {
     "title": "node-report: meld into core by gireeshpunathil · Pull Request #22712 · nodejs/node",
     "description": "Checklist\n\n\n make -j4 test (UNIX), or vcbuild test (Windows) passes\n tests and/or benchmarks are included\n documentation is changed or added\n commit message follows commit guidelines\n\nThis PR adds ...",
     "image": "https://opengraph.githubassets.com/f3bed691d68396d35cc52cf3a53e5b5615b202dbb358534f08ff1880cb4b4305/nodejs/node/pull/22712"
   },
-  "https://blog.hiroppy.me/entry/2018/04/23/100031": {
-    "title": "エンジニア採用のための仕組みづくり - 技術探し",
-    "description": "自分が思うエンジニア採用の戦略です。",
-    "image": "https://2.bp.blogspot.com/-Lm75_V4O7JY/V3x2OZbmIFI/AAAAAAAA8II/fzLckySfqnk0k7P-_YkSF8aDEBuUBodpQCLcB/s800/job_programmer.png"
-  },
-  "https://motida-japan.hatenablog.com/entry/2017/12/02/010000": {
-    "title": "キャリアパスどうするねん問題 - アナログ金木犀",
-    "description": "釘宮です。こんにちは。 この記事は SHIROBAKO Advent Calendar 2017 の 二日目の記事です。昨日のkonifarさんの 武蔵野アニメーション総務 興津由佳の左眼について という記事からスタートしました。 ベスト・オブ・興津 はあれ一択ですよね。さすが、わかってらっしゃる。 さて。 キャリアパス悩む— 有象無象 (@kgmyshin) 2017年11月28日 キャリアパス悩みますよね。 なのでSHIROBAKOを見てみました。 なぜかというと、SHIROBAKOの主題を一言で表すと(浅はかかもですが)、 みゃーもりのキャリアパスどうするねん問題 に尽きるからです。1話…",
-    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/k/kgmyshin/20171201/20171201141230.jpg"
-  },
-  "https://logmi.jp/tech/articles/321591": {
-    "title": "エンジニアキャリアにおける焦燥感との向き合い方",
-    "description": "2019年7月6日、株式会社サイバーエージェントが主催するイベント「Battle Conference U30」が開催されました。30歳以下のエンジニアによる30歳以下のエンジニアのための技術カンファレンスである本イベントには、さまざまな領域で活躍する若手が登壇。企業の枠を超えて、自身の技術・事業・キャリアに関する知見を発表しました。「エンジニアキャリアにおける焦燥感との向き合いかた」に登壇したのは、LINE株式会社、ElevenBackの花谷拓磨（potato4d）氏。登壇資料はこちら",
-    "image": "https://img.logmi.jp/article_covers/QsG1nN3TyziTq9UCbX8A6m.jpg"
-  },
-  "https://github.com/hiroppy/dynamic-rendering-sample": {
-    "title": "GitHub - hiroppy/dynamic-rendering-sample: This repo introduces how to realize dynamic rendering.",
-    "description": "This repo introduces how to realize dynamic rendering. - GitHub - hiroppy/dynamic-rendering-sample: This repo introduces how to realize dynamic rendering.",
-    "image": "https://opengraph.githubassets.com/4932ee4f8a44e65e1fce73b056a79c5fde6d637e8e2932c916154698abba7666/hiroppy/dynamic-rendering-sample"
-  },
-  "https://github.com/GoogleChrome/rendertron": {
-    "title": "GitHub - GoogleChrome/rendertron: A Headless Chrome rendering solution",
-    "description": "A Headless Chrome rendering solution. Contribute to GoogleChrome/rendertron development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/a099c084948ca151f5dd2e8e233f668a5d8e8b86e89d4b247cb50f4f871d9454/GoogleChrome/rendertron"
-  },
-  "https://developers.google.com/search/docs/guides/dynamic-rendering": {
-    "title": "Renderowanie dynamiczne | Centrum wyszukiwarki Google  |  Dokumentacja  |  Google Developers",
-    "description": "Renderowanie dynamiczne może pomóc robotom w przetwarzaniu JavaScriptu. Dowiedz się, jak stosować renderowanie dynamiczne i poprawić skuteczność SEO.",
-    "image": "https://developers.google.com/static/search/images/home-social-share-lockup.png"
-  },
-  "https://blog.hiroppy.me/entry/nodejs-experimental-modules": {
-    "title": "Node.jsの新しいモジュール方式の実験的導入 - 技術探し",
-    "description": "Node.jsの新しいモジュール方式の実験的導入の解説",
-    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
-  },
-  "https://github.com/nodejs/modules/issues/312": {
-    "title": "Rename configuration options to avoid \"type\" term · Issue #312 · nodejs/modules",
-    "description": "We have seen this in a few places, but it seems we should discuss why to use the term &quot;type&quot; if it is used for determining how to interpret contents. We have seen arguments about familiar...",
-    "image": "https://opengraph.githubassets.com/fcfcc98f33882308956491f0f3205e87e254f15eea77baa62b5c68c11dafd049/nodejs/modules/issues/312"
-  },
-  "https://github.com/hiroppy/node-esm-example": {
-    "title": "GitHub - hiroppy/node-esm-example",
-    "description": "Contribute to hiroppy/node-esm-example development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/f47eb86a64790c178dd79efae1997e776e6f276a75af0d63ce4e3251488d1668/hiroppy/node-esm-example"
-  },
-  "https://github.com/nodejs/modules/blob/master/doc/announcement.md#works-in-progress": {
-    "title": "Build software better, together",
-    "description": "GitHub is where people build software. More than 94 million people use GitHub to discover, fork, and contribute to over 330 million projects.",
-    "image": "https://github.githubassets.com/images/modules/open_graph/github-logo.png"
-  },
-  "https://github.com/whatwg/html/issues/4315": {
-    "title": "JSON modules · Issue #4315 · whatwg/html",
-    "description": "Hey All, I&#39;d like to explore support for importing json, similar to how Node.js currently support require(&#39;./some.json&#39;) Expected behavior: imported json would export an object or array...",
-    "image": "https://opengraph.githubassets.com/d0ec2d464d8758a6cbace76e4154cf78a662663380d4acff2ae13ec6d65b1946/whatwg/html/issues/4315"
-  },
-  "https://www.meetup.com/ja-JP/Dublin-Node-js-Meetup/events/260666447": {
-    "title": "Login to Meetup | Meetup",
-    "description": "Find groups that host online or in person events and meet people in your local community who share your interests.",
-    "image": "https://secure.meetupstatic.com/web-next/online-events/share/online-events820x547.jpg"
-  },
-  "https://blog.hiroppy.me/entry/webpack-persistent-caching": {
-    "title": "webpack@5で入るPersistent Cachingについて - 技術探し",
-    "description": "webpack@5で新しく導入されるPersistent Cachingの機能を紹介します。",
-    "image": "https://avatars1.githubusercontent.com/u/2105791?s=200&v=4"
-  },
-  "https://blog.hiroppy.me/entry/module-federation": {
-    "title": "webpack@5で入るModule Federationについて - 技術探し",
-    "description": "webpackの次のバージョンで入るmodule federationという仕組みを説明します。",
-    "image": "https://avatars1.githubusercontent.com/u/2105791?s=200&v=4"
-  },
-  "https://blog.hiroppy.me/entry/webpack-asset-modules": {
-    "title": "webpackの次のバージョンで入るassetModulesの紹介 - 技術探し",
-    "description": "新しく入る機能であるassetModulesの紹介をします。",
-    "image": "https://avatars1.githubusercontent.com/u/2105791?s=200&v=4"
-  },
-  "https://github.com/browserslist/browserslist": {
-    "title": "GitHub - browserslist/browserslist: 🦔 Share target browsers between different front-end tools, like Autoprefixer, Stylelint and babel-preset-env",
-    "description": "🦔 Share target browsers between different front-end tools, like Autoprefixer, Stylelint and babel-preset-env - GitHub - browserslist/browserslist: 🦔 Share target browsers between different front-en...",
-    "image": "https://opengraph.githubassets.com/a661b454fe775f175aadc639945e6050746bbfa7522a42c819da62bed78a82d2/browserslist/browserslist"
-  },
-  "https://github.com/tc39/proposal-top-level-await": {
-    "title": "GitHub - tc39/proposal-top-level-await: top-level `await` proposal for ECMAScript (stage 4)",
-    "description": "top-level `await` proposal for ECMAScript (stage 4) - GitHub - tc39/proposal-top-level-await: top-level `await` proposal for ECMAScript (stage 4)",
-    "image": "https://opengraph.githubassets.com/91da0be2b4828c607abc9938cdb2e8f6e513cdcb85e235fdff58280abb086285/tc39/proposal-top-level-await"
-  },
-  "https://github.com/webpack/node-libs-browser": {
-    "title": "GitHub - webpack/node-libs-browser: [DEPRECATED] The node core libs for in browser usage.",
-    "description": "[DEPRECATED] The node core libs for in browser usage. - GitHub - webpack/node-libs-browser: [DEPRECATED] The node core libs for in browser usage.",
-    "image": "https://opengraph.githubassets.com/0a9ab776f996417ca9a040847358859b905918874e62ee9237ea2fe6dff9df28/webpack/node-libs-browser"
-  },
-  "https://github.com/webpack/webpack/issues/11406": {
-    "title": "webpack 5 release plan · Issue #11406 · webpack/webpack",
-    "description": "TL;DR: release planned for 2020-10-10 After nearly 1 year of beta testing and about 2 years of development we feel that it&#39;s time to release webpack 5 soon. As promised we do announce the relea...",
-    "image": "https://opengraph.githubassets.com/557838115ca43a5bc90861a341be7966a6b8fd5df78cf08b708e1447fbbe8a79/webpack/webpack/issues/11406"
-  },
   "https://blog.hiroppy.me/entry/2017": {
-    "title": "2017年を振り返る - 技術探し",
-    "description": "激しい一年でした。 振り返り 今年は転職を二回しました。 5月にドワンゴを辞めて、6月にメルカリに入って、12月にドワンゴに戻りました。 個人的には、社会的な多くの経験を積めたと思うし特に後悔とかはしてません。 しかしながら、多くの方々に御迷惑をかけたと思っています。 今年は多くの方に支えていただき感謝しています。 本当にありがとうございました。 コミュニティ 多くのエンジニアの方に会えたと思います。 JSエンジニアはもちろんですが、別分野のエンジニアの方々に多く出会えた年だった気がします。 今年は国内での活動をしていきたいと思っていたので、その目標は達成したのではないかなと思います。 来年も…",
-    "image": "https://pbs.twimg.com/profile_images/1721255496/101010_400x400.GIF"
+    "title": "",
+    "description": "",
+    "image": ""
   },
-  "https://logmi.jp/tech/articles/320191": {
-    "title": "モノリシックとマイクロサービスの共存––メルカリWeb開発チームの挑戦",
-    "description": "2018年10月4日、株式会社メルカリが主催するイベント「Mercari Tech Conf 2018」が開催されました。メルカリグループ各社が、今後目指す方向や、これから取り組む技術的なチャレンジなどを語るエンジニア向けカンファレンス。2度目の開催となる今回は「Evolution（変化）」をテーマに、エンジニアたちがメルカリの技術のこれからを語ります。プレゼンテーション「Web Application as a Microservice」に登壇したのは、株式会社メルカリ、テックリードの杉浦颯太氏。講演資料はこちら",
-    "image": "https://img.logmi.jp/articles/NkFxoZ2CxKRX3J9pJUXBCH.jpg"
+  "https://events.html5j.org/conference/2018/11/session/#a5": {
+    "title": "HTML5 Conference",
+    "description": "HTML5 Conference - 2018年11月25日（日）東京電機大学 千住キャンパスにて開催。",
+    "image": "http://events.html5j.org/conference/2018/11/assets/img/ogp.png"
   },
   "https://github.com/hiroppy/slides#2018": {
     "title": "GitHub - hiroppy/slides: My slides",
     "description": "My slides. Contribute to hiroppy/slides development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/b675a93e515bed1a7591d69b57e8656733c4d007238d1c69e507ec938943e5c8/hiroppy/slides"
+    "image": "https://opengraph.githubassets.com/bf7b765159272c82379b8c7c9fdb22fc56ffda38b9b7c73767d73e8bf7922d5b/hiroppy/slides"
   },
-  "https://blog.hiroppy.me/entry/2018": {
-    "title": "2018年を振り返り - 技術探し",
-    "description": "2018年振り返り",
-    "image": "https://pbs.twimg.com/profile_images/1721255496/101010_400x400.GIF"
+  "https://logmi.jp/tech/articles/320191": {
+    "title": "モノリシックとマイクロサービスの共存––メルカリWeb開発チームの挑戦 | ログミーBusiness",
+    "description": "メルカリWeb開発チームの誕生杉浦颯太氏（以下、杉浦）：よろしくお願いします。本日は「Web Application as a Microservice」というタイトルで、Webについてお話をしようと思います。まずはじめに自己紹介をさせてく...",
+    "image": "https://images.logmi.jp/media/article/320191/images/NkFxoZ2CxKRX3J9pJUXBCH.jpg"
   },
-  "https://blog.hiroppy.me/entry/2019/07/30/102311": {
-    "title": "エンジニアの自分が思う「焦燥感」 - 技術探し",
-    "description": "「焦燥感」について。",
-    "image": "https://cdn.image.st-hatena.com/image/square/76aede9022ce034c220d11face8d81dd87b61ce0/backend=imagemagick;height=500;quality=80;version=1;width=500/https%3A%2F%2F2.bp.blogspot.com%2F-Lm75_V4O7JY%2FV3x2OZbmIFI%2FAAAAAAAA8II%2FfzLckySfqnk0k7P-_YkSF8aDEBuUBodpQCLcB%2Fs800%2Fjob_programmer.png"
+  "https://webpack.js.org/api/compiler-hooks/#hooks": {
+    "title": "Compiler Hooks | webpack",
+    "description": "webpack is a module bundler. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable of transforming, bundling, or packaging just about any resource or asset.",
+    "image": "https://webpack.js.org/icon-pwa-512x512.934507c816afbcdb.png"
   },
-  "https://blog.hiroppy.me/entry/2019/09/05/110756": {
-    "title": "アイルランドから帰ってきた - 技術探し",
-    "description": "アイルランド 時差 気候 治安 食 酒 交通 お金 半年の変化 感想 3/2 - 8/26 までアイルランドで生活していました。 長かったようであっという間に過ぎていって本当に幸せな日々でした。人生の中で一番良かったんじゃないかな。。。 アイルランド イギリスの左にある島で北部がイギリス領です。 首都はタックスヘイブンで有名なダブリンで多くの有名なIT企業がこの都市に集まっています。 日本から直接アイルランドに行くことは出来ず、一度乗り継ぎが必要となります。 時差 タイムゾーンはGMT+0でイギリスと同じとなりますが、サマータイムにより現在はGMT+1となります。 サマータイムは、3月の最終日…",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Ei-map.png"
-  },
-  "https://blog.hiroppy.me/entry/first-social-game": {
-    "title": "初めてソシャゲというものをやった - 技術探し",
-    "description": "昨日、初めてソシャゲをやって5万投資した話。",
-    "image": "https://1.bp.blogspot.com/-Hke6uvZRFJc/VIhO_y0nMVI/AAAAAAAApks/TzJAnv82lKI/s800/game_kakin.png"
-  },
-  "https://github.com/hiroppy/fusuma": {
-    "title": "GitHub - hiroppy/fusuma: ✍️Fusuma makes slides with Markdown easily.",
-    "description": "✍️Fusuma makes slides with Markdown easily. Contribute to hiroppy/fusuma development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/9ab308af1fd6c709aac2d0d06de3cbe3f059004f3a239a0f99c8793bd9c8c37f/hiroppy/fusuma"
-  },
-  "https://blog.hiroppy.me/search?q=%E6%8C%AF%E3%82%8A%E8%BF%94%E3%82%8A": {
-    "title": "振り返り の検索結果 - 技術探し",
-    "description": "JavaScriptを中心に記事を書いていきます :;(∩´﹏`∩);:",
-    "image": "https://cdn.blog.st-hatena.com/images/theme/og-image-1500.png"
-  },
-  "https://type.jp/et/feature/17462": {
-    "title": "【名村卓】ソウゾウCTOへの移籍で再認識した「高くて健全なプライド」をエンジニアが持つ意味 - エンジニアtype | 転職type",
-    "description": "メルカリからソウゾウCTOのポジションへと移った今、名村さんは自らのミッションを何だと考えるのか。移籍を決意した背景や、これからつくっていきたいというソウゾウらしいエンジニア組織のあり方、これからの活躍が期待されるソフトウェアエンジニアの条件を聞いた。\n",
-    "image": "https://type.jp/et/feature/wp-content/uploads/2021/09/souzouog.jpg"
-  },
-  "https://techfeed.connpass.com/event/213218": {
-    "title": "TechFeed Summit#6 - v16リリース記念！Node.jsの最新動向を語り尽くす！ (2021/05/26 19:30〜)",
-    "description": "## エキスパートだらけのカンファレンス  TechFeed Summitのコンセプトは、「エキスパートだらけのカンファレンス」。エキスパート向けの情報サービスであるTechFeed Pro、そしてそれを支えるエキスパートコミュニティの魅力を存分に凝縮したオンラインイベントを目指しています。  ## TechFeed Summit #6のテーマはNode.js v16リリース  Yosuke Furukawa さん​、Masashi Hirano さん​、Yuta Hiroto さん​をお招きして、Node.js v16リリースの注目ポイントやNode.jsの最新動向まで、余すことなくお...",
-    "image": "https://connpass-tokyo.s3.amazonaws.com/thumbs/01/10/01100ec64756594e54cc5ab389970455.png"
-  },
-  "https://connpass.com/event/211877": {
-    "title": "Web24 (2021/05/07 18:00〜)",
-    "description": "# Web24  ## tl;dr;    * Web のことをただひたすら 24 時間議論する   * 5/7 18:00 ~ 5/8: 18:00   * YouTube Live, 無料, アーカイブなし   * 登壇者の発言は個人のものであり所属する組織とは関係なし  ## 配信 URL    * https://bit.ly/web24live     * 連続配信の仕様のため Youtube Live の URL は途中で変わります     * Youtube Live の URL が変わったらこの bitly の遷移先を書き換えます     * シェアなどにはこの短縮 UR...",
-    "image": "https://connpass-tokyo.s3.amazonaws.com/thumbs/0e/7f/0e7f3629f70f221a99044db2bf5cc1f6.png"
-  },
-  "https://mercan.mercari.com/articles/28113": {
-    "title": "「新会社ソウゾウ立ち上げ期、いま率直にどうですか？」をメンバーに聞いてみた！ | mercan (メルカン)",
-    "description": "2021年1月28日に設立された「株式会社ソウゾウ(souzoh)」。 メルカリグループの次の柱となる事業を目指して発足。具体的な事業内容は明らかにされていませんが、着々とプロダクトリリースへの準備が進められています。 今回の記事では、そんなソウゾウに集う一部メンバーのプロフィー\n",
-    "image": "https://storage.googleapis.com/prd-mercan-asset/2021/04/e469b9e5-eyecatch-v2-1024x538.png"
-  },
-  "https://hiroppy.me": {
-    "title": "hiroppy's site",
-    "description": "Hiroppy is a JavaScript engineer and working on some OSS projects and Japanese communities.",
-    "image": "/images/meta/me.png"
-  },
-  "http://docs.libuv.org/en/v1.x/design.html": {
-    "title": "Design overview — libuv documentation",
-    "description": "",
+  "https://medium.com/@Rich_Harris/tree-shaking-versus-dead-code-elimination-d3765df85c80": {
+    "title": "Tree-shaking versus dead code elimination",
+    "description": "I’ve been working (albeit sporadically of late, admittedly) on a tool called Rollup, which bundles together JavaScript modules. One of its…",
     "image": ""
   },
-  "https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/#event-loop-explained": {
-    "title": "The Node.js Event Loop, Timers, and process.nextTick() | Node.js",
-    "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
-    "image": "https://nodejs.org/static/images/logo-hexagon-card.png"
+  "https://github.com/webpack/webpack/tree/master/examples/scope-hoisting": {
+    "title": "webpack/examples/scope-hoisting at main · webpack/webpack",
+    "description": "A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows for loading parts of the application on demand. Through &quot;loaders&quot;, modules can be...",
+    "image": "https://opengraph.githubassets.com/516c37cc7b5c94970b349a0a51f191dbc16dc7997eb26d35743fc40d81d53090/webpack/webpack"
   },
-  "https://medium.com/the-node-js-collection/what-you-should-know-to-really-understand-the-node-js-event-loop-and-its-metrics-c4907b19da4c": {
-    "title": "What you should know to really understand the Node.js Event Loop",
-    "description": "Node.js is an event-based platform. This means that everything that happens in Node is the reaction to an event. A transaction passing…",
-    "image": "https://miro.medium.com/max/1200/1*ROxiavz7LeRpIfcgRDE7CA.png"
+  "https://github.com/webpack/changelog-v5/blob/master/README.md": {
+    "title": "changelog-v5/README.md at master · webpack/changelog-v5",
+    "description": "Temporary repo for the changelog for webpack 5. Contribute to webpack/changelog-v5 development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/ef929df85f4031964a8e31dd0c747678992775e5d2d4a749ca6d27fe20015380/webpack/changelog-v5"
   },
-  "http://voidcanvas.com/nodejs-event-loop": {
-    "title": "Node.js event loop workflow & lifecycle in low level",
-    "description": "A year back while describing the differences between setImmediate & process.nextTick, I wrote a bit on the low level architecture of node’s event-loop. \nSurprisingly, the readers of that post became more",
-    "image": "https://imorph-assets.s3.amazonaws.com/site-docs/7ef2fe59-41d0-42ae-b6c9-eaa9f753e78b/85b179e9-8f33-4369-b31f-c6191e1eb6bd-original.png"
+  "https://github.com/webpack/webpack/pull/6448": {
+    "title": "[WIP] feat(css): add CSS module support (`css`) by michael-ciniawsky · Pull Request #6448 · webpack/webpack",
+    "description": "This PR attempts to add support for a new module type (module.type === &#39;css&#39;)  to support CSS &#39;natively&#39;, replacing the need for loaders/plugins like the css-loader/mini-css-extract...",
+    "image": "https://opengraph.githubassets.com/643209a5a965b86afaeb775f300310b35d8a16b12810d29c656d35b9d72786d2/webpack/webpack/pull/6448"
   },
-  "https://github.com/libuv/libuv/blob/v1.x/src/unix/core.c": {
-    "title": "libuv/core.c at v1.x · libuv/libuv",
-    "description": "Cross-platform asynchronous I/O. Contribute to libuv/libuv development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/1780799f9fb49ef6326322ea7e3ebe4383d12f8cb5aeafd23d7f5cfa3cd86c9b/libuv/libuv"
+  "https://github.com/webpack/webpack/pull/6447": {
+    "title": "[WIP] feat(html): add HTML module support (`html`) by michael-ciniawsky · Pull Request #6447 · webpack/webpack",
+    "description": "This PR attempts to add support for a new module type (module.type === &#39;html&#39;)  to support HTML &#39;natively&#39;, replacing the need for loaders/plugins like the html-loader/html-webpack-...",
+    "image": "https://opengraph.githubassets.com/9b689116c3c925cbdb3c66562e638e3f961ec1ad12113e28d40de406ef0ac2fc/webpack/webpack/pull/6447"
+  },
+  "https://github.com/webpack/webpack/pull/6446": {
+    "title": "feat(url): add asset module support (`url`) by michael-ciniawsky · Pull Request #6446 · webpack/webpack",
+    "description": "This PR attempts to add support for a new module type (module.type === &#39;url/experimental&#39;)  to handle &#39;assets&#39; (Images, Fonts, SVG, ...) &#39;natively&#39;, replacing the need for l...",
+    "image": "https://opengraph.githubassets.com/26236d7a5b12b777fe395c2ab98a9334dbbedfd1645cec59c42e740854ab13a8/webpack/webpack/pull/6446"
+  },
+  "https://nodejs.org/api/timers.html#timers_settimeout_callback_delay_args": {
+    "title": "Timers | Node.js v24.1.0 Documentation",
+    "description": "",
+    "image": ""
   },
   "http://www.ruanyifeng.com/blog/2018/02/node-event-loop.html": {
     "title": "Node 定时器详解 - 阮一峰的网络日志",
     "description": "",
     "image": ""
   },
-  "https://nodejs.org/api/timers.html#timers_settimeout_callback_delay_args": {
-    "title": "Timers | Node.js v19.1.0 Documentation",
+  "https://medium.com/the-node-js-collection/what-you-should-know-to-really-understand-the-node-js-event-loop-and-its-metrics-c4907b19da4c": {
+    "title": "What you should know to really understand the Node.js Event Loop",
+    "description": "Node.js is an event-based platform. This means that everything that happens in Node is the reaction to an event. A transaction passing…",
+    "image": "https://miro.medium.com/v2/resize:fit:1200/1*ROxiavz7LeRpIfcgRDE7CA.png"
+  },
+  "https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick": {
+    "title": "Node.js — The Node.js Event Loop",
+    "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
+    "image": "https://nodejs.org/en/next-data/og/announcement/Node.js%20%E2%80%94%20The%20Node.js%20Event%20Loop"
+  },
+  "https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/#phases-in-detail": {
+    "title": "Node.js — The Node.js Event Loop",
+    "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
+    "image": "https://nodejs.org/en/next-data/og/announcement/Node.js%20%E2%80%94%20The%20Node.js%20Event%20Loop"
+  },
+  "http://voidcanvas.com/nodejs-event-loop": {
+    "title": "",
     "description": "",
     "image": ""
   },
-  "https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/#phases-in-detail": {
-    "title": "The Node.js Event Loop, Timers, and process.nextTick() | Node.js",
+  "https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/#event-loop-explained": {
+    "title": "Node.js — The Node.js Event Loop",
     "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
-    "image": "https://nodejs.org/static/images/logo-hexagon-card.png"
+    "image": "https://nodejs.org/en/next-data/og/announcement/Node.js%20%E2%80%94%20The%20Node.js%20Event%20Loop"
   },
-  "https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick": {
-    "title": "The Node.js Event Loop, Timers, and process.nextTick() | Node.js",
-    "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
-    "image": "https://nodejs.org/static/images/logo-hexagon-card.png"
+  "https://github.com/libuv/libuv/blob/v1.x/src/unix/core.c": {
+    "title": "libuv/src/unix/core.c at v1.x · libuv/libuv",
+    "description": "Cross-platform asynchronous I/O. Contribute to libuv/libuv development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/4ccd9ff501ddb91f891cd4436ca3a6222ed57e0aca0c2bc1f695686407d7643d/libuv/libuv"
+  },
+  "http://docs.libuv.org/en/v1.x/design.html": {
+    "title": "Design overview - libuv documentationContentsMenuExpandLight modeDark modeAuto light/dark mode",
+    "description": "",
+    "image": ""
   },
   "https://cnodejs.org/topic/55a76cf95d5240f223494f31": {
     "title": "Node.js挖掘之四：从libuv到JS，一个TCP连接事件引发的一系列callback的逆向调用过程 - CNode技术社区",
@@ -602,22 +777,127 @@
   "https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules": {
     "title": "Tasks, microtasks, queues and schedules",
     "description": "",
-    "image": "https://jakearchibald.com/c/icon-42537423.png"
+    "image": "https://jakearchibald.com/c/icon-d166b7f8.png"
   },
-  "http://blog.hiroppy.me/entry/2018/05/25/100000": {
-    "title": "Node.jsのビルトインモジュールに名前空間が使われるかもしれない - 技術探し",
-    "description": "Node.jsのビルトインモジュールに対しての新しい提案として、名前空間で保護する案が出ている話",
+  "https://blog.hiroppy.me/entry/2017/11/06/095943#--prof": {
+    "title": "Node.jsのパフォーマンスチューニングのtips - hiroppy's site",
+    "description": "Node.jsでのパフォーマンス改善の方法のtipsをまとめます",
+    "image": "https://hiroppy.me/blog/nodejs-performance-tips/og.png"
+  },
+  "https://blog.hiroppy.me/entry/2017/11/06/095943": {
+    "title": "Node.jsのパフォーマンスチューニングのtips - hiroppy's site",
+    "description": "Node.jsでのパフォーマンス改善の方法のtipsをまとめます",
+    "image": "https://hiroppy.me/blog/nodejs-performance-tips/og.png"
+  },
+  "https://postd.cc/simple-guide-to-finding-a-javascript-memory-leak-in-node-js": {
+    "title": "Node.jsでのJavaScriptメモリリークを発見するための簡単ガイド | POSTD",
+    "description": "目次 初めに 極小理論 ステップ1. 問題の再現と確認 ステップ2. 最低3回のヒートダンプ採取 ステップ3. 問題の発見 ステップ4. 問題解決の確認 他のリソースへのリンク まとめ Someth…",
+    "image": "https://postd.cc/wp/wp-content/uploads/2016/05/memory-leak-500x386.png"
+  },
+  "https://nodejs.org/en/docs/guides/debugging-getting-started/#enabling-remote-debugging-scenarios": {
+    "title": "Node.js — Debugging Node.js",
+    "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
+    "image": "https://nodejs.org/en/next-data/og/announcement/Node.js%20%E2%80%94%20Debugging%20Node.js"
+  },
+  "https://slides.hiroppy.me/future-of-node/#20": {
+    "title": "future-of-node",
+    "description": "Introduce the current stability 1 modules and hot topics.",
     "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
   },
+  "https://github.com/mcollina/autocannon": {
+    "title": "GitHub - mcollina/autocannon: fast HTTP/1.1 benchmarking tool written in Node.js",
+    "description": "fast HTTP/1.1 benchmarking tool written in Node.js - mcollina/autocannon",
+    "image": "https://opengraph.githubassets.com/0f2c36ebe349ac2645628e7135ede7dff727c6c469792cab0d369938f38429b6/mcollina/autocannon"
+  },
+  "http://www.brendangregg.com/FlameGraphs/hotcoldflamegraphs.html": {
+    "title": "Hot/Cold Flame Graphs",
+    "description": "",
+    "image": ""
+  },
+  "https://github.com/nearform/node-clinic": {
+    "title": "GitHub - clinicjs/node-clinic: Clinic.js diagnoses your Node.js performance issues",
+    "description": "Clinic.js diagnoses your Node.js performance issues - clinicjs/node-clinic",
+    "image": "https://opengraph.githubassets.com/5029c8c3b9525d953b59e5f1d49ce66cac2b487a621bb0aab4676d2c60c85c37/clinicjs/node-clinic"
+  },
+  "https://github.com/nodejs/diagnostics/issues/148": {
+    "title": "Node CPU Profiling Roadmap · Issue #148 · nodejs/diagnostics",
+    "description": "We’d like to get feedback on the status of the profiling tools landscape in Node.js today. In particular -- we want to get alignment on a roadmap which will provide a free, open source, and cross-p...",
+    "image": "https://opengraph.githubassets.com/e81395a35febb8eba22a1d72e9babe84fdaee53695c198c2f6d84d7ce9eb5d6f/nodejs/diagnostics/issues/148"
+  },
+  "https://chrome.google.com/webstore/detail/nodejs-v8-inspector-manag/gnhhdgbaldcilmgcpfddgdbkhjohddkj": {
+    "title": "Node Inspector Manager (NIM) - Chrome Web Store",
+    "description": "Manages DevTools with Node V8 Inspector (node --inspect) Debugging Workflow",
+    "image": "https://lh3.googleusercontent.com/ppIizAjSrdpl-tTKjsUtZbD7Tla7npROR3osMMzUtf72f27cLKb3de0FkCB77EKsdFrm7YPQR_ARQ86KDZ829FlYuw=s128-rj-sc0x00ffffff"
+  },
+  "https://blog.hiroppy.me/entry/fusuma": {
+    "title": "",
+    "description": "",
+    "image": ""
+  },
+  "https://developer.mozilla.org/en-US/docs/Web/API/Presentation_API": {
+    "title": "Presentation API - Web APIs | MDN",
+    "description": "The Presentation API lets a user agent (such as a Web browser) effectively display web content through large presentation devices such as projectors and network-connected televisions. Supported types of multimedia devices include both displays which are wired using HDMI, DVI, or the like, or wireless, using DLNA, Chromecast, AirPlay, or Miracast.",
+    "image": "https://developer.mozilla.org/mdn-social-share.d893525a4fb5fb1f67a2.png"
+  },
+  "https://googlechrome.github.io/samples/presentation-api": {
+    "title": "Presentation Receiver API Sample",
+    "description": "Sample illustrating the use of Presentation Receiver API.",
+    "image": ""
+  },
+  "https://slides.hiroppy.me/future-of-node/#40": {
+    "title": "future-of-node",
+    "description": "Introduce the current stability 1 modules and hot topics.",
+    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
+  },
+  "https://docs.google.com/presentation/d/1xK1ana_TIxfAHX33CYVHFnJsV0If_YirLtRBBga9cv0/edit#slide=id.p": {
+    "title": "Node.js Package Mode",
+    "description": "Node.js Package Mode package.json { “mode”: “esm” }",
+    "image": "https://lh7-us.googleusercontent.com/docs/AHkbwyK3zL6AkkZyVD4doMpNAbahCXJs5FabkXKaNqIdlIoNq9a1mtkI0l6RBfK2MMbedzOJ0GmRO9BaFs3un7frbvrUgPcCtmUAWyvoVcXaA-Nn2PsQPgQ=w1200-h630-p"
+  },
+  "https://github.com/nodejs/node/pull/18392": {
+    "title": "esm: Implement esm mode flag by guybedford · Pull Request #18392 · nodejs/node",
+    "description": "This provides a mode: &quot;esm&quot; flag for package.json files which will treat &quot;.js&quot; files as ES modules within a given package boundary.\nThe package boundary of a package.json file i...",
+    "image": "https://opengraph.githubassets.com/c555e3788cfc4447079d7946013109fa8d2bbda5443ec3ed803bec198e6724d3/nodejs/node/pull/18392"
+  },
+  "http://blog.hiroppy.me/entry/performance-timing-api-with-node.js#Server-Side-Rendering": {
+    "title": "",
+    "description": "",
+    "image": ""
+  },
+  "http://blog.hiroppy.me/entry/2017/06/19/095956": {
+    "title": "Page Not Found",
+    "description": "",
+    "image": ""
+  },
+  "http://blog.hiroppy.me/entry/2017/07/28/101318": {
+    "title": "PWAの実装をしてみた - hiroppy's site",
+    "description": "Node.jsでのパフォーマンス改善の方法のtipsをまとめます",
+    "image": "https://hiroppy.me/blog/pwa/og.png"
+  },
+  "https://github.com/jfairbank/redux-saga-test-plan": {
+    "title": "GitHub - jfairbank/redux-saga-test-plan: Test Redux Saga with an easy plan.",
+    "description": "Test Redux Saga with an easy plan. Contribute to jfairbank/redux-saga-test-plan development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/57ae70481f3c85a35a6ea2c364c56342725e90f0eb93357dbe387aabf3d4c4b8/jfairbank/redux-saga-test-plan"
+  },
+  "https://github.com/jamiebuilds/react-loadable/pull/110": {
+    "title": "Migrate to webpack@4 API by 7rulnik · Pull Request #110 · jamiebuilds/react-loadable",
+    "description": "",
+    "image": "https://opengraph.githubassets.com/77e7c4677fff5b4b9c0e2d979917a04c15309529caf0c0701ff64389647ec901/jamiebuilds/react-loadable/pull/110"
+  },
+  "http://blog.hiroppy.me/entry/2018/05/25/100000": {
+    "title": "Node.jsのビルトインモジュールに名前空間が使われるかもしれない - hiroppy's site",
+    "description": "Node.jsにビルトイン専用の名前空間が提案されている話",
+    "image": "https://hiroppy.me/blog/nodejs-built-in-modules/og.png"
+  },
   "http://blog.hiroppy.me/entry/2017/10/23/110807#%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E5%A4%89%E6%95%B0": {
-    "title": "AyoでWorkerの実装が進んでいる - 技術探し",
-    "description": "Chrome Dev Summitのため、サンフランシスコで書いています。 Ayo側 Node側 Workerとは？ メソッド・変数 isMainThread postMessage(value[, transferList]) threadId workerData クラス MessageChannel MessagePort postMessage(value[, transferList]) Worker new Worker(filename, options) filename options Worker内の大きな違い postMessage(value[, transferLis…",
-    "image": "https://avatars2.githubusercontent.com/u/31225077?s=200&v=4"
+    "title": "Page Not Found",
+    "description": "",
+    "image": ""
   },
   "http://blog.hiroppy.me/entry/2017/10/23/110807": {
-    "title": "AyoでWorkerの実装が進んでいる - 技術探し",
-    "description": "Chrome Dev Summitのため、サンフランシスコで書いています。 Ayo側 Node側 Workerとは？ メソッド・変数 isMainThread postMessage(value[, transferList]) threadId workerData クラス MessageChannel MessagePort postMessage(value[, transferList]) Worker new Worker(filename, options) filename options Worker内の大きな違い postMessage(value[, transferLis…",
-    "image": "https://avatars2.githubusercontent.com/u/31225077?s=200&v=4"
+    "title": "Page Not Found",
+    "description": "",
+    "image": ""
   },
   "https://github.com/blake-regalia/worker.js/issues/1": {
     "title": "npm module name / Node.js built-in `worker` module · Issue #1 · blake-regalia/worker.js",
@@ -629,185 +909,85 @@
     "description": "Hi everyone! 👋\nThis PR adds threading support for to Node.js. I realize that this is not exactly a small PR and is going to take a while to review, so: I appreciate comments, questions (any kind, a...",
     "image": "https://opengraph.githubassets.com/cca92b9c8de86c6f539c868858b3e49bc23e9ed2c2fccce28468a34b09f211a7/nodejs/node/pull/20876"
   },
-  "https://slides.hiroppy.me/future-of-node/#40": {
-    "title": "future-of-node",
-    "description": "Introduce the current stability 1 modules and hot topics.",
-    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
-  },
-  "https://docs.google.com/presentation/d/1xK1ana_TIxfAHX33CYVHFnJsV0If_YirLtRBBga9cv0/edit#slide=id.p": {
-    "title": "Node.js Package Mode",
-    "description": "Node.js Package Mode package.json { “mode”: “esm” }",
-    "image": "https://lh6.googleusercontent.com/K5le4aSawFJiXjmAayFBVPGWa72KliPXfX-XoBfupu7wg8KYe_uvfQtwCRBboLqVd400RKVOawjtVw=w1200-h630-p"
-  },
-  "https://github.com/nodejs/node/pull/18392": {
-    "title": "esm: Implement esm mode flag by guybedford · Pull Request #18392 · nodejs/node",
-    "description": "This provides a mode: \"esm\" flag for package.json files which will treat \".js\" files as ES modules within a given package boundary.\nThe package boundary of a package.json file is deemed to be all m...",
-    "image": "https://opengraph.githubassets.com/c555e3788cfc4447079d7946013109fa8d2bbda5443ec3ed803bec198e6724d3/nodejs/node/pull/18392"
-  },
-  "https://slides.hiroppy.me/future-of-node/#20": {
-    "title": "future-of-node",
-    "description": "Introduce the current stability 1 modules and hot topics.",
-    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
-  },
-  "https://blog.hiroppy.me/entry/2017/11/06/095943#--prof": {
-    "title": "Node.jsのパフォーマンスチューニングのtips - 技術探し",
-    "description": "--inspect, --inspect-brk --trace-opt, --trace-deopt --prof --trace-events-enabled --trace-gc node-report Performance Timing API 優しいコードの書き方へ v8::SnapshotCreator さいごに Node9が10/31に出ました🎉🎉🎉 Node v9.0.0 (Current) | Node.js 今回はNode単体の話なので、Express、Nginx等のチューニングに関してはココには書きません。 また、libuv等のコード内部の話もしません。 --inspe…",
-    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
-  },
-  "https://nodejs.org/en/docs/guides/debugging-getting-started/#enabling-remote-debugging-scenarios": {
-    "title": "Debugging - Getting Started | Node.js",
-    "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
-    "image": "https://nodejs.org/static/images/logo-hexagon-card.png"
-  },
-  "https://blog.hiroppy.me/entry/2017/11/06/095943": {
-    "title": "Node.jsのパフォーマンスチューニングのtips - 技術探し",
-    "description": "--inspect, --inspect-brk --trace-opt, --trace-deopt --prof --trace-events-enabled --trace-gc node-report Performance Timing API 優しいコードの書き方へ v8::SnapshotCreator さいごに Node9が10/31に出ました🎉🎉🎉 Node v9.0.0 (Current) | Node.js 今回はNode単体の話なので、Express、Nginx等のチューニングに関してはココには書きません。 また、libuv等のコード内部の話もしません。 --inspe…",
-    "image": "https://avatars3.githubusercontent.com/u/9950313?s=200&v=4"
-  },
-  "https://postd.cc/simple-guide-to-finding-a-javascript-memory-leak-in-node-js": {
-    "title": "Node.jsでのJavaScriptメモリリークを発見するための簡単ガイド | POSTD",
-    "description": "目次 初めに 極小理論 ステップ1. 問題の再現と確認 ステップ2. 最低3回のヒートダンプ採取 ステップ3. 問題の発見 ステップ4. 問題解決の確認 他のリソースへのリンク まとめ Someth…",
-    "image": "https://postd.cc/wp/wp-content/uploads/2016/05/memory-leak-500x386.png"
-  },
-  "https://chrome.google.com/webstore/detail/nodejs-v8-inspector-manag/gnhhdgbaldcilmgcpfddgdbkhjohddkj": {
-    "title": "NIM (Node Inspector Manager)",
-    "description": "Node.jsのデバッグのため、 V8 Inspectorを自動で起動する拡張機能です。",
-    "image": "https://lh3.googleusercontent.com/ppIizAjSrdpl-tTKjsUtZbD7Tla7npROR3osMMzUtf72f27cLKb3de0FkCB77EKsdFrm7YPQR_ARQ86KDZ829FlYuw=w128-h128-e365-rj-sc0x00ffffff"
-  },
-  "https://github.com/mcollina/autocannon": {
-    "title": "GitHub - mcollina/autocannon: fast HTTP/1.1 benchmarking tool written in Node.js",
-    "description": "fast HTTP/1.1 benchmarking tool written in Node.js - GitHub - mcollina/autocannon: fast HTTP/1.1 benchmarking tool written in Node.js",
-    "image": "https://opengraph.githubassets.com/9ddc5b5eff5826a3634869e6c8f8c5e7b1ed1b6c64b541afafb8106a9c20fa25/mcollina/autocannon"
-  },
-  "https://github.com/nearform/node-clinic": {
-    "title": "GitHub - clinicjs/node-clinic: Clinic.js diagnoses your Node.js performance issues",
-    "description": "Clinic.js diagnoses your Node.js performance issues - GitHub - clinicjs/node-clinic: Clinic.js diagnoses your Node.js performance issues",
-    "image": "https://opengraph.githubassets.com/2f7023ec047da189e29b2f51a147586945ee7e1a1934eb3160543226989d33b4/clinicjs/node-clinic"
-  },
-  "http://www.brendangregg.com/FlameGraphs/hotcoldflamegraphs.html": {
-    "title": "Hot/Cold Flame Graphs",
-    "description": "",
-    "image": ""
-  },
-  "https://github.com/nodejs/diagnostics/issues/148": {
-    "title": "Node CPU Profiling Roadmap · Issue #148 · nodejs/diagnostics",
-    "description": "We’d like to get feedback on the status of the profiling tools landscape in Node.js today. In particular -- we want to get alignment on a roadmap which will provide a free, open source, and cross-p...",
-    "image": "https://opengraph.githubassets.com/e81395a35febb8eba22a1d72e9babe84fdaee53695c198c2f6d84d7ce9eb5d6f/nodejs/diagnostics/issues/148"
-  },
-  "https://blog.hiroppy.me/entry/fusuma": {
-    "title": "Markdownだけで綺麗なスライドを作るCLIを作っている - 技術探し",
-    "description": "Markdownだけでスライドを生成するFusumaというCLIを紹介します。 開発・ビルド・リリースをすべて1コマンドで行います。",
-    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/a/about_hiroppy/20180517/20180517085452.png"
-  },
-  "https://developer.mozilla.org/en-US/docs/Web/API/Presentation_API": {
-    "title": "Presentation API - Web APIs | MDN",
-    "description": "The Presentation API lets a user agent (such as a Web browser) effectively display web content through large presentation devices such as projectors and network-connected televisions. Supported types of multimedia devices include both displays which are wired using HDMI, DVI, or the like, or wireless, using DLNA, Chromecast, AirPlay, or Miracast.",
-    "image": "https://developer.mozilla.org/mdn-social-share.cd6c4a5a.png"
-  },
-  "https://googlechrome.github.io/samples/presentation-api": {
-    "title": "Presentation Receiver API Sample",
-    "description": "Sample illustrating the use of Presentation Receiver API.",
-    "image": ""
-  },
-  "http://blog.hiroppy.me/entry/performance-timing-api-with-node.js#Server-Side-Rendering": {
-    "title": "時間計測をしてNode.jsアプリのパフォーマンス改善の手助けをする - 技術探し",
-    "description": "Performance Timing APIの紹介とNode.jsのパフォーマンスチューニング方法について",
-    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/a/about_hiroppy/20180325/20180325094512.jpg"
-  },
-  "http://blog.hiroppy.me/entry/2017/06/19/095956": {
-    "title": "react-router, redux-sagaのテストの書き方 - 技術探し",
-    "description": "以下のリポジトリを参考にしてください github.com 記事が長くなってしまうので、プロダクションのコードは折りたたみしておきます。 使用ライブラリ Jest Enzyme jest-serializer-enzyme(enzymeでsnapshotとるため) redux-mock-store redux-saga-test-plan enzymeですが、snapshotに対応してないため react-test-rendererが最近の流れかもしれません。(むしろ推奨？) facebook.github.io github.com react-router github.com react…",
-    "image": "https://ogimage.blog.st-hatena.com/10328749687208748984/8599973812271089659/1535766760"
-  },
-  "http://blog.hiroppy.me/entry/2017/07/28/101318": {
-    "title": "PWAの実装をしてみた - 技術探し",
-    "description": "一年以上前の記事なので、コードが古いです。気をつけて読んでください。 PWAとは？ 目的 技術スタック Service Worker PWAのview App Shell Content キャッシュ戦略 読み込みフロー Web App Manifest デザイン FirefoxとChromeしかService Workerないけどどうするの？ ネットワーク 実装 ライブラリ webpack-offline 構成 ファイル ルーティング アセットのインストール API周り SSR 資料 さいごに そういえばPWAの実装したことがなかったなと思ったので少し触ってみた。 PWAとは？ PWA(Pro…",
-    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/a/about_hiroppy/20170727/20170727111537.png"
-  },
-  "https://github.com/jfairbank/redux-saga-test-plan": {
-    "title": "GitHub - jfairbank/redux-saga-test-plan: Test Redux Saga with an easy plan.",
-    "description": "Test Redux Saga with an easy plan. Contribute to jfairbank/redux-saga-test-plan development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/1b446bae058a8acc713be1fed4aa771fe1a3baf8f8a280de20fce7987c63c48b/jfairbank/redux-saga-test-plan"
-  },
-  "https://github.com/jamiebuilds/react-loadable/pull/110": {
-    "title": "Migrate to webpack@4 API by 7rulnik · Pull Request #110 · jamiebuilds/react-loadable",
-    "description": "",
-    "image": "https://opengraph.githubassets.com/77e7c4677fff5b4b9c0e2d979917a04c15309529caf0c0701ff64389647ec901/jamiebuilds/react-loadable/pull/110"
-  },
   "https://github.com/nodejs/node/pull/20922": {
     "title": "WIP: tools: add core files to @nodejs namespace by cjihrig · Pull Request #20922 · nodejs/node",
-    "description": "This is probably not the ideal solution, but I wanted to at least get the ball moving after the little bit of 'worker' module naming drama.\nThis commit allows all of Node core's public modules to b...",
+    "description": "This is probably not the ideal solution, but I wanted to at least get the ball moving after the little bit of &#39;worker&#39; module naming drama.\nThis commit allows all of Node core&#39;s public ...",
     "image": "https://opengraph.githubassets.com/959d3271aefd3150994ce5869a1f53d85ed3a401c022c64a436e91803cc81ffc/nodejs/node/pull/20922"
-  },
-  "https://nodesource.com/node-by-numbers": {
-    "title": "Node by Numbers 2018 — NodeSource",
-    "description": "Aside from sustained growth in Node.js adoption during 2018, analysis of the past year shows the impact of greater stability in the larger Node ecosystem.",
-    "image": ""
-  },
-  "http://blog.hiroppy.me/entry/migrate-to-webpack4#モジュールタイプ": {
-    "title": "webpack4への簡単なマイグレーションガイド - 技術探し",
-    "description": "webpack4への移行ガイド",
-    "image": "https://avatars1.githubusercontent.com/u/2105791?s=200&v=4"
-  },
-  "https://nodejs.org/api/esm.html": {
-    "title": "Modules: ECMAScript modules | Node.js v19.1.0 Documentation",
-    "description": "",
-    "image": ""
-  },
-  "https://github.com/nodejs/modules": {
-    "title": "GitHub - nodejs/modules: Node.js Modules Team",
-    "description": "Node.js Modules Team. Contribute to nodejs/modules development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/7f57387acccc4ea4f73a26afcfa9a778d017b3c01ce651a231942d5536350184/nodejs/modules"
-  },
-  "https://github.com/tc39/proposal-import-meta": {
-    "title": "GitHub - tc39/proposal-import-meta: import.meta proposal for JavaScript",
-    "description": "import.meta proposal for JavaScript. Contribute to tc39/proposal-import-meta development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/e1fb23f9bfd0b5f7c57ff46060c7007c398d57f54452f170c45977107bc7ff30/tc39/proposal-import-meta"
   },
   "https://github.com/nodejs/Release": {
     "title": "GitHub - nodejs/Release: Node.js Release Working Group",
     "description": "Node.js Release Working Group. Contribute to nodejs/Release development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/41cbe558588372b6a72e422c36bc470d008812e3d771ea9370dada20f90c9600/nodejs/Release"
+    "image": "https://opengraph.githubassets.com/d011e37ece517faa377ea89311861416be4b6248425a19afe674a138cb37717c/nodejs/Release"
   },
   "https://github.com/nodejs/node/pull/19091": {
     "title": "10.0.0 Proposal by jasnell · Pull Request #19091 · nodejs/node",
     "description": "This is nearly ready:\n\n1st RC Build will be cut afternoon (pacific time) of April 19th\n2nd RC Build (if there are any updates landed) will be cut afternoon of April 23rd\nRelease will be afternoon o...",
     "image": "https://opengraph.githubassets.com/a432924c8cecdf4bcaeabdc604cd0a4d29f154c04b02ae6fe42f9a6e87bda616/nodejs/node/pull/19091"
   },
-  "https://nodejs.org/dist/latest-v8.x/docs/api/perf_hooks.html": {
-    "title": "Performance Timing API | Node.js v8.17.0 Documentation",
+  "https://nodesource.com/node-by-numbers": {
+    "title": "NodeSource",
+    "description": "NodeSource is the safest and most secure Node.js platform. Secure. Reliable. Extensible.",
+    "image": "https://nodesource.com/assets/icons/nodesource-1200x630.png"
+  },
+  "https://nodejs.org/api/esm.html": {
+    "title": "Modules: ECMAScript modules | Node.js v24.1.0 Documentation",
     "description": "",
     "image": ""
+  },
+  "http://blog.hiroppy.me/entry/migrate-to-webpack4#モジュールタイプ": {
+    "title": "",
+    "description": "",
+    "image": ""
+  },
+  "https://github.com/nodejs/modules": {
+    "title": "GitHub - nodejs/modules: Node.js Modules Team",
+    "description": "Node.js Modules Team. Contribute to nodejs/modules development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/7e5e8a34a3337385d53028e98677966f386eaee7257301aa8d3255a632564418/nodejs/modules"
+  },
+  "https://github.com/tc39/proposal-import-meta": {
+    "title": "GitHub - tc39/proposal-import-meta: import.meta proposal for JavaScript",
+    "description": "import.meta proposal for JavaScript. Contribute to tc39/proposal-import-meta development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/4f6f51a802b9de6127cd7e35b9eea6f81c6e079b82dc1a77d15b4380cd681269/tc39/proposal-import-meta"
+  },
+  "http://abouthiroppy.hatenablog.jp/entry/2017/12/01/102935": {
+    "title": "メルカリを退職した - 技術探し",
+    "description": "6ヶ月でしたが、退職することになりました。 本当にありがとうございます。 環境 アメリカと日本のプロダクトで活動していて、フロントエンドチームに所属していました。 特にメンターでチームリーダの方からは、多くの配慮をしていただき入社してからずっと助けて貰ってました。 もちろん、周りの皆さんにも助けて貰っていて、このような結果になってしまい本当に申し訳ないと思っています。 メルカリですが、日本で開発をしながら英語も使えるいい環境でした。 開発の相方が外国人の方で、英語を喋る機会が多かったです。個人的にはもっと日本の会社は多様性・グローバル化をしてほしいと思っています。 特に多様性の部分は自分が気付…",
+    "image": "https://ogimage.blog.st-hatena.com/10328749687208748984/8599973812317263849/1512167930"
   },
   "http://postd.cc/simple-guide-to-finding-a-javascript-memory-leak-in-node-js": {
     "title": "Node.jsでのJavaScriptメモリリークを発見するための簡単ガイド | POSTD",
     "description": "目次 初めに 極小理論 ステップ1. 問題の再現と確認 ステップ2. 最低3回のヒートダンプ採取 ステップ3. 問題の発見 ステップ4. 問題解決の確認 他のリソースへのリンク まとめ Someth…",
     "image": "https://postd.cc/wp/wp-content/uploads/2016/05/memory-leak-500x386.png"
   },
-  "https://nodejs.org/en/blog/release/v9.0.0": {
-    "title": "Node v9.0.0 (Current) | Node.js",
-    "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
-    "image": "https://nodejs.org/static/images/logo-hexagon-card.png"
-  },
-  "http://abouthiroppy.hatenablog.jp/entry/2017/08/03/095304": {
-    "title": "Node8.3.0でデフォルトになるTF/Iに関わるベンチマークについて - 技術探し",
-    "description": "buildersconでのスライド 8.3.0 プロポーザル TurboFan + Ignition TurboFan Ignition Flow V8の5.9は・・・？ パフォーマンス webpack 8.2.1(V8 5.8) 8.3.0(V8 6.0) 結果 ESLint 8.2.1(V8 5.8) 8.3.0(V8 6.0) 結果 まとめ buildersconでのスライド speakerdeck.com 8.3.0 プロポーザル github.com 大きな変更はやはりV8の6.0とWHATWG Encoding Standardが入ることです🎉 今回はV8の6.0の話をします。 こ…",
-    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/a/about_hiroppy/20170803/20170803092506.jpg"
-  },
   "http://abouthiroppy.hatenablog.jp/entry/2017/08/08/192320": {
     "title": "NodeにPerformance Timing APIが追加される - 技術探し",
     "description": "NodeへPerformance Timing APIの初期実装が入ります。 資料 W3C NodeへのPR Performance Timing API 実装 Nodeで使ってみる 手順 コード API common now() mark(name: string) measure(name: string, startMark: string, endMark: string) get getEntries() getEntriesByType(type: string) getEntriesByName(name: string, type?: string) clear clearMa…",
     "image": "https://ogimage.blog.st-hatena.com/10328749687208748984/8599973812286804680/1502189293"
   },
-  "https://nodejs.org/en/docs/guides/simple-profiling": {
-    "title": "Easy profiling for Node.js Applications | Node.js",
+  "http://abouthiroppy.hatenablog.jp/entry/2017/08/03/095304": {
+    "title": "Node8.3.0でデフォルトになるTF/Iに関わるベンチマークについて - 技術探し",
+    "description": "buildersconでのスライド 8.3.0 プロポーザル TurboFan + Ignition TurboFan Ignition Flow V8の5.9は・・・？ パフォーマンス webpack 8.2.1(V8 5.8) 8.3.0(V8 6.0) 結果 ESLint 8.2.1(V8 5.8) 8.3.0(V8 6.0) 結果 まとめ buildersconでのスライド speakerdeck.com 8.3.0 プロポーザル github.com 大きな変更はやはりV8の6.0とWHATWG Encoding Standardが入ることです🎉 今回はV8の6.0の話をします。 こ…",
+    "image": "https://cdn.image.st-hatena.com/image/scale/be8ccd4694391edc97c536d99924932b84255913/backend=imagemagick;version=1;width=1300/https%3A%2F%2Fcdn-ak.f.st-hatena.com%2Fimages%2Ffotolife%2Fa%2Fabout_hiroppy%2F20170803%2F20170803092506.jpg"
+  },
+  "https://nodejs.org/en/blog/release/v9.0.0": {
+    "title": "Node.js — Node v9.0.0 (Current)",
     "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
-    "image": "https://nodejs.org/static/images/logo-hexagon-card.png"
+    "image": "https://nodejs.org/en/next-data/og/release/Node.js%20%E2%80%94%20Node%20v9.0.0%20(Current)"
+  },
+  "https://nodejs.org/en/docs/guides/simple-profiling": {
+    "title": "Node.js — Profiling Node.js Applications",
+    "description": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
+    "image": "https://nodejs.org/en/next-data/og/announcement/Node.js%20%E2%80%94%20Profiling%20Node.js%20Applications"
   },
   "https://github.com/nodejs/node-report": {
     "title": "GitHub - nodejs/node-report: Delivers a human-readable diagnostic summary, written to file.",
-    "description": "Delivers a human-readable diagnostic summary, written to file. - GitHub - nodejs/node-report: Delivers a human-readable diagnostic summary, written to file.",
-    "image": "https://opengraph.githubassets.com/f81888135ecbade88272edb6f4fa70a964fb8fa779076c9c568182267665e67c/nodejs/node-report"
+    "description": "Delivers a human-readable diagnostic summary, written to file. - nodejs/node-report",
+    "image": "https://opengraph.githubassets.com/752330b28a56b3b65d5cb7cfe7d0a51692350d56f1c30c718c556a54f41abc6f/nodejs/node-report"
+  },
+  "https://nodejs.org/dist/latest-v8.x/docs/api/perf_hooks.html": {
+    "title": "Performance Timing API | Node.js v8.17.0 Documentation",
+    "description": "",
+    "image": ""
   },
   "https://github.com/nodejs/help/issues/917": {
     "title": "Garbage collection changes in 8.7.0 · Issue #917 · nodejs/help",
@@ -817,221 +997,31 @@
   "https://github.com/nodejs/node/issues/13877": {
     "title": "Discussion/Tracking SnapshotCreator support · Issue #13877 · nodejs/node",
     "description": "Relevant earlier discussion on #9473 . v8::SnapshotCreator is a means to capture a heap snapshot of JS, CodeGen, and C++ bindings and revive them w/o performing loading/evaluation steps that got to...",
-    "image": "https://opengraph.githubassets.com/e107a5e35930b99c9c4ba4fcd33044ddc2a1d1ef878e896ae84ef669247d6b28/nodejs/node/issues/13877"
-  },
-  "http://abouthiroppy.hatenablog.jp/entry/2017/12/01/102935": {
-    "title": "メルカリを退職した - 技術探し",
-    "description": "6ヶ月でしたが、退職することになりました。 本当にありがとうございます。 環境 アメリカと日本のプロダクトで活動していて、フロントエンドチームに所属していました。 特にメンターでチームリーダの方からは、多くの配慮をしていただき入社してからずっと助けて貰ってました。 もちろん、周りの皆さんにも助けて貰っていて、このような結果になってしまい本当に申し訳ないと思っています。 メルカリですが、日本で開発をしながら英語も使えるいい環境でした。 開発の相方が外国人の方で、英語を喋る機会が多かったです。個人的にはもっと日本の会社は多様性・グローバル化をしてほしいと思っています。 特に多様性の部分は自分が気付…",
-    "image": "https://ogimage.blog.st-hatena.com/10328749687208748984/8599973812317263849/1512167930"
-  },
-  "https://developers.google.com/web/fundamentals/performance/prpl-pattern": {
-    "title": "Apply instant loading with the PRPL pattern",
-    "description": "PRPL is an acronym that describes a pattern used to make web pages load and become interactive, faster. In this guide, learn how each of these techniques fit together but still can be used independently to achieve performance results. ",
-    "image": "https://web-dev.imgix.net/image/FNkVSAX8UDTTQWQkKftSgGe9clO2/uZ3hQS2EPrA9csOgkoXI.png?auto=format&fit=max&w=1200&fm=auto"
-  },
-  "https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest": {
-    "title": "Add a web app manifest",
-    "description": "The web app manifest is a simple JSON file that tells the browser about your web application and how it should behave when installed on the user's mobile device or desktop. ",
-    "image": "https://web-dev.imgix.net/image/FNkVSAX8UDTTQWQkKftSgGe9clO2/uZ3hQS2EPrA9csOgkoXI.png?auto=format&fit=max&w=1200&fm=auto"
-  },
-  "https://developers.google.com/web/updates/2015/11/app-shell": {
-    "title": "Instant Loading Web Apps with an Application Shell Architecture - Chrome Developers",
-    "description": "Application shell architecture is a method of building progressive web apps today, taking advantage of a range of technologies.\n",
-    "image": "https://wd.imgix.net/image/fuiz5I8Iv7bV8YbrK2PKiY3Vask2/iGPiWTtoy7iF932Xday1.png?auto=format&w=1521"
+    "image": "https://opengraph.githubassets.com/00556228f14c015846296ebc4b9dfc7c86682a1b29e77c9f78f779c70fe5afde/nodejs/node/issues/13877"
   },
   "https://developers.google.com/web/fundamentals/getting-started/codelabs/your-first-pwapp": {
     "title": "Google Codelabs",
-    "description": "Google Developers Codelabs provide a guided, tutorial, hands-on coding experience. Most codelabs will step you through the process of building a small application, or adding a new feature to an existing application. They cover a wide range of topics such as Android Wear, Google Compute Engine, ARCore, and Google APIs on iOS.",
+    "description": "يقدّم لك برنامج Codelabs من Google for Developers دليلاً تعليميًا توجيهيًا وعملية ترميزية. سترشدك معظم الدروس التطبيقية حول الترميز خلال عملية إنشاء تطبيق صغير أو إضافة ميزة جديدة إلى تطبيق حالي. وتتناول هذه السلسلة مجموعة واسعة من المواضيع، مثل Android Wear وGoogle Compute Engine وARCore وGoogle APIs على iOS.",
     "image": ""
   },
-  "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1668817257600-29285.report.html": {
-    "title": "Lighthouse Report",
-    "description": "",
+  "https://developers.google.com/web/fundamentals/performance/prpl-pattern": {
+    "title": "Apply instant loading with the PRPL pattern  |  Articles  |  web.dev",
+    "description": "PRPL is an acronym that describes a pattern used to make web pages load and become interactive, faster. In this guide, learn how each of these techniques fit together but still can be used independently to achieve performance results.",
     "image": ""
   },
-  "https://ghost.org/": {
-    "title": "Ghost: The Creator Economy Platform",
-    "description": "The world's most popular modern publishing platform for creating a new media platform. Used by Apple, SkyNews, Buffer, OpenAI, and thousands more.",
-    "image": "https://ghost.org/images/meta/ghost.png"
-  },
-  "https://support.google.com/domains/answer/4522141?hl=ja": {
-    "title": "ドメインを URL または IP アドレスに転送する - Google Domains ヘルプ",
-    "description": "Google Domains でドメインを購入または移管すると、ドメイン名を別のアドレスに指定することで、ユーザーを 1 か所に誘導できます。\nたとえば、「www",
+  "https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest": {
+    "title": "Dodaj manifest aplikacji internetowej  |  Articles  |  web.dev",
+    "description": "Manifest aplikacji internetowej to prosty plik JSON, który informuje przeglądarkę o sposobie działania aplikacji internetowej.",
     "image": ""
   },
-  "https://github.com/pa11y/pa11y": {
-    "title": "GitHub - pa11y/pa11y: Pa11y is your automated accessibility testing pal",
-    "description": "Pa11y is your automated accessibility testing pal. Contribute to pa11y/pa11y development by creating an account on GitHub.",
-    "image": "https://opengraph.githubassets.com/30a8d4a77d27758911c625e4feb9f83af72fb9862bf33f276f2c48ab04c61756/pa11y/pa11y"
-  },
-  "https://www.w3.org/WAI/WCAG2AA-Conformance": {
-    "title": "Web Content Accessibility Guidelines (WCAG) 2 Level AA Conformance",
-    "description": "Accessibility resources free online from the international standards organization: W3C Web Accessibility Initiative (WAI).",
-    "image": "https://www.w3.org/WAI/assets/images/social-sharing-default.jpg"
-  },
-  "https://docs.astro.build/en/reference/directives-reference/#script--style-directives": {
-    "title": "Template Directives Reference",
-    "description": "Build faster websites with less client-side Javascript.",
-    "image": "https://docs.astro.build/open-graph/en/reference/directives-reference.png"
-  },
-  "https://docs.astro.build/en/core-concepts/astro-components/#client-side-scripts": {
-    "title": "Components",
-    "description": "An intro to the .astro component syntax.",
-    "image": "https://docs.astro.build/open-graph/en/core-concepts/astro-components.png"
-  },
-  "https://vitejs.dev/guide/env-and-mode.html#env-files": {
-    "title": "Vite",
-    "description": "Next Generation Frontend Tooling",
-    "image": "https://vitejs.dev/og-image.png"
-  },
-  "https://hiroppy.me/blog/astro-script-issue": {
-    "title": "AstroのScriptタグを扱うときの注意 - hiroppy's site",
-    "description": "AstroでのScriptタグのパフォーマンスの問題と環境変数の扱い方について説明します。",
-    "image": "/images/brands/astro.png"
-  },
-  "https://happyhackingkb.com/jp/products/hybrid_types/": {
-    "title": "Happy Hacking Keyboard | HHKB HYBRID Type-S | PFU",
-    "description": "株式会社PFUがお届けする高性能コンパクトキーボード、HHKB・Happy Hacking Keyboard HYBRID Type-Sのページです。",
-    "image": "https://happyhackingkb.com//ogp.png"
-  },
-  "https://www.diatec.co.jp/products/det.php?prod_c=1319": {
-    "title": "Majestouch MINILA JP68キー 赤軸製品情報 | ダイヤテック株式会社",
-    "description": "FILCO新コンパクト！親指ダブルFnキーボード ／FILCOキーボードの製造・販売を行うダイヤテック株式会社です。",
-    "image": "https://www.diatec.co.jp/image/ogimage.jpg"
-  },
-  "https://githubnext.com/projects/ai-for-pull-requests/": {
-    "title": "GitHub Next | AI for Pull Requests",
-    "description": "GitHub Next Project: AI for Pull Requests wants to make GitHub Pull Requests seamless, low burden and magical.",
-    "image": "https://githubnext.com/assets/images/og/project/ai-for-pull-requests.png"
-  },
-  "https://whatthediff.ai/": {
-    "title": "What-the-Diff – AI-powered code review assistant",
-    "description": "The AI powered GitHub app that explains the changes within your pull requests in plain english",
-    "image": "https://whatthediff.ai/images/card.png"
-  },
-  "https://mozaic.fm/episodes/110/yearly-ecosystem-2022.html": {
-    "title": "ep110 Yearly Ecosystem 2022 | mozaic.fm",
-    "description": "第 110 回のテーマは 2022 年 の Yearly Ecosystem です。今年の 8 月に開始した Ecosystem と、今回作成したそれ以前のまとめを踏まえ、今年の Web Ecosystem を振り返ります。",
-    "image": "https://mozaic.fm/assets/img/mozaic.600x600.png"
-  },
-  "https://hiroppy.me/blog/migrate-blog-from-hatena": {
-    "title": "Astroでサイトを作り直し、ブログをはてなから移管しました - hiroppy's site",
-    "description": "AstroとTailwindでサイト・ブログを再構築しました。この記事ではどのようにブログを移管したのかを紹介します。",
-    "image": "https://hiroppy.me/images/me.png"
-  },
-  "https://yuimedi.notion.site/d8e4e0131d2e47f797ae6a161b61fb64": {
-    "title": "Notion – The all-in-one workspace for your notes, tasks, wikis, and databases.",
-    "description": "A new tool that blends your everyday work apps into one. It's the all-in-one workspace for you and your team",
-    "image": "https://www.notion.so/images/meta/default.png"
-  },
-  "https://astro.build/blog/astro-2/": {
-    "title": "Astro 2.0 | Astro",
-    "description": "Astro 2.0 is here! Astro 2.0 is the first major web framework to deliver complete type-safety for Markdown and MDX. Other release highlights include: Hybrid Rendering • Redesigned Error Overlays • Improved Dev Server and HMR • Vite 4.0 • A New Public Roadmap",
-    "image": "https://astro.build/assets/social_Z2uMogB.jpeg"
-  },
-  "https://docs.astro.build/en/guides/content-collections": {
-    "title": "Content Collections",
-    "description": "Content collections help organize your Markdown and type-check your frontmatter with schemas.",
-    "image": "https://docs.astro.build/open-graph/en/guides/content-collections.png"
-  },
-  "https://github.com/hiroppy/site/pull/549": {
-    "title": "refactor: migrate to Content Collections by hiroppy · Pull Request #549 · hiroppy/site",
-    "description": "https://docs.astro.build/en/guides/content-collections",
-    "image": "https://opengraph.githubassets.com/2d0af6d097b36bc28a827d65c6c742737d9b724a42d7866a98fca880fd94c78a/hiroppy/site/pull/549"
-  },
-  "https://findy-code.io/engineer-lab/influential-books-3": {
-    "title": "あなたのキャリアに影響を与えた本は何ですか？ 著名エンジニアの方々に聞いてみた【第三弾】 - Findy Engineer Lab - ファインディエンジニアラボ",
-    "description": "過去にエンジニアラボに登場した、8人の著名なエンジニアのキャリアに影響を与えた“珠玉の書籍”を、ご本人にまつわるエピソードとともに紹介してもらいました。",
-    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/m/marikaakamatsu/20231109/20231109110540.jpg"
-  },
-  "https://prtimes.jp/main/html/rd/p/000000097.000021828.html": {
-    "title": "株式会社Rebaseの技術顧問に廣戸裕大（Hiroppy）氏が就任",
-    "description": "株式会社Rebaseのプレスリリース（2023年12月15日 14時00分）株式会社Rebaseの技術顧問に廣戸裕大（Hiroppy）氏が就任",
-    "image": "https://prcdn.freetls.fastly.net/release_image/21828/97/21828-97-28c42bc1c46e009f26ef0df502fa047e-1280x720.png?format=jpeg&auto=webp&fit=bounds&width=480&height=360"
-  },
-  "https://findy-code.io/engineer-lab/hiroppy": {
-    "title": "プログラミングを強みに生き残れるか？ 焦燥感にとらわれた20代を越えて広がったキャリアの可能性  - Findy Engineer Lab - ファインディエンジニアラボ",
-    "description": "OSS活動をする中で知った、届かない存在に対する焦燥感。ソフトウェアエンジニアとしてプログラミングが一番の強みだという廣戸裕大（hiroppy）さんですが、IC（Individual Contributor）のキャリアを歩むなかで技術のキャッチアップにもがき、悩んだ時期もあったといいます。その焦燥感をどう解消していったのか、今につながった転機を寄稿いただきました。",
-    "image": "https://cdn-ak.f.st-hatena.com/images/fotolife/b/blog-media/20230417/20230417144638.jpg"
-  },
-  "https://hiroppy.me/blog/2022": {
-    "title": "2022年を振り返る - hiroppy's site",
-    "description": "2022年の仕事やイベント等の振り返り",
-    "image": "https://hiroppy.me/_astro/ogp.llFle8Is.png"
-  },
-  "https://mozaic.fm/episodes/137/yearly-ecosystem-2023.html": {
-    "title": "ep137 Yearly Ecosystem 2023 | mozaic.fm",
-    "description": "第 137 回のテーマは 2023 年を振り返る Yearly Ecosystem です。",
-    "image": "https://mozaic.fm/assets/img/mozaic.600x600.png"
-  },
-  "https://hiroppy.me/blog/nodejs-esm": {
-    "title": "Node.jsとECMAScript Modules - hiroppy's site",
-    "description": "Node.jsに入るECMAScript Mdoulesの特徴を紹介します",
-    "image": "https://hiroppy.me/_astro/nodejs.2_oGYeR4.png"
-  },
-  "https://nextjs-app-router-training.vercel.app/": {
-    "title": "Next.js App Router Training",
-    "description": "Introducing various basic patterns using Next.js' app router with simplified code.",
-    "image": "https://nextjs-app-router-training.vercel.app/opengraph-image.png?fcd239148f85b301"
-  },
-  "https://github.com/hiroppy/web-app-template": {
-    "title": "GitHub - hiroppy/web-app-template: A minimal template for web app including DataBase, Google Auth, and frontend infrastructure 🎃",
-    "description": "A minimal template for web app including DataBase, Google Auth, and frontend infrastructure 🎃 - hiroppy/web-app-template",
-    "image": "https://opengraph.githubassets.com/4584148c0168cfc08cd062b0a9af325add885c235574e1b9b11a1e526e517c35/hiroppy/web-app-template"
-  },
-  "https://hiroppy.me/blog/nodejs-experimental-modules": {
-    "title": "Node.jsの新しいモジュール方式の実験的導入 - hiroppy's site",
-    "description": "Node.jsに新しく入るESMのアルゴリズムと仕組みを紹介します",
-    "image": "https://hiroppy.me/ogp/blog/nodejs-experimental-modules/og-4e6f64652e6a73e381aee696b0e38197e38184e383a2e382b8e383a5e383bce383abe696b9e5bc8fe381aee5ae9fe9a893e79a84e5b08ee585a56a617661736372697074.png"
-  },
-  "https://hiroppy.me/blog/node-esm": {
-    "title": "Node.jsのECMAScript Modulesの紹介 - hiroppy's site",
-    "description": "Node.jsのESMのリゾルバの説明と特徴を紹介します",
-    "image": "https://hiroppy.me/ogp/blog/node-esm/og-4e6f64652e6a73e381ae45434d41536372697074204d6f64756c6573e381aee7b4b9e4bb8b6a617661736372697074.png"
-  },
-  "https://github.com/nodejs/node/pull/51977": {
-    "title": "module: support require()ing synchronous ESM graphs by joyeecheung · Pull Request #51977 · nodejs/node",
-    "description": "Summary\nThis patch adds require() support for synchronous ESM graphs under\nthe flag --experimental-require-module\nThis is based on the the following design aspect of ESM:\n\nThe resolution can be syn...",
-    "image": "https://opengraph.githubassets.com/bf29d92f5a9a877b509142212f03a67b81b226e66a8e14a6821aff285d9a37ee/nodejs/node/pull/51977"
-  },
-  "https://mozaic.fm/episodes/144/monthly-ecosystem-202403.html": {
-    "title": "ep144 Monthly Ecosystem 202403 | mozaic.fm",
-    "description": "第 143 回のテーマは 2024 年 3 月の Monthly Ecosystem です。",
-    "image": "https://mozaic.fm/assets/img/mozaic.600x600.png"
-  },
-  "https://github.com/nodejs/node/pull/53725": {
-    "title": "module: add --experimental-strip-types by marco-ippolito · Pull Request #53725 · nodejs/node",
-    "description": "It is possible to execute TypeScript files by setting the experimental flag --experimental-strip-types.\nNode.js will transpile TypeScript source code into JavaScript source code.\nDuring the transpi...",
-    "image": "https://opengraph.githubassets.com/681ef38b64e53e0bc990116e3f9a86f6ca6af68a55ca9ac111b866180eef7693/nodejs/node/pull/53725"
-  },
-  "https://github.com/nodejs/loaders/issues/208": {
-    "title": "Support typescript  with --experimental-strip-types  · Issue #208 · nodejs/loaders",
-    "description": "Add this issue to keep track of the work for supporting typescript out of the box, in the PR you can find documentation etc... The main idea is to use type-stripping. This is achieved ideally throu...",
-    "image": "https://opengraph.githubassets.com/72dae0e2e43ffa1a83a13f92f46717ce3a0dac0b1b03a94c8aaa6d397b3213a9/nodejs/loaders/issues/208"
-  },
-  "https://hiroppy.github.io/web-app-template/features/unit-testing.html": {
-    "title": "Unit Testing | Web App Template",
-    "description": "From Zero to Service: Build with Best Practices, Minimal Code, and Essential Tools.",
+  "https://developers.google.com/web/updates/2015/11/app-shell": {
+    "title": "Web-apps direct laden met een applicatie-shell-architectuur  |  Blog  |  Chrome for Developers",
+    "description": "Applicatieshell-architectuur is een methode om tegenwoordig progressieve web-apps te bouwen, waarbij gebruik wordt gemaakt van een reeks technologieën.",
     "image": ""
   },
-  "https://testcontainers.com/": {
-    "title": "Testcontainers",
-    "description": "Testcontainers is an opensource library for providing lightweight, throwaway instances of common databases, Selenium web browsers, or anything else that can run in a Docker container.",
-    "image": "https://testcontainers.com//images/share-image.png"
-  },
-  "https://nextjs.org/docs/app/building-your-application/routing/middleware#unit-testing-experimental": {
-    "title": "Routing: Middleware | Next.js",
-    "description": "Learn how to use Middleware to run code before a request is completed.",
-    "image": "https://nextjs.org/api/docs-og?title=Routing:%20Middleware"
-  },
-  "https://www.nikkei.com/article/DGXZQOUC02ASK0S5A400C2000000/": {
-    "title": "LayerX、AIエージェントに参入　請求書受け取り代行など - 日本経済新聞",
-    "description": "支出管理システムのLayerX（レイヤーエックス、東京・中央）は2025年度中に人工知能（AI）エージェント事業に参入する。同社の既存サービスの請求書受領システムと連携させ、AIエージェントが企業の請求書受け取り代行を担うサービスなどを始める。30年には関連事業で500億円の売り上げを目指す。AIエージェントを活用して企業の間接業務を請け負うビジネス・プロセス・ア",
-    "image": "https://article-image-ix.nikkei.com/https%3A%2F%2Fimgix-proxy.n8s.jp%2FDSXZQO6225661004042025000000-1.jpg?auto=format&bg=FFFF&crop=focalpoint&fit=crop&fp-x=0.1&fp-y=0.14&h=630&w=1200&s=05e25f4d44cac486b64ac8cdb4619913"
-  },
-  "https://coder-penguin.com/": {
-    "title": "合同会社Coder Penguin",
-    "description": "合同会社Coder Penguinは、主にフロントエンドやNode.jsのパフォーマンス改善、技術選定サポート、組織課題解決、エンジニア採用など多岐にわたる支援を行っている会社です。",
-    "image": "https://coder-penguin.com/_astro/ogp.BoPtfs6M.jpg"
+  "https://hiroppy.me": {
+    "title": "hiroppy's site",
+    "description": "Hiroppy is a JavaScript engineer and working on some OSS projects and Japanese communities.",
+    "image": "https://hiroppy.me/_astro/me.Cw_p55Uq.png"
   }
 }

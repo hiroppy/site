@@ -10,9 +10,20 @@ type Props = {
   lazy?: boolean;
   width?: number;
   height?: number;
+  format?: "webp" | "avif" | "png" | "jpg" | "jpeg";
+  quality?: number;
 };
 
-const { src, alt, class: className, lazy = true, width, height } = Astro.props;
+const {
+  src,
+  alt,
+  class: className,
+  lazy = true,
+  width,
+  height,
+  format = "webp",
+  quality = 80,
+} = Astro.props;
 const placeholderColor =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcfPRvPQAHHgLWeG8FbgAAAABJRU5ErkJggg==";
 const loading = lazy ? "lazy" : "eager";
@@ -28,14 +39,27 @@ const loading = lazy ? "lazy" : "eager";
       }}
       class={className}
     />
-  ) : (
-    <AstroImage
-      src={importAssets(src) as /*  astroの型が一致していない */ any}
+  ) : typeof src === "string" && src.startsWith("http") ? (
+    <img
+      src={src}
       class={className}
       alt={alt}
-      width={(width ?? 0) * 4}
-      height={(height ?? 0) * 4}
+      width={width ?? 0}
+      height={height ?? 0}
       loading={loading}
+      onerror={`this.onerror=null; this.src='${placeholderColor}'`}
+    />
+  ) : (
+    <AstroImage
+      src={importAssets(src) as any}
+      class={className}
+      alt={alt}
+      width={width ?? 0}
+      height={height ?? 0}
+      loading={loading}
+      format={format}
+      quality={quality}
+      densities={[1, 2]}
       onerror={`this.onerror=null; this.src='${placeholderColor}'`}
     />
   )

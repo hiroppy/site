@@ -22,4 +22,14 @@ export default defineConfig({
       theme: "nord",
     },
   },
+  image: {
+    service: {
+      entrypoint: "astro/assets/services/sharp",
+    },
+    remotePatterns: [
+      {
+        protocol: "https",
+      },
+    ],
+  },
 });

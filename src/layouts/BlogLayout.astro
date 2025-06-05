@@ -85,9 +85,9 @@ if (import.meta.env.PROD) {
   <div
     class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
   >
-    <main class="container mx-auto max-w-6xl px-4 py-8">
+    <main class="container mx-auto max-w-6xl px-4 py-4 md:py-8">
       <!-- Back Button -->
-      <div class="mb-8">
+      <div class="mb-4 md:mb-8">
         <a href="/blog">
           <Button
             variant="ghost"
@@ -126,7 +126,7 @@ if (import.meta.env.PROD) {
             class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"
           >
           </div>
-          <div class="absolute bottom-6 left-6 right-6">
+          <div class="absolute bottom-6 left-4 right-4 md:left-8 md:right-8">
             <BlogBadge variant="primary" class="mb-4">
               {parseTags(tags)?.[0] || "記事"}
             </BlogBadge>
@@ -142,7 +142,7 @@ if (import.meta.env.PROD) {
           </div>
         </div>
 
-        <div class="p-8">
+        <div class="px-4 py-8 md:px-8">
           <!-- Author Info -->
           <div
             class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
@@ -169,7 +169,11 @@ if (import.meta.env.PROD) {
                 url={`${Astro.site?.origin}${url!}`}
                 title={title}
               />
-              <Link href={githubUrl} class="flex items-center">
+              <Link
+                href={githubUrl}
+                class="flex items-center"
+                ariaLabel="Edit this page on GitHub"
+              >
                 <Button variant="outline" size="sm" class="px-4 py-1">
                   <Icon icon="mdi:github" class="mr-1" width="14" height="14" />
                   Edit
@@ -187,7 +191,7 @@ if (import.meta.env.PROD) {
                 <h2 class="mb-4 font-semibold text-gray-900 dark:text-white">
                   📖 目次
                 </h2>
-                <nav>
+                <nav aria-label="記事の目次">
                   <ul class="space-y-1">
                     {indices
                       .filter((h) => h.depth <= 3)
@@ -197,8 +201,8 @@ if (import.meta.env.PROD) {
                             heading.depth === 1
                               ? "text-sm font-semibold"
                               : heading.depth === 2
-                                ? "ml-4 border-l-2 border-gray-300 pl-3 text-sm dark:border-gray-600"
-                                : "ml-8 border-l-2 border-gray-200 pl-3 text-xs dark:border-gray-700"
+                                ? "ml-4 border-l-2 border-gray-300 pl-3 text-sm dark:border-gray-300"
+                                : "ml-8 border-l-2 border-gray-200 pl-3 text-xs dark:border-gray-500"
                           }
                         >
                           <a
@@ -272,17 +276,20 @@ if (import.meta.env.PROD) {
           <hr class="my-8 border-gray-200 dark:border-gray-700" />
 
           <!-- Tags -->
-          <div class="mb-8">
-            <h2
-              class="mb-4 text-lg font-semibold text-gray-900 dark:text-white"
-            >
+          <div class="mb-8 space-y-4">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
               🏷️ タグ
             </h2>
             <div class="flex flex-wrap gap-2">
               {
                 parseTags(tags).map((tag: string) => (
                   <BlogBadge variant="secondary" class="px-3 py-1.5 text-sm">
-                    <a href={`/blog/tags/${tag}`}>{tag}</a>
+                    <a
+                      href={`/blog/tags/${tag}`}
+                      aria-label={`${tag}タグの記事を表示`}
+                    >
+                      {tag}
+                    </a>
                   </BlogBadge>
                 ))
               }
@@ -313,7 +320,10 @@ if (import.meta.env.PROD) {
                           ← 前の記事
                         </div>
                         <h3 class="line-clamp-2 text-sm font-semibold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-blue-500">
-                          <a href={`/blog/${posts[index - 1].slug}`}>
+                          <a
+                            href={`/blog/${posts[index - 1].slug}`}
+                            aria-label={`前の記事: ${posts[index - 1].data.title}`}
+                          >
                             {posts[index - 1].data.title}
                           </a>
                         </h3>
@@ -327,7 +337,10 @@ if (import.meta.env.PROD) {
                           次の記事 →
                         </div>
                         <h3 class="line-clamp-2 text-sm font-semibold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-blue-500">
-                          <a href={`/blog/${posts[index + 1].slug}`}>
+                          <a
+                            href={`/blog/${posts[index + 1].slug}`}
+                            aria-label={`次の記事: ${posts[index + 1].data.title}`}
+                          >
                             {posts[index + 1].data.title}
                           </a>
                         </h3>
@@ -372,7 +385,12 @@ if (import.meta.env.PROD) {
                           {parseTags(post.data.tags)?.[0] || "記事"}
                         </BlogBadge>
                         <h3 class="line-clamp-2 text-sm font-semibold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-blue-500">
-                          <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+                          <a
+                            href={`/blog/${post.slug}`}
+                            aria-label={`関連記事: ${post.data.title}`}
+                          >
+                            {post.data.title}
+                          </a>
                         </h3>
                         <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                           {formatDate(post.data.date)}

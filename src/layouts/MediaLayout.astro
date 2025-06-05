@@ -1,6 +1,7 @@
 ---
 import Layout from "./Layout.astro";
 import Button from "../components/Button.astro";
+import Link from "../components/Link.astro";
 import type { MediaType } from "../constants";
 
 type Path = "" | `/${MediaType}`;
@@ -55,25 +56,24 @@ const getDescription = (): string => {
   >
     <main class="container mx-auto px-4 py-8">
       <!-- Page Header -->
-      <div class="py-12 text-center">
+      <div class="py-6 text-center">
         <h1 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
           Media & Activities
         </h1>
-        <p class="mx-auto max-w-2xl text-xl text-gray-600 dark:text-gray-300">
-          {getDescription()}
-        </p>
       </div>
 
-      <!-- Filter Tabs -->
-      <div class="mb-8 flex justify-center">
+      <!-- Filter Tabs (Sticky) -->
+      <div
+        class="sticky top-20 z-40 mb-8 flex justify-center py-4 backdrop-blur-lg dark:bg-slate-900/60"
+      >
         <div
           class="flex flex-wrap gap-2 rounded-lg bg-white p-2 shadow-md dark:bg-slate-800"
         >
           {
             Object.entries(kinds).map(([kind, href]) => (
-              <a
+              <Link
                 href={href}
-                aria-label={`${getKindLabel(kind)}のメディア活動を表示`}
+                ariaLabel={`${getKindLabel(kind)}のメディア活動を表示`}
               >
                 <Button
                   variant={currentPath === kind ? "default" : "ghost"}
@@ -86,7 +86,7 @@ const getDescription = (): string => {
                 >
                   {getKindLabel(kind)}
                 </Button>
-              </a>
+              </Link>
             ))
           }
         </div>

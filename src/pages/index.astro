@@ -39,7 +39,7 @@ const reposWithStars = await Promise.all(
 ---
 
 <Layout>
-  <div class="container mx-auto space-y-12 px-4 py-8">
+  <main class="container mx-auto space-y-12 px-4 py-8">
     <!-- Hero Section -->
     <section class="py-12 text-center">
       <div class="mx-auto max-w-4xl">
@@ -58,10 +58,10 @@ const reposWithStars = await Promise.all(
             />
           </Avatar>
         </div>
-        <h1 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+        <h1 class="mb-10 text-4xl font-bold text-gray-900 dark:text-white">
           Welcome to hiroppy's site 👋
         </h1>
-        <div class="mb-8 flex justify-center space-x-4">
+        <div class="mb-4 flex justify-center space-x-4">
           <Button href={meta.sns.twitter} variant="social">
             <Icon icon="mdi:twitter" class="mr-2" width="20" height="20" />
             Twitter
@@ -103,7 +103,7 @@ const reposWithStars = await Promise.all(
                 <div class="mt-auto flex items-center justify-end text-sm text-gray-500 dark:text-gray-400">
                   <Hatena />
                   <span data-testid="bookmark-count" class="ml-1">
-                    {bookmark} bookmarks
+                    {bookmark}
                   </span>
                 </div>
               </CardContent>
@@ -161,16 +161,16 @@ const reposWithStars = await Promise.all(
     </Section>
     <!-- GitHub Sponsors Section -->
     <section
-      class="rounded-2xl bg-gradient-to-r from-purple-600 to-purple-700 p-8 text-center text-white dark:from-purple-700 dark:to-purple-800"
+      class="rounded-2xl bg-gradient-to-r from-purple-600 to-purple-700 px-2 py-8 text-center text-white dark:from-purple-700 dark:to-purple-800 md:px-8"
     >
-      <div class="mx-auto max-w-3xl">
+      <div class="mx-auto max-w-3xl space-y-6">
         <div
-          class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/20"
+          class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/20"
         >
           <Icon icon="mdi:heart" width="32" height="32" />
         </div>
-        <h2 class="mb-4 text-3xl font-bold">Thank you for your support!</h2>
-        <div class="mb-6 flex flex-wrap justify-center gap-3">
+        <h2 class="text-3xl font-bold">Thank you for your support!</h2>
+        <div class="flex flex-wrap justify-center gap-3">
           {
             [...sponsors.current, ...sponsors.past].map(
               ({ name, href, avatar }) => (
@@ -234,66 +234,5 @@ const reposWithStars = await Promise.all(
         </Link>
       </div>
     </section>
-  </div>
+  </main>
 </Layout>
-
-<script>
-  // Handle header avatar visibility based on hero avatar (only on index page)
-  function initializeAvatarVisibility() {
-    const headerAvatar = document.getElementById("header-avatar");
-    const headerText = document.getElementById("header-text");
-
-    if (!headerAvatar || !headerText) return;
-
-    // Check if we're on the index page
-    if (window.location.pathname !== "/") {
-      // On other pages, always show header avatar and text
-      headerAvatar.classList.remove("opacity-0");
-      headerAvatar.classList.add("opacity-100");
-      headerText.classList.remove("opacity-0");
-      headerText.classList.add("opacity-100");
-      return;
-    }
-
-    // Only on index page, use intersection observer
-    const heroAvatar = document.querySelector("section.py-12 .mx-auto.ring-4");
-    if (!heroAvatar) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Hero avatar is visible, hide header avatar and text
-            headerAvatar.classList.remove("opacity-100");
-            headerAvatar.classList.add("opacity-0");
-            headerText.classList.remove("opacity-100");
-            headerText.classList.add("opacity-0");
-          } else {
-            // Hero avatar is not visible, show header avatar and text
-            headerAvatar.classList.remove("opacity-0");
-            headerAvatar.classList.add("opacity-100");
-            headerText.classList.remove("opacity-0");
-            headerText.classList.add("opacity-100");
-          }
-        });
-      },
-      {
-        // Trigger when the hero avatar is completely out of view
-        rootMargin: "0px",
-        threshold: 0,
-      },
-    );
-
-    observer.observe(heroAvatar);
-  }
-
-  // Initialize on DOM ready
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initializeAvatarVisibility);
-  } else {
-    initializeAvatarVisibility();
-  }
-
-  // Re-initialize on page transitions (ViewTransitions)
-  document.addEventListener("astro:page-load", initializeAvatarVisibility);
-</script>
