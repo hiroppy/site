@@ -1,5 +1,6 @@
 ---
 export interface Props {
+  id?: string;
   variant?:
     | "default"
     | "outline"
@@ -26,6 +27,7 @@ export interface Props {
 }
 
 const {
+  id,
   variant = "default",
   size = "default",
   class: className = "",
@@ -85,6 +87,7 @@ const finalTarget = target || (isExternalLink ? "_blank" : undefined);
 const finalRel = rel || (isExternalLink ? "noreferrer" : undefined);
 
 const props = {
+  id,
   class: classes,
   ...(href && { href }),
   ...(finalTarget && { target: finalTarget }),

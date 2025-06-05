@@ -5,7 +5,7 @@ const { ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_ONLY_KEY } = import.meta.env;
 
 if (!ALGOLIA_APPLICATION_ID || !ALGOLIA_SEARCH_ONLY_KEY) {
   throw new Error(
-    "ALGOLIA_APPLICATION_ID and ALGOLIA_SEARCH_ONLY_KEY are reuired",
+    "ALGOLIA_APPLICATION_ID and ALGOLIA_SEARCH_ONLY_KEY are required",
   );
 }
 ---
@@ -87,12 +87,12 @@ if (!ALGOLIA_APPLICATION_ID || !ALGOLIA_SEARCH_ONLY_KEY) {
       const search = instantsearch({
         indexName: "blog",
         searchClient,
-        searchFunction(helper) {
-          if (helper.state.query && helper.state.query.length > 0) {
-            helper.search();
-          } else {
+        onStateChange({ uiState, setUiState }) {
+          const query = uiState.blog?.query || "";
+          if (query.length === 0) {
             hideResults();
           }
+          setUiState(uiState);
         },
       });
       const customAutocomplete = connectAutocomplete(renderAutocomplete);

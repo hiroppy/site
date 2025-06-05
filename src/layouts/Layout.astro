@@ -66,21 +66,29 @@ const titleContent =
     <link rel="dns-prefetch" href="//b.hatena.ne.jp" />
     <link rel="preconnect" href="//b.hatena.ne.jp" />
     <link rel="author" href="http://www.hatena.ne.jp/about_hiroppy/" />
-    <ClientRouter />
     <script is:inline>
-      // Theme initialization - runs before body loads to prevent FOUC
-      (function () {
-        const theme = localStorage.getItem("theme") || "dark";
-        document.documentElement.classList.toggle("dark", theme === "dark");
-
-        // Set background color immediately to prevent flash
-        if (theme === "dark") {
-          document.documentElement.style.backgroundColor = "#0f172a"; // slate-900
-        } else {
-          document.documentElement.style.backgroundColor = "#f8fafc"; // slate-50
+      const theme = (() => {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
         }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
       })();
+
+      if (theme === "light") {
+        document.documentElement.classList.remove("dark");
+      } else {
+        document.documentElement.classList.add("dark");
+      }
+
+      window.localStorage.setItem("theme", theme);
     </script>
+    <ClientRouter />
   </head>
   <body
     class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 font-body dark:from-slate-900 dark:to-slate-800"
@@ -90,31 +98,5 @@ const titleContent =
     <slot />
     <Footer />
     {import.meta.env.PROD && <GA />}
-    <script is:inline>
-      // Handle theme persistence during view transitions
-      document.addEventListener("astro:before-preparation", () => {
-        const theme = localStorage.getItem("theme") || "dark";
-        document.documentElement.classList.toggle("dark", theme === "dark");
-
-        // Set background color immediately to prevent flash
-        if (theme === "dark") {
-          document.documentElement.style.backgroundColor = "#0f172a"; // slate-900
-        } else {
-          document.documentElement.style.backgroundColor = "#f8fafc"; // slate-50
-        }
-      });
-
-      document.addEventListener("astro:after-swap", () => {
-        const theme = localStorage.getItem("theme") || "dark";
-        document.documentElement.classList.toggle("dark", theme === "dark");
-
-        // Set background color immediately to prevent flash
-        if (theme === "dark") {
-          document.documentElement.style.backgroundColor = "#0f172a"; // slate-900
-        } else {
-          document.documentElement.style.backgroundColor = "#f8fafc"; // slate-50
-        }
-      });
-    </script>
   </body>
 </html>
