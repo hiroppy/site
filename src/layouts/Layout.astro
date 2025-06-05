@@ -36,7 +36,10 @@ const titleContent =
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={siteDescription} />
     <meta property="theme-color" content="#3498db" />
@@ -69,6 +72,13 @@ const titleContent =
       (function () {
         const theme = localStorage.getItem("theme") || "dark";
         document.documentElement.classList.toggle("dark", theme === "dark");
+
+        // Set background color immediately to prevent flash
+        if (theme === "dark") {
+          document.documentElement.style.backgroundColor = "#0f172a"; // slate-900
+        } else {
+          document.documentElement.style.backgroundColor = "#f8fafc"; // slate-50
+        }
       })();
     </script>
   </head>
@@ -85,11 +95,25 @@ const titleContent =
       document.addEventListener("astro:before-preparation", () => {
         const theme = localStorage.getItem("theme") || "dark";
         document.documentElement.classList.toggle("dark", theme === "dark");
+
+        // Set background color immediately to prevent flash
+        if (theme === "dark") {
+          document.documentElement.style.backgroundColor = "#0f172a"; // slate-900
+        } else {
+          document.documentElement.style.backgroundColor = "#f8fafc"; // slate-50
+        }
       });
 
       document.addEventListener("astro:after-swap", () => {
         const theme = localStorage.getItem("theme") || "dark";
         document.documentElement.classList.toggle("dark", theme === "dark");
+
+        // Set background color immediately to prevent flash
+        if (theme === "dark") {
+          document.documentElement.style.backgroundColor = "#0f172a"; // slate-900
+        } else {
+          document.documentElement.style.backgroundColor = "#f8fafc"; // slate-50
+        }
       });
     </script>
   </body>

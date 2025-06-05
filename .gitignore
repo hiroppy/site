@@ -13,3 +13,4 @@ service_account_secret.json
 .githooks/*
 !/.githooks/pre-commit
 .claude
+*-darwin.png

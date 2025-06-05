@@ -313,7 +313,7 @@ if (import.meta.env.PROD) {
                   📚 前後の記事
                 </h2>
                 <div class="grid gap-4 md:grid-cols-2">
-                  {index !== 0 && (
+                  {index !== 0 ? (
                     <Card class="group transition-all duration-300 hover:shadow-lg dark:bg-slate-700">
                       <CardContent class="p-4">
                         <div class="mb-2 text-xs text-gray-500 dark:text-gray-400">
@@ -329,10 +329,12 @@ if (import.meta.env.PROD) {
                         </h3>
                       </CardContent>
                     </Card>
+                  ) : (
+                    <div />
                   )}
-                  {index !== posts.length - 1 && (
+                  {index !== posts.length - 1 ? (
                     <Card class="group transition-all duration-300 hover:shadow-lg dark:bg-slate-700">
-                      <CardContent class="p-4">
+                      <CardContent class="p-4 text-right">
                         <div class="mb-2 text-xs text-gray-500 dark:text-gray-400">
                           次の記事 →
                         </div>
@@ -346,6 +348,8 @@ if (import.meta.env.PROD) {
                         </h3>
                       </CardContent>
                     </Card>
+                  ) : (
+                    <div />
                   )}
                 </div>
               </div>
