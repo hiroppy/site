@@ -107,6 +107,16 @@ html {
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-400 dark:bg-slate-500;
   }
+
+  /* Hide scrollbar completely */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
 }
 
 /* Smooth transitions for theme switching */
@@ -115,4 +125,26 @@ html {
     background-color 0.3s ease,
     border-color 0.3s ease,
     color 0.3s ease;
+}
+
+/* Responsive iframe for YouTube embeds */
+@layer components {
+  .responsive-video {
+    @apply relative w-full overflow-hidden;
+    aspect-ratio: 16 / 9;
+  }
+
+  .responsive-video iframe {
+    @apply absolute left-0 top-0 h-full w-full;
+  }
+}
+
+/* Auto-apply responsive styles to iframes in MDX content */
+@layer base {
+  article iframe[src*="youtube"],
+  article iframe[src*="youtu.be"] {
+    @apply w-full max-w-full;
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
 }

@@ -5,14 +5,12 @@ on:
     paths:
       - "package.json"
       - "src/**"
-      - "data/**"
       - ".github/workflows/ci.yml"
   push:
     branches: [main]
     paths:
       - "package.json"
       - "src/**"
-      - "data/**"
       - ".github/workflows/ci.yml"
 
 env:
@@ -52,18 +50,24 @@ jobs:
       - run: pnpm lh --upload.target=temporary-public-storage
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-  # TODO: playwright
-  # a11y:
-  #   needs: [build]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: ./.github/actions/setup-node
-  #     - uses: actions/download-artifact@v4
-  #       with:
-  #         name: app
-  #         path: ./dist
-  #     - run: pnpm serve & pnpm a11y
+  a11y:
+    needs: [build]
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.52.0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node
+      - uses: actions/download-artifact@v4
+        with:
+          name: app
+          path: ./dist
+      - run: pnpm test:a11y
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: a11y-test-results
+          path: test-results/
   vrt:
     needs: [build]
     runs-on: ubuntu-latest
@@ -76,9 +80,9 @@ jobs:
         with:
           name: app
           path: ./dist
-      - run: npx playwright test tests/vrt.spec.ts
+      - run: pnpm test:vrt
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: test-results
+          name: vrt-test-results
           path: test-results/

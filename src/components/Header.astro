@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import Avatar from "./Avatar.astro";
 import Button from "./Button.astro";
 import ThemeToggle from "./ThemeToggle.astro";
@@ -24,10 +25,14 @@ const currentPath = Astro.url.pathname;
           class="opacity-0 transition-opacity duration-300"
         >
           <Avatar class="ring-2 ring-blue-500">
-            <img
-              src={meImage.src}
+            <Image
+              src={meImage}
               alt="Hiroppy"
               class="h-full w-full object-cover"
+              width={40}
+              height={40}
+              format="webp"
+              quality={80}
             />
           </Avatar>
         </div>
@@ -40,7 +45,10 @@ const currentPath = Astro.url.pathname;
           </p>
         </div>
       </a>
-      <nav class="hidden items-center space-x-2 md:flex">
+      <nav
+        class="hidden items-center space-x-2 md:flex"
+        aria-label="メインナビゲーション"
+      >
         <Button variant={currentPath === "/" ? "nav-active" : "nav"} href="/">
           About
         </Button>
@@ -57,8 +65,14 @@ const currentPath = Astro.url.pathname;
           Media
         </Button>
         <Button
-          variant={currentPath === "/jobs" ? "nav-active" : "nav"}
+          variant={currentPath.startsWith("/jobs") ? "nav-active" : "nav"}
           href="/jobs"
+        >
+          Jobs
+        </Button>
+        <Button
+          variant={currentPath.startsWith("/projects") ? "nav-active" : "nav"}
+          href="/projects"
         >
           Projects
         </Button>
@@ -86,40 +100,76 @@ const currentPath = Astro.url.pathname;
       </div>
     </div>
     <!-- Mobile menu -->
-    <nav id="mobile-menu" class="hidden md:hidden">
-      <div class="space-y-1 px-2 pb-3 pt-2">
-        <Button
-          variant={currentPath === "/" ? "nav-mobile-active" : "nav-mobile"}
-          href="/"
-        >
-          About
-        </Button>
-        <Button
-          variant={currentPath.startsWith("/blog")
-            ? "nav-mobile-active"
-            : "nav-mobile"}
-          href="/blog"
-        >
-          Blog
-        </Button>
-        <Button
-          variant={currentPath === "/jobs" ? "nav-mobile-active" : "nav-mobile"}
-          href="/jobs"
-        >
-          Projects
-        </Button>
-        <Button
-          variant={currentPath.startsWith("/media")
-            ? "nav-mobile-active"
-            : "nav-mobile"}
-          href="/media"
-        >
-          Media
-        </Button>
-        <Button variant="nav-mobile" href={meta.form.request}>
-          <Icon icon="mdi:email-outline" class="mr-2" width="16" height="16" />
-          お問い合わせ
-        </Button>
+    <nav
+      id="mobile-menu"
+      class="hidden md:hidden"
+      aria-label="モバイルナビゲーション"
+    >
+      <div class="px-2 pb-3 pt-2">
+        <!-- Horizontal Scrollable Navigation -->
+        <div class="scrollbar-hide mb-4 overflow-x-auto">
+          <div class="flex space-x-2 pb-2">
+            <Button
+              variant={currentPath === "/" ? "nav-mobile-active" : "nav-mobile"}
+              href="/"
+              class="flex-shrink-0"
+            >
+              About
+            </Button>
+            <Button
+              variant={currentPath.startsWith("/blog")
+                ? "nav-mobile-active"
+                : "nav-mobile"}
+              href="/blog"
+              class="flex-shrink-0"
+            >
+              Blog
+            </Button>
+            <Button
+              variant={currentPath.startsWith("/media")
+                ? "nav-mobile-active"
+                : "nav-mobile"}
+              href="/media"
+              class="flex-shrink-0"
+            >
+              Media
+            </Button>
+            <Button
+              variant={currentPath.startsWith("/jobs")
+                ? "nav-mobile-active"
+                : "nav-mobile"}
+              href="/jobs"
+              class="flex-shrink-0"
+            >
+              Jobs
+            </Button>
+            <Button
+              variant={currentPath.startsWith("/projects")
+                ? "nav-mobile-active"
+                : "nav-mobile"}
+              href="/projects"
+              class="flex-shrink-0"
+            >
+              Projects
+            </Button>
+          </div>
+        </div>
+        <!-- Contact Button -->
+        <div class="border-t border-gray-200 pt-4 dark:border-gray-700">
+          <Button
+            variant="contact"
+            href={meta.form.request}
+            class="w-full justify-center"
+          >
+            <Icon
+              icon="mdi:email-outline"
+              class="mr-2"
+              width="16"
+              height="16"
+            />
+            お問い合わせ
+          </Button>
+        </div>
       </div>
     </nav>
   </div>
@@ -164,4 +214,64 @@ const currentPath = Astro.url.pathname;
 
   // Re-initialize on page transitions (ViewTransitions)
   document.addEventListener("astro:page-load", initializeMobileMenu);
+
+  // Handle header avatar visibility
+  function initializeAvatarVisibility() {
+    const headerAvatar = document.getElementById("header-avatar");
+    const headerText = document.getElementById("header-text");
+
+    if (!headerAvatar || !headerText) return;
+
+    // Check if we're on the index page
+    if (window.location.pathname !== "/") {
+      // On other pages, always show header avatar and text
+      headerAvatar.classList.remove("opacity-0");
+      headerAvatar.classList.add("opacity-100");
+      headerText.classList.remove("opacity-0");
+      headerText.classList.add("opacity-100");
+      return;
+    }
+
+    // Only on index page, check for hero avatar and use intersection observer
+    const heroAvatar = document.querySelector("section.py-12 .mx-auto.ring-4");
+    if (!heroAvatar) {
+      // If no hero avatar found, show header avatar
+      headerAvatar.classList.remove("opacity-0");
+      headerAvatar.classList.add("opacity-100");
+      headerText.classList.remove("opacity-0");
+      headerText.classList.add("opacity-100");
+      return;
+    }
+
+    // Create intersection observer for hero avatar
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Hero is visible, hide header avatar
+          headerAvatar.classList.remove("opacity-100");
+          headerAvatar.classList.add("opacity-0");
+          headerText.classList.remove("opacity-100");
+          headerText.classList.add("opacity-0");
+        } else {
+          // Hero is not visible, show header avatar
+          headerAvatar.classList.remove("opacity-0");
+          headerAvatar.classList.add("opacity-100");
+          headerText.classList.remove("opacity-0");
+          headerText.classList.add("opacity-100");
+        }
+      });
+    });
+
+    observer.observe(heroAvatar);
+  }
+
+  // Initialize avatar visibility
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeAvatarVisibility);
+  } else {
+    initializeAvatarVisibility();
+  }
+
+  // Re-initialize on page transitions
+  document.addEventListener("astro:page-load", initializeAvatarVisibility);
 </script>

@@ -14,17 +14,39 @@ const config: PlaywrightTestConfig = {
       // Make screenshot comparison less sensitive to font rendering differences
       maxDiffPixelRatio: 0.05,
       threshold: 0.2,
+      animations: "disabled",
     },
+  },
+  use: {
+    // Global settings for better stability
+    actionTimeout: 60000,
+    navigationTimeout: 120000,
   },
   projects: [
     {
-      name: "chrome",
+      name: "chrome-a11y",
+      testMatch: "tests/a11y.spec.ts",
       use: {
         ...devices["Desktop Chrome"],
       },
     },
     {
-      name: "android",
+      name: "android-a11y",
+      testMatch: "tests/a11y.spec.ts",
+      use: {
+        ...devices["Pixel 7"],
+      },
+    },
+    {
+      name: "chrome-vrt",
+      testMatch: "tests/vrt.spec.ts",
+      use: {
+        ...devices["Desktop Chrome"],
+      },
+    },
+    {
+      name: "android-vrt",
+      testMatch: "tests/vrt.spec.ts",
       use: {
         ...devices["Pixel 7"],
       },

@@ -5,6 +5,7 @@ ENV PATH="$PNPM_HOME:$PATH"
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 # Force a specific font configuration for tests
 ENV PLAYWRIGHT_FONT_DISPLAY=same-as-local
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
 COPY . /app
 WORKDIR /app
@@ -22,7 +23,4 @@ RUN apt-get update && apt-get install -y fonts-noto-cjk fonts-noto-color-emoji
 COPY --from=build /app/node_modules /app/node_modules
 COPY --from=build /app/dist /app/dist
 
-# Install Playwright browsers
-RUN npx playwright install
-
-CMD ["npx", "playwright", "test", "tests/vrt.spec.ts", "--update-snapshots"]
+CMD ["pnpm", "test:vrt:update"]

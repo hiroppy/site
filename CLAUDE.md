@@ -8,7 +8,7 @@
 - **Typecheck**: `pnpm check` (astro check)
 - **Test**: `pnpm test` (playwright), `pnpm test:update` (update snapshots)
 - **Single test**: `npx playwright test tests/vrt.spec.ts -g "VRT: /blog"`
-- **A11y/Performance**: `pnpm a11y` (playwright axe-core), `pnpm lh` (lighthouse)
+- **A11y/Performance**: `test:a11y` (playwright axe-core), `pnpm lh` (lighthouse)
 
 ## Code Style
 

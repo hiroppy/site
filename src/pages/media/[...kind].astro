@@ -3,6 +3,7 @@ import MediaLayout from "../../layouts/MediaLayout.astro";
 import { HATENA_BLOG_URL, type MediaType } from "../../constants";
 import { sortItems } from "../../utils/sortItems";
 import Image from "../../components/Image.astro";
+import Link from "../../components/Link.astro";
 
 type Kind = MediaType | undefined;
 
@@ -91,10 +92,9 @@ function getPrefixForTitle(type: MediaType) {
   >
     {
       items.map(({ title, description, image, icon, url, publishedAt }) => (
-        <a
+        <Link
           href={url}
-          target={url.startsWith(import.meta.env.SITE) ? undefined : "_blank"}
-          aria-label={`${title} - ${description}`}
+          ariaLabel={`${title} - ${description}`}
           class="group block h-full"
         >
           <div class="flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all duration-300 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
@@ -134,7 +134,7 @@ function getPrefixForTitle(type: MediaType) {
               </h2>
             </div>
           </div>
-        </a>
+        </Link>
       ))
     }
   </div>
