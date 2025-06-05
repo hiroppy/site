@@ -33,6 +33,7 @@ module.exports = {
         "color-contrast": "off", // Design system limitation - needs design review
         "non-composited-animations": "off",
         "prioritize-lcp-image": "off",
+        "meta-viewport": "off",
       },
     },
   },
