@@ -1,6 +1,71 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-main: #3498db;
+  --color-main-dark: #0f2d3f;
+  --color-javascript: #f1e05a;
+  --color-javascript-dark: #494317;
+  --color-typescript: #3178c6;
+  --color-css: #8e6fc7;
+  --color-css-dark: #563d7c;
+  --color-go: #00add8;
+  --color-rust: #ce422b;
+  --color-cpp: #f34b7d;
+  --color-c: #555555;
+  --color-shell: #89e051;
+  --color-html: #e34c26;
+  
+  --font-family-body: system-ui, Arial, Helvetica, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Meiryo,sans-serif', sans-serif;
+  
+  --list-style-type-hyphen: '-  ';
+  
+  --container-center: true;
+  --container-padding: 1rem;
+  --container-screen-2xl: 1400px;
+  
+  --animate-fade-in: fadeIn 0.3s ease-in-out;
+  --animate-focus-in: text-focus-in 0.5s linear both;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes text-focus-in {
+  0% {
+    filter: blur(12px);
+    opacity: 0;
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
 
 /* Prevent FOUC during theme transitions */
 html {
