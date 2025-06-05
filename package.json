@@ -46,7 +46,7 @@
     "@astrojs/sitemap": "3.4.1",
     "@astrojs/tailwind": "6.0.2",
     "algoliasearch": "4.24.0",
-    "astro": "5.8.2",
+    "astro": "5.9.0",
     "hiroppy": "1.0.32",
     "iconify-icon": "3.0.0",
     "instantsearch.js": "4.78.3",
