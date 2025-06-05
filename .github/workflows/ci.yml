@@ -77,8 +77,6 @@ jobs:
           name: app
           path: ./dist
       - run: npx playwright test tests/vrt.spec.ts
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
