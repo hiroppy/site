@@ -23,6 +23,10 @@ const config: PlaywrightTestConfig = {
     navigationTimeout: 120000,
     trace: "on-first-retry",
     screenshot: "only-on-failure",
+    viewport: {
+      width: 1280,
+      height: 720,
+    },
   },
   projects: [
     {
