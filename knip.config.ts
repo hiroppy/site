@@ -21,6 +21,7 @@ const config: KnipConfig = {
     "serve",
     // Tailwind config
     "color",
+    "tailwindcss",
   ],
   astro: {
     config: ["astro.config.mjs"],

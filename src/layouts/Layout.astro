@@ -6,7 +6,7 @@ import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../constants";
 import meImage from "../assets/images/meta/me.png";
 import { importAssets, getImageSrc } from "../utils/importAssets";
-import "../styles/globals.css";
+import "../global.css";
 
 type Props = {
   title?: string;
@@ -91,7 +91,7 @@ const titleContent =
     <ClientRouter fallback="swap" />
   </head>
   <body
-    class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 font-body dark:from-slate-900 dark:to-slate-800"
+    class="font-body min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
   >
     <Header />
     {/*TODO: 全ページこっちにmargin寄せる */}

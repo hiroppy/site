@@ -34,6 +34,7 @@ const currentPath = Astro.url.pathname;
               height={40}
               format="webp"
               quality={80}
+              loading="eager"
             />
           </Avatar>
         </div>
@@ -85,7 +86,7 @@ const currentPath = Astro.url.pathname;
         <button
           id="mobile-menu-button"
           type="button"
-          class="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 dark:text-gray-300 dark:hover:bg-gray-800 md:hidden"
+          class="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-inset md:hidden dark:text-gray-300 dark:hover:bg-gray-800"
           aria-expanded="false"
         >
           <span class="sr-only">メニューを開く</span>
@@ -96,7 +97,7 @@ const currentPath = Astro.url.pathname;
           variant="default"
           size="sm"
           href={meta.form.request}
-          class="hidden md:flex"
+          class="hidden! md:flex!"
         >
           <Icon icon="mdi:email-outline" class="mr-2" width="16" height="16" />
           お問い合わせ
@@ -109,7 +110,7 @@ const currentPath = Astro.url.pathname;
       class="hidden md:hidden"
       aria-label="モバイルナビゲーション"
     >
-      <div class="px-2 pb-3 pt-6">
+      <div class="px-2 pt-6 pb-3">
         <!-- Horizontal Scrollable Navigation -->
         <div class="scrollbar-hide mb-4 overflow-x-auto">
           <div class="flex space-x-2 pb-2">
