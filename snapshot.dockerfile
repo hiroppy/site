@@ -14,6 +14,7 @@ RUN npm run setup
 
 FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN rm -rf dist
 RUN pnpm run build
 
 FROM base

@@ -4,18 +4,8 @@
 @custom-variant dark (.dark &);
 
 @theme {
-  /* Breakpoints */
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
-  --breakpoint-2xl: 1536px;
-
   /* Programming language colors */
-  --color-main: #3498db;
-  --color-main-dark: #1e3a5f;
   --color-javascript: #f1e05a;
-  --color-javascript-dark: #8a7a33;
   --color-typescript: #3178c6;
   --color-css: #8e6fc7;
   --color-css-dark: #563d7c;
@@ -26,52 +16,9 @@
   --color-shell: #89e051;
   --color-html: #e34c26;
 
-  /* Light theme colors */
-  --color-white: #ffffff;
-  --color-black: #0f1419;
-  --color-gray-50: #f8fafc;
-  --color-gray-100: #f1f5f9;
-  --color-gray-200: #e2e8f0;
-  --color-gray-300: #cbd5e1;
-  --color-gray-400: #94a3b8;
-  --color-gray-500: #64748b;
-  --color-gray-600: #475569;
-  --color-gray-700: #334155;
-  --color-gray-800: #1e293b;
-  --color-gray-900: #0f172a;
-
-  /* Blue colors */
-  --color-blue-500: #3b82f6;
-  --color-blue-600: #2563eb;
-  --color-blue-700: #1d4ed8;
-
-  /* Slate colors for dark theme */
-  --color-slate-700: #334155;
-  --color-slate-800: #1e293b;
-  --color-slate-900: #0f172a;
-
   --font-family-body:
     system-ui, Arial, Helvetica, "Hiragino Sans", "Hiragino Kaku Gothic ProN",
     "Meiryo,sans-serif", sans-serif;
-
-  --container-2xl: 1400px;
-
-  --border-radius-lg: 0.75rem;
-  --border-radius-md: calc(0.75rem - 2px);
-  --border-radius-sm: calc(0.75rem - 4px);
-
-  --animate-fade-in: fadeIn 0.3s ease-in-out;
-  --animate-focus-in: text-focus-in 0.5s linear both;
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
-
-  --keyframes-fadeIn: 0% {opacity: 0;} 100% {opacity: 1;};
-  --keyframes-focus-in: 0% {filter: blur(12px) ; opacity: 0;} 100%
-    {filter: blur(0) ; opacity: 1;};
-  --keyframes-accordion-down: 0% {height: 0;} 100%
-    {height: var(--radix-accordion-content-height) ;};
-  --keyframes-accordion-up: 0% {height: var(--radix-accordion-content-height) ;}
-    100% {height: 0;};
 }
 
 /* Prevent FOUC during theme transitions */

@@ -21,6 +21,8 @@ const config: PlaywrightTestConfig = {
     // Global settings for better stability
     actionTimeout: 60000,
     navigationTimeout: 120000,
+    trace: "on-first-retry",
+    screenshot: "only-on-failure",
   },
   projects: [
     {
