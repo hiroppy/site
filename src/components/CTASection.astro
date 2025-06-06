@@ -1,5 +1,6 @@
 ---
 import Icon from "./Icon.astro";
+import { cn } from "../utils/cn";
 
 type Props = {
   title: string;
@@ -21,7 +22,12 @@ const {
 ---
 
 <section
-  class={`rounded-2xl bg-gradient-to-r ${gradientFrom} ${gradientTo} p-8 text-center text-white ${className}`}
+  class={cn(
+    "rounded-2xl bg-gradient-to-r p-8 text-center text-white",
+    gradientFrom,
+    gradientTo,
+    className,
+  )}
 >
   <div class="mx-auto max-w-3xl space-y-6">
     <div

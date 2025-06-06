@@ -2,6 +2,7 @@
 import Layout from "./Layout.astro";
 import Button from "../components/Button.astro";
 import Link from "../components/Link.astro";
+import { cn } from "../utils/cn";
 import type { MediaType } from "../constants";
 
 type Path = "" | `/${MediaType}`;
@@ -78,11 +79,11 @@ const getDescription = (): string => {
                 <Button
                   variant={currentPath === kind ? "default" : "ghost"}
                   size="sm"
-                  class={`${
+                  class={cn(
                     currentPath === kind
                       ? "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400"
-                      : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
-                  }`}
+                      : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100",
+                  )}
                 >
                   {getKindLabel(kind)}
                 </Button>

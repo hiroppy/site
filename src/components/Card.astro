@@ -1,19 +1,21 @@
 ---
+import { cn } from "../utils/cn";
+
 type Props = {
   class?: string;
   variant?: "default" | "interactive";
 };
 
 const { class: className = "", variant = "default" } = Astro.props;
-
-const variants = {
-  default:
-    "rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-card-foreground shadow",
-  interactive:
-    "group overflow-hidden rounded-xl border-0 bg-white shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-blue-100 dark:bg-slate-800 dark:hover:shadow-blue-900",
-};
 ---
 
-<div class={`${variants[variant]} ${className}`}>
+<div
+  class={cn(
+    "rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-card-foreground shadow",
+    variant === "interactive" &&
+      "group overflow-hidden border-0 shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-blue-100 dark:hover:shadow-blue-900",
+    className,
+  )}
+>
   <slot />
 </div>

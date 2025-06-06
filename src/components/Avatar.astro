@@ -1,4 +1,6 @@
 ---
+import { cn } from "../utils/cn";
+
 export interface Props {
   class?: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
@@ -6,15 +8,15 @@ export interface Props {
 
 const { class: className = "", size = "md" } = Astro.props;
 
-const sizes = {
-  xs: "h-6 w-6",
-  sm: "h-8 w-8",
-  md: "h-10 w-10",
-  lg: "h-12 w-12",
-  xl: "h-32 w-32",
-};
-
-const classes = `relative flex shrink-0 overflow-hidden rounded-full ${sizes[size]} ${className}`;
+const classes = cn(
+  "relative flex shrink-0 overflow-hidden rounded-full",
+  size === "xs" && "h-6 w-6",
+  size === "sm" && "h-8 w-8",
+  size === "md" && "h-10 w-10",
+  size === "lg" && "h-12 w-12",
+  size === "xl" && "h-32 w-32",
+  className,
+);
 ---
 
 <span class={classes}>
