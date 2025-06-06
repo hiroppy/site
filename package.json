@@ -51,7 +51,7 @@
     "iconify-icon": "3.0.0",
     "instantsearch.js": "4.78.3",
     "marked": "15.0.12",
-    "satori": "0.13.2",
+    "satori": "0.14.0",
     "sharp": "0.34.2",
     "tailwindcss-animate": "1.0.7"
   }
