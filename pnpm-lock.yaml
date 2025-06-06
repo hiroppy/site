@@ -1011,6 +1011,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@rollup/wasm-node@4.42.0':
+    resolution: {integrity: sha512-qdaa9zil2ppR/YmvFOtNtpYHdGzH9uTSy/1qSGCMldq38Tz2W/3L43rbsp4rx2O5uLI0wOsz0VULmBx9dyOqOA==}
+    engines: {node: '>=18.0.0', npm: '>=8.0.0'}
+    hasBin: true
+
   '@sentry/core@6.19.7':
     resolution: {integrity: sha512-tOfZ/umqB2AcHPGbIrsFLcvApdTm9ggpi/kQZFkej7kMphjT+SGBiQfYtjyg9jcRW+ilAR4JXC9BGKsdEQ+8Vw==}
     engines: {node: '>=6'}
@@ -5153,6 +5158,12 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.41.1':
     optional: true
 
+  '@rollup/wasm-node@4.42.0':
+    dependencies:
+      '@types/estree': 1.0.7
+    optionalDependencies:
+      fsevents: 2.3.3
+
   '@sentry/core@6.19.7':
     dependencies:
       '@sentry/hub': 6.19.7
@@ -8102,6 +8113,7 @@ snapshots:
       '@rollup/rollup-win32-ia32-msvc': 4.41.1
       '@rollup/rollup-win32-x64-msvc': 4.41.1
       fsevents: 2.3.3
+    optional: true
 
   run-async@2.4.1: {}
 
@@ -8698,7 +8710,7 @@ snapshots:
       fdir: 6.4.5(picomatch@4.0.2)
       picomatch: 4.0.2
       postcss: 8.5.4
-      rollup: 4.41.1
+      rollup: '@rollup/wasm-node@4.42.0'
       tinyglobby: 0.2.14
     optionalDependencies:
       '@types/node': 20.12.7

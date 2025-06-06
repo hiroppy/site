@@ -17,7 +17,7 @@
     "test:a11y": "playwright test --project=*-a11y",
     "test:vrt": "playwright test --project=*-vrt",
     "test:update": "docker build -f snapshot.dockerfile -t snapshot-update . && docker run --rm --network host -v $(pwd):/app/ -w /app/ -it snapshot-update",
-    "test:vrt:update": "playwright test --project=*-vrt --update-snapshots",
+    "test:vrt:update": "pnpm test:vrt --update-snapshots",
     "fmt": "prettier -w .",
     "fmt:check": "prettier --check .",
     "lint": "knip",
