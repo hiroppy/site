@@ -1,5 +1,6 @@
 ---
 import { mergeClass } from "../utils/mergeClass";
+import { getExternalLinkProps } from "../utils/linkUtils";
 
 type Props = {
   href: string;
@@ -9,19 +10,19 @@ type Props = {
 };
 
 const { href, isBlank, class: className, ariaLabel } = Astro.props;
-const isNeedTargetBlank =
-  isBlank ??
-  (href.startsWith("http") && !href.startsWith(import.meta.env.SITE));
+
+const linkProps = getExternalLinkProps(href);
+const isNeedTargetBlank = isBlank ?? !!linkProps.target;
 ---
 
 <a
   href={href}
-  target={isNeedTargetBlank ? "_blank" : undefined}
+  target={isNeedTargetBlank ? "_blank" : linkProps.target}
   class={mergeClass(
-    "text-blue-600 dark:text-blue-300 no-underline hover:underline",
+    "text-blue-600 dark:text-blue-300 no-underline hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded",
     className ?? "",
   )}
-  rel={isNeedTargetBlank ? "noreferrer" : undefined}
+  rel={isNeedTargetBlank ? "noreferrer" : linkProps.rel}
   aria-label={ariaLabel}
 >
   <slot />

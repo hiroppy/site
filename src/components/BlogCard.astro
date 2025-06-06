@@ -7,23 +7,30 @@ import CardHeader from "./CardHeader.astro";
 import CardTitle from "./CardTitle.astro";
 import Image from "./Image.astro";
 import Icon from "./Icon.astro";
-import BlogBadge from "./BlogBadge.astro";
+import Badge from "./Badge.astro";
 import { parseTags } from "../utils/blog";
 import { formatDate } from "../utils/formatDate";
+import {
+  getBlogItemUrl,
+  getBlogItemImageAlt,
+  getBlogItemAriaLabel,
+  getTagVariant,
+} from "../utils/blogComponents";
 
-export interface Props {
+type Props = {
   post: CollectionEntry<"blog">;
   currentTag?: string;
-}
+  maxTags?: number;
+};
 
-const { post, currentTag } = Astro.props;
+const { post, currentTag, maxTags = 3 } = Astro.props;
 const { data, slug } = post;
 ---
 
 <a
-  href={`/blog/${slug}`}
+  href={getBlogItemUrl(slug)}
   class="block h-full"
-  aria-label={`記事「${data.title}」を読む`}
+  aria-label={getBlogItemAriaLabel(data.title)}
 >
   <Card variant="interactive" class="flex h-full flex-col">
     <CardHeader class="p-0">
@@ -32,7 +39,7 @@ const { data, slug } = post;
           data.image && (
             <Image
               src={data.image}
-              alt={data.title}
+              alt={getBlogItemImageAlt(data.title)}
               width={400}
               height={200}
               class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -46,9 +53,9 @@ const { data, slug } = post;
             </div>
           )
         }
-        <BlogBadge variant="primary" class="absolute left-3 top-3">
+        <Badge variant="primary" class="absolute left-3 top-3">
           {parseTags(data.tags)?.[0] || "記事"}
-        </BlogBadge>
+        </Badge>
       </div>
     </CardHeader>
     <CardContent class="flex flex-grow flex-col">
@@ -75,15 +82,9 @@ const { data, slug } = post;
       <div class="mt-auto flex flex-wrap gap-2">
         {
           parseTags(data.tags)
-            .slice(0, 3)
+            .slice(0, maxTags)
             .map((tag: string) => (
-              <BlogBadge
-                variant={
-                  currentTag && tag === currentTag ? "primary" : "secondary"
-                }
-              >
-                {tag}
-              </BlogBadge>
+              <Badge variant={getTagVariant(tag, currentTag)}>{tag}</Badge>
             ))
         }
       </div>

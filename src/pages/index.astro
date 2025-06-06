@@ -10,6 +10,7 @@ import Icon from "../components/Icon.astro";
 import Link from "../components/Link.astro";
 import Section from "../components/Section.astro";
 import GitHubStats from "../components/GitHubStats.astro";
+import CTASection from "../components/CTASection.astro";
 import meImage from "../assets/images/meta/me.png";
 import articles from "../../node_modules/hiroppy/generated/articles.json";
 import sponsors from "../../node_modules/hiroppy/generated/sponsors.json";
@@ -62,15 +63,15 @@ const reposWithStars = await Promise.all(
           Welcome to hiroppy's site 👋
         </h1>
         <div class="mb-4 flex justify-center space-x-4">
-          <Button href={meta.sns.twitter} variant="social">
+          <Button href={meta.sns.twitter} variant="outline">
             <Icon icon="mdi:twitter" class="mr-2" width="20" height="20" />
             Twitter
           </Button>
-          <Button href={meta.sns.github} variant="social">
+          <Button href={meta.sns.github} variant="outline">
             <Icon icon="mdi:github" class="mr-2" width="20" height="20" />
             GitHub
           </Button>
-          <Button href={meta.sns.linkedin} variant="social">
+          <Button href={meta.sns.linkedin} variant="outline">
             <Icon icon="mdi:linkedin" class="mr-2" width="20" height="20" />
             LinkedIn
           </Button>
@@ -160,69 +161,61 @@ const reposWithStars = await Promise.all(
       </div>
     </Section>
     <!-- GitHub Sponsors Section -->
-    <section
-      class="rounded-2xl bg-gradient-to-r from-purple-600 to-purple-700 px-2 py-8 text-center text-white dark:from-purple-700 dark:to-purple-800 md:px-8"
+    <CTASection
+      title="Thank you for your support!"
+      icon="mdi:heart"
+      gradientFrom="from-purple-600"
+      gradientTo="to-purple-700"
+      class="px-2 dark:from-purple-700 dark:to-purple-800 md:px-8"
     >
-      <div class="mx-auto max-w-3xl space-y-6">
-        <div
-          class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/20"
-        >
-          <Icon icon="mdi:heart" width="32" height="32" />
-        </div>
-        <h2 class="text-3xl font-bold">Thank you for your support!</h2>
-        <div class="flex flex-wrap justify-center gap-3">
-          {
-            [...sponsors.current, ...sponsors.past].map(
-              ({ name, href, avatar }) => (
-                <div>
-                  <Link
-                    href={
-                      href?.includes("https://docs.github.com/sponsors")
-                        ? "https://github.com"
-                        : href || "https://github.com"
-                    }
-                    ariaLabel={name === undefined ? "private user" : undefined}
-                  >
-                    <Avatar
-                      size="lg"
-                      class="ring-2 ring-white/30 transition-all duration-200 hover:ring-white/60"
-                    >
-                      <Image
-                        src={avatar ?? ""}
-                        alt={name ?? "private user"}
-                        class="h-full w-full object-cover"
-                        width={48}
-                        height={48}
-                      />
-                    </Avatar>
-                  </Link>
-                </div>
-              ),
-            )
-          }
-        </div>
+      <div class="flex flex-wrap justify-center gap-3">
+        {
+          [...sponsors.current, ...sponsors.past].map(
+            ({ name, href, avatar }) => (
+              <Link
+                href={
+                  href?.includes("https://docs.github.com/sponsors")
+                    ? "https://github.com"
+                    : (href ?? "https://github.com")
+                }
+                ariaLabel={name === undefined ? "private user" : undefined}
+              >
+                <Avatar
+                  size="lg"
+                  class="ring-2 ring-white/30 transition-all duration-200 hover:ring-white/60"
+                >
+                  <Image
+                    src={avatar ?? ""}
+                    alt={name ?? "private user"}
+                    class="h-full w-full object-cover"
+                    width={48}
+                    height={48}
+                  />
+                </Avatar>
+              </Link>
+            ),
+          )
+        }
       </div>
-    </section>
+    </CTASection>
 
     <!-- Company CTA Section -->
-    <section
-      class="rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 p-8 text-center text-white dark:from-blue-700 dark:to-blue-800"
+    <CTASection
+      title="合同会社Coder Penguin"
+      icon="mdi:office-building"
+      gradientFrom="from-blue-600"
+      gradientTo="to-blue-700"
+      class="dark:from-blue-700 dark:to-blue-800"
     >
-      <div class="mx-auto max-w-3xl">
-        <div
-          class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/20"
-        >
-          <Icon icon="mdi:office-building" width="32" height="32" />
-        </div>
-        <h2 class="mb-4 text-3xl font-bold">合同会社Coder Penguin</h2>
-        <div class="mb-6 text-xl text-blue-100 dark:text-blue-200">
-          <p>技術顧問、エンジニア組織、採用支援を行う会社を運営しています。</p>
-          <p>
-            開発も空き状況によっては可能なので、お気軽にお問い合わせください。
-          </p>
-        </div>
+      <div slot="description" class="text-xl text-blue-100 dark:text-blue-200">
+        <p>技術顧問、エンジニア組織、採用支援を行う会社を運営しています。</p>
+        <p>
+          開発も空き状況によっては可能なので、お気軽にお問い合わせください。
+        </p>
+      </div>
+      <div class="mt-6">
         <Link href={meta.form.request}>
-          <Button variant="cta-white">
+          <Button variant="default">
             <Icon
               icon="mdi:email-outline"
               class="mr-2"
@@ -233,6 +226,6 @@ const reposWithStars = await Promise.all(
           </Button>
         </Link>
       </div>
-    </section>
+    </CTASection>
   </main>
 </Layout>

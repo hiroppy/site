@@ -8,7 +8,7 @@ import ShareButtons from "../components/ShareButtons.astro";
 import { getBlogs, parseTags } from "../utils/blog";
 import Link from "../components/Link.astro";
 import { HATENA_BLOG_ENTRY_URL } from "../constants";
-import BlogBadge from "../components/BlogBadge.astro";
+import Badge from "../components/Badge.astro";
 import Button from "../components/Button.astro";
 import Card from "../components/Card.astro";
 import CardContent from "../components/CardContent.astro";
@@ -127,9 +127,9 @@ if (import.meta.env.PROD) {
           >
           </div>
           <div class="absolute bottom-6 left-4 right-4 md:left-8 md:right-8">
-            <BlogBadge variant="primary" class="mb-4">
+            <Badge variant="primary" class="mb-4">
               {parseTags(tags)?.[0] || "記事"}
-            </BlogBadge>
+            </Badge>
             <h1 class="mb-4 text-3xl font-bold text-white md:text-4xl">
               {title}
             </h1>
@@ -283,14 +283,14 @@ if (import.meta.env.PROD) {
             <div class="flex flex-wrap gap-2">
               {
                 parseTags(tags).map((tag: string) => (
-                  <BlogBadge variant="secondary" class="px-3 py-1.5 text-sm">
+                  <Badge variant="secondary" class="px-3 py-1.5 text-sm">
                     <a
                       href={`/blog/tags/${tag}`}
                       aria-label={`${tag}タグの記事を表示`}
                     >
                       {tag}
                     </a>
-                  </BlogBadge>
+                  </Badge>
                 ))
               }
             </div>
@@ -385,9 +385,9 @@ if (import.meta.env.PROD) {
                         </div>
                       )}
                       <div class="flex-1 p-4">
-                        <BlogBadge variant="secondary" class="mb-2 text-xs">
+                        <Badge variant="secondary" class="mb-2 text-xs">
                           {parseTags(post.data.tags)?.[0] || "記事"}
-                        </BlogBadge>
+                        </Badge>
                         <h3 class="line-clamp-2 text-sm font-semibold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-blue-500">
                           <a
                             href={`/blog/${post.slug}`}

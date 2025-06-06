@@ -3,10 +3,11 @@
  * @param entry - URL to get bookmark count for
  * @returns Promise<number> - Bookmark count
  */
-export async function getBookmark(entry: string): Promise<number> {
+export async function getBookmark(entry: string) {
   try {
-    const url = `https://b.hatena.ne.jp/entry/json/${entry}/`;
+    const url = `https://b.hatena.ne.jp/entry/jsonlite/?url=${encodeURIComponent(entry)}`;
     const res = await fetch(url);
+
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }
