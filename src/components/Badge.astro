@@ -1,4 +1,6 @@
 ---
+import { cn } from "../utils/cn";
+
 type Props = {
   variant?: "default" | "secondary" | "destructive" | "outline" | "primary";
   class?: string;
@@ -6,22 +8,20 @@ type Props = {
 
 const { variant = "default", class: className = "" } = Astro.props;
 
-const baseStyles =
-  "inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2";
-
-const variants = {
-  default: "bg-primary text-primary-foreground shadow hover:bg-primary/80",
-  primary:
+const classes = cn(
+  "inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+  variant === "default" &&
+    "bg-primary text-primary-foreground shadow hover:bg-primary/80",
+  variant === "primary" &&
     "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600",
-  secondary:
+  variant === "secondary" &&
     "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-slate-700 dark:text-gray-300 dark:hover:bg-slate-600",
-  destructive:
+  variant === "destructive" &&
     "bg-destructive text-destructive-foreground shadow hover:bg-destructive/80",
-  outline:
+  variant === "outline" &&
     "border border-gray-300 bg-transparent text-gray-700 dark:border-gray-600 dark:text-gray-300",
-};
-
-const classes = `${baseStyles} ${variants[variant]} ${className}`;
+  className,
+);
 ---
 
 <div class={classes}>

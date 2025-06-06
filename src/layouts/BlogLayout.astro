@@ -89,10 +89,7 @@ if (import.meta.env.PROD) {
       <!-- Back Button -->
       <div class="mb-4 md:mb-8">
         <a href="/blog">
-          <Button
-            variant="ghost"
-            class="text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400"
-          >
+          <Button variant="ghost">
             <Icon icon="mdi:arrow-left" class="mr-2" width="16" height="16" />
             ブログ一覧に戻る
           </Button>
@@ -314,7 +311,7 @@ if (import.meta.env.PROD) {
                 </h2>
                 <div class="grid gap-4 md:grid-cols-2">
                   {index !== 0 ? (
-                    <Card class="group transition-all duration-300 hover:shadow-lg dark:bg-slate-700">
+                    <Card class="group transition-all duration-300 hover:shadow-lg">
                       <CardContent class="p-4">
                         <div class="mb-2 text-xs text-gray-500 dark:text-gray-400">
                           ← 前の記事
@@ -333,7 +330,7 @@ if (import.meta.env.PROD) {
                     <div />
                   )}
                   {index !== posts.length - 1 ? (
-                    <Card class="group transition-all duration-300 hover:shadow-lg dark:bg-slate-700">
+                    <Card class="group transition-all duration-300 hover:shadow-lg">
                       <CardContent class="p-4 text-right">
                         <div class="mb-2 text-xs text-gray-500 dark:text-gray-400">
                           次の記事 →
