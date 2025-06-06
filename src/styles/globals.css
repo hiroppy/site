@@ -1,7 +1,17 @@
 @import "tailwindcss";
 @reference "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
+  /* Breakpoints */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* Programming language colors */
   --color-main: #3498db;
   --color-main-dark: #1e3a5f;
   --color-javascript: #f1e05a;
@@ -15,47 +25,53 @@
   --color-c: #555555;
   --color-shell: #89e051;
   --color-html: #e34c26;
-  
-  /* CSS Variables from original theme */
-  --color-background: hsl(0 0% 100%);
-  --color-foreground: hsl(222.2 84% 4.9%);
-  --color-card: hsl(0 0% 100%);
-  --color-card-foreground: hsl(222.2 84% 4.9%);
-  --color-popover: hsl(0 0% 100%);
-  --color-popover-foreground: hsl(222.2 84% 4.9%);
-  --color-primary: hsl(221.2 83.2% 53.3%);
-  --color-primary-foreground: hsl(210 40% 98%);
-  --color-secondary: hsl(210 40% 94%);
-  --color-secondary-foreground: hsl(222.2 84% 4.9%);
-  --color-muted: hsl(210 40% 96%);
-  --color-muted-foreground: hsl(215.4 16.3% 46.9%);
-  --color-accent: hsl(220 14.3% 95.9%);
-  --color-accent-foreground: hsl(220 8.9% 46.1%);
-  --color-destructive: hsl(0 84.2% 60.2%);
-  --color-destructive-foreground: hsl(210 40% 98%);
-  --color-border: hsl(214.3 31.8% 91.4%);
-  --color-input: hsl(214.3 31.8% 91.4%);
-  --color-ring: hsl(221.2 83.2% 53.3%);
-  
-  --font-family-body: system-ui, Arial, Helvetica, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Meiryo,sans-serif', sans-serif;
-  
+
+  /* Light theme colors */
+  --color-white: #ffffff;
+  --color-black: #0f1419;
+  --color-gray-50: #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #cbd5e1;
+  --color-gray-400: #94a3b8;
+  --color-gray-500: #64748b;
+  --color-gray-600: #475569;
+  --color-gray-700: #334155;
+  --color-gray-800: #1e293b;
+  --color-gray-900: #0f172a;
+
+  /* Blue colors */
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+
+  /* Slate colors for dark theme */
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+
+  --font-family-body:
+    system-ui, Arial, Helvetica, "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+    "Meiryo,sans-serif", sans-serif;
+
   --container-2xl: 1400px;
-  
-  --list-style-type-hyphen: '-  ';
-  
+
   --border-radius-lg: 0.75rem;
   --border-radius-md: calc(0.75rem - 2px);
   --border-radius-sm: calc(0.75rem - 4px);
-  
+
   --animate-fade-in: fadeIn 0.3s ease-in-out;
   --animate-focus-in: text-focus-in 0.5s linear both;
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
-  
-  --keyframes-fadeIn: 0% { opacity: 0; } 100% { opacity: 1; };
-  --keyframes-focus-in: 0% { filter: blur(12px); opacity: 0; } 100% { filter: blur(0); opacity: 1; };
-  --keyframes-accordion-down: 0% { height: 0; } 100% { height: var(--radix-accordion-content-height); };
-  --keyframes-accordion-up: 0% { height: var(--radix-accordion-content-height); } 100% { height: 0; };
+
+  --keyframes-fadeIn: 0% {opacity: 0;} 100% {opacity: 1;};
+  --keyframes-focus-in: 0% {filter: blur(12px) ; opacity: 0;} 100%
+    {filter: blur(0) ; opacity: 1;};
+  --keyframes-accordion-down: 0% {height: 0;} 100%
+    {height: var(--radix-accordion-content-height) ;};
+  --keyframes-accordion-up: 0% {height: var(--radix-accordion-content-height) ;}
+    100% {height: 0;};
 }
 
 /* Prevent FOUC during theme transitions */
@@ -67,78 +83,6 @@ html {
 @media (prefers-color-scheme: dark) {
   html:not(.light) {
     color-scheme: dark;
-  }
-}
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 94%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 220 14.3% 95.9%;
-    --accent-foreground: 220 8.9% 46.1%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.75rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 94.1%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 94.1%;
-    --sidebar-primary-foreground: 240 5.9% 10%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
   }
 }
 
@@ -191,7 +135,7 @@ html {
   }
 
   .responsive-video iframe {
-    @apply absolute left-0 top-0 h-full w-full;
+    @apply absolute top-0 left-0 h-full w-full;
   }
 }
 
