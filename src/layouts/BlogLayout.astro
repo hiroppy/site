@@ -126,7 +126,7 @@ if (import.meta.env.PROD) {
             class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"
           >
           </div>
-          <div class="absolute bottom-6 left-4 right-4 md:left-8 md:right-8">
+          <div class="absolute right-4 bottom-6 left-4 md:right-8 md:left-8">
             <Badge variant="primary" class="mb-4">
               {parseTags(tags)?.[0] || "記事"}
             </Badge>
@@ -413,11 +413,13 @@ if (import.meta.env.PROD) {
 </Layout>
 
 <style is:global>
+  @reference "tailwindcss";
+
   .prose h1,
   .prose h2,
   .prose h3,
   .prose h4 {
-    @apply mb-4 mt-8 font-bold text-gray-900 dark:text-white;
+    @apply mt-8 mb-4 font-bold text-gray-900 dark:text-white;
   }
   .prose h1 {
     @apply text-3xl;
@@ -457,7 +459,7 @@ if (import.meta.env.PROD) {
     @apply mb-4 overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100;
   }
   .prose blockquote {
-    @apply border-l-4 border-blue-500 bg-blue-50 py-2 pl-4 italic text-blue-800 dark:border-blue-400 dark:bg-blue-900/20 dark:text-blue-200;
+    @apply border-l-4 border-blue-500 bg-blue-50 py-2 pl-4 text-blue-800 italic dark:border-blue-400 dark:bg-blue-900/20 dark:text-blue-200;
   }
   .prose img {
     @apply mx-auto rounded-lg shadow-md;

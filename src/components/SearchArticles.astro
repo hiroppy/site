@@ -13,19 +13,19 @@ if (!ALGOLIA_APPLICATION_ID || !ALGOLIA_SEARCH_ONLY_KEY) {
 <div class="relative">
   <Icon
     icon="mdi:magnify"
-    class="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400"
+    class="absolute top-1/2 left-3 -translate-y-1/2 transform text-gray-400"
     width="16"
     height="16"
   />
   <input
     id="search-input"
     placeholder="記事を検索..."
-    class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 pl-10 text-base text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+    class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 pl-10 text-base text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
   />
   <!-- Search Results Dropdown -->
   <div
     id="search-results"
-    class="absolute left-0 right-0 top-full z-50 mt-1 hidden max-h-96 overflow-y-auto rounded-md border border-gray-300 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800"
+    class="absolute top-full right-0 left-0 z-50 mt-1 hidden max-h-96 overflow-y-auto rounded-md border border-gray-300 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800"
   >
     <ul id="search-result" class="py-2">
       <!-- Results will be inserted here -->
@@ -203,6 +203,8 @@ if (!ALGOLIA_APPLICATION_ID || !ALGOLIA_SEARCH_ONLY_KEY) {
 </script>
 
 <style is:global>
+  @reference "tailwindcss";
+
   /* 動的に生成されたタグはscopedにできないため、globalで定義する必要がある */
   .search-result-item {
     @apply px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700;

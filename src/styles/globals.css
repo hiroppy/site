@@ -1,6 +1,62 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@reference "tailwindcss";
+
+@theme {
+  --color-main: #3498db;
+  --color-main-dark: #1e3a5f;
+  --color-javascript: #f1e05a;
+  --color-javascript-dark: #8a7a33;
+  --color-typescript: #3178c6;
+  --color-css: #8e6fc7;
+  --color-css-dark: #563d7c;
+  --color-go: #00add8;
+  --color-rust: #ce422b;
+  --color-cpp: #f34b7d;
+  --color-c: #555555;
+  --color-shell: #89e051;
+  --color-html: #e34c26;
+  
+  /* CSS Variables from original theme */
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(222.2 84% 4.9%);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(222.2 84% 4.9%);
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(222.2 84% 4.9%);
+  --color-primary: hsl(221.2 83.2% 53.3%);
+  --color-primary-foreground: hsl(210 40% 98%);
+  --color-secondary: hsl(210 40% 94%);
+  --color-secondary-foreground: hsl(222.2 84% 4.9%);
+  --color-muted: hsl(210 40% 96%);
+  --color-muted-foreground: hsl(215.4 16.3% 46.9%);
+  --color-accent: hsl(220 14.3% 95.9%);
+  --color-accent-foreground: hsl(220 8.9% 46.1%);
+  --color-destructive: hsl(0 84.2% 60.2%);
+  --color-destructive-foreground: hsl(210 40% 98%);
+  --color-border: hsl(214.3 31.8% 91.4%);
+  --color-input: hsl(214.3 31.8% 91.4%);
+  --color-ring: hsl(221.2 83.2% 53.3%);
+  
+  --font-family-body: system-ui, Arial, Helvetica, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Meiryo,sans-serif', sans-serif;
+  
+  --container-2xl: 1400px;
+  
+  --list-style-type-hyphen: '-  ';
+  
+  --border-radius-lg: 0.75rem;
+  --border-radius-md: calc(0.75rem - 2px);
+  --border-radius-sm: calc(0.75rem - 4px);
+  
+  --animate-fade-in: fadeIn 0.3s ease-in-out;
+  --animate-focus-in: text-focus-in 0.5s linear both;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  
+  --keyframes-fadeIn: 0% { opacity: 0; } 100% { opacity: 1; };
+  --keyframes-focus-in: 0% { filter: blur(12px); opacity: 0; } 100% { filter: blur(0); opacity: 1; };
+  --keyframes-accordion-down: 0% { height: 0; } 100% { height: var(--radix-accordion-content-height); };
+  --keyframes-accordion-up: 0% { height: var(--radix-accordion-content-height); } 100% { height: 0; };
+}
 
 /* Prevent FOUC during theme transitions */
 html {
@@ -10,7 +66,7 @@ html {
 /* Default to dark theme if no preference is set */
 @media (prefers-color-scheme: dark) {
   html:not(.light) {
-    @apply dark;
+    color-scheme: dark;
   }
 }
 

@@ -6,6 +6,8 @@ const { frontmatter } = Astro.props;
 
 <html class="bg-slate-100">
   <style is:global>
+    @reference "tailwindcss";
+
     h2 {
       @apply my-4 text-xl font-semibold text-sky-700;
     }
@@ -44,7 +46,8 @@ const { frontmatter } = Astro.props;
     }
 
     ul {
-      @apply list-inside list-hyphen;
+      @apply list-inside;
+      list-style-type: "-  ";
     }
 
     a {
