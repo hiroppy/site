@@ -10,7 +10,7 @@
     "setup": "git config --local core.hooksPath .githooks && npm run corepack",
     "corepack": "corepack enable pnpm",
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "rm -rf dist && astro build",
     "preview": "astro preview",
     "check": "astro check",
     "test": "playwright test",
