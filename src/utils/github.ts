@@ -19,7 +19,7 @@ interface RepositoryInfo {
 
 let octokit: Octokit | null = null;
 
-function getOctokit(): Octokit {
+function getOctokit() {
   if (!octokit) {
     const token = import.meta.env.GITHUB_TOKEN;
 
@@ -37,10 +37,7 @@ function getOctokit(): Octokit {
  * @param repo - Repository name
  * @returns Promise<number> - Star count
  */
-export async function getStarCount(
-  owner: string,
-  repo: string,
-): Promise<string> {
+export async function getStarCount(owner: string, repo: string) {
   try {
     const octokit = getOctokit();
     const { data } = await octokit.rest.repos.get({
@@ -66,10 +63,7 @@ export async function getStarCount(
  * @param repo - Repository name
  * @returns Promise<RepositoryInfo> - Repository information
  */
-export async function getRepositoryInfo(
-  owner: string,
-  repo: string,
-): Promise<RepositoryInfo> {
+export async function getRepositoryInfo(owner: string, repo: string) {
   try {
     const octokit = getOctokit();
     const { data } = await octokit.rest.repos.get({

@@ -8,9 +8,7 @@ type ImageType =
       default: ImageMetadata;
     };
 
-export async function importAssets(
-  image: string | ImageMetadata,
-): Promise<ImageType> {
+export async function importAssets(image: string | ImageMetadata) {
   if (typeof image === "object" || !image || image.startsWith("http")) {
     return image;
   }

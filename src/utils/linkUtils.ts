@@ -1,4 +1,4 @@
-export function isExternalLink(href: string, baseUrl?: string): boolean {
+function isExternalLink(href: string, baseUrl?: string) {
   if (!href) return false;
 
   const siteUrl = baseUrl || import.meta.env.SITE;
