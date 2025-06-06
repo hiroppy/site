@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @reference "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark (.dark &);
 
 @theme {
   /* Breakpoints */
@@ -97,15 +97,27 @@ html {
   }
 
   .scrollbar-thin::-webkit-scrollbar-track {
-    @apply bg-gray-100 dark:bg-slate-800;
+    @apply bg-gray-100;
+  }
+  
+  .dark .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-slate-800;
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-gray-300 dark:bg-slate-600;
+    @apply rounded-full bg-gray-300;
+  }
+  
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-slate-600;
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-400 dark:bg-slate-500;
+    @apply bg-gray-400;
+  }
+  
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-500;
   }
 
   /* Hide scrollbar completely */
@@ -155,7 +167,15 @@ html {
   .prose h2,
   .prose h3,
   .prose h4 {
-    @apply mt-8 mb-4 font-bold text-gray-900 dark:text-white;
+    @apply mt-8 mb-4 font-bold;
+    color: rgb(17 24 39); /* gray-900 */
+  }
+  
+  .dark .prose h1,
+  .dark .prose h2,
+  .dark .prose h3,
+  .dark .prose h4 {
+    color: rgb(255 255 255); /* white */
   }
   .prose h1 {
     @apply text-3xl;
