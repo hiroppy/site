@@ -7,6 +7,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  packages: write
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -49,16 +50,18 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
-          if git diff --quiet; then
-            echo "has_changes=false" >> $GITHUB_OUTPUT
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "Files have been modified by the build process"
           else
-            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No files were modified by the build process"
           fi
       - name: Commit and push changes
         if: steps.changes.outputs.has_changes == 'true'
         run: |
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git add .
           git commit -m "chore: update test snapshots
 
