@@ -7,8 +7,8 @@ type ArticleLink = {
   title?: string;
   description?: string;
   image?: string;
-  siteName?: string;
-  siteUrl: string;
+  name?: string;
+  url: string;
 };
 
 type Props = {
@@ -55,7 +55,7 @@ const articleLinks = links.filter((link) => link.title && link.description);
           >
             {articleLinks.map((link) => (
               <Link
-                href={link.siteUrl}
+                href={link.url}
                 class="group/card block w-40 flex-shrink-0 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
                 ariaLabel={`${link.title}を読む`}
               >
@@ -83,7 +83,7 @@ const articleLinks = links.filter((link) => link.title && link.description);
                 </div>
 
                 <div class="p-2">
-                  {link.siteName && (
+                  {link.name && (
                     <div class="mb-1 flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-400">
                       <Icon
                         icon="mdi:domain"
@@ -91,7 +91,7 @@ const articleLinks = links.filter((link) => link.title && link.description);
                         height="10"
                         decorative={false}
                       />
-                      <span class="truncate text-xs">{link.siteName}</span>
+                      <span class="truncate text-xs">{link.name}</span>
                     </div>
                   )}
 

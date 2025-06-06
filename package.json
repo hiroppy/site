@@ -47,7 +47,7 @@
     "@astrojs/tailwind": "6.0.2",
     "algoliasearch": "5.27.0",
     "astro": "5.9.0",
-    "hiroppy": "1.0.32",
+    "hiroppy": "1.0.36",
     "iconify-icon": "3.0.0",
     "instantsearch.js": "4.78.3",
     "marked": "15.0.12",
