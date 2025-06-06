@@ -1,8 +1,8 @@
 ---
-export interface Props {
+type Props = {
   class?: string;
   variant?: "default" | "interactive";
-}
+};
 
 const { class: className = "", variant = "default" } = Astro.props;
 

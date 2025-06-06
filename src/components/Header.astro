@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import Avatar from "./Avatar.astro";
 import Button from "./Button.astro";
+import NavButton from "./NavButton.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 import Icon from "./Icon.astro";
 import meImage from "../assets/images/meta/me.png";
@@ -49,33 +50,36 @@ const currentPath = Astro.url.pathname;
         class="hidden items-center space-x-2 md:flex"
         aria-label="メインナビゲーション"
       >
-        <Button variant={currentPath === "/" ? "nav-active" : "nav"} href="/">
+        <NavButton
+          variant={currentPath === "/" ? "active" : "default"}
+          href="/"
+        >
           About
-        </Button>
-        <Button
-          variant={currentPath.startsWith("/blog") ? "nav-active" : "nav"}
+        </NavButton>
+        <NavButton
+          variant={currentPath.startsWith("/blog") ? "active" : "default"}
           href="/blog"
         >
           Blog
-        </Button>
-        <Button
-          variant={currentPath.startsWith("/media") ? "nav-active" : "nav"}
+        </NavButton>
+        <NavButton
+          variant={currentPath.startsWith("/media") ? "active" : "default"}
           href="/media"
         >
           Media
-        </Button>
-        <Button
-          variant={currentPath.startsWith("/jobs") ? "nav-active" : "nav"}
+        </NavButton>
+        <NavButton
+          variant={currentPath.startsWith("/jobs") ? "active" : "default"}
           href="/jobs"
         >
           Jobs
-        </Button>
-        <Button
-          variant={currentPath.startsWith("/projects") ? "nav-active" : "nav"}
+        </NavButton>
+        <NavButton
+          variant={currentPath.startsWith("/projects") ? "active" : "default"}
           href="/projects"
         >
           Projects
-        </Button>
+        </NavButton>
       </nav>
       <div class="flex items-center space-x-2">
         <button
@@ -89,7 +93,7 @@ const currentPath = Astro.url.pathname;
         </button>
         <ThemeToggle />
         <Button
-          variant="contact"
+          variant="default"
           size="sm"
           href={meta.form.request}
           class="hidden md:flex"
@@ -109,55 +113,55 @@ const currentPath = Astro.url.pathname;
         <!-- Horizontal Scrollable Navigation -->
         <div class="scrollbar-hide mb-4 overflow-x-auto">
           <div class="flex space-x-2 pb-2">
-            <Button
-              variant={currentPath === "/" ? "nav-mobile-active" : "nav-mobile"}
+            <NavButton
+              variant={currentPath === "/" ? "mobile-active" : "mobile"}
               href="/"
               class="flex-shrink-0"
             >
               About
-            </Button>
-            <Button
+            </NavButton>
+            <NavButton
               variant={currentPath.startsWith("/blog")
-                ? "nav-mobile-active"
-                : "nav-mobile"}
+                ? "mobile-active"
+                : "mobile"}
               href="/blog"
               class="flex-shrink-0"
             >
               Blog
-            </Button>
-            <Button
+            </NavButton>
+            <NavButton
               variant={currentPath.startsWith("/media")
-                ? "nav-mobile-active"
-                : "nav-mobile"}
+                ? "mobile-active"
+                : "mobile"}
               href="/media"
               class="flex-shrink-0"
             >
               Media
-            </Button>
-            <Button
+            </NavButton>
+            <NavButton
               variant={currentPath.startsWith("/jobs")
-                ? "nav-mobile-active"
-                : "nav-mobile"}
+                ? "mobile-active"
+                : "mobile"}
               href="/jobs"
               class="flex-shrink-0"
             >
               Jobs
-            </Button>
-            <Button
+            </NavButton>
+            <NavButton
               variant={currentPath.startsWith("/projects")
-                ? "nav-mobile-active"
-                : "nav-mobile"}
+                ? "mobile-active"
+                : "mobile"}
               href="/projects"
               class="flex-shrink-0"
             >
               Projects
-            </Button>
+            </NavButton>
           </div>
         </div>
         <!-- Contact Button -->
         <div class="border-t border-gray-200 pt-4 dark:border-gray-700">
           <Button
-            variant="contact"
+            variant="default"
             href={meta.form.request}
             class="w-full justify-center"
           >
