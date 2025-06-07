@@ -22,4 +22,9 @@
 - **CSS**: Tailwind utility classes, minimal custom CSS
 - **Pre-commit**: Runs Prettier via lint-staged before commits
 
+## Assets
+
+- **Brand Images**: All images in `src/assets/images/brands/` should have 60% padding with centered content
+  - Use ImageMagick: `magick input.png -background transparent -gravity center -extent 160%x160% output.png`
+
 Created for agentic coding assistants working in this repository

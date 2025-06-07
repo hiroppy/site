@@ -23,7 +23,7 @@ const currentPath = Astro.url.pathname;
       >
         <div
           id="header-avatar"
-          class="opacity-0 transition-all duration-300 ease-in-out"
+          class="-translate-x-4 scale-95 opacity-0 transition-all duration-500 ease-out"
         >
           <Avatar class="ring-2 ring-blue-500">
             <Image
@@ -40,7 +40,7 @@ const currentPath = Astro.url.pathname;
         </div>
         <div
           id="header-text"
-          class="opacity-0 transition-all duration-300 ease-in-out"
+          class="-translate-x-4 opacity-0 transition-all delay-150 duration-500 ease-out"
         >
           <h1 class="text-xl font-bold text-gray-900 dark:text-white">
             Hiroppy
@@ -232,22 +232,22 @@ const currentPath = Astro.url.pathname;
 
     // Check if we're on the index page
     if (window.location.pathname !== "/") {
-      // On other pages, always show header avatar and text
-      headerAvatar.classList.remove("opacity-0");
-      headerAvatar.classList.add("opacity-100");
-      headerText.classList.remove("opacity-0");
-      headerText.classList.add("opacity-100");
+      // On other pages, always show header avatar and text with animation
+      headerAvatar.classList.remove("opacity-0", "-translate-x-4", "scale-95");
+      headerAvatar.classList.add("opacity-100", "translate-x-0", "scale-100");
+      headerText.classList.remove("opacity-0", "-translate-x-4");
+      headerText.classList.add("opacity-100", "translate-x-0");
       return;
     }
 
     // Only on index page, check for hero avatar and use intersection observer
     const heroAvatar = document.querySelector("section.py-12 .mx-auto.ring-4");
     if (!heroAvatar) {
-      // If no hero avatar found, show header avatar
-      headerAvatar.classList.remove("opacity-0");
-      headerAvatar.classList.add("opacity-100");
-      headerText.classList.remove("opacity-0");
-      headerText.classList.add("opacity-100");
+      // If no hero avatar found, show header avatar with animation
+      headerAvatar.classList.remove("opacity-0", "-translate-x-4", "scale-95");
+      headerAvatar.classList.add("opacity-100", "translate-x-0", "scale-100");
+      headerText.classList.remove("opacity-0", "-translate-x-4");
+      headerText.classList.add("opacity-100", "translate-x-0");
       return;
     }
 
@@ -255,17 +255,29 @@ const currentPath = Astro.url.pathname;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // Hero is visible, hide header avatar
-          headerAvatar.classList.remove("opacity-100");
-          headerAvatar.classList.add("opacity-0");
-          headerText.classList.remove("opacity-100");
-          headerText.classList.add("opacity-0");
+          // Hero is visible, hide header avatar with animation
+          headerAvatar.classList.remove(
+            "opacity-100",
+            "translate-x-0",
+            "scale-100",
+          );
+          headerAvatar.classList.add("opacity-0", "-translate-x-4", "scale-95");
+          headerText.classList.remove("opacity-100", "translate-x-0");
+          headerText.classList.add("opacity-0", "-translate-x-4");
         } else {
-          // Hero is not visible, show header avatar
-          headerAvatar.classList.remove("opacity-0");
-          headerAvatar.classList.add("opacity-100");
-          headerText.classList.remove("opacity-0");
-          headerText.classList.add("opacity-100");
+          // Hero is not visible, show header avatar with animation
+          headerAvatar.classList.remove(
+            "opacity-0",
+            "-translate-x-4",
+            "scale-95",
+          );
+          headerAvatar.classList.add(
+            "opacity-100",
+            "translate-x-0",
+            "scale-100",
+          );
+          headerText.classList.remove("opacity-0", "-translate-x-4");
+          headerText.classList.add("opacity-100", "translate-x-0");
         }
       });
     });
