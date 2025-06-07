@@ -23,7 +23,7 @@ const currentPath = Astro.url.pathname;
       >
         <div
           id="header-avatar"
-          class="opacity-0 transition-opacity duration-300"
+          class="opacity-0 transition-all duration-300 ease-in-out"
         >
           <Avatar class="ring-2 ring-blue-500">
             <Image
@@ -38,7 +38,10 @@ const currentPath = Astro.url.pathname;
             />
           </Avatar>
         </div>
-        <div id="header-text" class="opacity-0 transition-opacity duration-300">
+        <div
+          id="header-text"
+          class="opacity-0 transition-all duration-300 ease-in-out"
+        >
           <h1 class="text-xl font-bold text-gray-900 dark:text-white">
             Hiroppy
           </h1>
