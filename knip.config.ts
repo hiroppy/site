@@ -19,8 +19,6 @@ const config: KnipConfig = {
   ignoreDependencies: [
     // for playwright
     "serve",
-    // Tailwind config
-    "color",
     "tailwindcss",
   ],
   astro: {
