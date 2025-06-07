@@ -1,4 +1,4 @@
-import algoliasearch from "algoliasearch";
+import { algoliasearch } from "algoliasearch";
 import { getArticles } from "./utils.mjs";
 
 process.loadEnvFile();
