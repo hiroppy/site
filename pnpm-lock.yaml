@@ -13,7 +13,7 @@ importers:
         version: 0.9.4(prettier-plugin-astro@0.14.1)(prettier@3.5.3)(typescript@5.8.3)
       '@astrojs/mdx':
         specifier: 4.3.0
-        version: 4.3.0(astro@5.9.0(@types/node@20.12.7)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)(yaml@2.8.0))
+        version: 4.3.0(astro@5.9.1(@types/node@20.12.7)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)(yaml@2.8.0))
       '@astrojs/partytown':
         specifier: 2.1.4
         version: 2.1.4
@@ -30,14 +30,14 @@ importers:
         specifier: 5.27.0
         version: 5.27.0
       astro:
-        specifier: 5.9.0
-        version: 5.9.0(@types/node@20.12.7)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)(yaml@2.8.0)
+        specifier: 5.9.1
+        version: 5.9.1(@types/node@20.12.7)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)(yaml@2.8.0)
       clsx:
         specifier: 2.1.1
         version: 2.1.1
       hiroppy:
-        specifier: 1.0.36
-        version: 1.0.36
+        specifier: 1.0.37
+        version: 1.0.37
       iconify-icon:
         specifier: 3.0.0
         version: 3.0.0
@@ -164,8 +164,8 @@ packages:
   '@astrojs/compiler@2.10.3':
     resolution: {integrity: sha512-bL/O7YBxsFt55YHU021oL+xz+B/9HvGNId3F9xURN16aeqDK9juHGktdkCSXz+U4nqFACq6ZFvWomOzhV+zfPw==}
 
-  '@astrojs/compiler@2.12.0':
-    resolution: {integrity: sha512-7bCjW6tVDpUurQLeKBUN9tZ5kSv5qYrGmcn0sG0IwacL7isR2ZbyyA3AdZ4uxsuUFOS2SlgReTH7wkxO6zpqWA==}
+  '@astrojs/compiler@2.12.1':
+    resolution: {integrity: sha512-WDSyVIiz7sNcJcCJxJFITu6XjfGhJ50Z0auyaWsrM+xb07IlhBLFtQuDkNy0caVHWNcKTM2LISAaHhgkRqGAVg==}
 
   '@astrojs/compiler@2.9.1':
     resolution: {integrity: sha512-s8Ge2lWHx/s3kl4UoerjL/iPtwdtogNM/BLOaGCwQA6crMOVYpphy5wUkYlKyuh8GAeGYH/5haLAFBsgNy9AQQ==}
@@ -1374,8 +1374,8 @@ packages:
     resolution: {integrity: sha512-ISvCdHdlTDlH5IpxQJIex7BWBywFWgjJSVdwst+/iQCoEYnyOaQ95+X1JGshuBjGp6nxKUy1jMgE3zPqN7fQdg==}
     hasBin: true
 
-  astro@5.9.0:
-    resolution: {integrity: sha512-AHF7oZDBQRwggHUG0bwBhRQjrDD+vJpCtPd0/GVxDB1hGRV0SQuFWS0UHX5bYczIqFcao1z9o9o0r2rQtHrTMg==}
+  astro@5.9.1:
+    resolution: {integrity: sha512-wxoJcTbuDZNFSv6EaL0PAlrp0Wx6VnOAULCXvy0scsV70oWMeUkdxuBxfO54JxO5Qgyvwj9h99y6E0elqOpGtA==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -2218,8 +2218,8 @@ packages:
     resolution: {integrity: sha512-Ox1pJVrDCyGHMG9CFg1tmrRUMRPRsAWYc/PinY0XzJU4K7y7vjNoLKIQ7BR5UJMCxNN8EM1MNDmHWA/B3aZUuw==}
     engines: {node: '>=6'}
 
-  hiroppy@1.0.36:
-    resolution: {integrity: sha512-oIw6ublEnzY9k1A/Z3uGXryRYxs6CV+3Dv/+0LP2901AT+VlrQZ55gUjw3XZnhdaF0NW7QdQ6XG+yes/RsyH6A==}
+  hiroppy@1.0.37:
+    resolution: {integrity: sha512-5N1aG7Ulr/32YoQ/+0eggQE5h/jzzeaOGKtGwlGus2XHHDyR0TiST2k25NDX4Z4y5drp/YsSBxxUyIq6YAJtLw==}
 
   hogan.js@3.0.2:
     resolution: {integrity: sha512-RqGs4wavGYJWE07t35JQccByczmNUXQT0E12ZYV1VKYu5UiAU9lsos/yBAcf840+zrUQQxgVduCR5/B8nNtibg==}
@@ -4330,7 +4330,7 @@ snapshots:
 
   '@astrojs/compiler@2.10.3': {}
 
-  '@astrojs/compiler@2.12.0': {}
+  '@astrojs/compiler@2.12.1': {}
 
   '@astrojs/compiler@2.9.1': {}
 
@@ -4388,12 +4388,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@4.3.0(astro@5.9.0(@types/node@20.12.7)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)(yaml@2.8.0))':
+  '@astrojs/mdx@4.3.0(astro@5.9.1(@types/node@20.12.7)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)(yaml@2.8.0))':
     dependencies:
       '@astrojs/markdown-remark': 6.3.2
       '@mdx-js/mdx': 3.1.0(acorn@8.14.1)
       acorn: 8.14.1
-      astro: 5.9.0(@types/node@20.12.7)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)(yaml@2.8.0)
+      astro: 5.9.1(@types/node@20.12.7)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)(yaml@2.8.0)
       es-module-lexer: 1.6.0
       estree-util-visit: 2.0.0
       hast-util-to-html: 9.0.5
@@ -5547,9 +5547,9 @@ snapshots:
 
   astring@1.8.6: {}
 
-  astro@5.9.0(@types/node@20.12.7)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)(yaml@2.8.0):
+  astro@5.9.1(@types/node@20.12.7)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.8.3)(yaml@2.8.0):
     dependencies:
-      '@astrojs/compiler': 2.12.0
+      '@astrojs/compiler': 2.12.1
       '@astrojs/internal-helpers': 0.6.1
       '@astrojs/markdown-remark': 6.3.2
       '@astrojs/telemetry': 3.3.0
@@ -6654,7 +6654,7 @@ snapshots:
 
   hex-rgb@4.3.0: {}
 
-  hiroppy@1.0.36: {}
+  hiroppy@1.0.37: {}
 
   hogan.js@3.0.2:
     dependencies:
