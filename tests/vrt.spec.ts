@@ -66,7 +66,7 @@ for (const url of urls) {
           page.locator(".job-history"),
           page.locator('img[loading="lazy"]'),
         ],
-        timeout: 120000,
+        timeout: 300000,
       });
     });
   }

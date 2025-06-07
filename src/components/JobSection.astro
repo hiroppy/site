@@ -1,13 +1,13 @@
 ---
 import type JobMeta from "hiroppy/generated/jobs.json";
 import Image from "./Image.astro";
-import { formatDate } from "../utils/formatDate";
 import { marked } from "marked";
 import Link from "./Link.astro";
 import Card from "./Card.astro";
 import CardContent from "./CardContent.astro";
 import CardTitle from "./CardTitle.astro";
 import ExpandableArticleLinks from "./ExpandableArticleLinks.astro";
+import PeriodBadge from "./PeriodBadge.astro";
 
 type JobContent = (typeof JobMeta)["main"] | (typeof JobMeta)["side"];
 
@@ -68,33 +68,31 @@ for (const item of items) {
                         </Link>
                       </CardTitle>
                       <div class="flex flex-col space-y-1">
-                        <div class="flex items-center space-x-2">
-                          <span
-                            class={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                              isCurrentJob
-                                ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
-                                : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300"
-                            }`}
-                          >
-                            {position}
-                          </span>
-                          {isCurrentJob && (
-                            <div class="flex items-center space-x-1 text-xs text-green-600 dark:text-green-400">
-                              <div class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" />
-                              <span>Current</span>
-                            </div>
-                          )}
+                        <div class="flex items-center justify-between">
+                          <div class="flex items-center space-x-2">
+                            <span
+                              class={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+                                isCurrentJob
+                                  ? "bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-400"
+                                  : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300"
+                              }`}
+                            >
+                              {position}
+                            </span>
+                            {isCurrentJob && (
+                              <div class="flex items-center space-x-1 text-xs text-green-600 dark:text-green-400">
+                                <div class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" />
+                                <span>Current</span>
+                              </div>
+                            )}
+                          </div>
+                          <PeriodBadge
+                            start={new Date(start)}
+                            end={end ? new Date(end) : null}
+                            variant="text"
+                            class="flex-shrink-0"
+                          />
                         </div>
-                        <span
-                          class={`text-xs font-medium ${
-                            isCurrentJob
-                              ? "text-green-600 dark:text-green-400"
-                              : "text-gray-500 dark:text-gray-400"
-                          }`}
-                        >
-                          {formatDate(new Date(start))} -{" "}
-                          {end ? formatDate(new Date(end)) : "Present"}
-                        </span>
                       </div>
                     </div>
                   </div>
@@ -123,22 +121,22 @@ for (const item of items) {
                       </div>
                     )}
                     <div class="min-w-0 flex-1 space-y-3">
-                      <div class="flex flex-col space-y-2 md:flex-row md:items-start md:justify-between md:space-y-0">
-                        <div class="space-y-1">
-                          <CardTitle level={4} class="text-lg">
-                            <Link
-                              href={(meta as any)[company].url}
-                              class="text-gray-900 transition-colors hover:text-blue-600 dark:text-white dark:hover:text-blue-400"
-                              ariaLabel={`${name}の会社サイトを開く`}
-                            >
-                              {name}
-                            </Link>
-                          </CardTitle>
+                      <div class="space-y-2">
+                        <CardTitle level={4} class="text-lg">
+                          <Link
+                            href={(meta as any)[company].url}
+                            class="text-gray-900 transition-colors hover:text-blue-600 dark:text-white dark:hover:text-blue-400"
+                            ariaLabel={`${name}の会社サイトを開く`}
+                          >
+                            {name}
+                          </Link>
+                        </CardTitle>
+                        <div class="flex items-center justify-between">
                           <div class="flex items-center space-x-2">
                             <span
                               class={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
                                 isCurrentJob
-                                  ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+                                  ? "bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-400"
                                   : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300"
                               }`}
                             >
@@ -151,18 +149,12 @@ for (const item of items) {
                               </div>
                             )}
                           </div>
-                        </div>
-                        <div class="flex flex-col items-start md:items-end">
-                          <span
-                            class={`text-sm font-medium ${
-                              isCurrentJob
-                                ? "text-green-600 dark:text-green-400"
-                                : "text-gray-500 dark:text-gray-400"
-                            }`}
-                          >
-                            {formatDate(new Date(start))} -{" "}
-                            {end ? formatDate(new Date(end)) : "Present"}
-                          </span>
+                          <PeriodBadge
+                            start={new Date(start)}
+                            end={end ? new Date(end) : null}
+                            variant="text"
+                            class="flex-shrink-0"
+                          />
                         </div>
                       </div>
 

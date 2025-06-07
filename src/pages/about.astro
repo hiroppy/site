@@ -1,0 +1,293 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import CardContent from "../components/CardContent.astro";
+import CardTitle from "../components/CardTitle.astro";
+import Avatar from "../components/Avatar.astro";
+import Image from "../components/Image.astro";
+import Icon from "../components/Icon.astro";
+import Section from "../components/Section.astro";
+import PeriodBadge from "../components/PeriodBadge.astro";
+import meImage from "../assets/images/meta/me.png";
+import meta from "../../node_modules/hiroppy/generated/meta.json";
+
+const { profile, sns, site, community } = meta;
+
+// Convert community object to array for easier iteration
+const communityActivities = Object.entries(community).map(([key, value]) => ({
+  id: key,
+  title: (value as any).position,
+  start: value.start,
+  end: value.end,
+  links: value.links,
+}));
+---
+
+<Layout title="About - Who am I?">
+  <main class="container mx-auto space-y-12 px-4 py-8">
+    <!-- Hero Section -->
+    <section class="py-12 text-center">
+      <div class="mx-auto max-w-4xl">
+        <div class="mb-6">
+          <Avatar
+            size="xl"
+            class="mx-auto ring-4 ring-blue-500 ring-offset-4 ring-offset-white dark:ring-offset-slate-900"
+          >
+            <Image
+              src={meImage}
+              class="h-full w-full object-cover"
+              alt="hiroppy"
+              width={128}
+              height={128}
+              lazy={false}
+            />
+          </Avatar>
+        </div>
+        <h1 class="mb-6 text-4xl font-bold text-gray-900 dark:text-white">
+          Who am I?
+        </h1>
+        <div class="mx-auto max-w-5xl text-left">
+          <p
+            class="text-lg leading-relaxed whitespace-pre-line text-gray-700 dark:text-gray-300"
+          >
+            {profile}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Links Section -->
+    <Section title="Find me on">
+      <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+        <Card
+          variant="interactive"
+          class="card-lift"
+          link={{ href: sns.github }}
+        >
+          <CardContent class="p-4 text-center">
+            <Icon
+              icon="mdi:github"
+              class="mx-auto mb-2 text-4xl text-gray-800 dark:text-gray-200"
+            />
+            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+              GitHub
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              Visit Profile
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card
+          variant="interactive"
+          class="card-lift"
+          link={{ href: sns.twitter }}
+        >
+          <CardContent class="p-4 text-center">
+            <Icon
+              icon="mdi:twitter"
+              class="mx-auto mb-2 text-4xl text-blue-400"
+            />
+            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+              Twitter/X
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Follow me</p>
+          </CardContent>
+        </Card>
+
+        <Card
+          variant="interactive"
+          class="card-lift"
+          link={{ href: sns.linkedin }}
+        >
+          <CardContent class="p-4 text-center">
+            <Icon
+              icon="mdi:linkedin"
+              class="mx-auto mb-2 text-4xl text-blue-700"
+            />
+            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+              LinkedIn
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Connect</p>
+          </CardContent>
+        </Card>
+
+        <Card
+          variant="interactive"
+          class="card-lift"
+          link={{ href: sns.connpass }}
+        >
+          <CardContent class="p-4 text-center">
+            <Icon
+              icon="mdi:account-group"
+              class="mx-auto mb-2 text-4xl text-orange-500"
+            />
+            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+              Connpass
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Events</p>
+          </CardContent>
+        </Card>
+
+        <Card
+          variant="interactive"
+          class="card-lift"
+          link={{ href: sns.facebook }}
+        >
+          <CardContent class="p-4 text-center">
+            <Icon
+              icon="mdi:facebook"
+              class="mx-auto mb-2 text-4xl text-blue-600"
+            />
+            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+              Facebook
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Profile</p>
+          </CardContent>
+        </Card>
+      </div>
+    </Section>
+
+    <!-- Quick Links Section -->
+    <Section title="Quick Links">
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card
+          variant="interactive"
+          class="card-lift bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20"
+          link={{ href: site.company }}
+        >
+          <CardContent class="p-6 text-center">
+            <Icon
+              icon="mdi:office-building"
+              class="mx-auto mb-3 text-4xl text-orange-600"
+            />
+            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+              Company
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              Coder Penguin
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card
+          variant="interactive"
+          class="card-lift bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20"
+          link={{ href: site.podcast }}
+        >
+          <CardContent class="p-6 text-center">
+            <Icon
+              icon="mdi:microphone"
+              class="mx-auto mb-3 text-4xl text-purple-600"
+            />
+            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+              Podcast
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              Listen to Mozaic.fm
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card
+          variant="interactive"
+          class="card-lift bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20"
+          link={{ href: site.blog }}
+        >
+          <CardContent class="p-6 text-center">
+            <Icon
+              icon="mdi:post"
+              class="mx-auto mb-3 text-4xl text-green-600"
+            />
+            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+              Blog
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              Read Articles
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card
+          variant="interactive"
+          class="card-lift bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20"
+          link={{ href: site.resume }}
+        >
+          <CardContent class="p-6 text-center">
+            <Icon
+              icon="mdi:account-circle"
+              class="mx-auto mb-3 text-4xl text-blue-600"
+            />
+            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+              Resume
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">View Resume</p>
+          </CardContent>
+        </Card>
+      </div>
+    </Section>
+
+    <!-- Community Activities Section -->
+    <Section title="Community Activities">
+      <div class="space-y-8">
+        {
+          communityActivities.map(({ title, start, end, links }) => (
+            <div>
+              <div class="mb-4 flex items-center justify-between">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                  {title}
+                </h3>
+                <PeriodBadge start={start} end={end} />
+              </div>
+              {links && links.length > 0 && (
+                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {links.map(
+                    ({ title: linkTitle, description, image, url }) => (
+                      <Card
+                        variant="interactive"
+                        class="card-lift"
+                        link={{ href: url }}
+                      >
+                        <CardContent class="p-4">
+                          {image && image.trim() ? (
+                            <div class="mb-3 overflow-hidden rounded-lg">
+                              <Image
+                                src={image}
+                                class="card-image-zoom h-32 w-full object-cover"
+                                alt={linkTitle}
+                                width={300}
+                                height={128}
+                              />
+                            </div>
+                          ) : (
+                            <div class="mb-3 flex h-32 items-center justify-center rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20">
+                              <Icon
+                                icon="mdi:presentation"
+                                class="text-4xl text-blue-600 dark:text-blue-400"
+                              />
+                            </div>
+                          )}
+                          <CardTitle
+                            level={4}
+                            class="mb-2 text-lg leading-relaxed"
+                          >
+                            {linkTitle}
+                          </CardTitle>
+                          {description && (
+                            <p class="line-clamp-3 text-sm text-gray-600 dark:text-gray-300">
+                              {description}
+                            </p>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ),
+                  )}
+                </div>
+              )}
+            </div>
+          ))
+        }
+      </div>
+    </Section>
+  </main>
+</Layout>

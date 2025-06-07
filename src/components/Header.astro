@@ -8,7 +8,7 @@ import Icon from "./Icon.astro";
 import meImage from "../assets/images/meta/me.png";
 import meta from "../../node_modules/hiroppy/generated/meta.json";
 
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url?.pathname || "";
 ---
 
 <header
@@ -57,6 +57,12 @@ const currentPath = Astro.url.pathname;
         <NavButton
           variant={currentPath === "/" ? "active" : "default"}
           href="/"
+        >
+          Home
+        </NavButton>
+        <NavButton
+          variant={currentPath === "/about" ? "active" : "default"}
+          href="/about"
         >
           About
         </NavButton>
@@ -120,6 +126,13 @@ const currentPath = Astro.url.pathname;
             <NavButton
               variant={currentPath === "/" ? "mobile-active" : "mobile"}
               href="/"
+              class="flex-shrink-0"
+            >
+              Home
+            </NavButton>
+            <NavButton
+              variant={currentPath === "/about" ? "mobile-active" : "mobile"}
+              href="/about"
               class="flex-shrink-0"
             >
               About

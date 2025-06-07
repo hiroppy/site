@@ -47,7 +47,7 @@ const articleLinks = links.filter((link) => link.title && link.description);
           />
         </summary>
 
-        <div class="mt-3">
+        <div class="expandable-content mt-3 overflow-hidden">
           <div
             id={uniqueId}
             class="flex gap-4 overflow-x-auto scroll-smooth px-4 pb-4"
@@ -112,6 +112,47 @@ const articleLinks = links.filter((link) => link.title && link.description);
 }
 
 <style>
+  /* Expandable content animation */
+  .expandable-content {
+    animation: slideDown 0.3s ease-out;
+    transform-origin: top;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+      max-height: 0;
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 500px;
+    }
+  }
+
+  /* Smooth transition for details content */
+  details[open] .expandable-content {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  details:not([open]) .expandable-content {
+    animation: slideUp 0.2s ease-in;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 500px;
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+      max-height: 0;
+    }
+  }
+
   /* Custom scrollbar for webkit browsers */
   .flex::-webkit-scrollbar {
     height: 6px;
