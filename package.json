@@ -35,9 +35,13 @@
     "prettier": "3.5.3",
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.6.12",
+    "remark": "15.0.1",
+    "remark-frontmatter": "5.0.0",
     "serve": "14.2.4",
+    "strip-markdown": "6.0.0",
     "tailwindcss": "4.1.8",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "yaml": "2.8.0"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
