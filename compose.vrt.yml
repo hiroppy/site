@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: vrt.dockerfile
+    image: hiroppy-site-vrt:latest
     env_file:
       - ./.env
     volumes:
