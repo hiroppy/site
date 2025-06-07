@@ -86,6 +86,13 @@ html {
     color 0.3s ease;
 }
 
+/* prevent layout shift */
+iconify-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
+
 /* Responsive iframe for YouTube embeds */
 @layer components {
   .responsive-video {
