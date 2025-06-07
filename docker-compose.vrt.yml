@@ -1,0 +1,13 @@
+services:
+  vrt:
+    build:
+      context: .
+      dockerfile: vrt.dockerfile
+    env_file:
+      - ./.env
+    volumes:
+      - ./test-results:/app/test-results
+      - ./tests:/app/tests
+    network_mode: "host"
+    stdin_open: true
+    tty: true

@@ -2,9 +2,7 @@ FROM mcr.microsoft.com/playwright:v1.52.0
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-# Skip Puppeteer's Chromium download since we're using Playwright
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-# Force a specific font configuration for tests
 ENV PLAYWRIGHT_FONT_DISPLAY=same-as-local
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
@@ -13,9 +11,8 @@ WORKDIR /app
 
 # Install fonts to ensure consistent rendering
 RUN apt-get update && apt-get install -y fonts-noto-cjk fonts-noto-color-emoji
-
 RUN npm run setup
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-# RUN pnpm run build
+RUN pnpm run build
 
 CMD ["pnpm", "test:vrt:update"]
