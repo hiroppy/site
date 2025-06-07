@@ -36,8 +36,8 @@ importers:
         specifier: 2.1.1
         version: 2.1.1
       hiroppy:
-        specifier: 1.0.39
-        version: 1.0.39
+        specifier: 1.0.41
+        version: 1.0.41
       iconify-icon:
         specifier: 3.0.0
         version: 3.0.0
@@ -2237,8 +2237,8 @@ packages:
     resolution: {integrity: sha512-Ox1pJVrDCyGHMG9CFg1tmrRUMRPRsAWYc/PinY0XzJU4K7y7vjNoLKIQ7BR5UJMCxNN8EM1MNDmHWA/B3aZUuw==}
     engines: {node: '>=6'}
 
-  hiroppy@1.0.39:
-    resolution: {integrity: sha512-vvFwIL5OyDZbUjdzNTkD5Y2AvD6O9TG+AVwNxz4t3XAu6PF4rQzIEky0tUbTMzY5YztAkvv4yFdkSW34RmeO2A==}
+  hiroppy@1.0.41:
+    resolution: {integrity: sha512-INSA1ceEZ3kjt7vNvls4EfRbZJGRx1Mx42I06c+u7TUoYAqrPeggZCOq9uHHwspMliQYR4IQNAIN6vPbmCMPfA==}
 
   hogan.js@3.0.2:
     resolution: {integrity: sha512-RqGs4wavGYJWE07t35JQccByczmNUXQT0E12ZYV1VKYu5UiAU9lsos/yBAcf840+zrUQQxgVduCR5/B8nNtibg==}
@@ -6691,7 +6691,7 @@ snapshots:
 
   hex-rgb@4.3.0: {}
 
-  hiroppy@1.0.39: {}
+  hiroppy@1.0.41: {}
 
   hogan.js@3.0.2:
     dependencies:
