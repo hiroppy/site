@@ -2,13 +2,12 @@
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 import CardContent from "../components/CardContent.astro";
-import CardHeader from "../components/CardHeader.astro";
 import CardTitle from "../components/CardTitle.astro";
 import Avatar from "../components/Avatar.astro";
 import Image from "../components/Image.astro";
 import Icon from "../components/Icon.astro";
-import Link from "../components/Link.astro";
 import Section from "../components/Section.astro";
+import PeriodBadge from "../components/PeriodBadge.astro";
 import meImage from "../assets/images/meta/me.png";
 import meta from "../../node_modules/hiroppy/generated/meta.json";
 
@@ -17,7 +16,10 @@ const { profile, sns, site, community } = meta;
 // Convert community object to array for easier iteration
 const communityActivities = Object.entries(community).map(([key, value]) => ({
   id: key,
-  ...value,
+  title: (value as any).position,
+  start: value.start,
+  end: value.end,
+  links: value.links,
 }));
 ---
 
@@ -42,11 +44,11 @@ const communityActivities = Object.entries(community).map(([key, value]) => ({
           </Avatar>
         </div>
         <h1 class="mb-6 text-4xl font-bold text-gray-900 dark:text-white">
-          Who am I? 🤔
+          Who am I?
         </h1>
-        <div class="mx-auto max-w-3xl text-left">
+        <div class="mx-auto max-w-5xl text-left">
           <p
-            class="whitespace-pre-line text-lg leading-relaxed text-gray-700 dark:text-gray-300"
+            class="text-lg leading-relaxed whitespace-pre-line text-gray-700 dark:text-gray-300"
           >
             {profile}
           </p>
@@ -58,7 +60,9 @@ const communityActivities = Object.entries(community).map(([key, value]) => ({
     <Section title="Find me on">
       <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
         <Card
-          class="group border-0 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-200/60 dark:bg-slate-800 dark:hover:shadow-blue-900/40"
+          variant="interactive"
+          class="card-lift"
+          link={{ href: sns.github }}
         >
           <CardContent class="p-4 text-center">
             <Icon
@@ -68,17 +72,16 @@ const communityActivities = Object.entries(community).map(([key, value]) => ({
             <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
               GitHub
             </h3>
-            <Link
-              href={sns.github}
-              class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-            >
+            <p class="text-sm text-gray-600 dark:text-gray-400">
               Visit Profile
-            </Link>
+            </p>
           </CardContent>
         </Card>
 
         <Card
-          class="group border-0 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-200/60 dark:bg-slate-800 dark:hover:shadow-blue-900/40"
+          variant="interactive"
+          class="card-lift"
+          link={{ href: sns.twitter }}
         >
           <CardContent class="p-4 text-center">
             <Icon
@@ -88,17 +91,14 @@ const communityActivities = Object.entries(community).map(([key, value]) => ({
             <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
               Twitter/X
             </h3>
-            <Link
-              href={sns.twitter}
-              class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-            >
-              Follow me
-            </Link>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Follow me</p>
           </CardContent>
         </Card>
 
         <Card
-          class="group border-0 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-200/60 dark:bg-slate-800 dark:hover:shadow-blue-900/40"
+          variant="interactive"
+          class="card-lift"
+          link={{ href: sns.linkedin }}
         >
           <CardContent class="p-4 text-center">
             <Icon
@@ -108,17 +108,14 @@ const communityActivities = Object.entries(community).map(([key, value]) => ({
             <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
               LinkedIn
             </h3>
-            <Link
-              href={sns.linkedin}
-              class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-            >
-              Connect
-            </Link>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Connect</p>
           </CardContent>
         </Card>
 
         <Card
-          class="group border-0 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-200/60 dark:bg-slate-800 dark:hover:shadow-blue-900/40"
+          variant="interactive"
+          class="card-lift"
+          link={{ href: sns.connpass }}
         >
           <CardContent class="p-4 text-center">
             <Icon
@@ -128,17 +125,14 @@ const communityActivities = Object.entries(community).map(([key, value]) => ({
             <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
               Connpass
             </h3>
-            <Link
-              href={sns.connpass}
-              class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-            >
-              Events
-            </Link>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Events</p>
           </CardContent>
         </Card>
 
         <Card
-          class="group border-0 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-200/60 dark:bg-slate-800 dark:hover:shadow-blue-900/40"
+          variant="interactive"
+          class="card-lift"
+          link={{ href: sns.facebook }}
         >
           <CardContent class="p-4 text-center">
             <Icon
@@ -148,76 +142,9 @@ const communityActivities = Object.entries(community).map(([key, value]) => ({
             <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
               Facebook
             </h3>
-            <Link
-              href={sns.facebook}
-              class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-            >
-              Profile
-            </Link>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Profile</p>
           </CardContent>
         </Card>
-      </div>
-    </Section>
-
-    <!-- Community Activities Section -->
-    <Section title="Community Activities">
-      <div class="space-y-6">
-        {
-          communityActivities.map(({ title, start, end, links }) => (
-            <Card class="border-0 bg-white shadow-lg dark:bg-slate-800">
-              <CardHeader class="pb-3">
-                <CardTitle class="flex items-center justify-between">
-                  <span class="text-xl font-semibold text-gray-900 dark:text-white">
-                    {title}
-                  </span>
-                  <span class="text-sm text-gray-500 dark:text-gray-400">
-                    {start} {end ? `- ${end}` : "- Present"}
-                  </span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {links && links.length > 0 && (
-                  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    {links.map(
-                      ({ title: linkTitle, description, image, siteUrl }) => (
-                        <div class="group">
-                          <Link href={siteUrl} class="block">
-                            {image ? (
-                              <div class="mb-3 overflow-hidden rounded-lg">
-                                <Image
-                                  src={image}
-                                  class="h-32 w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                  alt={linkTitle}
-                                  width={300}
-                                  height={128}
-                                />
-                              </div>
-                            ) : (
-                              <div class="mb-3 flex h-32 items-center justify-center rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20">
-                                <Icon
-                                  icon="mdi:presentation"
-                                  class="text-4xl text-blue-600 dark:text-blue-400"
-                                />
-                              </div>
-                            )}
-                            <h4 class="mb-2 font-medium text-gray-900 transition-colors group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
-                              {linkTitle}
-                            </h4>
-                            {description && (
-                              <p class="line-clamp-3 text-sm text-gray-600 dark:text-gray-300">
-                                {description}
-                              </p>
-                            )}
-                          </Link>
-                        </div>
-                      ),
-                    )}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          ))
-        }
       </div>
     </Section>
 
@@ -225,67 +152,9 @@ const communityActivities = Object.entries(community).map(([key, value]) => ({
     <Section title="Quick Links">
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card
-          class="group border-0 bg-gradient-to-br from-blue-50 to-blue-100 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:from-blue-900/20 dark:to-blue-800/20"
-        >
-          <CardContent class="p-6 text-center">
-            <Icon
-              icon="mdi:account-circle"
-              class="mx-auto mb-3 text-4xl text-blue-600"
-            />
-            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
-              Resume
-            </h3>
-            <Link
-              href={site.resume}
-              class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400"
-            >
-              View Resume
-            </Link>
-          </CardContent>
-        </Card>
-
-        <Card
-          class="group border-0 bg-gradient-to-br from-green-50 to-green-100 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:from-green-900/20 dark:to-green-800/20"
-        >
-          <CardContent class="p-6 text-center">
-            <Icon
-              icon="mdi:post"
-              class="mx-auto mb-3 text-4xl text-green-600"
-            />
-            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
-              Blog
-            </h3>
-            <Link
-              href={site.blog}
-              class="text-sm text-green-600 hover:text-green-800 dark:text-green-400"
-            >
-              Read Articles
-            </Link>
-          </CardContent>
-        </Card>
-
-        <Card
-          class="group border-0 bg-gradient-to-br from-purple-50 to-purple-100 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:from-purple-900/20 dark:to-purple-800/20"
-        >
-          <CardContent class="p-6 text-center">
-            <Icon
-              icon="mdi:microphone"
-              class="mx-auto mb-3 text-4xl text-purple-600"
-            />
-            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
-              Podcast
-            </h3>
-            <Link
-              href={site.podcast}
-              class="text-sm text-purple-600 hover:text-purple-800 dark:text-purple-400"
-            >
-              Listen to Mozaic.fm
-            </Link>
-          </CardContent>
-        </Card>
-
-        <Card
-          class="group border-0 bg-gradient-to-br from-orange-50 to-orange-100 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:from-orange-900/20 dark:to-orange-800/20"
+          variant="interactive"
+          class="card-lift bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20"
+          link={{ href: site.company }}
         >
           <CardContent class="p-6 text-center">
             <Icon
@@ -295,14 +164,129 @@ const communityActivities = Object.entries(community).map(([key, value]) => ({
             <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
               Company
             </h3>
-            <Link
-              href={site.company}
-              class="text-sm text-orange-600 hover:text-orange-800 dark:text-orange-400"
-            >
+            <p class="text-sm text-gray-600 dark:text-gray-400">
               Coder Penguin
-            </Link>
+            </p>
           </CardContent>
         </Card>
+
+        <Card
+          variant="interactive"
+          class="card-lift bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20"
+          link={{ href: site.podcast }}
+        >
+          <CardContent class="p-6 text-center">
+            <Icon
+              icon="mdi:microphone"
+              class="mx-auto mb-3 text-4xl text-purple-600"
+            />
+            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+              Podcast
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              Listen to Mozaic.fm
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card
+          variant="interactive"
+          class="card-lift bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20"
+          link={{ href: site.blog }}
+        >
+          <CardContent class="p-6 text-center">
+            <Icon
+              icon="mdi:post"
+              class="mx-auto mb-3 text-4xl text-green-600"
+            />
+            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+              Blog
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              Read Articles
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card
+          variant="interactive"
+          class="card-lift bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20"
+          link={{ href: site.resume }}
+        >
+          <CardContent class="p-6 text-center">
+            <Icon
+              icon="mdi:account-circle"
+              class="mx-auto mb-3 text-4xl text-blue-600"
+            />
+            <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+              Resume
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">View Resume</p>
+          </CardContent>
+        </Card>
+      </div>
+    </Section>
+
+    <!-- Community Activities Section -->
+    <Section title="Community Activities">
+      <div class="space-y-8">
+        {
+          communityActivities.map(({ title, start, end, links }) => (
+            <div>
+              <div class="mb-4 flex items-center justify-between">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                  {title}
+                </h3>
+                <PeriodBadge start={start} end={end} />
+              </div>
+              {links && links.length > 0 && (
+                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {links.map(
+                    ({ title: linkTitle, description, image, url }) => (
+                      <Card
+                        variant="interactive"
+                        class="card-lift"
+                        link={{ href: url }}
+                      >
+                        <CardContent class="p-4">
+                          {image && image.trim() ? (
+                            <div class="mb-3 overflow-hidden rounded-lg">
+                              <Image
+                                src={image}
+                                class="card-image-zoom h-32 w-full object-cover"
+                                alt={linkTitle}
+                                width={300}
+                                height={128}
+                              />
+                            </div>
+                          ) : (
+                            <div class="mb-3 flex h-32 items-center justify-center rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20">
+                              <Icon
+                                icon="mdi:presentation"
+                                class="text-4xl text-blue-600 dark:text-blue-400"
+                              />
+                            </div>
+                          )}
+                          <CardTitle
+                            level={4}
+                            class="mb-2 text-lg leading-relaxed"
+                          >
+                            {linkTitle}
+                          </CardTitle>
+                          {description && (
+                            <p class="line-clamp-3 text-sm text-gray-600 dark:text-gray-300">
+                              {description}
+                            </p>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ),
+                  )}
+                </div>
+              )}
+            </div>
+          ))
+        }
       </div>
     </Section>
   </main>
