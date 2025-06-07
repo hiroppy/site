@@ -1,21 +1,46 @@
 ---
 import { cn } from "../utils/cn";
+import Link from "./Link.astro";
+
+type LinkProps = {
+  href: string;
+  isBlank?: boolean;
+  ariaLabel?: string;
+};
 
 type Props = {
   class?: string;
   variant?: "default" | "interactive";
+  link?: LinkProps;
 };
 
-const { class: className = "", variant = "default" } = Astro.props;
+const { class: className = "", variant = "default", link } = Astro.props;
+
+const baseClasses = cn(
+  "rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-card-foreground shadow",
+  variant === "interactive" &&
+    "group overflow-hidden border-0 shadow-md card-lift",
+  link && "cursor-pointer block",
+  className,
+);
 ---
 
-<div
-  class={cn(
-    "rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-card-foreground shadow",
-    variant === "interactive" &&
-      "group overflow-hidden border-0 shadow-md card-lift",
-    className,
-  )}
->
-  <slot />
-</div>
+{
+  link ? (
+    <Link
+      href={link.href}
+      isBlank={link.isBlank}
+      ariaLabel={link.ariaLabel}
+      class={cn(
+        baseClasses,
+        "no-underline hover:no-underline focus-visible:shadow-2xl focus-visible:ring-8 focus-visible:shadow-blue-500/50 focus-visible:ring-blue-400 focus-visible:ring-offset-4 focus-visible:outline-none",
+      )}
+    >
+      <slot />
+    </Link>
+  ) : (
+    <div class={baseClasses}>
+      <slot />
+    </div>
+  )
+}
