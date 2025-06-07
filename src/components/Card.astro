@@ -18,9 +18,8 @@ const { class: className = "", variant = "default", link } = Astro.props;
 
 const baseClasses = cn(
   "rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-card-foreground shadow",
-  variant === "interactive" &&
-    "group overflow-hidden border-0 shadow-md card-lift",
-  link && "cursor-pointer block",
+  variant === "interactive" && "overflow-hidden border-0 shadow-md card-lift",
+  link && "cursor-pointer block group",
   className,
 );
 ---

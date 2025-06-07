@@ -1,22 +1,5 @@
 import { Octokit } from "octokit";
 
-interface RepositoryInfo {
-  name: string;
-  url: string;
-  description: string | null;
-  language: string | null;
-  stars: number;
-  forks: number;
-  openIssues: number;
-  defaultBranch: string;
-  createdAt: string;
-  updatedAt: string;
-  avatar: string;
-  homepage: string | null;
-  topics: string[];
-  archived: boolean;
-}
-
 let octokit: Octokit | null = null;
 
 function getOctokit() {

@@ -1,5 +1,5 @@
 ---
-import { mergeClass } from "../utils/mergeClass";
+import { twMerge } from "tailwind-merge";
 import Icon from "./Icon.astro";
 import Link from "./Link.astro";
 
@@ -20,9 +20,7 @@ const {
 } = Astro.props;
 ---
 
-<div
-  class={mergeClass("flex justify-between items-center mt-4", className ?? "")}
->
+<div class={twMerge("flex justify-between items-center mt-4", className)}>
   {
     prev ? (
       <Link

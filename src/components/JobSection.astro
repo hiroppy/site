@@ -2,11 +2,11 @@
 import type JobMeta from "hiroppy/generated/jobs.json";
 import Image from "./Image.astro";
 import { formatDate } from "../utils/formatDate";
-import Icon from "./Icon.astro";
-import Link from "./Link.astro";
 import { marked } from "marked";
+import Link from "./Link.astro";
 import Card from "./Card.astro";
 import CardContent from "./CardContent.astro";
+import CardTitle from "./CardTitle.astro";
 import ExpandableArticleLinks from "./ExpandableArticleLinks.astro";
 
 type JobContent = (typeof JobMeta)["main"] | (typeof JobMeta)["side"];
@@ -31,9 +31,9 @@ for (const item of items) {
 ---
 
 <div class="space-y-6">
-  <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+  <CardTitle level={3} class="text-xl">
     {title}
-  </h3>
+  </CardTitle>
   <div class="space-y-6">
     {
       history.map(
@@ -58,22 +58,15 @@ for (const item of items) {
                       </div>
                     )}
                     <div class="min-w-0 flex-1">
-                      <h4 class="mb-1 text-base font-semibold">
+                      <CardTitle level={4} class="mb-1 text-base">
                         <Link
                           href={(meta as any)[company].url}
-                          class="flex items-center space-x-1 text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                          class="text-gray-900 transition-colors hover:text-blue-600 dark:text-white dark:hover:text-blue-400"
                           ariaLabel={`${name}の会社サイトを開く`}
                         >
-                          <span>{name}</span>
-                          <Icon
-                            icon="mdi:open-in-new"
-                            class="opacity-0 transition-opacity group-hover:opacity-100"
-                            width="14"
-                            height="14"
-                            decorative={false}
-                          />
+                          {name}
                         </Link>
-                      </h4>
+                      </CardTitle>
                       <div class="flex flex-col space-y-1">
                         <div class="flex items-center space-x-2">
                           <span
@@ -132,22 +125,15 @@ for (const item of items) {
                     <div class="min-w-0 flex-1 space-y-3">
                       <div class="flex flex-col space-y-2 md:flex-row md:items-start md:justify-between md:space-y-0">
                         <div class="space-y-1">
-                          <h4 class="text-lg font-semibold">
+                          <CardTitle level={4} class="text-lg">
                             <Link
                               href={(meta as any)[company].url}
-                              class="flex items-center space-x-2 text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                              class="text-gray-900 transition-colors hover:text-blue-600 dark:text-white dark:hover:text-blue-400"
                               ariaLabel={`${name}の会社サイトを開く`}
                             >
-                              <span>{name}</span>
-                              <Icon
-                                icon="mdi:open-in-new"
-                                class="opacity-0 transition-opacity group-hover:opacity-100"
-                                width="16"
-                                height="16"
-                                decorative={false}
-                              />
+                              {name}
                             </Link>
-                          </h4>
+                          </CardTitle>
                           <div class="flex items-center space-x-2">
                             <span
                               class={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${

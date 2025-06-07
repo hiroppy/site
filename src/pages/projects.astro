@@ -5,8 +5,8 @@ import Button from "../components/Button.astro";
 import Icon from "../components/Icon.astro";
 import Card from "../components/Card.astro";
 import CardContent from "../components/CardContent.astro";
+import CardTitle from "../components/CardTitle.astro";
 import Section from "../components/Section.astro";
-import Link from "../components/Link.astro";
 import Image from "../components/Image.astro";
 import GitHubStats from "../components/GitHubStats.astro";
 import { getRepositoryInfo } from "../utils/github";
@@ -106,14 +106,9 @@ const contributions = await Promise.all(
                   width="20"
                   height="20"
                 />
-                <h3 class="flex-1 text-lg font-semibold">
-                  <Link
-                    href={project.url}
-                    class="text-gray-900 transition-colors hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-500"
-                  >
-                    {project.name}
-                  </Link>
-                </h3>
+                <CardTitle level={3} class="flex-1 text-lg">
+                  {project.name}
+                </CardTitle>
               </div>
 
               {/* <!-- Status and Stats Row --> */}
@@ -207,7 +202,10 @@ const contributions = await Promise.all(
     <div class="space-y-4">
       {
         contributions.map((contrib) => (
-          <Card variant="interactive">
+          <Card
+            variant="interactive"
+            link={{ href: contrib.url, isBlank: true }}
+          >
             <CardContent>
               <div class="flex items-start space-x-3">
                 <div class="flex-shrink-0">
@@ -222,14 +220,9 @@ const contributions = await Promise.all(
                 <div class="min-w-0 flex-1">
                   {/* <!-- Project Name Row --> */}
                   <div class="mb-2">
-                    <h3 class="text-lg font-semibold">
-                      <Link
-                        href={contrib.url}
-                        class="text-gray-900 transition-colors hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-500"
-                      >
-                        {contrib.name}
-                      </Link>
-                    </h3>
+                    <CardTitle level={3} class="text-lg">
+                      {contrib.name}
+                    </CardTitle>
                   </div>
 
                   {/* <!-- Role and Stats Row --> */}

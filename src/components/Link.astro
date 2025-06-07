@@ -1,5 +1,5 @@
 ---
-import { mergeClass } from "../utils/mergeClass";
+import { twMerge } from "tailwind-merge";
 import { getExternalLinkProps } from "../utils/linkUtils";
 
 type Props = {
@@ -11,18 +11,24 @@ type Props = {
 
 const { href, isBlank, class: className, ariaLabel } = Astro.props;
 
+const siteUrl = "https://hiroppy.me/";
+const isInternalLink = href.startsWith(siteUrl);
+const internalHref = isInternalLink ? href.replace(siteUrl, "/") : href;
+
 const linkProps = getExternalLinkProps(href);
-const isNeedTargetBlank = isBlank ?? !!linkProps.target;
+const shouldOpenInBlank = isInternalLink
+  ? false
+  : (isBlank ?? !!linkProps.target);
 ---
 
 <a
-  href={href}
-  target={isNeedTargetBlank ? "_blank" : linkProps.target}
-  class={mergeClass(
+  href={internalHref}
+  target={shouldOpenInBlank ? "_blank" : undefined}
+  class={twMerge(
     "text-blue-600 dark:text-blue-300 no-underline hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded",
-    className ?? "",
+    className,
   )}
-  rel={isNeedTargetBlank ? "noreferrer" : linkProps.rel}
+  rel={shouldOpenInBlank ? "noreferrer" : undefined}
   aria-label={ariaLabel}
 >
   <slot />

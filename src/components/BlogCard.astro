@@ -27,67 +27,65 @@ const { post, currentTag, maxTags = 3 } = Astro.props;
 const { data, slug } = post;
 ---
 
-<a
-  href={getBlogItemUrl(slug)}
-  class="block h-full"
-  aria-label={getBlogItemAriaLabel(data.title)}
+<Card
+  variant="interactive"
+  class="flex h-full flex-col"
+  link={{
+    href: getBlogItemUrl(slug),
+    ariaLabel: getBlogItemAriaLabel(data.title),
+  }}
 >
-  <Card variant="interactive" class="flex h-full flex-col">
-    <CardHeader class="p-0">
-      <div class="relative overflow-hidden">
-        {
-          data.image && (
-            <Image
-              src={data.image}
-              alt={getBlogItemImageAlt(data.title)}
-              width={400}
-              height={200}
-              class="card-image-zoom h-48 w-full object-cover"
-            />
-          )
-        }
-        {
-          !data.image && (
-            <div class="flex h-48 w-full items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600">
-              <div class="text-6xl opacity-20 dark:opacity-10">📝</div>
-            </div>
-          )
-        }
-        <Badge variant="primary" class="absolute top-3 left-3">
-          {parseTags(data.tags)?.[0] || "記事"}
-        </Badge>
+  <CardHeader class="p-0">
+    <div class="relative overflow-hidden">
+      {
+        data.image && (
+          <Image
+            src={data.image}
+            alt={getBlogItemImageAlt(data.title)}
+            width={400}
+            height={200}
+            class="card-image-zoom h-48 w-full object-cover"
+          />
+        )
+      }
+      {
+        !data.image && (
+          <div class="flex h-48 w-full items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600">
+            <div class="text-6xl opacity-20 dark:opacity-10">📝</div>
+          </div>
+        )
+      }
+      <Badge variant="primary" class="absolute top-3 left-3">
+        {parseTags(data.tags)?.[0] || "記事"}
+      </Badge>
+    </div>
+  </CardHeader>
+  <CardContent class="flex flex-grow flex-col">
+    <div
+      class="mb-3 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400"
+    >
+      <div class="flex items-center space-x-1" data-testid="blog-date">
+        <Icon icon="mdi:calendar" width="16" height="16" />
+        <span>{formatDate(data.date)}</span>
       </div>
-    </CardHeader>
-    <CardContent class="flex flex-grow flex-col">
-      <div
-        class="mb-3 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400"
-      >
-        <div class="flex items-center space-x-1" data-testid="blog-date">
-          <Icon icon="mdi:calendar" width="16" height="16" />
-          <span>{formatDate(data.date)}</span>
-        </div>
-      </div>
+    </div>
 
-      <CardTitle
-        level={2}
-        class="card-title-hover mb-3 line-clamp-2 text-xl leading-relaxed"
-      >
-        {data.title}
-      </CardTitle>
+    <CardTitle level={2} class="mb-3 line-clamp-2 text-xl leading-relaxed">
+      {data.title}
+    </CardTitle>
 
-      <CardDescription class="mb-4 line-clamp-3">
-        {data.description}
-      </CardDescription>
+    <CardDescription class="mb-4 line-clamp-3">
+      {data.description}
+    </CardDescription>
 
-      <div class="mt-auto flex flex-wrap gap-2">
-        {
-          parseTags(data.tags)
-            .slice(0, maxTags)
-            .map((tag: string) => (
-              <Badge variant={getTagVariant(tag, currentTag)}>{tag}</Badge>
-            ))
-        }
-      </div>
-    </CardContent>
-  </Card>
-</a>
+    <div class="mt-auto flex flex-wrap gap-2">
+      {
+        parseTags(data.tags)
+          .slice(0, maxTags)
+          .map((tag: string) => (
+            <Badge variant={getTagVariant(tag, currentTag)}>{tag}</Badge>
+          ))
+      }
+    </div>
+  </CardContent>
+</Card>

@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 import CardContent from "../components/CardContent.astro";
+import CardTitle from "../components/CardTitle.astro";
 import Avatar from "../components/Avatar.astro";
 import Button from "../components/Button.astro";
 import Image from "../components/Image.astro";
@@ -99,9 +100,12 @@ const reposWithStars = await Promise.all(
                 />
               </div>
               <CardContent class="flex flex-grow flex-col p-4">
-                <h3 class="card-title-hover mb-2 flex-grow text-lg leading-relaxed font-medium text-gray-900 dark:text-gray-100">
+                <CardTitle
+                  level={3}
+                  class="mb-2 flex-grow text-lg leading-relaxed"
+                >
                   {title}
-                </h3>
+                </CardTitle>
                 <div class="mt-auto flex items-center justify-end text-sm text-gray-500 dark:text-gray-400">
                   <Hatena />
                   <span data-testid="bookmark-count" class="ml-1">
@@ -136,9 +140,9 @@ const reposWithStars = await Promise.all(
                       />
                     </Avatar>
                     <div class="min-w-0 flex-1">
-                      <h3 class="card-title-hover mb-2 text-lg leading-relaxed font-semibold text-gray-900 dark:text-white">
+                      <CardTitle level={3} class="mb-2 text-lg leading-relaxed">
                         {name}
-                      </h3>
+                      </CardTitle>
                       <p class="mb-3 line-clamp-2 text-sm text-gray-600 dark:text-gray-300">
                         {description}
                       </p>
