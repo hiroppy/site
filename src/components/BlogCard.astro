@@ -42,7 +42,7 @@ const { data, slug } = post;
               alt={getBlogItemImageAlt(data.title)}
               width={400}
               height={200}
-              class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              class="card-image-zoom h-48 w-full object-cover"
             />
           )
         }
@@ -70,7 +70,7 @@ const { data, slug } = post;
 
       <CardTitle
         level={2}
-        class="mb-3 line-clamp-2 text-xl leading-relaxed transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-500"
+        class="card-title-hover mb-3 line-clamp-2 text-xl leading-relaxed"
       >
         {data.title}
       </CardTitle>
