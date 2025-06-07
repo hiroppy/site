@@ -5,8 +5,9 @@ const config: KnipConfig = {
     "src/pages/**/*.{astro,ts}",
     "src/content/**/*.{md,mdx}",
     "src/layouts/**/*.astro",
+    "scripts/**/*.mts",
   ],
-  project: ["src/**/*.{astro,ts,tsx,js,jsx,mdx}"],
+  project: ["src/**/*.{astro,ts,tsx,js,jsx,mdx}", "scripts/**/*.mts"],
   ignore: [
     "generated/**",
     // mdx uses theme files

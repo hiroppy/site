@@ -22,8 +22,8 @@
     "fmt": "prettier -w .",
     "fmt:check": "prettier --check .",
     "lint": "knip",
-    "cache": "node scripts/generatecache.mjs",
-    "lh": "lhci autorun"
+    "lh": "lhci autorun",
+    "index": "node --experimental-strip-types scripts/updateBlogOnAlgolia.mts"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.10.2",
