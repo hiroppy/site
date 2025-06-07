@@ -12,6 +12,7 @@ import Badge from "../components/Badge.astro";
 import Button from "../components/Button.astro";
 import Card from "../components/Card.astro";
 import CardContent from "../components/CardContent.astro";
+import CardTitle from "../components/CardTitle.astro";
 import Avatar from "../components/Avatar.astro";
 import Image from "../components/Image.astro";
 import Icon from "../components/Icon.astro";
@@ -301,38 +302,40 @@ if (import.meta.env.PROD) {
                 </h2>
                 <div class="grid gap-4 md:grid-cols-2">
                   {index !== 0 ? (
-                    <Card class="group transition-all duration-300 hover:shadow-lg">
-                      <CardContent class="p-4">
+                    <Card
+                      class="transition-all duration-300 hover:shadow-lg"
+                      link={{
+                        href: `/blog/${posts[index - 1].slug}`,
+                        ariaLabel: `前の記事: ${posts[index - 1].data.title}`,
+                      }}
+                    >
+                      <CardContent>
                         <div class="mb-2 text-xs text-gray-500 dark:text-gray-400">
                           ← 前の記事
                         </div>
-                        <h3 class="line-clamp-2 text-sm font-semibold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-blue-500">
-                          <a
-                            href={`/blog/${posts[index - 1].slug}`}
-                            aria-label={`前の記事: ${posts[index - 1].data.title}`}
-                          >
-                            {posts[index - 1].data.title}
-                          </a>
-                        </h3>
+                        <CardTitle level={3} class="line-clamp-2 text-sm">
+                          {posts[index - 1].data.title}
+                        </CardTitle>
                       </CardContent>
                     </Card>
                   ) : (
                     <div />
                   )}
                   {index !== posts.length - 1 ? (
-                    <Card class="group transition-all duration-300 hover:shadow-lg">
-                      <CardContent class="p-4 text-right">
+                    <Card
+                      class="transition-all duration-300 hover:shadow-lg"
+                      link={{
+                        href: `/blog/${posts[index + 1].slug}`,
+                        ariaLabel: `次の記事: ${posts[index + 1].data.title}`,
+                      }}
+                    >
+                      <CardContent class="text-right">
                         <div class="mb-2 text-xs text-gray-500 dark:text-gray-400">
                           次の記事 →
                         </div>
-                        <h3 class="line-clamp-2 text-sm font-semibold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-blue-500">
-                          <a
-                            href={`/blog/${posts[index + 1].slug}`}
-                            aria-label={`次の記事: ${posts[index + 1].data.title}`}
-                          >
-                            {posts[index + 1].data.title}
-                          </a>
-                        </h3>
+                        <CardTitle level={3} class="line-clamp-2 text-sm">
+                          {posts[index + 1].data.title}
+                        </CardTitle>
                       </CardContent>
                     </Card>
                   ) : (
@@ -354,8 +357,14 @@ if (import.meta.env.PROD) {
             </h2>
             <div class="grid gap-6 md:grid-cols-2">
               {relatedPosts.map((post) => (
-                <Card class="group transition-all duration-300 hover:shadow-lg dark:bg-slate-800">
-                  <CardContent class="p-0">
+                <Card
+                  class="transition-all duration-300 hover:shadow-lg dark:bg-slate-800"
+                  link={{
+                    href: `/blog/${post.slug}`,
+                    ariaLabel: `関連記事: ${post.data.title}`,
+                  }}
+                >
+                  <CardContent>
                     <div class="flex items-center">
                       {post.data.image && (
                         <Image
@@ -363,27 +372,22 @@ if (import.meta.env.PROD) {
                           alt={post.data.title}
                           width={120}
                           height={80}
-                          class="h-20 w-24 rounded-l-lg object-cover"
+                          class="h-20 w-24 rounded-lg object-cover"
                         />
                       )}
                       {!post.data.image && (
-                        <div class="flex h-20 w-24 items-center justify-center rounded-l-lg bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600">
+                        <div class="flex h-20 w-24 items-center justify-center rounded-lg bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600">
                           <div class="text-2xl opacity-30">📝</div>
                         </div>
                       )}
-                      <div class="flex-1 p-4">
+                      <div class="flex-1 pl-4">
                         <Badge variant="secondary" class="mb-2 text-xs">
                           {parseTags(post.data.tags)?.[0] || "記事"}
                         </Badge>
-                        <h3 class="line-clamp-2 text-sm font-semibold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-blue-500">
-                          <a
-                            href={`/blog/${post.slug}`}
-                            aria-label={`関連記事: ${post.data.title}`}
-                          >
-                            {post.data.title}
-                          </a>
-                        </h3>
-                        <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                        <CardTitle level={3} class="mb-2 line-clamp-2 text-sm">
+                          {post.data.title}
+                        </CardTitle>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">
                           {formatDate(post.data.date)}
                         </p>
                       </div>
