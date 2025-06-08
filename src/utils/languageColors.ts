@@ -11,34 +11,14 @@ export function getLanguageColorClass(language: string | null) {
       return "bg-javascript";
     case "TypeScript":
       return "bg-typescript";
+    case "HTML":
+      return "bg-html";
     case "CSS":
       return "bg-css dark:bg-css-dark";
-    case "Python":
-      return "bg-python";
     case "Go":
       return "bg-go";
     case "Rust":
       return "bg-rust";
-    case "Java":
-      return "bg-java";
-    case "C++":
-      return "bg-cpp";
-    case "C":
-      return "bg-c";
-    case "PHP":
-      return "bg-php";
-    case "Ruby":
-      return "bg-ruby";
-    case "Swift":
-      return "bg-swift";
-    case "Kotlin":
-      return "bg-kotlin";
-    case "Dart":
-      return "bg-dart";
-    case "Shell":
-      return "bg-shell";
-    case "HTML":
-      return "bg-html";
     default:
       return "bg-gray-400 dark:bg-gray-600"; // Default color for unknown languages
   }
