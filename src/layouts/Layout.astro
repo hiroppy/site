@@ -67,26 +67,30 @@ const titleContent =
     <link rel="preconnect" href="//b.hatena.ne.jp" />
     <link rel="author" href="http://www.hatena.ne.jp/about_hiroppy/" />
     <script is:inline>
-      const theme = (() => {
-        if (
-          typeof localStorage !== "undefined" &&
-          localStorage.getItem("theme")
-        ) {
-          return localStorage.getItem("theme");
+      (function () {
+        const theme = (() => {
+          if (
+            typeof localStorage !== "undefined" &&
+            localStorage.getItem("theme")
+          ) {
+            return localStorage.getItem("theme");
+          }
+          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            return "dark";
+          }
+          return "light";
+        })();
+
+        if (theme === "light") {
+          document.documentElement.classList.remove("dark");
+        } else {
+          document.documentElement.classList.add("dark");
         }
-        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-          return "dark";
+
+        if (typeof localStorage !== "undefined") {
+          localStorage.setItem("theme", theme);
         }
-        return "light";
       })();
-
-      if (theme === "light") {
-        document.documentElement.classList.remove("dark");
-      } else {
-        document.documentElement.classList.add("dark");
-      }
-
-      window.localStorage.setItem("theme", theme);
     </script>
     <ClientRouter fallback="swap" />
   </head>

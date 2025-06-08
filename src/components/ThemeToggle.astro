@@ -44,8 +44,16 @@ import Icon from "./Icon.astro";
   // Initialize immediately
   initTheme();
 
-  // Handle view transitions
-  document.addEventListener("astro:after-swap", initTheme);
+  // Handle view transitions - re-attach event listener if needed
+  document.addEventListener("astro:after-swap", function () {
+    initTheme();
+
+    // Re-attach toggle handler if button exists but doesn't have onclick
+    const toggleButton = document.getElementById("theme-toggle");
+    if (toggleButton && !toggleButton.hasAttribute("onclick")) {
+      toggleButton.addEventListener("click", toggleTheme);
+    }
+  });
 
   // Also initialize when DOM is ready (for page loads)
   if (document.readyState === "loading") {
