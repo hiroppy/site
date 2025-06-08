@@ -103,32 +103,19 @@ test.describe("Component VRT Tests", () => {
   }) => {
     await setupPage(page, "http://localhost:3000/jobs");
 
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(1000);
+    // Find the specific Mercari/Souzoh main job card using aria-label directly
+    const mercariMainCard = page.locator('[aria-label="main-Mercari/Souzoh"]');
 
-    // Find and click the first visible related articles button
-    const allRelatedArticles = page
-      .locator("details summary")
+    // Find the desktop layout (md:block) and click the related articles button
+    const relatedArticlesButton = mercariMainCard
+      .locator(".hidden.md\\:block details summary")
       .filter({ hasText: "関連記事" });
-    const totalCount = await allRelatedArticles.count();
 
-    let foundVisible = false;
-    for (let i = 0; i < totalCount; i++) {
-      const currentButton = allRelatedArticles.nth(i);
-      if (await currentButton.isVisible()) {
-        await currentButton.click();
-        foundVisible = true;
-        break;
-      }
-    }
-
-    if (!foundVisible) {
-      throw new Error("Main job related articles button not found");
-    }
-
+    await relatedArticlesButton.click();
     await page.waitForTimeout(1000);
+
     await takeScreenshot(
-      page.locator("details[open] .expandable-content").first(),
+      mercariMainCard.locator("details[open] .expandable-content"),
       "job-related-articles-mercari-main.png",
     );
   });
