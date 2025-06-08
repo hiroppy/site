@@ -1,28 +1,14 @@
 ---
+import { Icon as AstroIcon } from "astro-icon/components";
+
 export interface Props {
   icon: string;
   class?: string;
   width?: string | number;
   height?: string | number;
-  decorative?: boolean;
 }
 
-const {
-  icon,
-  class: className,
-  width = "1em",
-  height = "1em",
-  decorative = true,
-} = Astro.props;
+const { icon, class: className, width = "1em", height = "1em" } = Astro.props;
 ---
 
-<iconify-icon
-  icon={icon}
-  class={className}
-  width={width}
-  height={height}
-  aria-hidden={decorative ? "true" : undefined}></iconify-icon>
-
-<script>
-  import "iconify-icon";
-</script>
+<AstroIcon name={icon} class={className} width={width} height={height} />

@@ -28,8 +28,10 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "4.10.2",
+    "@iconify-json/mdi": "1.2.3",
     "@lhci/cli": "0.14.0",
     "@playwright/test": "1.52.0",
+    "astro-icon": "1.1.5",
     "cheerio": "1.0.0",
     "knip": "5.60.2",
     "octokit": "5.0.3",
@@ -55,7 +57,6 @@
     "astro": "5.9.1",
     "clsx": "2.1.1",
     "hiroppy": "1.0.41",
-    "iconify-icon": "3.0.0",
     "instantsearch.js": "4.78.3",
     "marked": "15.0.12",
     "satori": "0.14.0",

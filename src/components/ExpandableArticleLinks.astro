@@ -34,7 +34,6 @@ const articleLinks = links.filter((link) => link.title && link.description);
               width="18"
               height="18"
               class="text-gray-500 dark:text-gray-400"
-              decorative={false}
             />
             <span>関連記事 ({articleLinks.length}件)</span>
           </div>
@@ -43,7 +42,6 @@ const articleLinks = links.filter((link) => link.title && link.description);
             width="20"
             height="20"
             class="text-gray-400 transition-transform duration-200 group-open:rotate-180 dark:text-gray-500"
-            decorative={false}
           />
         </summary>
 
@@ -74,7 +72,6 @@ const articleLinks = links.filter((link) => link.title && link.description);
                         width="32"
                         height="32"
                         class="text-gray-400 dark:text-gray-600"
-                        decorative={false}
                       />
                     </div>
                   )}
@@ -84,12 +81,7 @@ const articleLinks = links.filter((link) => link.title && link.description);
                 <div class="p-2">
                   {link.name && (
                     <div class="mb-1 flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-400">
-                      <Icon
-                        icon="mdi:domain"
-                        width="10"
-                        height="10"
-                        decorative={false}
-                      />
+                      <Icon icon="mdi:domain" width="10" height="10" />
                       <span class="truncate text-xs">{link.name}</span>
                     </div>
                   )}
