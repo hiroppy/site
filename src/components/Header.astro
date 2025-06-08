@@ -61,7 +61,9 @@ const currentPath = Astro.url?.pathname || "";
           Home
         </NavButton>
         <NavButton
-          variant={currentPath === "/about" ? "active" : "default"}
+          variant={currentPath === "/about" || currentPath === "/about/"
+            ? "active"
+            : "default"}
           href="/about"
         >
           About
@@ -131,7 +133,9 @@ const currentPath = Astro.url?.pathname || "";
               Home
             </NavButton>
             <NavButton
-              variant={currentPath === "/about" ? "mobile-active" : "mobile"}
+              variant={currentPath === "/about" || currentPath === "/about/"
+                ? "mobile-active"
+                : "mobile"}
               href="/about"
               class="flex-shrink-0"
             >
