@@ -1,0 +1,93 @@
+---
+import Avatar from "./Avatar.astro";
+import Button from "./Button.astro";
+import Icon from "./Icon.astro";
+import Image from "./Image.astro";
+
+type Props = {
+  title: string;
+  subtitle?: string;
+  profileText?: string;
+  avatar: any;
+  socialLinks?: {
+    twitter?: string;
+    github?: string;
+    linkedin?: string;
+  };
+  class?: string;
+};
+
+const {
+  title,
+  subtitle,
+  profileText,
+  avatar,
+  socialLinks,
+  class: className,
+} = Astro.props;
+---
+
+<section class={`py-12 text-center ${className || ""}`}>
+  <div class="mx-auto max-w-4xl">
+    <div class="mb-6">
+      <Avatar
+        size="xl"
+        class="mx-auto ring-4 ring-blue-500 ring-offset-4 ring-offset-white dark:ring-offset-slate-900"
+      >
+        <Image
+          src={avatar}
+          class="h-full w-full object-cover"
+          alt="hiroppy"
+          width={128}
+          height={128}
+          lazy={false}
+        />
+      </Avatar>
+    </div>
+    <h1
+      class={`text-4xl font-bold text-gray-900 dark:text-white ${subtitle ? "mb-6" : "mb-10"}`}
+    >
+      {title}
+    </h1>
+    {
+      subtitle && (
+        <h2 class="mb-10 text-xl text-gray-600 dark:text-gray-300">
+          {subtitle}
+        </h2>
+      )
+    }
+    {
+      profileText && (
+        <div class="mx-auto mb-6 max-w-5xl text-left">
+          <p class="text-lg leading-relaxed whitespace-pre-line text-gray-700 dark:text-gray-300">
+            {profileText}
+          </p>
+        </div>
+      )
+    }
+    {
+      socialLinks && (
+        <div class="mb-4 flex justify-center space-x-4">
+          {socialLinks.twitter && (
+            <Button href={socialLinks.twitter} variant="outline">
+              <Icon icon="mdi:twitter" class="mr-2" width="20" height="20" />
+              Twitter
+            </Button>
+          )}
+          {socialLinks.github && (
+            <Button href={socialLinks.github} variant="outline">
+              <Icon icon="mdi:github" class="mr-2" width="20" height="20" />
+              GitHub
+            </Button>
+          )}
+          {socialLinks.linkedin && (
+            <Button href={socialLinks.linkedin} variant="outline">
+              <Icon icon="mdi:linkedin" class="mr-2" width="20" height="20" />
+              LinkedIn
+            </Button>
+          )}
+        </div>
+      )
+    }
+  </div>
+</section>

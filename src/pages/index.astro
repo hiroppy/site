@@ -1,17 +1,18 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import HeroSection from "../components/HeroSection.astro";
+import Section from "../components/Section.astro";
+import CTASection from "../components/CTASection.astro";
 import Card from "../components/Card.astro";
 import CardContent from "../components/CardContent.astro";
 import CardTitle from "../components/CardTitle.astro";
 import Avatar from "../components/Avatar.astro";
-import Button from "../components/Button.astro";
 import Image from "../components/Image.astro";
-import Hatena from "../components/icons/Hatena.astro";
+import Button from "../components/Button.astro";
 import Icon from "../components/Icon.astro";
+import Hatena from "../components/icons/Hatena.astro";
 import Link from "../components/Link.astro";
-import Section from "../components/Section.astro";
 import GitHubStats from "../components/GitHubStats.astro";
-import CTASection from "../components/CTASection.astro";
 import meImage from "../assets/images/meta/me.png";
 import articles from "../../node_modules/hiroppy/generated/articles.json";
 import sponsors from "../../node_modules/hiroppy/generated/sponsors.json";
@@ -43,42 +44,15 @@ const reposWithStars = await Promise.all(
 <Layout>
   <main class="container mx-auto space-y-12 px-4 py-8">
     <!-- Hero Section -->
-    <section class="py-12 text-center">
-      <div class="mx-auto max-w-4xl">
-        <div class="mb-6">
-          <Avatar
-            size="xl"
-            class="mx-auto ring-4 ring-blue-500 ring-offset-4 ring-offset-white dark:ring-offset-slate-900"
-          >
-            <Image
-              src={meImage}
-              class="h-full w-full object-cover"
-              alt="hiroppy"
-              width={128}
-              height={128}
-              lazy={false}
-            />
-          </Avatar>
-        </div>
-        <h1 class="mb-10 text-4xl font-bold text-gray-900 dark:text-white">
-          Welcome to hiroppy's site 👋
-        </h1>
-        <div class="mb-4 flex justify-center space-x-4">
-          <Button href={meta.sns.twitter} variant="outline">
-            <Icon icon="mdi:twitter" class="mr-2" width="20" height="20" />
-            Twitter
-          </Button>
-          <Button href={meta.sns.github} variant="outline">
-            <Icon icon="mdi:github" class="mr-2" width="20" height="20" />
-            GitHub
-          </Button>
-          <Button href={meta.sns.linkedin} variant="outline">
-            <Icon icon="mdi:linkedin" class="mr-2" width="20" height="20" />
-            LinkedIn
-          </Button>
-        </div>
-      </div>
-    </section>
+    <HeroSection
+      title="Welcome to hiroppy's site 👋"
+      avatar={meImage}
+      socialLinks={{
+        twitter: meta.sns.twitter,
+        github: meta.sns.github,
+        linkedin: meta.sns.linkedin,
+      }}
+    />
 
     <!-- Popular Articles Section -->
     <Section title="Popular Articles">

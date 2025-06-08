@@ -30,17 +30,35 @@ const config: PlaywrightTestConfig = {
   },
   projects: [
     {
-      name: "chrome-a11y",
+      name: "chrome-a11y-light",
       testMatch: "tests/a11y.spec.ts",
       use: {
         ...devices["Desktop Chrome"],
+        colorScheme: "light",
       },
     },
     {
-      name: "android-a11y",
+      name: "chrome-a11y-dark",
+      testMatch: "tests/a11y.spec.ts",
+      use: {
+        ...devices["Desktop Chrome"],
+        colorScheme: "dark",
+      },
+    },
+    {
+      name: "android-a11y-light",
       testMatch: "tests/a11y.spec.ts",
       use: {
         ...devices["Pixel 7"],
+        colorScheme: "light",
+      },
+    },
+    {
+      name: "android-a11y-dark",
+      testMatch: "tests/a11y.spec.ts",
+      use: {
+        ...devices["Pixel 7"],
+        colorScheme: "dark",
       },
     },
     {

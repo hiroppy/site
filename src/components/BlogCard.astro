@@ -14,7 +14,6 @@ import {
   getBlogItemUrl,
   getBlogItemImageAlt,
   getBlogItemAriaLabel,
-  getTagVariant,
 } from "../utils/blogComponents";
 
 type Props = {
@@ -55,9 +54,6 @@ const { data, slug } = post;
           </div>
         )
       }
-      <Badge variant="primary" class="absolute top-3 left-3">
-        {parseTags(data.tags)?.[0] || "記事"}
-      </Badge>
     </div>
   </CardHeader>
   <CardContent class="flex flex-grow flex-col">
@@ -83,7 +79,13 @@ const { data, slug } = post;
         parseTags(data.tags)
           .slice(0, maxTags)
           .map((tag: string) => (
-            <Badge variant={getTagVariant(tag, currentTag)}>{tag}</Badge>
+            <Badge
+              variant={
+                currentTag && tag === currentTag ? "primary" : "secondary"
+              }
+            >
+              {tag}
+            </Badge>
           ))
       }
     </div>

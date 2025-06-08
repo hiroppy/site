@@ -1,8 +1,8 @@
 ---
-export interface Props {
+export type Props = {
   title: string;
   class?: string;
-}
+};
 
 const { title, class: className = "" } = Astro.props;
 ---

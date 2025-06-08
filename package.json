@@ -13,7 +13,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "test:a11y": "playwright test --project=*-a11y",
+    "test:a11y": "playwright test --project=*-a11y-*",
     "test:vrt:update": "docker compose -f compose.vrt.yml up --build",
     "test:vrt:ci": "playwright test --project=*-vrt-*",
     "test:vrt:ci:update": "pnpm test:vrt:ci --update-snapshots",

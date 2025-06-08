@@ -52,20 +52,6 @@ async function performSearch(page: Page, query: string) {
 }
 
 test.describe("Component VRT Tests", () => {
-  // Header icon test for PC when scrolling
-  test("Header icon appears on scroll (PC)", async ({ page }) => {
-    await setupPage(page, "http://localhost:3000/", { viewport: "desktop" });
-
-    await page.setViewportSize({ width: 1280, height: 720 });
-    await page.evaluate(() => window.scrollTo(0, 500));
-    await page.waitForTimeout(1000);
-
-    await takeScreenshot(
-      page.locator("header"),
-      "header-icon-on-scroll-pc.png",
-    );
-  });
-
   // Hamburger menu test for mobile (both themes)
   for (const theme of themes) {
     test(`Hamburger menu shows links and contact (mobile ${theme})`, async ({

@@ -1,0 +1,49 @@
+---
+import Card from "./Card.astro";
+import CardContent from "./CardContent.astro";
+import Icon from "./Icon.astro";
+
+type QuickLink = {
+  href: string;
+  icon: string;
+  title: string;
+  description: string;
+  gradient: string;
+  iconColor: string;
+};
+
+type Props = {
+  links: QuickLink[];
+  columns?: "1" | "2" | "3" | "4";
+  class?: string;
+};
+
+const { links, columns = "4", class: className } = Astro.props;
+
+const gridClasses = {
+  "1": "grid-cols-1",
+  "2": "grid-cols-1 md:grid-cols-2",
+  "3": "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+  "4": "grid-cols-1 md:grid-cols-2 lg:grid-cols-4",
+};
+---
+
+<div class={`grid gap-4 ${gridClasses[columns]} ${className || ""}`}>
+  {
+    links.map(({ href, icon, title, description, gradient, iconColor }) => (
+      <Card
+        variant="interactive"
+        class={`card-lift ${gradient}`}
+        link={{ href }}
+      >
+        <CardContent class="p-6 text-center">
+          <Icon icon={icon} class={`mx-auto mb-3 text-4xl ${iconColor}`} />
+          <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+            {title}
+          </h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">{description}</p>
+        </CardContent>
+      </Card>
+    ))
+  }
+</div>

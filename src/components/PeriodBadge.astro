@@ -42,7 +42,7 @@ const endText = end ? formatValue(end) : "Present";
         : variant === "badge"
           ? "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300"
           : isActive
-            ? "text-green-700 dark:text-green-400"
+            ? "text-green-800 dark:text-green-400"
             : "text-gray-500 dark:text-gray-400",
     )}
   >
@@ -50,7 +50,7 @@ const endText = end ? formatValue(end) : "Present";
   </span>
   {
     isActive && showCurrentIndicator && (
-      <div class="flex items-center space-x-1 text-xs text-green-600 dark:text-green-400">
+      <div class="flex items-center space-x-1 text-xs text-green-800 dark:text-green-400">
         <div class="h-2 w-2 animate-pulse rounded-full bg-green-500" />
         <span>Current</span>
       </div>

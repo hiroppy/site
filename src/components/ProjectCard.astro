@@ -1,0 +1,137 @@
+---
+import Card from "./Card.astro";
+import CardContent from "./CardContent.astro";
+import CardTitle from "./CardTitle.astro";
+import Badge from "./Badge.astro";
+import Button from "./Button.astro";
+import Icon from "./Icon.astro";
+import GitHubStats from "./GitHubStats.astro";
+import { getLanguageDot } from "../utils/languageColors";
+
+type Props = {
+  name: string;
+  description: string | null;
+  stars: number;
+  forks: number;
+  language?: string | null;
+  url: string;
+  homepage?: string | null;
+  topics?: string[];
+  status?: string;
+  lastUpdated?: string;
+  class?: string;
+};
+
+const {
+  name,
+  description,
+  stars,
+  forks,
+  language,
+  url,
+  homepage,
+  topics,
+  status,
+  lastUpdated,
+  class: className,
+} = Astro.props;
+---
+
+<Card variant="interactive" class={`flex h-full flex-col ${className || ""}`}>
+  <CardContent class="flex flex-col space-y-1.5">
+    <!-- Repository Name Row -->
+    <div class="mb-2 flex items-center space-x-2">
+      <Icon
+        icon="mdi:github"
+        class="text-gray-600 dark:text-gray-400"
+        width="20"
+        height="20"
+      />
+      <CardTitle level={3} class="flex-1 text-lg">
+        {name}
+      </CardTitle>
+    </div>
+
+    <!-- Status and Stats Row -->
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      {
+        status && (
+          <Badge
+            variant={
+              status === "Active"
+                ? "default"
+                : status === "Maintenance"
+                  ? "secondary"
+                  : status === "Archived"
+                    ? "secondary"
+                    : "outline"
+            }
+            class={
+              status === "Active"
+                ? "bg-green-800 text-white hover:bg-green-900 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/40"
+                : status === "Archived"
+                  ? "bg-orange-100 text-orange-800 hover:bg-orange-200 dark:bg-orange-900/30 dark:text-orange-400 dark:hover:bg-orange-900/40"
+                  : ""
+            }
+          >
+            {status}
+          </Badge>
+        )
+      }
+      <div
+        class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400"
+      >
+        <GitHubStats type="star" count={stars} />
+        <GitHubStats type="fork" count={forks} />
+      </div>
+    </div>
+  </CardContent>
+
+  <CardContent class="flex flex-grow flex-col pt-0">
+    <p class="mb-4 line-clamp-2 text-gray-600 dark:text-gray-400">
+      {description || "No description available"}
+    </p>
+
+    {
+      topics && topics.length > 0 && (
+        <div class="mb-4 flex flex-wrap gap-2">
+          {topics.map((topic: string) => (
+            <Badge variant="secondary" class="text-xs">
+              {topic}
+            </Badge>
+          ))}
+        </div>
+      )
+    }
+
+    <div
+      class="mb-4 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400"
+    >
+      <div class="flex items-center space-x-4">
+        {
+          language && (
+            <div class="flex items-center space-x-1">
+              <div class={getLanguageDot(language)} />
+              <span>{language}</span>
+            </div>
+          )
+        }
+      </div>
+    </div>
+
+    <div class="mt-auto flex items-center space-x-2">
+      <Button variant="outline" size="sm" class="flex-1" href={url}>
+        <Icon icon="mdi:github" class="mr-2" width="16" height="16" />
+        GitHub
+      </Button>
+      {
+        homepage && (
+          <Button variant="outline" size="sm" class="flex-1" href={homepage}>
+            <Icon icon="mdi:open-in-new" class="mr-2" width="16" height="16" />
+            Site
+          </Button>
+        )
+      }
+    </div>
+  </CardContent>
+</Card>

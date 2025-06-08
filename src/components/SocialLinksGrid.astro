@@ -1,0 +1,47 @@
+---
+import Card from "./Card.astro";
+import CardContent from "./CardContent.astro";
+import Icon from "./Icon.astro";
+
+type SocialLink = {
+  href: string;
+  icon: string;
+  title: string;
+  description: string;
+  color?: string;
+};
+
+type Props = {
+  links: SocialLink[];
+  columns?: "2" | "3" | "4" | "5";
+  class?: string;
+};
+
+const { links, columns = "5", class: className } = Astro.props;
+
+const gridClasses = {
+  "2": "grid-cols-2",
+  "3": "grid-cols-2 md:grid-cols-3",
+  "4": "grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+  "5": "grid-cols-2 md:grid-cols-3 lg:grid-cols-5",
+};
+---
+
+<div class={`grid gap-4 ${gridClasses[columns]} ${className || ""}`}>
+  {
+    links.map(({ href, icon, title, description, color }) => (
+      <Card variant="interactive" class="card-lift" link={{ href }}>
+        <CardContent class="p-4 text-center">
+          <Icon
+            icon={icon}
+            class={`mx-auto mb-2 text-4xl ${color || "text-gray-800 dark:text-gray-200"}`}
+          />
+          <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+            {title}
+          </h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">{description}</p>
+        </CardContent>
+      </Card>
+    ))
+  }
+</div>

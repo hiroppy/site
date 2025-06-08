@@ -24,6 +24,7 @@ const config: KnipConfig = {
     // for playwright
     "serve",
     "tailwindcss",
+    "@iconify-json/mdi",
   ],
   astro: {
     config: ["astro.config.mjs"],

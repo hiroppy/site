@@ -1,10 +1,10 @@
 ---
 import { cn } from "../utils/cn";
 
-export interface Props {
+export type Props = {
   class?: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
-}
+};
 
 const { class: className = "", size = "md" } = Astro.props;
 

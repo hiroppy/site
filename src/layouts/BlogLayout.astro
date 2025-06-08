@@ -115,16 +115,29 @@ if (import.meta.env.PROD) {
           >
           </div>
           <div class="absolute right-4 bottom-6 left-4 md:right-8 md:left-8">
-            <Badge variant="primary" class="mb-4">
-              {parseTags(tags)?.[0] || "記事"}
-            </Badge>
             <h1 class="mb-4 text-3xl font-bold text-white md:text-4xl">
               {title}
             </h1>
-            <div class="flex items-center space-x-6 text-white/90">
+            <div class="flex items-center justify-between text-white/90">
               <div class="flex items-center space-x-2">
                 <Icon icon="mdi:calendar" width="16" height="16" />
                 <span>{date}</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                {
+                  parseTags(tags)
+                    .slice(0, 3)
+                    .map((tag: string) => (
+                      <Badge variant="secondary" class="text-sm">
+                        <a
+                          href={`/blog/tags/${tag}`}
+                          aria-label={`${tag}タグの記事を表示`}
+                        >
+                          {tag}
+                        </a>
+                      </Badge>
+                    ))
+                }
               </div>
             </div>
           </div>
@@ -132,9 +145,7 @@ if (import.meta.env.PROD) {
 
         <div class="px-4 py-8 md:px-8">
           <!-- Author Info -->
-          <div
-            class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-          >
+          <div class="mb-8 flex items-center justify-between gap-4">
             <div class="flex items-center space-x-4">
               <Avatar class="h-12 w-12">
                 <Image
@@ -152,22 +163,16 @@ if (import.meta.env.PROD) {
                 </p>
               </div>
             </div>
-            <div class="flex flex-wrap items-center gap-2">
-              <ShareButtons
-                url={`${Astro.site?.origin}${url!}`}
-                title={title}
-              />
-              <Link
-                href={githubUrl}
-                class="flex items-center"
-                ariaLabel="Edit this page on GitHub"
-              >
-                <Button variant="outline" size="sm" class="px-4 py-1">
-                  <Icon icon="mdi:github" class="mr-1" width="14" height="14" />
-                  Edit
-                </Button>
-              </Link>
-            </div>
+            <Link
+              href={githubUrl}
+              class="flex items-center"
+              ariaLabel="Edit this page on GitHub"
+            >
+              <Button variant="outline" class="no-underline">
+                <Icon icon="mdi:github" class="mr-1" width="16" height="16" />
+                Edit
+              </Button>
+            </Link>
           </div>
 
           <hr class="mb-8 border-gray-200 dark:border-gray-700" />
@@ -263,26 +268,8 @@ if (import.meta.env.PROD) {
 
           <hr class="my-8 border-gray-200 dark:border-gray-700" />
 
-          <!-- Tags -->
-          <div class="mb-8 space-y-4">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              🏷️ タグ
-            </h2>
-            <div class="flex flex-wrap gap-2">
-              {
-                parseTags(tags).map((tag: string) => (
-                  <Badge variant="secondary" class="px-3 py-1.5 text-sm">
-                    <a
-                      href={`/blog/tags/${tag}`}
-                      aria-label={`${tag}タグの記事を表示`}
-                    >
-                      {tag}
-                    </a>
-                  </Badge>
-                ))
-              }
-            </div>
-
+          <!-- Share Buttons -->
+          <div class="mb-8">
             <div
               class="flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
             >

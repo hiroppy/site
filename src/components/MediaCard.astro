@@ -1,0 +1,74 @@
+---
+import Card from "./Card.astro";
+import CardTitle from "./CardTitle.astro";
+import Image from "./Image.astro";
+
+type Props = {
+  title: string;
+  description: string | undefined;
+  image?: string;
+  icon: string;
+  url: string;
+  publishedAt: string;
+  class?: string;
+};
+
+const {
+  title,
+  description,
+  image,
+  icon,
+  url,
+  publishedAt,
+  class: className,
+} = Astro.props;
+---
+
+<Card
+  link={{ href: url, ariaLabel: `${title} - ${description}` }}
+  class={`group flex h-full flex-col overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg ${className || ""}`}
+>
+  <div
+    class="relative flex h-48 items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600"
+  >
+    <div class="absolute top-3 left-3 z-10">
+      <div
+        class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white/90 text-lg backdrop-blur-sm dark:border-gray-600 dark:bg-gray-900/90"
+      >
+        {icon}
+      </div>
+    </div>
+    {
+      image && (
+        <Image
+          src={image}
+          alt={title}
+          width={200}
+          height={120}
+          class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+      )
+    }
+    {!image && <div class="text-6xl opacity-20 dark:opacity-10">{icon}</div>}
+    <div
+      class="media-overlay absolute inset-0 flex items-center justify-center bg-black/80 p-4"
+    >
+      <p class="line-clamp-4 text-center text-sm leading-relaxed text-white">
+        {description || "No description available"}
+      </p>
+    </div>
+  </div>
+
+  <div class="flex flex-grow flex-col justify-between p-4">
+    <div class="mb-2 flex items-center justify-between">
+      <span
+        class="rounded-md bg-gray-100 px-2 py-1 text-xs text-gray-600 dark:bg-gray-700 dark:text-gray-200"
+      >
+        {publishedAt}
+      </span>
+    </div>
+    <CardTitle level={2} class="line-clamp-2 text-sm leading-tight">
+      {title}
+    </CardTitle>
+  </div>
+</Card>
