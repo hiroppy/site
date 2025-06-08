@@ -207,11 +207,32 @@ if (!ALGOLIA_APPLICATION_ID || !ALGOLIA_SEARCH_ONLY_KEY) {
   @reference "tailwindcss";
 
   /* 動的に生成されたタグはscopedにできないため、globalで定義する必要がある */
-  .search-result-item {
-    @apply px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700;
+  #search-results .search-result-item {
+    @apply px-4 py-3 text-gray-900 dark:text-gray-300;
   }
 
-  .search-result-item > a {
+  #search-results .search-result-item:hover {
+    background-color: rgb(249 250 251); /* gray-50 */
+  }
+
+  .dark #search-results .search-result-item:hover {
+    background-color: rgb(55 65 81); /* gray-700 */
+  }
+
+  #search-results .search-result-item > a {
     @apply block;
+    color: rgb(17 24 39); /* gray-900 */
+  }
+
+  #search-results .search-result-item:hover > a {
+    color: rgb(59 130 246); /* blue-500 for better contrast on hover */
+  }
+
+  .dark #search-results .search-result-item > a {
+    color: rgb(209 213 219); /* gray-300 */
+  }
+
+  .dark #search-results .search-result-item:hover > a {
+    color: rgb(147 197 253); /* blue-300 for dark mode hover */
   }
 </style>
