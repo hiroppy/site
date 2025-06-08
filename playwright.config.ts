@@ -44,17 +44,24 @@ const config: PlaywrightTestConfig = {
       },
     },
     {
-      name: "chrome-vrt",
-      testMatch: "tests/vrt.spec.ts",
+      name: "chrome-vrt-pages",
+      testMatch: "tests/vrt-pages.spec.ts",
       use: {
         ...devices["Desktop Chrome"],
       },
     },
     {
-      name: "android-vrt",
-      testMatch: "tests/vrt.spec.ts",
+      name: "android-vrt-pages",
+      testMatch: "tests/vrt-pages.spec.ts",
       use: {
         ...devices["Pixel 7"],
+      },
+    },
+    {
+      name: "chrome-vrt-components",
+      testMatch: "tests/vrt-components.spec.ts",
+      use: {
+        ...devices["Desktop Chrome"],
       },
     },
   ],

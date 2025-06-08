@@ -15,4 +15,4 @@ RUN npm run setup
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
-CMD ["pnpm", "test:vrt:update"]
+CMD ["pnpm", "test:vrt:ci:update"]
