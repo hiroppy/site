@@ -4,18 +4,6 @@
 @custom-variant dark (.dark &);
 
 @theme {
-  /* Programming language colors */
-  --color-javascript: #f1e05a;
-  --color-typescript: #3178c6;
-  --color-css: #8e6fc7;
-  --color-css-dark: #563d7c;
-  --color-go: #00add8;
-  --color-rust: #ce422b;
-  --color-cpp: #f34b7d;
-  --color-c: #555555;
-  --color-shell: #89e051;
-  --color-html: #e34c26;
-
   --font-family-body:
     system-ui, Arial, Helvetica, "Hiragino Sans", "Hiragino Kaku Gothic ProN",
     "Meiryo,sans-serif", sans-serif;
@@ -124,18 +112,6 @@ html {
   transform: scale(1.1);
 }
 
-.card-title-hover {
-  transition: color 0.3s ease;
-}
-
-.group:hover .card-title-hover {
-  color: rgb(37, 99, 235); /* blue-600 */
-}
-
-.dark .group:hover .card-title-hover {
-  color: rgb(96, 165, 250); /* blue-400 */
-}
-
 /* SNS Button hover animations */
 button[class*="outline"],
 a[class*="outline"] {
@@ -166,18 +142,6 @@ a[class*="outline"]:hover {
 
 .group:hover .media-overlay {
   opacity: 1;
-}
-
-/* Responsive iframe for YouTube embeds */
-@layer components {
-  .responsive-video {
-    @apply relative w-full overflow-hidden;
-    aspect-ratio: 16 / 9;
-  }
-
-  .responsive-video iframe {
-    @apply absolute top-0 left-0 h-full w-full;
-  }
 }
 
 /* Auto-apply responsive styles to iframes in MDX content */
