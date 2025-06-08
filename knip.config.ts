@@ -16,6 +16,9 @@ const config: KnipConfig = {
     "src/content/blog/cjs-esm-reference-chart-of-behavior.mdx",
     "src/content/blog/create-module-bundler-esm.mdx",
     "src/content/blog/nodejs-esm.mdx",
+    // Unlisted binaries (1)
+    // test:vrt:${{ matrix.test-type }}  .github/workflows/ci.yml
+    ".github/workflows/ci.yml",
   ],
   ignoreDependencies: [
     // for playwright
