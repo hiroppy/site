@@ -73,6 +73,9 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.52.0
+    strategy:
+      matrix:
+        test-type: [pages, components]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node
@@ -80,9 +83,9 @@ jobs:
         with:
           name: app
           path: ./dist
-      - run: pnpm test:vrt
+      - run: pnpm test:vrt:${{ matrix.test-type }}
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: vrt-test-results
+          name: vrt-${{ matrix.test-type }}-test-results
           path: test-results/

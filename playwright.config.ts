@@ -64,13 +64,6 @@ const config: PlaywrightTestConfig = {
         ...devices["Desktop Chrome"],
       },
     },
-    {
-      name: "android-vrt-components",
-      testMatch: "tests/vrt-components.spec.ts",
-      use: {
-        ...devices["Pixel 7"],
-      },
-    },
   ],
 };
 

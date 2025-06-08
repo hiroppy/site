@@ -1,75 +1,135 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
+
+type Theme = (typeof themes)[number];
 
 const themes = ["light", "dark"] as const;
+const SCREENSHOT_OPTIONS = {
+  animations: "disabled" as const,
+  timeout: 30000,
+};
+const MOBILE_VIEWPORT = { width: 375, height: 667 };
 
-// Component test helper
-async function testComponent(
+async function setupPage(
   page: any,
-  componentName: string,
-  componentPath: string,
+  url: string,
+  options: { theme?: Theme; viewport?: "mobile" | "desktop" } = {},
 ) {
+  await page.goto(url, { waitUntil: "networkidle" });
+
+  if (options.viewport === "mobile") {
+    await page.setViewportSize(MOBILE_VIEWPORT);
+  }
+
+  if (options.theme) {
+    await setTheme(page, options.theme);
+  }
+
+  await page.waitForLoadState("networkidle");
+}
+
+async function setTheme(page: Page, theme: Theme) {
+  await page.evaluate((selectedTheme: any) => {
+    localStorage.setItem("theme", selectedTheme);
+    document.documentElement.classList.toggle("dark", selectedTheme === "dark");
+  }, theme);
+  await page.waitForTimeout(1000);
+}
+
+async function takeScreenshot(element: any, filename: string) {
+  await expect(element).toHaveScreenshot(filename, SCREENSHOT_OPTIONS);
+}
+
+async function clickMenuButton(page: any) {
+  const menuButton = page.getByRole("button", { name: /menu|メニュー/i });
+  await menuButton.click();
+  await page.waitForTimeout(500);
+}
+
+async function performSearch(page: Page, query: string) {
+  const searchInput = page.getByRole("searchbox");
+  await searchInput.fill(query);
+  await page.waitForTimeout(1000);
+}
+
+test.describe("Component VRT Tests", () => {
+  // Header icon test for PC when scrolling
+  test("Header icon appears on scroll (PC)", async ({ page }) => {
+    await setupPage(page, "http://localhost:3000/", { viewport: "desktop" });
+
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.evaluate(() => window.scrollTo(0, 500));
+    await page.waitForTimeout(1000);
+
+    await takeScreenshot(
+      page.locator("header"),
+      "header-icon-on-scroll-pc.png",
+    );
+  });
+
+  // Hamburger menu test for mobile (both themes)
   for (const theme of themes) {
-    test(`Component VRT: ${componentName} (${theme})`, async ({ page }) => {
-      // Create a simple test page for the component
-      const testPageContent = `
-        <!DOCTYPE html>
-        <html lang="ja">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Component Test</title>
-          <script src="https://cdn.tailwindcss.com"></script>
-          <script>
-            tailwind.config = {
-              darkMode: 'class'
-            }
-          </script>
-        </head>
-        <body class="${theme === "dark" ? "dark" : ""} bg-white dark:bg-gray-900 p-8">
-          <div id="component-container"></div>
-        </body>
-        </html>
-      `;
+    test(`Hamburger menu shows links and contact (mobile ${theme})`, async ({
+      page,
+    }) => {
+      await setupPage(page, "http://localhost:3000/", {
+        viewport: "mobile",
+        theme,
+      });
 
-      await page.setContent(testPageContent);
-
-      // Wait for page to be ready
-      await page.waitForLoadState("networkidle");
-
-      // Set theme in localStorage
-      await page.evaluate((selectedTheme) => {
-        localStorage.setItem("theme", selectedTheme);
-      }, theme);
-
-      // TODO: Add component rendering logic here
-      // This is a placeholder for component isolation testing
-      await page
-        .locator("#component-container")
-        .innerHTML("<div>Component placeholder</div>");
-
-      await expect(page.locator("#component-container")).toHaveScreenshot(
-        `${componentName}-${theme}.png`,
-        {
-          animations: "disabled",
-          timeout: 30000,
-        },
+      await clickMenuButton(page);
+      await takeScreenshot(
+        page.getByRole("navigation"),
+        `header-menu-mobile-${theme}.png`,
       );
     });
   }
-}
 
-// Example component tests - add your components here
-test.describe("Component VRT Tests", () => {
-  // Placeholder test - replace with actual component tests
-  test("Example component test", async ({ page }) => {
-    await page.setContent(`
-      <html>
-        <body>
-          <div>Component testing framework ready</div>
-        </body>
-      </html>
-    `);
+  // Blog search test for both themes
+  for (const theme of themes) {
+    test(`Blog search results (${theme})`, async ({ page }) => {
+      await setupPage(page, "http://localhost:3000/blog", { theme });
 
-    await expect(page.locator("div")).toHaveScreenshot("example-component.png");
+      await performSearch(page, "This article is for VRT.");
+      await takeScreenshot(
+        page.locator("#search-results"),
+        `blog-search-results-${theme}.png`,
+      );
+    });
+  }
+
+  // Job related articles test for Mercari/Souzoh main job (Chrome only)
+  test("Job related articles expansion (Mercari/Souzoh main)", async ({
+    page,
+  }) => {
+    await setupPage(page, "http://localhost:3000/jobs");
+
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(1000);
+
+    // Find and click the first visible related articles button
+    const allRelatedArticles = page
+      .locator("details summary")
+      .filter({ hasText: "関連記事" });
+    const totalCount = await allRelatedArticles.count();
+
+    let foundVisible = false;
+    for (let i = 0; i < totalCount; i++) {
+      const currentButton = allRelatedArticles.nth(i);
+      if (await currentButton.isVisible()) {
+        await currentButton.click();
+        foundVisible = true;
+        break;
+      }
+    }
+
+    if (!foundVisible) {
+      throw new Error("Main job related articles button not found");
+    }
+
+    await page.waitForTimeout(1000);
+    await takeScreenshot(
+      page.locator("details[open] .expandable-content").first(),
+      "job-related-articles-mercari-main.png",
+    );
   });
 });
