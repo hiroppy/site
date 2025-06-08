@@ -55,12 +55,42 @@ const currentPath = Astro.url?.pathname || "";
         aria-label="メインナビゲーション"
       >
         <NavButton
+          variant={currentPath === "/" ? "active" : "default"}
+          href="/"
+        >
+          Home
+        </NavButton>
+        <NavButton
           variant={currentPath === "/about" || currentPath === "/about/"
             ? "active"
             : "default"}
           href="/about"
         >
           About
+        </NavButton>
+        <NavButton
+          variant={currentPath.startsWith("/blog") ? "active" : "default"}
+          href="/blog"
+        >
+          Blog
+        </NavButton>
+        <NavButton
+          variant={currentPath.startsWith("/media") ? "active" : "default"}
+          href="/media"
+        >
+          Media
+        </NavButton>
+        <NavButton
+          variant={currentPath.startsWith("/jobs") ? "active" : "default"}
+          href="/jobs"
+        >
+          Jobs
+        </NavButton>
+        <NavButton
+          variant={currentPath.startsWith("/projects") ? "active" : "default"}
+          href="/projects"
+        >
+          Projects
         </NavButton>
       </nav>
       <div class="flex items-center space-x-2">
@@ -96,6 +126,13 @@ const currentPath = Astro.url?.pathname || "";
         <div class="scrollbar-hide mb-4 overflow-x-auto">
           <div class="flex space-x-2 pb-2">
             <NavButton
+              variant={currentPath === "/" ? "mobile-active" : "mobile"}
+              href="/"
+              class="flex-shrink-0"
+            >
+              Home
+            </NavButton>
+            <NavButton
               variant={currentPath === "/about" || currentPath === "/about/"
                 ? "mobile-active"
                 : "mobile"}
@@ -103,6 +140,42 @@ const currentPath = Astro.url?.pathname || "";
               class="flex-shrink-0"
             >
               About
+            </NavButton>
+            <NavButton
+              variant={currentPath.startsWith("/blog")
+                ? "mobile-active"
+                : "mobile"}
+              href="/blog"
+              class="flex-shrink-0"
+            >
+              Blog
+            </NavButton>
+            <NavButton
+              variant={currentPath.startsWith("/media")
+                ? "mobile-active"
+                : "mobile"}
+              href="/media"
+              class="flex-shrink-0"
+            >
+              Media
+            </NavButton>
+            <NavButton
+              variant={currentPath.startsWith("/jobs")
+                ? "mobile-active"
+                : "mobile"}
+              href="/jobs"
+              class="flex-shrink-0"
+            >
+              Jobs
+            </NavButton>
+            <NavButton
+              variant={currentPath.startsWith("/projects")
+                ? "mobile-active"
+                : "mobile"}
+              href="/projects"
+              class="flex-shrink-0"
+            >
+              Projects
             </NavButton>
           </div>
         </div>
