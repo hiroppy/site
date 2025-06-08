@@ -83,7 +83,7 @@ jobs:
         with:
           name: app
           path: ./dist
-      - run: pnpm test:vrt:${{ matrix.test-type }}
+      - run: pnpm test:vrt:ci:${{ matrix.test-type }}
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

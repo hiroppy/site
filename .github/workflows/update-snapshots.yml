@@ -48,7 +48,7 @@ jobs:
         run: npx playwright install --with-deps
       - run: pnpm build
       - name: Update snapshots
-        run: pnpm test:vrt:update
+        run: pnpm test:vrt:ci:update
       - name: Check for changes
         id: changes
         run: |
