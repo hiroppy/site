@@ -25,6 +25,7 @@ const config: KnipConfig = {
     "serve",
     "tailwindcss",
     "@iconify-json/mdi",
+    "@iconify-json/noto",
   ],
   astro: {
     config: ["astro.config.mjs"],
