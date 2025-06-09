@@ -1023,5 +1023,15 @@
     "title": "hiroppy's site",
     "description": "Hiroppy is a JavaScript engineer and working on some OSS projects and Japanese communities.",
     "image": "https://hiroppy.me/_astro/me.Cw_p55Uq.png"
+  },
+  "https://sushichan044.hateblo.jp/entry/2025/06/06/003325": {
+    "title": "fzf で高速に git worktree 間を移動する - お雑煮研究会",
+    "description": "AI Coding の発展により、 最近は一つのリポジトリの中に複数のgit worktreeを切って並列作業をすることが増えてきた。 こうなると、当然git worktreeの間を素早く移動したくなるのが人間というものである。 いいアイデアはないだろうかと考えていたら、ふと id:mizdra さんが似たものを作られていたことを思い出した。 www.mizdra.net 多分同じ要領で行けそうなので作ってみることにした。 完成形 基本 zsh で作業しているのでそれ用になっている。他のシェル使っている方は申し訳ない... 任意の Git リポジトリ内で起動すると、そのリポジトリで作成されてい…",
+    "image": "https://ogimage.blog.st-hatena.com/6801883189111742267/6802418398462340777/1749291573"
+  },
+  "https://github.com/hiroppy/dotfiles/blob/master/config/fish/functions/wt.fish": {
+    "title": "dotfiles/config/fish/functions/wt.fish at master · hiroppy/dotfiles",
+    "description": "my dotfiles. Contribute to hiroppy/dotfiles development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/54f1166ddbe4e6a5a71a8ecf278573302f2ae2d449d73af22aebe5123826654d/hiroppy/dotfiles"
   }
 }
