@@ -55,7 +55,7 @@
     "@astrojs/sitemap": "3.4.1",
     "@tailwindcss/vite": "4.1.8",
     "algoliasearch": "5.27.0",
-    "astro": "5.9.1",
+    "astro": "5.9.2",
     "clsx": "2.1.1",
     "hiroppy": "1.0.44",
     "instantsearch.js": "4.78.3",
