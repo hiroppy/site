@@ -62,17 +62,17 @@ for (const item of items) {
                       </div>
                     )}
                     <div class="min-w-0 flex-1">
-                      <CardTitle level={4} class="mb-1 text-base">
-                        <Link
-                          href={(meta as any)[company].url}
-                          class="text-gray-900 transition-colors hover:text-blue-700 dark:text-white dark:hover:text-blue-400"
-                          ariaLabel={`${name}の会社サイトを開く`}
-                        >
-                          {name}
-                        </Link>
-                      </CardTitle>
-                      <div class="flex flex-col space-y-1">
-                        <div class="flex items-center justify-between">
+                      <div class="flex items-start justify-between gap-2">
+                        <div class="min-w-0 flex-1">
+                          <CardTitle level={4} class="mb-1 text-base">
+                            <Link
+                              href={(meta as any)[company].url}
+                              class="text-gray-900 transition-colors hover:text-blue-700 dark:text-white dark:hover:text-blue-400"
+                              ariaLabel={`${name}の会社サイトを開く`}
+                            >
+                              {name}
+                            </Link>
+                          </CardTitle>
                           <div class="flex items-center space-x-2">
                             <span
                               class={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
@@ -90,13 +90,13 @@ for (const item of items) {
                               </div>
                             )}
                           </div>
-                          <PeriodBadge
-                            start={new Date(start)}
-                            end={end ? new Date(end) : null}
-                            variant="text"
-                            class="flex-shrink-0"
-                          />
                         </div>
+                        <PeriodBadge
+                          start={new Date(start)}
+                          end={end ? new Date(end) : null}
+                          variant="text"
+                          class="flex-shrink-0"
+                        />
                       </div>
                     </div>
                   </div>
