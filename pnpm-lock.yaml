@@ -60,6 +60,9 @@ importers:
       '@iconify-json/mdi':
         specifier: 1.2.3
         version: 1.2.3
+      '@iconify-json/noto':
+        specifier: 1.2.3
+        version: 1.2.3
       '@lhci/cli':
         specifier: 0.14.0
         version: 0.14.0
@@ -461,6 +464,9 @@ packages:
 
   '@iconify-json/mdi@1.2.3':
     resolution: {integrity: sha512-O3cLwbDOK7NNDf2ihaQOH5F9JglnulNDFV7WprU2dSoZu3h3cWH//h74uQAB87brHmvFVxIOkuBX2sZSzYhScg==}
+
+  '@iconify-json/noto@1.2.3':
+    resolution: {integrity: sha512-YvsF8je31tPUAkhXw+aydVlmF5LOTNGRE5foOdsZVuniymr4r4020JUN9Kc/i2eOqmHDodBKmX62Um4+o8c6UQ==}
 
   '@iconify/tools@4.1.2':
     resolution: {integrity: sha512-q6NzLQYEN9zkDfcyBqD3vItHcZw97w/s++3H3TBxUORr57EfHxj6tOW6fyufDjMq+Vl56WXWaPx1csBPYlI5CA==}
@@ -4854,6 +4860,10 @@ snapshots:
       tslib: 2.8.1
 
   '@iconify-json/mdi@1.2.3':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/noto@1.2.3':
     dependencies:
       '@iconify/types': 2.0.0
 

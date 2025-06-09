@@ -6,6 +6,7 @@ import Image from "./Image.astro";
 
 type Props = {
   title: string;
+  titleIcon?: string;
   subtitle?: string;
   profileText?: string;
   avatar: any;
@@ -19,6 +20,7 @@ type Props = {
 
 const {
   title,
+  titleIcon,
   subtitle,
   profileText,
   avatar,
@@ -48,6 +50,11 @@ const {
       class={`text-4xl font-bold text-gray-900 dark:text-white ${subtitle ? "mb-6" : "mb-10"}`}
     >
       {title}
+      {
+        titleIcon && (
+          <Icon icon={titleIcon} class="ml-2 inline" width="32" height="32" />
+        )
+      }
     </h1>
     {
       subtitle && (

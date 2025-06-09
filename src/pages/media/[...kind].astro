@@ -3,6 +3,7 @@ import MediaLayout from "../../layouts/MediaLayout.astro";
 import { HATENA_BLOG_URL, type MediaType } from "../../constants";
 import { sortItems } from "../../utils/sortItems";
 import MediaCard from "../../components/MediaCard.astro";
+import Icon from "../../components/Icon.astro";
 
 type Kind = MediaType | undefined;
 
@@ -61,13 +62,13 @@ async function getData(kind: Exclude<Kind, undefined>) {
 function getMediaIcon(type: MediaType) {
   switch (type) {
     case "media":
-      return "📣";
+      return "mdi:typewriter";
     case "podcasts":
-      return "🎧";
+      return "mdi:podcast";
     case "talks":
-      return "👨‍🏫";
+      return "mdi:presentation";
     default:
-      return "😵‍💫";
+      return "mdi:help-circle";
   }
 }
 
@@ -79,7 +80,7 @@ function getPrefixForTitle(type: MediaType) {
     case "talks":
       return "Talked";
     default:
-      return "😵‍💫";
+      return "Unknown";
   }
 }
 ---
@@ -109,7 +110,9 @@ function getPrefixForTitle(type: MediaType) {
   {
     items.length === 0 && (
       <div class="py-16 text-center">
-        <div class="mb-4 text-6xl opacity-20">📝</div>
+        <div class="mb-4 flex justify-center opacity-20">
+          <Icon icon="noto:memo" width="96" height="96" />
+        </div>
         <h2 class="mb-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
           No items found
         </h2>

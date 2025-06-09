@@ -106,7 +106,12 @@ if (import.meta.env.PROD) {
           {
             !frontmatter.image && (
               <div class="flex h-64 w-full items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 md:h-80">
-                <div class="text-8xl opacity-30">📝</div>
+                <Icon
+                  icon="mdi:file-document-outline"
+                  class="text-8xl opacity-30"
+                  width="2em"
+                  height="2em"
+                />
               </div>
             )
           }
@@ -182,7 +187,13 @@ if (import.meta.env.PROD) {
             indices.length > 0 && (
               <div class="mb-8 rounded-lg bg-gray-50 p-6 dark:bg-slate-700">
                 <h2 class="mb-4 font-semibold text-gray-900 dark:text-white">
-                  📖 目次
+                  <Icon
+                    icon="mdi:table-of-contents"
+                    class="mr-2 inline-block"
+                    width="20"
+                    height="20"
+                  />
+                  目次
                 </h2>
                 <nav aria-label="記事の目次">
                   <ul class="space-y-1">
@@ -229,7 +240,13 @@ if (import.meta.env.PROD) {
                       height="20"
                     />
                     <span class="text-sm font-medium text-yellow-800 dark:text-yellow-200">
-                      🚨 この記事は1年以上更新されていません
+                      <Icon
+                        icon="mdi:alert-circle"
+                        class="mr-1 inline-block"
+                        width="16"
+                        height="16"
+                      />
+                      この記事は1年以上更新されていません
                     </span>
                   </div>
                 </div>
@@ -246,7 +263,13 @@ if (import.meta.env.PROD) {
                       height="20"
                     />
                     <span class="text-sm text-blue-800 dark:text-blue-200">
-                      💁‍♀️ この記事は{" "}
+                      <Icon
+                        icon="mdi:information"
+                        class="mr-1 inline-block"
+                        width="16"
+                        height="16"
+                      />
+                      この記事は{" "}
                       <Link
                         href={`${HATENA_BLOG_ENTRY_URL}/${frontmatter.hatenaPath}`}
                         class="underline"
@@ -285,7 +308,13 @@ if (import.meta.env.PROD) {
             index !== -1 && (
               <div class="mb-8">
                 <h2 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-                  📚 前後の記事
+                  <Icon
+                    icon="mdi:book-open-variant"
+                    class="mr-2 inline-block"
+                    width="20"
+                    height="20"
+                  />
+                  前後の記事
                 </h2>
                 <div class="grid gap-4 md:grid-cols-2">
                   {index !== 0 ? (
@@ -364,7 +393,12 @@ if (import.meta.env.PROD) {
                       )}
                       {!post.data.image && (
                         <div class="flex h-20 w-24 items-center justify-center rounded-lg bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600">
-                          <div class="text-2xl opacity-30">📝</div>
+                          <Icon
+                            icon="mdi:file-document-outline"
+                            class="text-2xl opacity-30"
+                            width="1em"
+                            height="1em"
+                          />
                         </div>
                       )}
                       <div class="flex-1 pl-4">

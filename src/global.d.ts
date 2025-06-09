@@ -34,6 +34,13 @@ type DataItem = {
   hot?: boolean;
   prefixForTitle: string;
   appendixes?: Record<string, string | undefined>;
+  links?: Array<{
+    title: string;
+    description?: string;
+    image?: string;
+    name: string;
+    url: string;
+  }>;
 };
 
 type OGPJson = Record<

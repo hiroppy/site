@@ -3,6 +3,7 @@ import MainLayout from "../layouts/MainLayout.astro";
 import SkillBox from "../components/SkillBox.astro";
 import JobResume from "../components/JobResume.astro";
 import Section from "../components/Section.astro";
+import Icon from "../components/Icon.astro";
 ---
 
 <MainLayout title="Skills & Work Experience">
@@ -20,7 +21,7 @@ import Section from "../components/Section.astro";
       <span
         class="inline-flex items-center space-x-1 rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-400"
       >
-        <span>👷</span>
+        <Icon icon="noto:construction-worker" width="16" height="16" />
         <span>maintainer(including past)</span>
       </span>
     </div>

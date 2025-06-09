@@ -50,7 +50,12 @@ const { data, slug } = post;
       {
         !data.image && (
           <div class="flex h-48 w-full items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600">
-            <div class="text-6xl opacity-20 dark:opacity-10">📝</div>
+            <Icon
+              icon="mdi:file-document-outline"
+              class="text-6xl opacity-20 dark:opacity-10"
+              width="1.5em"
+              height="1.5em"
+            />
           </div>
         )
       }
