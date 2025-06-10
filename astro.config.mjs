@@ -22,7 +22,10 @@ export default defineConfig({
 
   markdown: {
     shikiConfig: {
-      theme: "nord",
+      themes: {
+        light: "one-light",
+        dark: "nord",
+      },
     },
   },
 
