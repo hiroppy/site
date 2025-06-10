@@ -1,7 +1,7 @@
 ---
 import Card from "./Card.astro";
 import CardTitle from "./CardTitle.astro";
-import Image from "./Image.astro";
+import CardImage from "./CardImage.astro";
 import Icon from "./Icon.astro";
 import Link from "./Link.astro";
 
@@ -49,17 +49,7 @@ const {
           <Icon icon={icon} width="18" height="18" />
         </div>
       </div>
-      {
-        image && (
-          <Image
-            src={image}
-            alt={title}
-            width={200}
-            height={120}
-            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-          />
-        )
-      }
+      {image && <CardImage src={image} alt={title} variant="hero" />}
       {
         !image && (
           <div class="flex items-center justify-center text-gray-400 opacity-30 dark:text-gray-400 dark:opacity-20">

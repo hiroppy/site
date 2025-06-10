@@ -5,7 +5,7 @@ import CardContent from "./CardContent.astro";
 import CardDescription from "./CardDescription.astro";
 import CardHeader from "./CardHeader.astro";
 import CardTitle from "./CardTitle.astro";
-import Image from "./Image.astro";
+import CardImage from "./CardImage.astro";
 import Icon from "./Icon.astro";
 import Badge from "./Badge.astro";
 import { parseTags } from "../utils/blog";
@@ -38,12 +38,11 @@ const { data, slug } = post;
     <div class="relative overflow-hidden">
       {
         data.image && (
-          <Image
+          <CardImage
             src={data.image}
             alt={getBlogItemImageAlt(data.title)}
-            width={400}
-            height={200}
-            class="card-image-zoom h-48 w-full object-cover"
+            variant="cover"
+            class="card-image-zoom"
           />
         )
       }

@@ -1,6 +1,6 @@
 ---
 import Card from "./Card.astro";
-import Image from "./Image.astro";
+import CardImage from "./CardImage.astro";
 import Link from "../components/Link.astro";
 import { parseTags } from "../utils/blog";
 import { formatDate } from "../utils/formatDate";
@@ -20,8 +20,8 @@ const { url, frontmatter } = Astro.props;
   <Link href={url}>
     <h2 class="text-blue-700 dark:text-blue-300">{frontmatter.title}</h2>
   </Link>
-  <div class="mt-2 flex justify-between gap-2">
-    <div class="flex flex-col justify-between gap-4">
+  <div class="mt-2 flex items-start gap-4">
+    <div class="flex flex-1 flex-col gap-4">
       <p class="text-sm">{frontmatter.description}</p>
       <div class="flex items-center gap-3 text-sm text-gray-300">
         <span>{formatDate(new Date(frontmatter.date))}</span>
@@ -30,12 +30,10 @@ const { url, frontmatter } = Astro.props;
         </div>
       </div>
     </div>
-    <Image
+    <CardImage
       src={frontmatter.image}
       alt={getBlogItemImageAlt(frontmatter.title)}
-      class="h-20 w-20"
-      width={80}
-      height={80}
+      variant="thumbnail"
     />
   </div>
 </Card>

@@ -1,0 +1,46 @@
+---
+import Image from "./Image.astro";
+
+type CardImageVariant = "thumbnail" | "cover" | "hero" | "mini" | "expand";
+
+type Props = {
+  src: string | undefined;
+  alt: string;
+  variant?: CardImageVariant;
+  class?: string;
+};
+
+const { src, alt, variant = "cover", class: className } = Astro.props;
+
+const variantClasses = {
+  thumbnail: "h-20 w-36 object-cover rounded-md flex-shrink-0",
+  cover: "h-48 w-full object-cover",
+  hero: "h-full w-full object-cover",
+  mini: "h-24 w-full object-cover",
+  expand:
+    "h-full w-full object-cover transition-transform duration-300 group-hover/card:scale-105",
+};
+
+const variantSizes = {
+  thumbnail: { width: 152, height: 80 },
+  cover: { width: 400, height: 210 },
+  hero: { width: 384, height: 202 },
+  mini: { width: 160, height: 84 },
+  expand: { width: 160, height: 84 },
+};
+
+const imageClass = `${variantClasses[variant]} ${className || ""}`;
+const { width, height } = variantSizes[variant];
+---
+
+{
+  src && (
+    <Image
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      class={imageClass}
+    />
+  )
+}

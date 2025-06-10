@@ -1,7 +1,7 @@
 ---
 import Card from "./Card.astro";
 import Icon from "./Icon.astro";
-import Image from "./Image.astro";
+import CardImage from "./CardImage.astro";
 
 type ArticleLink = {
   title?: string;
@@ -58,12 +58,10 @@ const articleLinks = links.filter((link) => link.title && link.description);
               >
                 <div class="relative h-24 overflow-hidden bg-gray-100 dark:bg-gray-900">
                   {link.image ? (
-                    <Image
+                    <CardImage
                       src={link.image}
                       alt={link.title || "記事画像"}
-                      width={160}
-                      height={96}
-                      class="h-full w-full object-cover transition-transform duration-300 group-hover/card:scale-105"
+                      variant="expand"
                     />
                   ) : (
                     <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
