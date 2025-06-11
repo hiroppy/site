@@ -43,7 +43,7 @@
     "remark-frontmatter": "5.0.0",
     "serve": "14.2.4",
     "strip-markdown": "6.0.0",
-    "tailwindcss": "4.1.8",
+    "tailwindcss": "4.1.10",
     "typescript": "5.8.3",
     "yaml": "2.8.0"
   },
@@ -53,7 +53,7 @@
     "@astrojs/partytown": "2.1.4",
     "@astrojs/rss": "4.0.12",
     "@astrojs/sitemap": "3.4.1",
-    "@tailwindcss/vite": "4.1.8",
+    "@tailwindcss/vite": "4.1.10",
     "algoliasearch": "5.27.0",
     "astro": "5.9.2",
     "clsx": "2.1.1",
