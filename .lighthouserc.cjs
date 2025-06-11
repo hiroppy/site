@@ -27,6 +27,7 @@ module.exports = {
         "image-delivery-insight": "off",
         "lcp-discovery-insight": "off",
         "network-dependency-tree-insight": "off",
+        "forced-reflow-insight": "pff",
       },
     },
   },
