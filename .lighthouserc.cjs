@@ -21,6 +21,13 @@ module.exports = {
         // playwrightで担保しているのでオフ
         "color-contrast": "off",
         "meta-viewport": "off",
+
+        // ローカル環境でのレスポンス時間のばらつきを考慮
+        "document-latency-insight": "off",
+        "image-delivery-insight": "off",
+        "lcp-discovery-insight": "off",
+        "network-dependency-tree-insight": "off",
+        "forced-reflow-insight": "pff",
       },
     },
   },

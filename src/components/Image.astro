@@ -48,6 +48,7 @@ const loading = lazy ? "lazy" : "eager";
       height={height ?? 0}
       loading={loading}
       onerror={`this.onerror=null; this.src='${placeholderColor}'`}
+      decoding="async"
     />
   ) : (
     <AstroImage
@@ -61,6 +62,7 @@ const loading = lazy ? "lazy" : "eager";
       quality={quality}
       densities={[1, 2]}
       onerror={`this.onerror=null; this.src='${placeholderColor}'`}
+      decoding="async"
     />
   )
 }

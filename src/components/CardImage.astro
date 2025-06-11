@@ -8,6 +8,8 @@ type Props = {
   alt: string;
   variant?: CardImageVariant;
   class?: string;
+  loading?: "lazy" | "eager";
+  priority?: boolean;
 };
 
 const { src, alt, variant = "cover", class: className } = Astro.props;
