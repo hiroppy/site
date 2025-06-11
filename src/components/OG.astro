@@ -5,6 +5,7 @@ import { writeFileSync, readFileSync } from "node:fs";
 import Card from "./Card.astro";
 import CardContent from "./CardContent.astro";
 import CardTitle from "./CardTitle.astro";
+import Icon from "./Icon.astro";
 
 type Props = {
   url: string;
@@ -72,32 +73,50 @@ if (ogp[url]) {
 }
 ---
 
-<Card link={{ href: url, isBlank: true }} class="bg-gray-100 dark:bg-gray-700">
-  <CardContent class="flex justify-between gap-3">
-    <div class="flex flex-1 flex-col gap-1">
-      <CardTitle level={3} class="text-base">
+<a
+  href={url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="group block overflow-hidden rounded-lg border border-gray-200 bg-white transition-all duration-200 hover:border-blue-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-600"
+>
+  <div class="flex h-32">
+    <div class="flex min-w-0 flex-1 flex-col p-4">
+      <h3
+        class="mt-0 mb-2 line-clamp-2 text-base leading-tight font-medium text-gray-900 group-hover:text-blue-600 dark:text-gray-100 dark:group-hover:text-blue-400"
+      >
         {title}
-      </CardTitle>
-      <span class="text-sm text-gray-600 dark:text-gray-300">
-        {
-          description && description.length > 100
-            ? `${description?.slice(0, 100)}...`
-            : description
-        }
-      </span>
+      </h3>
+      {
+        description && (
+          <p class="mt-0 truncate text-sm text-gray-600 dark:text-gray-400">
+            {description}
+          </p>
+        )
+      }
+      <div class="flex items-center gap-2">
+        <Icon
+          icon="mdi:open-in-new"
+          width="12"
+          height="12"
+          class="text-gray-400 dark:text-gray-500"
+        />
+        <span class="truncate text-xs text-gray-500 dark:text-gray-400">
+          {new URL(url).hostname}
+        </span>
+      </div>
     </div>
     {
       image && (
-        <div class="hidden h-32 max-h-40 max-w-52 sm:block">
+        <div class="w-24 flex-shrink-0 overflow-hidden md:w-[243px]">
           <Image
             src={image}
             alt={title}
-            class="h-full w-full rounded-sm object-cover"
-            width={60}
-            height={40}
+            class="h-full w-full object-cover"
+            width={243}
+            height={128}
           />
         </div>
       )
     }
-  </CardContent>
-</Card>
+  </div>
+</a>
