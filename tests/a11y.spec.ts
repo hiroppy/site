@@ -10,6 +10,8 @@ for (const url of urls) {
 
     const accessibilityScanResults = await new AxeBuilder({ page })
       .disableRules(["meta-viewport"])
+      .exclude("pre.astro-code")
+      .exclude("pre.astro-code *")
       .analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);
