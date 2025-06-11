@@ -8,9 +8,18 @@ type Props = {
   alt: string;
   variant?: CardImageVariant;
   class?: string;
+  loading?: "lazy" | "eager";
+  priority?: boolean;
 };
 
-const { src, alt, variant = "cover", class: className } = Astro.props;
+const {
+  src,
+  alt,
+  variant = "cover",
+  class: className,
+  loading = "lazy",
+  priority = false,
+} = Astro.props;
 
 const variantClasses = {
   thumbnail: "h-20 w-36 object-cover rounded-md flex-shrink-0",
@@ -41,6 +50,8 @@ const { width, height } = variantSizes[variant];
       width={width}
       height={height}
       class={imageClass}
+      loading={loading}
+      decoding="async"
     />
   )
 }
