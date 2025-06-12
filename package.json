@@ -34,7 +34,7 @@
     "@playwright/test": "1.53.0",
     "astro-icon": "1.1.5",
     "cheerio": "1.1.0",
-    "knip": "5.60.2",
+    "knip": "5.61.0",
     "octokit": "5.0.3",
     "prettier": "3.5.3",
     "prettier-plugin-astro": "0.14.1",
