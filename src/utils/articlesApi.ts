@@ -57,6 +57,7 @@ type SourcesResponse = {
 };
 
 const BASE_API_URL = import.meta.env.FEEDLE_API_URL;
+const API_TOKEN = import.meta.env.FEEDLE_API_TOKEN;
 
 /**
  * 記事を取得する
@@ -81,7 +82,11 @@ export async function fetchArticles(
     }
     // allの場合は api/v1/frontend/articles のまま
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        "x-api-token": API_TOKEN,
+      },
+    });
 
     if (!response.ok) {
       return {
@@ -109,7 +114,11 @@ export async function fetchSources(
 ): Promise<{ sources: Source[]; lastHarvested?: Date; error?: string }> {
   try {
     const url = `${BASE_API_URL}/${type}/sources`;
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        "x-api-token": API_TOKEN,
+      },
+    });
 
     if (!response.ok) {
       return {

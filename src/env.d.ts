@@ -2,6 +2,7 @@
 
 interface ImportMetaEnv {
   readonly FEEDLE_API_URL: string;
+  readonly FEEDLE_API_TOKEN: string;
 }
 
 interface ImportMeta {
