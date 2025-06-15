@@ -3,9 +3,9 @@ const paths = require("./testedPaths.cjs");
 module.exports = {
   ci: {
     collect: {
-      staticDistDir: "./dist",
       url: paths,
       numberOfRuns: 1,
+      startServerCommand: "pnpm preview --port 3000",
     },
     assert: {
       preset: "lighthouse:no-pwa",

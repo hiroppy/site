@@ -47,7 +47,7 @@ jobs:
         with:
           name: app
           path: ./dist
-      - run: pnpm preview --port 3000 & pnpm lh --upload.target=temporary-public-storage
+      - run: pnpm lh --upload.target=temporary-public-storage
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
   a11y:
