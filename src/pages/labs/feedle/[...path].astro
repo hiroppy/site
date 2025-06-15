@@ -1,12 +1,6 @@
 ---
 export const prerender = false;
 
-// Set stale-while-revalidate cache headers (1 hour = 3600 seconds)
-Astro.response.headers.set(
-  "Cache-Control",
-  "public, max-age=0, s-maxage=3600, stale-while-revalidate=3600",
-);
-
 import Layout from "../../../layouts/Layout.astro";
 import ArticleSidebar from "../../../components/feedle/ArticleSidebar.astro";
 import ArticleModal from "../../../components/feedle/ArticleModal.astro";

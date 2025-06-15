@@ -81,12 +81,6 @@ export const GET: APIRoute = async ({ params, site, url }) => {
       })),
     });
 
-    // Set stale-while-revalidate cache headers (1 hour = 3600 seconds)
-    response.headers.set(
-      "Cache-Control",
-      "public, max-age=0, s-maxage=3600, stale-while-revalidate=3600",
-    );
-
     return response;
   } catch (err) {
     console.error("RSS generation error:", err);
