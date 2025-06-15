@@ -28,6 +28,9 @@ module.exports = {
         "lcp-discovery-insight": "off",
         "network-dependency-tree-insight": "off",
         "forced-reflow-insight": "pff",
+
+        // pnpm previewなので不要
+        "uses-text-compression": "off",
       },
     },
   },
