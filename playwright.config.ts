@@ -5,9 +5,9 @@ const config: PlaywrightTestConfig = {
   fullyParallel: true,
   webServer: {
     // docker内でsharpを動かすのは難しいのでastro previewを使わない
-    command: "serve dist",
+    command: "pnpm preview --port 3000",
     port: 3000,
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI,
   },
   expect: {
     toHaveScreenshot: {

@@ -1,0 +1,39 @@
+---
+import Icon from "../Icon.astro";
+import ArticleGrid from "./ArticleGrid.astro";
+import type { Article, Source } from "../../utils/articlesApi";
+
+type Props = {
+  error?: string | null;
+  articles: Article[];
+  sources: Source[];
+};
+
+const { error, articles, sources } = Astro.props;
+---
+
+<div
+  class="flex-1 overflow-y-auto px-4 py-4 pt-6 md:px-6 md:py-6"
+  style="scroll-behavior: smooth;"
+>
+  {
+    error ? (
+      <div class="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950">
+        <div class="flex items-center gap-2 text-red-600 dark:text-red-400">
+          <Icon icon="mdi:alert-circle" class="h-5 w-5" />
+          <span>Failed to load articles: {error}</span>
+        </div>
+      </div>
+    ) : articles.length === 0 ? (
+      <div class="text-center text-gray-500 dark:text-gray-400">
+        <Icon
+          icon="mdi:newspaper-variant-outline"
+          class="mx-auto mb-4 h-12 w-12"
+        />
+        <p class="mb-2 text-lg font-medium">No articles found</p>
+      </div>
+    ) : (
+      <ArticleGrid articles={articles} sources={sources} />
+    )
+  }
+</div>

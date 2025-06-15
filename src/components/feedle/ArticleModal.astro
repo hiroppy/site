@@ -1,0 +1,210 @@
+---
+import Dialog from "../Dialog.astro";
+import Icon from "../Icon.astro";
+---
+
+<Dialog
+  id="article-modal"
+  title=""
+  dynamicTitle={true}
+  titleId="modal-title"
+  closeButtonId="close-modal"
+  maxWidth="max-w-4xl"
+  backdrop="blur"
+  position="auto"
+  headerClass="sticky top-0 bg-white p-6 dark:bg-gray-800"
+  contentClass="max-h-[calc(90vh-120px)] overflow-y-auto p-6"
+>
+  <!-- モーダルコンテンツ -->
+  <div class="grid gap-6 lg:grid-cols-3">
+    <!-- 画像とメタ情報 -->
+    <div class="lg:col-span-1">
+      <div id="modal-image-container" class="mb-4">
+        <img
+          id="modal-image"
+          class="w-full rounded-lg object-cover"
+          style="display: none;"
+        />
+        <div
+          id="modal-no-image"
+          class="flex h-48 items-center justify-center rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900"
+          style="display: none;"
+        >
+          <div class="text-center">
+            <Icon
+              icon="mdi:image-outline"
+              class="mx-auto mb-2 h-8 w-8 text-gray-400 dark:text-gray-500"
+            />
+            <span class="text-xs text-gray-500 dark:text-gray-400"
+              >No Image</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="mb-4 flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400"
+      >
+        <span
+          id="modal-source"
+          class="rounded bg-gray-200 px-2 py-1 text-xs font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-200"
+        ></span>
+        <time id="modal-published" class="text-xs"></time>
+      </div>
+
+      <div id="modal-tags" class="flex flex-wrap gap-2"></div>
+    </div>
+
+    <!-- 詳細情報 -->
+    <div class="lg:col-span-2">
+      <div class="mb-6">
+        <h3 class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+          Summary
+        </h3>
+        <p
+          id="modal-summary"
+          class="leading-relaxed whitespace-pre-wrap text-gray-600 dark:text-gray-400"
+        >
+        </p>
+      </div>
+
+      <div class="flex justify-end">
+        <a
+          id="modal-read-button"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+        >
+          <Icon icon="mdi:open-in-new" class="mr-2 h-4 w-4" />
+          Read full article
+        </a>
+      </div>
+    </div>
+  </div>
+</Dialog>
+
+<script>
+  function initializeModal() {
+    const modal = document.getElementById("article-modal") as HTMLDialogElement;
+    const closeModal = document.getElementById("close-modal");
+
+    if (!modal || !closeModal) return;
+
+    // 既存のイベントリスナーを削除（重複を防ぐ）
+    const existingCards = document.querySelectorAll(".article-card");
+    existingCards.forEach((card) => {
+      const clonedCard = card.cloneNode(true);
+      card.parentNode?.replaceChild(clonedCard, card);
+    });
+
+    // 新しいイベントリスナーを追加
+    const articleCards = document.querySelectorAll(".article-card");
+    articleCards.forEach((card) => {
+      card.addEventListener("click", (e) => {
+        // データ属性から記事情報を取得
+        const element = e.currentTarget as HTMLElement;
+        const title = element.dataset.articleTitle || "Untitled";
+        const summary = element.dataset.articleSummary; // APIからのsummary
+        const description = element.dataset.articleDescription; // 表示用description (og:description含む)
+        const url = element.dataset.articleUrl || "#";
+        const image = element.dataset.articleImage;
+        const source = element.dataset.articleSource || "Unknown";
+        const published = element.dataset.articlePublished;
+        const tags = element.dataset.articleTags;
+
+        // APIのsummaryがnullまたは空の場合は直接リンクに飛ぶ
+        if (
+          !summary ||
+          summary.trim() === "" ||
+          summary === "null" ||
+          summary === "undefined"
+        ) {
+          window.open(url, "_blank", "noopener,noreferrer");
+          return;
+        }
+
+        // summaryがある場合はモーダルを表示
+        e.preventDefault();
+        e.stopPropagation();
+
+        // モーダルに情報を設定
+        const modalTitle = document.getElementById("modal-title");
+        const modalSummary = document.getElementById("modal-summary");
+        const modalSource = document.getElementById("modal-source");
+        const modalReadButton = document.getElementById(
+          "modal-read-button",
+        ) as HTMLAnchorElement;
+
+        if (modalTitle) modalTitle.textContent = title;
+        if (modalSummary)
+          modalSummary.textContent =
+            summary || description || "No summary available";
+        if (modalSource) modalSource.textContent = source;
+        if (modalReadButton) modalReadButton.href = url;
+
+        // 画像設定
+        const modalImage = document.getElementById(
+          "modal-image",
+        ) as HTMLImageElement;
+        const modalNoImage = document.getElementById("modal-no-image");
+
+        if (image && modalImage && modalNoImage) {
+          modalImage.src = image;
+          modalImage.alt = title;
+          modalImage.style.display = "block";
+          modalNoImage.style.display = "none";
+        } else if (modalImage && modalNoImage) {
+          modalImage.style.display = "none";
+          modalNoImage.style.display = "flex";
+        }
+
+        // 公開日設定
+        const modalPublished = document.getElementById("modal-published");
+        if (published && modalPublished) {
+          const publishedDate = new Date(published)
+            .toLocaleDateString("ja-JP", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })
+            .replace(/\//g, "/");
+          modalPublished.textContent = publishedDate;
+        } else if (modalPublished) {
+          modalPublished.textContent = "";
+        }
+
+        // タグ設定
+        const modalTags = document.getElementById("modal-tags");
+        if (modalTags) {
+          modalTags.innerHTML = "";
+          if (tags) {
+            const tagArray = tags
+              .split(",")
+              .filter((tag: string) => tag.trim());
+            tagArray.forEach((tag: string) => {
+              const tagElement = document.createElement("span");
+              tagElement.className =
+                "rounded bg-blue-100 px-2 py-1 text-xs text-blue-700 dark:bg-blue-900 dark:text-blue-300";
+              tagElement.textContent = tag.trim();
+              modalTags.appendChild(tagElement);
+            });
+          }
+        }
+
+        // モーダル表示
+        modal.showModal();
+      });
+    });
+  }
+
+  // DOMContentLoadedとページ読み込み完了時の両方で初期化
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeModal);
+  } else {
+    initializeModal();
+  }
+
+  // ページ遷移時の再初期化（Astroのクライアントサイドナビゲーション対応）
+  document.addEventListener("astro:page-load", initializeModal);
+</script>

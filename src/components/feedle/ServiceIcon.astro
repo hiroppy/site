@@ -1,0 +1,38 @@
+---
+import Icon from "../Icon.astro";
+import { getServiceIcon } from "../../utils/serviceIcon";
+import type { Source } from "../../utils/articlesApi";
+
+type Props = {
+  source: Source;
+  size?: "sm" | "md" | "lg";
+  class?: string;
+};
+
+const { source, size = "md", class: className = "" } = Astro.props;
+
+const serviceIcon = getServiceIcon(source);
+
+const sizeClasses = {
+  sm: "h-4 w-4",
+  md: "h-6 w-6",
+  lg: "h-8 w-8",
+};
+
+const iconClass = `${sizeClasses[size]} ${className}`;
+---
+
+{
+  serviceIcon.type === "url" ? (
+    <img
+      src={serviceIcon.value}
+      alt={source.name}
+      class={`${iconClass} rounded`}
+    />
+  ) : (
+    <Icon
+      icon={serviceIcon.value}
+      class={`${iconClass} text-gray-500 dark:text-gray-400`}
+    />
+  )
+}

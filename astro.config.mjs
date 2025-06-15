@@ -5,6 +5,11 @@ import mdx from "@astrojs/mdx";
 import icon from "astro-icon";
 import tailwindcss from "@tailwindcss/vite";
 
+const adapter =
+  process.env.NODE_ENV !== "test"
+    ? (await import("@astrojs/vercel")).default()
+    : (await import("@astrojs/node")).default({ mode: "standalone" });
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://hiroppy.me/",
@@ -48,4 +53,6 @@ export default defineConfig({
       },
     },
   },
+
+  adapter,
 });

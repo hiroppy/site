@@ -1,0 +1,467 @@
+---
+import Icon from "../Icon.astro";
+import DateFilter from "./DateFilter.astro";
+import ServicesDialog from "./ServicesDialog.astro";
+import ServiceListItem from "./ServiceListItem.astro";
+import type { ServiceGroup } from "../../utils/articlesApi";
+
+type Props = {
+  currentType: string;
+  currentCategory: string;
+  currentService?: string;
+  currentPeriod?: string;
+  serviceGroups: Record<string, ServiceGroup>;
+  lastHarvested?: Date;
+};
+
+const {
+  currentType,
+  currentCategory,
+  currentService,
+  currentPeriod,
+  serviceGroups,
+  lastHarvested,
+} = Astro.props;
+
+function buildServiceUrl(serviceData: ServiceGroup, category: string): string {
+  const firstSource = serviceData.sources[0];
+  const baseUrl =
+    category === "all"
+      ? `/labs/feedle/${currentType}/${firstSource.kind}/${firstSource.id}`
+      : `/labs/feedle/${currentType}/${category}/${firstSource.id}`;
+
+  return currentPeriod && currentPeriod !== "all"
+    ? `${baseUrl}?period=${currentPeriod}`
+    : baseUrl;
+}
+---
+
+<!-- Mobile overlay backdrop -->
+<div
+  id="sidebar-backdrop"
+  class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
+  style="opacity: 0; pointer-events: none; transition: opacity 0.3s ease-in-out;"
+>
+</div>
+
+<aside
+  id="sidebar"
+  class="fixed inset-y-0 left-0 z-50 w-64 flex-shrink-0 border-r border-gray-200 bg-gray-50 md:relative md:z-auto dark:border-gray-700 dark:bg-gray-900"
+  style="transform: translateX(-100%);"
+>
+  <div class="flex h-full flex-col overflow-hidden">
+    <!-- Title and Last Updated -->
+    <div
+      class="flex-shrink-0 border-b border-gray-200 p-4 dark:border-gray-700"
+    >
+      <h1 class="text-lg font-bold text-gray-900 dark:text-gray-100">
+        {currentType.toLocaleUpperCase()}
+      </h1>
+      {
+        lastHarvested && (
+          <p class="text-xs text-gray-500 dark:text-gray-400">
+            Last updated:{" "}
+            {lastHarvested.toLocaleString("ja-JP", {
+              timeZone: "Asia/Tokyo",
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </p>
+        )
+      }
+    </div>
+
+    <!-- Date Filter -->
+    <div class="flex-shrink-0 border-b border-gray-200 dark:border-gray-700">
+      <div class="p-3">
+        <h3 class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+          Period
+        </h3>
+        <DateFilter
+          currentType={currentType}
+          currentCategory={currentCategory}
+          currentService={currentService}
+          currentPeriod={currentPeriod}
+        />
+      </div>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="flex-shrink-0 border-b border-gray-200 dark:border-gray-700">
+      <div class="p-3">
+        <h3 class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+          Categories
+        </h3>
+        <div class="space-y-1">
+          <a
+            href={`/labs/feedle/${currentType}${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
+            class={`flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+              currentCategory === "all"
+                ? "bg-blue-500 text-white shadow-sm"
+                : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+            }`}
+          >
+            All
+          </a>
+          <a
+            href={`/labs/feedle/${currentType}/official${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
+            class={`flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+              currentCategory === "official"
+                ? "bg-blue-500 text-white shadow-sm"
+                : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+            }`}
+          >
+            Official
+          </a>
+          <a
+            href={`/labs/feedle/${currentType}/community${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
+            class={`flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+              currentCategory === "community"
+                ? "bg-blue-500 text-white shadow-sm"
+                : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+            }`}
+          >
+            Community
+          </a>
+          <a
+            href={`/labs/feedle/${currentType}/release${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
+            class={`flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+              currentCategory === "release"
+                ? "bg-blue-500 text-white shadow-sm"
+                : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+            }`}
+          >
+            Release
+          </a>
+          <a
+            href={`/labs/feedle/${currentType}/podcast${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
+            class={`flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+              currentCategory === "podcast"
+                ? "bg-blue-500 text-white shadow-sm"
+                : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+            }`}
+          >
+            Podcast
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Filters -->
+    {
+      Object.keys(serviceGroups).length > 0 && (
+        <div class="flex flex-1 flex-col overflow-hidden">
+          <div class="p-3">
+            <div class="flex items-center justify-between">
+              <h3
+                id="sources-count"
+                class="text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Sources (--)
+              </h3>
+              <button
+                id="services-dialog-btn"
+                type="button"
+                class="cursor-pointer rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                title="View all services"
+              >
+                <Icon icon="mdi:format-list-bulleted" class="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+
+          <div class="flex-1 overflow-y-auto p-2">
+            <div id="sidebar-services" class="space-y-1 pb-8">
+              <a
+                href={`/labs/feedle/${currentType}/${currentCategory}${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
+                class={`flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                  !currentService
+                    ? "bg-blue-500 text-white shadow-sm"
+                    : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+                }`}
+              >
+                <Icon icon="mdi:all-inclusive" class="mr-2 h-4 w-4" />
+                All
+              </a>
+
+              {/* Service list with selected service first */}
+              {Object.entries(serviceGroups)
+                .sort(([a], [b]) => {
+                  // Put selected service first, then alphabetical order
+                  const aSelected =
+                    serviceGroups[a].sources[0].id === currentService;
+                  const bSelected =
+                    serviceGroups[b].sources[0].id === currentService;
+                  if (aSelected && !bSelected) return -1;
+                  if (!aSelected && bSelected) return 1;
+                  return a.localeCompare(b);
+                })
+                .map(([serviceName, serviceData]) => {
+                  const isSelected =
+                    serviceData.sources[0].id === currentService;
+                  return (
+                    <ServiceListItem
+                      serviceName={serviceName}
+                      serviceData={serviceData}
+                      href={buildServiceUrl(serviceData, currentCategory)}
+                      isSelected={isSelected}
+                      variant="sidebar"
+                      showCount={true}
+                    />
+                  );
+                })}
+
+              {/* 最下部のパディング確保用の空要素 */}
+              <div class="h-16" />
+            </div>
+          </div>
+        </div>
+      )
+    }
+  </div>
+</aside>
+
+<!-- Services Dialog Component -->
+<ServicesDialog
+  serviceGroups={serviceGroups}
+  currentType={currentType}
+  currentCategory={currentCategory}
+  currentPeriod={currentPeriod}
+  showLastUpdated={false}
+/>
+
+<!-- Mobile hamburger button -->
+<button
+  id="hamburger-btn"
+  class="fixed top-20 left-4 z-40 rounded-lg bg-white p-2 shadow-lg transition-colors hover:bg-gray-100 md:hidden dark:bg-gray-800 dark:hover:bg-gray-700"
+>
+  <Icon icon="mdi:menu" class="h-6 w-6 text-gray-600 dark:text-gray-300" />
+</button>
+
+<script>
+  // Initialize immediately to prevent reload animation
+  (function () {
+    const sidebar = document.getElementById("sidebar");
+    if (sidebar && window.innerWidth >= 768) {
+      sidebar.style.transform = "translateX(0)";
+      sidebar.style.transition = "none";
+      requestAnimationFrame(() => {
+        sidebar.style.transition =
+          "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
+      });
+    } else if (sidebar) {
+      sidebar.style.transition = "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
+    }
+  })();
+
+  function initializeSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const backdrop = document.getElementById("sidebar-backdrop");
+    const hamburgerBtn = document.getElementById("hamburger-btn");
+
+    if (!sidebar || !backdrop || !hamburgerBtn) return;
+
+    let isOpen = false;
+
+    // Show sidebar by default on desktop
+    if (window.innerWidth >= 768 && sidebar) {
+      sidebar.style.transform = "translateX(0)";
+    }
+
+    function openSidebar() {
+      if (isOpen) return;
+
+      isOpen = true;
+      if (backdrop) {
+        backdrop.style.opacity = "1";
+        backdrop.style.pointerEvents = "auto";
+      }
+
+      requestAnimationFrame(() => {
+        if (sidebar) {
+          sidebar.style.transform = "translateX(0)";
+        }
+      });
+
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeSidebar() {
+      if (!isOpen) return;
+
+      isOpen = false;
+      if (sidebar) {
+        sidebar.style.transform = "translateX(-100%)";
+      }
+      if (backdrop) {
+        backdrop.style.opacity = "0";
+        backdrop.style.pointerEvents = "none";
+      }
+      document.body.style.overflow = "";
+    }
+
+    hamburgerBtn.addEventListener("click", () => {
+      if (isOpen) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    });
+
+    backdrop.addEventListener("click", closeSidebar);
+
+    const sidebarLinks = sidebar.querySelectorAll("a");
+    sidebarLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        if (window.innerWidth < 768) {
+          closeSidebar();
+        }
+      });
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isOpen) {
+        closeSidebar();
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 768) {
+        if (sidebar) {
+          sidebar.style.transform = "translateX(0)";
+        }
+        if (backdrop) {
+          backdrop.style.opacity = "0";
+          backdrop.style.pointerEvents = "none";
+        }
+        document.body.style.overflow = "";
+        isOpen = false;
+      } else if (!isOpen) {
+        if (sidebar) {
+          sidebar.style.transform = "translateX(-100%)";
+        }
+        if (backdrop) {
+          backdrop.style.opacity = "0";
+          backdrop.style.pointerEvents = "none";
+        }
+      }
+    });
+  }
+
+  function initializeServicesDialog() {
+    const dialogBtn = document.getElementById("services-dialog-btn");
+
+    if (!dialogBtn) return;
+
+    dialogBtn.addEventListener("click", () => {
+      if (typeof (window as any).openServicesDialog === "function") {
+        (window as any).openServicesDialog();
+      }
+    });
+  }
+
+  // Simplified sidebar filtering
+  function initializeSubscriptionFiltering() {
+    const DB_NAME = "feedleSubscriptions";
+    const DB_VERSION = 1;
+    const STORE_NAME = "ignoredItems";
+    let db: IDBDatabase | null = null;
+
+    async function initDB(): Promise<IDBDatabase> {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onerror = () => reject(request.error);
+        request.onsuccess = () => {
+          db = request.result;
+          resolve(db);
+        };
+        request.onupgradeneeded = (event) => {
+          const database = (event.target as IDBOpenDBRequest).result;
+          if (!database.objectStoreNames.contains(STORE_NAME)) {
+            const store = database.createObjectStore(STORE_NAME, {
+              keyPath: "key",
+            });
+            store.createIndex("type", "type", { unique: false });
+          }
+        };
+      });
+    }
+
+    async function isSubscribed(type: string, id: string): Promise<boolean> {
+      try {
+        if (!db) await initDB();
+        if (!db || !db.objectStoreNames.contains(STORE_NAME)) return true;
+
+        const transaction = db.transaction([STORE_NAME], "readonly");
+        const store = transaction.objectStore(STORE_NAME);
+
+        return new Promise((resolve) => {
+          const request = store.get(`${type}:${id}`);
+          request.onsuccess = () => resolve(!request.result);
+          request.onerror = () => resolve(true);
+        });
+      } catch (error) {
+        return true;
+      }
+    }
+
+    async function filterSidebarSources() {
+      const servicesList = document.getElementById("sidebar-services");
+      const sourcesCount = document.getElementById("sources-count");
+      if (!servicesList) return;
+
+      const serviceItems = servicesList.querySelectorAll("a[data-source-id]");
+      let visibleCount = 0;
+
+      for (const item of serviceItems) {
+        const htmlItem = item as HTMLElement;
+        const sourceId = htmlItem.dataset.sourceId;
+        if (sourceId) {
+          const subscribed = await isSubscribed("source", sourceId);
+          if (subscribed) {
+            htmlItem.style.display = "";
+            visibleCount++;
+          } else {
+            htmlItem.style.display = "none";
+          }
+        }
+      }
+
+      if (sourcesCount) {
+        sourcesCount.textContent = `Sources (${visibleCount})`;
+      }
+    }
+
+    // Initialize and setup event listener
+    initDB()
+      .then(() => {
+        filterSidebarSources();
+        window.addEventListener("subscriptionChanged", filterSidebarSources);
+      })
+      .catch((error) => {
+        console.warn("Failed to initialize subscription filtering:", error);
+      });
+  }
+
+  // Initialize all functionality
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      initializeSidebar();
+      initializeServicesDialog();
+      initializeSubscriptionFiltering();
+    });
+  } else {
+    initializeSidebar();
+    initializeServicesDialog();
+    initializeSubscriptionFiltering();
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    initializeSidebar();
+    initializeServicesDialog();
+    initializeSubscriptionFiltering();
+  });
+</script>

@@ -1,0 +1,93 @@
+---
+export const prerender = false;
+
+// Set stale-while-revalidate cache headers (1 hour = 3600 seconds)
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, max-age=0, s-maxage=3600, stale-while-revalidate=3600",
+);
+
+import Layout from "../../../layouts/Layout.astro";
+import ArticleSidebar from "../../../components/feedle/ArticleSidebar.astro";
+import ArticleModal from "../../../components/feedle/ArticleModal.astro";
+import ServiceInfoHeader from "../../../components/feedle/ServiceInfoHeader.astro";
+import RSSFeedButtons from "../../../components/feedle/RSSFeedButtons.astro";
+import ContentArea from "../../../components/feedle/ContentArea.astro";
+import { getFeedleData } from "../../../utils/feedleData";
+import { generatePageTitle } from "../../../utils/feedleConfig";
+
+// URLパスを解析
+const { path } = Astro.params;
+const pathSegments = path ? path.split("/").filter(Boolean) : [];
+
+// URLクエリパラメータから期間フィルターを取得
+const currentPeriod = Astro.url.searchParams.get("period") || "all";
+
+// データの取得
+let data;
+try {
+  data = await getFeedleData(pathSegments, currentPeriod);
+} catch (error) {
+  // 無効なパスの場合はfrontendにリダイレクト
+  return Astro.redirect(`${BASE_PATH}/frontend`, 302);
+}
+
+const {
+  currentType,
+  currentCategory,
+  currentService,
+  articles,
+  sources,
+  serviceGroups,
+  lastHarvested,
+  error,
+} = data;
+
+// ページタイトルの生成
+const pageTitle = generatePageTitle(
+  currentType,
+  currentCategory,
+  currentService,
+);
+---
+
+<Layout title={pageTitle}>
+  <main class="flex h-screen w-full">
+    <ArticleSidebar
+      currentType={currentType}
+      currentCategory={currentCategory}
+      currentService={currentService}
+      currentPeriod={currentPeriod}
+      serviceGroups={serviceGroups}
+      lastHarvested={lastHarvested}
+    />
+
+    <div
+      class="flex flex-1 flex-col overflow-hidden bg-gray-50 md:ml-0 dark:bg-gray-900"
+    >
+      {
+        currentService && (
+          <ServiceInfoHeader
+            currentService={currentService}
+            serviceGroups={serviceGroups}
+            currentType={currentType}
+            currentCategory={currentCategory}
+            currentPeriod={currentPeriod}
+          />
+        )
+      }
+
+      {!currentService && <RSSFeedButtons currentType={currentType} />}
+
+      <ContentArea error={error} articles={articles} sources={sources} />
+    </div>
+  </main>
+
+  <ArticleModal />
+</Layout>
+
+<style>
+  body {
+    overflow: hidden;
+  }
+</style>
