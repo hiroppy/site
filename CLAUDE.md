@@ -22,6 +22,12 @@
 - **CSS**: Tailwind utility classes, minimal custom CSS
 - **Pre-commit**: Runs Prettier via lint-staged before commits
 
+## Environment Variables
+
+- **FEEDLE_API_URL**: Feedle API base URL (default: `http://localhost:8787/api/v1`)
+  - Configure in `.env` file for local development
+  - See `.env.example` for reference
+
 ## Assets
 
 - **Brand Images**: All images in `src/assets/images/brands/` should have 60% padding with centered content

@@ -34,7 +34,8 @@ const { title, url: tmpUrl, description, tags } = frontmatter;
 const url = tmpUrl?.replace(".mdx", "").replace(/.+?\/content/, "");
 
 // HMRで重くなるため、dev環境ではglobをさせない
-const posts = import.meta.env.PROD ? await getBlogs() : [];
+const posts =
+  import.meta.env.NODE_EVN !== "development" ? await getBlogs() : [];
 const index = posts.findIndex(
   ({ slug }) =>
     slug ===

@@ -14,3 +14,4 @@ service_account_secret.json
 !/.githooks/pre-commit
 .claude
 *-darwin.png
+.vercel

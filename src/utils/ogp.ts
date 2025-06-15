@@ -1,6 +1,5 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { fileURLToPath } from "node:url";
 import satori from "satori";
 import sharp from "sharp";
 import me from "../assets/images/meta/me.png";
@@ -9,12 +8,12 @@ const { font, icon } = await (async () => {
   if (import.meta.env.PROD) {
     const font = await readFile(
       join(
-        fileURLToPath(import.meta.url),
+        import.meta.dirname,
         "../../../src/assets/fonts/NotoSansJP-SemiBold.ttf",
       ),
     );
     const icon = new Uint8Array(
-      await readFile(join(fileURLToPath(import.meta.url), "../../", me.src)),
+      await readFile(join(import.meta.dirname, "../", me.src)),
     ).buffer;
 
     return {

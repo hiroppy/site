@@ -1,0 +1,229 @@
+---
+import Card from "../Card.astro";
+import CardContent from "../CardContent.astro";
+import CardTitle from "../CardTitle.astro";
+import CardDescription from "../CardDescription.astro";
+import CardImage from "../CardImage.astro";
+import type { Article, Source } from "../../utils/articlesApi";
+
+type Props = {
+  articles: Article[];
+  sources: Source[];
+};
+
+const { articles, sources } = Astro.props;
+
+function getSourceName(sourceId: string): string {
+  const sourceObj = sources.find(
+    (source: Source) => source.id === sourceId || source.name === sourceId,
+  );
+  return sourceObj ? sourceObj.name || sourceObj.id || "Unknown" : sourceId;
+}
+
+function isRecentArticle(published_at: string | undefined): boolean {
+  if (!published_at) return false;
+  const publishedDate = new Date(published_at);
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+  return publishedDate >= oneMonthAgo;
+}
+
+function getDisplayDescription(article: Article, sourceKind?: string): string {
+  // releaseの場合はsummaryを優先
+  if (sourceKind === "release") {
+    return article.summary || article.og_description || "";
+  }
+  // release以外はog_descriptionを優先
+  return article.og_description || article.summary || "";
+}
+---
+
+<div
+  id="articles-grid"
+  class="grid grid-cols-1 gap-4 pb-24 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+>
+  {
+    articles.map((article) => {
+      const sourceObj = sources.find((s) => s.id === article.source);
+      const description = getDisplayDescription(article, sourceObj?.kind);
+
+      return (
+        <div
+          class="article-card cursor-pointer"
+          data-article-id={article.id}
+          data-article-title={article.title}
+          data-article-summary={article.summary}
+          data-article-description={description}
+          data-article-url={article.url}
+          data-article-image={article.og_image}
+          data-article-source={getSourceName(article.source || "")}
+          data-article-source-id={article.source || ""}
+          data-article-published={article.published_at}
+          data-article-tags={article.tags?.join(",") || ""}
+        >
+          <Card variant="interactive" class="flex h-full flex-col">
+            <CardImage
+              src={article.og_image}
+              alt={article.title || "Article image"}
+            />
+
+            <CardContent class="flex flex-grow flex-col">
+              <CardTitle level={3} class="mb-2 text-base leading-tight">
+                {article.title || "Untitled"}
+              </CardTitle>
+
+              {description && (
+                <CardDescription class="mb-2 line-clamp-3">
+                  {description}
+                </CardDescription>
+              )}
+
+              <div class="mt-auto">
+                <div class="mb-2 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                  <span class="rounded bg-gray-200 px-2 py-1 text-xs font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-200">
+                    {getSourceName(article.source || "")}
+                  </span>
+                  {article.published_at && (
+                    <time
+                      class={
+                        isRecentArticle(article.published_at)
+                          ? "font-medium text-green-800 dark:text-green-400"
+                          : ""
+                      }
+                    >
+                      {new Date(article.published_at)
+                        .toLocaleDateString("ja-JP", {
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit",
+                        })
+                        .replace(/\//g, "/")}
+                    </time>
+                  )}
+                </div>
+
+                {article.tags && article.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-1">
+                    {article.tags.slice(0, 3).map((tag: string) => (
+                      <span class="rounded bg-blue-100 px-2 py-1 text-xs text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      );
+    })
+  }
+</div>
+
+<script>
+  // Simplified article filtering
+  function initializeArticleFiltering() {
+    const DB_NAME = "feedleSubscriptions";
+    const DB_VERSION = 1;
+    const STORE_NAME = "ignoredItems";
+    let db: IDBDatabase | null = null;
+
+    async function initDB() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onerror = () => reject(request.error);
+        request.onsuccess = () => {
+          db = request.result;
+          resolve(db);
+        };
+        request.onupgradeneeded = (event) => {
+          const database = (event.target as IDBOpenDBRequest).result;
+          if (!database.objectStoreNames.contains(STORE_NAME)) {
+            const store = database.createObjectStore(STORE_NAME, {
+              keyPath: "key",
+            });
+            store.createIndex("type", "type", { unique: false });
+          }
+        };
+      });
+    }
+
+    async function isSubscribed(type: string, id: string) {
+      try {
+        if (!db) await initDB();
+        if (!db || !db.objectStoreNames.contains(STORE_NAME)) return true;
+
+        const transaction = db.transaction([STORE_NAME], "readonly");
+        const store = transaction.objectStore(STORE_NAME);
+
+        return new Promise((resolve) => {
+          const request = store.get(`${type}:${id}`);
+          request.onsuccess = () => resolve(!request.result);
+          request.onerror = () => resolve(true);
+        });
+      } catch (error) {
+        return true;
+      }
+    }
+
+    async function filterArticles() {
+      const articlesGrid = document.getElementById("articles-grid");
+      if (!articlesGrid) return;
+
+      // Check if we're on a source-specific page
+      const isSourcePage = window.location.pathname.match(
+        /\/labs\/feedle\/[^/]+\/[^/]+\/[^/]+$/,
+      );
+
+      const articleCards = articlesGrid.querySelectorAll(".article-card");
+      let visibleCount = 0;
+
+      // If on a source page, show all articles regardless of subscription
+      if (isSourcePage) {
+        for (const card of articleCards) {
+          (card as HTMLElement).style.display = "";
+          visibleCount++;
+        }
+        return;
+      }
+
+      // Otherwise, apply subscription filtering
+      for (const card of articleCards) {
+        const sourceId = (card as HTMLElement).dataset.articleSourceId;
+
+        if (sourceId) {
+          const subscribed = await isSubscribed("source", sourceId);
+          if (subscribed) {
+            (card as HTMLElement).style.display = "";
+            visibleCount++;
+          } else {
+            (card as HTMLElement).style.display = "none";
+          }
+        } else {
+          // Show articles without source ID
+          (card as HTMLElement).style.display = "";
+          visibleCount++;
+        }
+      }
+    }
+
+    // Initialize and setup event listener
+    initDB()
+      .then(() => {
+        filterArticles();
+        window.addEventListener("subscriptionChanged", filterArticles);
+      })
+      .catch((error) => {
+        console.warn("Failed to initialize article filtering:", error);
+      });
+  }
+
+  // Initialize article filtering
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeArticleFiltering);
+  } else {
+    initializeArticleFiltering();
+  }
+
+  document.addEventListener("astro:page-load", initializeArticleFiltering);
+</script>

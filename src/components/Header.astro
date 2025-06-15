@@ -7,14 +7,16 @@ import ThemeToggle from "./ThemeToggle.astro";
 import Icon from "./Icon.astro";
 import meImage from "../assets/images/meta/me.png";
 import meta from "../../node_modules/hiroppy/generated/meta.json";
+import { cn } from "../utils/cn";
 
 const currentPath = Astro.url?.pathname || "";
+const isLabsPage = currentPath.startsWith("/labs/feedle");
 ---
 
 <header
   class="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md dark:border-slate-700 dark:bg-slate-900/80"
 >
-  <div class="container mx-auto px-4 py-4">
+  <div class={cn("mx-auto px-6 py-4", isLabsPage ? "" : "container")}>
     <div class="flex items-center justify-between">
       <a
         href="/"
@@ -76,6 +78,12 @@ const currentPath = Astro.url?.pathname || "";
           href="/projects"
         >
           Projects
+        </NavButton>
+        <NavButton
+          variant={currentPath.startsWith("/labs") ? "active" : "default"}
+          href="/labs"
+        >
+          Labs
         </NavButton>
       </nav>
       <div class="flex items-center space-x-2">
@@ -161,6 +169,15 @@ const currentPath = Astro.url?.pathname || "";
               class="flex-shrink-0"
             >
               Projects
+            </NavButton>
+            <NavButton
+              variant={currentPath.startsWith("/labs")
+                ? "mobile-active"
+                : "mobile"}
+              href="/labs"
+              class="flex-shrink-0"
+            >
+              Labs
             </NavButton>
           </div>
         </div>

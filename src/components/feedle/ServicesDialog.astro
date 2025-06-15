@@ -1,0 +1,383 @@
+---
+import Dialog from "../Dialog.astro";
+import Icon from "../Icon.astro";
+import SearchInput from "../SearchInput.astro";
+import ServiceListItem from "./ServiceListItem.astro";
+import type { ServiceGroup } from "../../utils/articlesApi";
+
+type Props = {
+  serviceGroups: Record<string, ServiceGroup>;
+  currentType: string;
+  currentCategory: string;
+  currentPeriod?: string;
+  showLastUpdated?: boolean;
+};
+
+const {
+  serviceGroups,
+  currentType,
+  currentCategory,
+  currentPeriod,
+  showLastUpdated = false,
+} = Astro.props;
+
+function buildServiceUrl(
+  serviceData: ServiceGroup,
+  currentCategory: string,
+  currentType: string,
+  currentPeriod?: string,
+): string {
+  const firstSource = serviceData.sources[0];
+  const baseUrl =
+    currentCategory === "all"
+      ? `/labs/feedle/${currentType}/${firstSource.kind}/${firstSource.id}`
+      : `/labs/feedle/${currentType}/${currentCategory}/${firstSource.id}`;
+
+  return currentPeriod && currentPeriod !== "all"
+    ? `${baseUrl}?period=${currentPeriod}`
+    : baseUrl;
+}
+---
+
+<Dialog
+  id="services-dialog"
+  title={`All Sources (${Object.keys(serviceGroups).length})`}
+  maxWidth="max-w-4xl"
+  backdrop="blur"
+  position="center"
+  contentClass="h-[70vh] max-sm:h-[85vh] overflow-hidden flex flex-col"
+>
+  <!-- Search Input -->
+  <div class="border-b border-gray-200 p-6 pb-4 dark:border-gray-700">
+    <SearchInput id="sources-search" placeholder="Search sources..." />
+  </div>
+
+  <!-- Sources Grid -->
+  <div class="min-h-0 flex-1 overflow-y-auto p-6 pt-4">
+    <div id="sources-grid" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        Object.entries(serviceGroups)
+          .sort(([a], [b]) => a.localeCompare(b))
+          .map(([serviceName, serviceData]) => (
+            <ServiceListItem
+              serviceName={serviceName}
+              serviceData={serviceData}
+              href={buildServiceUrl(
+                serviceData,
+                currentCategory,
+                currentType,
+                currentPeriod,
+              )}
+              variant="dialog"
+              showVisibilityToggle={true}
+              showLastUpdated={showLastUpdated}
+            />
+          ))
+      }
+    </div>
+
+    <!-- No results message -->
+    <div
+      id="no-results"
+      class="flex hidden flex-1 items-center justify-center text-gray-500 dark:text-gray-400"
+    >
+      <div class="text-center">
+        <Icon
+          icon="mdi:magnify"
+          class="mx-auto mb-4 h-12 w-12 text-gray-300 dark:text-gray-600"
+        />
+        <p>No sources found matching your search.</p>
+      </div>
+    </div>
+  </div>
+</Dialog>
+
+<script>
+  // Import utilities (inline for Astro compatibility)
+  async function loadModules() {
+    // Since we can't use ES modules in Astro inline scripts, we'll recreate minimal versions
+    // This is a compromise for Astro's client-side script limitations
+
+    function initializeDialog() {
+      try {
+        // Initialize search functionality
+        const searchInput = document.getElementById(
+          "sources-search",
+        ) as HTMLInputElement | null;
+        const sourcesGrid = document.getElementById(
+          "sources-grid",
+        ) as HTMLElement | null;
+        const noResults = document.getElementById(
+          "no-results",
+        ) as HTMLElement | null;
+        const sourceCards = document.querySelectorAll(".source-card");
+
+        if (searchInput && sourcesGrid && noResults) {
+          searchInput.addEventListener("input", (e) => {
+            const target = e.target as HTMLInputElement;
+            const searchTerm = target.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            sourceCards.forEach((card) => {
+              const cardElement = card as HTMLElement;
+              const sourceName =
+                cardElement.getAttribute("data-source-name") || "";
+              const sourceKind =
+                cardElement.getAttribute("data-source-kind") || "";
+
+              const matches =
+                sourceName.includes(searchTerm) ||
+                sourceKind.includes(searchTerm);
+
+              if (matches) {
+                cardElement.style.display = "";
+                visibleCount++;
+              } else {
+                cardElement.style.display = "none";
+              }
+            });
+
+            // Show/hide no results message
+            if (visibleCount === 0 && searchTerm !== "") {
+              sourcesGrid.style.display = "none";
+              noResults.style.display = "block";
+            } else {
+              sourcesGrid.style.display = "grid";
+              noResults.style.display = "none";
+            }
+          });
+
+          // Clear search when dialog closes
+          const dialog = document.getElementById("services-dialog");
+          if (dialog) {
+            dialog.addEventListener("close", () => {
+              searchInput.value = "";
+              sourceCards.forEach((card) => {
+                const cardElement = card as HTMLElement;
+                cardElement.style.display = "";
+              });
+              sourcesGrid.style.display = "grid";
+              noResults.style.display = "none";
+            });
+          }
+        }
+
+        // Initialize subscription toggle functionality
+        initializeSubscriptionManager();
+      } catch (error) {
+        console.error("Failed to initialize services dialog:", error);
+      }
+    }
+
+    // Simplified subscription manager for this component
+    function initializeSubscriptionManager() {
+      const DB_NAME = "feedleSubscriptions";
+      const DB_VERSION = 1;
+      const STORE_NAME = "ignoredItems";
+      let db: IDBDatabase | null = null;
+
+      // Initialize IndexedDB
+      function initDB() {
+        return new Promise<IDBDatabase>((resolve, reject) => {
+          const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+          request.onerror = () => reject(request.error);
+          request.onsuccess = () => {
+            db = request.result;
+            resolve(db);
+          };
+
+          request.onupgradeneeded = (event) => {
+            const database = (event.target as IDBOpenDBRequest).result;
+            if (database.objectStoreNames.contains(STORE_NAME)) {
+              database.deleteObjectStore(STORE_NAME);
+            }
+            const store = database.createObjectStore(STORE_NAME, {
+              keyPath: "key",
+            });
+            store.createIndex("type", "type", { unique: false });
+          };
+        });
+      }
+
+      async function isSubscribed(type: string, id: string): Promise<boolean> {
+        try {
+          if (!db) await initDB();
+          if (!db || !db.objectStoreNames.contains(STORE_NAME)) return true;
+
+          const transaction = db.transaction([STORE_NAME], "readonly");
+          const store = transaction.objectStore(STORE_NAME);
+
+          return new Promise<boolean>((resolve) => {
+            const request = store.get(`${type}:${id}`);
+            request.onsuccess = () => resolve(!request.result);
+            request.onerror = () => resolve(true);
+          });
+        } catch (error) {
+          return true;
+        }
+      }
+
+      async function toggleSubscription(
+        type: string,
+        id: string,
+      ): Promise<boolean> {
+        try {
+          if (!db) await initDB();
+          if (!db || !db.objectStoreNames.contains(STORE_NAME)) return true;
+
+          const currentlySubscribed = await isSubscribed(type, id);
+          const transaction = db.transaction([STORE_NAME], "readwrite");
+          const store = transaction.objectStore(STORE_NAME);
+
+          return new Promise<boolean>((resolve) => {
+            if (currentlySubscribed) {
+              const item = {
+                key: `${type}:${id}`,
+                id,
+                type,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+              };
+              const request = store.put(item);
+              request.onsuccess = () => resolve(false);
+              request.onerror = () => resolve(currentlySubscribed);
+            } else {
+              const request = store.delete(`${type}:${id}`);
+              request.onsuccess = () => resolve(true);
+              request.onerror = () => resolve(currentlySubscribed);
+            }
+          });
+        } catch (error) {
+          return true;
+        }
+      }
+
+      function updateSubscriptionState(
+        element: HTMLElement,
+        subscribedIcon: HTMLElement,
+        unsubscribedIcon: HTMLElement,
+        isSubscribed: boolean,
+      ) {
+        if (isSubscribed) {
+          element.style.opacity = "1";
+          subscribedIcon.classList.remove("hidden");
+          unsubscribedIcon.classList.add("hidden");
+        } else {
+          element.style.opacity = "0.5";
+          subscribedIcon.classList.add("hidden");
+          unsubscribedIcon.classList.remove("hidden");
+        }
+      }
+
+      // Setup global debug utilities
+      async function setupDebugUtils() {
+        if (!db) await initDB();
+
+        (window as any).debugFeedleDB = {
+          async showIgnoredItems() {
+            if (!db || !db.objectStoreNames.contains(STORE_NAME)) {
+              console.log("No store found, DB is empty");
+              return;
+            }
+            const transaction = db.transaction([STORE_NAME], "readonly");
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.getAll();
+            request.onsuccess = () => {
+              console.log("=== Current DB Contents ===");
+              console.log("Ignored items:", request.result);
+              console.log("=== End DB Contents ===");
+            };
+          },
+          async clearAllIgnored() {
+            if (!db) return;
+            const transaction = db.transaction([STORE_NAME], "readwrite");
+            const store = transaction.objectStore(STORE_NAME);
+            await store.clear();
+            console.log("All ignored items cleared");
+            location.reload();
+          },
+          async testSubscription(sourceId: string) {
+            const result = await isSubscribed("source", sourceId);
+            console.log(`Source ${sourceId} is subscribed:`, result);
+            return result;
+          },
+        };
+      }
+
+      // Initialize and setup toggles
+      initDB()
+        .then(async () => {
+          await setupDebugUtils();
+
+          const subscriptionToggles = document.querySelectorAll(
+            ".subscription-toggle",
+          );
+
+          for (const toggle of subscriptionToggles) {
+            const sourceId = toggle.getAttribute("data-source-id");
+            const sourceCard = toggle.closest(
+              ".source-card",
+            ) as HTMLElement | null;
+            const subscribedIcon = toggle.querySelector(
+              ".subscribed-icon",
+            ) as HTMLElement | null;
+            const unsubscribedIcon = toggle.querySelector(
+              ".unsubscribed-icon",
+            ) as HTMLElement | null;
+
+            if (
+              !sourceCard ||
+              !subscribedIcon ||
+              !unsubscribedIcon ||
+              !sourceId
+            )
+              continue;
+
+            // Set initial state
+            const subscribed = await isSubscribed("source", sourceId);
+            updateSubscriptionState(
+              sourceCard,
+              subscribedIcon,
+              unsubscribedIcon,
+              subscribed,
+            );
+
+            // Add click handler
+            toggle.addEventListener("click", async (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+
+              const newState = await toggleSubscription("source", sourceId);
+              updateSubscriptionState(
+                sourceCard,
+                subscribedIcon,
+                unsubscribedIcon,
+                newState,
+              );
+
+              // Dispatch event to notify other components
+              window.dispatchEvent(
+                new CustomEvent("subscriptionChanged", {
+                  detail: { sourceId, subscribed: newState, type: "source" },
+                }),
+              );
+            });
+          }
+        })
+        .catch(console.error);
+    }
+
+    // Initialize everything
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initializeDialog);
+    } else {
+      initializeDialog();
+    }
+
+    document.addEventListener("astro:page-load", initializeDialog);
+  }
+
+  // Load and initialize
+  loadModules();
+</script>

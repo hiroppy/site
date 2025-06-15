@@ -10,7 +10,9 @@ type Props = {
 
 const { url } = Astro.props;
 const generatedFilePath = new URL(
-  "../../generated/ogp.json",
+  import.meta.env.NODE_ENV === "development"
+    ? "../../generated/ogp.json"
+    : "../../../generated/ogp.json",
   // astroはbuild時に自身ではなくdist/entry.mjsに向けてしまう
   import.meta.url,
 );

@@ -3,9 +3,9 @@ const paths = require("./testedPaths.cjs");
 module.exports = {
   ci: {
     collect: {
-      staticDistDir: "./dist",
       url: paths,
       numberOfRuns: 1,
+      startServerCommand: "pnpm preview --port 3000",
     },
     assert: {
       preset: "lighthouse:no-pwa",
@@ -28,6 +28,9 @@ module.exports = {
         "lcp-discovery-insight": "off",
         "network-dependency-tree-insight": "off",
         "forced-reflow-insight": "pff",
+
+        // pnpm previewなので不要
+        "uses-text-compression": "off",
       },
     },
   },

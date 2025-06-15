@@ -1,5 +1,6 @@
 ---
 import Image from "./Image.astro";
+import Icon from "./Icon.astro";
 
 type CardImageVariant = "thumbnail" | "cover" | "hero" | "mini" | "expand";
 
@@ -16,11 +17,19 @@ const { src, alt, variant = "cover", class: className } = Astro.props;
 
 const variantClasses = {
   thumbnail: "h-20 w-36 object-cover rounded-md flex-shrink-0",
-  cover: "h-48 w-full object-cover",
+  cover: "h-40 w-full object-cover",
   hero: "h-full w-full object-cover",
   mini: "h-24 w-full object-cover",
   expand:
     "h-full w-full object-cover transition-transform duration-300 group-hover/card:scale-105",
+};
+
+const variantContainerClasses = {
+  thumbnail: "h-20 w-36 rounded-md flex-shrink-0",
+  cover: "h-40 w-full",
+  hero: "h-full w-full",
+  mini: "h-24 w-full",
+  expand: "h-full w-full",
 };
 
 const variantSizes = {
@@ -32,11 +41,12 @@ const variantSizes = {
 };
 
 const imageClass = `${variantClasses[variant]} ${className || ""}`;
+const containerClass = `${variantContainerClasses[variant]} ${className || ""}`;
 const { width, height } = variantSizes[variant];
 ---
 
 {
-  src && (
+  src ? (
     <Image
       src={src}
       alt={alt}
@@ -44,5 +54,17 @@ const { width, height } = variantSizes[variant];
       height={height}
       class={imageClass}
     />
+  ) : (
+    <div
+      class={`flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 ${containerClass}`}
+    >
+      <div class="text-center">
+        <Icon
+          icon="mdi:image-outline"
+          class="mx-auto mb-2 h-8 w-8 text-gray-400 dark:text-gray-500"
+        />
+        <span class="text-xs text-gray-500 dark:text-gray-400">No Image</span>
+      </div>
+    </div>
   )
 }
