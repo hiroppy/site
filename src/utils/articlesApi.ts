@@ -42,11 +42,11 @@ export type ServiceGroup = {
   articleCount: number;
 };
 
-export type ArticlesResponse = {
+type ArticlesResponse = {
   articles: Article[];
 };
 
-export type SourcesResponse = {
+type SourcesResponse = {
   sources: Source[];
   categories?: any;
   summary: {
@@ -54,10 +54,6 @@ export type SourcesResponse = {
     total_articles?: number;
     last_harvest_execution?: string;
   };
-};
-
-export type ApiError = {
-  message: string;
 };
 
 const BASE_API_URL = import.meta.env.FEEDLE_API_URL;
@@ -142,7 +138,7 @@ export async function fetchSources(
 /**
  * ソースを種類別にグループ化する
  */
-export function groupSourcesByCategory(sources: Source[]) {
+function groupSourcesByCategory(sources: Source[]) {
   return {
     all: sources,
     official: sources.filter((source) => source.kind === "official"),
@@ -155,18 +151,8 @@ export function groupSourcesByCategory(sources: Source[]) {
 /**
  * サービス名を取得する
  */
-export function getServiceName(sourceObj: Source): string {
+function getServiceName(sourceObj: Source): string {
   return sourceObj.name || sourceObj.id || "Unknown";
-}
-
-/**
- * ソースIDからソース名を取得する
- */
-export function getSourceName(sourceId: string, sources: Source[]): string {
-  const sourceObj = sources.find(
-    (source) => source.id === sourceId || source.name === sourceId,
-  );
-  return sourceObj ? sourceObj.name || sourceObj.id || "Unknown" : sourceId;
 }
 
 /**

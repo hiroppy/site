@@ -11,7 +11,7 @@ import {
 import { validateArticlePath } from "./articlesConfig";
 import type { ArticleType } from "./feedleConfig";
 
-export type FeedleData = {
+type FeedleData = {
   currentType: ArticleType;
   currentCategory: string;
   currentService?: string;

@@ -1,6 +1,6 @@
 import type { Source } from "./articlesApi";
 
-export type ServiceIconResult = {
+type ServiceIconResult = {
   type: "url" | "icon";
   value: string;
 };

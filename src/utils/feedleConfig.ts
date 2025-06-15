@@ -1,17 +1,17 @@
-export const SITE_URL = "https://hiroppy.me";
-export const BASE_PATH = "/labs/feedle";
+const SITE_URL = "https://hiroppy.me";
+const BASE_PATH = "/labs/feedle";
 
-export const ARTICLE_TYPES = ["frontend", "ai", "backend", "mobile"] as const;
+const ARTICLE_TYPES = ["frontend", "ai", "backend", "mobile"] as const;
 export type ArticleType = (typeof ARTICLE_TYPES)[number];
 
-export const ARTICLE_KINDS = [
+const ARTICLE_KINDS = [
   "all",
   "official",
   "community",
   "release",
   "podcast",
 ] as const;
-export type ArticleKind = (typeof ARTICLE_KINDS)[number];
+type ArticleKind = (typeof ARTICLE_KINDS)[number];
 
 export const RSS_FEED_KINDS: Array<{ key: ArticleKind; label: string }> = [
   { key: "all", label: "All" },

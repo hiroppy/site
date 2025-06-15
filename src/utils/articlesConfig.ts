@@ -3,7 +3,7 @@
  * 新しいタイプや設定を追加する際はここを更新してください
  */
 
-export type ArticleTypeConfig = {
+type ArticleTypeConfig = {
   id: string;
   name: string;
   description: string;
@@ -11,7 +11,7 @@ export type ArticleTypeConfig = {
   categories: CategoryConfig[];
 };
 
-export type CategoryConfig = {
+type CategoryConfig = {
   id: string;
   name: string;
   description: string;
@@ -21,7 +21,7 @@ export type CategoryConfig = {
 /**
  * 利用可能な記事タイプの設定
  */
-export const ARTICLE_TYPES: ArticleTypeConfig[] = [
+const ARTICLE_TYPES: ArticleTypeConfig[] = [
   {
     id: "frontend",
     name: "Frontend",
@@ -91,23 +91,21 @@ export const ARTICLE_TYPES: ArticleTypeConfig[] = [
 /**
  * 有効な記事タイプのみを返す
  */
-export function getEnabledArticleTypes(): ArticleTypeConfig[] {
+function getEnabledArticleTypes(): ArticleTypeConfig[] {
   return ARTICLE_TYPES.filter((type) => type.enabled);
 }
 
 /**
  * 特定のタイプの設定を取得
  */
-export function getArticleTypeConfig(
-  typeId: string,
-): ArticleTypeConfig | undefined {
+function getArticleTypeConfig(typeId: string): ArticleTypeConfig | undefined {
   return ARTICLE_TYPES.find((type) => type.id === typeId);
 }
 
 /**
  * 特定のタイプで有効なカテゴリのみを返す
  */
-export function getEnabledCategories(typeId: string): CategoryConfig[] {
+function getEnabledCategories(typeId: string): CategoryConfig[] {
   const typeConfig = getArticleTypeConfig(typeId);
   return typeConfig ? typeConfig.categories.filter((cat) => cat.enabled) : [];
 }
