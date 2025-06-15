@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node
-      - run: pnpm build
+      - run: pnpm test:build
       - uses: actions/upload-artifact@v4
         with:
           name: app
