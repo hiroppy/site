@@ -1,6 +1,5 @@
 import {
   fetchArticles,
-  fetchSources,
   getServiceGroups,
   getAllServiceGroups,
   filterArticlesByPeriod,
@@ -8,6 +7,7 @@ import {
   type Source,
   type ServiceGroup,
 } from "./articlesApi";
+import { getCachedSources } from "./sourcesCache";
 import { validateArticlePath } from "./articlesConfig";
 import type { ArticleType } from "./feedleConfig";
 
@@ -48,7 +48,7 @@ export async function getFeedleData(
   try {
     const [articlesResult, sourcesResult] = await Promise.all([
       fetchArticles(currentType),
-      fetchSources(currentType),
+      getCachedSources(currentType),
     ]);
 
     if (articlesResult.error) {
