@@ -274,7 +274,7 @@ function buildServiceUrl(
       async function setupDebugUtils() {
         if (!db) await initDB();
 
-        window.debugFeedleDB = {
+        (window as any).debugFeedleDB = {
           async showIgnoredItems() {
             if (!db || !db.objectStoreNames.contains(STORE_NAME)) {
               console.log("No store found, DB is empty");

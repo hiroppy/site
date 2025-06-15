@@ -89,13 +89,6 @@ const ARTICLE_TYPES: ArticleTypeConfig[] = [
 ];
 
 /**
- * 有効な記事タイプのみを返す
- */
-function getEnabledArticleTypes(): ArticleTypeConfig[] {
-  return ARTICLE_TYPES.filter((type) => type.enabled);
-}
-
-/**
  * 特定のタイプの設定を取得
  */
 function getArticleTypeConfig(typeId: string): ArticleTypeConfig | undefined {
