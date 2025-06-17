@@ -94,7 +94,14 @@ const pageDescription = generateDescription();
         )
       }
 
-      {!currentService && <RSSFeedButtons currentType={currentType} />}
+      {
+        !currentService && (
+          <RSSFeedButtons
+            currentType={currentType}
+            lastHarvested={lastHarvested}
+          />
+        )
+      }
 
       <ContentArea error={error} articles={articles} sources={sources} />
     </div>

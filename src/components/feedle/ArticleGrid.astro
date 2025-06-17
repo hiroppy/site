@@ -80,7 +80,7 @@ function getDisplayDescription(article: Article, sourceKind?: string): string {
 
               <div class="mt-auto">
                 <div class="mb-2 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                  <span class="rounded bg-gray-200 px-2 py-1 text-xs font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-200">
+                  <span class="max-w-32 truncate rounded bg-gray-200 px-2 py-1 text-xs font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-200">
                     {getSourceName(article.source || "")}
                   </span>
                   {article.published_at && (

@@ -3,6 +3,7 @@ import Icon from "../Icon.astro";
 import DateFilter from "./DateFilter.astro";
 import ServicesDialog from "./ServicesDialog.astro";
 import ServiceListItem from "./ServiceListItem.astro";
+import SidebarSection from "./SidebarSection.astro";
 import type { ServiceGroup } from "../../utils/articlesApi";
 
 type Props = {
@@ -20,7 +21,6 @@ const {
   currentService,
   currentPeriod,
   serviceGroups,
-  lastHarvested,
 } = Astro.props;
 
 function buildServiceUrl(serviceData: ServiceGroup, category: string): string {
@@ -49,44 +49,43 @@ function buildServiceUrl(serviceData: ServiceGroup, category: string): string {
   class="fixed inset-y-0 left-0 z-50 w-64 flex-shrink-0 -translate-x-full transform border-r border-gray-200 bg-gray-50 md:relative md:z-auto md:translate-x-0 dark:border-gray-700 dark:bg-gray-900"
 >
   <div class="flex h-full flex-col overflow-hidden">
-    <!-- Title and Last Updated -->
-    <div
-      class="flex-shrink-0 border-b border-gray-200 p-4 dark:border-gray-700"
-    >
-      <h1 class="text-lg font-bold text-gray-900 dark:text-gray-100">
-        {currentType.toLocaleUpperCase()}
-      </h1>
-      {
-        lastHarvested && (
-          <p class="text-xs text-gray-500 dark:text-gray-400">
-            Last updated:{" "}
-            {lastHarvested.toLocaleString("ja-JP", {
-              timeZone: "Asia/Tokyo",
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </p>
-        )
-      }
-    </div>
+    <!-- Article Type Selector -->
+    <SidebarSection title="Article Types">
+      <div class="space-y-1">
+        <a
+          href={`/labs/feedle/frontend${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
+          class={`flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+            currentType === "frontend"
+              ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-sm"
+              : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+          }`}
+        >
+          <Icon icon="mdi:palette" class="mr-2 h-4 w-4" />
+          Frontend
+        </a>
+        <a
+          href={`/labs/feedle/ai${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
+          class={`flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+            currentType === "ai"
+              ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-sm"
+              : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+          }`}
+        >
+          <Icon icon="mdi:robot" class="mr-2 h-4 w-4" />
+          AI
+        </a>
+      </div>
+    </SidebarSection>
 
     <!-- Date Filter -->
-    <div class="flex-shrink-0 border-b border-gray-200 dark:border-gray-700">
-      <div class="p-3">
-        <h3 class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-          Period
-        </h3>
-        <DateFilter
-          currentType={currentType}
-          currentCategory={currentCategory}
-          currentService={currentService}
-          currentPeriod={currentPeriod}
-        />
-      </div>
-    </div>
+    <SidebarSection title="Period" padding="compact">
+      <DateFilter
+        currentType={currentType}
+        currentCategory={currentCategory}
+        currentService={currentService}
+        currentPeriod={currentPeriod}
+      />
+    </SidebarSection>
 
     <!-- Category Filters -->
     <div class="flex-shrink-0 border-b border-gray-200 dark:border-gray-700">

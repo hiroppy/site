@@ -1,0 +1,23 @@
+---
+type Props = {
+  title: string;
+  noBorder?: boolean;
+  padding?: "normal" | "compact";
+};
+
+const { title, noBorder = false, padding = "normal" } = Astro.props;
+
+const paddingClass = padding === "compact" ? "p-3" : "p-4";
+const borderClass = noBorder
+  ? ""
+  : "border-b border-gray-200 dark:border-gray-700";
+---
+
+<div class={`flex-shrink-0 ${borderClass}`}>
+  <div class={paddingClass}>
+    <h3 class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+      {title}
+    </h3>
+    <slot />
+  </div>
+</div>
