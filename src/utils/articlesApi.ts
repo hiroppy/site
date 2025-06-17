@@ -71,19 +71,19 @@ export async function fetchArticles(
   sourceId?: string,
 ): Promise<{ articles: Article[]; error?: string }> {
   try {
-    let url;
+    const params = new URLSearchParams();
+
+    params.append("domain", type);
 
     if (sourceId) {
-      // /api/v1/articles/:domain/sources/:source
-      url = `${BASE_API_URL}/articles/${type}/sources/${sourceId}`;
-    } else if (kind && kind !== "all") {
-      // /api/v1/articles/:domain/:kind
-      url = `${BASE_API_URL}/articles/${type}/${kind}`;
-    } else {
-      // /api/v1/articles/:domain
-      url = `${BASE_API_URL}/articles/${type}`;
+      params.append("source", sourceId);
     }
 
+    if (kind && kind !== "all") {
+      params.append("kind", kind);
+    }
+
+    const url = `${BASE_API_URL}/articles?${params}`;
     const response = await fetch(url, {
       headers: {
         "x-api-token": API_TOKEN,
@@ -98,6 +98,7 @@ export async function fetchArticles(
     }
 
     const data: ArticlesResponse = await response.json();
+
     return { articles: data.articles || [] };
   } catch (error) {
     return {

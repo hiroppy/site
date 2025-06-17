@@ -47,7 +47,7 @@ export async function getFeedleData(
 
   try {
     const [articlesResult, sourcesResult] = await Promise.all([
-      fetchArticles(currentType),
+      fetchArticles(currentType, pathSegments[1], pathSegments[2]),
       getCachedSources(currentType),
     ]);
 
@@ -63,21 +63,6 @@ export async function getFeedleData(
     } else {
       sources = sourcesResult.sources;
       lastHarvested = sourcesResult.lastHarvested;
-    }
-
-    // 特定のkind/sourceの記事を再取得
-    if ((currentCategory !== "all" || currentService) && !error) {
-      const specificArticlesResult = await fetchArticles(
-        currentType,
-        currentCategory === "all" ? undefined : currentCategory,
-        currentService,
-      );
-
-      if (specificArticlesResult.error) {
-        error = specificArticlesResult.error;
-      } else {
-        articles = specificArticlesResult.articles;
-      }
     }
 
     // 日付フィルタリングを適用
