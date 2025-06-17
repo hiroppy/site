@@ -38,14 +38,3 @@ export async function getCachedSources(
 
   return result;
 }
-
-/**
- * 特定のtypeのキャッシュをクリア
- */
-export function clearSourcesCache(type?: string): void {
-  if (type) {
-    cache.delete(type);
-  } else {
-    cache.clear();
-  }
-}
