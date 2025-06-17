@@ -147,9 +147,32 @@ function buildServiceUrl(
             }
           });
 
-          // Clear search when dialog closes
+          // Handle dialog open/close events
           const dialog = document.getElementById("services-dialog");
           if (dialog) {
+            // Monitor dialog open state using MutationObserver
+            const observer = new MutationObserver((mutations) => {
+              mutations.forEach((mutation) => {
+                if (
+                  mutation.type === "attributes" &&
+                  mutation.attributeName === "open"
+                ) {
+                  const dialogElement = mutation.target as HTMLDialogElement;
+                  if (dialogElement.open) {
+                    // Dialog opened - focus search input
+                    setTimeout(() => {
+                      searchInput.focus();
+                    }, 100);
+                  }
+                }
+              });
+            });
+
+            observer.observe(dialog, {
+              attributes: true,
+              attributeFilter: ["open"],
+            });
+
             dialog.addEventListener("close", () => {
               searchInput.value = "";
               sourceCards.forEach((card) => {
@@ -293,7 +316,7 @@ function buildServiceUrl(
             if (!db) return;
             const transaction = db.transaction([STORE_NAME], "readwrite");
             const store = transaction.objectStore(STORE_NAME);
-            await store.clear();
+            store.clear();
             console.log("All ignored items cleared");
             location.reload();
           },

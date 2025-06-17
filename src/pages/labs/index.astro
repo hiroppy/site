@@ -1,34 +1,75 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import Link from "../../components/Link.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import Section from "../../components/Section.astro";
+import Card from "../../components/Card.astro";
+import CardContent from "../../components/CardContent.astro";
+import CardTitle from "../../components/CardTitle.astro";
+import CardDescription from "../../components/CardDescription.astro";
+import Icon from "../../components/Icon.astro";
 
 const pageTitle = "Labs";
 
 const projects = [
   {
     title: "Feedle",
-    description: "Tech article aggregation platform",
+    description:
+      "開発者向けの技術記事収集プラットフォーム。様々なソースから技術記事を集約し、キュレーションします。",
     link: "/labs/feedle/frontend",
+    icon: "mdi:rss",
+    status: "Active",
+    tags: ["JavaScript"],
+    color: "from-blue-500 to-purple-600",
   },
 ];
 ---
 
-<MainLayout title={pageTitle}>
-  <div class="space-y-6">
-    {
-      projects.map((project) => (
-        <div class="rounded-lg border border-gray-200 p-6 dark:border-gray-800">
-          <h3 class="mb-2 text-xl font-semibold">
-            <Link
-              href={project.link}
-              class="hover:text-blue-600 dark:hover:text-blue-400"
+<PageLayout
+  title={pageTitle}
+  description="Experimental projects and laboratory space for testing new technologies and ideas"
+  pageType="Labs"
+>
+  <main class="container mx-auto space-y-12 px-4 py-8">
+    <Section title="Current Projects">
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {
+          projects.map((project) => (
+            <Card
+              variant="interactive"
+              class="card-lift group"
+              link={{ href: project.link }}
             >
-              {project.title}
-            </Link>
-          </h3>
-          <p class="text-gray-600 dark:text-gray-400">{project.description}</p>
-        </div>
-      ))
-    }
-  </div>
-</MainLayout>
+              <CardContent class="flex h-full flex-col p-6">
+                <div class="mb-4 flex items-center justify-between">
+                  <div
+                    class={`flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${project.color}`}
+                  >
+                    <Icon icon={project.icon} class="text-2xl text-white" />
+                  </div>
+                  <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200">
+                    {project.status}
+                  </span>
+                </div>
+
+                <CardTitle level={3} class="mb-3 text-xl">
+                  {project.title}
+                </CardTitle>
+
+                <CardDescription class="mb-4 flex-grow text-gray-600 dark:text-gray-300">
+                  {project.description}
+                </CardDescription>
+
+                <div class="mt-auto flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span class="rounded-md bg-gray-100 px-2 py-1 text-xs text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
+    </Section>
+  </main>
+</PageLayout>

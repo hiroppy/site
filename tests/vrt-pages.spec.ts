@@ -1,14 +1,83 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import urls from "../testedPaths.cjs";
 
 const themes = ["light", "dark"] as const;
 
+const ogTestedUrls = [
+  "http://localhost:3000/labs",
+  "http://localhost:3000/media",
+  "http://localhost:3000/media/talks",
+  "http://localhost:3000/media/podcasts",
+  "http://localhost:3000/blog/tags/site",
+];
+
+// OG画像をチェックする関数
+async function checkOgImage(page: Page, url: string) {
+  // Chrome環境でのみOG画像をチェック
+  const browser = page.context().browser();
+  if (!browser) return;
+  const browserName = browser.browserType().name();
+  if (browserName !== "chromium") return;
+
+  try {
+    // OGメタタグの存在確認
+    const ogImage = page.locator('meta[property="og:image"]');
+    const hasOgImage = (await ogImage.count()) > 0;
+
+    if (hasOgImage) {
+      const ogImageUrl = await ogImage.getAttribute("content");
+      expect(ogImageUrl).toBeTruthy();
+
+      // OG画像パスを取得
+      let ogImagePath = ogImageUrl!;
+      if (ogImagePath.startsWith("https://")) {
+        ogImagePath = ogImagePath.replace("https://hiroppy.me", "");
+      }
+
+      // OG画像に直接アクセス
+      const ogImageFullUrl = `http://localhost:3000${ogImagePath}`;
+      const ogResponse = await page.context().request.get(ogImageFullUrl);
+
+      // 画像が存在することを確認
+      if (ogResponse.status() === 200) {
+        expect(ogResponse.headers()["content-type"]).toContain("image");
+
+        // OG画像のスクリーンショットを保存
+        const urlPath = url.replace("http://localhost:3000", "");
+        const cleanPath =
+          urlPath === "/" || urlPath === ""
+            ? "home"
+            : urlPath.replace(/^\//, "").replace(/\//g, "-");
+
+        // OG画像を新しいページで開いてスクリーンショット
+        const ogPage = await page.context().newPage();
+        await ogPage.goto(ogImageFullUrl);
+        await expect(ogPage).toHaveScreenshot(`${cleanPath}-og-image.png`, {
+          fullPage: true,
+        });
+        await ogPage.close();
+      }
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      // OG画像チェックでエラーが発生してもVRTテストは継続
+      console.log(`OG image check failed for ${url}:`, error.message);
+    }
+  }
+}
+
+// 既存のURLs（VRTとOGテスト両方）
 for (const url of urls) {
   for (const theme of themes) {
     test(`VRT: ${url} (${theme})`, async ({ page }) => {
       await page.goto(url, {
         waitUntil: "networkidle",
       });
+
+      // Light themeの時のみOG画像をチェック（重複を避けるため）
+      if (theme === "light") {
+        await checkOgImage(page, url);
+      }
 
       // Set theme by adding/removing dark class and updating localStorage
       await page.evaluate((selectedTheme) => {
@@ -68,6 +137,29 @@ for (const url of urls) {
         ],
         timeout: 300000,
       });
+    });
+  }
+}
+
+for (const url of ogTestedUrls) {
+  for (const theme of themes) {
+    test(`OG Check: ${url} (${theme})`, async ({ page }, testInfo) => {
+      // Android環境ではスキップ
+      if (testInfo.project.name.includes("android")) {
+        test.skip();
+        return;
+      }
+
+      // darkテーマの場合はスキップ
+      if (theme === "dark") {
+        test.skip();
+        return;
+      }
+
+      await page.goto(url, {
+        waitUntil: "networkidle",
+      });
+      await checkOgImage(page, url);
     });
   }
 }

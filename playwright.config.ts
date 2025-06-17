@@ -4,7 +4,6 @@ const config: PlaywrightTestConfig = {
   testDir: "./tests",
   fullyParallel: true,
   webServer: {
-    // docker内でsharpを動かすのは難しいのでastro previewを使わない
     command: "pnpm preview --port 3000",
     port: 3000,
     reuseExistingServer: !process.env.CI,
@@ -71,6 +70,7 @@ const config: PlaywrightTestConfig = {
     {
       name: "android-vrt-pages",
       testMatch: "tests/vrt-pages.spec.ts",
+      grep: /^VRT:/,
       use: {
         ...devices["Pixel 7"],
       },

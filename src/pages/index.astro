@@ -1,18 +1,18 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import PageLayout from "../layouts/PageLayout.astro";
 import HeroSection from "../components/HeroSection.astro";
 import Section from "../components/Section.astro";
 import CTASection from "../components/CTASection.astro";
 import Card from "../components/Card.astro";
 import CardContent from "../components/CardContent.astro";
 import CardTitle from "../components/CardTitle.astro";
+import CardDescription from "../components/CardDescription.astro";
 import Avatar from "../components/Avatar.astro";
 import Image from "../components/Image.astro";
 import Button from "../components/Button.astro";
 import Icon from "../components/Icon.astro";
 import Hatena from "../components/icons/Hatena.astro";
 import Link from "../components/Link.astro";
-import GitHubStats from "../components/GitHubStats.astro";
 import meImage from "../assets/images/meta/me.png";
 import articles from "../../node_modules/hiroppy/generated/articles.json";
 import sponsors from "../../node_modules/hiroppy/generated/sponsors.json";
@@ -20,7 +20,7 @@ import repos from "../../node_modules/hiroppy/generated/repos.json";
 import meta from "../../node_modules/hiroppy/generated/meta.json";
 import { getStarCount } from "../utils/github";
 import { getBookmark } from "../utils/hatena";
-import { getLanguageColorClass } from "../utils/languageColors";
+import { getLanguageDot } from "../utils/languageColors";
 
 const hotArticles = articles.filter(({ hot }) => !!hot);
 const articlesWithBookmarks = await Promise.all(
@@ -41,7 +41,11 @@ const reposWithStars = await Promise.all(
 );
 ---
 
-<Layout>
+<PageLayout
+  title="hiroppy - JavaScript Engineer"
+  description="JavaScript Engineer, 技術顧問、エンジニア組織支援、採用支援を行っています"
+  pageType="Home"
+>
   <main class="container mx-auto space-y-12 px-4 py-8">
     <!-- Hero Section -->
     <HeroSection
@@ -59,37 +63,41 @@ const reposWithStars = await Promise.all(
     <Section title="Popular Articles">
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {
-          articlesWithBookmarks.map(({ url, title, image, bookmark }) => (
-            <Card
-              link={{ href: url }}
-              class="group card-lift flex h-full flex-col border-0 bg-white shadow-lg dark:bg-slate-800"
-            >
-              <div class="relative overflow-hidden rounded-t-lg">
-                <Image
-                  src={image}
-                  class="card-image-zoom h-32 w-full object-cover"
-                  alt={title}
-                  width={300}
-                  height={160}
-                  lazy={false}
-                />
-              </div>
-              <CardContent class="flex flex-grow flex-col p-4">
-                <CardTitle
-                  level={3}
-                  class="mb-2 flex-grow text-lg leading-relaxed"
-                >
-                  {title}
-                </CardTitle>
-                <div class="mt-auto flex items-center justify-end text-sm text-gray-500 dark:text-gray-400">
-                  <Hatena />
-                  <span data-testid="bookmark-count" class="ml-1">
-                    {bookmark}
-                  </span>
+          articlesWithBookmarks.map(
+            ({ url, title, image, description, bookmark }) => (
+              <Card
+                link={{ href: url }}
+                class="group card-lift flex h-full flex-col border-0 bg-white shadow-lg dark:bg-slate-800"
+              >
+                <div class="relative overflow-hidden rounded-t-lg">
+                  <Image
+                    src={image}
+                    class="card-image-zoom h-32 w-full object-cover"
+                    alt={title}
+                    width={300}
+                    height={160}
+                    lazy={false}
+                  />
                 </div>
-              </CardContent>
-            </Card>
-          ))
+                <CardContent class="flex flex-grow flex-col p-4">
+                  <CardTitle level={3} class="mb-2 text-lg leading-relaxed">
+                    {title}
+                  </CardTitle>
+                  {description && (
+                    <CardDescription class="mb-3 flex-grow text-sm text-gray-600 dark:text-gray-300">
+                      {description}
+                    </CardDescription>
+                  )}
+                  <div class="mt-auto flex items-center justify-end text-sm text-gray-500 dark:text-gray-400">
+                    <Hatena />
+                    <span data-testid="bookmark-count" class="ml-1">
+                      {bookmark}
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            ),
+          )
         }
       </div>
     </Section>
@@ -122,15 +130,12 @@ const reposWithStars = await Promise.all(
                         {description}
                       </p>
                       <div class="flex items-center justify-between text-sm">
-                        <GitHubStats
-                          type="star"
-                          count={stars}
-                          class="text-gray-500 dark:text-gray-400"
-                        />
                         <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
-                          <div
-                            class={`${getLanguageColorClass(language)} h-2 w-2 rounded-full`}
-                          />
+                          <Icon icon="mdi:star" width="16" height="16" />
+                          <span class="text-xs">{stars}</span>
+                        </div>
+                        <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+                          <div class={getLanguageDot(language)} />
                           <span class="text-xs">{language}</span>
                         </div>
                       </div>
@@ -214,4 +219,4 @@ const reposWithStars = await Promise.all(
       </div>
     </CTASection>
   </main>
-</Layout>
+</PageLayout>

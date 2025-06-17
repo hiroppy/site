@@ -7,7 +7,7 @@ const urls = [
   "http://localhost:3000/blog/tags/site",
   "http://localhost:3000/blog/vrt",
   "http://localhost:3000/media/articles",
-  "http://localhost:3000/projects",
+  "http://localhost:3000/labs",
 ];
 
 module.exports = urls;

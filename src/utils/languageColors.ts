@@ -3,7 +3,7 @@
  * @param language - Programming language name
  * @returns CSS class string for the language color
  */
-export function getLanguageColorClass(language: string | null) {
+function getLanguageColorClass(language: string | null) {
   if (!language) return "";
 
   switch (language) {
@@ -31,5 +31,5 @@ export function getLanguageColorClass(language: string | null) {
  */
 export function getLanguageDot(language: string | null) {
   const colorClass = getLanguageColorClass(language);
-  return `${colorClass} h-3 w-3 rounded-full`;
+  return `${colorClass} h-2 w-2 rounded-full`;
 }

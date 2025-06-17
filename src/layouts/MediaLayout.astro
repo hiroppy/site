@@ -1,5 +1,5 @@
 ---
-import Layout from "./Layout.astro";
+import PageLayout from "./PageLayout.astro";
 import Button from "../components/Button.astro";
 import Link from "../components/Link.astro";
 import { cn } from "../utils/cn";
@@ -48,9 +48,10 @@ const getDescription = (): string => {
 };
 ---
 
-<Layout
-  title={`Media / ${currentPath === "" ? "all" : currentPath.replace("/", "")}`}
+<PageLayout
+  title={`Media & Activities${currentPath === "" ? "" : ` / ${currentPath.replace("/", "")}`}`}
   description={getDescription()}
+  pageType="Media"
 >
   <div
     class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
@@ -97,4 +98,4 @@ const getDescription = (): string => {
       <slot />
     </main>
   </div>
-</Layout>
+</PageLayout>

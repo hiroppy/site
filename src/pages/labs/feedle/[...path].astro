@@ -43,9 +43,32 @@ const pageTitle = generatePageTitle(
   currentCategory,
   currentService,
 );
+
+// OG用の説明文を生成
+const generateDescription = () => {
+  let desc = "Tech article aggregation platform";
+  if (currentType !== "frontend") {
+    desc += ` - ${currentType.charAt(0).toUpperCase() + currentType.slice(1)} articles`;
+  }
+  if (currentCategory && currentCategory !== "all") {
+    desc += ` from ${currentCategory}`;
+  }
+  if (currentService) {
+    desc += ` - ${currentService}`;
+  }
+  return desc;
+};
+
+const pageDescription = generateDescription();
 ---
 
-<Layout title={pageTitle}>
+<!-- 動的ページなのでLayoutを直接使用し、固定OG画像を設定 -->
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  image="/labs/feedle/og.png"
+  isOptimizedImage={false}
+>
   <main class="flex h-screen w-full">
     <ArticleSidebar
       currentType={currentType}

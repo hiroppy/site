@@ -74,12 +74,6 @@ const isLabsPage = currentPath.startsWith("/labs/feedle");
           Jobs
         </NavButton>
         <NavButton
-          variant={currentPath.startsWith("/projects") ? "active" : "default"}
-          href="/projects"
-        >
-          Projects
-        </NavButton>
-        <NavButton
           variant={currentPath.startsWith("/labs") ? "active" : "default"}
           href="/labs"
         >
@@ -160,15 +154,6 @@ const isLabsPage = currentPath.startsWith("/labs/feedle");
               class="flex-shrink-0"
             >
               Jobs
-            </NavButton>
-            <NavButton
-              variant={currentPath.startsWith("/projects")
-                ? "mobile-active"
-                : "mobile"}
-              href="/projects"
-              class="flex-shrink-0"
-            >
-              Projects
             </NavButton>
             <NavButton
               variant={currentPath.startsWith("/labs")

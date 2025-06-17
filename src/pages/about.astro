@@ -1,5 +1,5 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import PageLayout from "../layouts/PageLayout.astro";
 import HeroSection from "../components/HeroSection.astro";
 import SocialLinksGrid from "../components/SocialLinksGrid.astro";
 import QuickLinksGrid from "../components/QuickLinksGrid.astro";
@@ -12,6 +12,7 @@ import Image from "../components/Image.astro";
 import Icon from "../components/Icon.astro";
 import meImage from "../assets/images/meta/me.png";
 import meta from "../../node_modules/hiroppy/generated/meta.json";
+import { getRepositoryInfo } from "../utils/github";
 
 const { profile, sns, site, community } = meta;
 
@@ -23,6 +24,32 @@ const communityActivities = Object.entries(community).map(([key, value]) => ({
   end: value.end,
   links: value.links,
 }));
+
+// Featured repositories to showcase
+const featuredRepos = [
+  { owner: "nodejs", repo: "node" },
+  { owner: "webpack", repo: "webpack" },
+  { owner: "webpack", repo: "webpack-dev-server" },
+  { owner: "stylelint", repo: "stylelint" },
+  { owner: "hiroppy", repo: "fusuma" },
+  { owner: "hiroppy", repo: "web-app-template" },
+];
+
+// Get repository information
+const repositories = await Promise.allSettled(
+  featuredRepos.map(async ({ owner, repo }) => {
+    try {
+      return await getRepositoryInfo(owner, repo);
+    } catch (error) {
+      console.error(`Failed to fetch info for ${owner}/${repo}:`, error);
+      return null;
+    }
+  }),
+);
+
+const repoData = repositories
+  .map((result) => (result.status === "fulfilled" ? result.value : null))
+  .filter((repo) => repo !== null);
 
 // Social links configuration
 const socialLinks = [
@@ -104,7 +131,11 @@ const quickLinks = [
 ];
 ---
 
-<Layout title="About - Who am I?">
+<PageLayout
+  title="About - Who am I?"
+  description="JavaScript Engineer, Speaker, OSS Contributor, Community Organizer"
+  pageType="About"
+>
   <main class="container mx-auto space-y-12 px-4 py-8">
     <!-- Hero Section -->
     <HeroSection title="Who am I?" avatar={meImage} profileText={profile} />
@@ -117,6 +148,67 @@ const quickLinks = [
     <!-- Quick Links Section -->
     <Section title="Quick Links">
       <QuickLinksGrid links={quickLinks} />
+    </Section>
+
+    <!-- GitHub Contributions Section -->
+    <Section title="OSS Maintenance">
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {
+          repoData.map((repo) => (
+            <Card
+              variant="interactive"
+              class="card-lift"
+              link={{ href: repo.url }}
+            >
+              <CardContent class="flex h-full flex-col p-4">
+                <div class="mb-3 flex items-center gap-3">
+                  <div class="flex-shrink-0">
+                    <Image
+                      src={repo.avatar}
+                      class="h-10 w-10 rounded-full"
+                      alt={`${repo.name} avatar`}
+                      width={40}
+                      height={40}
+                    />
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <CardTitle level={4} class="truncate text-lg">
+                      {repo.name}
+                    </CardTitle>
+                    {repo.language && (
+                      <div class="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+                        <span class="h-3 w-3 rounded-full bg-yellow-400" />
+                        {repo.language}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {repo.description && (
+                  <p class="mb-3 line-clamp-2 text-sm text-gray-600 dark:text-gray-300">
+                    {repo.description}
+                  </p>
+                )}
+
+                <div class="mt-auto flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                  <div class="flex items-center gap-1">
+                    <Icon icon="mdi:star" class="text-yellow-500" />
+                    <span>
+                      {new Intl.NumberFormat("ja-JP").format(repo.stars)}
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <Icon icon="mdi:source-fork" class="text-blue-500" />
+                    <span>
+                      {new Intl.NumberFormat("ja-JP").format(repo.forks)}
+                    </span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
     </Section>
 
     <!-- Community Activities Section -->
@@ -133,8 +225,30 @@ const quickLinks = [
               </div>
               {links && links.length > 0 && (
                 <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  {links.map(
-                    ({ title: linkTitle, description, image, url }) => (
+                  {links
+                    .sort((a, b) => {
+                      // Try to extract year from URL or title for chronological sorting
+                      const extractYear = (item: {
+                        url: string;
+                        title: string;
+                      }) => {
+                        const yearMatch = (item.url + " " + item.title).match(
+                          /20(\d{2})/,
+                        );
+                        return yearMatch ? parseInt("20" + yearMatch[1]) : 0;
+                      };
+
+                      const yearA = extractYear(a);
+                      const yearB = extractYear(b);
+
+                      if (yearA && yearB && yearA !== yearB) {
+                        return yearB - yearA; // Newest first
+                      }
+
+                      // Fallback: reverse alphabetical by title (newer-sounding titles first)
+                      return b.title.localeCompare(a.title);
+                    })
+                    .map(({ title: linkTitle, description, image, url }) => (
                       <Card
                         variant="interactive"
                         class="card-lift"
@@ -172,8 +286,7 @@ const quickLinks = [
                           )}
                         </CardContent>
                       </Card>
-                    ),
-                  )}
+                    ))}
                 </div>
               )}
             </div>
@@ -182,4 +295,4 @@ const quickLinks = [
       </div>
     </Section>
   </main>
-</Layout>
+</PageLayout>
