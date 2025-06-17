@@ -46,8 +46,7 @@ function buildServiceUrl(serviceData: ServiceGroup, category: string): string {
 
 <aside
   id="sidebar"
-  class="fixed inset-y-0 left-0 z-50 w-64 flex-shrink-0 border-r border-gray-200 bg-gray-50 md:relative md:z-auto dark:border-gray-700 dark:bg-gray-900"
-  style="transform: translateX(-100%);"
+  class="fixed inset-y-0 left-0 z-50 w-64 flex-shrink-0 -translate-x-full transform border-r border-gray-200 bg-gray-50 md:relative md:z-auto md:translate-x-0 dark:border-gray-700 dark:bg-gray-900"
 >
   <div class="flex h-full flex-col overflow-hidden">
     <!-- Title and Last Updated -->
@@ -242,18 +241,16 @@ function buildServiceUrl(serviceData: ServiceGroup, category: string): string {
 </button>
 
 <script>
-  // Initialize immediately to prevent reload animation
+  // Initialize sidebar transition and mobile positioning
   (function () {
     const sidebar = document.getElementById("sidebar");
-    if (sidebar && window.innerWidth >= 768) {
-      sidebar.style.transform = "translateX(0)";
-      sidebar.style.transition = "none";
-      requestAnimationFrame(() => {
-        sidebar.style.transition =
-          "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
-      });
-    } else if (sidebar) {
+    if (sidebar) {
       sidebar.style.transition = "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
+
+      // Ensure mobile sidebar starts hidden
+      if (window.innerWidth < 768) {
+        sidebar.style.transform = "translateX(-100%)";
+      }
     }
   })();
 
@@ -266,10 +263,7 @@ function buildServiceUrl(serviceData: ServiceGroup, category: string): string {
 
     let isOpen = false;
 
-    // Show sidebar by default on desktop
-    if (window.innerWidth >= 768 && sidebar) {
-      sidebar.style.transform = "translateX(0)";
-    }
+    // Desktop sidebar is already visible via CSS classes
 
     function openSidebar() {
       if (isOpen) return;
@@ -282,6 +276,7 @@ function buildServiceUrl(serviceData: ServiceGroup, category: string): string {
 
       requestAnimationFrame(() => {
         if (sidebar) {
+          sidebar.classList.remove("-translate-x-full");
           sidebar.style.transform = "translateX(0)";
         }
       });
@@ -294,6 +289,7 @@ function buildServiceUrl(serviceData: ServiceGroup, category: string): string {
 
       isOpen = false;
       if (sidebar) {
+        sidebar.classList.add("-translate-x-full");
         sidebar.style.transform = "translateX(-100%)";
       }
       if (backdrop) {

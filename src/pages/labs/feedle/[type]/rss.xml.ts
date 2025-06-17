@@ -5,26 +5,20 @@ import type { APIRoute } from "astro";
 import { fetchArticles } from "../../../../utils/articlesApi";
 
 function getTypeConfig(type: string, kind?: string) {
-  if (kind) {
+  const typeCapitalized = type.charAt(0).toUpperCase() + type.slice(1);
+
+  if (kind && kind !== "all") {
+    const kindCapitalized = kind.charAt(0).toUpperCase() + kind.slice(1);
     return {
-      title: `${kind.charAt(0).toUpperCase() + kind.slice(1)} Articles - Hiroppy`,
-      description: `Latest ${kind} articles and resources curated by Hiroppy`,
+      title: `${typeCapitalized} Articles (${kindCapitalized}) - Hiroppy`,
+      description: `Latest ${kind} ${type} articles and resources curated by Hiroppy`,
     };
   }
 
-  switch (type.toLowerCase()) {
-    case "frontend":
-      return {
-        title: "Frontend Articles - Hiroppy",
-        description:
-          "Latest frontend development articles and resources curated by Hiroppy",
-      };
-    default:
-      return {
-        title: `${type.charAt(0).toUpperCase() + type.slice(1)} Articles - Hiroppy`,
-        description: `Latest ${type} articles and resources curated by Hiroppy`,
-      };
-  }
+  return {
+    title: `${typeCapitalized} Articles - Hiroppy`,
+    description: `Latest ${type} articles and resources curated by Hiroppy`,
+  };
 }
 
 export const GET: APIRoute = async ({ params, site, url }) => {

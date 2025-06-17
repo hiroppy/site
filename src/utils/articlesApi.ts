@@ -71,16 +71,18 @@ export async function fetchArticles(
   sourceId?: string,
 ): Promise<{ articles: Article[]; error?: string }> {
   try {
-    let url = `${BASE_API_URL}/${type}/articles`;
+    let url;
 
-    if (kind && sourceId) {
-      // api/v1/frontend/articles/official/github-id
-      url += `/${kind}/${sourceId}`;
+    if (sourceId) {
+      // /api/v1/articles/:domain/sources/:source
+      url = `${BASE_API_URL}/articles/${type}/sources/${sourceId}`;
     } else if (kind && kind !== "all") {
-      // api/v1/frontend/articles/official
-      url += `/${kind}`;
+      // /api/v1/articles/:domain/:kind
+      url = `${BASE_API_URL}/articles/${type}/${kind}`;
+    } else {
+      // /api/v1/articles/:domain
+      url = `${BASE_API_URL}/articles/${type}`;
     }
-    // allの場合は api/v1/frontend/articles のまま
 
     const response = await fetch(url, {
       headers: {
@@ -113,7 +115,7 @@ export async function fetchSources(
   type: string,
 ): Promise<{ sources: Source[]; lastHarvested?: Date; error?: string }> {
   try {
-    const url = `${BASE_API_URL}/${type}/sources`;
+    const url = `${BASE_API_URL}/sources/${type}`;
     const response = await fetch(url, {
       headers: {
         "x-api-token": API_TOKEN,
@@ -235,10 +237,38 @@ export function filterArticlesByPeriod(
     return articles;
   }
 
+  // 現在の日本時間を取得
   const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const oneMonthAgo = new Date();
-  oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
+  const jstOffset = 9 * 60 * 60 * 1000; // 日本時間はUTC+9
+  const nowJST = new Date(now.getTime() + jstOffset);
+
+  // 日本時間での今日の開始時刻（0:00 JST）をUTCに変換
+  const todayStartJST = new Date(
+    Date.UTC(
+      nowJST.getUTCFullYear(),
+      nowJST.getUTCMonth(),
+      nowJST.getUTCDate(),
+      0,
+      0,
+      0,
+      0,
+    ),
+  );
+  const todayStart = new Date(todayStartJST.getTime() - jstOffset);
+
+  // 日本時間での30日前の開始時刻（0:00 JST）をUTCに変換
+  const oneMonthAgoStartJST = new Date(
+    Date.UTC(
+      nowJST.getUTCFullYear(),
+      nowJST.getUTCMonth(),
+      nowJST.getUTCDate() - 30,
+      0,
+      0,
+      0,
+      0,
+    ),
+  );
+  const oneMonthAgoStart = new Date(oneMonthAgoStartJST.getTime() - jstOffset);
 
   return articles.filter((article) => {
     if (!article.published_at) return false;
@@ -247,9 +277,9 @@ export function filterArticlesByPeriod(
 
     switch (period) {
       case "today":
-        return publishedDate >= today;
+        return publishedDate >= todayStart;
       case "month":
-        return publishedDate >= oneMonthAgo;
+        return publishedDate >= oneMonthAgoStart;
       default:
         return true;
     }
