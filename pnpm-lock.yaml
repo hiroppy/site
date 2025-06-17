@@ -45,8 +45,8 @@ importers:
         specifier: 1.0.44
         version: 1.0.44
       instantsearch.js:
-        specifier: 4.78.3
-        version: 4.78.3(algoliasearch@5.27.0)
+        specifier: 4.79.0
+        version: 4.79.0(algoliasearch@5.27.0)
       marked:
         specifier: 15.0.12
         version: 15.0.12
@@ -1410,8 +1410,8 @@ packages:
   ajv@8.12.0:
     resolution: {integrity: sha512-sRu1kpcO9yLtYxBKvqfTeh9KzZEwO3STyX1HT+4CaDzC6HpTGYhIhPIzj9XuKU7KYDwnaeh5hcOwjy1QuJzBPA==}
 
-  algoliasearch-helper@3.25.0:
-    resolution: {integrity: sha512-vQoK43U6HXA9/euCqLjvyNdM4G2Fiu/VFp4ae0Gau9sZeIKBPvUPnXfLYAe65Bg7PFuw03coeu5K6lTPSXRObw==}
+  algoliasearch-helper@3.26.0:
+    resolution: {integrity: sha512-Rv2x3GXleQ3ygwhkhJubhhYGsICmShLAiqtUuJTUkr9uOCOXyF2E71LVT4XDnVffbknv8XgScP4U0Oxtgm+hIw==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
 
@@ -2561,8 +2561,8 @@ packages:
   instantsearch-ui-components@0.11.1:
     resolution: {integrity: sha512-ZqUbJYYgObQ47J08ftXV1KNC1vdEoiD4/49qrkCdW46kRzLxLgYXJGuEuk48DQwK4aBtIoccgTyfbMGfcqNjxg==}
 
-  instantsearch.js@4.78.3:
-    resolution: {integrity: sha512-0i7vyX9jHEIKSfhu+CZHL/ySnbMAe7e98YUJiZX5D7AiXo2WvAPbnV/3CXIPR0whNWOXKGvlv7Ji7Pt4Yrn+Aw==}
+  instantsearch.js@4.79.0:
+    resolution: {integrity: sha512-6t9Td/pXNYfJAb1NHv520oQMKHiudPxRuKkNdUCe72xUJmJTlNT2Z4b8Aj1HmDaq0KDUAhxMt73ch+/0Gwknzg==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
 
@@ -6021,7 +6021,7 @@ snapshots:
       require-from-string: 2.0.2
       uri-js: 4.4.1
 
-  algoliasearch-helper@3.25.0(algoliasearch@5.27.0):
+  algoliasearch-helper@3.26.0(algoliasearch@5.27.0):
     dependencies:
       '@algolia/events': 4.0.1
       algoliasearch: 5.27.0
@@ -7456,7 +7456,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.4
 
-  instantsearch.js@4.78.3(algoliasearch@5.27.0):
+  instantsearch.js@4.79.0(algoliasearch@5.27.0):
     dependencies:
       '@algolia/events': 4.0.1
       '@types/dom-speech-recognition': 0.0.1
@@ -7464,7 +7464,7 @@ snapshots:
       '@types/hogan.js': 3.0.5
       '@types/qs': 6.9.15
       algoliasearch: 5.27.0
-      algoliasearch-helper: 3.25.0(algoliasearch@5.27.0)
+      algoliasearch-helper: 3.26.0(algoliasearch@5.27.0)
       hogan.js: 3.0.2
       htm: 3.1.1
       instantsearch-ui-components: 0.11.1
