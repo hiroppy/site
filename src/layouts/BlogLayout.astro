@@ -1,6 +1,5 @@
 ---
 import { writeFile, mkdir } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { formatDate } from "../utils/formatDate";
 import Layout from "./Layout.astro";
@@ -31,7 +30,8 @@ const diffDate =
 const { title, url: tmpUrl, description, tags } = frontmatter;
 
 // TODO: urlがファイルパスになっているバグがある
-const url = tmpUrl?.replace(".mdx", "").replace(/.+?\/content/, "");
+const url =
+  tmpUrl?.replace(".mdx", "").replace(/.+?\/content/, "") || Astro.url.pathname;
 
 // HMRで重くなるため、dev環境ではglobをさせない
 const posts =
@@ -64,12 +64,12 @@ const relatedPosts = posts
   .slice(0, 2);
 
 const ogImageFileName = "og.png";
-const ogImageDistRelativePath = `../../${url}`;
+const ogImageDistRelativePath = `../../${url.replace(/^\//, "")}`;
 const ogImageDistAbsolutePath = join(ogImageDistRelativePath, ogImageFileName);
 
-if (import.meta.env.PROD) {
+if (import.meta.env.PROD || process.env.NODE_ENV === "test") {
   const buf = await generateOgImage(title, tags.split(","));
-  const fileDir = join(fileURLToPath(import.meta.url), ogImageDistRelativePath);
+  const fileDir = join(process.cwd(), "dist/client", url.replace(/^\//, ""));
 
   await mkdir(fileDir, {
     recursive: true,

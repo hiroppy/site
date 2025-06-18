@@ -9,6 +9,8 @@ const ogTestedUrls = [
   "http://localhost:3000/media/talks",
   "http://localhost:3000/media/podcasts",
   "http://localhost:3000/blog/tags/site",
+  "http://localhost:3000/labs/feedle",
+  "http://localhost:3000/labs/feedle/frontend",
 ];
 
 // OG画像をチェックする関数

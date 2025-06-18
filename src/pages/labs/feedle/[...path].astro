@@ -8,7 +8,7 @@ import ServiceInfoHeader from "../../../components/feedle/ServiceInfoHeader.astr
 import RSSFeedButtons from "../../../components/feedle/RSSFeedButtons.astro";
 import ContentArea from "../../../components/feedle/ContentArea.astro";
 import { getFeedleData } from "../../../utils/feedleData";
-import { generatePageTitle } from "../../../utils/feedleConfig";
+import { generatePageTitle, BASE_PATH } from "../../../utils/feedleConfig";
 
 // URLパスを解析
 const { path } = Astro.params;
@@ -60,13 +60,16 @@ const generateDescription = () => {
 };
 
 const pageDescription = generateDescription();
+
+// OG画像のパス設定（静的ファイルを参照）
+const ogImagePath = `${BASE_PATH}/${path || "frontend"}/og.png`;
 ---
 
-<!-- 動的ページなのでLayoutを直接使用し、固定OG画像を設定 -->
+<!-- 動的ページなのでLayoutを直接使用し、動的OG画像を設定 -->
 <Layout
   title={pageTitle}
   description={pageDescription}
-  image="/labs/feedle/og.png"
+  image={ogImagePath}
   isOptimizedImage={false}
 >
   <main class="flex h-screen w-full">

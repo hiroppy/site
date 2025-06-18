@@ -25,7 +25,8 @@
     "pnpm",
     "hatena",
     "mozaic",
-    "yuimedi"
+    "yuimedi",
+    "feedle"
   ],
   "cSpell.allowCompoundWords": true,
   "cSpell.ignorePaths": [

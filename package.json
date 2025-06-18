@@ -25,7 +25,8 @@
     "fmt:check": "prettier --check .",
     "lint": "knip",
     "lh": "lhci autorun",
-    "index": "node --experimental-strip-types scripts/updateBlogOnAlgolia.mts"
+    "index": "node --experimental-strip-types scripts/updateBlogOnAlgolia.mts",
+    "generate:feedle-og": "node --experimental-strip-types scripts/generate-feedle-og-images.mts"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.10.2",

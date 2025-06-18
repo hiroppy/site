@@ -1,5 +1,5 @@
 const SITE_URL = "https://hiroppy.me";
-const BASE_PATH = "/labs/feedle";
+export const BASE_PATH = "/labs/feedle";
 
 const ARTICLE_TYPES = ["frontend", "ai"] as const;
 export type ArticleType = (typeof ARTICLE_TYPES)[number];
