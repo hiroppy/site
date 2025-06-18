@@ -57,7 +57,7 @@
     "@astrojs/sitemap": "3.4.1",
     "@astrojs/vercel": "8.1.5",
     "@tailwindcss/vite": "4.1.10",
-    "algoliasearch": "5.27.0",
+    "algoliasearch": "5.28.0",
     "astro": "5.9.4",
     "clsx": "2.1.1",
     "hiroppy": "1.0.44",
