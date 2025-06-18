@@ -15,7 +15,7 @@
     "check": "astro check",
     "test:build": "NODE_ENV=test astro build",
     "test:a11y": "NODE_ENV=test playwright test --project=*-a11y-*",
-    "test:vrt:update": "docker compose -f compose.vrt.yml up --build",
+    "test:vrt:update": "docker compose -f compose.vrt.yml up --build && pnpm docker:clean",
     "test:vrt:ci": "NODE_ENV=test playwright test --project=*-vrt-*",
     "test:vrt:ci:update": "pnpm test:vrt:ci --update-snapshots",
     "test:vrt:ci:pages": "NODE_ENV=test playwright test --project=*-vrt-pages",
