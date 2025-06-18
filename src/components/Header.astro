@@ -18,27 +18,29 @@ const isLabsPage = currentPath.startsWith("/labs/feedle");
 >
   <div class={cn("mx-auto px-6 py-4", isLabsPage ? "" : "container")}>
     <div class="flex items-center justify-between">
-      <a
-        href="/"
-        class="flex items-center space-x-3"
-        aria-label="Hiroppy ホームページに戻る"
-      >
-        <div id="header-avatar">
-          <Avatar class="ring-2 ring-blue-500">
-            <Image
-              src={meImage}
-              alt="Hiroppy"
-              class="h-full w-full object-cover"
-              width={80}
-              height={80}
-              format="webp"
-              loading="eager"
-            />
-          </Avatar>
-        </div>
-      </a>
+      <div class="flex-1">
+        <a
+          href="/"
+          class="inline-flex items-center space-x-3"
+          aria-label="Hiroppy ホームページに戻る"
+        >
+          <div id="header-avatar">
+            <Avatar class="ring-2 ring-blue-500">
+              <Image
+                src={meImage}
+                alt="Hiroppy"
+                class="h-full w-full object-cover"
+                width={80}
+                height={80}
+                format="webp"
+                loading="eager"
+              />
+            </Avatar>
+          </div>
+        </a>
+      </div>
       <nav
-        class="hidden items-center space-x-2 md:flex"
+        class="hidden items-center justify-center space-x-2 md:flex"
         aria-label="メインナビゲーション"
       >
         <NavButton
@@ -80,7 +82,7 @@ const isLabsPage = currentPath.startsWith("/labs/feedle");
           Labs
         </NavButton>
       </nav>
-      <div class="flex items-center space-x-2">
+      <div class="flex flex-1 items-center justify-end space-x-2">
         <button
           id="mobile-menu-button"
           type="button"

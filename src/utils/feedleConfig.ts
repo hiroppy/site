@@ -1,7 +1,7 @@
 const SITE_URL = "https://hiroppy.me";
 const BASE_PATH = "/labs/feedle";
 
-const ARTICLE_TYPES = ["frontend", "ai", "backend", "mobile"] as const;
+const ARTICLE_TYPES = ["frontend", "ai"] as const;
 export type ArticleType = (typeof ARTICLE_TYPES)[number];
 
 const ARTICLE_KINDS = [
@@ -43,9 +43,7 @@ export function generatePageTitle(
 ): string {
   let title = "Feedle";
 
-  if (type !== "frontend") {
-    title += ` - ${type.charAt(0).toUpperCase() + type.slice(1)}`;
-  }
+  title += ` - ${type.charAt(0).toUpperCase() + type.slice(1)}`;
 
   if (category && category !== "all") {
     title += ` - ${category.charAt(0).toUpperCase() + category.slice(1)}`;

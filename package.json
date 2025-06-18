@@ -20,7 +20,7 @@
     "test:vrt:ci:update": "pnpm test:vrt:ci --update-snapshots",
     "test:vrt:ci:pages": "NODE_ENV=test playwright test --project=*-vrt-pages",
     "test:vrt:ci:components": "NODE_ENV=test playwright test --project=*-vrt-components",
-    "docker:clean": "docker compose -f compose.vrt.yml down --rmi all --volumes",
+    "docker:clean": "docker compose -f compose.vrt.yml down --rmi all --volumes && docker image prune -f",
     "fmt": "prettier -w .",
     "fmt:check": "prettier --check .",
     "lint": "knip",

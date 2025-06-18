@@ -58,7 +58,7 @@ const ARTICLE_TYPES: ArticleTypeConfig[] = [
     id: "ai",
     name: "AI",
     description: "Artificial Intelligence and Machine Learning articles",
-    enabled: false, // 将来的に有効化予定
+    enabled: true,
     categories: [
       {
         id: "official",
