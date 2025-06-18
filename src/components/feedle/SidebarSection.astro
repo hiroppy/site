@@ -1,6 +1,6 @@
 ---
 type Props = {
-  title: string;
+  title?: string;
   noBorder?: boolean;
   padding?: "normal" | "compact";
 };
@@ -15,9 +15,13 @@ const borderClass = noBorder
 
 <div class={`flex-shrink-0 ${borderClass}`}>
   <div class={paddingClass}>
-    <h3 class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-      {title}
-    </h3>
+    {
+      title && (
+        <h3 class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+          {title}
+        </h3>
+      )
+    }
     <slot />
   </div>
 </div>
