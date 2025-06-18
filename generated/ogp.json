@@ -1033,5 +1033,15 @@
     "title": "dotfiles/config/fish/functions/wt.fish at master · hiroppy/dotfiles",
     "description": "my dotfiles. Contribute to hiroppy/dotfiles development by creating an account on GitHub.",
     "image": "https://opengraph.githubassets.com/54f1166ddbe4e6a5a71a8ecf278573302f2ae2d449d73af22aebe5123826654d/hiroppy/dotfiles"
+  },
+  "https://mozaic.fm": {
+    "title": "Episodes | mozaic.fm",
+    "description": "next generation web podcast by Jxck",
+    "image": "https://mozaic.fm/assets/img/mozaic.600x600.png"
+  },
+  "https://hiroppy.me/labs/feedle/frontend": {
+    "title": "Feedle - Frontend - hiroppy's site",
+    "description": "Tech article aggregation platform",
+    "image": "https://hiroppy.me/labs/feedle/frontend/og.png"
   }
 }

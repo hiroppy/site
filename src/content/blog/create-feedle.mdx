@@ -1,0 +1,81 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: フロントエンドの最新情報を収集しよう
+date: 2025-06-19
+description: 月1回、podcastで話す内容をどうやって集めているのかを紹介します
+image: /images/blog/create-feedle/feedle.png
+tags: site,javascript
+---
+
+import OG from "../../components/OG.astro";
+
+## Feedle
+
+月に一回、mozaic.fmというポッドキャストでその月に起きたフロントエンドの動向を話しています。
+
+<OG url="https://mozaic.fm" />
+
+Feedlyをやめてから今まではRSSフィードをすべてslackに流し、記録しておきたいものは「後で見る」に保存していましたが、SlackのUI的に見づらいのなーとはずっと思っていたので、今回このようなものを作成しました。
+
+<br />
+
+![](../../assets/images/blog/create-feedle/feedle.png)
+
+<OG url="https://hiroppy.me/labs/feedle/frontend" />
+
+<br />
+
+なのでここにあるRSSフィードは、自分が普段見ているものを集めたものですが、HTMLをスクレイピングできるようになったので、新しくRSSフィードを配信してないサイトも追加しました。
+本当はXもこっちに流したかったけど、無料枠だと月100件しかreadできないので諦めました。今は、IndexedDBで状態を管理していますが、たまにスマホで見たいときがあるので、クロスデバイスでの同期をいつかは考えるかもです。
+
+もし自分でフロントエンドの情報を集めるのがめんどくさいなと思っている方は、ぜひご活用ください。
+これらをまとめたRSSフィードも提供しています。
+
+## LLM
+
+すべての記事に対してLLMを通していますが、用途を明記します。
+
+- GitHub Release
+  - 本文からのタグ(e.g. tool, framework, compiler)の決定
+  - リリースノートの要約
+    - 3 - 5文程度の要約を生成
+    - そのリリースでの重要な変更ポイントを5つ程度抽出
+- その他
+  - 本文からのタグの決定
+  - ドメイン(ここでいうフロントエンド)の決定
+  - 要約はなし、表示は `og:description` のみ
+
+ドメインの決定に関しては悩んだのですが、最近のフロントエンドエンジニアの方のブログでもLLMの話が多いので、フロントエンド以外の記事も混じってしまうことがあります。
+なので適切な名前空間に移動させるためLLMを通しています。これは後ほど準備しているAIのドメインのページに表示されます。
+設計上、あくまでもフロントエンドのフィードという扱いにはしていません。フロントエンドで登録されているブログもAIに関連する記事があれば、AI関連のブログとしてそっちにも表示されます。
+
+## Astro
+
+astroでこういうUIを作るのは結構厳しく、やっぱりCSRで動的にUIを作るのであれば、Reactなりのフレームワークを入れないと、Native JavaScriptで頑張らないといけないです。
+今回LLMが全部書いたので、Astroで難しいのに更に大量のscriptタグが発生して正直すぐにでもリファクタリングしたい気持ちが。
+特にイベントリスナーの登録、再登録、解除等がめんどくさかったです。
+
+こういうサイトを入れてしまったので、全体的にAstroをやめて、Nextに変えようかなと考えていますが、Content Collectionだけほしい。
+
+## Claude
+
+3月にclaude codeめっちゃ使って、そのころに[感動](https://x.com/about_hiroppy/status/1902536619418382819)してたにも関わらず、
+Roo Codeのオーケストレーター最高じゃんって言って浮気して戻ってきた民ですが、久しぶりに触ったらclaude codeの進化にびっくりしました。
+やっぱり月額使い放題最高!!
+
+基本的には仲良かったですが、以下のように反りが合わない部分がありました。(ルール設定なし)
+
+- Astroの場合、積極的にCSS操作をJSで書こうとするので、CSSだけでって言わないといけない
+- `} catch (error: any) {` にしたがる
+- JSのclassを使いたがる
+- index.tsを作りたがる
+- Error [ERR_UNKNOWN_BUILTIN_MODULE]: No such built-in module: node:fetch
+- なぜかdynamic importをしたがる
+- pnpmなのにnpmを使いたがる
+- biomeなのにeslintだと間違え始める
+
+---
+
+frontendのRSSフィード集、presetが完成したので次はAIで。
+
+<OG url="https://hiroppy.me/labs/feedle/frontend" />
