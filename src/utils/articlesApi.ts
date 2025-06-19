@@ -257,6 +257,20 @@ export function filterArticlesByPeriod(
   );
   const todayStart = new Date(todayStartJST.getTime() - jstOffset);
 
+  // 日本時間での明日の開始時刻（0:00 JST）をUTCに変換
+  const tomorrowStartJST = new Date(
+    Date.UTC(
+      nowJST.getUTCFullYear(),
+      nowJST.getUTCMonth(),
+      nowJST.getUTCDate() + 1,
+      0,
+      0,
+      0,
+      0,
+    ),
+  );
+  const tomorrowStart = new Date(tomorrowStartJST.getTime() - jstOffset);
+
   // 日本時間での30日前の開始時刻（0:00 JST）をUTCに変換
   const oneMonthAgoStartJST = new Date(
     Date.UTC(
@@ -278,7 +292,7 @@ export function filterArticlesByPeriod(
 
     switch (period) {
       case "today":
-        return publishedDate >= todayStart;
+        return publishedDate >= todayStart && publishedDate < tomorrowStart;
       case "month":
         return publishedDate >= oneMonthAgoStart;
       default:

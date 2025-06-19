@@ -3,7 +3,7 @@
  * Pure JSX structure without Node.js dependencies
  */
 
-export interface OgTemplateProps {
+interface OgTemplateProps {
   title: string;
   pageType: string;
   description?: string;
