@@ -73,13 +73,13 @@ const ogConfigs = [
   },
   {
     path: "frontend/og.png",
-    title: "Feedle Frontend",
+    title: "Feedle / Frontend",
     pageType: "Hiroppy Labs",
     description: "フロントエンド関連の情報を集めるサービス",
   },
   {
     path: "ai/og.png",
-    title: "Feedle AI",
+    title: "Feedle / AI",
     pageType: "Hiroppy Labs",
     description: "AI関連の情報を集めるサービス",
   },
