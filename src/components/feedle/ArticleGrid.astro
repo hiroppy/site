@@ -41,6 +41,7 @@ function getDisplayDescription(article: Article, sourceKind?: string): string {
 <div
   id="articles-grid"
   class="grid grid-cols-1 gap-4 pb-24 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+  style="contain: layout style;"
 >
   {
     articles.map((article) => {
@@ -50,6 +51,7 @@ function getDisplayDescription(article: Article, sourceKind?: string): string {
       return (
         <div
           class="article-card cursor-pointer"
+          style="contain: layout style;"
           data-article-id={article.id}
           data-article-title={article.title}
           data-article-summary={article.summary}
