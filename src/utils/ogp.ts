@@ -2,7 +2,6 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import satori from "satori";
 import sharp from "sharp";
-import me from "../assets/images/meta/me.png";
 import { createPageOgTemplate, createBlogOgTemplate } from "./ogTemplates.ts";
 
 const { font, iconBase64 } = await (async () => {

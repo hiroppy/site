@@ -231,7 +231,7 @@ if (import.meta.env.PROD || process.env.NODE_ENV === "test") {
           <!-- Warnings -->
           <div class="mb-8 space-y-4">
             {
-              parseTags(tags).includes("javascript") && diffDate > 365 && (
+              diffDate > 365 && (
                 <div class="rounded-lg border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-800 dark:bg-yellow-900/20">
                   <div class="flex items-center">
                     <Icon
@@ -241,12 +241,6 @@ if (import.meta.env.PROD || process.env.NODE_ENV === "test") {
                       height="20"
                     />
                     <span class="text-sm font-medium text-yellow-800 dark:text-yellow-200">
-                      <Icon
-                        icon="mdi:alert-circle"
-                        class="mr-1 inline-block"
-                        width="16"
-                        height="16"
-                      />
                       この記事は1年以上更新されていません
                     </span>
                   </div>
@@ -264,12 +258,6 @@ if (import.meta.env.PROD || process.env.NODE_ENV === "test") {
                       height="20"
                     />
                     <span class="text-sm text-blue-800 dark:text-blue-200">
-                      <Icon
-                        icon="mdi:information"
-                        class="mr-1 inline-block"
-                        width="16"
-                        height="16"
-                      />
                       この記事は{" "}
                       <Link
                         href={`${HATENA_BLOG_ENTRY_URL}/${frontmatter.hatenaPath}`}

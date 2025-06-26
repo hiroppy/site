@@ -4,6 +4,8 @@ import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import icon from "astro-icon";
 import tailwindcss from "@tailwindcss/vite";
+import astroExpressiveCode from "astro-expressive-code";
+import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 
 const adapter =
   process.env.NODE_ENV !== "test"
@@ -21,18 +23,24 @@ export default defineConfig({
       },
     }),
     sitemap(),
+    astroExpressiveCode({
+      themes: ["nord", "github-light-default"],
+      styleOverrides: {
+        borderRadius: "0.375rem",
+        borderColor: "rgb(84 88 100)",
+      },
+      defaultProps: {
+        overridesByLang: {
+          "bash,sh,shell": {
+            frame: "none",
+          },
+        },
+      },
+      plugins: [pluginCollapsibleSections()],
+    }),
     mdx(),
     icon(),
   ],
-
-  markdown: {
-    shikiConfig: {
-      themes: {
-        light: "one-light",
-        dark: "nord",
-      },
-    },
-  },
 
   image: {
     service: {
