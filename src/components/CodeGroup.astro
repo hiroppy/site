@@ -159,9 +159,16 @@ while ((match = panelRegex.exec(slotContent)) !== null) {
     tabsContainer.addEventListener(
       "wheel",
       (e) => {
-        if (e.deltaY !== 0) {
-          e.preventDefault();
-          tabsContainer.scrollLeft += e.deltaY;
+        // Only handle horizontal scrolling when the tabs container can scroll horizontally
+        const canScrollHorizontally =
+          tabsContainer.scrollWidth > tabsContainer.clientWidth;
+
+        if (e.deltaY !== 0 && canScrollHorizontally) {
+          // Only prevent default if we're actually handling the scroll
+          if (e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+            e.preventDefault();
+            tabsContainer.scrollLeft += e.deltaY;
+          }
         }
       },
       { passive: false },
