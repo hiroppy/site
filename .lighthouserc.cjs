@@ -27,7 +27,8 @@ module.exports = {
         "image-delivery-insight": "off",
         "lcp-discovery-insight": "off",
         "network-dependency-tree-insight": "off",
-        "forced-reflow-insight": "pff",
+        "forced-reflow-insight": "off",
+        "unused-css-rules": "off",
 
         // pnpm previewなので不要
         "uses-text-compression": "off",

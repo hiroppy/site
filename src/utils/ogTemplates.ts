@@ -73,7 +73,6 @@ export function createPageOgTemplate({
               padding: "80px 80px 60px 80px",
               height: "100%",
               position: "relative",
-              zIndex: 1,
             },
             children: [
               // Header with site branding
@@ -318,7 +317,6 @@ export function createBlogOgTemplate({
               padding: "80px 80px 60px 80px",
               height: "100%",
               position: "relative",
-              zIndex: 1,
             },
             children: [
               // Header with site branding
