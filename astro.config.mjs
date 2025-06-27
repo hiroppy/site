@@ -6,6 +6,7 @@ import icon from "astro-icon";
 import tailwindcss from "@tailwindcss/vite";
 import astroExpressiveCode from "astro-expressive-code";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
+import { remarkCodeGroups } from "./src/utils/remark-code-groups.mjs";
 
 const adapter =
   process.env.NODE_ENV !== "test"
@@ -15,6 +16,10 @@ const adapter =
 // https://astro.build/config
 export default defineConfig({
   site: "https://hiroppy.me/",
+
+  markdown: {
+    remarkPlugins: [remarkCodeGroups],
+  },
 
   integrations: [
     partytown({
@@ -38,7 +43,9 @@ export default defineConfig({
       },
       plugins: [pluginCollapsibleSections()],
     }),
-    mdx(),
+    mdx({
+      remarkPlugins: [remarkCodeGroups],
+    }),
     icon(),
   ],
 

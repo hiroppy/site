@@ -10,6 +10,8 @@ hatenaPath: foo
 
 import OG from "../../components/OG.astro";
 import Image from "../../components/Image.astro";
+import CodeGroup from "../../components/CodeGroup.astro";
+import CodeGroupPanel from "../../components/CodeGroupPanel.astro";
 
 ## Test
 
@@ -32,6 +34,52 @@ This article is for VRT.
 ```ts
 const foo = "foo";
 ```
+
+### Code Group Example
+
+::: code-group
+
+```bash [npm]
+npm install astro
+```
+
+```bash [pnpm]
+pnpm add astro
+```
+
+```bash [yarn]
+yarn add astro
+```
+
+:::
+
+::: code-group
+
+```ts [add.ts] {"2": 2}
+export function add() {
+  return 1 + 1;
+}
+```
+
+```js [add.js]
+export function add() {
+  return 1 + 1;
+}
+```
+
+```html [index.html]
+<div>
+  <p>HTML code</p>
+</div>
+```
+
+```css [style.css]
+body {
+  background-color: #fff;
+}
+```
+
+:::
 
 `code`, **strong**, _italic_
 

@@ -1,0 +1,18 @@
+---
+export interface Props {
+  label: string;
+  icon?: string;
+  language?: string;
+}
+
+const { label, icon, language } = Astro.props;
+---
+
+<div
+  class="code-group-panel"
+  data-label={label}
+  data-icon={icon}
+  data-language={language}
+>
+  <slot />
+</div>

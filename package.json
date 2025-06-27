@@ -47,6 +47,7 @@
     "strip-markdown": "6.0.0",
     "tailwindcss": "4.1.11",
     "typescript": "5.8.3",
+    "unist-util-visit": "5.0.0",
     "yaml": "2.8.0"
   },
   "dependencies": {
