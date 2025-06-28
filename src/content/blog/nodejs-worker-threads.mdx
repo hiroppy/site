@@ -71,9 +71,9 @@ process.on("message", (message) => {
 if (process.send) process.send("from child");
 ```
 
-```javascript
-// worker_threads
-const { MessageChannel } = require("worker_threads");
+<br />
+```javascript // worker_threads const {MessageChannel} =
+require("worker_threads");
 
 const { port1, port2 } = new MessageChannel();
 
@@ -82,7 +82,8 @@ port2.postMessage("hi");
 
 port2.on("message", (message) => console.log(message));
 port1.postMessage("bye");
-```
+
+````
 
 #### 共有範囲
 
@@ -140,7 +141,7 @@ const {
   Worker, workerData, parentPort
   MessageChannel, MessagePort
 } = require('worker_threads');
-```
+````
 
 長くなるので、変数、メソッド、クラス等の説明は以下を参照してください。
 
@@ -188,30 +189,12 @@ if (isMainThread) {
 }
 ```
 
-```shell
-# output
-$ node --experimental-worker index.js
-Main Thread
-worker: 0
-worker: 1
-worker: 2
-worker: 3
-| MainThread |: 1
-| worker: 0 |: 1
-| worker: 1 |: 1
-| worker: 2 |: 1
-| worker: 3 |: 1
-| MainThread |: 2
-| worker: 0 |: 2
-| worker: 1 |: 2
-| worker: 2 |: 2
-| worker: 3 |: 2
-| MainThread |: 3
-| worker: 0 |: 3
-| worker: 1 |: 3
-| worker: 2 |: 3
-| worker: 3 |: 3
-```
+<br />
+```shell # output $ node --experimental-worker index.js Main Thread worker: 0
+worker: 1 worker: 2 worker: 3 | MainThread |: 1 | worker: 0 |: 1 | worker: 1 |:
+1 | worker: 2 |: 1 | worker: 3 |: 1 | MainThread |: 2 | worker: 0 |: 2 | worker:
+1 |: 2 | worker: 2 |: 2 | worker: 3 |: 2 | MainThread |: 3 | worker: 0 |: 3 |
+worker: 1 |: 3 | worker: 2 |: 3 | worker: 3 |: 3 ```
 
 ### スレッド間でメッセージングを行う
 
@@ -253,9 +236,8 @@ const w = createWorker(resolve("child.js"), (err, res) => {
 });
 ```
 
-```javascript
-// child.js
-// worker thread
+<br />
+```javascript // child.js // worker thread
 
 const { PerformanceObserver, performance } = require("perf_hooks");
 const { parentPort } = require("worker_threads");
@@ -263,34 +245,35 @@ const { parentPort } = require("worker_threads");
 console.log("| Worker |");
 
 const obs = new PerformanceObserver((items) => {
-  const time = items.getEntries()[0].duration;
+const time = items.getEntries()[0].duration;
 
-  // main threadへ処理時間の結果を返す
-  parentPort.postMessage(time);
+// main threadへ処理時間の結果を返す
+parentPort.postMessage(time);
 
-  performance.clearMarks();
+performance.clearMarks();
 });
 obs.observe({ entryTypes: ["measure"] });
 
-const len = 64 * 1024 * 1024;
+const len = 64 _ 1024 _ 1024;
 const b = Buffer.allocUnsafe(len);
 let s = "";
 
 // 重い処理なためこの箇所の実行時間を計測する
 performance.mark("A");
 for (let i = 0; i < 256; ++i) s += String.fromCharCode(i);
-for (let i = 0; i < 64 * 1024 * 1024; i += 256) b.write(s, i, 256, "ascii");
+for (let i = 0; i < 64 _ 1024 _ 1024; i += 256) b.write(s, i, 256, "ascii");
 for (let i = 0; i < 32; ++i) b.toString("base64");
 performance.mark("B");
 performance.measure("A to B", "A", "B");
 
 // main threadから返答が来たらこのworkerを終了する
 parentPort.on("message", (msg) => {
-  console.log(`| Worker | ${msg} from Main Thread`);
-  process.exit();
+console.log(`| Worker | ${msg} from Main Thread`);
+process.exit();
 });
-```
 
+````
+<br />
 ```shell
 # output
 $ node --experimental-worker parent.js
@@ -299,7 +282,7 @@ $ node --experimental-worker parent.js
 | Main Thread | execution time: 3128.782205ms from Worker Thread
 | Worker | thx;) from Main Thread
 | Main Thread | worker stopped
-```
+````
 
 ## パフォーマンス
 

@@ -13,6 +13,6 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y fonts-noto-cjk fonts-noto-color-emoji
 RUN npm run setup
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm run test:build
+RUN pnpm run build:local
 
 CMD ["pnpm", "test:vrt:ci:update"]

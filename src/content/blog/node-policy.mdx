@@ -43,21 +43,24 @@ require("fs");
 require("./foo.js");
 ```
 
-```javascript
-// foo.js
+<br />
+```javascript // foo.js
 
 console.log("foo");
+
 ```
 
 最初に各ファイルのハッシュ値を生成する必要があります。
 
 ```
+
 $ printf "sha384-$(cat app.js | openssl dgst -sha384 -binary | base64)"
 sha384-stoY+K7ZeOkSLHmCYOOrfWcLsKFb1Niv/dkz6f9Q0UP5FQi9pRTglvtGcQ/IPyZR
 
 $ printf "sha384-$(cat foo.js | openssl dgst -sha384 -binary | base64)"
 sha384-1RHAoU62Cn5DMHZLSZZKEnvcml+GOtj5O4BXAUohiYtjGzo0v/iFIM7KOxRwoG7P
-```
+
+````
 
 policy.json を作成し、以下のように登録します。
 これは、実行ファイルすべて列挙する必要があります。(entry-point 含め)
@@ -77,7 +80,7 @@ policy.json を作成し、以下のように登録します。
     }
   }
 }
-```
+````
 
 `dependencies` は boolean でも可能ですが、本番環境では推奨されません。
 今回は、ビルトインモジュールの fs なので`true`としています。

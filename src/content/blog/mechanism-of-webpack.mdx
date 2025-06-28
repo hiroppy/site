@@ -46,10 +46,9 @@ module.exports = foo;
 define(["./foo"], (foo) => foo);
 ```
 
-```css
-@import url("foo.css");
-```
-
+<br />
+```css @import url("foo.css"); ```
+<br />
 ```html
 <img src="./foo.png" />
 ```
@@ -188,14 +187,15 @@ webpackHotUpdate("bundle",{
 })
 ```
 
-```json
-// "output.hotUpdateMainFilename": "[hash].hot-update.json"
+<br />
+```json // "output.hotUpdateMainFilename": "[hash].hot-update.json"
 
 {
-  "h": "5946277f0fe1b6e0144e",
-  "c": { "bundle": true }
+"h": "5946277f0fe1b6e0144e",
+"c": { "bundle": true }
 }
-```
+
+````
 
 ## Tapable (v1)
 
@@ -217,7 +217,7 @@ this.hooks.render.tap(
     return source;
   }
 );
-```
+````
 
 また、webpack には以下の多くの hooks を持ち、多彩に様々なことを表現することができます。
 
@@ -270,6 +270,7 @@ export const b2 = "b2"; // 使われない
 const b3 = "b3"; // ローカル変数
 ```
 
+<br />
 ```javascript
 (function (module, __webpack_exports__, __webpack_require__) {
   // index.js (entry point)
@@ -277,35 +278,36 @@ const b3 = "b3"; // ローカル変数
   /* harmony import */ var _a__WEBPACK_IMPORTED_MODULE_0__ =
     __webpack_require__(/*! ./a */ "./a.js");
 
-  console.log(_a__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+console.log(\_a**WEBPACK_IMPORTED_MODULE_0**[/* default */ "a"]);
 });
 
-(function (module, __webpack_exports__, __webpack_require__) {
-  // a.js
-  /* unused harmony export test */
-  /* harmony import */ var _b__WEBPACK_IMPORTED_MODULE_0__ =
-    __webpack_require__(/*! ./b */ "./b.js");
+(function (module, **webpack_exports**, **webpack_require**) {
+// a.js
+/_ unused harmony export test _/
+/_ harmony import _/ var \_b**WEBPACK_IMPORTED_MODULE_0** =
+**webpack_require**(/_! ./b _/ "./b.js");
 
-  const a = `${_b__WEBPACK_IMPORTED_MODULE_0__[/* b1 */ "a"]} from b`; // b.jsのb1を参照する
-  /* harmony default export */ __webpack_exports__["a"] = a; // index.jsのexportsへ'a'キーとして結果を渡す
-  const test = () => 2 * 2;
+const a = `${_b__WEBPACK_IMPORTED_MODULE_0__[/* b1 */ "a"]} from b`; // b.jsのb1を参照する
+/_ harmony default export _/ **webpack_exports**["a"] = a; // index.jsのexportsへ'a'キーとして結果を渡す
+const test = () => 2 \* 2;
 });
 
-(function (module, __webpack_exports__, __webpack_require__) {
-  // b.js
-  /* harmony export (binding) */ __webpack_require__.d(
-    __webpack_exports__,
-    "a",
-    function () {
-      return b1;
-    },
-  );
-  /* unused harmony export b2 */
-  const b1 = "b1"; // a.jsによって使われている変数
-  const b2 = "b2"; // b2はexportしているが、未使用な変数
-  const b3 = "b3"; // b3はexportしていない変数
+(function (module, **webpack_exports**, **webpack_require**) {
+// b.js
+/_ harmony export (binding) _/ **webpack_require**.d(
+**webpack_exports**,
+"a",
+function () {
+return b1;
+},
+);
+/_ unused harmony export b2 _/
+const b1 = "b1"; // a.jsによって使われている変数
+const b2 = "b2"; // b2はexportしているが、未使用な変数
+const b3 = "b3"; // b3はexportしていない変数
 });
-```
+
+````
 
 `/* unused harmony export xxxx */`というコメントがついていれば成功です。
 これはその文の通り、export されているが使ってないことを意味します。
@@ -318,7 +320,7 @@ const b3 = "b3"; // ローカル変数
     return b1;
   },
 );
-```
+````
 
 そして、`b.js`を見るとわかりますが、使われる変数だけが` __webpack_require__.d`を経由して登録されます。
 `b2`は export してますが、`a.js`で使われないため、binding されません。
@@ -555,18 +557,19 @@ module.exports = {
 };
 ```
 
-```
-vendor.e01916c600d5e12dd9aa.16.bundle.js   1.41 MiB
+<br />
+``` vendor.e01916c600d5e12dd9aa.16.bundle.js 1.41 MiB
 
 ↓
 
-vendor~253ae210.e46c3fe01b7780f11d81.bundle.js    316 KiB
-vendor~7274e1de.a2d5e8d87c5e36752b28.bundle.js    183 KiB
-vendor~7d359b94.79f7863fa304fe20067e.bundle.js   53.5 KiB
-vendor~9c5b28f6.71223a4ff0625388be27.bundle.js    610 KiB
-vendor~b5906859.2b626aa82671c8667e3a.bundle.js   95.2 KiB
-vendor~db300d2f.d22d5b79be58987d729e.bundle.js   92.9 KiB
-vendor~ec8c427e.59a4800bc2621be8d855.bundle.js     95 KiB
+vendor~253ae210.e46c3fe01b7780f11d81.bundle.js 316 KiB
+vendor~7274e1de.a2d5e8d87c5e36752b28.bundle.js 183 KiB
+vendor~7d359b94.79f7863fa304fe20067e.bundle.js 53.5 KiB
+vendor~9c5b28f6.71223a4ff0625388be27.bundle.js 610 KiB
+vendor~b5906859.2b626aa82671c8667e3a.bundle.js 95.2 KiB
+vendor~db300d2f.d22d5b79be58987d729e.bundle.js 92.9 KiB
+vendor~ec8c427e.59a4800bc2621be8d855.bundle.js 95 KiB
+
 ```
 
 このように分けれる範囲で分解をすることも可能です。
@@ -581,3 +584,4 @@ webpack では、まだまだ様々なアルゴリズムが存在します。
 <OG url="https://github.com/webpack/changelog-v5/blob/master/README.md" />
 
 もしなにかありましたら、[twitter](https://twitter.com/about_hiroppy)までどうぞ！
+```

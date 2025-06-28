@@ -112,15 +112,16 @@ $ node --experimental-modules --entry-type=module --eval \
 /
 ```
 
-```sh
-$ node --experimental-modules --entry-type=commonjs --eval \
-  "import { sep } from 'path'; console.log(sep);"
+<br />
+```sh $ node --experimental-modules --entry-type=commonjs --eval \ "import {sep}
+from 'path'; console.log(sep);"
 
 import { sep } from 'path'; console.log(sep);
        ^
 
 SyntaxError: Unexpected token {
-```
+
+````
 
 ### package.json の type フィールド
 
@@ -136,17 +137,18 @@ SyntaxError: Unexpected token {
 {
   "type": "module"
 }
-```
+````
 
-```javascript
-// ./sample/index.js
+<br />
+```javascript // ./sample/index.js
 
 // 近しいpackage.jsonのtypeがmoduleなので、このファイルはESMで読み込まれる
 import "./sample/setup/init.js";
 
 // ./node_modules/foo/package.jsonにはtypeが書いてないため、CJSで読み込まれる
 import "foo";
-```
+
+````
 
 ## 特定ファイルのモジュール形式をロックしたい場合
 
@@ -164,4 +166,4 @@ import "./legacy-file.cjs";
 
 // 常にesmとして読み込む
 import "commonjs-package/src/index.mjs";
-```
+````

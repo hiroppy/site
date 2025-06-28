@@ -63,14 +63,14 @@ module.exports = {
 };
 ```
 
-```javascript
-// src/index.js
-import foo from "./images/foo.png";
+<br />
+```javascript // src/index.js import foo from "./images/foo.png";
 
 console.log(foo);
 // /dist/images/151cfcfa1bd74779aadb.png
 img.src = foo;
-```
+
+````
 
 ### データ URI を出力する (url-loader)
 
@@ -88,17 +88,17 @@ module.exports = {
     ],
   },
 };
-```
+````
 
-```javascript
-// src/index.js
-import foo from "./images/foo.svg";
+<br />
+```javascript // src/index.js import foo from "./images/foo.svg";
 
 console.log(foo);
 // data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDo...vc3ZnPgo=
 
 block.style.background = `url(${foo})`;
-```
+
+````
 
 ### ソースを出力する (raw-loader)
 
@@ -116,16 +116,16 @@ module.exports = {
     ],
   },
 };
-```
+````
 
-```javascript
-// src/index.js
-import foo from "./foo.txt";
+<br />
+```javascript // src/index.js import foo from "./foo.txt";
 
 console.log(foo);
 // hello!
 block.textContent = foo;
-```
+
+````
 
 ### 自動的に選択させる
 
@@ -153,4 +153,4 @@ module.exports = {
     ],
   },
 };
-```
+````

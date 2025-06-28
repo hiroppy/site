@@ -591,12 +591,9 @@ const debuglog = util.debuglog("foo-bar");
 debuglog("hi there, it's foo-bar [%d]", 2333);
 ```
 
-```
-$ NODE_DEBUG=foo* node index.js
-FOO-BAR 42404: hi there, it's foo-bar [2333]
-$ NODE_DEBUG=*oo* node index.js
-FOO-BAR 42404: hi there, it's foo-bar [2333]
-```
+<br />
+``` $ NODE_DEBUG=foo* node index.js FOO-BAR 42404: hi there, it's foo-bar [2333]
+$ NODE_DEBUG=*oo* node index.js FOO-BAR 42404: hi there, it's foo-bar [2333] ```
 
 ### util.inspect に compact オプションが追加 (v9.9.0)
 

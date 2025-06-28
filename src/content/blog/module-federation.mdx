@@ -108,15 +108,14 @@ module.exports = {
 };
 ```
 
-```javascript
-// src/index.js
-import React from "react";
+<br />
+```javascript // src/index.js import React from "react";
 
 const Page1 = () => <h1>This is Page1</h1>;
 
 export default Page1; // React.lazyはdefault exportsのみ許容
 ```
-
+<br />
 ```
               Asset       Size
              579.js   7.27 KiB  [emitted]
@@ -147,25 +146,26 @@ module.exports = {
 };
 ```
 
-```javascript
-// src/index.js
-import React, { lazy, Suspense } from "react";
-import { render } from "react-dom";
+<br />
+```javascript // src/index.js import React, {(lazy, Suspense)} from "react";
+import {render} from "react-dom";
 
 // page1/page(remote)をdynamic import
 const Page1 = lazy(() => import("page1/Page"));
 
 const Wrapper = () => (
-  <div>
-    <Suspense fallback={<span>Loading...</span>}>
-      <Page1 />
-    </Suspense>
-  </div>
+
+<div>
+  <Suspense fallback={<span>Loading...</span>}>
+    <Page1 />
+  </Suspense>
+</div>
 );
 
 render(<Wrapper />, document.getElementById("root"));
-```
 
+````
+<br />
 ```html
 <!-- index.html -->
 <!doctype html>
@@ -179,14 +179,11 @@ render(<Wrapper />, document.getElementById("root"));
     <script src="http://localhost:8081/page1RemoteEntry.js"></script>
   </body>
 </html>
-```
+````
 
-```
-              Asset       Size
-         index.html  194 bytes  [compared for emit]
-            main.js    128 KiB  [emitted]            [name: main]
-main.js.LICENSE.txt  790 bytes  [compared for emit]
-```
+<br />
+``` Asset Size index.html 194 bytes [compared for emit] main.js 128 KiB
+[emitted] [name: main] main.js.LICENSE.txt 790 bytes [compared for emit] ```
 
 このように、`import('<scope>/<request>')`という形でローカル側は取り込みます。
 

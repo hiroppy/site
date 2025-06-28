@@ -37,14 +37,16 @@ module.exports = {
 };
 ```
 
+<br />
 ```javascript
 // loader.js
 module.exports = function postLoader(res) {
   console.log(this.resource);
 
-  return res;
+return res;
 };
-```
+
+````
 
 この場合は、拡張子.css がきた場合に css-loader -> style-loader -> ./loader というローダーチェインが発生します。
 
@@ -57,7 +59,7 @@ webpack のローダーの読み方は右からとなり、options のつなぎ�
 
 ```javascript
 import style from "style-loader!css-loader?modules&sourceMap!./style.css";
-```
+````
 
 ## 接頭辞
 
@@ -125,14 +127,16 @@ module.exports = {
 };
 ```
 
+<br />
 ```javascript
 // loader
 module.exports = function postLoader(res) {
   console.log(this.resource);
 
-  return res;
+return res;
 };
-```
+
+````
 
 Match Resouce は変換先の拡張子を webpack.config.js へ渡すため、この場合のローダーの出力は何も出ません。
 
@@ -152,7 +156,7 @@ module.exports = {
     ],
   },
 };
-```
+````
 
 ローダーの出力は以下のようになります。
 

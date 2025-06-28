@@ -190,27 +190,28 @@ module.exports = {
 VERSION=1.0
 ```
 
-```javascript
-const webpack = require("webpack");
-const { config } = require("dotenv");
+<br />
+```javascript const webpack = require("webpack"); const {config} =
+require("dotenv");
 
 config();
 
 module.exports = {
-  cache: {
-    type: "filesystem",
-    buildDependencies: {
-      config: [__filename],
-    },
-    version: process.env.VERSION,
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      "process.env.version": process.env.VERSION,
-    }),
-  ],
+cache: {
+type: "filesystem",
+buildDependencies: {
+config: [__filename],
+},
+version: process.env.VERSION,
+},
+plugins: [
+new webpack.DefinePlugin({
+"process.env.version": process.env.VERSION,
+}),
+],
 };
-```
+
+````
 
 さてこれで問題になるのが、もしこれをしっかり設定しないと**過去のスナップショットを参照するため生成結果も過去の状態になることです。**これが webpack が恐れていた問題です。この場合だと、`version`を指定しない場合、出力は常に最初のビルド時のものとなり.env で書き換えしても反映されません。
 
@@ -228,13 +229,14 @@ node_modules のコードに対して、timestamp + hash で管理するとコ�
 // index.js
 import * as d3 from "d3";
 import "foo.js";
-```
+````
 
+<br />
 ```javascript
 // foo.js
 console.log("foo");
 ```
-
+<br />
 ```javascript
 // webpack.config.js
 module.exports = {

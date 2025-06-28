@@ -45,10 +45,11 @@ npm install package-name
 ```
 ````
 
+<br />
 ```bash [pnpm]
 pnpm add package-name
 ```
-
+<br />
 ```bash [yarn]
 yarn add package-name
 ```

@@ -184,13 +184,8 @@ Promise.resolve().then(() => console.log(4));
 process.nextTick(() => console.log(5));
 ```
 
-```
-1
-3
-5
-2
-4
-```
+<br />
+``` 1 3 5 2 4 ```
 
 先に nextTickQueue が消費されているのがわかります。
 
@@ -238,12 +233,10 @@ setTimeout(() => {
 }, 1000);
 ```
 
-```sh
-# output
-timeout callback executed after 1s and 0.0070209ms
-timeout callback executed after 1s and 0.004651383ms
-timeout callback executed after 1s and 0.001348922ms
-```
+<br />
+```sh # output timeout callback executed after 1s and 0.0070209ms timeout
+callback executed after 1s and 0.004651383ms timeout callback executed after 1s
+and 0.001348922ms ```
 
 毎回異なる結果となり、`0ms` となることはありません。
 
@@ -319,10 +312,8 @@ readFile(__filename, () => {
 });
 ```
 
-```sh
-# output
-delay: 502ms
-```
+<br />
+```sh # output delay: 502ms ```
 
 このコードをぱっと見た時に、100ms 後に`delay: 100ms`と出力されるだろうと思うかもしれません。
 このコードのフローを説明します。
@@ -360,13 +351,8 @@ Promise.resolve().then(() => console.log(4));
 (() => console.log(5))();
 ```
 
-```
-5
-3
-4
-1
-2
-```
+<br />
+``` 5 3 4 1 2 ```
 
 なぜこの順番の出力になるかは上記のイベントループの流れでわかるかと思います。
 
@@ -439,10 +425,8 @@ readFile(__filename, () => {
 });
 ```
 
-```
-setImmediate
-setTimeout
-```
+<br />
+``` setImmediate setTimeout ```
 
 上の例だと必ず `setImmediate` が先に出力されるようになります。
 それは、最初に pending callbacks フェーズに入り、その次が check フェーズだからです。

@@ -13,6 +13,20 @@ import Image from "../../components/Image.astro";
 import CodeGroup from "../../components/CodeGroup.astro";
 import CodeGroupPanel from "../../components/CodeGroupPanel.astro";
 
+---
+
+## Heading h2
+
+### Heading h3
+
+#### Heading h4
+
+##### Heading h5
+
+###### Heading h6
+
+---
+
 ## Test
 
 This article is for VRT.
@@ -43,13 +57,10 @@ const foo = "foo";
 npm install astro
 ```
 
-```bash [pnpm]
-pnpm add astro
-```
-
-```bash [yarn]
-yarn add astro
-```
+<br />
+```bash [pnpm] pnpm add astro ```
+<br />
+```bash [yarn] yarn add astro ```
 
 :::
 
@@ -61,18 +72,19 @@ export function add() {
 }
 ```
 
+<br />
 ```js [add.js]
 export function add() {
   return 1 + 1;
 }
 ```
-
+<br />
 ```html [index.html]
 <div>
   <p>HTML code</p>
 </div>
 ```
-
+<br />
 ```css [style.css]
 body {
   background-color: #fff;

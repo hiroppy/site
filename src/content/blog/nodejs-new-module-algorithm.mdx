@@ -35,8 +35,8 @@ console.log(esm);
 // }
 ```
 
-```js
-// esm.mjs
+<br />
+```js // esm.mjs
 
 export async function named() {
   return "named";
@@ -61,25 +61,24 @@ export async function named() {
 await named();
 ```
 
-```sh
-node:internal/modules/esm/module_job:290
-    this.module.instantiateSync();
-                ^
+<br />
+```sh node:internal/modules/esm/module_job:290 this.module.instantiateSync(); ^
 
 Error: require() cannot be used on an ESM graph with top-level await. Use import() instead. To see where the top-level await comes from, use --experimental-print-required-tla.
-    at ModuleJobSync.runSync (node:internal/modules/esm/module_job:290:17)
-    at ModuleLoader.importSyncForRequire (node:internal/modules/esm/loader:301:16)
-    at Object.loadESMFromCJS [as .mjs] (node:internal/modules/cjs/loader:1289:32)
-    at Module.load (node:internal/modules/cjs/loader:1238:32)
-    at Module._load (node:internal/modules/cjs/loader:1054:12)
-    at Module.require (node:internal/modules/cjs/loader:1263:19)
-    at require (node:internal/modules/helpers:179:18)
-    at Object.<anonymous> (/Users/cont-y-hiroto/node/a/index.js:3:13)
-    at Module._compile (node:internal/modules/cjs/loader:1420:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1498:10) {
-  code: 'ERR_REQUIRE_ASYNC_MODULE'
+at ModuleJobSync.runSync (node:internal/modules/esm/module_job:290:17)
+at ModuleLoader.importSyncForRequire (node:internal/modules/esm/loader:301:16)
+at Object.loadESMFromCJS [as .mjs] (node:internal/modules/cjs/loader:1289:32)
+at Module.load (node:internal/modules/cjs/loader:1238:32)
+at Module.\_load (node:internal/modules/cjs/loader:1054:12)
+at Module.require (node:internal/modules/cjs/loader:1263:19)
+at require (node:internal/modules/helpers:179:18)
+at Object.<anonymous> (/Users/cont-y-hiroto/node/a/index.js:3:13)
+at Module.\_compile (node:internal/modules/cjs/loader:1420:14)
+at Module.\_extensions..js (node:internal/modules/cjs/loader:1498:10) {
+code: 'ERR_REQUIRE_ASYNC_MODULE'
 }
-```
+
+````
 
 このように新しくエラーコードとして、`ERR_REQUIRE_ASYNC_MODULE`が追加されました。
 
@@ -148,7 +147,7 @@ console.log("root.js:", typeof module !== "undefined" ? "cjs" : "esm"); // cjs
 // Conclusion
 // 🙆‍♀️ESM -> CJS
 // 🙅‍♀️CJS -> ESM (excluding dynamic import)
-```
+````
 
 もっと詳しく現行のNode.jsのモジュールについて詳しく知りたい場合は、以下の記事を参考にしてください。
 

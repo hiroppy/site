@@ -7,9 +7,7 @@ const { class: className } = Astro.props;
 ---
 
 <div class={`flex h-screen w-full ${className || ""}`}>
-  <aside class="sidebar h-full">
-    <slot name="sidebar" />
-  </aside>
+  <slot name="sidebar" />
 
   <main
     class="flex flex-1 flex-col overflow-hidden bg-gray-50 md:ml-0 dark:bg-gray-900"
@@ -17,3 +15,13 @@ const { class: className } = Astro.props;
     <slot name="content" />
   </main>
 </div>
+
+<style is:global>
+  body {
+    overflow: hidden;
+  }
+
+  html {
+    scroll-padding-top: 80px;
+  }
+</style>

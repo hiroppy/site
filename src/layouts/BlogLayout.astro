@@ -3,6 +3,8 @@ import { writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { formatDate } from "../utils/formatDate";
 import Layout from "./Layout.astro";
+import TwoPaneLayout from "../components/TwoPaneLayout.astro";
+import TableOfContents from "../components/TableOfContents.astro";
 import ShareButtons from "../components/ShareButtons.astro";
 import { getBlogs, parseTags } from "../utils/blog";
 import Link from "../components/Link.astro";
@@ -23,7 +25,6 @@ const { frontmatter, headings } = Astro.props as MarkdownLayoutProps<
   CollectionEntry<"blog">["data"]
 >;
 const date = formatDate(new Date(frontmatter.date));
-const indices = headings.filter((heading) => heading.depth < 4);
 const diffDate =
   (new Date().getTime() - new Date(frontmatter.date).getTime()) /
   (60 * 60 * 1000 * 24);
@@ -83,332 +84,453 @@ if (import.meta.env.PROD || process.env.NODE_ENV === "test") {
   description={description}
   image={ogImageDistAbsolutePath}
   isOptimizedImage={false}
+  fullscreen
 >
-  <div
-    class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
-  >
-    <main class="container mx-auto max-w-6xl px-4 py-4 md:py-8">
-      <!-- Article Header -->
-      <article
-        class="overflow-hidden rounded-2xl bg-white shadow-lg dark:bg-slate-800"
-      >
-        <div class="relative">
-          {
-            frontmatter.image && (
-              <Image
-                src={frontmatter.image}
-                alt={title}
-                width={800}
-                height={400}
-                class="h-64 w-full object-cover md:h-80"
-              />
-            )
-          }
-          {
-            !frontmatter.image && (
-              <div class="flex h-64 w-full items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 md:h-80">
-                <Icon
-                  icon="mdi:file-document-outline"
-                  class="text-8xl opacity-30"
-                  width="2em"
-                  height="2em"
-                />
-              </div>
-            )
-          }
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"
-          >
-          </div>
-          <div class="absolute right-4 bottom-6 left-4 md:right-8 md:left-8">
-            <h1 class="mb-4 text-3xl font-bold text-white md:text-4xl">
-              {title}
-            </h1>
-            <div class="flex items-center justify-between text-white/90">
-              <div class="flex items-center space-x-2">
-                <Icon icon="mdi:calendar" width="16" height="16" />
-                <span>{date}</span>
-              </div>
-              <div class="flex flex-wrap gap-2">
-                {
-                  parseTags(tags)
-                    .slice(0, 3)
-                    .map((tag: string) => (
-                      <Badge variant="secondary" class="text-sm">
-                        <a
-                          href={`/blog/tags/${tag}`}
-                          aria-label={`${tag}タグの記事を表示`}
-                        >
-                          {tag}
-                        </a>
-                      </Badge>
-                    ))
-                }
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="px-4 py-8 md:px-8">
-          <!-- Author Info -->
-          <div class="mb-8 flex items-center justify-between gap-4">
-            <div class="flex items-center space-x-4">
-              <Avatar class="h-12 w-12">
-                <Image
-                  src="/images/meta/me.png"
-                  alt="Hiroppy"
-                  class="h-12 w-12 rounded-full"
-                />
-              </Avatar>
-              <div>
-                <p class="font-semibold text-gray-900 dark:text-white">
-                  Hiroppy
-                </p>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
-                  JavaScript Engineer
-                </p>
-              </div>
-            </div>
-            <Link
-              href={githubUrl}
-              class="flex items-center"
-              ariaLabel="Edit this page on GitHub"
+  <TwoPaneLayout>
+    <!-- Sidebar with Table of Contents -->
+    <aside
+      slot="sidebar"
+      class="hidden h-full w-64 flex-shrink-0 border-r border-gray-200 bg-gray-50 lg:block dark:border-gray-700 dark:bg-gray-900"
+    >
+      <div class="flex h-full flex-col overflow-hidden">
+        <div class="flex-1 overflow-y-auto p-6">
+          <div class="pt-4">
+            <h2
+              class="mb-4 flex items-center text-sm font-semibold text-gray-900 dark:text-white"
             >
-              <Button variant="outline" class="no-underline">
-                <Icon icon="mdi:github" class="mr-1" width="16" height="16" />
-                Edit
-              </Button>
-            </Link>
-          </div>
-
-          <hr class="mb-8 border-gray-200 dark:border-gray-700" />
-
-          <!-- Table of Contents -->
-          {
-            indices.length > 0 && (
-              <div class="mb-8 rounded-lg bg-gray-50 p-6 dark:bg-slate-700">
-                <h2 class="mb-4 font-semibold text-gray-900 dark:text-white">
-                  <Icon
-                    icon="mdi:table-of-contents"
-                    class="mr-2 inline-block"
-                    width="20"
-                    height="20"
-                  />
-                  目次
-                </h2>
-                <nav aria-label="記事の目次">
-                  <ul class="space-y-1">
-                    {indices
-                      .filter((h) => h.depth <= 3)
-                      .map((heading) => (
-                        <li
-                          class={
-                            heading.depth === 1
-                              ? "text-sm font-semibold"
-                              : heading.depth === 2
-                                ? "ml-4 border-l-2 border-gray-300 pl-3 text-sm dark:border-gray-300"
-                                : "ml-8 border-l-2 border-gray-200 pl-3 text-xs dark:border-gray-500"
-                          }
-                        >
-                          <a
-                            href={`#${heading.slug}`}
-                            class={
-                              heading.depth === 1
-                                ? "text-gray-900 hover:text-blue-600 dark:text-white dark:hover:text-blue-400"
-                                : "text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400"
-                            }
-                          >
-                            {heading.text}
-                          </a>
-                        </li>
-                      ))}
-                  </ul>
-                </nav>
-              </div>
-            )
-          }
-
-          <!-- Warnings -->
-          <div class="mb-8 space-y-4">
-            {
-              diffDate > 365 && (
-                <div class="rounded-lg border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-800 dark:bg-yellow-900/20">
-                  <div class="flex items-center">
-                    <Icon
-                      icon="mdi:alert"
-                      class="mr-2 text-yellow-600 dark:text-yellow-400"
-                      width="20"
-                      height="20"
-                    />
-                    <span class="text-sm font-medium text-yellow-800 dark:text-yellow-200">
-                      この記事は1年以上更新されていません
-                    </span>
-                  </div>
-                </div>
-              )
-            }
-            {
-              frontmatter.hatenaPath && (
-                <div class="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900/20">
-                  <div class="flex items-center">
-                    <Icon
-                      icon="mdi:check-circle"
-                      class="mr-2 text-blue-600 dark:text-blue-400"
-                      width="20"
-                      height="20"
-                    />
-                    <span class="text-sm text-blue-800 dark:text-blue-200">
-                      この記事は{" "}
-                      <Link
-                        href={`${HATENA_BLOG_ENTRY_URL}/${frontmatter.hatenaPath}`}
-                        class="underline"
-                      >
-                        Hatena Blog
-                      </Link>{" "}
-                      からの移行記事です
-                    </span>
-                  </div>
-                </div>
-              )
-            }
-          </div>
-
-          <!-- Article Content -->
-          <div class="prose prose-lg max-w-none">
-            <slot />
-          </div>
-
-          <hr class="my-8 border-gray-200 dark:border-gray-700" />
-
-          <!-- Share Buttons -->
-          <div class="mb-8">
-            <div
-              class="flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
-            >
-              <ShareButtons
-                url={`${Astro.site?.origin}${url!}`}
-                title={title}
+              <Icon
+                icon="mdi:table-of-contents"
+                class="mr-2"
+                width="16"
+                height="16"
               />
-            </div>
-          </div>
-
-          <!-- Pagination -->
-          {
-            index !== -1 && (
-              <div class="mb-8">
-                <h2 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-                  <Icon
-                    icon="noto:open-book"
-                    class="mr-2 inline-block"
-                    width="24"
-                    height="24"
-                  />
-                  前後の記事
-                </h2>
-                <div class="grid gap-4 md:grid-cols-2">
-                  {index !== 0 ? (
-                    <Card
-                      class="transition-all duration-300 hover:shadow-lg"
-                      link={{
-                        href: `/blog/${posts[index - 1].slug}`,
-                        ariaLabel: `前の記事: ${posts[index - 1].data.title}`,
-                      }}
-                    >
-                      <CardContent>
-                        <div class="mb-2 text-xs text-gray-500 dark:text-gray-400">
-                          ← 前の記事
-                        </div>
-                        <CardTitle level={3} class="line-clamp-2 text-sm">
-                          {posts[index - 1].data.title}
-                        </CardTitle>
-                      </CardContent>
-                    </Card>
-                  ) : (
-                    <div />
-                  )}
-                  {index !== posts.length - 1 ? (
-                    <Card
-                      class="transition-all duration-300 hover:shadow-lg"
-                      link={{
-                        href: `/blog/${posts[index + 1].slug}`,
-                        ariaLabel: `次の記事: ${posts[index + 1].data.title}`,
-                      }}
-                    >
-                      <CardContent class="text-right">
-                        <div class="mb-2 text-xs text-gray-500 dark:text-gray-400">
-                          次の記事 →
-                        </div>
-                        <CardTitle level={3} class="line-clamp-2 text-sm">
-                          {posts[index + 1].data.title}
-                        </CardTitle>
-                      </CardContent>
-                    </Card>
-                  ) : (
-                    <div />
-                  )}
-                </div>
-              </div>
-            )
-          }
-        </div>
-      </article>
-
-      <!-- Related Posts -->
-      {
-        relatedPosts.length > 0 && (
-          <section class="mt-12">
-            <h2 class="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
-              関連記事
+              目次
             </h2>
-            <div class="grid gap-6 md:grid-cols-2">
-              {relatedPosts.map((post) => (
-                <Card
-                  class="transition-all duration-300 hover:shadow-lg dark:bg-slate-800"
-                  link={{
-                    href: `/blog/${post.slug}`,
-                    ariaLabel: `関連記事: ${post.data.title}`,
-                  }}
-                >
-                  <CardContent>
-                    <div class="flex items-center">
-                      {post.data.image && (
-                        <Image
-                          src={post.data.image}
-                          alt={post.data.title}
-                          width={120}
-                          height={80}
-                          class="h-20 w-24 rounded-lg object-cover"
-                        />
-                      )}
-                      {!post.data.image && (
-                        <div class="flex h-20 w-24 items-center justify-center rounded-lg bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600">
-                          <Icon
-                            icon="mdi:file-document-outline"
-                            class="text-2xl opacity-30"
-                            width="1em"
-                            height="1em"
-                          />
-                        </div>
-                      )}
-                      <div class="flex-1 pl-4">
-                        <Badge variant="secondary" class="mb-2 text-xs">
-                          {parseTags(post.data.tags)?.[0] || "記事"}
-                        </Badge>
-                        <CardTitle level={3} class="mb-2 line-clamp-2 text-sm">
-                          {post.data.title}
-                        </CardTitle>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">
-                          {formatDate(post.data.date)}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+            <TableOfContents headings={headings} />
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div
+      slot="content"
+      class="h-full overflow-y-auto bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
+    >
+      <main
+        class="container mx-auto min-h-full max-w-6xl px-2 py-6 md:px-4 md:py-8"
+      >
+        <!-- Article Header -->
+        <article
+          class="overflow-hidden rounded-2xl bg-white shadow-lg dark:bg-slate-800"
+        >
+          <div class="relative">
+            {
+              frontmatter.image && (
+                <Image
+                  src={frontmatter.image}
+                  alt={title}
+                  width={800}
+                  height={400}
+                  class="h-64 w-full object-cover md:h-80"
+                />
+              )
+            }
+            {
+              !frontmatter.image && (
+                <div class="flex h-64 w-full items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 md:h-80">
+                  <Icon
+                    icon="mdi:file-document-outline"
+                    class="text-8xl opacity-30"
+                    width="2em"
+                    height="2em"
+                  />
+                </div>
+              )
+            }
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"
+            >
             </div>
-          </section>
-        )
-      }
-    </main>
-  </div>
+            <div class="absolute right-4 bottom-6 left-4 md:right-8 md:left-8">
+              <h1 class="mb-4 text-3xl font-bold text-white md:text-4xl">
+                {title}
+              </h1>
+              <div class="flex items-center justify-between text-white/90">
+                <div class="flex items-center space-x-2">
+                  <Icon icon="mdi:calendar" width="16" height="16" />
+                  <span>{date}</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  {
+                    parseTags(tags)
+                      .slice(0, 3)
+                      .map((tag: string) => (
+                        <Badge variant="secondary" class="text-sm">
+                          <a
+                            href={`/blog/tags/${tag}`}
+                            aria-label={`${tag}タグの記事を表示`}
+                          >
+                            {tag}
+                          </a>
+                        </Badge>
+                      ))
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="px-4 py-8 md:px-8">
+            <!-- Author Info -->
+            <div class="mb-8 flex items-center justify-between gap-4">
+              <div class="flex items-center space-x-4">
+                <Avatar class="h-12 w-12">
+                  <Image
+                    src="/images/meta/me.png"
+                    alt="Hiroppy"
+                    class="h-12 w-12 rounded-full"
+                  />
+                </Avatar>
+                <div>
+                  <p class="font-semibold text-gray-900 dark:text-white">
+                    Hiroppy
+                  </p>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">
+                    JavaScript Engineer
+                  </p>
+                </div>
+              </div>
+              <Link
+                href={githubUrl}
+                class="flex items-center"
+                ariaLabel="Edit this page on GitHub"
+              >
+                <Button variant="outline" class="no-underline">
+                  <Icon icon="mdi:github" class="mr-1" width="16" height="16" />
+                  Edit
+                </Button>
+              </Link>
+            </div>
+
+            <hr class="mb-8 border-gray-200 dark:border-gray-700" />
+
+            <!-- Mobile Table of Contents -->
+            <details
+              class="mb-8 rounded-lg bg-gray-50 p-6 lg:hidden dark:bg-slate-700"
+            >
+              <summary
+                class="cursor-pointer font-semibold text-gray-900 dark:text-white"
+              >
+                <Icon
+                  icon="mdi:table-of-contents"
+                  class="mr-2 inline-block"
+                  width="20"
+                  height="20"
+                />
+                目次
+              </summary>
+              <div class="mt-4">
+                <TableOfContents headings={headings} />
+              </div>
+            </details>
+
+            <!-- Warnings -->
+            <div class="mb-8 space-y-4">
+              {
+                diffDate > 365 && (
+                  <div class="rounded-lg border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-800 dark:bg-yellow-900/20">
+                    <div class="flex items-center">
+                      <Icon
+                        icon="mdi:alert"
+                        class="mr-2 text-yellow-600 dark:text-yellow-400"
+                        width="20"
+                        height="20"
+                      />
+                      <span class="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+                        この記事は1年以上更新されていません
+                      </span>
+                    </div>
+                  </div>
+                )
+              }
+              {
+                frontmatter.hatenaPath && (
+                  <div class="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900/20">
+                    <div class="flex items-center">
+                      <Icon
+                        icon="mdi:check-circle"
+                        class="mr-2 text-blue-600 dark:text-blue-400"
+                        width="20"
+                        height="20"
+                      />
+                      <span class="text-sm text-blue-800 dark:text-blue-200">
+                        この記事は{" "}
+                        <Link
+                          href={`${HATENA_BLOG_ENTRY_URL}/${frontmatter.hatenaPath}`}
+                          class="underline"
+                        >
+                          Hatena Blog
+                        </Link>{" "}
+                        からの移行記事です
+                      </span>
+                    </div>
+                  </div>
+                )
+              }
+            </div>
+
+            <!-- Article Content -->
+            <div class="prose prose-lg max-w-none">
+              <slot />
+            </div>
+
+            <hr class="my-8 border-gray-200 dark:border-gray-700" />
+
+            <!-- Share Buttons -->
+            <div class="mb-8">
+              <div
+                class="flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
+              >
+                <ShareButtons
+                  url={`${Astro.site?.origin}${url!}`}
+                  title={title}
+                />
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Pagination -->
+        {
+          index !== -1 && (
+            <section class="mt-12 mb-12">
+              <h2 class="mb-6 text-xl font-bold text-gray-900 dark:text-white">
+                <Icon
+                  icon="noto:open-book"
+                  class="mr-2 inline-block"
+                  width="20"
+                  height="20"
+                />
+                前後の記事
+              </h2>
+              <div class="grid gap-6 md:grid-cols-2">
+                {index !== 0 ? (
+                  <Card
+                    class="transition-all duration-300 hover:shadow-lg dark:bg-slate-800"
+                    link={{
+                      href: `/blog/${posts[index - 1].slug}`,
+                      ariaLabel: `前の記事: ${posts[index - 1].data.title}`,
+                    }}
+                  >
+                    <CardContent>
+                      <div class="mb-2 text-xs text-gray-500 dark:text-gray-400">
+                        ← 前の記事
+                      </div>
+                      <CardTitle level={3} class="line-clamp-2 text-sm">
+                        {posts[index - 1].data.title}
+                      </CardTitle>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <div />
+                )}
+                {index !== posts.length - 1 ? (
+                  <Card
+                    class="transition-all duration-300 hover:shadow-lg dark:bg-slate-800"
+                    link={{
+                      href: `/blog/${posts[index + 1].slug}`,
+                      ariaLabel: `次の記事: ${posts[index + 1].data.title}`,
+                    }}
+                  >
+                    <CardContent class="text-right">
+                      <div class="mb-2 text-xs text-gray-500 dark:text-gray-400">
+                        次の記事 →
+                      </div>
+                      <CardTitle level={3} class="line-clamp-2 text-sm">
+                        {posts[index + 1].data.title}
+                      </CardTitle>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <div />
+                )}
+              </div>
+            </section>
+          )
+        }
+
+        <!-- Related Posts -->
+        {
+          relatedPosts.length > 0 && (
+            <section class="mt-12 mb-24">
+              <h2 class="mb-6 text-xl font-bold text-gray-900 dark:text-white">
+                <Icon
+                  icon="mdi:link-variant"
+                  class="mr-2 inline-block"
+                  width="20"
+                  height="20"
+                />
+                関連する記事
+              </h2>
+              <div class="grid gap-6 md:grid-cols-2">
+                {relatedPosts.map((post) => (
+                  <Card
+                    class="transition-all duration-300 hover:shadow-lg dark:bg-slate-800"
+                    link={{
+                      href: `/blog/${post.slug}`,
+                      ariaLabel: `関連記事: ${post.data.title}`,
+                    }}
+                  >
+                    <CardContent>
+                      <div class="flex items-center">
+                        {post.data.image && (
+                          <Image
+                            src={post.data.image}
+                            alt={post.data.title}
+                            width={120}
+                            height={80}
+                            class="h-20 w-24 rounded-lg object-cover"
+                          />
+                        )}
+                        {!post.data.image && (
+                          <div class="flex h-20 w-24 items-center justify-center rounded-lg bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600">
+                            <Icon
+                              icon="mdi:file-document-outline"
+                              class="text-2xl opacity-30"
+                              width="1em"
+                              height="1em"
+                            />
+                          </div>
+                        )}
+                        <div class="flex-1 pl-4">
+                          <Badge variant="secondary" class="mb-2 text-xs">
+                            {parseTags(post.data.tags)?.[0] || "記事"}
+                          </Badge>
+                          <CardTitle
+                            level={3}
+                            class="mb-2 line-clamp-2 text-sm"
+                          >
+                            {post.data.title}
+                          </CardTitle>
+                          <p class="text-xs text-gray-500 dark:text-gray-400">
+                            {formatDate(post.data.date)}
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </section>
+          )
+        }
+      </main>
+    </div>
+  </TwoPaneLayout>
 </Layout>
+
+<script>
+  // Table of Contents active section highlighting
+  function initializeTocHighlighting() {
+    const tocLinks = document.querySelectorAll("[data-toc-link]");
+    const headings = document.querySelectorAll("h1[id], h2[id], h3[id]");
+
+    if (!tocLinks.length || !headings.length) return;
+
+    let currentActiveId = "";
+
+    function setActiveLink(id: string) {
+      if (id === currentActiveId) return;
+      currentActiveId = id;
+
+      // Remove active class from all links
+      tocLinks.forEach((link) => {
+        link.classList.remove(
+          "bg-blue-100",
+          "text-blue-700",
+          "dark:bg-blue-800/60",
+          "dark:text-blue-200",
+        );
+      });
+
+      // Add active class to current link
+      if (currentActiveId) {
+        const activeLink = document.querySelector(
+          `[data-toc-link="${currentActiveId}"]`,
+        );
+        if (activeLink) {
+          activeLink.classList.add(
+            "bg-blue-100",
+            "text-blue-700",
+            "dark:bg-blue-800/60",
+            "dark:text-blue-200",
+          );
+        }
+      }
+    }
+
+    // Check initial hash on page load
+    function checkInitialHash() {
+      const hash = window.location.hash.slice(1); // Remove #
+      if (hash) {
+        // Small delay to ensure DOM is ready
+        setTimeout(() => {
+          const element = document.getElementById(hash);
+          if (element) {
+            setActiveLink(hash);
+          }
+        }, 100);
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveLink(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: "-20% 0px -60% 0px",
+        threshold: 0.1,
+      },
+    );
+
+    headings.forEach((heading) => {
+      observer.observe(heading);
+    });
+
+    // Listen for hash changes (when clicking TOC links or anchor links)
+    window.addEventListener("hashchange", () => {
+      const hash = window.location.hash.slice(1);
+      if (hash) {
+        setActiveLink(hash);
+      }
+    });
+
+    // Add click listeners to TOC links
+    tocLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        const targetId = link.getAttribute("data-toc-link");
+        if (targetId) {
+          setActiveLink(targetId);
+        }
+      });
+    });
+
+    // Check initial hash
+    checkInitialHash();
+  }
+
+  // Initialize on page load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeTocHighlighting);
+  } else {
+    initializeTocHighlighting();
+  }
+
+  // Initialize on Astro page transitions
+  document.addEventListener("astro:page-load", initializeTocHighlighting);
+</script>

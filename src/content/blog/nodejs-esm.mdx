@@ -299,6 +299,7 @@ var implements,
 -->\n
 ```
 
+<br />
 ```
 # CJS
 $
@@ -308,12 +309,12 @@ $ Module build failed: SyntaxError: Unexpected token (1:0)
     | ^
   2 | -->\n
 ```
-
+<br />
 ```javascript
 // index.js
 0111;
 ```
-
+<br />
 ```
 # CJS
 $
@@ -341,12 +342,8 @@ console.log(
 );
 ```
 
-```
-# CJS
-$ object
-# ESM
-$ number
-```
+<br />
+``` # CJS $ object # ESM $ number ```
 
 `call`で`this`を 1 として束縛し、スコープで包んだ`function`の`this`を返しその型を評価します。
 `this`の束縛がない場合は、スコープで包まれているため、`typeof this === '[Function]'`です。

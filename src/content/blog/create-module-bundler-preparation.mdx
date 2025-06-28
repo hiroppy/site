@@ -177,14 +177,14 @@ const a = require("./module1");
 console.log("main:", a);
 ```
 
-```javascript
-// module1.js
-const a = require("./entry");
+<br />
+```javascript // module1.js const a = require("./entry");
 
 console.log("module1:", a);
 
 module.exports = "from module1";
-```
+
+````
 
 以下のように現在走査しているファイルの絶対パスを使って確認を行います。
 
@@ -192,7 +192,7 @@ module.exports = "from module1";
 const hasAlreadyModule = Array.from(modulesMap).some(
   ({ path }) => path === filePath,
 );
-```
+````
 
 無ければ、追加し、そのモジュールはキャッシュされていないのでそのモジュールの依存を辿るために再帰を行います。
 
@@ -395,6 +395,7 @@ function m(txt) {
 module.exports = m;
 ```
 
+<br />
 ```javascript
 // after
 ({
@@ -404,9 +405,11 @@ module.exports = m;
     }
 
     module.exports = m;
-  },
+
+},
 });
-```
+
+````
 
 このように引数の`module`, `exports`, `require`を持った関数に囲います。
 これは後ほど、本体の引数として使われます。
@@ -450,7 +453,7 @@ module.exports = m;
   },
   // ここまで
 });
-```
+````
 
 これでモジュール解決も行えて、1 ファイルで実行できる形となりました。
 これが最低限のベースコードとなります。

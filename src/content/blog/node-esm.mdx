@@ -155,12 +155,9 @@ console.log("esm/index.js    :", typeof module !== "undefined" ? "cjs" : "esm");
 console.log("esm/cjs/index.js:", typeof module !== "undefined" ? "cjs" : "esm");
 ```
 
-```shell
-$ node --experimental-modules root.js
-esm/index.js    : esm # 2
-esm/cjs/index.js: cjs # 3
-root.js         : esm # 1
-```
+<br />
+```shell $ node --experimental-modules root.js esm/index.js : esm # 2
+esm/cjs/index.js: cjs # 3 root.js : esm # 1 ```
 
 ##### package.json
 
@@ -268,10 +265,10 @@ import "./foo/index.js"; // --es-module-specifier-resolution=explicit
 import "./foo"; // --es-module-specifier-resolution=node
 ```
 
-```shell
-$ node --experimental-modules --es-module-specifier-resolution=node ./strict/index.js
-$ node --experimental-modules  ./strict/index.js # default is `explicit`
-```
+<br />
+```shell $ node --experimental-modules --es-module-specifier-resolution=node
+./strict/index.js $ node --experimental-modules ./strict/index.js # default is
+`explicit` ```
 
 #### JavaScript のみ
 
