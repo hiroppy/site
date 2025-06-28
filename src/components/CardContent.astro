@@ -1,5 +1,6 @@
 ---
 import { cn } from "../utils/cn";
+import { commonStyles } from "../utils/commonStyles";
 
 type Props = {
   class?: string;
@@ -8,6 +9,6 @@ type Props = {
 const { class: className = "" } = Astro.props;
 ---
 
-<div class={cn("p-4 md:p-6", className)}>
+<div class={cn(commonStyles.cardContent, className)}>
   <slot />
 </div>

@@ -1,5 +1,6 @@
 ---
 import { cn } from "../utils/cn";
+import { commonStyles } from "../utils/commonStyles";
 
 type Props = {
   variant?: "default" | "secondary" | "destructive" | "outline" | "primary";
@@ -9,7 +10,8 @@ type Props = {
 const { variant = "default", class: className = "" } = Astro.props;
 
 const classes = cn(
-  "inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+  "inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-colors",
+  commonStyles.focusRing,
   variant === "default" &&
     "bg-primary text-primary-foreground shadow hover:bg-primary/80",
   variant === "primary" &&

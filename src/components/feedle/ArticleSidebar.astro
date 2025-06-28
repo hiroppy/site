@@ -4,6 +4,7 @@ import DateFilter from "./DateFilter.astro";
 import ServicesDialog from "./ServicesDialog.astro";
 import ServiceListItem from "./ServiceListItem.astro";
 import SidebarSection from "./SidebarSection.astro";
+import NavItem from "./NavItem.astro";
 import type { ServiceGroup } from "../../utils/articlesApi";
 
 type Props = {
@@ -94,56 +95,36 @@ function buildServiceUrl(serviceData: ServiceGroup, category: string): string {
           Categories
         </h3>
         <div class="space-y-1">
-          <a
+          <NavItem
             href={`/labs/feedle/${currentType}${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
-            class={`flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-              currentCategory === "all"
-                ? "bg-blue-600 text-white shadow-sm"
-                : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
-            }`}
+            isActive={currentCategory === "all"}
           >
             All
-          </a>
-          <a
+          </NavItem>
+          <NavItem
             href={`/labs/feedle/${currentType}/official${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
-            class={`flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-              currentCategory === "official"
-                ? "bg-blue-500 text-white shadow-sm"
-                : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
-            }`}
+            isActive={currentCategory === "official"}
           >
             Official
-          </a>
-          <a
+          </NavItem>
+          <NavItem
             href={`/labs/feedle/${currentType}/community${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
-            class={`flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-              currentCategory === "community"
-                ? "bg-blue-500 text-white shadow-sm"
-                : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
-            }`}
+            isActive={currentCategory === "community"}
           >
             Community
-          </a>
-          <a
+          </NavItem>
+          <NavItem
             href={`/labs/feedle/${currentType}/release${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
-            class={`flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-              currentCategory === "release"
-                ? "bg-blue-500 text-white shadow-sm"
-                : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
-            }`}
+            isActive={currentCategory === "release"}
           >
             Release
-          </a>
-          <a
+          </NavItem>
+          <NavItem
             href={`/labs/feedle/${currentType}/podcast${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
-            class={`flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-              currentCategory === "podcast"
-                ? "bg-blue-500 text-white shadow-sm"
-                : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
-            }`}
+            isActive={currentCategory === "podcast"}
           >
             Podcast
-          </a>
+          </NavItem>
         </div>
       </div>
     </div>
@@ -173,17 +154,13 @@ function buildServiceUrl(serviceData: ServiceGroup, category: string): string {
 
           <div class="flex-1 overflow-y-auto p-2">
             <div id="sidebar-services" class="space-y-1 pb-8">
-              <a
+              <NavItem
                 href={`/labs/feedle/${currentType}/${currentCategory}${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
-                class={`flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                  !currentService
-                    ? "bg-blue-500 text-white shadow-sm"
-                    : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
-                }`}
+                isActive={!currentService}
+                icon="mdi:all-inclusive"
               >
-                <Icon icon="mdi:all-inclusive" class="mr-2 h-4 w-4" />
                 All
-              </a>
+              </NavItem>
 
               {/* Service list with selected service first */}
               {Object.entries(serviceGroups)

@@ -1,5 +1,6 @@
 ---
 import { cn } from "../utils/cn";
+import { commonStyles } from "../utils/commonStyles";
 import Link from "./Link.astro";
 
 type LinkProps = {
@@ -23,8 +24,9 @@ const {
 } = Astro.props;
 
 const baseClasses = cn(
-  "rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-card-foreground shadow",
-  variant === "interactive" && "overflow-hidden border-0 shadow-md card-lift",
+  commonStyles.cardBase,
+  "text-card-foreground shadow",
+  variant === "interactive" && commonStyles.cardInteractive,
   link && "cursor-pointer block group",
   className,
 );

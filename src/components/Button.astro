@@ -1,6 +1,7 @@
 ---
 import { getExternalLinkProps } from "../utils/linkUtils";
 import { cn } from "../utils/cn";
+import { commonStyles } from "../utils/commonStyles";
 
 type Props = {
   variant?:
@@ -37,7 +38,8 @@ const {
 } = Astro.props;
 
 const classes = cn(
-  "cursor-pointer inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "cursor-pointer inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50",
+  commonStyles.focusRing,
   variant === "default" &&
     "bg-blue-700 text-white shadow hover:bg-blue-800 dark:bg-blue-700 dark:hover:bg-blue-800",
   variant === "destructive" &&

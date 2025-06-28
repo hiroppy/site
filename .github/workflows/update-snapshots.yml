@@ -46,7 +46,7 @@ jobs:
       - uses: ./.github/actions/setup-node
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
-      - run: pnpm test:build
+      - run: pnpm build:local
       - name: Update snapshots
         run: pnpm test:vrt:ci:update
       - name: Check for changes

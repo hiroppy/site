@@ -1,0 +1,24 @@
+---
+import { cn } from "../../utils/cn";
+import { commonStyles } from "../../utils/commonStyles";
+import Icon from "../Icon.astro";
+
+type Props = {
+  href: string;
+  isActive?: boolean;
+  icon?: string;
+  class?: string;
+};
+
+const { href, isActive = false, icon, class: className } = Astro.props;
+
+const baseClasses = cn("flex w-full items-center", commonStyles.navItem);
+const stateClasses = isActive
+  ? commonStyles.navActive
+  : commonStyles.navDefault;
+---
+
+<a href={href} class={cn(baseClasses, stateClasses, className)}>
+  {icon && <Icon icon={icon} class="mr-2 h-4 w-4" />}
+  <slot />
+</a>

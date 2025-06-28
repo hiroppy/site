@@ -3,12 +3,12 @@
  * Pure JSX structure without Node.js dependencies
  */
 
-interface OgTemplateProps {
+type OgTemplateProps = {
   title: string;
   pageType: string;
   description?: string;
   iconBase64: string;
-}
+};
 
 export function createPageOgTemplate({
   title,

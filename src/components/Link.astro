@@ -1,6 +1,7 @@
 ---
 import { twMerge } from "tailwind-merge";
 import { getExternalLinkProps } from "../utils/linkUtils";
+import { commonStyles } from "../utils/commonStyles";
 
 type Props = {
   href: string;
@@ -25,7 +26,8 @@ const shouldOpenInBlank = isInternalLink
   href={internalHref}
   target={shouldOpenInBlank ? "_blank" : undefined}
   class={twMerge(
-    "text-blue-700 dark:text-blue-300 no-underline hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded",
+    "text-blue-700 dark:text-blue-300 no-underline hover:underline rounded",
+    commonStyles.focusRing,
     className,
   )}
   rel={shouldOpenInBlank ? "noreferrer" : undefined}

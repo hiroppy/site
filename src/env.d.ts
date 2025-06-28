@@ -1,10 +1,10 @@
 /// <reference path="../.astro/types.d.ts" />
 
-interface ImportMetaEnv {
+type ImportMetaEnv = {
   readonly FEEDLE_API_URL: string;
   readonly FEEDLE_API_TOKEN: string;
-}
+};
 
-interface ImportMeta {
+type ImportMeta = {
   readonly env: ImportMetaEnv;
-}
+};

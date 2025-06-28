@@ -4,11 +4,11 @@ import { join } from "node:path";
 import Layout from "./Layout.astro";
 import { generatePageOgImage } from "../utils/ogp";
 
-interface Props {
+type Props = {
   title: string;
   description?: string;
   pageType: string;
-}
+};
 
 const { title, description, pageType } = Astro.props;
 
