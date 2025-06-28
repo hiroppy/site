@@ -153,7 +153,7 @@ function buildServiceUrl(serviceData: ServiceGroup, category: string): string {
           </div>
 
           <div class="flex-1 overflow-y-auto p-2">
-            <div id="sidebar-services" class="space-y-1 pb-8">
+            <div id="sidebar-services" class="space-y-1">
               <NavItem
                 href={`/labs/feedle/${currentType}/${currentCategory}${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
                 isActive={!currentService}
@@ -188,9 +188,6 @@ function buildServiceUrl(serviceData: ServiceGroup, category: string): string {
                     />
                   );
                 })}
-
-              {/* 最下部のパディング確保用の空要素 */}
-              <div class="h-16" />
             </div>
           </div>
         </div>

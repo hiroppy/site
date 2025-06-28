@@ -176,7 +176,7 @@ a[class*="outline"]:hover {
     @apply rounded bg-gray-100 px-1 py-0.5 text-sm text-gray-800 dark:bg-gray-700 dark:text-gray-200;
   }
   .prose pre {
-    @apply mb-4 overflow-x-auto rounded-lg p-4 text-sm;
+    @apply mb-4 max-w-full overflow-x-auto rounded-lg p-4 text-sm;
   }
 
   .prose blockquote {
@@ -195,7 +195,7 @@ a[class*="outline"]:hover {
     @apply mx-auto;
   }
   .prose table {
-    @apply w-full border-collapse border border-gray-300 dark:border-gray-600;
+    @apply block w-full max-w-full border-collapse overflow-x-auto border border-gray-300 dark:border-gray-600;
   }
   .prose th,
   .prose td {

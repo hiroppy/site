@@ -115,35 +115,6 @@ for (const url of urls) {
       // Additional wait for any animations or transitions
       await page.waitForTimeout(500);
 
-      // For blog pages, ensure the right content panel is fully scrolled
-      if (url.includes("/blog/")) {
-        // Scroll the main content area to the bottom to capture full content
-        await page.evaluate(() => {
-          const contentArea = document.querySelector(
-            ".overflow-y-auto:not(.w-64)",
-          );
-          if (contentArea) {
-            contentArea.scrollTop = contentArea.scrollHeight;
-          }
-        });
-
-        // Wait for any lazy loading after scroll
-        await page.waitForTimeout(500);
-
-        // Scroll back to top for consistent screenshot
-        await page.evaluate(() => {
-          const contentArea = document.querySelector(
-            ".overflow-y-auto:not(.w-64)",
-          );
-          if (contentArea) {
-            contentArea.scrollTop = 0;
-          }
-        });
-
-        // Wait for scroll to complete
-        await page.waitForTimeout(200);
-      }
-
       // Generate screenshot name based on URL path and theme
       const urlPath = url.replace("http://localhost:3000", "");
       const cleanPath =
