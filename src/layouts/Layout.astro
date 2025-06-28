@@ -13,9 +13,27 @@ type Props = {
   description?: string;
   image?: string;
   isOptimizedImage?: boolean;
+  showHeader?: boolean;
+  showFooter?: boolean;
+  headerVariant?: "default" | "fullscreen";
+  fullscreen?: boolean;
 };
 
-const { title, description, image, isOptimizedImage = true } = Astro.props;
+const {
+  title,
+  description,
+  image,
+  isOptimizedImage = true,
+  showHeader = true,
+  showFooter = true,
+  headerVariant = "default",
+  fullscreen = false,
+} = Astro.props;
+
+// fullscreenの場合は関連するpropsを上書き
+const finalShowHeader = fullscreen ? true : showHeader;
+const finalShowFooter = fullscreen ? false : showFooter;
+const finalHeaderVariant = fullscreen ? "fullscreen" : headerVariant;
 const pageTitle = title ?? Astro.url.pathname.replace(/^\/|\/$/g, "");
 const siteDescription = description ?? SITE_DESCRIPTION;
 const ogImage = new URL(
@@ -97,10 +115,10 @@ const titleContent =
   <body
     class="font-body min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
   >
-    <Header />
+    {finalShowHeader && <Header variant={finalHeaderVariant} />}
     {/*TODO: 全ページこっちにmargin寄せる */}
     <slot />
-    <Footer />
+    {finalShowFooter && <Footer />}
     {import.meta.env.PROD && <GA />}
   </body>
 </html>

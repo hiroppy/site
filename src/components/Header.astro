@@ -9,14 +9,19 @@ import meImage from "../assets/images/meta/me.png";
 import meta from "../../node_modules/hiroppy/generated/meta.json";
 import { cn } from "../utils/cn";
 
+export interface Props {
+  variant?: "default" | "fullscreen";
+}
+
+const { variant = "default" } = Astro.props;
 const currentPath = Astro.url?.pathname || "";
-const isLabsPage = currentPath.startsWith("/labs/feedle");
+const isFullscreenPage = variant === "fullscreen";
 ---
 
 <header
   class="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md dark:border-slate-700 dark:bg-slate-900/80"
 >
-  <div class={cn("mx-auto px-6 py-4", isLabsPage ? "" : "container")}>
+  <div class={cn("mx-auto px-6 py-4", isFullscreenPage ? "" : "container")}>
     <div class="flex items-center justify-between">
       <div class="flex-1">
         <a

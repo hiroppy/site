@@ -1,0 +1,19 @@
+---
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class={`flex h-screen w-full ${className || ""}`}>
+  <aside class="sidebar h-full">
+    <slot name="sidebar" />
+  </aside>
+
+  <main
+    class="flex flex-1 flex-col overflow-hidden bg-gray-50 md:ml-0 dark:bg-gray-900"
+  >
+    <slot name="content" />
+  </main>
+</div>

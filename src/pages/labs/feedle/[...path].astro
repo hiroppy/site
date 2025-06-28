@@ -2,6 +2,7 @@
 export const prerender = false;
 
 import Layout from "../../../layouts/Layout.astro";
+import TwoPaneLayout from "../../../components/TwoPaneLayout.astro";
 import ArticleSidebar from "../../../components/feedle/ArticleSidebar.astro";
 import ArticleModal from "../../../components/feedle/ArticleModal.astro";
 import ServiceInfoHeader from "../../../components/feedle/ServiceInfoHeader.astro";
@@ -65,26 +66,27 @@ const pageDescription = generateDescription();
 const ogImagePath = `${BASE_PATH}/${path || "frontend"}/og.png`;
 ---
 
-<!-- 動的ページなのでLayoutを直接使用し、動的OG画像を設定 -->
+<!-- 動的ページなのでLayoutを使用し、動的OG画像を設定 -->
 <Layout
   title={pageTitle}
   description={pageDescription}
   image={ogImagePath}
   isOptimizedImage={false}
+  fullscreen
 >
-  <main class="flex h-screen w-full">
-    <ArticleSidebar
-      currentType={currentType}
-      currentCategory={currentCategory}
-      currentService={currentService}
-      currentPeriod={currentPeriod}
-      serviceGroups={serviceGroups}
-      lastHarvested={lastHarvested}
-    />
+  <TwoPaneLayout>
+    <div slot="sidebar" class="h-full">
+      <ArticleSidebar
+        currentType={currentType}
+        currentCategory={currentCategory}
+        currentService={currentService}
+        currentPeriod={currentPeriod}
+        serviceGroups={serviceGroups}
+        lastHarvested={lastHarvested}
+      />
+    </div>
 
-    <div
-      class="flex flex-1 flex-col overflow-hidden bg-gray-50 md:ml-0 dark:bg-gray-900"
-    >
+    <div slot="content" class="flex h-full flex-col">
       {
         currentService && (
           <ServiceInfoHeader
@@ -108,12 +110,12 @@ const ogImagePath = `${BASE_PATH}/${path || "frontend"}/og.png`;
 
       <ContentArea error={error} articles={articles} sources={sources} />
     </div>
-  </main>
+  </TwoPaneLayout>
 
   <ArticleModal />
 </Layout>
 
-<style>
+<style is:global>
   body {
     overflow: hidden;
   }
