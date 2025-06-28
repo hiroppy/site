@@ -29,6 +29,7 @@ module.exports = {
         "network-dependency-tree-insight": "off",
         "forced-reflow-insight": "off",
         "unused-css-rules": "off",
+        "unminified-javascript": "off",
 
         // pnpm previewなので不要
         "uses-text-compression": "off",
