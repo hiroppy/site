@@ -1,0 +1,103 @@
+---
+import { Icon } from "astro-icon/components";
+
+export interface Props {
+  type: "note" | "tip" | "important" | "warning" | "caution";
+}
+
+const { type } = Astro.props;
+
+const alertConfig = {
+  note: {
+    icon: "mdi:information",
+    title: "Note",
+    color: "blue",
+  },
+  tip: {
+    icon: "mdi:lightbulb",
+    title: "Tip",
+    color: "green",
+  },
+  important: {
+    icon: "mdi:alert-circle",
+    title: "Important",
+    color: "purple",
+  },
+  warning: {
+    icon: "mdi:alert",
+    title: "Warning",
+    color: "yellow",
+  },
+  caution: {
+    icon: "mdi:alert-octagon",
+    title: "Caution",
+    color: "red",
+  },
+};
+
+const config = alertConfig[type];
+---
+
+<div
+  class:list={[
+    "alert",
+    `alert-${type}`,
+    "my-6 rounded-lg p-4",
+    // Light mode colors
+    type === "note" && "border-blue-300 bg-blue-50 text-blue-800",
+    type === "tip" && "border-green-300 bg-green-50 text-green-800",
+    type === "important" && "border-purple-300 bg-purple-50 text-purple-800",
+    type === "warning" && "border-yellow-300 bg-yellow-50 text-yellow-800",
+    type === "caution" && "border-red-300 bg-red-50 text-red-800",
+    // Dark mode colors
+    type === "note" &&
+      "dark:border-blue-500 dark:bg-blue-900/20 dark:text-blue-200",
+    type === "tip" &&
+      "dark:border-green-500 dark:bg-green-900/20 dark:text-green-200",
+    type === "important" &&
+      "dark:border-purple-500 dark:bg-purple-900/20 dark:text-purple-200",
+    type === "warning" &&
+      "dark:border-yellow-500 dark:bg-yellow-900/20 dark:text-yellow-200",
+    type === "caution" &&
+      "dark:border-red-500 dark:bg-red-900/20 dark:text-red-200",
+  ]}
+  role="note"
+>
+  <div class="alert-header mb-2 flex items-center gap-2 font-semibold">
+    <Icon
+      name={config.icon}
+      class:list={[
+        "alert-icon flex-shrink-0",
+        // Light mode icon colors
+        type === "note" && "text-blue-600",
+        type === "tip" && "text-green-600",
+        type === "important" && "text-purple-600",
+        type === "warning" && "text-yellow-600",
+        type === "caution" && "text-red-600",
+        // Dark mode icon colors
+        type === "note" && "dark:text-blue-400",
+        type === "tip" && "dark:text-green-400",
+        type === "important" && "dark:text-purple-400",
+        type === "warning" && "dark:text-yellow-400",
+        type === "caution" && "dark:text-red-400",
+      ]}
+      size={20}
+    />
+    <span class="alert-title text-sm font-bold tracking-wider uppercase"
+      >{config.title}</span
+    >
+  </div>
+  <div class="alert-content text-sm leading-relaxed">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .alert-content :global(p:first-child) {
+    margin-top: 0;
+  }
+
+  .alert-content :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

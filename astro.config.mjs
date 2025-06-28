@@ -7,6 +7,7 @@ import tailwindcss from "@tailwindcss/vite";
 import astroExpressiveCode from "astro-expressive-code";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { remarkCodeGroups } from "./src/utils/remark-code-groups.mjs";
+import { remarkAlerts } from "./src/utils/remark-alerts.mjs";
 
 const adapter =
   process.env.NODE_ENV !== "test"
@@ -18,7 +19,7 @@ export default defineConfig({
   site: "https://hiroppy.me/",
 
   markdown: {
-    remarkPlugins: [remarkCodeGroups],
+    remarkPlugins: [remarkCodeGroups, remarkAlerts],
   },
 
   integrations: [
@@ -44,7 +45,7 @@ export default defineConfig({
       plugins: [pluginCollapsibleSections()],
     }),
     mdx({
-      remarkPlugins: [remarkCodeGroups],
+      remarkPlugins: [remarkCodeGroups, remarkAlerts],
     }),
     icon(),
   ],
