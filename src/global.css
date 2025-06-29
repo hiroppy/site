@@ -195,7 +195,7 @@ a[class*="outline"]:hover {
     @apply mx-auto;
   }
   .prose table {
-    @apply block w-full max-w-full border-collapse overflow-x-auto border border-gray-300 dark:border-gray-600;
+    @apply w-full border-collapse border border-gray-300 dark:border-gray-600;
   }
   .prose th,
   .prose td {
