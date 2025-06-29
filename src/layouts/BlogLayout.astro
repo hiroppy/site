@@ -92,22 +92,24 @@ if (import.meta.env.PROD || process.env.NODE_ENV === "test") {
       slot="sidebar"
       class="hidden h-full w-64 flex-shrink-0 border-r border-gray-200 bg-gray-50 lg:block dark:border-gray-700 dark:bg-gray-900"
     >
-      <div class="flex h-full flex-col overflow-hidden">
-        <div class="flex-1 p-6">
-          <div class="pt-4">
-            <h2
-              class="mb-4 flex items-center text-sm font-semibold text-gray-900 dark:text-white"
-            >
-              <Icon
-                icon="mdi:table-of-contents"
-                class="mr-2"
-                width="16"
-                height="16"
-              />
-              目次
-            </h2>
-            <TableOfContents headings={headings} />
-          </div>
+      <div class="flex h-full flex-col">
+        <!-- Fixed header -->
+        <div class="flex-shrink-0 px-6 pt-10 pb-4">
+          <h2
+            class="flex items-center text-sm font-semibold text-gray-900 dark:text-white"
+          >
+            <Icon
+              icon="mdi:table-of-contents"
+              class="mr-2"
+              width="16"
+              height="16"
+            />
+            目次
+          </h2>
+        </div>
+        <!-- Scrollable content -->
+        <div class="flex-1 overflow-y-auto px-6 pb-6">
+          <TableOfContents headings={headings} />
         </div>
       </div>
     </aside>
