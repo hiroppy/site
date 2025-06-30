@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/BlogLayout.astro
 title: Playwrightで実際のDBを用いてテストを並列実行し高速化する
-date: 2025-06-27
+date: 2025-07-01
 description: WorkerFixtures、動的ポート割り当て、ヘルスチェックによる完全な並列化実装
 image: /images/brands/playwright.png
 tags: e2e,testing,node.js
@@ -32,20 +32,59 @@ LLMにとっても人間にとっても実行速度というのは重要で、�
 ## Playwrightの問題点
 
 [webserver](https://playwright.dev/docs/test-webserver)は、単一のサーバー起動のみしかサポートしていないため、これに依存することはできません。
-Playwrightは複数のアプリケーションを起動することを想定してないため、もちろんポートの管理などもありません。APIからのアクセスはできるものの特に利用できるものもないためここは自分たちで対応する必要があります。
+Playwrightは複数のAPPを起動することを想定してないため、もちろんポートの管理などもありません。APIからのアクセスはできるものの特に利用できるものもないためここは自分たちで対応する必要があります。
 
 ## 全体の流れ
 
-1. テストするユーザーの認証を全体のテスト前に行い、`storageState`として保存し、各テストは認証をスキップする
-2. 各integrationテスト実行前に、動的にPostgreSQLコンテナとアプリケーションを起動する
-3. 各テストは、`afterEach`でDBのデータをリセットする
-4. 各integrationはテストが終了次第、DBの破棄とアプリケーションの終了を行う
+1. APP側で認証を通るようにする
+2. テストするユーザーの認証を全体のテスト前に行い、`storageState`として保存し、各テストは認証をスキップする
+3. 各integrationテスト実行前に、動的にPostgreSQLコンテナとAPPを起動する
+4. 各テストは、`afterEach`でDBのデータをリセットする
+5. 各integrationはテストが終了次第、DBの破棄とAPPの終了を行う
+
+## APP側で認証を通るようにする
+
+Googleなどの認証をe2eで突破するのは大変なので、あまりやりたくないですが、プロダクトコード内で偽装します。
+`NEXTAUTH_TEST_MODE === "true"`のときに、JWTのエンコード/デコード処理を上書きします。
+
+<OG url="https://zenn.dev/moozaru/articles/e35ce8e47ac805" />
+
+<br />
+
+```ts {3-16} {25}
+import type { NextAuthConfig } from "next-auth";
+
+export const configForTest = {
+  jwt: {
+    encode: async ({ token }) => {
+      return btoa(JSON.stringify(token));
+    },
+    decode: async ({ token }) => {
+      if (!token) {
+        return {};
+      }
+
+      return JSON.parse(atob(token));
+    },
+  },
+} satisfies Omit<NextAuthConfig, "providers">;
+
+export const config = {
+  providers: [],
+  callbacks: {
+    session: ({ session }) => {
+      return session;
+    },
+  },
+  ...(process.env.NEXTAUTH_TEST_MODE === "true" ? configForTest : {}),
+} satisfies NextAuthConfig;
+```
 
 ## ユーザーの認証状態を事前に作成する
 
 毎回のテストでログイン処理を実行することは、実行時間の観点から非効率的です。
-Playwrightの公式ドキュメントでも推奨されているように、テストで使用するすべてのユーザーの認証状態を事前に`storageState`として保存しておくことで、各テストケースではすでにログイン済みの状態から開始できるようになります。
-これを実行すると、e2e/.authにそれぞれのアカウントの認証状態がjsonで保存されます。
+Playwrightの公式ドキュメントにもあるように、テストで使用するすべてのユーザーの認証状態を事前に`storageState`として保存しておくことで、各テストケースではすでにログイン済みの状態から開始できるようになります。
+これを実行すると、`e2e/.auth`にそれぞれのアカウントの認証状態がjsonで保存されます。
 
 <OG url="https://playwright.dev/docs/auth" />
 
@@ -64,7 +103,7 @@ export const user1: User = {
 };
 ```
 
-```ts [playwright.config.ts] {"事前実行":8-9} {"完了待ち": 16}
+```ts [playwright.config.ts]
 import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
@@ -80,14 +119,13 @@ export default defineConfig({
       use: {
         ...devices["Desktop Chrome"],
       },
-      dependencies: ["setup"],
+      dependencies: ["setup"], // setupの後に実行
     },
   ],
 });
 ```
 
-{/* prettier-ignore */}
-```ts [e2e/helpers/users.ts] {"JWTトークンの生成とCookie設定": 7-20} {"認証状態をファイルに保存": 23-25}
+```ts [e2e/helpers/users.ts]
 import type { BrowserContext, TestType } from "@playwright/test";
 import type { User } from "next-auth";
 import type { JWT } from "next-auth/jwt";
@@ -101,19 +139,18 @@ export async function createUserAuthState(context: BrowserContext, jwt: JWT) {
       value: btoa(
         JSON.stringify({
           ...jwt,
-          sub: jwt.user.id, // JWTのsubjectフィールドにユーザーIDを設定
+          sub: jwt.user.id,
         }),
       ),
       domain: "localhost",
       path: "/",
       httpOnly: true,
       sameSite: "Lax",
-      expires: Math.round((Date.now() + 60 * 60 * 24 * 1000 * 7) / 1000), // 7日間有効
+      expires: Math.round((Date.now() + 60 * 60 * 24 * 1000 * 7) / 1000),
     },
   ]);
 
-  // ブラウザの認証状態をファイルに保存
-  // 後のテストでこのファイルを読み込むことで認証済み状態を復元
+  // ブラウザの認証状態をファイルに保存し、各テストでこのファイルを読み込むことにより認証済み状態を復元
   await context.storageState({
     path: getStorageStatePath(jwt.user.id ?? ""),
   });
@@ -134,20 +171,35 @@ setup("Create user1 auth", async ({ context }) => {
 
 :::
 
-## ワーカーごとの独立したデータベース環境
+## ワーカーごとの独立した環境を構築する
 
-並列E2Eテストの核心は、**各ワーカーが完全に独立したデータベースを持つこと**です。[Testcontainers](https://testcontainers.com/)を使用することで、動的にPostgreSQLコンテナを作成し、ポート競合を完全に回避できます。
+複数のDBとAPPを並列に起動するための仕組みを構築します。これにより、各ワーカーが独立した環境でテストを実行できるようになります。
 
-### Testcontainersの利点
+### 動的にDBを起動させる準備をする
 
-Testcontainersを採用することで、実際のPostgreSQLを使用した本番同等のデータベース環境でテストを実行できます。各ワーカーは完全に独立したデータベースインスタンスを持つため、テスト間の干渉を心配する必要がありません。また、テスト終了時には自動的にリソースがクリーンアップされるため、リソースリークの心配もありません。Dockerが利用可能な環境であれば、ローカルでもCI/CD環境でも同じように実行できる点も大きな利点です。
+Testcontainersを用いて、PostgreSQLのコンテナを動的に起動し、各ワーカーが独自のデータベースを使用できるようにします。これにより、テスト間でのデータ競合を防ぎます。
 
-### 動的ポート割り当ての仕組み
+<OG url="https://testcontainers.com/" />
 
-従来のアプローチでは、PostgreSQLの標準ポート（5432）を固定で使用するため、複数のワーカーが同時に実行されるとポート競合が発生します。この問題を解決するため、`DATABASE_PORT=0`を指定することで、OSに空きポートの自動割り当てを任せる方式を採用します。
+今回は、dockerの`compose`を利用していますが、そうでない場合は`GenericContainer`を利用してください。portを`0`にしておくことにより、空いているポートに勝手にアサインされます。
 
-{/* prettier-ignore */}
-```ts title="tests/db.setup.ts" {"Docker Composeの環境設定": 13-18} {"動的ポート割り当て": 19} {"コンテナ起動と待機": 20-24} {"Prismaマイグレーション実行": 29} {"リソース管理とクリーンアップ": 33-42}
+ここでは競合ポートを避ける処理と起動までの準備を行います。
+
+::: code-group
+
+```yaml [compose.yml]
+services:
+  db:
+    image: postgres:17
+    ports:
+      - "${DATABASE_PORT:-5432}:5432" # 動的ポート対応のため、上書きできるようにしておく
+    environment:
+      POSTGRES_DB: testdb
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+```
+
+```ts [tests/db.setup.ts]
 import { exec } from "node:child_process";
 import { promisify } from "node:util";
 import { DockerComposeEnvironment, Wait } from "testcontainers";
@@ -157,34 +209,30 @@ import { createDBUrl } from "../src/app/_utils/db";
 const execAsync = promisify(exec);
 
 export async function setupDB({ port }: { port: "random" | number }) {
-  // Docker ComposeからPostgreSQLコンテナを起動
-  // テスト用の環境変数とポート設定を動的に変更
   const container = await new DockerComposeEnvironment(".", "compose.yml")
     .withEnvironmentFile(".env.test") // テスト専用の環境変数ファイル
     .withEnvironment({
-      // compose.ymlで ports: ${DATABASE_PORT:-5432}:5432 の形式にしておく
       // 0を指定することでOSが自動的に空きポートを割り当て
       DATABASE_PORT: port === "random" ? "0" : `${port}`,
     })
-    .withWaitStrategy("db", Wait.forListeningPorts()) // ポートが利用可能になるまで待機
-    .up(["db"]); // dbサービスのみ起動
+    .withWaitStrategy("db", Wait.forListeningPorts())
+    .up(["db"]);
 
   const dbContainer = container.getContainer("db-1");
-  const mappedPort = dbContainer.getMappedPort(5432); // 実際に割り当てられたポート取得
+  const mappedPort = dbContainer.getMappedPort(5432);
   const url = createDBUrl({
     host: dbContainer.getHost(),
     port: mappedPort,
   });
 
-  // データベーススキーマの自動セットアップ
+  // migrate
   await execAsync(`DATABASE_URL=${url} npx prisma db push`);
 
   const prisma = new PrismaClient({ datasources: { db: { url } } });
 
-  // クリーンアップ関数の定義
   async function down() {
     await prisma.$disconnect();
-    await container.down(); // コンテナの停止と削除
+    await container.down();
   }
 
   return {
@@ -193,7 +241,6 @@ export async function setupDB({ port }: { port: "random" | number }) {
     port: mappedPort,
     prisma,
     down,
-    // using宣言でのリソース自動管理をサポート
     async [Symbol.asyncDispose]() {
       await down();
     },
@@ -201,42 +248,30 @@ export async function setupDB({ port }: { port: "random" | number }) {
 }
 ```
 
-この仕組みにより、各ワーカーは独自のポートで実際のPostgreSQLデータベースを取得できるようになります。すべてのワーカーが同じPrismaスキーマを使用しながらも、データベースレベルで完全に分離されているため、テスト間でのデータ競合は一切発生しません。
+:::
 
-### Docker Compose設定の準備
+ちなみに`db.setup.ts`はvitestで並列にDBを立ち上げることもできるので、共通化しておくと便利です。
 
-```yaml
-# compose.yml
-services:
-  db:
-    image: postgres:15
-    ports:
-      - "${DATABASE_PORT:-5432}:5432" # 動的ポート対応
-    environment:
-      POSTGRES_DB: testdb
-      POSTGRES_USER: testuser
-      POSTGRES_PASSWORD: testpass
-```
+### 動的にAPPを起動する準備
 
-## ワーカーごとの独立したアプリケーション起動
+データベースの隔離と同様に、各ワーカーは独自のポートでNext.jsを起動する必要があります。`baseURL`や、`dbPort`、`appPort`を実行時に環境変数で上書きし、各種ポートや向き先を変更します。
+また、ポートの確率やヘルスチェックを行うためのユーティリティ関数も用意します。[get-port](https://www.npmjs.com/package/get-port)を利用してもいいです。
 
-データベースの隔離と同様に、各ワーカーは独自のポートでNext.jsアプリケーションを起動する必要があります。これにより、アプリケーションレベルでも完全な隔離を実現し、ワーカー間の干渉を防ぎます。
+ここでも競合ポートを避ける処理と起動までの準備を行います。
 
-```ts [アプリケーション起動ヘルパー]
+::: code-group
+
+```ts [e2e/helpers/setupApp.ts]
 import { exec } from "node:child_process";
 import { getRandomPort } from "./getRandomPort";
 import { waitForHealth } from "./waitForHealth";
 
 export async function setupApp(dbPort: number) {
-  const appPort = await getRandomPort(); // 空きポートを自動取得
+  const appPort = await getRandomPort();
   const baseURL = `http://localhost:${appPort}`;
-
-  // 環境変数でDBポートとアプリポートを指定してNext.js起動
   const cp = exec(
     `NEXTAUTH_URL=${baseURL} DATABASE_PORT=${dbPort} pnpm start --port ${appPort}`,
   );
-
-  // アプリケーションの起動完了を確実に待機
   await waitForHealth(baseURL);
 
   return {
@@ -244,144 +279,26 @@ export async function setupApp(dbPort: number) {
     baseURL,
     async [Symbol.asyncDispose]() {
       if (cp.pid) {
-        process.kill(cp.pid); // プロセスの確実な終了
-      }
-    },
-  };
-}
-```
-
-## WorkerFixturesによる効率的な並列化
-
-Playwrightの並列実行において、WorkerFixturesは最も重要な概念です。従来のglobalSetupアプローチとは根本的に異なり、並列E2Eテストを実現する上で不可欠な機能となっています。
-
-### globalSetupの根本的な問題
-
-従来のglobalSetupアプローチでは、すべてのワーカーが単一のリソースを共有することになります。これは並列実行時に致命的な問題を引き起こします。
-
-::: code-group
-
-```ts [問題のあるglobalSetup]
-export default async function globalSetup() {
-  // 全workerで共有される単一のDB
-  const db = await setupDB({ port: 5432 }); // 固定ポート
-  global.dbInstance = db;
-
-  // 単一のアプリケーション起動
-  const app = exec("pnpm start --port 3000"); // 固定ポート
-  global.appProcess = app;
-}
-
-// 複数workerで競合が発生
-// - 同じポートを取り合い失敗
-// - 同一DBでテストデータが競合
-// - 1つのworkerが失敗すると他にも影響
-```
-
-```ts [グローバル状態の問題]
-test("user creation", async () => {
-  await global.dbInstance.user.create({...}); // 他のテストに影響
-});
-
-test("user deletion", async () => {
-  await global.dbInstance.user.deleteMany(); // 他のテストのデータも削除
-});
-```
-
-:::
-
-### fixturesによるテスト環境の構築
-
-Playwrightの`webserver`機能は複数のポートでの起動をサポートしていないため、各テストで独自のアプリケーションインスタンスを起動する必要があります。この課題を解決するため、fixturesにアプリケーションとデータベースを構築する`setup`機能を追加します。`worker`スコープを指定することで、ワーカープロセス単位でリソースが隔離され、真の並列実行が可能になります。
-
-<OG url="https://playwright.dev/docs/test-fixtures#execution-order" />
-
-::: code-group
-
-```ts [fixtures.ts - Worker独立化]
-import { exec } from "node:child_process";
-import { test as base } from "@playwright/test";
-import { setupDB } from "../tests/db.setup";
-import { getRandomPort } from "./helpers/getRandomPort";
-import { waitForHealth } from "./helpers/waitForHealth";
-
-export type TestFixtures = {
-  reset: () => Promise<void>;
-};
-
-export type WorkerFixtures = {
-  setup: {
-    prisma: PrismaClient;
-    appPort: number;
-    baseURL: string;
-    dbURL: string;
-  };
-};
-
-export const test = base.extend<TestFixtures, WorkerFixtures>({
-  setup: [
-    async ({ browser }, use) => {
-      // worker毎に完全に独立したリソース
-      const appPort = await getRandomPort();
-      await using dbSetup = await setupDB({ port: "random" });
-      const baseURL = `http://localhost:${appPort}`;
-
-      const cp = exec(
-        `NEXTAUTH_URL=${baseURL} DATABASE_PORT=${dbSetup.port} pnpm start --port ${appPort}`,
-      );
-
-      await waitForHealth(baseURL);
-
-      // browserのbaseURLを自動設定
-      const originalNewContext = browser.newContext.bind(browser);
-      browser.newContext = async () => {
-        return originalNewContext({ baseURL });
-      };
-
-      await use({
-        prisma: dbSetup.prisma,
-        appPort,
-        baseURL,
-        dbURL: dbSetup.url,
-      });
-
-      // worker終了時の自動クリーンアップ
-      if (cp.pid) {
         process.kill(cp.pid);
       }
     },
-    {
-      scope: "worker", // 重要: workerスコープを指定
-      auto: true, // 自動実行
-    },
-  ],
-
-  // テストスコープでの軽量リセット
-  reset: async ({ setup }, use) => {
-    use(async () => {
-      await truncateDB(setup.prisma);
-    });
-  },
-});
+  } as const;
+}
 ```
 
-```ts [getRandomPort.ts]
+```ts [e2e/helpers/getRandomPort.ts]
 import { createServer } from "node:http";
 
 export async function getRandomPort() {
   return new Promise<number>((resolve) => {
-    const server = createServer((req, res) => {
-      res.end("");
-    });
+    const server = createServer();
 
-    server.listen(0); // OSが空きポートを自動割り当て
-
-    server.on("listening", () => {
+    server.listen(0, () => {
       const address = server.address();
       const port = address && typeof address === "object" ? address.port : null;
 
       if (port) {
-        server.close(); // 即座にサーバーを閉じてポート解放
+        server.close();
         resolve(port);
       }
     });
@@ -389,12 +306,12 @@ export async function getRandomPort() {
 }
 ```
 
-```ts [waitForHealth.ts]
+```ts [e2e/helpers/waitForHealth.ts]
 import { setTimeout } from "node:timers/promises";
 
 export async function waitForHealth(baseUrl: string) {
   const maxAttempts = 30;
-  const interval = 500;
+  const interval = 100;
   const healthUrl = `${baseUrl}/api/health`;
   let attempts = 0;
 
@@ -406,12 +323,10 @@ export async function waitForHealth(baseUrl: string) {
         const data = await response.json();
 
         if (data.status === "ok") {
-          return; // ヘルスチェック成功
+          return;
         }
       }
-    } catch {
-      // 接続エラーは無視して次の試行へ
-    }
+    } catch {}
 
     attempts++;
     await setTimeout(interval);
@@ -421,39 +336,149 @@ export async function waitForHealth(baseUrl: string) {
 }
 ```
 
-```ts [ヘルスエンドポイント - app/api/health/route.ts]
-import { NextResponse } from "next/server";
+:::
 
-export async function GET() {
-  try {
-    // DB接続確認
-    await prisma.$queryRaw`SELECT 1`;
+### fixturesでDBとAPPを起動する
 
-    return NextResponse.json({
-      status: "ok",
-      timestamp: new Date().toISOString(),
-    });
-  } catch (error) {
-    return NextResponse.json(
-      { status: "error", error: error.message },
-      { status: 500 },
-    );
-  }
+次に、Playwrightの`fixtures`を利用して、各ワーカーごとに独立したデータベースとアプリケーションを起動する仕組みを実装します。
+`worker`スコープを定義し、workerプロセスごとに起動のsetupを自動で行います。
+
+<OG url="https://playwright.dev/docs/test-fixtures#worker-scoped-fixtures" />
+
+::: code-group
+
+```ts [e2e/fixtures.ts]
+import { test as base } from "@playwright/test";
+import type { User } from "next-auth";
+import { setupDB } from "../tests/db.setup";
+import { setupApp } from "./helpers/app";
+import { generatePrismaClient } from "./helpers/prisma";
+
+export type TestFixtures = {};
+
+export type WorkerFixtures = {
+  setup: Awaited<{
+    prisma: Awaited<ReturnType<typeof setupDB>>["prisma"];
+    appPort: number;
+    baseURL: string;
+    dbURL: string;
+  }>;
+};
+
+export const test = base.extend<TestFixtures, WorkerFixtures>({
+  setup: [
+    async ({ browser }, use) => {
+      await using dbSetup = await setupDB({ port: "random" });
+      await using appSetup = await setupApp(dbSetup.port);
+      const baseURL = appSetup.baseURL;
+      const originalNewContext = browser.newContext.bind(browser);
+
+      // 新しいbaseURLを含んだコンテキストを新たに作成
+      browser.newContext = async () => {
+        return originalNewContext({ baseURL });
+      };
+
+      await use({
+        prisma: dbSetup.prisma,
+        appPort: appSetup.appPort,
+        baseURL,
+        dbURL: dbSetup.url,
+      });
+    },
+    {
+      scope: "worker",
+      auto: true,
+    },
+  ],
+});
+```
+
+```ts [e2e/helpers/prisma.ts]
+import { PrismaClient } from "../../src/app/__generated__/prisma";
+
+export async function generatePrismaClient(url: string) {
+  const prisma = new PrismaClient({
+    datasources: {
+      db: {
+        url,
+      },
+    },
+  });
+
+  return {
+    prisma,
+    async [Symbol.asyncDispose]() {
+      await prisma.$disconnect();
+    },
+  } as const;
 }
 ```
 
-```ts [移行手順 - playwright.config.ts変更]
-// 削除
-export default defineConfig({
--  globalSetup: require.resolve('./e2e/globalSetup'),
--  globalTeardown: require.resolve('./e2e/globalTeardown'),
-  fullyParallel: true, // 並列実行を有効化
-  projects: [
+:::
+
+## テストユーザーを利用できるようにする
+
+最初に作成したログイン済みユーザーをテストで利用できるように変更します。
+
+::: code-group
+
+```ts [e2e/fixtures.ts]
+import { test as base } from "@playwright/test";
+import type { User } from "next-auth";
+import { setupDB, truncate } from "../tests/db.setup";
+import { setupApp } from "./helpers/app";
+import { generatePrismaClient } from "./helpers/prisma";
+import { registerUserToDB } from "./helpers/users";
+
+export type TestFixtures = {
+  storageState: string;
+  registerToDB: (user: User) => Promise<void>;
+  reset: () => Promise<void>;
+};
+
+export type WorkerFixtures = {
+  setup: Awaited<{
+    prisma: Awaited<ReturnType<typeof setupDB>>["prisma"];
+    appPort: number;
+    baseURL: string;
+    dbURL: string;
+  }>;
+};
+
+export const test = base.extend<TestFixtures, WorkerFixtures>({
+  setup: [
+    async ({ browser }, use) => {
+      await using dbSetup = await setupDB({ port: "random" });
+      await using appSetup = await setupApp(dbSetup.port);
+      const baseURL = appSetup.baseURL;
+
+      const originalNewContext = browser.newContext.bind(browser);
+
+      // 新しいbaseURLを含んだコンテキストを新たに作成
+      browser.newContext = async () => {
+        return originalNewContext({
+          baseURL,
+        });
+      };
+
+      await use({
+        prisma: dbSetup.prisma,
+        appPort: appSetup.appPort,
+        baseURL,
+        dbURL: dbSetup.url,
+      });
+    },
     {
-      name: "chrome",
-      use: { ...devices["Desktop Chrome"] },
+      scope: "worker",
+      auto: true,
     },
   ],
+  registerToDB: async ({ reset, setup }, use) => {
+    await use(async (user: User) => {
+      await registerUserToDB(user, setup.dbURL);
+    });
+    await reset();
+  },
 });
 ```
 
