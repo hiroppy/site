@@ -1,4 +1,5 @@
 export const SITE_TITLE = "hiroppy's site";
+export const BLOG_SITE_TITLE = "技術探し";
 export const SITE_DESCRIPTION =
   "Hiroppy is a JavaScript engineer and working on some OSS projects and Japanese communities.";
 export const BLOG_DESCRIPTION =

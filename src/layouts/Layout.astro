@@ -3,7 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import Footer from "../components/Footer.astro";
 import GA from "../components/GA.astro";
 import Header from "../components/Header.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../constants";
+import { SITE_DESCRIPTION, SITE_TITLE, BLOG_SITE_TITLE } from "../constants";
 import meImage from "../assets/images/meta/me.png";
 import { importAssets, getImageSrc } from "../utils/importAssets";
 import "../global.css";
@@ -46,8 +46,10 @@ const ogImage = new URL(
 );
 
 const url = new URL(Astro.url.pathname, Astro.site);
+const isBlogPage = Astro.url.pathname.startsWith("/blog");
+const siteTitleToUse = isBlogPage ? BLOG_SITE_TITLE : SITE_TITLE;
 const titleContent =
-  pageTitle === "" ? SITE_TITLE : `${pageTitle} - ${SITE_TITLE}`;
+  pageTitle === "" ? siteTitleToUse : `${pageTitle} - ${siteTitleToUse}`;
 ---
 
 <!doctype html>
