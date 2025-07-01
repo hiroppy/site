@@ -2,13 +2,17 @@
 
 ## Commands
 
-- **Build/Run**: `pnpm build`, `pnpm dev`, `pnpm preview`
-- **Data**: `pnpm data:generate`, `pnpm cache`, `pnpm data:clean`
-- **Lint/Format**: `pnpm fmt` (prettier), `pnpm fmt:check`
+- **Setup**: `pnpm setup` (git hooks and corepack setup)
+- **Build/Run**: `pnpm build`, `pnpm build:local` (test build), `pnpm dev`, `pnpm preview`
+- **Lint/Format**: `pnpm fmt` (prettier), `pnpm fmt:check`, `pnpm lint` (knip dependency analysis)
 - **Typecheck**: `pnpm check` (astro check)
-- **Test**: `pnpm test` (playwright), `pnpm test:update` (update snapshots)
-- **Single test**: `npx playwright test tests/vrt.spec.ts -g "VRT: /blog"`
-- **A11y/Performance**: `test:a11y` (playwright axe-core), `pnpm lh` (lighthouse)
+- **Test**:
+  - **Prerequisites**: Run `pnpm build:local` before running tests
+  - **A11y**: `pnpm test:a11y` (playwright axe-core)
+  - **VRT**: `pnpm test:vrt:update` (update snapshots via Docker), `pnpm test:vrt:ci` (run VRT tests)
+  - **VRT Specific**: `pnpm test:vrt:ci:pages`, `pnpm test:vrt:ci:components`
+  - **Performance**: `pnpm lh` (lighthouse)
+- **Other**: `pnpm index` (update Algolia search), `pnpm generate:feedle-og` (generate OG images), `pnpm docker:clean`
 
 ## Code Style
 
@@ -25,6 +29,7 @@
 ## Environment Variables
 
 - **FEEDLE_API_URL**: Feedle API base URL (default: `http://localhost:8787/api/v1`)
+- **FEEDLE_API_TOKEN**: Feedle API authentication token
   - Configure in `.env` file for local development
   - See `.env.example` for reference
 
