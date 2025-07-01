@@ -35,10 +35,8 @@ const { title, page, allTags, currentTag, showSearch = true } = Astro.props;
   }
 
   <!-- Tags (Sticky) -->
-  <div class="sticky top-16 z-40 mb-8 py-6 backdrop-blur-lg">
-    <div class="mx-auto max-w-4xl">
-      <TagsBox tags={allTags} />
-    </div>
+  <div class="sticky top-16 z-40 py-6 backdrop-blur-lg">
+    <TagsBox tags={allTags} />
   </div>
 
   <!-- Blog Posts Grid -->

@@ -1,5 +1,5 @@
 ---
-import PageLayout from "../../layouts/PageLayout.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
 import Section from "../../components/Section.astro";
 import Card from "../../components/Card.astro";
 import CardContent from "../../components/CardContent.astro";
@@ -23,13 +23,8 @@ const projects = [
 ];
 ---
 
-<PageLayout
-  title={pageTitle}
-  description="Experimental projects and laboratory space for testing new technologies and ideas"
-  pageType="Labs"
->
-  <main class="container mx-auto space-y-12 px-4 py-8">
-    <h1 class="mb-8 text-4xl font-bold text-gray-900 dark:text-white">Labs</h1>
+<MainLayout title={pageTitle}>
+  <div class="space-y-12">
     <Section title="Current Projects">
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {
@@ -72,5 +67,5 @@ const projects = [
         }
       </div>
     </Section>
-  </main>
-</PageLayout>
+  </div>
+</MainLayout>

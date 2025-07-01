@@ -1,4 +1,5 @@
 ---
+import { cn } from "../utils/cn";
 import Avatar from "./Avatar.astro";
 import Button from "./Button.astro";
 import Icon from "./Icon.astro";
@@ -29,7 +30,7 @@ const {
 } = Astro.props;
 ---
 
-<section class={`py-12 text-center ${className || ""}`}>
+<section class={cn("text-center py-6", className)}>
   <div class="mx-auto max-w-4xl">
     <div class="mb-6">
       <Avatar

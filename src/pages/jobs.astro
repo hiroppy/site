@@ -1,181 +1,172 @@
 ---
-import PageLayout from "../layouts/PageLayout.astro";
+import MainLayout from "../layouts/MainLayout.astro";
 import SkillBox from "../components/SkillBox.astro";
 import JobResume from "../components/JobResume.astro";
 import Section from "../components/Section.astro";
 import Icon from "../components/Icon.astro";
 ---
 
-<PageLayout
-  title="Skills & Work Experience"
-  description="JavaScript Engineer with expertise in frontend infrastructure, performance optimization, and modern web technologies"
-  pageType="Skills"
->
-  <main class="container mx-auto px-4 py-8">
-    <h1 class="mb-8 text-4xl font-bold text-gray-900 dark:text-white">
-      Skills & Work Experience
-    </h1>
-    <!-- Skills Section -->
-    <Section title="Technical Skills" class="mb-16">
-      <div class="mb-4 space-y-2">
-        <p class="text-gray-600 dark:text-gray-300">
-          2008年頃からJavaScriptとCを使ってプログラミングを始め、4年間画像処理を研究し、ニコニコ生放送の動画最適化についても研究をしていました。
-        </p>
-        <p class="text-gray-600 dark:text-gray-300">
-          現在は、主にwebpack、Turborepo、Viteなどのツールを使ったWebパフォーマンスとフロントエンドインフラストラクチャの構築が専門です。Next.jsとGraphQLを2017年から利用しており、様々な製品開発を行っています。
-        </p>
-      </div>
-      <div class="mb-6 flex items-center justify-end">
-        <span
-          class="inline-flex items-center space-x-1 rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-400"
-        >
-          <Icon icon="noto:construction-worker" width="16" height="16" />
-          <span>maintainer(including past)</span>
-        </span>
-      </div>
-      <div class="grid gap-6 xl:grid-cols-2">
-        <SkillBox
-          title="JavaScript"
-          color="bg-yellow-500"
-          items={[
-            {
-              title: "Node.js 👷",
-              from: 2011,
-            },
-            {
-              title: "TypeScript",
-              from: 2016,
-            },
-            {
-              title: "React",
-              from: 2015,
-            },
-            {
-              title: "Next.js",
-              from: 2017,
-            },
-            {
-              title: "Gatsby 👷",
-              from: 2017,
-              to: 2021,
-            },
-            {
-              title: "Astro",
-              from: 2022,
-            },
-            {
-              title: "Apollo",
-              from: 2017,
-            },
-            {
-              title: "Nestjs",
-              from: 2020,
-            },
-            {
-              title: "Mui",
-              from: 2021,
-            },
-            {
-              title: "ChakraUI 👷",
-              from: 2020,
-            },
-            {
-              title: "TailwindCSS",
-              from: 2019,
-            },
-            {
-              title: "Redux",
-              from: 2016,
-              to: 2019,
-            },
-            {
-              title: "Prisma",
-              from: 2022,
-            },
-            {
-              title: "NextAuth.js",
-              from: 2022,
-            },
-            {
-              title: "Electron",
-              from: 2017,
-            },
-            {
-              title: "webpack 👷",
-              from: 2017,
-            },
-            {
-              title: "Vite",
-              from: 2022,
-            },
-            {
-              title: "jQuery",
-              from: 2008,
-              to: 2014,
-            },
-          ]}
-        />
-        <SkillBox
-          title="Others"
-          color="bg-purple-500"
-          items={[
-            {
-              title: "Go",
-              from: 2022,
-            },
-            {
-              title: "C, C++",
-              from: 2008,
-              to: 2015,
-            },
-            {
-              title: "ActionScript",
-              from: 2010,
-              to: 2015,
-            },
-            {
-              title: "Java",
-              from: 2010,
-              to: 2012,
-            },
-            {
-              title: "OpenCV",
-              from: 2014,
-              to: 2015,
-            },
-            {
-              title: "Boost",
-              from: 2012,
-              to: 2015,
-            },
-            {
-              title: "GraphQL",
-              from: 2017,
-            },
-            {
-              title: "gRPC",
-              from: 2020,
-            },
-            {
-              title: "Terraform",
-              from: 2022,
-            },
-            {
-              title: "PostgreSQL",
-              from: 2014,
-            },
-            {
-              title: "DuckDB",
-              from: 2022,
-            },
-          ]}
-        />
-      </div>
-    </Section>
+<MainLayout title="Skills & Work Experience">
+  <!-- Skills Section -->
+  <Section title="Technical Skills" class="mb-16">
+    <div class="mb-4 space-y-2">
+      <p class="text-gray-600 dark:text-gray-300">
+        2008年頃からJavaScriptとCを使ってプログラミングを始め、4年間画像処理を研究し、ニコニコ生放送の動画最適化についても研究をしていました。
+      </p>
+      <p class="text-gray-600 dark:text-gray-300">
+        現在は、主にwebpack、Turborepo、Viteなどのツールを使ったWebパフォーマンスとフロントエンドインフラストラクチャの構築が専門です。Next.jsとGraphQLを2017年から利用しており、様々な製品開発を行っています。
+      </p>
+    </div>
+    <div class="mb-6 flex items-center justify-end">
+      <span
+        class="inline-flex items-center space-x-1 rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-400"
+      >
+        <Icon icon="noto:construction-worker" width="16" height="16" />
+        <span>maintainer(including past)</span>
+      </span>
+    </div>
+    <div class="grid gap-6 xl:grid-cols-2">
+      <SkillBox
+        title="JavaScript"
+        color="bg-yellow-500"
+        items={[
+          {
+            title: "Node.js 👷",
+            from: 2011,
+          },
+          {
+            title: "TypeScript",
+            from: 2016,
+          },
+          {
+            title: "React",
+            from: 2015,
+          },
+          {
+            title: "Next.js",
+            from: 2017,
+          },
+          {
+            title: "Gatsby 👷",
+            from: 2017,
+            to: 2021,
+          },
+          {
+            title: "Astro",
+            from: 2022,
+          },
+          {
+            title: "Apollo",
+            from: 2017,
+          },
+          {
+            title: "Nestjs",
+            from: 2020,
+          },
+          {
+            title: "Mui",
+            from: 2021,
+          },
+          {
+            title: "ChakraUI 👷",
+            from: 2020,
+          },
+          {
+            title: "TailwindCSS",
+            from: 2019,
+          },
+          {
+            title: "Redux",
+            from: 2016,
+            to: 2019,
+          },
+          {
+            title: "Prisma",
+            from: 2022,
+          },
+          {
+            title: "NextAuth.js",
+            from: 2022,
+          },
+          {
+            title: "Electron",
+            from: 2017,
+          },
+          {
+            title: "webpack 👷",
+            from: 2017,
+          },
+          {
+            title: "Vite",
+            from: 2022,
+          },
+          {
+            title: "jQuery",
+            from: 2008,
+            to: 2014,
+          },
+        ]}
+      />
+      <SkillBox
+        title="Others"
+        color="bg-purple-500"
+        items={[
+          {
+            title: "Go",
+            from: 2022,
+          },
+          {
+            title: "C, C++",
+            from: 2008,
+            to: 2015,
+          },
+          {
+            title: "ActionScript",
+            from: 2010,
+            to: 2015,
+          },
+          {
+            title: "Java",
+            from: 2010,
+            to: 2012,
+          },
+          {
+            title: "OpenCV",
+            from: 2014,
+            to: 2015,
+          },
+          {
+            title: "Boost",
+            from: 2012,
+            to: 2015,
+          },
+          {
+            title: "GraphQL",
+            from: 2017,
+          },
+          {
+            title: "gRPC",
+            from: 2020,
+          },
+          {
+            title: "Terraform",
+            from: 2022,
+          },
+          {
+            title: "PostgreSQL",
+            from: 2014,
+          },
+          {
+            title: "DuckDB",
+            from: 2022,
+          },
+        ]}
+      />
+    </div>
+  </Section>
 
-    <!-- Resume Section -->
-    <Section title="Work Experience" class="mb-16">
-      <JobResume />
-    </Section>
-  </main>
-</PageLayout>
+  <!-- Resume Section -->
+  <Section title="Work Experience" class="mb-16">
+    <JobResume />
+  </Section>
+</MainLayout>
