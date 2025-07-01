@@ -1053,5 +1053,25 @@
     "title": "Testcontainersを利用し実際のデータベースを用いたテストを並列実行する - hiroppy's site",
     "description": "開発時の環境と同じ実際のデータベースを用いて、テストを並列に実行する方法を紹介",
     "image": "https://hiroppy.me/blog/testcontainers-parallel-tests/og.png"
+  },
+  "https://playwright.dev/docs/auth#multiple-signed-in-roles": {
+    "title": "Authentication | Playwright",
+    "description": "Introduction",
+    "image": "https://repository-images.githubusercontent.com/221981891/8c5c6942-c91f-4df1-825f-4cf474056bd7"
+  },
+  "https://playwright.dev/docs/test-fixtures#worker-scoped-fixtures": {
+    "title": "Fixtures | Playwright",
+    "description": "Introduction",
+    "image": "https://repository-images.githubusercontent.com/221981891/8c5c6942-c91f-4df1-825f-4cf474056bd7"
+  },
+  "https://playwright.dev/docs/auth": {
+    "title": "Authentication | Playwright",
+    "description": "Introduction",
+    "image": "https://repository-images.githubusercontent.com/221981891/8c5c6942-c91f-4df1-825f-4cf474056bd7"
+  },
+  "https://zenn.dev/moozaru/articles/e35ce8e47ac805": {
+    "title": "E2EテストでNextAuth認証(OAuthなど)を突破する方法",
+    "description": "",
+    "image": "https://res.cloudinary.com/zenn/image/upload/s--ipCbiIXq--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:E2E%25E3%2583%2586%25E3%2582%25B9%25E3%2583%2588%25E3%2581%25A7NextAuth%25E8%25AA%258D%25E8%25A8%25BC%2528OAuth%25E3%2581%25AA%25E3%2581%25A9%2529%25E3%2582%2592%25E7%25AA%2581%25E7%25A0%25B4%25E3%2581%2599%25E3%2582%258B%25E6%2596%25B9%25E6%25B3%2595%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_34:zaru%2Cx_220%2Cy_108/bo_3px_solid_rgb:d6e3ed%2Cg_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyL2FiNDkwNTdmZTMuanBlZw==%2Cr_20%2Cw_90%2Cx_92%2Cy_102/co_rgb:6e7b85%2Cg_south_west%2Cl_text:notosansjp-medium.otf_30:%25E3%2583%25A0%25E3%2583%25BC%25E3%2582%25B6%25E3%2583%25AB%25E3%2581%25A1%25E3%2582%2583%25E3%2582%2593%25E3%2581%25AD%25E3%2582%258B%2Cx_220%2Cy_160/bo_4px_solid_white%2Cg_south_west%2Ch_50%2Cl_fetch:aHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FPaDE0R2hTeWVOcHN2TEdOdTdPeUFlU1JEbDhUNkNOX1p3NHBXSHpIRHN2NlBFPXMyNTAtYw==%2Cr_max%2Cw_50%2Cx_139%2Cy_84/v1627283836/default/og-base-w1200-v2.png"
   }
 }
