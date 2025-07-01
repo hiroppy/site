@@ -1,7 +1,7 @@
 ---
 import Icon from "./Icon.astro";
 import Hatena from "./icons/Hatena.astro";
-import Link from "./Link.astro";
+import Button from "./Button.astro";
 import { SITE_TITLE } from "../constants";
 
 type Props = {
@@ -15,31 +15,37 @@ const twitter = `https://twitter.com/share?url=${url}&text=${sharedTitle}&relate
 const twitterFollow =
   "https://twitter.com/intent/follow?screen_name=about_hiroppy";
 const hatena = `https://b.hatena.ne.jp/entry/panel/?url=${url}&title=${sharedTitle}#bbutton`;
+
+const shareButtonClass =
+  "flex items-center gap-2 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-300";
 ---
 
-<div class="share-buttons flex flex-row items-center justify-center gap-4">
-  <Link
+<div class="share-buttons flex flex-row items-center justify-center gap-2">
+  <Button
     href={twitter}
-    class="flex items-center gap-2 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-300"
-    aria-label="Tweet"
+    variant="ghost"
+    class={shareButtonClass}
+    ariaLabel="Tweet"
   >
     <Icon icon="mdi:twitter" width="20" height="20" />
     <span>Tweet</span>
-  </Link>
-  <Link
+  </Button>
+  <Button
     href={twitterFollow}
-    class="flex items-center gap-2 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-300"
-    aria-label="Follow on Twitter"
+    variant="ghost"
+    class={shareButtonClass}
+    ariaLabel="Follow on Twitter"
   >
     <Icon icon="mdi:twitter" width="20" height="20" />
     <span>Follow</span>
-  </Link>
-  <Link
+  </Button>
+  <Button
     href={hatena}
-    class="flex items-center gap-2 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-300"
-    aria-label="Link for hatena"
+    variant="ghost"
+    class={shareButtonClass}
+    ariaLabel="Link for hatena"
   >
     <Hatena className="h-4 w-4" />
     <span>Bookmark</span>
-  </Link>
+  </Button>
 </div>
