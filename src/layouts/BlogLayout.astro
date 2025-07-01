@@ -113,7 +113,7 @@ if (import.meta.env.PROD || process.env.NODE_ENV === "test") {
         </div>
         <!-- Fixed bottom section -->
         <div
-          class="flex flex-shrink-0 items-center border-t border-gray-200 px-6 py-6 dark:border-gray-700"
+          class="flex h-20 flex-shrink-0 items-center border-t border-gray-200 px-6 dark:border-gray-700"
         >
           <Link
             href="/blog"
@@ -295,7 +295,7 @@ if (import.meta.env.PROD || process.env.NODE_ENV === "test") {
         <!-- Pagination -->
         {
           index !== -1 && (
-            <section class="mt-12 mb-12">
+            <section class="my-12">
               <h2 class="mb-6 text-xl font-bold text-gray-900 dark:text-white">
                 <Icon
                   icon="noto:open-book"
@@ -354,7 +354,7 @@ if (import.meta.env.PROD || process.env.NODE_ENV === "test") {
         <!-- Related Posts -->
         {
           relatedPosts.length > 0 && (
-            <section class="mt-12 mb-24">
+            <section class="my-12">
               <h2 class="mb-6 text-xl font-bold text-gray-900 dark:text-white">
                 <Icon
                   icon="mdi:link-variant"
