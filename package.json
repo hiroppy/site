@@ -59,6 +59,7 @@
     "@astrojs/sitemap": "3.4.1",
     "@astrojs/vercel": "8.2.0",
     "@expressive-code/plugin-collapsible-sections": "0.41.2",
+    "@expressive-code/plugin-line-numbers": "0.41.2",
     "@tailwindcss/vite": "4.1.11",
     "algoliasearch": "5.29.0",
     "astro": "5.10.1",

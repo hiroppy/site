@@ -10,8 +10,8 @@ tags: e2e,testing,node.js
 import OG from "../../components/OG.astro";
 
 最近は、LLMによるコード生成が日常的になっています。
-それに伴って、テストはコードが正しく実行されているかを保証するために今後更に重要になっていきますが、
-LLMにとっても人間にとっても実行速度というのは重要で、特にe2eは実行速度が遅い点が課題です。
+それに伴って、テストはコードが正しく実行されているかを保証するために今後更に重要になっていきます。
+そこでLLMにとっても人間にとっても、実行速度が重要な要素となりますが、特にe2eは実行速度が遅い点が課題です。
 
 さらに実際のDBを用いたテストを行う際、並列に実行した場合にはテスト全体を冪等にすることは難しく、直列実行が一般的です。(GitHub Actionsのmatrixやコンテナで隔離すれば可能)
 
@@ -38,9 +38,9 @@ Playwrightは複数のAPPを起動することを想定してないため、も�
 
 1. APP側で認証を通るようにする
 2. テストするユーザーの認証を全体のテスト前に行い、`storageState`として保存し、各テストは認証をスキップする
-3. 各integrationテスト実行前に、動的にPostgreSQLコンテナとAPPを起動する
+3. 各ワーカーはテスト実行前に、動的にPostgreSQLコンテナとAPPを起動する
 4. 各テストは、`afterEach`でDBのデータをリセットする
-5. 各integrationはテストが終了次第、DBの破棄とAPPの終了を行う
+5. 各ワーカーはテストが終了次第、DBの破棄とAPPの終了を行う
 
 ## APP側で認証を通るようにする
 
@@ -90,7 +90,7 @@ Playwrightの公式ドキュメントにもあるように、テストで使用�
 
 ::: code-group
 
-```ts [e2e/dummyUsers.ts] title="ダミーユーザーの作成"
+```ts [e2e/dummyUsers.ts]
 import type { User } from "next-auth";
 
 export const user1: User = {
@@ -342,6 +342,7 @@ export async function waitForHealth(baseUrl: string) {
 
 次に、Playwrightの`fixtures`を利用して、各ワーカーごとに独立したデータベースとアプリケーションを起動する仕組みを実装します。
 `worker`スコープを定義し、workerプロセスごとに起動のsetupを自動で行います。
+`use`の前がテスト実行前となるので、実行前にDBやAPPを起動し、もし後処理が必要であれば、`use`の後に書くことが出来ます。
 
 <OG url="https://playwright.dev/docs/test-fixtures#worker-scoped-fixtures" />
 
@@ -419,13 +420,16 @@ export async function generatePrismaClient(url: string) {
 ## テストユーザーを利用できるようにする
 
 最初に作成したログイン済みユーザーをテストで利用できるように変更します。
+`fixtures`にuserをDBへ登録するメソッドとcookieとDBを飛ばすためのメソッドを追加します。(厳密には`User`だけを飛ばしたほうがいいが、`afterEach`で飛ばしているので一緒)
+
+`setup`は`fixtures`で定義しているので、`registerToDB`や`reset`からアクセスし、DBやAPPのポートなどの状態を取得できます。
 
 ::: code-group
 
-```ts [e2e/fixtures.ts]
+```ts [e2e/fixtures.ts] collapse={15-20, 25-48} collapseStyle="collapsible-start"
 import { test as base } from "@playwright/test";
 import type { User } from "next-auth";
-import { setupDB, truncate } from "../tests/db.setup";
+import { setupDB } from "../tests/db.setup";
 import { setupApp } from "./helpers/app";
 import { generatePrismaClient } from "./helpers/prisma";
 import { registerUserToDB } from "./helpers/users";
@@ -451,7 +455,6 @@ export const test = base.extend<TestFixtures, WorkerFixtures>({
       await using dbSetup = await setupDB({ port: "random" });
       await using appSetup = await setupApp(dbSetup.port);
       const baseURL = appSetup.baseURL;
-
       const originalNewContext = browser.newContext.bind(browser);
 
       // 新しいbaseURLを含んだコンテキストを新たに作成
@@ -479,81 +482,257 @@ export const test = base.extend<TestFixtures, WorkerFixtures>({
     });
     await reset();
   },
+  reset: ({ context, setup }, use) => {
+    use(async () => {
+      await using db = await generatePrismaClient(setup.dbURL);
+      await Promise.all([truncate(db.prisma), context.clearCookies()]);
+    });
+  },
 });
+```
+
+```ts [e2e/helpers/users.ts] collapse={28-47} collapseStyle="collapsible-start"
+import type { BrowserContext, TestType } from "@playwright/test";
+import type { User } from "next-auth";
+import type { JWT } from "next-auth/jwt";
+import type { TestFixtures, WorkerFixtures } from "../fixtures";
+import { generatePrismaClient } from "./prisma";
+
+export async function registerUserToDB(user: User, dbUrl: string) {
+  await using db = await generatePrismaClient(dbUrl);
+  await db.prisma.user.create({
+    data: {
+      ...user,
+      accounts: {
+        create: {
+          type: "oauth",
+          provider: "google",
+          providerAccountId: `${Math.random()}`,
+          id_token: "id_token",
+          access_token: "access_token",
+          token_type: "Bearer",
+          scope: "scope",
+        },
+      },
+    },
+  });
+}
+
+export async function createUserAuthState(context: BrowserContext, jwt: JWT) {
+  await context.addCookies([
+    {
+      name: "authjs.session-token",
+      value: btoa(
+        JSON.stringify({
+          ...jwt,
+          // google provider attaches `sub` to the token
+          sub: jwt.user.id,
+        }),
+      ),
+      domain: "localhost",
+      path: "/",
+      httpOnly: true,
+      sameSite: "Lax",
+      expires: Math.round((Date.now() + 60 * 60 * 24 * 1000 * 7) / 1000),
+    },
+  ]);
+  await context.storageState({
+    path: getStorageStatePath(jwt.user.id ?? ""),
+  });
+}
+
+export async function useUser<T extends TestType<TestFixtures, WorkerFixtures>>(
+  test: T,
+  user: User,
+) {
+  test.use({ storageState: getStorageStatePath(user.id) });
+  // 毎テストごとにDBにもuserの情報を登録しておく
+  test.beforeEach(async ({ registerToDB: registerToDB }) => {
+    await registerToDB(user);
+  });
+}
+
+function getStorageStatePath(id: string) {
+  return `e2e/.auth/${id}.json`;
+}
 ```
 
 :::
 
-## 実際のテスト記述
+これでテストを実行する準備ができました。
 
-実際のテストコードでは、WorkerFixturesを活用して効率的なテストを記述できます。事前に作成した認証状態とfixturesから提供されるPrismaインスタンスを組み合わせることで、簡潔で保守性の高いテストコードが実現できます。
+## ページのテストを書く
+
+今回は、[Page Object Models](https://playwright.dev/docs/pom)を採用し、`fixtures`経由でページそれぞれのオブジェクトを取得します。
 
 ::: code-group
 
-```ts [並列テスト例]
-import { expect } from "@playwright/test";
-import { test } from "../fixtures";
+```ts [e2e/integrations/auth.ts]
 import { user1 } from "../dummyUsers";
+import { test } from "../fixtures";
+import { useUser } from "../helpers/users";
 
-test.describe("User management", () => {
-  test.afterEach(async ({ reset }) => {
-    await reset(); // 軽量なリセット処理のみ
+test.describe("no sign in", () => {
+  test("should redirect to signIn page", async ({ topPage, signInPage }) => {
+    await topPage.goTo();
+    await signInPage.expectUI();
   });
+});
 
-  test("should create user", async ({ page, setup }) => {
-    // setupはworker開始時に初期化済み
-    await setup.prisma.user.create({
-      data: { name: "test user", email: "test@example.com" },
-    });
+test.describe("sign in", () => {
+  useUser(test, user1);
 
-    await page.goto("/users"); // baseURLが設定済み
-    await expect(page.getByText("test user")).toBeVisible();
-  });
-
-  test("should delete user", async ({ page, setup }) => {
-    // 同じworker内なら同じsetupを共有（効率的）
-    const user = await setup.prisma.user.create({
-      data: { name: "to be deleted", email: "delete@example.com" },
-    });
-
-    await page.goto(`/users/${user.id}/delete`);
-    await page.click('[data-testid="confirm-delete"]');
-    await expect(page.getByText("User deleted")).toBeVisible();
+  test("should show my name", async ({ topPage }) => {
+    await topPage.goTo();
+    await topPage.expectUI("signIn", user1);
   });
 });
 ```
 
-```ts [認証状態の活用]
-test.describe("認証が必要な機能", () => {
-  test.use({
-    storageState: getStorageStatePath(user1.id), // 事前作成した認証状態
-  });
+```ts [e2e/models/TopPage.ts]
+import { expect, type Locator, type Page } from "@playwright/test";
+import type { User } from "next-auth";
+import { Base } from "./Base";
 
-  test("投稿を作成できる", async ({ page, setup }) => {
-    await setup.prisma.post.create({
-      data: {
-        title: "テスト投稿",
-        content: "テスト内容",
-        authorId: user1.id,
-      },
+export class TopPage extends Base {
+  textUserStatusLabelLocator: Locator;
+
+  constructor(page: Page) {
+    super(page);
+
+    this.textUserStatusLabelLocator = this.page.locator(
+      '[aria-label="User status"]',
+    );
+  }
+
+  async goTo() {
+    return await this.page.goto("/");
+  }
+
+  async expectUI(state: "signIn" | "signOut", user?: User) {
+    if (state === "signIn") {
+      await expect(this.textUserStatusLabelLocator).toContainText(
+        `you are signed in as ${user?.name} 😄`,
+      );
+    }
+
+    if (state === "signOut") {
+      await expect(this.textUserStatusLabelLocator).toContainText(
+        "you are not signed in 🥲",
+      );
+    }
+  }
+}
+```
+
+```ts [e2e/fixtures.ts] collapse={11-14,18-23,31-54,57-60,63-66} collapseStyle="collapsible-start"
+import { test as base } from "@playwright/test";
+import type { User } from "next-auth";
+import { setupDB, truncate } from "../tests/db.setup";
+import { setupApp } from "./helpers/app";
+import { generatePrismaClient } from "./helpers/prisma";
+import { registerUserToDB } from "./helpers/users";
+import { TopPage } from "./models/TopPage";
+
+export type TestFixtures = {
+  topPage: TopPage;
+  storageState: string;
+  registerToDB: (user: User) => Promise<void>;
+  reset: () => Promise<void>;
+  a11y: () => AxeBuilder;
+};
+
+export type WorkerFixtures = {
+  setup: Awaited<{
+    prisma: Awaited<ReturnType<typeof setupDB>>["prisma"];
+    appPort: number;
+    baseURL: string;
+    dbURL: string;
+  }>;
+};
+
+export const test = base.extend<TestFixtures, WorkerFixtures>({
+  topPage: ({ page }, use) => {
+    use(new TopPage(page));
+  },
+  setup: [
+    async ({ browser }, use) => {
+      await using dbSetup = await setupDB({ port: "random" });
+      await using appSetup = await setupApp(dbSetup.port);
+      const baseURL = appSetup.baseURL;
+      const originalNewContext = browser.newContext.bind(browser);
+
+      // 新しいbaseURLを含んだコンテキストを新たに作成
+      browser.newContext = async () => {
+        return originalNewContext({
+          baseURL,
+        });
+      };
+
+      await use({
+        prisma: dbSetup.prisma,
+        appPort: appSetup.appPort,
+        baseURL,
+        dbURL: dbSetup.url,
+      });
+    },
+    {
+      scope: "worker",
+      auto: true,
+    },
+  ],
+  registerToDB: async ({ reset, setup }, use) => {
+    await use(async (user: User) => {
+      await registerUserToDB(user, setup.dbURL);
     });
-
-    await page.goto("/posts");
-    await expect(page.getByText("テスト投稿")).toBeVisible();
-  });
+    await reset();
+  },
+  reset: ({ context, setup }, use) => {
+    use(async () => {
+      await using db = await generatePrismaClient(setup.dbURL);
+      await Promise.all([truncate(db.prisma), context.clearCookies()]);
+    });
+  },
 });
 ```
 
 :::
 
+注意点が一つあり、`useUser`(認証状態の復元)は`page.context.storageState`の制約上、`page`が作られる前に追加しないといけないので`test`の前に実行が必要となります。
+なので`test.describe`の中で実行する必要があり、ユーザーのスコープは`describe`となります。
+
+```ts
+import { user1 } from "../dummyUsers";
+import { test } from "../fixtures";
+import { useUser } from "../helpers/users";
+
+test.describe("sign in", () => {
+  useUser(test, user1);
+
+  test("should show my name", async ({ topPage }) => {
+    await topPage.goTo();
+    await topPage.expectUI("signIn", user1);
+  });
+});
+```
+
+<br />
+
+<OG url="https://playwright.dev/docs/auth#multiple-signed-in-roles" />
+
+これで実際のDBを用いて並列にテストを実行することができ、e2eの実行時間が大幅に短縮されました。とあるプロジェクトだと10分から3分ぐらいかわりました。
+
 ## まとめ
 
-本記事で紹介した一連のテクニックを活用することで、実際のデータベースを使用したPlaywrightテストの完全な並列化が実現できます。開発環境と同じ構成でテストを実行できるため、本番環境により近い条件での検証が可能となり、テストの信頼性が大幅に向上します。
-
-特に、LLMを活用した開発が増えている現在において、このような堅牢なテスト環境は品質保証の要となります。AIが生成したコードに対しても、実際のデータベースと実環境に近い条件でのE2Eテストを実行することで、高い品質を保ちながら開発速度を向上させることができます。
+下地を作るのが大変ですが、これを一度作ってしまえば、あとは各テストで認証が必要であれば`useUser`を使うだけで、実際のDBを用いた並列テストが可能になります。
+特にLLMを活用した開発が増えている現在において、このような堅牢なテスト環境の構築と実行時間は今後も最低限必要なガードレールとなるのだと思います。
 
 ---
 
 類似の内容でunit testでの実装は以下を参照
 
 <OG url="https://hiroppy.me/blog/testcontainers-parallel-tests" />
+
+リポジトリは以下を参照
+
+<OG url="https://github.com/hiroppy/web-app-template" />
