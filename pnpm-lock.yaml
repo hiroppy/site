@@ -32,6 +32,9 @@ importers:
       '@expressive-code/plugin-collapsible-sections':
         specifier: 0.41.2
         version: 0.41.2
+      '@expressive-code/plugin-line-numbers':
+        specifier: 0.41.2
+        version: 0.41.2
       '@tailwindcss/vite':
         specifier: 4.1.11
         version: 4.1.11(vite@6.3.5(@types/node@20.12.7)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0))
@@ -487,6 +490,9 @@ packages:
 
   '@expressive-code/plugin-frames@0.41.2':
     resolution: {integrity: sha512-pfy0hkJI4nbaONjmksFDcuHmIuyPTFmi1JpABe4q2ajskiJtfBf+WDAL2pg595R9JNoPrrH5+aT9lbkx2noicw==}
+
+  '@expressive-code/plugin-line-numbers@0.41.2':
+    resolution: {integrity: sha512-xdRoScuFWQbYEpWTh6G7kJ0VK46kcUPHPMjRo3CG2ynZ1rqiJCC9FnZQQWQ7U8aGd/n7EnU3vJBkBeVqhZyEWg==}
 
   '@expressive-code/plugin-shiki@0.41.2':
     resolution: {integrity: sha512-xD4zwqAkDccXqye+235BH5bN038jYiSMLfUrCOmMlzxPDGWdxJDk5z4uUB/aLfivEF2tXyO2zyaarL3Oqht0fQ==}
@@ -5130,6 +5136,10 @@ snapshots:
       '@expressive-code/core': 0.41.2
 
   '@expressive-code/plugin-frames@0.41.2':
+    dependencies:
+      '@expressive-code/core': 0.41.2
+
+  '@expressive-code/plugin-line-numbers@0.41.2':
     dependencies:
       '@expressive-code/core': 0.41.2
 

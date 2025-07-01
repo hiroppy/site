@@ -6,6 +6,7 @@ import icon from "astro-icon";
 import tailwindcss from "@tailwindcss/vite";
 import astroExpressiveCode from "astro-expressive-code";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
+import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import { remarkCodeGroups } from "./src/utils/remark-code-groups.mjs";
 import { remarkAlerts } from "./src/utils/remark-alerts.mjs";
 
@@ -42,7 +43,7 @@ export default defineConfig({
           },
         },
       },
-      plugins: [pluginCollapsibleSections()],
+      plugins: [pluginCollapsibleSections(), pluginLineNumbers()],
     }),
     mdx({
       remarkPlugins: [remarkCodeGroups, remarkAlerts],

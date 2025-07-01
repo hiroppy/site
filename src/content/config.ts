@@ -22,6 +22,7 @@ const AVAILABLE_TAGS = [
   "git",
   "environment",
   "docker",
+  "e2e",
 ] as const;
 
 const blogCollection = defineCollection({
