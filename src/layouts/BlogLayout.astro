@@ -111,6 +111,19 @@ if (import.meta.env.PROD || process.env.NODE_ENV === "test") {
         <div class="flex-1 overflow-y-auto px-6 pb-6">
           <TableOfContents headings={headings} />
         </div>
+        <!-- Fixed bottom section -->
+        <div
+          class="flex flex-shrink-0 items-center border-t border-gray-200 px-6 py-6 dark:border-gray-700"
+        >
+          <Link
+            href="/blog"
+            animation={false}
+            class="flex items-center text-sm font-medium text-gray-600 dark:text-gray-400"
+          >
+            <Icon icon="mdi:arrow-left" class="mr-2" width="16" height="16" />
+            blog一覧に戻る
+          </Link>
+        </div>
       </div>
     </aside>
 
@@ -156,64 +169,42 @@ if (import.meta.env.PROD || process.env.NODE_ENV === "test") {
               <h1 class="mb-4 text-3xl font-bold text-white md:text-4xl">
                 {title}
               </h1>
-              <div class="flex items-center justify-between text-white/90">
-                <div class="flex items-center space-x-2">
-                  <Icon icon="mdi:calendar" width="16" height="16" />
-                  <span>{date}</span>
-                </div>
-                <div class="flex flex-wrap gap-2">
-                  {
-                    parseTags(tags)
-                      .slice(0, 3)
-                      .map((tag: string) => (
-                        <Badge variant="secondary" class="text-sm">
-                          <a
-                            href={`/blog/tags/${tag}`}
-                            aria-label={`${tag}タグの記事を表示`}
-                          >
-                            {tag}
-                          </a>
-                        </Badge>
-                      ))
-                  }
-                </div>
+              <div class="flex items-center text-white/90">
+                <Icon icon="mdi:calendar" width="16" height="16" />
+                <span class="ml-2">{date}</span>
               </div>
             </div>
           </div>
 
           <div class="px-4 py-8 md:px-8">
-            <!-- Author Info -->
-            <div class="mb-8 flex items-center justify-between gap-4">
-              <div class="flex items-center space-x-4">
-                <Avatar class="h-12 w-12">
-                  <Image
-                    src="/images/meta/me.png"
-                    alt="Hiroppy"
-                    class="h-12 w-12 rounded-full"
-                  />
-                </Avatar>
-                <div>
-                  <p class="font-semibold text-gray-900 dark:text-white">
-                    Hiroppy
-                  </p>
-                  <p class="text-sm text-gray-600 dark:text-gray-400">
-                    JavaScript Engineer
-                  </p>
-                </div>
+            <div class="mb-4 flex items-center justify-between">
+              <div class="flex flex-wrap gap-2">
+                {
+                  parseTags(tags).map((tag: string) => (
+                    <Badge variant="secondary" class="text-sm">
+                      <a
+                        href={`/blog/tags/${tag}`}
+                        aria-label={`${tag}タグの記事を表示`}
+                      >
+                        {tag}
+                      </a>
+                    </Badge>
+                  ))
+                }
               </div>
               <Link
                 href={githubUrl}
                 class="flex items-center"
                 ariaLabel="Edit this page on GitHub"
               >
-                <Button variant="outline" class="no-underline">
+                <Button variant="outline" size="sm" class="no-underline">
                   <Icon icon="mdi:github" class="mr-1" width="16" height="16" />
                   Edit
                 </Button>
               </Link>
             </div>
 
-            <hr class="mb-8 border-gray-200 dark:border-gray-700" />
+            <hr class="mb-4 border-gray-200 dark:border-gray-700" />
 
             <!-- Mobile Table of Contents -->
             <details

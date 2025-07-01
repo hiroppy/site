@@ -8,9 +8,16 @@ type Props = {
   isBlank?: boolean;
   class?: string;
   ariaLabel?: string;
+  animation?: boolean;
 };
 
-const { href, isBlank, class: className, ariaLabel } = Astro.props;
+const {
+  href,
+  isBlank,
+  class: className,
+  ariaLabel,
+  animation = true,
+} = Astro.props;
 
 const siteUrl = "https://hiroppy.me/";
 const isInternalLink = href.startsWith(siteUrl);
@@ -27,7 +34,7 @@ const shouldOpenInBlank = isInternalLink
   target={shouldOpenInBlank ? "_blank" : undefined}
   class={twMerge(
     "text-blue-700 dark:text-blue-300 no-underline hover:underline rounded",
-    commonStyles.focusRing,
+    animation ? commonStyles.focusRing : "",
     className,
   )}
   rel={shouldOpenInBlank ? "noreferrer" : undefined}
