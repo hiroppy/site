@@ -8,3 +8,176 @@ tags: node.js
 ---
 
 import OG from "../../components/OG.astro";
+
+<OG title="Node.js公式設定ファイル早見表" />
+
+## はじめに
+
+Node.js には **「ランタイムが直接理解する設定ファイル」** がいくつか存在します。
+この記事では、2025‑07‑01 時点で公式にサポートされている 5 種類の設定ファイルをまとめ、その目的・使いどころ・サンプルを整理します。
+
+## 公式設定ファイル 早見表
+
+| ファイル名（拡張子） | 主な用途                                   | 有効にする CLI フラグ例                                                               | 初登場バージョン | 現在のステータス |
+| -------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------- | ---------------- | ---------------- |
+| `node.config.json`   | 複数の CLI オプションを JSON 一括管理      | `--experimental-config-file node.config.json`<br>`--experimental-default-config-file` | v23.10.0         | **experimental** |
+| `sea-config.json`    | 単一バイナリ化 (SEA) の入力定義            | `--experimental-sea-config sea-config.json`                                           | v20 系           | **experimental** |
+| `policy.json`        | モジュール読込のホワイトリスト・完全性検証 | `--experimental-policy=policy.json`                                                   | v12.0.0          | **experimental** |
+| `.env`               | 環境変数の外部注入                         | `--env-file=.env`                                                                     | v20.6.0          | **stable**       |
+| `openssl.cnf` など   | OpenSSL 層の詳細設定 (FIPS 有効化など)     | `--openssl-config=/path/to/openssl.cnf`                                               | v6.9.0           | **stable**       |
+
+> 💡 **公式ドキュメントの位置づけ**
+> ここでいう「公式」とは _node コマンドが起動時に直接読み取り、動作を変えるファイル_ を指しています。たとえば `package.json` の `type` フィールドも Node の挙動に影響しますが、この記事では **ランタイム設定ファイル** にフォーカスします。
+
+---
+
+## 1. `node.config.json` — グローバル CLI 設定
+
+2025 年現在もっとも新しい設定ファイル。
+テストカバレッジ用フラグや検証的フラグを、毎回コマンドラインに列挙する代わりに JSON へまとめられます。
+
+```json
+{
+  "test-coverage": true,
+  "watch-path": ["src"],
+  "no-warnings": true
+}
+```
+
+実行例:
+
+```bash
+node --experimental-config-file=node.config.json app.js
+```
+
+### いつ使う？
+
+- `npm test` とローカル開発で同じフラグを共有したいとき
+- CI で長い CLI オプション列をスッキリさせたいとき
+
+---
+
+## 2. `sea-config.json` — Single Executable Application 用定義
+
+Node アプリを **単一実行ファイル** (.exe など) にパッケージする Experimental 機能 _SEA_ の設定。
+
+```json
+{
+  "main": "dist/server.js",
+  "output": "bin/my-api",
+  "resources": ["public", "views"]
+}
+```
+
+```bash
+node --experimental-sea-config sea-config.json
+```
+
+### 注意点
+
+- 現状 **Linux x64** のみサポート (2025‑07 時点)
+- ネイティブアドオンは埋め込み不可
+
+---
+
+## 3. `policy.json` — セキュリティポリシー
+
+モジュールを **ハッシュ検証** しつつホワイトリスト方式でロードを許可します。
+CDN 由来コードを実行する CLI ツールなどで威力を発揮。
+
+```jsonc
+{
+  "onerror": "exit",
+  "integrity": true,
+  "resources": {
+    "./index.js": {
+      "specifier": "./index.js",
+      "integrity": "sha256-abcdef...",
+    },
+  },
+}
+```
+
+```bash
+node --experimental-policy=policy.json index.js
+```
+
+---
+
+## 4. `.env` — 環境変数ファイル
+
+INI 互換フォーマット。`.env` を置けば dotenv ライブラリ不要で、Node が自前でパースしてくれます。
+
+```env
+NODE_ENV=production
+PORT=8080
+SECRET_KEY="s3cr3t"
+```
+
+```bash
+node --env-file=.env server.mjs
+```
+
+> **既存 dotenv との違い**
+>
+> - **型付けは行わない**（すべて文字列）
+> - 複数ファイル指定は不可（1 ファイルのみ）
+
+---
+
+## 5. `openssl.cnf` — OpenSSL 層の追加設定
+
+古典的な設定だが、FIPS モードやカスタム暗号スイートの有効化に使います。
+
+```bash
+node --openssl-config=/etc/ssl/openssl-fips.cnf server.js
+```
+
+### よくある落とし穴
+
+- `NODE_OPTIONS="--openssl-config=..."` で環境変数にも設定可能だが、**‐‐openssl-config** が優先される
+- FIPS モードはビルド時に `./configure --openssl-fips` が必要
+
+---
+
+## 6. 公式設定ファイルではないが知っておきたいもの
+
+| ファイル                         | 用途                                                           |
+| -------------------------------- | -------------------------------------------------------------- |
+| `package.json`                   | `type`, `exports`, `imports`, `bin` などがランタイム挙動を変更 |
+| `config.gypi` / `process.config` | Node 自身のビルド設定を示す JSON                               |
+| `.npmrc`                         | npm のふるまいを調整。Node そのものではないが日常開発で必須    |
+
+---
+
+## 実践：最小構成で SEA + `.env`
+
+1. **`.env`** を準備
+   ```env
+   PORT=3000
+   ```
+2. **`server.js`**
+   ```js
+   console.log(`Running on :${process.env.PORT}`);
+   ```
+3. **`sea-config.json`**
+   ```json
+   { "main": "server.js", "output": "server-bin" }
+   ```
+4. **バイナリ化 & 実行**
+   ```bash
+   node --env-file=.env --experimental-sea-config sea-config.json
+   ./server-bin
+   ```
+
+> ✅ `.env` は **SEA バイナリ実行時** にも読み込まれるため、埋め込み不要でそのまま運用できます。
+
+---
+
+## まとめ
+
+- **安定版 (`stable`)** は `.env` と `openssl.cnf` の 2 つだけ。
+- **experimental** 機能を使う際は、**LTS への昇格タイミング** と **デプロイ環境** を事前に確認しよう。
+- まずは **`.env`** から取り入れ、CIで `node.config.json` を試してみるのがオススメです。
+
+Node.js の設定を正しく選び、開発フローとセキュリティを一段引き上げましょう 🛠️🚀
