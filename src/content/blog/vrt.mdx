@@ -12,6 +12,7 @@ import OG from "../../components/OG.astro";
 import Image from "../../components/Image.astro";
 import CodeGroup from "../../components/CodeGroup.astro";
 import CodeGroupPanel from "../../components/CodeGroupPanel.astro";
+import TwoColumn from "../../components/TwoColumn.astro";
 
 ---
 
@@ -127,3 +128,17 @@ body {
 
 > [!CAUTION]
 > Negative potential consequences of an action.
+
+## Two column
+
+<TwoColumn>
+  <div>左側のコンテンツ</div>
+  <div>右側のコンテンツ</div>
+</TwoColumn>
+
+<br />
+
+<TwoColumn ratio="2:1" gap="lg">
+  <div>幅広のコンテンツ (2)</div>
+  <div>狭いコンテンツ (1)</div>
+</TwoColumn>
