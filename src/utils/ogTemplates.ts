@@ -350,7 +350,7 @@ export function createBlogOgTemplate({
                           color: "#e2e8f0",
                           fontWeight: "600",
                         },
-                        children: "hiroppy.me",
+                        children: "技術探し",
                       },
                     },
                   ],
