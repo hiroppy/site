@@ -14,12 +14,12 @@ import OG from "../../components/OG.astro";
 
 |  §  | テーマ                          | 重点フラグ                                    |
 | :-: | :------------------------------ | :-------------------------------------------- |
-|  1  | Injection Sinks (eval など)     | `--disallow-code-generation-from-strings`     |
-|  2  | Monkey Patching                 | `--frozen-intrinsics`                         |
-|  3  | Prototype Pollution             | `--disable-proto=throw`                       |
-|  4  | Permission Model                | `--permission`                                |
-|  5  | **Secure Heap**                 | `--secure-heap`                               |
-|  6  | **Policy & Integrity Manifest** | `--experimental-policy`, `--policy-integrity` |
+|  1  | Injection Sinks (eval など)     | `--disallow-code-generation-from-strings`     |
+|  2  | Monkey Patching                 | `--frozen-intrinsics`                         |
+|  3  | Prototype Pollution             | `--disable-proto=throw`                       |
+|  4  | Permission Model                | `--permission`                                |
+|  5  | **Secure Heap**                 | `--secure-heap`                               |
+|  6  | **Policy & Integrity Manifest** | `--experimental-policy`, `--policy-integrity` |
 
 ---
 
@@ -39,10 +39,6 @@ new Function(`return ${userInput}`)();
 
 // WebAssemblyを使った攻撃
 WebAssembly.compile(maliciousBuffer);
-
-// VM モジュールでの攻撃
-const vm = require('vm');
-vm.runInThisContext(userCode); // 同様に危険
 ```
 
 ### 防御方法
@@ -57,7 +53,6 @@ $ node --disallow-code-generation-from-strings index.mjs
 - `new Function()`
 - `WebAssembly.compile()`
 - `WebAssembly.instantiate()`
-- `vm.runInThisContext()` (一部制限)
 
 ### 実際の導入での注意点
 
@@ -68,33 +63,14 @@ $ node --disallow-code-generation-from-strings index.mjs
 const handlebars = require('handlebars'); // テンプレートコンパイル
 const lodash = require('lodash');        // template関数
 const jsonpath = require('jsonpath');    // 動的関数生成
-const moment = require('moment');        // 一部のロケール処理
 ```
 
 **代替案**：
 - テンプレートエンジンは事前コンパイル版を使用
 - CSP（Content Security Policy）ヘッダーでも `unsafe-eval` を禁止
 - TypeScript使用時は `noImplicitEval` を有効化
-- 静的解析ツール（ESLint）で `no-eval` ルールを強制
 
-### 検証方法
-
-```js
-// 設定が有効かテスト
-try {
-  eval('console.log("test")');
-  console.log('❌ eval is enabled');
-} catch (e) {
-  console.log('✅ eval is disabled');
-}
-
-try {
-  new Function('return 42')();
-  console.log('❌ Function constructor is enabled');
-} catch (e) {
-  console.log('✅ Function constructor is disabled');
-}
-```
+---
 
 ## Monkey Patching — ビルトインオブジェクトの改ざんを防ぐ
 
@@ -116,17 +92,6 @@ Array.prototype.push = function(item) {
 // 他のコードに影響
 const users = [];
 users.push({username: 'admin', password: 'secret'}); // ← 情報漏洩
-
-// JSON.parseの改ざん
-const originalParse = JSON.parse;
-JSON.parse = function(text) {
-  const result = originalParse(text);
-  // 機密情報を抜き取り
-  if (result.token) {
-    exfiltrateData(result.token);
-  }
-  return result;
-};
 ```
 
 ### 防御方法
@@ -136,8 +101,7 @@ $ node --frozen-intrinsics app.mjs
 ```
 
 **効果**：
-- すべてのビルトイン (Object, Array, Date …) を再帰的に `Object.freeze()`
-- 必要な polyfill は **`--require core-js`** などで「凍結前」にロード
+- すべてのビルトイン (Object, Array, Date, Promise …) を再帰的に `Object.freeze()`
 - プロトタイプチェーン全体が不変になる
 - グローバルオブジェクトも保護される
 
@@ -148,9 +112,6 @@ $ node --frozen-intrinsics app.mjs
 ```sh
 # 正しい順序：polyfill → 凍結 → アプリケーション
 node --require core-js/stable --frozen-intrinsics app.mjs
-
-# babel-polyfill の場合
-node --require @babel/polyfill --frozen-intrinsics app.mjs
 ```
 
 **動作確認**：
@@ -160,34 +121,13 @@ node --require @babel/polyfill --frozen-intrinsics app.mjs
 try {
   Array.prototype.maliciousMethod = () => {};
 } catch (e) {
-  console.log('✅ Protected!', e.message); // TypeError: Cannot add property
-}
-
-try {
-  Object.prototype.polluted = 'value';
-} catch (e) {
-  console.log('✅ Object.prototype protected');
-}
-
-// 既存メソッドの上書きも不可
-try {
-  Array.prototype.push = () => {};
-} catch (e) {
-  console.log('✅ Array.prototype.push protected');
+  console.log('Protected!', e.message); // TypeError: Cannot add property
 }
 ```
 
-### 注意が必要なライブラリ
+---
 
-```js
-// これらのライブラリはfrozen-intrinsicsと相性問題の可能性
-require('core-js'); // polyfillライブラリ
-require('babel-polyfill'); // Babel polyfill
-require('zone.js'); // Angular依存
-require('reflect-metadata'); // TypeScript decorators
-```
 ## Prototype Pollution — プロトタイプ汚染攻撃を阻止
-
 
 `__proto__` を使ったプロトタイプ汚染は、オブジェクトマージ処理で頻発する脆弱性です。
 
@@ -219,11 +159,6 @@ merge({}, malicious);
 // 全てのオブジェクトが汚染される
 console.log({}.isAdmin); // true
 console.log({}.polluted); // "value"
-
-// 実際の攻撃例
-const userInput = JSON.parse('{"__proto__": {"isAdmin": true}}');
-merge(config, userInput);
-// 以降、全てのオブジェクトがisAdmin: trueを持つ
 ```
 
 ### 防御方法
@@ -269,61 +204,137 @@ if (!ajv.validate(schema, userInput)) {
 }
 ```
 
-### 検証方法
+---
 
-```js
-// プロトタイプ汚染の検出
-function detectPrototypePollution() {
-  const testObject = {};
-  try {
-    testObject.__proto__.polluted = 'test';
-    console.log('❌ Prototype pollution possible');
-  } catch (e) {
-    console.log('✅ Prototype pollution blocked');
-  }
-}
+## Permission Model — ファイル＆プロセス権限をホワイトリスト化
 
-// 既存の汚染チェック
-function checkExistingPollution() {
-  const clean = {};
-  const suspicious = ['isAdmin', 'isOwner', 'polluted', 'constructor'];
-  
-  for (const prop of suspicious) {
-    if (prop in clean) {
-      console.warn(`⚠️ Possible pollution detected: ${prop}`);
-    }
-  }
-}
-```
+Node.js v20 で安定化された Permission Model により、ファイルシステムとサブプロセスアクセスを細かく制御できます。
 
-## Permission Model
-
-ファイル＆サブプロセスをホワイトリスト化
+### 基本的な使用法
 
 ```sh
 node --permission \
-     --allow-fs-read=/var/data \
+     --allow-fs-read=/var/data,/etc/ssl \
+     --allow-fs-write=/tmp,/var/log \
      --allow-child-process \
      api.mjs
 ```
 
-- デフォルトで **全権限拒否**、個別に `--allow-*` で解放
-- v21.6.0 以降は相対パス許可が強化
+### 詳細な権限設定
+
+```sh
+# 読み取り専用の設定ファイルディレクトリ
+--allow-fs-read=/app/config
+
+# ログ書き込み専用
+--allow-fs-write=/var/log/app
+
+# 特定の実行ファイルのみ許可
+--allow-child-process=/usr/bin/convert,/usr/bin/git
+
+# ネットワークアクセス制限（将来の機能）
+--allow-network=api.example.com:443
+```
+
+### 実践的な設定例
+
+**Web アプリケーションサーバー**：
+
+```sh
+NODE_OPTIONS="--permission \
+  --allow-fs-read=/app,/etc/ssl/certs \
+  --allow-fs-write=/tmp,/var/log \
+  --allow-child-process=/usr/bin/imagemagick" \
+npm start
+```
+
+**マイクロサービス**：
+
+```sh
+# 最小権限の原則
+node --permission \
+     --allow-fs-read=/app/dist \
+     --allow-fs-write=/dev/stdout,/dev/stderr \
+     microservice.mjs
+```
+
+### トラブルシューティング
+
+**権限エラーのデバッグ**：
+
+```sh
+# 詳細なエラー情報を表示
+NODE_OPTIONS="--permission --trace-warnings" node app.mjs
+```
+
+**段階的な導入**：
+
+```sh
+# 1. 監査モードで実行（v21.6.0+）
+node --permission --audit-permissions app.mjs
+
+# 2. 警告のみ表示
+node --permission --warn-permissions app.mjs
+
+# 3. 本格運用
+node --permission --allow-fs-read=/app app.mjs
+```
 
 ---
 
-## Secure Heap
+## Secure Heap — メモリからの秘密情報漏洩を防ぐ
 
-ヒープダンプや隣接メモリ破壊から **秘密鍵流出 (CWE‑284)** を守る。
+ヒープダンプや隣接メモリ破壊から **秘密鍵・パスワード・トークンの流出 (CWE‑284)** を守ります。
+
+### セキュアヒープの仕組み
 
 ```bash
-# 16 MiB の Secure Heap（最小ブロック 4 KiB）
+# 16 MiB の Secure Heap（最小ブロック 4 KiB）
 node --secure-heap=16777216 --secure-heap-min=4096 app.mjs
 ```
 
-Linux/macOS 専用。枯渇すると OpenSSL API がエラーを返す。
+**保護される情報**：
+- TLS/SSL 秘密鍵
+- パスワードハッシュ
+- JWT トークン
+- 暗号化キー
 
-## Policy & Integrity Manifest — Require/Import をハッシュ検証
+### 適切なサイズ設定
+
+```bash
+# 小規模アプリケーション（API サーバー）
+--secure-heap=8388608  # 8 MiB
+
+# 中規模アプリケーション（Web アプリ）
+--secure-heap=16777216 # 16 MiB
+
+# 大規模アプリケーション（暗号化処理が多い）
+--secure-heap=33554432 # 32 MiB
+```
+
+### 監視と最適化
+
+```js
+// セキュアヒープの使用状況を監視
+const { memory } = process;
+console.log('Secure heap:', memory().secureHeap);
+
+// 暗号化処理でのセキュアヒープ利用確認
+const crypto = require('crypto');
+const key = crypto.generateKeySync('aes', { length: 256 });
+console.log('Key in secure heap:', key.symmetric);
+```
+
+**Linux/macOS 専用**の機能で、枯渇すると OpenSSL API がエラーを返します。
+
+**パフォーマンス影響**：
+- メモリ断片化の可能性
+- 暗号化処理が若干低速化
+- メモリ使用量の増加
+
+---
+
+## Policy & Integrity Manifest — Require/Import をハッシュ検証
 
 Policy 機能は、モジュールの完全性を検証し、許可されたモジュールのみをロードする仕組みです。
 サプライチェーン攻撃や改ざんされた依存関係から保護します。
@@ -373,13 +384,40 @@ node --experimental-policy=policy.json \
      app/server.js
 ```
 
+### 自動化とCI/CD統合
+
+**ハッシュ値生成の自動化**：
+
+```bash
+#!/bin/bash
+# generate-policy.sh
+find src -name "*.js" -o -name "*.mjs" | while read file; do
+  hash=$(cat "$file" | openssl dgst -sha256 -binary | base64)
+  echo "\"$file\": { \"integrity\": \"sha256-$hash\" }"
+done
+```
+
+**CI での整合性チェック**：
+
+```yaml
+# .github/workflows/security.yml
+- name: Verify Policy Integrity
+  run: |
+    node --experimental-policy=policy.json \
+         --policy-integrity=file:policy.json.sig \
+         --check app.js
+```
+
 ### 主な利点
 
 - **改ざん検知**: ファイルが変更されると即座にエラー
 - **依存関係の制限**: 許可されていないモジュールのロードを防止
 - **ランタイム保護**: require/import 時にリアルタイム検証
+- **サプライチェーン攻撃対策**: npm パッケージの改ざんを検出
 
 未許可のパス・改ざんされたファイルは即例外となり、攻撃を未然に防ぎます。
+
+---
 
 ## --max-http-header-size — HTTP ヘッダーサイズ制限
 
@@ -402,18 +440,6 @@ node --max-http-header-size=8192 server.mjs
 - **API サーバー**: 4096〜8192 バイト
 - **Web アプリ**: 8192〜16384 バイト
 - **プロキシ/CDN 経由**: CDN の制限値に合わせる
-
-## CI に組み込む推奨セット
-
-```bash
-NODE_OPTIONS="\
-  --disallow-code-generation-from-strings \
-  --frozen-intrinsics \
-  --disable-proto=throw \
-  --permission \
-  --secure-heap=16777216 --secure-heap-min=4096" \
-  npm test
-```
 
 ---
 
@@ -766,16 +792,46 @@ NODE_OPTIONS="--secure-heap=8388608 --max-http-header-size=8192" npm start
 
 ---
 
+## CI に組み込む推奨セット
+
+```bash
+# 開発環境
+NODE_OPTIONS="\
+  --trace-warnings \
+  --disallow-code-generation-from-strings \
+  --max-http-header-size=8192" \
+npm test
+
+# ステージング環境
+NODE_OPTIONS="\
+  --disallow-code-generation-from-strings \
+  --frozen-intrinsics \
+  --disable-proto=throw \
+  --secure-heap=16777216 \
+  --max-http-header-size=8192" \
+npm run test:integration
+
+# 本番環境
+NODE_OPTIONS="\
+  --disallow-code-generation-from-strings \
+  --frozen-intrinsics \
+  --disable-proto=throw \
+  --permission \
+  --allow-fs-read=/app,/etc/ssl \
+  --allow-fs-write=/tmp,/var/log \
+  --secure-heap=16777216 --secure-heap-min=4096 \
+  --max-http-header-size=8192" \
+npm start
+```
+
 ## 参考リンク
 
-- [Node.js CLI Flags](https://nodejs.org/api/cli.html)
-- [Permissions API](https://nodejs.org/api/permissions.html)
-- [Policy Manifest](https://nodejs.org/api/policy.html)
-- [Secure Heap](https://nodejs.org/api/cli.html#--secure-heap-size)
-- [Prototype Pollution (PortSwigger)](https://portswigger.net/web-security/prototype-pollution)
-- [Memory Access Violation (CWE‑284)](https://nodejs.org/ja/learn/getting-started/security-best-practices#memory-access-violation-cwe-284)
-- [Node.js Debugger / Inspector](https://nodejs.org/api/debugger.html)
+- [Node.js CLI Flags](https://nodejs.org/api/cli.html)
+- [Permissions API](https://nodejs.org/api/permissions.html)
+- [Policy Manifest](https://nodejs.org/api/policy.html)
+- [Secure Heap](https://nodejs.org/api/cli.html#--secure-heap-size)
+- [Prototype Pollution (PortSwigger)](https://portswigger.net/web-security/prototype-pollution)
+- [Memory Access Violation (CWE-284)](https://nodejs.org/ja/learn/getting-started/security-best-practices#memory-access-violation-cwe-284)
+- [Node.js Debugger / Inspector](https://nodejs.org/api/debugger.html)
 - [OWASP Node.js Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html)
 - [Node.js Security Best Practices](https://nodejs.org/en/docs/guides/security/)
-- [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)
-- [CWE Top 25 Most Dangerous Software Weaknesses](https://cwe.mitre.org/top25/archive/2023/2023_top25_list.html)
