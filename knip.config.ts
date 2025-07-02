@@ -28,6 +28,11 @@ const config: KnipConfig = {
     "@iconify-json/mdi",
     "@iconify-json/noto",
     "unist-util-visit",
+    // for textlint
+    "textlint-filter-rule-allowlist",
+    "textlint-rule-ja-no-mixed-period",
+    "textlint-rule-preset-ja-technical-writing",
+    "textlint-rule-spellcheck-tech-word",
   ],
   astro: {
     config: ["astro.config.mjs"],
