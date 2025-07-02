@@ -1,25 +1,30 @@
 {
+  "plugins": {
+    "@textlint/markdown": {
+      "extensions": [".mdx"]
+    }
+  },
   "rules": {
     "preset-ja-technical-writing": {
       "sentence-length": {
-        "max": 100
+        "max": 150
       },
       "max-comma": {
-        "max": 4
-      },
-      "max-ten": {
-        "max": 4
-      },
-      "max-kanji-continuous-len": {
         "max": 6
       },
-      "arabic-kanji-numbers": true,
-      "no-mix-dearu-desumasu": true,
-      "ja-no-mixed-period": true,
+      "max-ten": {
+        "max": 6
+      },
+      "max-kanji-continuous-len": {
+        "max": 8
+      },
+      "arabic-kanji-numbers": false,
+      "no-mix-dearu-desumasu": false,
+      "ja-no-mixed-period": false,
       "no-double-negative-ja": true,
-      "no-dropping-the-ra": true,
+      "no-dropping-the-ra": false,
       "no-doubled-joshi": {
-        "min_interval": 1
+        "min_interval": 2
       },
       "no-doubled-conjunction": true,
       "no-doubled-conjunctive-particle-ga": true,
@@ -27,18 +32,12 @@
       "no-zero-width-spaces": true,
       "no-exclamation-question-mark": false,
       "no-hankaku-kana": true,
-      "ja-no-weak-phrase": true,
+      "ja-no-weak-phrase": false,
       "ja-no-successive-word": true,
       "ja-no-abusage": true,
-      "ja-no-redundant-expression": true,
+      "ja-no-redundant-expression": false,
       "ja-unnatural-alphabet": true,
       "no-unmatched-pair": true
-    },
-    "ja-no-mixed-period": {
-      "periodMark": "。",
-      "allowPeriodMarks": [],
-      "allowEmojiAtEnd": false,
-      "forceAppendPeriod": false
     },
     "spellcheck-tech-word": true
   },
