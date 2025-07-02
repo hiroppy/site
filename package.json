@@ -24,6 +24,8 @@
     "fmt": "prettier -w .",
     "fmt:check": "prettier --check .",
     "lint": "knip",
+    "textlint": "textlint 'src/content/blog/*.mdx'",
+    "textlint:fix": "textlint --fix 'src/content/blog/*.mdx'",
     "lh": "lhci autorun",
     "index": "node --experimental-strip-types scripts/updateBlogOnAlgolia.mts",
     "generate:feedle-og": "node --experimental-strip-types scripts/generate-feedle-og-images.mts"
@@ -46,6 +48,11 @@
     "serve": "14.2.4",
     "strip-markdown": "6.0.0",
     "tailwindcss": "4.1.11",
+    "textlint": "15.1.0",
+    "textlint-filter-rule-allowlist": "4.0.0",
+    "textlint-rule-ja-no-mixed-period": "3.0.1",
+    "textlint-rule-preset-ja-technical-writing": "12.0.2",
+    "textlint-rule-spellcheck-tech-word": "5.0.0",
     "typescript": "5.8.3",
     "unist-util-visit": "5.0.0",
     "yaml": "2.8.0"

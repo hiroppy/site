@@ -4,7 +4,7 @@
 
 - **Setup**: `pnpm setup` (git hooks and corepack setup)
 - **Build/Run**: `pnpm build`, `pnpm build:local` (test build), `pnpm dev`, `pnpm preview`
-- **Lint/Format**: `pnpm fmt` (prettier), `pnpm fmt:check`, `pnpm lint` (knip dependency analysis)
+- **Lint/Format**: `pnpm fmt` (prettier), `pnpm fmt:check`, `pnpm lint` (knip dependency analysis), `pnpm textlint` (check blog posts), `pnpm textlint:fix` (auto-fix blog posts)
 - **Typecheck**: `pnpm check` (astro check)
 - **Test**:
   - **Prerequisites**: Run `pnpm build:local` before running tests

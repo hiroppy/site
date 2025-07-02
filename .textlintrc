@@ -1,0 +1,64 @@
+{
+  "rules": {
+    "preset-ja-technical-writing": {
+      "sentence-length": {
+        "max": 100
+      },
+      "max-comma": {
+        "max": 4
+      },
+      "max-ten": {
+        "max": 4
+      },
+      "max-kanji-continuous-len": {
+        "max": 6
+      },
+      "arabic-kanji-numbers": true,
+      "no-mix-dearu-desumasu": true,
+      "ja-no-mixed-period": true,
+      "no-double-negative-ja": true,
+      "no-dropping-the-ra": true,
+      "no-doubled-joshi": {
+        "min_interval": 1
+      },
+      "no-doubled-conjunction": true,
+      "no-doubled-conjunctive-particle-ga": true,
+      "no-invalid-control-character": true,
+      "no-zero-width-spaces": true,
+      "no-exclamation-question-mark": false,
+      "no-hankaku-kana": true,
+      "ja-no-weak-phrase": true,
+      "ja-no-successive-word": true,
+      "ja-no-abusage": true,
+      "ja-no-redundant-expression": true,
+      "ja-unnatural-alphabet": true,
+      "no-unmatched-pair": true
+    },
+    "ja-no-mixed-period": {
+      "periodMark": "。",
+      "allowPeriodMarks": [],
+      "allowEmojiAtEnd": false,
+      "forceAppendPeriod": false
+    },
+    "spellcheck-tech-word": true
+  },
+  "filters": {
+    "allowlist": {
+      "allow": [
+        "Yuimedi",
+        "hiroppy",
+        "ニコナレ",
+        "N予備校",
+        "メルカリJP",
+        "メルカリShops",
+        "Findy",
+        "koba",
+        "yoshiko",
+        "VPoE",
+        "MDX",
+        ":::",
+        "```"
+      ]
+    }
+  }
+}
