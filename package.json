@@ -61,7 +61,7 @@
     "@expressive-code/plugin-collapsible-sections": "0.41.2",
     "@expressive-code/plugin-line-numbers": "0.41.2",
     "@tailwindcss/vite": "4.1.11",
-    "algoliasearch": "5.29.0",
+    "algoliasearch": "5.30.0",
     "astro": "5.10.2",
     "astro-expressive-code": "0.41.2",
     "clsx": "2.1.1",
