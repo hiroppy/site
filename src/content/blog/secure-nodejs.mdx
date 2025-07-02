@@ -82,32 +82,85 @@ node --secure-heap=16777216 --secure-heap-min=4096 app.mjs
 
 Linux/macOS 専用。枯渇すると OpenSSL API がエラーを返す。
 
-## TODO: ちょうさ Policy & Integrity Manifest — Require/Import をハッシュ検証
+## Policy & Integrity Manifest — Require/Import をハッシュ検証
 
-`policy.json` 例:
+Policy 機能は、モジュールの完全性を検証し、許可されたモジュールのみをロードする仕組みです。
+サプライチェーン攻撃や改ざんされた依存関係から保護します。
+
+### Policy ファイルの生成
+
+```bash
+# 既存プロジェクトから policy.json を自動生成
+node --experimental-policy=policy.json \
+     --policy-integrity=auto \
+     --trace-deprecation \
+     app/server.js
+```
+
+### `policy.json` の構造
 
 ```json
 {
-  "onerror": "exit",
+  "onerror": "exit", // ポリシー違反時の動作: "exit" | "log" | "throw"
+  "scopes": {
+    "file:": {
+      "cascade": true, // 子スコープへカスケード
+      "integrity": true // 整合性チェックを有効化
+    }
+  },
   "resources": {
     "./app/server.js": {
-      "integrity": "sha256-<SRI>",
-      "dependencies": { "./router": "./app/router.js" }
+      "integrity": "sha256-iuGZ6SFVFpMuHUcJciQTIKpIyaQVigMZlvg9Lx66HV8=",
+      "dependencies": {
+        "./router": "./app/router.js",
+        "express": true // npm パッケージを許可
+      }
     },
-    "./app/router.js": { "integrity": "sha256-<SRI>" }
+    "./app/router.js": {
+      "integrity": "sha256-FKN2XmqPRcpjqX3jfKdRTnAIXyFqdc2VJKZjxLjwdkI="
+    }
   }
 }
 ```
 
+### 実行時の検証
+
 ```bash
+# ポリシーファイル自体の整合性も検証
 node --experimental-policy=policy.json \
-     --policy-integrity=sha256-<policySRI> \
+     --policy-integrity=sha256-X0pnXwAgx7mVHQ2J8fKqgyj8hYjk04cDWAlfqPTK/c4= \
      app/server.js
 ```
 
-未許可のパス・ハッシュは即例外。
+### 主な利点
 
-## --max-http-header-size
+- **改ざん検知**: ファイルが変更されると即座にエラー
+- **依存関係の制限**: 許可されていないモジュールのロードを防止
+- **ランタイム保護**: require/import 時にリアルタイム検証
+
+未許可のパス・改ざんされたファイルは即例外となり、攻撃を未然に防ぎます。
+
+## --max-http-header-size — HTTP ヘッダーサイズ制限
+
+HTTP ヘッダーのサイズを制限し、Header Bomb 攻撃（CWE-400）を防ぎます。
+
+```bash
+# デフォルト: 16384 バイト (16 KiB)
+# 本番環境では 8192 バイト推奨
+node --max-http-header-size=8192 server.mjs
+```
+
+### 効果
+
+- **DoS 防止**: 巨大ヘッダーによるメモリ枯渇を防止
+- **パフォーマンス向上**: ヘッダー解析の高速化
+- **攻撃面の削減**: Header Injection の余地を制限
+
+### 設定の目安
+
+- **API サーバー**: 4096〜8192 バイト
+- **Web アプリ**: 8192〜16384 バイト
+- **プロキシ/CDN 経由**: CDN の制限値に合わせる
 
 ## CI に組み込む推奨セット
 
@@ -123,10 +176,10 @@ NODE_OPTIONS="\
 
 ## 参考リンク
 
-{/* - Node.js CLI Flags — <https://nodejs.org/api/cli.html> */}
-{/* - Permissions API — <https://nodejs.org/api/permissions.html> */}
-{/* - Policy Manifest — <https://nodejs.org/api/policy.html> */}
-{/* - Secure Heap — <https://nodejs.org/api/cli.html#--secure-heap-size> */}
-{/* - Prototype Pollution (PortSwigger) — <https://portswigger.net/web-security/prototype-pollution> */}
-{/* - Memory Access Violation (CWE‑284) — <https://nodejs.org/ja/learn/getting-started/security-best-practices#memory-access-violation-cwe-284> */}
-{/* - Node.js Debugger / Inspector — <https://nodejs.org/api/debugger.html> */}
+- **Node.js CLI Flags** — <https://nodejs.org/api/cli.html>
+- **Permissions API** — <https://nodejs.org/api/permissions.html>
+- **Policy Manifest** — <https://nodejs.org/api/policy.html>
+- **Secure Heap** — <https://nodejs.org/api/cli.html#--secure-heap-size>
+- **Prototype Pollution (PortSwigger)** — <https://portswigger.net/web-security/prototype-pollution>
+- **Memory Access Violation (CWE‑284)** — <https://nodejs.org/ja/learn/getting-started/security-best-practices#memory-access-violation-cwe-284>
+- **Node.js Debugger / Inspector** — <https://nodejs.org/api/debugger.html>
