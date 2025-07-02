@@ -27,6 +27,7 @@ jobs:
       - run: pnpm check
       - run: pnpm fmt:check
       - run: pnpm lint
+      - run: pnpm textlint
   build:
     runs-on: ubuntu-latest
     steps:
