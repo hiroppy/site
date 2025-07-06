@@ -14,16 +14,24 @@ import Button from "../components/Button.astro";
 import Card from "../components/Card.astro";
 import CardContent from "../components/CardContent.astro";
 import CardTitle from "../components/CardTitle.astro";
-import Avatar from "../components/Avatar.astro";
 import Image from "../components/Image.astro";
 import Icon from "../components/Icon.astro";
+import References from "../components/References.astro";
 import type { CollectionEntry } from "astro:content";
 import type { MarkdownLayoutProps } from "astro";
 import { generateOgImage } from "../utils/ogp";
 
-const { frontmatter, headings } = Astro.props as MarkdownLayoutProps<
-  CollectionEntry<"blog">["data"]
->;
+const { frontmatter, headings: originalHeadings } =
+  Astro.props as MarkdownLayoutProps<CollectionEntry<"blog">["data"]>;
+
+// 参考文献がある場合は目次に追加
+const headings =
+  frontmatter.references && frontmatter.references.length > 0
+    ? [
+        ...originalHeadings,
+        { depth: 2, slug: "references", text: "参考リンク" },
+      ]
+    : originalHeadings;
 const date = formatDate(new Date(frontmatter.date));
 const diffDate =
   (new Date().getTime() - new Date(frontmatter.date).getTime()) /
@@ -275,6 +283,13 @@ if (import.meta.env.PROD || process.env.NODE_ENV === "test") {
             <div class="prose prose-lg max-w-none">
               <slot />
             </div>
+
+            <!-- References Section -->
+            {
+              frontmatter.references && frontmatter.references.length > 0 && (
+                <References references={frontmatter.references} />
+              )
+            }
 
             <hr class="my-8 border-gray-200 dark:border-gray-700" />
 

@@ -42,6 +42,8 @@ const blogCollection = defineCollection({
     ),
     // 以前のhatenablogのpath
     hatenaPath: z.string().optional(),
+    // 参考文献のURL配列
+    references: z.array(z.string().url()).optional(),
   }),
 });
 
