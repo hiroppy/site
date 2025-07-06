@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/BlogLayout.astro
 title: 簡単に導入できるNode.js のセキュリティ強化
-date: 2025-06-12
+date: 2025-07-08
 description: SPA, SSR, PWAをどのように安全に作るかを解説します
 image: /images/brands/nodejs.png
 tags: node.js
@@ -9,7 +9,7 @@ tags: node.js
 
 import OG from "../../components/OG.astro";
 
-今回は **CLI オプションだけで導入できる Node.js のセキュリティ強化** をまとめます。
+今回は CLI オプションだけで導入できる Node.js のセキュリティ強化 をまとめます。
 「動いたけど危険だった」コードを本番に送り込まないために、**CI〜本番まで同じフラグ** を徹底しましょう。
 
 |  §  | テーマ                          | 重点フラグ                                    |
@@ -20,8 +20,6 @@ import OG from "../../components/OG.astro";
 |  4  | Permission Model                | `--permission`                                |
 |  5  | **Secure Heap**                 | `--secure-heap`                               |
 |  6  | **Policy & Integrity Manifest** | `--experimental-policy`, `--policy-integrity` |
-
----
 
 ## Injection Sinks — コード実行の脆弱性を防ぐ
 
@@ -41,7 +39,7 @@ new Function(`return ${userInput}`)();
 WebAssembly.compile(maliciousBuffer);
 
 // VM モジュールでの攻撃
-const vm = require('vm');
+const vm = require("vm");
 vm.runInThisContext(userCode); // 同様に危険
 ```
 
@@ -65,13 +63,14 @@ $ node --disallow-code-generation-from-strings index.mjs
 
 ```js
 // これらのライブラリは要注意
-const handlebars = require('handlebars'); // テンプレートコンパイル
-const lodash = require('lodash');        // template関数
-const jsonpath = require('jsonpath');    // 動的関数生成
-const moment = require('moment');        // 一部のロケール処理
+const handlebars = require("handlebars"); // テンプレートコンパイル
+const lodash = require("lodash"); // template関数
+const jsonpath = require("jsonpath"); // 動的関数生成
+const moment = require("moment"); // 一部のロケール処理
 ```
 
 **代替案**：
+
 - テンプレートエンジンは事前コンパイル版を使用
 - CSP（Content Security Policy）ヘッダーでも `unsafe-eval` を禁止
 - TypeScript使用時は `noImplicitEval` を有効化
@@ -83,16 +82,16 @@ const moment = require('moment');        // 一部のロケール処理
 // 設定が有効かテスト
 try {
   eval('console.log("test")');
-  console.log('❌ eval is enabled');
+  console.log("❌ eval is enabled");
 } catch (e) {
-  console.log('✅ eval is disabled');
+  console.log("✅ eval is disabled");
 }
 
 try {
-  new Function('return 42')();
-  console.log('❌ Function constructor is enabled');
+  new Function("return 42")();
+  console.log("❌ Function constructor is enabled");
 } catch (e) {
-  console.log('✅ Function constructor is disabled');
+  console.log("✅ Function constructor is disabled");
 }
 ```
 
@@ -104,10 +103,10 @@ try {
 
 ```js
 // 悪意のあるライブラリやプロトタイプ汚染
-Array.prototype.push = function(item) {
+Array.prototype.push = function (item) {
   // 全ての配列操作を監視・改ざん
-  console.log('Intercepted:', item);
-  if (item.includes('password')) {
+  console.log("Intercepted:", item);
+  if (item.includes("password")) {
     sendToAttacker(item);
   }
   return originalPush.call(this, item);
@@ -115,11 +114,11 @@ Array.prototype.push = function(item) {
 
 // 他のコードに影響
 const users = [];
-users.push({username: 'admin', password: 'secret'}); // ← 情報漏洩
+users.push({ username: "admin", password: "secret" }); // ← 情報漏洩
 
 // JSON.parseの改ざん
 const originalParse = JSON.parse;
-JSON.parse = function(text) {
+JSON.parse = function (text) {
   const result = originalParse(text);
   // 機密情報を抜き取り
   if (result.token) {
@@ -136,6 +135,7 @@ $ node --frozen-intrinsics app.mjs
 ```
 
 **効果**：
+
 - すべてのビルトイン (Object, Array, Date …) を再帰的に `Object.freeze()`
 - 必要な polyfill は **`--require core-js`** などで「凍結前」にロード
 - プロトタイプチェーン全体が不変になる
@@ -160,20 +160,20 @@ node --require @babel/polyfill --frozen-intrinsics app.mjs
 try {
   Array.prototype.maliciousMethod = () => {};
 } catch (e) {
-  console.log('✅ Protected!', e.message); // TypeError: Cannot add property
+  console.log("✅ Protected!", e.message); // TypeError: Cannot add property
 }
 
 try {
-  Object.prototype.polluted = 'value';
+  Object.prototype.polluted = "value";
 } catch (e) {
-  console.log('✅ Object.prototype protected');
+  console.log("✅ Object.prototype protected");
 }
 
 // 既存メソッドの上書きも不可
 try {
   Array.prototype.push = () => {};
 } catch (e) {
-  console.log('✅ Array.prototype.push protected');
+  console.log("✅ Array.prototype.push protected");
 }
 ```
 
@@ -181,13 +181,13 @@ try {
 
 ```js
 // これらのライブラリはfrozen-intrinsicsと相性問題の可能性
-require('core-js'); // polyfillライブラリ
-require('babel-polyfill'); // Babel polyfill
-require('zone.js'); // Angular依存
-require('reflect-metadata'); // TypeScript decorators
+require("core-js"); // polyfillライブラリ
+require("babel-polyfill"); // Babel polyfill
+require("zone.js"); // Angular依存
+require("reflect-metadata"); // TypeScript decorators
 ```
-## Prototype Pollution — プロトタイプ汚染攻撃を阻止
 
+## Prototype Pollution — プロトタイプ汚染攻撃を阻止
 
 `__proto__` を使ったプロトタイプ汚染は、オブジェクトマージ処理で頻発する脆弱性です。
 
@@ -197,7 +197,7 @@ require('reflect-metadata'); // TypeScript decorators
 // 危険なマージ処理
 function merge(target, source) {
   for (const key in source) {
-    if (typeof source[key] === 'object') {
+    if (typeof source[key] === "object") {
       target[key] = merge(target[key] || {}, source[key]);
     } else {
       target[key] = source[key];
@@ -208,10 +208,10 @@ function merge(target, source) {
 
 // 攻撃ペイロード
 const malicious = {
-  "__proto__": {
-    "isAdmin": true,
-    "polluted": "value"
-  }
+  __proto__: {
+    isAdmin: true,
+    polluted: "value",
+  },
 };
 
 merge({}, malicious);
@@ -233,6 +233,7 @@ $ node --disable-proto=throw --frozen-intrinsics server.mjs
 ```
 
 **効果**：
+
 - `__proto__` 参照・代入時に即例外
 - `Object.prototype.__proto__` アクセスを完全に禁止
 
@@ -246,26 +247,26 @@ function safeMerge(target, source) {
 }
 
 // ライブラリを使用
-const merge = require('lodash.mergewith');
+const merge = require("lodash.mergewith");
 const result = merge(target, source, (objValue, srcValue) => {
   // カスタムマージロジック
   return Array.isArray(objValue) ? objValue.concat(srcValue) : undefined;
 });
 
 // 入力検証
-const Ajv = require('ajv');
+const Ajv = require("ajv");
 const ajv = new Ajv();
 const schema = {
-  type: 'object',
+  type: "object",
   properties: {
-    name: { type: 'string' },
-    age: { type: 'number' }
+    name: { type: "string" },
+    age: { type: "number" },
   },
-  additionalProperties: false // __proto__ などを拒否
+  additionalProperties: false, // __proto__ などを拒否
 };
 
 if (!ajv.validate(schema, userInput)) {
-  throw new Error('Invalid input');
+  throw new Error("Invalid input");
 }
 ```
 
@@ -276,18 +277,18 @@ if (!ajv.validate(schema, userInput)) {
 function detectPrototypePollution() {
   const testObject = {};
   try {
-    testObject.__proto__.polluted = 'test';
-    console.log('❌ Prototype pollution possible');
+    testObject.__proto__.polluted = "test";
+    console.log("❌ Prototype pollution possible");
   } catch (e) {
-    console.log('✅ Prototype pollution blocked');
+    console.log("✅ Prototype pollution blocked");
   }
 }
 
 // 既存の汚染チェック
 function checkExistingPollution() {
   const clean = {};
-  const suspicious = ['isAdmin', 'isOwner', 'polluted', 'constructor'];
-  
+  const suspicious = ["isAdmin", "isOwner", "polluted", "constructor"];
+
   for (const prop of suspicious) {
     if (prop in clean) {
       console.warn(`⚠️ Possible pollution detected: ${prop}`);
@@ -472,14 +473,14 @@ NODE_OPTIONS="<上記の本番設定>" npm start
 
 ```js
 // パフォーマンス影響の測定
-const { performance } = require('perf_hooks');
+const { performance } = require("perf_hooks");
 
 const startTime = performance.now();
 // アプリケーション処理
 const endTime = performance.now();
 
-console.log('Security overhead:', endTime - startTime, 'ms');
-console.log('Memory usage:', process.memoryUsage());
+console.log("Security overhead:", endTime - startTime, "ms");
+console.log("Memory usage:", process.memoryUsage());
 ```
 
 ---
@@ -490,21 +491,23 @@ console.log('Memory usage:', process.memoryUsage());
 
 ```js
 // セキュリティ関連の警告をキャッチ
-process.on('warning', (warning) => {
-  if (warning.name === 'DeprecationWarning' || 
-      warning.name === 'SecurityWarning') {
-    console.error('Security Warning:', warning.message);
+process.on("warning", (warning) => {
+  if (
+    warning.name === "DeprecationWarning" ||
+    warning.name === "SecurityWarning"
+  ) {
+    console.error("Security Warning:", warning.message);
     // ログシステムに送信
     securityLogger.warn(warning);
   }
 });
 
 // Permission Model 違反のキャッチ
-process.on('uncaughtException', (error) => {
-  if (error.code === 'ERR_PERMISSION_DENIED') {
-    console.error('Permission denied:', error.message);
+process.on("uncaughtException", (error) => {
+  if (error.code === "ERR_PERMISSION_DENIED") {
+    console.error("Permission denied:", error.message);
     // セキュリティアラート送信
-    alertSystem.send('Permission violation detected');
+    alertSystem.send("Permission violation detected");
   }
 });
 ```
@@ -512,30 +515,30 @@ process.on('uncaughtException', (error) => {
 ### ログ設定例
 
 ```js
-const winston = require('winston');
+const winston = require("winston");
 
 const securityLogger = winston.createLogger({
-  level: 'info',
+  level: "info",
   format: winston.format.combine(
     winston.format.timestamp(),
-    winston.format.json()
+    winston.format.json(),
   ),
   transports: [
-    new winston.transports.File({ 
-      filename: '/var/log/security.log',
-      level: 'warn'
+    new winston.transports.File({
+      filename: "/var/log/security.log",
+      level: "warn",
     }),
     new winston.transports.Console({
-      format: winston.format.simple()
-    })
-  ]
+      format: winston.format.simple(),
+    }),
+  ],
 });
 
 // セキュリティイベントのログ
-securityLogger.warn('Eval attempt blocked', {
+securityLogger.warn("Eval attempt blocked", {
   request: req.url,
-  userAgent: req.headers['user-agent'],
-  timestamp: new Date().toISOString()
+  userAgent: req.headers["user-agent"],
+  timestamp: new Date().toISOString(),
 });
 ```
 
@@ -544,19 +547,19 @@ securityLogger.warn('Eval attempt blocked', {
 ```js
 // 重要なセキュリティイベントでアラート
 const alertThresholds = {
-  permissionDenied: 5,     // 5分間に5回でアラート
-  evalBlocked: 3,          // 3分間に3回でアラート
-  prototypePollution: 1    // 即座にアラート
+  permissionDenied: 5, // 5分間に5回でアラート
+  evalBlocked: 3, // 3分間に3回でアラート
+  prototypePollution: 1, // 即座にアラート
 };
 
 function checkSecurityThreshold(event, count) {
   if (count >= alertThresholds[event]) {
     // Slack/Email/PagerDuty などに送信
     alertSystem.send({
-      severity: 'HIGH',
+      severity: "HIGH",
       event: event,
       count: count,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   }
 }
@@ -577,8 +580,8 @@ new Function(template);
 vm.runInThisContext(code);
 
 // ✅ 安全なパターン
-const validator = require('ajv');
-const template = require('handlebars').compile(templateString);
+const validator = require("ajv");
+const template = require("handlebars").compile(templateString);
 ```
 
 **2. オブジェクトマージの安全性**
@@ -601,8 +604,8 @@ fs.readFile(userPath);
 require(userModule);
 
 // ✅ 安全なパターン
-const allowedPaths = ['/app/public', '/app/uploads'];
-if (allowedPaths.some(path => userPath.startsWith(path))) {
+const allowedPaths = ["/app/public", "/app/uploads"];
+if (allowedPaths.some((path) => userPath.startsWith(path))) {
   fs.readFile(userPath);
 }
 ```
@@ -611,10 +614,10 @@ if (allowedPaths.some(path => userPath.startsWith(path))) {
 
 ```js
 // security.test.js
-const { spawn } = require('child_process');
+const { spawn } = require("child_process");
 
-describe('Security Configuration', () => {
-  test('should block eval attempts', async () => {
+describe("Security Configuration", () => {
+  test("should block eval attempts", async () => {
     const result = await runWithSecurity(`
       try {
         eval('console.log("hacked")');
@@ -622,10 +625,10 @@ describe('Security Configuration', () => {
         console.log('blocked');
       }
     `);
-    expect(result.stdout).toContain('blocked');
+    expect(result.stdout).toContain("blocked");
   });
 
-  test('should prevent prototype pollution', async () => {
+  test("should prevent prototype pollution", async () => {
     const result = await runWithSecurity(`
       try {
         const obj = {};
@@ -634,21 +637,22 @@ describe('Security Configuration', () => {
         console.log('protected');
       }
     `);
-    expect(result.stdout).toContain('protected');
+    expect(result.stdout).toContain("protected");
   });
 });
 
 function runWithSecurity(code) {
   return new Promise((resolve) => {
-    const child = spawn('node', [
-      '--disallow-code-generation-from-strings',
-      '--disable-proto=throw',
-      '-e', code
+    const child = spawn("node", [
+      "--disallow-code-generation-from-strings",
+      "--disable-proto=throw",
+      "-e",
+      code,
     ]);
-    
-    let stdout = '';
-    child.stdout.on('data', (data) => stdout += data);
-    child.on('close', () => resolve({ stdout }));
+
+    let stdout = "";
+    child.stdout.on("data", (data) => (stdout += data));
+    child.on("close", () => resolve({ stdout }));
   });
 }
 ```
@@ -683,6 +687,7 @@ Error: Code generation from strings disallowed for this context
 ```
 
 **解決策**：
+
 - テンプレートエンジンを事前コンパイル版に変更
 - `--disallow-code-generation-from-strings` を一時的に削除してテスト
 - 依存関係で eval を使用するライブラリを特定
@@ -694,6 +699,7 @@ Error: Access to this API has been restricted
 ```
 
 **解決策**：
+
 ```bash
 # デバッグモードで詳細確認
 NODE_OPTIONS="--permission --trace-warnings" node app.js
@@ -709,6 +715,7 @@ Error: secure heap allocation failed
 ```
 
 **解決策**：
+
 ```bash
 # ヒープサイズを増加
 --secure-heap=33554432  # 32 MiB に増加
@@ -749,7 +756,7 @@ awk '/Permission denied/ {print $5}' /var/log/security.log | sort | uniq -c
 setInterval(() => {
   const usage = process.memoryUsage();
   if (usage.secureHeap / (16 * 1024 * 1024) > 0.8) {
-    console.warn('Secure heap usage high:', usage.secureHeap);
+    console.warn("Secure heap usage high:", usage.secureHeap);
   }
 }, 60000);
 ```
