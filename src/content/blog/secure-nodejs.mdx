@@ -1,105 +1,115 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: 簡単に導入できるNode.js のセキュリティ強化
+title: CLIから簡単に導入できるNode.js のセキュリティ強化
 date: 2025-07-08
 description: SPA, SSR, PWAをどのように安全に作るかを解説します
 image: /images/brands/nodejs.png
 tags: node.js
+references:
+  - https://nodejs.org/en/learn/getting-started/security-best-practices
+  - https://nodejs.org/api/permissions.html
+  - https://nodejs.org/api/policy.html
 ---
 
 import OG from "../../components/OG.astro";
 
-今回は CLI オプションだけで導入できる Node.js のセキュリティ強化 をまとめます。
-「動いたけど危険だった」コードを本番に送り込まないために、**CI〜本番まで同じフラグ** を徹底しましょう。
+Node.jsには多くのCLIオプションがありますが、その中でもセキュリティに関するものをまとめます。
 
-|  §  | テーマ                          | 重点フラグ                                    |
-| :-: | :------------------------------ | :-------------------------------------------- |
-|  1  | Injection Sinks (eval など)     | `--disallow-code-generation-from-strings`     |
-|  2  | Monkey Patching                 | `--frozen-intrinsics`                         |
-|  3  | Prototype Pollution             | `--disable-proto=throw`                       |
-|  4  | Permission Model                | `--permission`                                |
-|  5  | **Secure Heap**                 | `--secure-heap`                               |
-|  6  | **Policy & Integrity Manifest** | `--experimental-policy`, `--policy-integrity` |
+## Injection Sinks
 
-## Injection Sinks — コード実行の脆弱性を防ぐ
+Injection Sinksとは、外部からの入力をそのまま受け入れて、処理を実行してしまう場所のことを指します。
 
-**eval**、**Function**、**WebAssembly.compile** などによる動的コード実行は、RCE（Remote Code Execution）攻撃の入り口となります。
+`eval`、`Function` などによる動的コード実行は、サプライチェーン攻撃やRCE攻撃の原因になるため、可能であれば実行させないようにしたほうが良いです。V8のフラグである`--disallow-code-generation-from-strings`を用いることにより、ランタイム時にこれらの実行があるとエラーになります。
+
+eslintの`no-eval`ルールはもちろん設定した方が良いですが、このフラグはnode_modulesにまで実行時にチェックを行うためそこが大きな違いとなります。
+
+```js
+const code = 'console.log("Hello, World!")';
+
+eval(code);
+```
+
+<br />
+
+```sh
+ᐅ node --disallow-code-generation-from-strings index.mjs
+eval(code);
+     ^
+
+EvalError: Code generation from strings disallowed for this context
+    at Object.<anonymous> (/Users/hiroppy/Desktop/test/index.mjs:3:6)
+```
 
 ### 攻撃例
 
 ```js
 // クエリパラメータからの攻撃
-// ?q=process.mainModule.require('fs').readFileSync('/etc/passwd','utf8')
-eval(`db.find("${req.query.q}")`); // ← RCE
+eval(`db.find("${req.query.q}")`);
 
 // テンプレートエンジンでの攻撃
 new Function(`return ${userInput}`)();
-
-// WebAssemblyを使った攻撃
-WebAssembly.compile(maliciousBuffer);
-
-// VM モジュールでの攻撃
-const vm = require("vm");
-vm.runInThisContext(userCode); // 同様に危険
 ```
 
-### 防御方法
+### 注意点
+
+前述の通り、ランタイムでエラーとなるため、node_modulesのライブラリがこれらの機能を使用している場合、アプリケーションが動作しなくなる可能性があります。
+
+> [!WARNING]
+> 例えばcore-jsは使い方によっては動かなくなる
+
+また`vm.runInThisContext`や`WebAssembly.compile`は影響を受けないので完璧ではない点に注意が必要です。
+
+```js
+const vm = require("node:vm");
+
+const code = 'console.log("Hello, World!")';
+
+vm.runInThisContext(code); // hello, World!
+```
+
+### ブラウザ上では将来的にもっと厳格にできる
+
+`CSP`と`Trusted Types`を使用することで、ブラウザ上でも動的コード実行を防ぐことができます。
+さらに今、stage-3にある`Dynamic Code Brand Checks`を使用することで、より柔軟にエンジンが判断し動的コード実行を制限できます。
+
+詳しくは以下を参照。
+
+{/* https://docs.google.com/presentation/d/1ae0ISg8sXLGWdIXNnEVnP14PSFRi9ouohWjCbpsPoEw/edit?slide=id.p#slide=id.p */}
+
+<OG url="https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API" />
+
+<br />
+
+<OG url="https://github.com/tc39/proposal-dynamic-code-brand-checks" />
+
+## Monkey Patching
+
+依存ライブラリが `Array.prototype.push` などの既存の動作を変更し、実行時に全体に影響を与えるプロパティを変更する攻撃です。
+
+`--frozen-intrinsics`フラグを使用することで、ビルトインオブジェクトのプロトタイプを凍結し、変更を防ぐことができます。
+
+```js
+Array.prototype.push = function () {
+  console.log("This will not work");
+};
+```
+
+<br />
 
 ```sh
-$ node --disallow-code-generation-from-strings index.mjs
+ᐅ node --frozen-intrinsics index.mjs
+(node:9932) ExperimentalWarning: Frozen intristics is an experimental feature and might change at any time
+node:internal/freeze_intrinsics:507
+          throw new TypeError(
+                ^
+
+Error [TypeError]: Cannot assign to read only property 'push' of object ''
+    at Array.setter (node:internal/freeze_intrinsics:507:17)
 ```
 
-このフラグにより、以下の API が無効化されます：
+### 攻撃例
 
-- `eval()`
-- `new Function()`
-- `WebAssembly.compile()`
-- `WebAssembly.instantiate()`
-- `vm.runInThisContext()` (一部制限)
-
-### 実際の導入での注意点
-
-**既存のライブラリが動的コード生成を使用している場合**、エラーが発生します：
-
-```js
-// これらのライブラリは要注意
-const handlebars = require("handlebars"); // テンプレートコンパイル
-const lodash = require("lodash"); // template関数
-const jsonpath = require("jsonpath"); // 動的関数生成
-const moment = require("moment"); // 一部のロケール処理
-```
-
-**代替案**：
-
-- テンプレートエンジンは事前コンパイル版を使用
-- CSP（Content Security Policy）ヘッダーでも `unsafe-eval` を禁止
-- TypeScript使用時は `noImplicitEval` を有効化
-- 静的解析ツール（ESLint）で `no-eval` ルールを強制
-
-### 検証方法
-
-```js
-// 設定が有効かテスト
-try {
-  eval('console.log("test")');
-  console.log("❌ eval is enabled");
-} catch (e) {
-  console.log("✅ eval is disabled");
-}
-
-try {
-  new Function("return 42")();
-  console.log("❌ Function constructor is enabled");
-} catch (e) {
-  console.log("✅ Function constructor is disabled");
-}
-```
-
-## Monkey Patching — ビルトインオブジェクトの改ざんを防ぐ
-
-依存ライブラリが `Array.prototype.push = …` を上書きすると、他ライブラリや Node.js コアの前提が崩壊します。
-
-### 攻撃シナリオ
+TODO
 
 ```js
 // 悪意のあるライブラリやプロトタイプ汚染
@@ -128,20 +138,15 @@ JSON.parse = function (text) {
 };
 ```
 
-### 防御方法
+### 注意点
 
-```sh
-$ node --frozen-intrinsics app.mjs
-```
+TODO
 
-**効果**：
-
-- すべてのビルトイン (Object, Array, Date …) を再帰的に `Object.freeze()`
-- 必要な polyfill は **`--require core-js`** などで「凍結前」にロード
-- プロトタイプチェーン全体が不変になる
-- グローバルオブジェクトも保護される
+`globalThis`
 
 ### 実装上の考慮点
+
+TODO
 
 **polyfill の導入順序が重要**：
 
@@ -153,32 +158,6 @@ node --require core-js/stable --frozen-intrinsics app.mjs
 node --require @babel/polyfill --frozen-intrinsics app.mjs
 ```
 
-**動作確認**：
-
-```js
-// 凍結後は例外が発生
-try {
-  Array.prototype.maliciousMethod = () => {};
-} catch (e) {
-  console.log("✅ Protected!", e.message); // TypeError: Cannot add property
-}
-
-try {
-  Object.prototype.polluted = "value";
-} catch (e) {
-  console.log("✅ Object.prototype protected");
-}
-
-// 既存メソッドの上書きも不可
-try {
-  Array.prototype.push = () => {};
-} catch (e) {
-  console.log("✅ Array.prototype.push protected");
-}
-```
-
-### 注意が必要なライブラリ
-
 ```js
 // これらのライブラリはfrozen-intrinsicsと相性問題の可能性
 require("core-js"); // polyfillライブラリ
@@ -187,7 +166,7 @@ require("zone.js"); // Angular依存
 require("reflect-metadata"); // TypeScript decorators
 ```
 
-## Prototype Pollution — プロトタイプ汚染攻撃を阻止
+## Prototype Pollution
 
 `__proto__` を使ったプロトタイプ汚染は、オブジェクトマージ処理で頻発する脆弱性です。
 
@@ -773,16 +752,13 @@ NODE_OPTIONS="--secure-heap=8388608 --max-http-header-size=8192" npm start
 
 ---
 
-## 参考リンク
+## まとめ
 
-- [Node.js CLI Flags](https://nodejs.org/api/cli.html)
-- [Permissions API](https://nodejs.org/api/permissions.html)
-- [Policy Manifest](https://nodejs.org/api/policy.html)
-- [Secure Heap](https://nodejs.org/api/cli.html#--secure-heap-size)
-- [Prototype Pollution (PortSwigger)](https://portswigger.net/web-security/prototype-pollution)
-- [Memory Access Violation (CWE‑284)](https://nodejs.org/ja/learn/getting-started/security-best-practices#memory-access-violation-cwe-284)
-- [Node.js Debugger / Inspector](https://nodejs.org/api/debugger.html)
-- [OWASP Node.js Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html)
-- [Node.js Security Best Practices](https://nodejs.org/en/docs/guides/security/)
-- [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)
-- [CWE Top 25 Most Dangerous Software Weaknesses](https://cwe.mitre.org/top25/archive/2023/2023_top25_list.html)
+|  §  | テーマ                          | 重点フラグ                                    |
+| :-: | :------------------------------ | :-------------------------------------------- |
+|  1  | Injection Sinks (eval など)     | `--disallow-code-generation-from-strings`     |
+|  2  | Monkey Patching                 | `--frozen-intrinsics`                         |
+|  3  | Prototype Pollution             | `--disable-proto=throw`                       |
+|  4  | Permission Model                | `--permission`                                |
+|  5  | **Secure Heap**                 | `--secure-heap`                               |
+|  6  | **Policy & Integrity Manifest** | `--experimental-policy`, `--policy-integrity` |
