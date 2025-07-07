@@ -13,7 +13,7 @@ type Props = {
 const { references } = Astro.props;
 
 async function fetchTitle(url: string): Promise<string | null> {
-  if (import.meta.env.DEV) {
+  if (process.env.NODE_ENV === "development") {
     return "---- dev mode ----";
   }
 

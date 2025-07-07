@@ -72,9 +72,7 @@ async function checkOgImage(page: Page, url: string) {
 for (const url of urls) {
   for (const theme of themes) {
     test(`VRT: ${url} (${theme})`, async ({ page }) => {
-      await page.goto(url, {
-        waitUntil: "networkidle",
-      });
+      await page.goto(url);
 
       // Light themeの時のみOG画像をチェック（重複を避けるため）
       if (theme === "light") {
@@ -135,6 +133,7 @@ for (const url of urls) {
           page.locator('[data-testid="copyright-year"]'),
           page.locator('[data-testid="blog-date"]'),
           page.locator(".job-history"),
+          page.locator(".google-slides-container"),
           page.locator('img[loading="lazy"]'),
         ],
         timeout: 300000,

@@ -1,14 +1,16 @@
 ---
 type Props = {
   id: string;
+  title?: string;
 };
 
-const { id } = Astro.props;
+const { id, title = "Google Slides Presentation" } = Astro.props;
 ---
 
 <div class="google-slides-container">
   <iframe
     src={`https://docs.google.com/presentation/d/e/${id}/embed`}
+    title={title}
     allowfullscreen={true}></iframe>
 </div>
 
