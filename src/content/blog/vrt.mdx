@@ -16,6 +16,7 @@ import Image from "../../components/Image.astro";
 import CodeGroup from "../../components/CodeGroup.astro";
 import CodeGroupPanel from "../../components/CodeGroupPanel.astro";
 import TwoColumn from "../../components/TwoColumn.astro";
+import GoogleSlidesCard from "../../components/GoogleSlidesCard.astro";
 
 ---
 
@@ -29,31 +30,52 @@ import TwoColumn from "../../components/TwoColumn.astro";
 
 ###### Heading h6
 
----
-
-## Test
+## Typography
 
 This article is for VRT.
 
-<OG url="https://hiroppy.me" />
+`code`, **strong**, _italic_
+
+> blockquote
+
+## Table
+
+| foo | bar |
+| --- | --- |
+| 1   | 1   |
+| 2   | 2   |
+
+## Two column
+
+<TwoColumn>
+  <div>左側のコンテンツ</div>
+  <div>右側のコンテンツ</div>
+</TwoColumn>
 
 <br />
-<br />
-<br />
+
+<TwoColumn ratio="2:1" gap="lg">
+  <div>幅広のコンテンツ (2)</div>
+  <div>狭いコンテンツ (1)</div>
+</TwoColumn>
+
+## OGP
+
+<OG url="https://hiroppy.me" />
+
+## Image
 
 <Image alt="me" src="/images/meta/me.png" class="w-10" />
 
 <br />
 
-> blockquote
+![aa](../../assets/images/meta/me.png)
 
-<br />
+## Code
 
 ```ts
 const foo = "foo";
 ```
-
-`code`, **strong**, _italic_
 
 ### Code Group Example
 
@@ -108,13 +130,6 @@ body {
 
 :::
 
-### Test2
-
-| foo | bar |
-| --- | --- |
-| 1   | 1   |
-| 2   | 2   |
-
 ### GitHub-Flavored Alerts
 
 > [!NOTE]
@@ -132,16 +147,6 @@ body {
 > [!CAUTION]
 > Negative potential consequences of an action.
 
-## Two column
+## Google Slides
 
-<TwoColumn>
-  <div>左側のコンテンツ</div>
-  <div>右側のコンテンツ</div>
-</TwoColumn>
-
-<br />
-
-<TwoColumn ratio="2:1" gap="lg">
-  <div>幅広のコンテンツ (2)</div>
-  <div>狭いコンテンツ (1)</div>
-</TwoColumn>
+<GoogleSlidesCard id="2PACX-1vTW6FYDrDsP-KDNZFS0wdpWxI-ePyk_EwVV4XbxYy3skbKsyxyG_3U6Yr_tYdFZkxIBohEIrVyCgvme" />

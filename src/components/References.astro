@@ -1,20 +1,20 @@
 ---
 import * as cheerio from "cheerio";
 
-export interface Reference {
+export type Reference = {
   url: string;
-  title?: string;
-}
+  title: string;
+};
 
-interface Props {
+type Props = {
   references: string[];
-}
+};
 
 const { references } = Astro.props;
 
 async function fetchTitle(url: string): Promise<string | null> {
   if (import.meta.env.DEV) {
-    return "dev env";
+    return "---- dev mode ----";
   }
 
   try {
@@ -29,7 +29,6 @@ async function fetchTitle(url: string): Promise<string | null> {
   }
 }
 
-// 各URLのタイトルを取得
 const referencesWithTitles: Reference[] = await Promise.all(
   references.map(async (url) => {
     const title = await fetchTitle(url);
@@ -41,15 +40,14 @@ const referencesWithTitles: Reference[] = await Promise.all(
 <section class="my-12">
   <h2
     id="references"
-    class="mb-6 text-xl font-bold text-gray-900 dark:text-white"
+    class="mb-4 text-xl font-bold text-gray-900 dark:text-white"
   >
     参考リンク
   </h2>
-  <ul class="space-y-3">
+  <ul class="list-outside list-disc space-y-1">
     {
       referencesWithTitles.map(({ url, title }) => (
-        <li class="flex items-start">
-          <span class="mr-2 text-gray-500 dark:text-gray-400">•</span>
+        <li class="ml-4 marker:text-gray-700 dark:marker:text-gray-400">
           <a
             href={url}
             target="_blank"

@@ -51,8 +51,8 @@ importers:
         specifier: 2.1.1
         version: 2.1.1
       hiroppy:
-        specifier: 1.0.44
-        version: 1.0.44
+        specifier: 1.0.45
+        version: 1.0.45
       instantsearch.js:
         specifier: 4.79.0
         version: 4.79.0(algoliasearch@5.30.0)
@@ -2546,8 +2546,8 @@ packages:
     resolution: {integrity: sha512-Ox1pJVrDCyGHMG9CFg1tmrRUMRPRsAWYc/PinY0XzJU4K7y7vjNoLKIQ7BR5UJMCxNN8EM1MNDmHWA/B3aZUuw==}
     engines: {node: '>=6'}
 
-  hiroppy@1.0.44:
-    resolution: {integrity: sha512-pmCFpORxC+qA2QSniwAIsLcjj32iw1vHVp3g0EWhI3aktWrtt8LIhEPLT+Hly0POW6FkGykfUnizRaoReF7Sbg==}
+  hiroppy@1.0.45:
+    resolution: {integrity: sha512-PCoy9Hs5L8eGFbYwjHAwk3vNjUzdQJkKDPEMWbvzbQ/aTFvDRiggfnBgmpxjHSqnIsWtkjuDJQYtrAJ41sQDKw==}
 
   hogan.js@3.0.2:
     resolution: {integrity: sha512-RqGs4wavGYJWE07t35JQccByczmNUXQT0E12ZYV1VKYu5UiAU9lsos/yBAcf840+zrUQQxgVduCR5/B8nNtibg==}
@@ -7538,7 +7538,7 @@ snapshots:
 
   hex-rgb@4.3.0: {}
 
-  hiroppy@1.0.44: {}
+  hiroppy@1.0.45: {}
 
   hogan.js@3.0.2:
     dependencies:
