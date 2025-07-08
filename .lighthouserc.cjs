@@ -7,6 +7,9 @@ module.exports = {
       numberOfRuns: 1,
       startServerCommand: "pnpm preview --port 3000",
     },
+    upload: {
+      target: "temporary-public-storage",
+    },
     assert: {
       preset: "lighthouse:no-pwa",
       assertions: {
