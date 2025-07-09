@@ -8,10 +8,6 @@ const { id, title = "Google Slides Presentation" } = Astro.props;
 ---
 
 <div class="google-slides-container">
-  <div class="loading-placeholder">
-    <div class="loading-spinner"></div>
-    <p>Loading Google Slides presentation...</p>
-  </div>
   <iframe
     src={`https://docs.google.com/presentation/d/e/${id}/embed`}
     title={title}
@@ -21,7 +17,7 @@ const { id, title = "Google Slides Presentation" } = Astro.props;
     sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"
     style="border: 0;"
     aria-label={title}
-    onload="this.previousElementSibling.style.display='none'"></iframe>
+  ></iframe>
 </div>
 
 <style>
@@ -32,41 +28,6 @@ const { id, title = "Google Slides Presentation" } = Astro.props;
     overflow: hidden;
     background-color: #f8f9fa;
     border-radius: 8px;
-  }
-
-  .loading-placeholder {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #f8f9fa;
-    z-index: 1;
-  }
-
-  .loading-spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #e9ecef;
-    border-top: 4px solid #007bff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 16px;
-  }
-
-  .loading-placeholder p {
-    margin: 0;
-    color: #6c757d;
-    font-size: 14px;
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
   }
 
   .google-slides-container iframe {
