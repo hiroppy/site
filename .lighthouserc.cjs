@@ -33,6 +33,13 @@ module.exports = {
 
         // pnpm previewなので不要
         "uses-text-compression": "off",
+
+        // google slideのエラー
+        "font-display": "off",
+        "inspector-issues": "off",
+        "third-party-cookies": "off",
+        "bf-cache": "off",
+        "font-display-insight": "off",
       },
     },
   },
