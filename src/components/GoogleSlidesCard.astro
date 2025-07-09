@@ -11,13 +11,10 @@ const { id, title = "Google Slides Presentation" } = Astro.props;
   <iframe
     src={`https://docs.google.com/presentation/d/e/${id}/embed`}
     title={title}
-    allowfullscreen={true}
+    allowfullscreen
     loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade"
-    sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"
-    style="border: 0;"
-    aria-label={title}
-  ></iframe>
+  >
+  </iframe>
 </div>
 
 <style>
