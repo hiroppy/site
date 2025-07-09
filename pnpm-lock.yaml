@@ -54,8 +54,8 @@ importers:
         specifier: 1.0.46
         version: 1.0.46
       instantsearch.js:
-        specifier: 4.79.0
-        version: 4.79.0(algoliasearch@5.31.0)
+        specifier: 4.79.1
+        version: 4.79.1(algoliasearch@5.31.0)
       marked:
         specifier: 16.0.0
         version: 16.0.0
@@ -284,8 +284,8 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  '@babel/runtime@7.24.4':
-    resolution: {integrity: sha512-dkxf7+hn8mFBwKjs9bvBlArzLVxVbS8usaPUDd5p2a9JCL9tB8OaOVN1isD4+Xyk4ns89/xeOmbQvgdK7IIVdA==}
+  '@babel/runtime@7.27.6':
+    resolution: {integrity: sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==}
     engines: {node: '>=6.9.0'}
 
   '@babel/types@7.26.3':
@@ -2632,11 +2632,11 @@ packages:
     resolution: {integrity: sha512-cntlB5ghuB0iuO65Ovoi8ogLHiWGs/5yNrtUcKjFhSSiVeAIVpD7koaSU9RM8mpXw5YDi9RdYXGQMaOURB7ycQ==}
     engines: {node: '>=6.0.0'}
 
-  instantsearch-ui-components@0.11.1:
-    resolution: {integrity: sha512-ZqUbJYYgObQ47J08ftXV1KNC1vdEoiD4/49qrkCdW46kRzLxLgYXJGuEuk48DQwK4aBtIoccgTyfbMGfcqNjxg==}
+  instantsearch-ui-components@0.11.2:
+    resolution: {integrity: sha512-XxwqUY6NifxSvHYfyfJRiGhqYqHXQFcFNOEjNyFptB9HOkx14yCdayKar4BZxGx353FnFD6b4Z8LdzbGud+RFA==}
 
-  instantsearch.js@4.79.0:
-    resolution: {integrity: sha512-6t9Td/pXNYfJAb1NHv520oQMKHiudPxRuKkNdUCe72xUJmJTlNT2Z4b8Aj1HmDaq0KDUAhxMt73ch+/0Gwknzg==}
+  instantsearch.js@4.79.1:
+    resolution: {integrity: sha512-wqU4d3O+LHgTk+HfJaKdrhYCQkfhZ6JXD3S/WjOf0mTNH+zM9ma6ud2QdK7ebwgSwygXLNJ8Opaln+3paoVZQw==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
 
@@ -3690,9 +3690,6 @@ packages:
 
   recma-stringify@1.0.0:
     resolution: {integrity: sha512-cjwII1MdIIVloKvC9ErQ+OgAtwHBmcZ0Bg4ciz78FtbT8In39aAYbaA7zvxQ61xVMSPE8WxhLwLbhif4Js2C+g==}
-
-  regenerator-runtime@0.14.1:
-    resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
 
   regex-recursion@6.0.2:
     resolution: {integrity: sha512-0YCaSCq2VRIebiaUviZNs0cBz1kg5kVS2UKUfNIx8YVs1cN3AV7NTctO5FOKBA+UT2BPJIWZauYHPqJODG50cg==}
@@ -4980,9 +4977,7 @@ snapshots:
     dependencies:
       '@babel/types': 7.26.3
 
-  '@babel/runtime@7.24.4':
-    dependencies:
-      regenerator-runtime: 0.14.1
+  '@babel/runtime@7.27.6': {}
 
   '@babel/types@7.26.3':
     dependencies:
@@ -7638,11 +7633,11 @@ snapshots:
       strip-ansi: 5.2.0
       through: 2.3.8
 
-  instantsearch-ui-components@0.11.1:
+  instantsearch-ui-components@0.11.2:
     dependencies:
-      '@babel/runtime': 7.24.4
+      '@babel/runtime': 7.27.6
 
-  instantsearch.js@4.79.0(algoliasearch@5.31.0):
+  instantsearch.js@4.79.1(algoliasearch@5.31.0):
     dependencies:
       '@algolia/events': 4.0.1
       '@types/dom-speech-recognition': 0.0.1
@@ -7653,7 +7648,7 @@ snapshots:
       algoliasearch-helper: 3.26.0(algoliasearch@5.31.0)
       hogan.js: 3.0.2
       htm: 3.1.1
-      instantsearch-ui-components: 0.11.1
+      instantsearch-ui-components: 0.11.2
       preact: 10.20.2
       qs: 6.9.7
       search-insights: 2.17.3
@@ -8946,8 +8941,6 @@ snapshots:
       estree-util-to-js: 2.0.0
       unified: 11.0.5
       vfile: 6.0.3
-
-  regenerator-runtime@0.14.1: {}
 
   regex-recursion@6.0.2:
     dependencies:
