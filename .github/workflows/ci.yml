@@ -6,12 +6,14 @@ on:
       - "package.json"
       - "src/**"
       - ".github/workflows/ci.yml"
+      - ".lighthouserc.cjs"
   push:
     branches: [main]
     paths:
       - "package.json"
       - "src/**"
       - ".github/workflows/ci.yml"
+      - ".lighthouserc.cjs"
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
