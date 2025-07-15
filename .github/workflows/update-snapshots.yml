@@ -19,7 +19,7 @@ jobs:
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/update')
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.53.2
+      image: mcr.microsoft.com/playwright:v1.54.1
     steps:
       - name: Get PR information
         id: pr
