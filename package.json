@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
-    "@astrojs/mdx": "4.3.0",
+    "@astrojs/mdx": "4.3.1",
     "@astrojs/node": "9.3.0",
     "@astrojs/partytown": "2.1.4",
     "@astrojs/rss": "4.0.12",
@@ -65,7 +65,7 @@
     "astro": "5.11.2",
     "astro-expressive-code": "0.41.3",
     "clsx": "2.1.1",
-    "hiroppy": "1.0.47",
+    "hiroppy": "1.0.48",
     "instantsearch.js": "4.79.1",
     "marked": "16.0.0",
     "satori": "0.15.2",
