@@ -61,14 +61,14 @@
     "@expressive-code/plugin-collapsible-sections": "0.41.3",
     "@expressive-code/plugin-line-numbers": "0.41.3",
     "@tailwindcss/vite": "4.1.11",
-    "algoliasearch": "5.34.0",
+    "algoliasearch": "5.34.1",
     "astro": "5.12.2",
     "astro-expressive-code": "0.41.3",
     "clsx": "2.1.1",
     "hiroppy": "1.0.48",
     "instantsearch.js": "4.79.2",
     "marked": "16.1.1",
-    "satori": "0.16.0",
+    "satori": "0.16.1",
     "sharp": "0.34.3",
     "tailwind-merge": "3.3.1"
   }
