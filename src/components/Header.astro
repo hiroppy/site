@@ -63,12 +63,6 @@ const isFullscreenPage = variant === "fullscreen";
           About
         </NavButton>
         <NavButton
-          variant={currentPath.startsWith("/blog") ? "active" : "default"}
-          href="/blog"
-        >
-          Blog
-        </NavButton>
-        <NavButton
           variant={currentPath.startsWith("/media") ? "active" : "default"}
           href="/media"
         >
@@ -79,6 +73,12 @@ const isFullscreenPage = variant === "fullscreen";
           href="/jobs"
         >
           Jobs
+        </NavButton>
+        <NavButton
+          variant={currentPath.startsWith("/blog") ? "active" : "default"}
+          href="/blog"
+        >
+          Blog
         </NavButton>
         <NavButton
           variant={currentPath.startsWith("/labs") ? "active" : "default"}
