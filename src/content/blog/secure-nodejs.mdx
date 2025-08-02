@@ -1,0 +1,476 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: CLIから簡単に導入できるNode.js のセキュリティ強化
+date: 2025-07-08
+description: SPA, SSR, PWAをどのように安全に作るかを解説します
+image: /images/brands/nodejs.png
+tags: node.js
+references:
+  - https://nodejs.org/en/learn/getting-started/security-best-practices
+  - https://nodejs.org/api/permissions.html
+  - https://nodejs.org/api/policy.html
+---
+
+import OG from "../../components/OG.astro";
+import GoogleSlidesCard from "../../components/GoogleSlidesCard.astro";
+
+Node.jsには多くのCLIオプションがありますが、その中でもセキュリティに関するものをまとめます。
+
+## Injection Sinks
+
+Injection Sinksとは、外部からの入力をそのまま受け入れて、処理を実行してしまう場所のことを指します。
+
+`eval`、`Function` などによる動的コード実行は、サプライチェーン攻撃やRCE攻撃の原因になるため、可能であれば実行させないようにしたほうが良いです。V8のフラグである`--disallow-code-generation-from-strings`を用いることにより、ランタイム時にこれらの実行があるとエラーになります。
+
+eslintなどの`no-eval`ルールはもちろん設定した方が良いですが、このフラグはnode_modulesにまで実行時にチェックを行うためそこが大きな違いとなります。
+
+```js
+const code = 'console.log("Hello, World!")';
+
+eval(code);
+```
+
+<br />
+
+```sh
+ᐅ node --disallow-code-generation-from-strings index.mjs
+eval(code);
+     ^
+
+EvalError: Code generation from strings disallowed for this context
+    at Object.<anonymous> (/Users/hiroppy/Desktop/test/index.mjs:3:6)
+```
+
+### 攻撃例
+
+```js
+// クエリパラメータからの攻撃
+eval(`db.find("${req.query.q}")`);
+
+// テンプレートエンジンでの攻撃
+new Function(`return ${userInput}`)();
+```
+
+### 注意点
+
+前述の通り、ランタイムでエラーとなるため、node_modulesのライブラリがこれらの機能を使用している場合、アプリケーションが動作しなくなる可能性があります。
+
+> [!WARNING]
+> 例えばcore-jsは使い方によっては動かなくなる
+
+また`vm.runInThisContext`や`WebAssembly.compile`は影響を受けないので完璧ではない点に注意が必要です。
+
+```js
+const vm = require("node:vm");
+
+const code = 'console.log("Hello, World!")';
+
+vm.runInThisContext(code); // hello, World!
+```
+
+### ブラウザ上では将来的にもっと厳格にできる
+
+`CSP`と`Trusted Types`を使用することで、ブラウザ上でも動的なコードの実行を防ぐことができます。
+さらに今、stage-3にある`Dynamic Code Brand Checks`を使用することで、より柔軟にエンジンが判断し動的なコードの実行を制限できます。
+
+詳しくは以下のスライドを参照してください。
+
+<GoogleSlidesCard id="2PACX-1vThHR1o_6AIkYYxBvDwcqKXePulAo2lj90NBVrVJBNHD5PGZU302BQuju1dZzExbDr1MKGL2gXej6tw" />
+
+<br />
+
+<OG url="https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API" />
+
+<br />
+
+<OG url="https://github.com/tc39/proposal-dynamic-code-brand-checks" />
+
+## Monkey Patching
+
+依存ライブラリが `Array.prototype.push` などの既存の動作を変更し、実行時に全体に影響を与えるプロパティを変更する攻撃です。
+
+`--frozen-intrinsics`フラグを使用することで、ビルトインオブジェクトのプロトタイプを凍結し、変更を防ぐことができます。
+
+```js
+Array.prototype.push = function () {
+  console.log("This will not work");
+};
+```
+
+<br />
+
+```sh
+ᐅ node --frozen-intrinsics index.mjs
+(node:9932) ExperimentalWarning: Frozen intristics is an experimental feature and might change at any time
+node:internal/freeze_intrinsics:507
+          throw new TypeError(
+                ^
+
+Error [TypeError]: Cannot assign to read only property 'push' of object ''
+    at Array.setter (node:internal/freeze_intrinsics:507:17)
+```
+
+### 攻撃例
+
+このようにnode_modules内で改変されていた場合には誰も気づかないでしょう。
+
+```js
+// monkey patch
+const originalPush = Array.prototype.push;
+
+Array.prototype.push = function (item) {
+  if (item && Object.keys(item).includes("password")) {
+    // ログや外部送信などの任意のサイドチャネル
+    sendToAttacker(item);
+  }
+  return originalPush.call(this, item);
+};
+
+const users = [];
+
+users.push({ username: "admin", password: "secret" });
+```
+
+### 注意点
+
+TODO
+
+`globalThis`
+
+### 実装上の考慮点
+
+TODO
+
+**polyfill の導入順序が重要**：
+
+```sh
+# 正しい順序：polyfill → 凍結 → アプリケーション
+node --require core-js/stable --frozen-intrinsics app.mjs
+
+# babel-polyfill の場合
+node --require @babel/polyfill --frozen-intrinsics app.mjs
+```
+
+```js
+// これらのライブラリはfrozen-intrinsicsと相性問題の可能性
+require("core-js"); // polyfillライブラリ
+require("babel-polyfill"); // Babel polyfill
+require("zone.js"); // Angular依存
+require("reflect-metadata"); // TypeScript decorators
+```
+
+## Prototype Pollution
+
+`__proto__` を使ったプロトタイプ汚染は、オブジェクトマージ処理で頻発する脆弱性です。
+
+### 攻撃の仕組み
+
+```js
+// 危険なマージ処理
+function merge(target, source) {
+  for (const key in source) {
+    if (typeof source[key] === "object") {
+      target[key] = merge(target[key] || {}, source[key]);
+    } else {
+      target[key] = source[key];
+    }
+  }
+  return target;
+}
+
+// 攻撃ペイロード
+const malicious = {
+  __proto__: {
+    isAdmin: true,
+    polluted: "value",
+  },
+};
+
+merge({}, malicious);
+
+// 全てのオブジェクトが汚染される
+console.log({}.isAdmin); // true
+console.log({}.polluted); // "value"
+
+// 実際の攻撃例
+const userInput = JSON.parse('{"__proto__": {"isAdmin": true}}');
+merge(config, userInput);
+// 以降、全てのオブジェクトがisAdmin: trueを持つ
+```
+
+### 防御方法
+
+```sh
+$ node --disable-proto=throw --frozen-intrinsics server.mjs
+```
+
+**効果**：
+
+- `__proto__` 参照・代入時に即例外
+- `Object.prototype.__proto__` アクセスを完全に禁止
+
+### 安全なマージの実装
+
+```js
+// structuredClone を使用（Node.js 17+）
+function safeMerge(target, source) {
+  const cloned = structuredClone(source);
+  return { ...target, ...cloned };
+}
+
+// ライブラリを使用
+const merge = require("lodash.mergewith");
+const result = merge(target, source, (objValue, srcValue) => {
+  // カスタムマージロジック
+  return Array.isArray(objValue) ? objValue.concat(srcValue) : undefined;
+});
+
+// 入力検証
+const Ajv = require("ajv");
+const ajv = new Ajv();
+const schema = {
+  type: "object",
+  properties: {
+    name: { type: "string" },
+    age: { type: "number" },
+  },
+  additionalProperties: false, // __proto__ などを拒否
+};
+
+if (!ajv.validate(schema, userInput)) {
+  throw new Error("Invalid input");
+}
+```
+
+### 検証方法
+
+```js
+// プロトタイプ汚染の検出
+function detectPrototypePollution() {
+  const testObject = {};
+  try {
+    testObject.__proto__.polluted = "test";
+    console.log("❌ Prototype pollution possible");
+  } catch (e) {
+    console.log("✅ Prototype pollution blocked");
+  }
+}
+
+// 既存の汚染チェック
+function checkExistingPollution() {
+  const clean = {};
+  const suspicious = ["isAdmin", "isOwner", "polluted", "constructor"];
+
+  for (const prop of suspicious) {
+    if (prop in clean) {
+      console.warn(`⚠️ Possible pollution detected: ${prop}`);
+    }
+  }
+}
+```
+
+## Permission Model
+
+ファイル＆サブプロセスをホワイトリスト化
+
+```sh
+node --permission \
+     --allow-fs-read=/var/data \
+     --allow-child-process \
+     api.mjs
+```
+
+- デフォルトで **全権限拒否**、個別に `--allow-*` で解放
+- v21.6.0 以降は相対パス許可が強化
+
+---
+
+## Secure Heap
+
+ヒープダンプや隣接メモリ破壊から **秘密鍵流出 (CWE‑284)** を守る。
+
+```bash
+# 16 MiB の Secure Heap（最小ブロック 4 KiB）
+node --secure-heap=16777216 --secure-heap-min=4096 app.mjs
+```
+
+Linux/macOS 専用。枯渇すると OpenSSL API がエラーを返す。
+
+## Policy & Integrity Manifest — Require/Import をハッシュ検証
+
+Policy 機能は、モジュールの完全性を検証し、許可されたモジュールのみをロードする仕組みです。
+サプライチェーン攻撃や改ざんされた依存関係から保護します。
+
+### Policy ファイルの生成
+
+```bash
+# 既存プロジェクトから policy.json を自動生成
+node --experimental-policy=policy.json \
+     --policy-integrity=auto \
+     --trace-deprecation \
+     app/server.js
+```
+
+### `policy.json` の構造
+
+```json
+{
+  "onerror": "exit", // ポリシー違反時の動作: "exit" | "log" | "throw"
+  "scopes": {
+    "file:": {
+      "cascade": true, // 子スコープへカスケード
+      "integrity": true // 整合性チェックを有効化
+    }
+  },
+  "resources": {
+    "./app/server.js": {
+      "integrity": "sha256-iuGZ6SFVFpMuHUcJciQTIKpIyaQVigMZlvg9Lx66HV8=",
+      "dependencies": {
+        "./router": "./app/router.js",
+        "express": true // npm パッケージを許可
+      }
+    },
+    "./app/router.js": {
+      "integrity": "sha256-FKN2XmqPRcpjqX3jfKdRTnAIXyFqdc2VJKZjxLjwdkI="
+    }
+  }
+}
+```
+
+### 実行時の検証
+
+```bash
+# ポリシーファイル自体の整合性も検証
+node --experimental-policy=policy.json \
+     --policy-integrity=sha256-X0pnXwAgx7mVHQ2J8fKqgyj8hYjk04cDWAlfqPTK/c4= \
+     app/server.js
+```
+
+### 主な利点
+
+- **改ざん検知**: ファイルが変更されると即座にエラー
+- **依存関係の制限**: 許可されていないモジュールのロードを防止
+- **ランタイム保護**: require/import 時にリアルタイム検証
+
+未許可のパス・改ざんされたファイルは即例外となり、攻撃を未然に防ぎます。
+
+## --max-http-header-size — HTTP ヘッダーサイズ制限
+
+HTTP ヘッダーのサイズを制限し、Header Bomb 攻撃（CWE-400）を防ぎます。
+
+```bash
+# デフォルト: 16384 バイト (16 KiB)
+# 本番環境では 8192 バイト推奨
+node --max-http-header-size=8192 server.mjs
+```
+
+### 効果
+
+- **DoS 防止**: 巨大ヘッダーによるメモリ枯渇を防止
+- **パフォーマンス向上**: ヘッダー解析の高速化
+- **攻撃面の削減**: Header Injection の余地を制限
+
+### 設定の目安
+
+- **API サーバー**: 4096〜8192 バイト
+- **Web アプリ**: 8192〜16384 バイト
+- **プロキシ/CDN 経由**: CDN の制限値に合わせる
+
+### セキュリティイベントの監視
+
+```js
+// セキュリティ関連の警告をキャッチ
+process.on("warning", (warning) => {
+  if (
+    warning.name === "DeprecationWarning" ||
+    warning.name === "SecurityWarning"
+  ) {
+    console.error("Security Warning:", warning.message);
+    // ログシステムに送信
+    securityLogger.warn(warning);
+  }
+});
+
+// Permission Model 違反のキャッチ
+process.on("uncaughtException", (error) => {
+  if (error.code === "ERR_PERMISSION_DENIED") {
+    console.error("Permission denied:", error.message);
+    // セキュリティアラート送信
+    alertSystem.send("Permission violation detected");
+  }
+});
+```
+
+### デバッグ方法とログ解析
+
+**詳細なデバッグ情報**：
+
+```bash
+# 全ての警告とトレースを表示
+NODE_OPTIONS="--trace-warnings --trace-deprecation --trace-sync-io" node app.js
+
+# セキュリティ関連のみフィルタ
+node app.js 2>&1 | grep -E "(Security|Permission|Eval|Prototype)"
+```
+
+**ログ解析例**：
+
+```bash
+# セキュリティイベントの統計
+grep "Permission denied" /var/log/security.log | wc -l
+grep "Eval blocked" /var/log/security.log | tail -10
+
+# 攻撃パターンの分析
+awk '/Permission denied/ {print $5}' /var/log/security.log | sort | uniq -c
+```
+
+### パフォーマンス問題の対処法
+
+**メモリ使用量の最適化**：
+
+```js
+// セキュアヒープの使用状況監視
+setInterval(() => {
+  const usage = process.memoryUsage();
+  if (usage.secureHeap / (16 * 1024 * 1024) > 0.8) {
+    console.warn("Secure heap usage high:", usage.secureHeap);
+  }
+}, 60000);
+```
+
+**起動時間の改善**：
+
+```bash
+# 最小限のセキュリティ設定から開始
+NODE_OPTIONS="--secure-heap=8388608" npm start
+
+# 段階的に追加
+NODE_OPTIONS="--secure-heap=8388608 --max-http-header-size=8192" npm start
+```
+
+## まとめ
+
+| テーマ                      | フラグ                                        |
+| :-------------------------- | :-------------------------------------------- |
+| Injection Sinks             | `--disallow-code-generation-from-strings`     |
+| Monkey Patching             | `--frozen-intrinsics`                         |
+| Prototype Pollution         | `--disable-proto=throw`                       |
+| Permission Model            | `--permission`                                |
+| Secure Heap                 | `--secure-heap`                               |
+| Policy & Integrity Manifest | `--experimental-policy`, `--policy-integrity` |
+
+<br />
+
+```bash
+NODE_OPTIONS="\
+  --disallow-code-generation-from-strings \
+  --frozen-intrinsics \
+  --disable-proto=throw \
+  --permission \
+  --allow-fs-read=/app,/etc/ssl \
+  --allow-fs-write=/tmp,/var/log \
+  --secure-heap=16777216 \
+  --secure-heap-min=4096 \
+  --max-http-header-size=8192" \
+npm start
+```
