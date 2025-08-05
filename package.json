@@ -48,7 +48,7 @@
     "tailwindcss": "4.1.11",
     "typescript": "5.9.2",
     "unist-util-visit": "5.0.0",
-    "yaml": "2.8.0"
+    "yaml": "2.8.1"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
