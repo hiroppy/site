@@ -43,7 +43,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup-node
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: app
           path: ./dist
@@ -58,7 +58,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup-node
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: app
           path: ./dist
@@ -79,7 +79,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup-node
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: app
           path: ./dist
