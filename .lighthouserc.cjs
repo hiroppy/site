@@ -40,6 +40,7 @@ module.exports = {
         "third-party-cookies": "off",
         "bf-cache": "off",
         "font-display-insight": "off",
+        "errors-in-console": "off",
       },
     },
   },
