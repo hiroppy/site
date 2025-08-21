@@ -54,7 +54,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.54.2
+      image: mcr.microsoft.com/playwright:v1.55.0
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup-node
@@ -72,7 +72,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.54.2
+      image: mcr.microsoft.com/playwright:v1.55.0
     strategy:
       matrix:
         test-type: [pages, components]
