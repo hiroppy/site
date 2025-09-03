@@ -91,8 +91,8 @@ importers:
         specifier: 1.1.2
         version: 1.1.2
       knip:
-        specifier: 5.63.0
-        version: 5.63.0(@types/node@20.12.7)(typescript@5.9.2)
+        specifier: 5.63.1
+        version: 5.63.1(@types/node@20.12.7)(typescript@5.9.2)
       octokit:
         specifier: 5.0.3
         version: 5.0.3
@@ -2816,8 +2816,8 @@ packages:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
 
-  knip@5.63.0:
-    resolution: {integrity: sha512-xIFIi/uvLW0S/AQqwggN6UVRKBOQ1Ya7jBfQzllswZplr2si5C616/5wCcWc/eoi1PLJgPgJQLxqYq1aiYpqwg==}
+  knip@5.63.1:
+    resolution: {integrity: sha512-wSznedUAzcU4o9e0O2WPqDnP7Jttu8cesq/R23eregRY8QYQ9NLJ3aGt9fadJfRzPBoU4tRyutwVQu6chhGDlA==}
     engines: {node: '>=18.18.0'}
     hasBin: true
     peerDependencies:
@@ -3970,10 +3970,6 @@ packages:
     resolution: {integrity: sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==}
     engines: {node: '>= 6.0.0', npm: '>= 3.0.0'}
 
-  smol-toml@1.3.4:
-    resolution: {integrity: sha512-UOPtVuYkzYGee0Bd2Szz8d2G3RfMfJ2t3qVdZUAozZyAk+a0Sxa+QKix0YCwjL/A1RR0ar44nCxaoN9FxdJGwA==}
-    engines: {node: '>= 18'}
-
   smol-toml@1.4.2:
     resolution: {integrity: sha512-rInDH6lCNiEyn3+hH8KVGFdbjc099j47+OSgbMrfDYX1CmXLfdKd7qi6IfcWj2wFxvSVkuI46M+wPGYfEOEj6g==}
     engines: {node: '>= 18'}
@@ -4899,7 +4895,7 @@ snapshots:
       remark-rehype: 11.1.2
       remark-smartypants: 3.0.2
       shiki: 3.7.0
-      smol-toml: 1.3.4
+      smol-toml: 1.4.2
       unified: 11.0.5
       unist-util-remove-position: 5.0.0
       unist-util-visit: 5.0.0
@@ -7807,7 +7803,7 @@ snapshots:
 
   kleur@4.1.5: {}
 
-  knip@5.63.0(@types/node@20.12.7)(typescript@5.9.2):
+  knip@5.63.1(@types/node@20.12.7)(typescript@5.9.2):
     dependencies:
       '@nodelib/fs.walk': 1.2.8
       '@types/node': 20.12.7
@@ -9402,8 +9398,6 @@ snapshots:
       sax: 1.3.0
 
   smart-buffer@4.2.0: {}
-
-  smol-toml@1.3.4: {}
 
   smol-toml@1.4.2: {}
 
