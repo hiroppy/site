@@ -33,7 +33,7 @@
     "@iconify-json/mdi": "1.2.3",
     "@iconify-json/noto": "1.2.7",
     "@lhci/cli": "0.15.1",
-    "@playwright/test": "1.55.0",
+    "@playwright/test": "1.55.1",
     "astro-icon": "1.1.5",
     "cheerio": "1.1.2",
     "knip": "5.63.1",
