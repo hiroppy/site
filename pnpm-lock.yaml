@@ -15,8 +15,8 @@ importers:
         specifier: 4.3.7
         version: 4.3.7(astro@5.13.10(@types/node@20.12.7)(@vercel/functions@2.2.13)(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.9.3)(yaml@2.8.1))
       '@astrojs/node':
-        specifier: 9.4.5
-        version: 9.4.5(astro@5.13.10(@types/node@20.12.7)(@vercel/functions@2.2.13)(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.9.3)(yaml@2.8.1))
+        specifier: 9.4.6
+        version: 9.4.6(astro@5.13.10(@types/node@20.12.7)(@vercel/functions@2.2.13)(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.9.3)(yaml@2.8.1))
       '@astrojs/partytown':
         specifier: 2.1.4
         version: 2.1.4
@@ -242,10 +242,10 @@ packages:
     peerDependencies:
       astro: ^5.0.0
 
-  '@astrojs/node@9.4.5':
-    resolution: {integrity: sha512-rTfrcZsjZKJUhB8AlWJUa8amEy8I3CZePSjYn0D9+YTn27CBB3v5jHDOuUJQVRc8fm8oEi2uprF79agTGexwcA==}
+  '@astrojs/node@9.4.6':
+    resolution: {integrity: sha512-vyl+GaT20CjullFghaO5/g3ygpzfjQdxjRJev8r33Vi831nCe3yyy4G/V1z6wpq4FHDEduMtT2jdXfJVx1th+A==}
     peerDependencies:
-      astro: ^5.7.0
+      astro: ^5.14.3
 
   '@astrojs/partytown@2.1.4':
     resolution: {integrity: sha512-loUrAu0cGYFDC6dHVRiomdsBJ41VjDYXPA+B3Br51V5hENFgDSOLju86OIj1TvBACcsB22UQV7BlppODDG5gig==}
@@ -4900,7 +4900,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/node@9.4.5(astro@5.13.10(@types/node@20.12.7)(@vercel/functions@2.2.13)(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.9.3)(yaml@2.8.1))':
+  '@astrojs/node@9.4.6(astro@5.13.10(@types/node@20.12.7)(@vercel/functions@2.2.13)(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.9.3)(yaml@2.8.1))':
     dependencies:
       '@astrojs/internal-helpers': 0.7.4
       astro: 5.13.10(@types/node@20.12.7)(@vercel/functions@2.2.13)(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.42.0)(typescript@5.9.3)(yaml@2.8.1)
