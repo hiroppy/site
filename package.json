@@ -37,7 +37,7 @@
     "astro-icon": "1.1.5",
     "cheerio": "1.1.2",
     "knip": "5.63.1",
-    "octokit": "5.0.3",
+    "octokit": "5.0.4",
     "prettier": "3.6.2",
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.6.14",
