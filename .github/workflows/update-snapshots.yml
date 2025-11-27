@@ -37,7 +37,7 @@ jobs:
               base_ref: pullRequest.base.ref
             };
       - name: Checkout PR branch
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: ${{ fromJson(steps.pr.outputs.result).head_ref }}
