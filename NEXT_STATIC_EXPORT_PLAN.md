@@ -16,7 +16,7 @@
 - フェーズ1: 並走基盤づくり
   - 既存コードを壊さないよう、このリポジトリ内に Next プロジェクト専用ディレクトリ（例: `next/` または `apps/next/`）を作成し、Astro と独立に動かす。`output: "export"` を設定し、`images.unoptimized: true` で static export を許容。
   - 既存の生成スクリプトを Next でも使えるよう、`pnpm generate` 的な単一コマンドで `generated/` を埋める前提に整理。生成物は `public/cache/**` など Next からも参照できる位置へ配置する。
-  - 共通ユーティリティ（型、日付/文字列処理、データ取得ラッパー）を `/src/shared` などに切り出し、Astro/Next の両方から使えるようにする。
+- 共通ユーティリティ（型、日付/文字列処理、データ取得ラッパー）を `/src/shared` などに切り出し、Astro/Next の両方から使えるようにする。
 - フェーズ2: ページ単位移行
   - トラフィックの少ない静的ページから Next へ移植し、`next export` の出力を Vercel/静的ホスティング上でプレビュー。差分確認用に自動スクリーンショット比較（Playwright/VRT）を用意すると安全。
   - データ取得はビルド前生成物を読む形に固定し、`fetch` は `cache: "force-cache"` + `next: { revalidate: false }` など静的前提で書き直す。
@@ -68,3 +68,12 @@
 - 画像は可能な限り事前生成し、必要に応じて CDN 最適化を後段で検討する。
 - View Transitions を App Router で対応する方針（未対応箇所はフォールバック可能にする）。
 - 本番切り替えは移行完了後でよく、それまでは Astro 出力を本番、Next 出力はプレビューで確認する。
+
+## 進捗メモ（Next 並走開始）
+
+- `next/` ディレクトリで App Router + static export の骨組みを作成し、view transitions を有効化。
+- `next/app/jobs` に初期ポートを追加し、`hiroppy/generated/jobs.json` を直接読み込む静的ページとして動作確認できる形にした（UI は Tailwind で Astro 側の見た目を近似）。
+- Next 側で `externalDir` を有効化し、`@site/utils/*` と `@site/generated/*` を参照するエイリアスを追加。`next/src/shared/generated.ts` で生成物の参照を共通化。
+- 将来のブラウザテスト用に `vitest.config.browser.ts` と `test:browser` スクリプトを追加（依存インストール後に利用）。
+- Jobs ページのロジックを `lib.ts` に分離し、`normalizeJobs`/`formatPeriod` のブラウザテストを用意して React 化した UI をテストしやすくした。
+- Next 側に Tailwind（postcss/tailwind 設定と `@tailwind` ベースの global.css）を導入し、Jobs ページの UI を Tailwind クラスで近似。

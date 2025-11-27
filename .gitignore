@@ -6,6 +6,8 @@ npm-debug.log
 .env
 .eslintcache
 dist
+.next
+out
 .astro
 .lighthouseci
 test-results
