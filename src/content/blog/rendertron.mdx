@@ -129,12 +129,10 @@ server {
         const id = "#observablehq-6b3f2a05";
 
         if (document.querySelector(id).children.length === 0) {
-          const { Runtime, Inspector } = await import(
-            "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js"
-          );
-          const { default: define } = await import(
-            "https://api.observablehq.com/@d3/hierarchical-edge-bundling.js?v=3"
-          );
+          const { Runtime, Inspector } =
+            await import("https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js");
+          const { default: define } =
+            await import("https://api.observablehq.com/@d3/hierarchical-edge-bundling.js?v=3");
           const inspect = Inspector.into(id);
 
           new Runtime().module(define, (name) =>
