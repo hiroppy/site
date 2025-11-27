@@ -51,8 +51,8 @@ importers:
         specifier: 2.1.1
         version: 2.1.1
       hiroppy:
-        specifier: 1.0.54
-        version: 1.0.54
+        specifier: 1.0.55
+        version: 1.0.55
       instantsearch.js:
         specifier: 4.84.0
         version: 4.84.0(algoliasearch@5.45.0)
@@ -224,9 +224,6 @@ packages:
 
   '@astrojs/compiler@2.9.1':
     resolution: {integrity: sha512-s8Ge2lWHx/s3kl4UoerjL/iPtwdtogNM/BLOaGCwQA6crMOVYpphy5wUkYlKyuh8GAeGYH/5haLAFBsgNy9AQQ==}
-
-  '@astrojs/internal-helpers@0.7.4':
-    resolution: {integrity: sha512-lDA9MqE8WGi7T/t2BMi+EAXhs4Vcvr94Gqx3q15cFEz8oFZMO4/SFBqYr/UcmNlvW+35alowkVj+w9VhLvs5Cw==}
 
   '@astrojs/internal-helpers@0.7.5':
     resolution: {integrity: sha512-vreGnYSSKhAjFJCWAwe/CNhONvoc5lokxtRoZims+0wa3KbHBdPHSSthJsKxPd8d/aic6lWKpRTYGY/hsgK6EA==}
@@ -2574,8 +2571,8 @@ packages:
     resolution: {integrity: sha512-Ox1pJVrDCyGHMG9CFg1tmrRUMRPRsAWYc/PinY0XzJU4K7y7vjNoLKIQ7BR5UJMCxNN8EM1MNDmHWA/B3aZUuw==}
     engines: {node: '>=6'}
 
-  hiroppy@1.0.54:
-    resolution: {integrity: sha512-DBg8H9poyzKPGQsHchJdngiNbSLrmQnn41/LfFBbz35rNhRa62XJ1NKTU1R6XB8UG8Cgfk8vzvntxFwKEDrANA==}
+  hiroppy@1.0.55:
+    resolution: {integrity: sha512-MPaQc1Oyrh+mzerjePDUOmF/bOxm6AsbmCoXgG9Sg16ZWxddo1rs7OyrTQ6bEg84N75MqRX6y7DxjQUJ2Zx6Vw==}
 
   hogan.js@3.0.2:
     resolution: {integrity: sha512-RqGs4wavGYJWE07t35JQccByczmNUXQT0E12ZYV1VKYu5UiAU9lsos/yBAcf840+zrUQQxgVduCR5/B8nNtibg==}
@@ -4878,8 +4875,6 @@ snapshots:
   '@astrojs/compiler@2.13.0': {}
 
   '@astrojs/compiler@2.9.1': {}
-
-  '@astrojs/internal-helpers@0.7.4': {}
 
   '@astrojs/internal-helpers@0.7.5': {}
 
@@ -7602,7 +7597,7 @@ snapshots:
 
   hex-rgb@4.3.0: {}
 
-  hiroppy@1.0.54: {}
+  hiroppy@1.0.55: {}
 
   hogan.js@3.0.2:
     dependencies:

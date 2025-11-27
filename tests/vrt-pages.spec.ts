@@ -132,6 +132,7 @@ for (const url of urls) {
           page.locator('[data-testid="github-fork-count"]'),
           page.locator('[data-testid="copyright-year"]'),
           page.locator('[data-testid="blog-date"]'),
+          page.locator('[data-testid="job-timeline"]'),
           page.locator(".job-history"),
           page.locator(".google-slides-container"),
           page.locator('img[loading="lazy"]'),
