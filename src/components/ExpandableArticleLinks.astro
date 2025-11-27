@@ -54,7 +54,7 @@ const articleLinks = links.filter((link) => link.title && link.description);
             {articleLinks.map((link) => (
               <Card
                 link={{ href: link.url, ariaLabel: `${link.title}を読む` }}
-                class="group/card w-40 flex-shrink-0 overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md"
+                class="group/card w-40 shrink-0 overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md"
               >
                 <div class="relative h-24 overflow-hidden bg-gray-100 dark:bg-gray-900">
                   {link.image ? (

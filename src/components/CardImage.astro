@@ -16,7 +16,7 @@ type Props = {
 const { src, alt, variant = "cover", class: className } = Astro.props;
 
 const variantClasses = {
-  thumbnail: "h-20 w-36 object-cover rounded-md flex-shrink-0",
+  thumbnail: "h-20 w-36 object-cover rounded-md shrink-0",
   cover: "h-40 w-full object-cover",
   hero: "h-full w-full object-cover",
   mini: "h-24 w-full object-cover",
@@ -25,7 +25,7 @@ const variantClasses = {
 };
 
 const variantContainerClasses = {
-  thumbnail: "h-20 w-36 rounded-md flex-shrink-0",
+  thumbnail: "h-20 w-36 rounded-md shrink-0",
   cover: "h-40 w-full",
   hero: "h-full w-full",
   mini: "h-24 w-full",

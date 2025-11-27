@@ -98,11 +98,11 @@ if (import.meta.env.PROD || process.env.NODE_ENV === "test") {
     <!-- Sidebar with Table of Contents -->
     <aside
       slot="sidebar"
-      class="hidden h-full w-72 flex-shrink-0 border-r border-gray-200 bg-gray-50 lg:block dark:border-gray-700 dark:bg-gray-900"
+      class="hidden h-full w-72 shrink-0 border-r border-gray-200 bg-gray-50 lg:block dark:border-gray-700 dark:bg-gray-900"
     >
       <div class="flex h-full flex-col">
         <!-- Fixed header -->
-        <div class="flex-shrink-0 px-6 pt-10 pb-4">
+        <div class="shrink-0 px-6 pt-10 pb-4">
           <h2
             class="flex items-center text-sm font-semibold text-gray-900 dark:text-white"
           >
@@ -121,7 +121,7 @@ if (import.meta.env.PROD || process.env.NODE_ENV === "test") {
         </div>
         <!-- Fixed bottom section -->
         <div
-          class="flex h-20 flex-shrink-0 items-center border-t border-gray-200 px-6 dark:border-gray-700"
+          class="flex h-20 shrink-0 items-center border-t border-gray-200 px-6 dark:border-gray-700"
         >
           <Link
             href="/blog"

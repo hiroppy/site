@@ -1,0 +1,287 @@
+---
+import history from "../../node_modules/hiroppy/generated/jobs.json";
+import JobTimelineAxis from "./JobTimelineAxis.astro";
+import JobTimelineBar from "./JobTimelineBar.astro";
+import {
+  calculateDateRange,
+  calculatePosition,
+  calculateDurationMonths,
+  generateTimeMarkers,
+  type TimelineJob,
+} from "../utils/timelineCalculations";
+
+type TimelineFilter = "all" | "main" | "side";
+
+// Transform and merge job data
+const allJobs: TimelineJob[] = [
+  ...history.main.map((job, i) => ({
+    id: `main-${i}`,
+    name: job.name,
+    company: job.company,
+    position: job.position,
+    start: new Date(job.start),
+    end: job.end ? new Date(job.end) : null,
+    type: "main" as const,
+    logo: (history.meta as any)[job.company].image,
+    url: (history.meta as any)[job.company].url,
+    row: 0,
+    startPercent: 0,
+    widthPercent: 0,
+    durationMonths: 0,
+    isActive: job.end === null,
+  })),
+  ...history.side.map((job, i) => ({
+    id: `side-${i}`,
+    name: job.name,
+    company: job.company,
+    position: job.position,
+    start: new Date(job.start),
+    end: job.end ? new Date(job.end) : null,
+    type: "side" as const,
+    logo: (history.meta as any)[job.company].image,
+    url: (history.meta as any)[job.company].url,
+    row: 0,
+    startPercent: 0,
+    widthPercent: 0,
+    durationMonths: 0,
+    isActive: job.end === null,
+  })),
+];
+
+// Calculate date range
+const dateRange = calculateDateRange(allJobs);
+
+// Generate time markers for vertical lines
+const timeMarkers = generateTimeMarkers(dateRange.start, dateRange.end);
+
+const filterOptions: { key: TimelineFilter; label: string }[] = [
+  { key: "all", label: "All" },
+  { key: "main", label: "Main only" },
+  { key: "side", label: "Sub only" },
+];
+
+const defaultFilter: TimelineFilter = "all";
+
+const sortJobs = (jobs: TimelineJob[]) => {
+  return [...jobs].sort((a, b) => {
+    const aIsActive = a.end === null;
+    const bIsActive = b.end === null;
+
+    if (aIsActive && !bIsActive) return -1;
+    if (!aIsActive && bIsActive) return 1;
+
+    if (aIsActive && bIsActive) {
+      if (a.type !== b.type) {
+        return a.type === "main" ? -1 : 1;
+      }
+
+      const aDuration = calculateDurationMonths(a.start, a.end);
+      const bDuration = calculateDurationMonths(b.start, b.end);
+
+      if (aDuration !== bDuration) {
+        return bDuration - aDuration;
+      }
+
+      return b.start.getTime() - a.start.getTime();
+    }
+
+    return (b.end?.getTime() || 0) - (a.end?.getTime() || 0);
+  });
+};
+
+const prepareTimelineJobs = (jobs: TimelineJob[]) => {
+  const sortedJobs = sortJobs(jobs).map((job) => ({ ...job }));
+
+  sortedJobs.forEach((job, index) => {
+    job.row = index;
+
+    const { startPercent, widthPercent } = calculatePosition(
+      job,
+      dateRange.start,
+      dateRange.end,
+    );
+
+    job.startPercent = startPercent;
+    job.widthPercent = widthPercent;
+    job.durationMonths = calculateDurationMonths(job.start, job.end);
+  });
+
+  return sortedJobs;
+};
+
+const timelineViews = filterOptions.map(({ key }) => {
+  const filteredJobs =
+    key === "all" ? allJobs : allJobs.filter((job) => job.type === key);
+  const jobs = prepareTimelineJobs(filteredJobs);
+
+  return {
+    key,
+    jobs,
+    height: jobs.length * 72,
+  };
+});
+---
+
+<div class="mb-8">
+  <div class="mb-4 flex flex-wrap items-center gap-2">
+    {
+      filterOptions.map(({ key, label }) => {
+        const isDefault = key === defaultFilter;
+        return (
+          <button
+            type="button"
+            class={`inline-flex items-center rounded-full border px-3 py-1.5 text-sm font-medium transition focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:ring-offset-gray-900 ${
+              isDefault
+                ? "border-blue-600 bg-blue-600 text-white shadow-sm dark:border-blue-500 dark:bg-blue-500"
+                : "border-gray-300 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+            }`}
+            data-filter-button
+            data-filter={key}
+            aria-pressed={isDefault ? "true" : "false"}
+          >
+            {label}
+          </button>
+        );
+      })
+    }
+  </div>
+
+  {
+    timelineViews.map(({ key, jobs, height }) => (
+      <div
+        class={key === defaultFilter ? "" : "hidden"}
+        data-timeline-view={key}
+      >
+        <div
+          class="timeline-container relative w-full overflow-x-auto overflow-y-auto rounded-lg bg-white px-6 shadow-sm dark:bg-gray-900"
+          style="max-height: 400px;"
+          data-testid="job-timeline"
+        >
+          <div
+            class="sticky top-0 z-10 bg-white py-2 dark:bg-gray-900"
+            style="min-width: 2800px;"
+          >
+            <JobTimelineAxis dateRange={dateRange} />
+          </div>
+
+          <div
+            class="relative"
+            style={`height: ${height}px; min-width: 2800px;`}
+          >
+            {timeMarkers.map((marker) => (
+              <div
+                class={`absolute top-0 w-px ${marker.isMajor ? "bg-gray-300 dark:bg-gray-700" : "bg-gray-200 dark:bg-gray-800"}`}
+                style={`left: ${marker.position}%; height: 100%;`}
+              />
+            ))}
+
+            {jobs.map((job) => (
+              <JobTimelineBar job={job} />
+            ))}
+          </div>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  const ACTIVE_CLASSES = [
+    "border-blue-600",
+    "bg-blue-600",
+    "text-white",
+    "shadow-sm",
+    "dark:border-blue-500",
+    "dark:bg-blue-500",
+  ];
+  const INACTIVE_CLASSES = [
+    "border-gray-300",
+    "bg-white",
+    "text-gray-700",
+    "hover:bg-gray-100",
+    "dark:border-gray-600",
+    "dark:bg-gray-800",
+    "dark:text-gray-200",
+    "dark:hover:bg-gray-700",
+  ];
+
+  function initializeTimeline() {
+    const buttons = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-filter-button]"),
+    );
+    const views = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-timeline-view]"),
+    );
+
+    const updateButtonClasses = (button: HTMLElement, isActive: boolean) => {
+      const add = isActive ? ACTIVE_CLASSES : INACTIVE_CLASSES;
+      const remove = isActive ? INACTIVE_CLASSES : ACTIVE_CLASSES;
+
+      button.classList.add(...add);
+      button.classList.remove(...remove);
+      button.setAttribute("aria-pressed", isActive ? "true" : "false");
+    };
+
+    const showView = (target: string) => {
+      views.forEach((view) => {
+        const shouldShow = view.dataset.timelineView === target;
+        view.classList.toggle("hidden", !shouldShow);
+      });
+
+      buttons.forEach((button) => {
+        const isActive = button.dataset.filter === target;
+        updateButtonClasses(button, isActive);
+      });
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = button.dataset.filter || "all";
+        showView(target);
+      });
+    });
+  }
+
+  function initializeTimelineBarClicks() {
+    const timelineBars = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-timeline-bar]"),
+    );
+
+    timelineBars.forEach((bar) => {
+      bar.addEventListener("click", () => {
+        const jobId = bar.dataset.jobId;
+        if (!jobId) return;
+
+        const targetElement = document.getElementById(jobId);
+        if (!targetElement) return;
+
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+
+        // Add a brief highlight effect
+        targetElement.classList.add("ring-2", "ring-blue-500");
+        setTimeout(() => {
+          targetElement.classList.remove("ring-2", "ring-blue-500");
+        }, 2000);
+      });
+    });
+  }
+
+  // Initialize on page load
+  initializeTimeline();
+  initializeTimelineBarClicks();
+
+  // Re-initialize after Astro view transitions
+  document.addEventListener("astro:page-load", () => {
+    initializeTimeline();
+    initializeTimelineBarClicks();
+  });
+</script>
+
+<style>
+  .timeline-container {
+    scroll-behavior: smooth;
+  }
+</style>

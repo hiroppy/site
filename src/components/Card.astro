@@ -14,6 +14,7 @@ type Props = {
   variant?: "default" | "interactive";
   link?: LinkProps;
   ariaLabel?: string;
+  id?: string;
 };
 
 const {
@@ -21,6 +22,7 @@ const {
   variant = "default",
   ariaLabel,
   link,
+  id,
 } = Astro.props;
 
 const baseClasses = cn(
@@ -46,7 +48,7 @@ const baseClasses = cn(
       <slot />
     </Link>
   ) : (
-    <div class={baseClasses} aria-label={ariaLabel}>
+    <div id={id} class={baseClasses} aria-label={ariaLabel}>
       <slot />
     </div>
   )

@@ -38,11 +38,17 @@ for (const item of items) {
   <div class="space-y-6">
     {
       history.map(
-        ({ name, company, description, start, end, position, links }) => {
+        (
+          { name, company, description, start, end, position, links },
+          index,
+        ) => {
           const isCurrentJob = end === null;
+          const jobType = title === "Main Job" ? "main" : "side";
+          const jobId = `${jobType}-${index}`;
           return (
             <Card
-              class="group card-lift shadow-sm"
+              id={jobId}
+              class="group card-lift scroll-mt-24 shadow-sm"
               ariaLabel={`${titleLabel}-${name}`}
             >
               <CardContent>
@@ -51,7 +57,7 @@ for (const item of items) {
                   {/* Header: Image + Company + Position */}
                   <div class="flex items-start gap-3">
                     {(meta as any)[company] && (
-                      <div class="flex-shrink-0">
+                      <div class="shrink-0">
                         <Image
                           src={(meta as any)[company].image}
                           alt={name}
@@ -95,18 +101,15 @@ for (const item of items) {
                           start={new Date(start)}
                           end={end ? new Date(end) : null}
                           variant="text"
-                          class="flex-shrink-0"
+                          class="shrink-0"
                         />
                       </div>
                     </div>
                   </div>
-
-                  {/* Full-width description */}
                   <div
-                    class="job-history prose prose-sm dark:prose-invert max-w-none text-gray-600 dark:text-gray-300"
+                    class="job-history prose prose-sm dark:prose-invert max-w-none text-sm text-gray-600 dark:text-gray-300"
                     set:html={description}
                   />
-
                   <ExpandableArticleLinks links={links} companyName={name} />
                 </div>
 
@@ -114,7 +117,7 @@ for (const item of items) {
                 <div class="hidden md:block">
                   <div class="flex items-start gap-4">
                     {(meta as any)[company] && (
-                      <div class="flex-shrink-0">
+                      <div class="shrink-0">
                         <Image
                           src={(meta as any)[company].image}
                           alt={name}
@@ -157,13 +160,13 @@ for (const item of items) {
                             start={new Date(start)}
                             end={end ? new Date(end) : null}
                             variant="text"
-                            class="flex-shrink-0"
+                            class="shrink-0"
                           />
                         </div>
                       </div>
 
                       <div
-                        class="job-history prose prose-sm dark:prose-invert max-w-none text-gray-600 dark:text-gray-300"
+                        class="job-history prose prose-sm dark:prose-invert max-w-none text-sm text-gray-600 dark:text-gray-300"
                         set:html={description}
                       />
 
