@@ -1,4 +1,4 @@
-export type JobType = "main" | "side";
+type JobType = "main" | "side";
 
 export interface TimelineJob {
   id: string;
@@ -22,7 +22,7 @@ export interface DateRange {
   end: Date;
 }
 
-export interface TimeMarker {
+interface TimeMarker {
   date: Date;
   label: string;
   isMajor: boolean;
@@ -47,51 +47,6 @@ export function calculateDateRange(jobs: TimelineJob[]): DateRange {
     start: new Date(Math.max(...starts, ...ends)),
     end: new Date(Math.min(...starts)),
   };
-}
-
-/**
- * Check if two jobs overlap in time
- */
-export function hasOverlap(job1: TimelineJob, job2: TimelineJob): boolean {
-  const end1 = job1.end || new Date();
-  const end2 = job2.end || new Date();
-  return job1.start < end2 && job2.start < end1;
-}
-
-/**
- * Assign rows to jobs to avoid overlaps using greedy algorithm
- */
-export function assignRows(jobs: TimelineJob[]): TimelineJob[] {
-  const sortedJobs = [...jobs].sort(
-    (a, b) => b.start.getTime() - a.start.getTime(),
-  );
-  const rows: TimelineJob[][] = [];
-
-  for (const job of sortedJobs) {
-    let assigned = false;
-
-    // Try to place in existing rows
-    for (let i = 0; i < rows.length; i++) {
-      const rowHasOverlap = rows[i].some((existingJob) =>
-        hasOverlap(job, existingJob),
-      );
-
-      if (!rowHasOverlap) {
-        job.row = i;
-        rows[i].push(job);
-        assigned = true;
-        break;
-      }
-    }
-
-    // Create new row if needed
-    if (!assigned) {
-      job.row = rows.length;
-      rows.push([job]);
-    }
-  }
-
-  return sortedJobs;
 }
 
 /**
@@ -145,21 +100,6 @@ export function formatDuration(months: number): string {
 }
 
 /**
- * Filter jobs by date range
- */
-export function filterJobsByDateRange(
-  jobs: TimelineJob[],
-  rangeStart: Date,
-  rangeEnd: Date,
-): TimelineJob[] {
-  return jobs.filter((job) => {
-    const jobEnd = job.end || new Date();
-    // Include job if it overlaps with the filter range
-    return job.start <= rangeEnd && jobEnd >= rangeStart;
-  });
-}
-
-/**
  * Generate time markers for the axis
  * Only shows markers for January and July of each year
  */
@@ -178,7 +118,6 @@ export function generateTimeMarkers(start: Date, end: Date): TimeMarker[] {
   while (current.getTime() >= endTime) {
     const month = current.getMonth();
     const isJanuary = month === 0;
-    const isJuly = month === 6;
     const position = ((start.getTime() - current.getTime()) / duration) * 100;
 
     // Format label: show full "YYYY/MM" for January, just month number for July
@@ -205,35 +144,4 @@ export function generateTimeMarkers(start: Date, end: Date): TimeMarker[] {
   }
 
   return markers;
-}
-
-/**
- * Calculate filter date range
- */
-export function getFilterDateRange(
-  filter: "all" | "1y" | "6m" | "3m",
-  allJobs: TimelineJob[],
-): DateRange {
-  const now = new Date();
-
-  switch (filter) {
-    case "3m": {
-      const threeMonthsAgo = new Date(now);
-      threeMonthsAgo.setMonth(now.getMonth() - 3);
-      return { start: now, end: threeMonthsAgo };
-    }
-    case "6m": {
-      const sixMonthsAgo = new Date(now);
-      sixMonthsAgo.setMonth(now.getMonth() - 6);
-      return { start: now, end: sixMonthsAgo };
-    }
-    case "1y": {
-      const oneYearAgo = new Date(now);
-      oneYearAgo.setFullYear(now.getFullYear() - 1);
-      return { start: now, end: oneYearAgo };
-    }
-    case "all":
-    default:
-      return calculateDateRange(allJobs);
-  }
 }
