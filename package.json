@@ -62,7 +62,7 @@
     "@expressive-code/plugin-line-numbers": "0.41.3",
     "@tailwindcss/vite": "4.1.17",
     "algoliasearch": "5.37.0",
-    "astro": "5.13.10",
+    "astro": "5.15.9",
     "astro-expressive-code": "0.41.3",
     "clsx": "2.1.1",
     "hiroppy": "1.0.54",
