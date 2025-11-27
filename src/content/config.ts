@@ -32,9 +32,11 @@ const blogCollection = defineCollection({
     description: z.string(),
     image: z.string(),
     tags: z.string().refine(
-      (tags) => {
+      (tags: string) => {
         const tagList = tags.split(",").map((tag) => tag.trim());
-        return tagList.every((tag) => AVAILABLE_TAGS.includes(tag as any));
+        return tagList.every((tag) =>
+          (AVAILABLE_TAGS as readonly string[]).includes(tag),
+        );
       },
       {
         message: `Tags must be one of: ${AVAILABLE_TAGS.join(", ")}`,

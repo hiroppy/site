@@ -1,5 +1,3 @@
-import { visit } from "unist-util-visit";
-
 export function remarkCodeGroups() {
   return (tree) => {
     // Collect all code groups in a separate pass first
