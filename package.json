@@ -57,7 +57,7 @@
     "@astrojs/partytown": "2.1.4",
     "@astrojs/rss": "4.0.13",
     "@astrojs/sitemap": "3.6.0",
-    "@astrojs/vercel": "8.2.11",
+    "@astrojs/vercel": "9.0.2",
     "@expressive-code/plugin-collapsible-sections": "0.41.3",
     "@expressive-code/plugin-line-numbers": "0.41.3",
     "@tailwindcss/vite": "4.1.17",
