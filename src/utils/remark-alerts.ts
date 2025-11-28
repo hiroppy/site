@@ -1,16 +1,27 @@
+import type { Root, RootContent, Blockquote, Paragraph, Parent } from "mdast";
 import { visit } from "unist-util-visit";
 
+interface NodeReplacement {
+  parent: Parent;
+  index: number | undefined;
+  replacement: RootContent;
+}
+
 export function remarkAlerts() {
-  return (tree) => {
-    const nodesToReplace = [];
+  return (tree: Root) => {
+    const nodesToReplace: NodeReplacement[] = [];
 
     visit(tree, "blockquote", (node, index, parent) => {
-      if (!node.children || node.children.length === 0) return;
+      const blockquote = node as Blockquote;
+      if (!blockquote.children || blockquote.children.length === 0) return;
 
-      const firstChild = node.children[0];
-      if (firstChild.type !== "paragraph" || !firstChild.children) return;
+      const firstChild = blockquote.children[0];
+      if (firstChild.type !== "paragraph") return;
 
-      const firstTextNode = firstChild.children[0];
+      const paragraph = firstChild as Paragraph;
+      if (!paragraph.children || paragraph.children.length === 0) return;
+
+      const firstTextNode = paragraph.children[0];
       if (firstTextNode.type !== "text") return;
 
       // Check for GitHub-flavored alert syntax: [!TYPE]
@@ -29,12 +40,12 @@ export function remarkAlerts() {
 
       // If the first text node is now empty, remove it
       if (!firstTextNode.value.trim()) {
-        firstChild.children.shift();
+        paragraph.children.shift();
       }
 
       // If the first paragraph is now empty, remove it
-      if (firstChild.children.length === 0) {
-        node.children.shift();
+      if (paragraph.children.length === 0) {
+        blockquote.children.shift();
       }
 
       // Create Alert component
@@ -48,28 +59,37 @@ export function remarkAlerts() {
             value: alertType,
           },
         ],
-        children: node.children,
+        children: blockquote.children,
       };
 
-      nodesToReplace.push({
-        parent,
-        index,
-        replacement: alertComponent,
-      });
+      if (parent && index !== undefined) {
+        nodesToReplace.push({
+          parent,
+          index,
+          replacement: alertComponent as unknown as RootContent,
+        });
+      }
     });
 
     // Apply replacements
     nodesToReplace.reverse().forEach(({ parent, index, replacement }) => {
-      parent.children[index] = replacement;
+      if (
+        "children" in parent &&
+        Array.isArray(parent.children) &&
+        index !== undefined
+      ) {
+        parent.children[index] = replacement;
+      }
     });
 
     // Add import statement if any alerts were found
     if (nodesToReplace.length > 0) {
       const hasAlertImport = tree.children.some(
         (child) =>
-          child.type === "mdxjsEsm" &&
-          child.value?.includes("Alert") &&
-          child.value?.includes("../../components/Alert.astro"),
+          "value" in child &&
+          typeof child.value === "string" &&
+          child.value.includes("Alert") &&
+          child.value.includes("../../components/Alert.astro"),
       );
 
       if (!hasAlertImport) {
@@ -96,7 +116,7 @@ export function remarkAlerts() {
               ],
             },
           },
-        });
+        } as unknown as RootContent);
       }
     }
   };

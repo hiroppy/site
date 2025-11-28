@@ -1,27 +1,39 @@
+import type { Root, RootContent, Code, Paragraph } from "mdast";
+
+interface CodeGroup {
+  startIndex: number;
+  endIndex: number;
+  contentNodes: RootContent[];
+}
+
 export function remarkCodeGroups() {
-  return (tree) => {
+  return (tree: Root) => {
     // Collect all code groups in a separate pass first
-    const codeGroups = [];
+    const codeGroups: CodeGroup[] = [];
 
     // First pass: find all code groups without modifying the tree
     for (let i = 0; i < tree.children.length; i++) {
       const node = tree.children[i];
 
       if (node.type === "paragraph") {
-        const text = node.children?.map((child) => child.value || "").join("");
+        const paragraphNode = node as Paragraph;
+        const text = paragraphNode.children
+          ?.map((child) => ("value" in child ? child.value : ""))
+          .join("");
 
         if (text.trim() === "::: code-group") {
           // Found start of code group, now find the end
           let endIndex = -1;
-          const contentNodes = [];
+          const contentNodes: RootContent[] = [];
 
           // Look ahead for the closing :::
           for (let j = i + 1; j < tree.children.length; j++) {
             const nextNode = tree.children[j];
 
             if (nextNode.type === "paragraph") {
-              const nextText = nextNode.children
-                ?.map((child) => child.value || "")
+              const nextParagraph = nextNode as Paragraph;
+              const nextText = nextParagraph.children
+                ?.map((child) => ("value" in child ? child.value : ""))
                 .join("");
               if (nextText.trim() === ":::") {
                 endIndex = j;
@@ -55,11 +67,13 @@ export function remarkCodeGroups() {
       const { startIndex, endIndex, contentNodes } = codeGroups[groupIndex];
 
       // Filter only code blocks
-      const codeBlocks = contentNodes.filter((node) => node.type === "code");
+      const codeBlocks = contentNodes.filter(
+        (node): node is Code => node.type === "code",
+      );
 
       if (codeBlocks.length > 0) {
         // Language to icon mapping
-        const languageIcons = {
+        const languageIcons: Record<string, string> = {
           javascript: "mdi:language-javascript",
           js: "mdi:language-javascript",
           typescript: "mdi:language-typescript",
@@ -120,7 +134,7 @@ export function remarkCodeGroups() {
             languageIcons[language.toLowerCase()] || languageIcons.default;
 
           // Remove the label from meta to avoid conflicts
-          if (metaMatch) {
+          if (metaMatch && block.meta) {
             block.meta = block.meta.replace(/\s*\[[^\]]+\]\s*/, " ").trim();
           }
 
@@ -157,7 +171,11 @@ export function remarkCodeGroups() {
         };
 
         // Replace the entire code group range with the new component
-        tree.children.splice(startIndex, endIndex - startIndex + 1, codeGroup);
+        tree.children.splice(
+          startIndex,
+          endIndex - startIndex + 1,
+          codeGroup as unknown as RootContent,
+        );
       }
     }
 
@@ -165,15 +183,17 @@ export function remarkCodeGroups() {
     if (codeGroups.length > 0) {
       const hasCodeGroupImport = tree.children.some(
         (child) =>
-          child.type === "mdxjsEsm" &&
-          child.value?.includes("CodeGroup") &&
-          child.value?.includes("../../components/CodeGroup.astro"),
+          "value" in child &&
+          typeof child.value === "string" &&
+          child.value.includes("CodeGroup") &&
+          child.value.includes("../../components/CodeGroup.astro"),
       );
       const hasCodeGroupPanelImport = tree.children.some(
         (child) =>
-          child.type === "mdxjsEsm" &&
-          child.value?.includes("CodeGroupPanel") &&
-          child.value?.includes("../../components/CodeGroupPanel.astro"),
+          "value" in child &&
+          typeof child.value === "string" &&
+          child.value.includes("CodeGroupPanel") &&
+          child.value.includes("../../components/CodeGroupPanel.astro"),
       );
 
       if (!hasCodeGroupImport) {
@@ -200,7 +220,7 @@ export function remarkCodeGroups() {
               ],
             },
           },
-        });
+        } as unknown as RootContent);
       }
       if (!hasCodeGroupPanelImport) {
         tree.children.unshift({
@@ -230,7 +250,7 @@ export function remarkCodeGroups() {
               ],
             },
           },
-        });
+        } as unknown as RootContent);
       }
     }
   };

@@ -34,6 +34,7 @@
     "@iconify-json/noto": "1.2.7",
     "@lhci/cli": "0.15.1",
     "@playwright/test": "1.57.0",
+    "@types/mdast": "4.0.4",
     "astro-icon": "1.1.5",
     "cheerio": "1.1.2",
     "knip": "5.70.2",

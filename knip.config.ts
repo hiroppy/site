@@ -27,7 +27,7 @@ const config: KnipConfig = {
     "@iconify-json/noto",
   ],
   astro: {
-    config: ["astro.config.mjs"],
+    config: ["astro.config.ts"],
   },
   compilers: {
     mdx: true,
