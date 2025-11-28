@@ -87,9 +87,6 @@ importers:
       '@types/mdast':
         specifier: 4.0.4
         version: 4.0.4
-      '@vitest/browser':
-        specifier: 2.1.4
-        version: 2.1.4(@types/node@20.12.7)(playwright@1.57.0)(typescript@5.9.3)(vite@6.4.1(@types/node@20.12.7)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.1))(vitest@2.1.4)
       astro-icon:
         specifier: 1.1.5
         version: 1.1.5
@@ -5427,6 +5424,7 @@ snapshots:
       '@babel/helper-validator-identifier': 7.28.5
       js-tokens: 4.0.0
       picocolors: 1.1.1
+    optional: true
 
   '@babel/helper-string-parser@7.27.1': {}
 
@@ -5825,7 +5823,8 @@ snapshots:
   '@img/sharp-win32-x64@0.34.5':
     optional: true
 
-  '@inquirer/ansi@1.0.2': {}
+  '@inquirer/ansi@1.0.2':
+    optional: true
 
   '@inquirer/confirm@5.1.21(@types/node@20.12.7)':
     dependencies:
@@ -5833,6 +5832,7 @@ snapshots:
       '@inquirer/type': 3.0.10(@types/node@20.12.7)
     optionalDependencies:
       '@types/node': 20.12.7
+    optional: true
 
   '@inquirer/core@10.3.2(@types/node@20.12.7)':
     dependencies:
@@ -5846,12 +5846,15 @@ snapshots:
       yoctocolors-cjs: 2.1.3
     optionalDependencies:
       '@types/node': 20.12.7
+    optional: true
 
-  '@inquirer/figures@1.0.15': {}
+  '@inquirer/figures@1.0.15':
+    optional: true
 
   '@inquirer/type@3.0.10(@types/node@20.12.7)':
     optionalDependencies:
       '@types/node': 20.12.7
+    optional: true
 
   '@isaacs/cliui@8.0.2':
     dependencies:
@@ -5977,6 +5980,7 @@ snapshots:
       is-node-process: 1.2.0
       outvariant: 1.4.3
       strict-event-emitter: 0.5.1
+    optional: true
 
   '@napi-rs/wasm-runtime@1.0.7':
     dependencies:
@@ -6198,14 +6202,17 @@ snapshots:
       '@octokit/request-error': 7.0.2
       '@octokit/webhooks-methods': 6.0.0
 
-  '@open-draft/deferred-promise@2.2.0': {}
+  '@open-draft/deferred-promise@2.2.0':
+    optional: true
 
   '@open-draft/logger@0.3.0':
     dependencies:
       is-node-process: 1.2.0
       outvariant: 1.4.3
+    optional: true
 
-  '@open-draft/until@2.1.0': {}
+  '@open-draft/until@2.1.0':
+    optional: true
 
   '@opentelemetry/api@1.9.0': {}
 
@@ -6282,7 +6289,8 @@ snapshots:
     dependencies:
       playwright: 1.57.0
 
-  '@polka/url@1.0.0-next.29': {}
+  '@polka/url@1.0.0-next.29':
+    optional: true
 
   '@puppeteer/browsers@2.10.5':
     dependencies:
@@ -6523,10 +6531,12 @@ snapshots:
       lz-string: 1.5.0
       picocolors: 1.1.1
       pretty-format: 27.5.1
+    optional: true
 
   '@testing-library/user-event@14.6.1(@testing-library/dom@10.4.1)':
     dependencies:
       '@testing-library/dom': 10.4.1
+    optional: true
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
@@ -6541,7 +6551,8 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.7
 
-  '@types/aria-query@5.0.4': {}
+  '@types/aria-query@5.0.4':
+    optional: true
 
   '@types/aws-lambda@8.10.137': {}
 
@@ -6593,7 +6604,8 @@ snapshots:
     dependencies:
       '@types/node': 20.12.7
 
-  '@types/statuses@2.0.6': {}
+  '@types/statuses@2.0.6':
+    optional: true
 
   '@types/tar@6.1.13':
     dependencies:
@@ -6672,6 +6684,7 @@ snapshots:
       - typescript
       - utf-8-validate
       - vite
+    optional: true
 
   '@vitest/expect@2.1.4':
     dependencies:
@@ -6697,6 +6710,7 @@ snapshots:
     optionalDependencies:
       msw: 2.12.3(@types/node@20.12.7)(typescript@5.9.3)
       vite: 6.4.1(@types/node@20.12.7)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.1)
+    optional: true
 
   '@vitest/pretty-format@2.1.4':
     dependencies:
@@ -6879,7 +6893,8 @@ snapshots:
     dependencies:
       color-convert: 2.0.1
 
-  ansi-styles@5.2.0: {}
+  ansi-styles@5.2.0:
+    optional: true
 
   ansi-styles@6.2.1: {}
 
@@ -6899,6 +6914,7 @@ snapshots:
   aria-query@5.3.0:
     dependencies:
       dequal: 2.0.3
+    optional: true
 
   aria-query@5.3.2: {}
 
@@ -7282,7 +7298,8 @@ snapshots:
 
   cli-width@2.2.1: {}
 
-  cli-width@4.1.0: {}
+  cli-width@4.1.0:
+    optional: true
 
   cliui@6.0.0:
     dependencies:
@@ -7508,7 +7525,8 @@ snapshots:
 
   dlv@1.1.3: {}
 
-  dom-accessibility-api@0.5.16: {}
+  dom-accessibility-api@0.5.16:
+    optional: true
 
   dom-serializer@2.0.0:
     dependencies:
@@ -8009,7 +8027,8 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  graphql@16.12.0: {}
+  graphql@16.12.0:
+    optional: true
 
   h3@1.15.4:
     dependencies:
@@ -8203,7 +8222,8 @@ snapshots:
       property-information: 7.0.0
       space-separated-tokens: 2.0.2
 
-  headers-polyfill@4.0.3: {}
+  headers-polyfill@4.0.3:
+    optional: true
 
   hex-rgb@4.3.0: {}
 
@@ -8378,7 +8398,8 @@ snapshots:
     dependencies:
       is-docker: 3.0.0
 
-  is-node-process@1.2.0: {}
+  is-node-process@1.2.0:
+    optional: true
 
   is-number@7.0.0: {}
 
@@ -8417,7 +8438,8 @@ snapshots:
 
   js-library-detector@6.7.0: {}
 
-  js-tokens@4.0.0: {}
+  js-tokens@4.0.0:
+    optional: true
 
   js-yaml@3.14.1:
     dependencies:
@@ -8658,7 +8680,8 @@ snapshots:
 
   lru-cache@7.18.3: {}
 
-  lz-string@1.5.0: {}
+  lz-string@1.5.0:
+    optional: true
 
   magic-string@0.30.21:
     dependencies:
@@ -9252,12 +9275,14 @@ snapshots:
       typescript: 5.9.3
     transitivePeerDependencies:
       - '@types/node'
+    optional: true
 
   muggle-string@0.4.1: {}
 
   mute-stream@0.0.7: {}
 
-  mute-stream@2.0.0: {}
+  mute-stream@2.0.0:
+    optional: true
 
   nanoid@3.3.11: {}
 
@@ -9354,7 +9379,8 @@ snapshots:
 
   os-tmpdir@1.0.2: {}
 
-  outvariant@1.4.3: {}
+  outvariant@1.4.3:
+    optional: true
 
   oxc-resolver@11.14.0:
     optionalDependencies:
@@ -9559,6 +9585,7 @@ snapshots:
       ansi-regex: 5.0.1
       ansi-styles: 5.2.0
       react-is: 17.0.2
+    optional: true
 
   prismjs@1.30.0: {}
 
@@ -9636,7 +9663,8 @@ snapshots:
       iconv-lite: 0.4.24
       unpipe: 1.0.0
 
-  react-is@17.0.2: {}
+  react-is@17.0.2:
+    optional: true
 
   react@19.2.0: {}
 
@@ -9829,7 +9857,8 @@ snapshots:
       retext-stringify: 4.0.0
       unified: 11.0.5
 
-  rettime@0.7.0: {}
+  rettime@0.7.0:
+    optional: true
 
   reusify@1.0.4: {}
 
@@ -10041,6 +10070,7 @@ snapshots:
       '@polka/url': 1.0.0-next.29
       mrmime: 2.0.1
       totalist: 3.0.1
+    optional: true
 
   sisteransi@1.0.5: {}
 
@@ -10091,7 +10121,8 @@ snapshots:
 
   statuses@2.0.1: {}
 
-  statuses@2.0.2: {}
+  statuses@2.0.2:
+    optional: true
 
   std-env@3.10.0: {}
 
@@ -10104,7 +10135,8 @@ snapshots:
     optionalDependencies:
       bare-events: 2.5.4
 
-  strict-event-emitter@0.5.1: {}
+  strict-event-emitter@0.5.1:
+    optional: true
 
   string-width@2.1.1:
     dependencies:
@@ -10196,7 +10228,8 @@ snapshots:
       picocolors: 1.1.1
       sax: 1.4.3
 
-  tagged-tag@1.0.0: {}
+  tagged-tag@1.0.0:
+    optional: true
 
   tailwind-merge@3.4.0: {}
 
@@ -10268,7 +10301,8 @@ snapshots:
 
   tldts-core@6.1.18: {}
 
-  tldts-core@7.0.19: {}
+  tldts-core@7.0.19:
+    optional: true
 
   tldts-icann@6.1.18:
     dependencies:
@@ -10277,6 +10311,7 @@ snapshots:
   tldts@7.0.19:
     dependencies:
       tldts-core: 7.0.19
+    optional: true
 
   tmp@0.0.33:
     dependencies:
@@ -10294,11 +10329,13 @@ snapshots:
 
   toidentifier@1.0.1: {}
 
-  totalist@3.0.1: {}
+  totalist@3.0.1:
+    optional: true
 
   tough-cookie@6.0.0:
     dependencies:
       tldts: 7.0.19
+    optional: true
 
   tr46@0.0.3: {}
 
@@ -10321,6 +10358,7 @@ snapshots:
   type-fest@5.2.0:
     dependencies:
       tagged-tag: 1.0.0
+    optional: true
 
   type-is@1.6.18:
     dependencies:
@@ -10457,7 +10495,8 @@ snapshots:
     optionalDependencies:
       '@vercel/functions': 2.2.13
 
-  until-async@3.0.2: {}
+  until-async@3.0.2:
+    optional: true
 
   uri-js@4.4.1:
     dependencies:
@@ -10821,7 +10860,8 @@ snapshots:
     dependencies:
       yoctocolors: 2.1.1
 
-  yoctocolors-cjs@2.1.3: {}
+  yoctocolors-cjs@2.1.3:
+    optional: true
 
   yoctocolors@2.1.1: {}
 
