@@ -10,6 +10,7 @@
     "strict": true,
     "strictNullChecks": true,
     "types": ["astro/client", "vitest"],
+    "jsx": "react-jsx",
     "paths": {
       "hiroppy/*": ["./node_modules/hiroppy/*"]
     }

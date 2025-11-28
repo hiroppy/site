@@ -20,11 +20,15 @@ const config: KnipConfig = {
     // Unlisted binaries (1)
     // test:vrt:${{ matrix.test-type }}  .github/workflows/ci.yml
     ".github/workflows/ci.yml",
+    // TODO:
+    "src/components/header.test.browser.tsx",
   ],
   ignoreDependencies: [
     "tailwindcss",
     "@iconify-json/mdi",
     "@iconify-json/noto",
+    // TODO:
+    "@vitest/browser",
   ],
   astro: {
     config: ["astro.config.ts"],
