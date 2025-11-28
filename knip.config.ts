@@ -22,8 +22,6 @@ const config: KnipConfig = {
     ".github/workflows/ci.yml",
   ],
   ignoreDependencies: [
-    // for playwright
-    "serve",
     "tailwindcss",
     "@iconify-json/mdi",
     "@iconify-json/noto",
