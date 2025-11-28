@@ -39,7 +39,7 @@ const siteDescription = description ?? SITE_DESCRIPTION;
 const ogImage = new URL(
   image
     ? isOptimizedImage
-      ? getImageSrc(await importAssets(image))
+      ? getImageSrc(importAssets(image))
       : image
     : meImage.src,
   Astro.site?.origin as string,
