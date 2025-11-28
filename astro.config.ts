@@ -7,8 +7,8 @@ import tailwindcss from "@tailwindcss/vite";
 import astroExpressiveCode from "astro-expressive-code";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
-import { remarkCodeGroups } from "./src/utils/remark-code-groups";
-import { remarkAlerts } from "./src/utils/remark-alerts";
+import { remarkCodeGroups } from "./src/utils/remarkCodeGroups";
+import { remarkAlerts } from "./src/utils/remarkAlerts";
 
 const adapter =
   process.env.NODE_ENV !== "test"

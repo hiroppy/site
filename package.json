@@ -20,6 +20,8 @@
     "test:vrt:ci:update": "pnpm test:vrt:ci --update-snapshots",
     "test:vrt:ci:pages": "NODE_ENV=test playwright test --project=*-vrt-pages",
     "test:vrt:ci:components": "NODE_ENV=test playwright test --project=*-vrt-components",
+    "test": "vitest run",
+    "test:watch": "vitest --watch",
     "docker:clean": "docker compose -f compose.vrt.yml down --rmi all --volumes && docker image prune -f",
     "fmt": "prettier -w .",
     "fmt:check": "prettier --check .",
@@ -49,6 +51,7 @@
     "tailwindcss": "4.1.17",
     "typescript": "5.9.3",
     "unist-util-visit": "5.0.0",
+    "vitest": "2.1.4",
     "yaml": "2.8.1"
   },
   "dependencies": {

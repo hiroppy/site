@@ -27,6 +27,12 @@ jobs:
       - run: pnpm check
       - run: pnpm fmt:check
       - run: pnpm lint
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup-node
+      - run: pnpm test
   build:
     runs-on: ubuntu-latest
     steps:

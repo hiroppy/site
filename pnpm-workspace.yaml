@@ -3,5 +3,6 @@ onlyBuiltDependencies:
   - esbuild
   - hiroppy
   - lefthook
+  - msw
   - puppeteer
   - sharp
