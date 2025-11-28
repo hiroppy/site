@@ -42,7 +42,7 @@
     "knip": "5.70.2",
     "lefthook": "2.0.4",
     "octokit": "5.0.5",
-    "prettier": "3.7.1",
+    "prettier": "3.7.2",
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.7.1",
     "remark": "15.0.1",

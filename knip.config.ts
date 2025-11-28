@@ -11,8 +11,8 @@ const config: KnipConfig = {
   ignore: [
     "generated/**",
     // mdx uses theme files
-    "src/components/BlogCardItem.astro",
-    "src/components/Alert.astro",
+    "src/components/blog/BlogCardItem.astro",
+    "src/components/blog/Alert.astro",
     // Unlisted dependencies
     "src/content/blog/cjs-esm-reference-chart-of-behavior.mdx",
     "src/content/blog/create-module-bundler-esm.mdx",
