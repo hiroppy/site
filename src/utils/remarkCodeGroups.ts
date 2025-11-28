@@ -10,6 +10,7 @@ export function remarkCodeGroups() {
   return (tree: Root) => {
     // Collect all code groups in a separate pass first
     const codeGroups: CodeGroup[] = [];
+    let processedGroups = 0;
 
     // First pass: find all code groups without modifying the tree
     for (let i = 0; i < tree.children.length; i++) {
@@ -176,11 +177,13 @@ export function remarkCodeGroups() {
           endIndex - startIndex + 1,
           codeGroup as unknown as RootContent,
         );
+
+        processedGroups++;
       }
     }
 
     // Add import statements if any code groups were processed
-    if (codeGroups.length > 0) {
+    if (processedGroups > 0) {
       const hasCodeGroupImport = tree.children.some(
         (child) =>
           "value" in child &&
