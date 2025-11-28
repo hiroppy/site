@@ -10,25 +10,46 @@ import ExpandableArticleLinks from "./ExpandableArticleLinks.astro";
 import PeriodBadge from "./PeriodBadge.astro";
 
 type JobContent = (typeof JobMeta)["main"] | (typeof JobMeta)["side"];
+type JobMetaData = (typeof JobMeta)["meta"];
+
+type CompanyMeta = {
+  image: string;
+  url: string;
+};
+
+type JobItem = JobContent[number];
+type JobItemWithParsedDescription = Omit<JobItem, "description"> & {
+  description: string;
+};
 
 type Props = {
   title: "Main Job" | "My Company";
   items: JobContent;
-  meta: (typeof JobMeta)["meta"];
+  meta: JobMetaData;
 };
 
 const { title, items, meta } = Astro.props;
 const titleLabel = title === "Main Job" ? "main" : "coder-penguin";
-const history: JobContent = [];
 
-for (const item of items) {
-  // TODO:
-  // @ts-expect-error
-  history.push({
-    ...item,
-    description: await marked.parse(item.description),
-  });
+// Helper function to safely get company metadata
+function getCompanyMeta(
+  metadata: JobMetaData,
+  companyKey: string,
+): CompanyMeta | null {
+  const companyMeta = metadata[companyKey as keyof JobMetaData];
+  if (!companyMeta || typeof companyMeta !== "object") {
+    return null;
+  }
+  return companyMeta as CompanyMeta;
 }
+
+// Parse markdown descriptions with proper typing
+const history: JobItemWithParsedDescription[] = await Promise.all(
+  items.map(async (item) => ({
+    ...item,
+    description: (await marked.parse(item.description)) as string,
+  })),
+);
 ---
 
 <div class="space-y-6">
@@ -56,28 +77,42 @@ for (const item of items) {
                 <div class="block space-y-4 md:hidden">
                   {/* Header: Image + Company + Position */}
                   <div class="flex items-start gap-3">
-                    {(meta as any)[company] && (
-                      <div class="shrink-0">
-                        <Image
-                          src={(meta as any)[company].image}
-                          alt={name}
-                          width={48}
-                          height={48}
-                          class="h-12 w-12 rounded-lg bg-white p-1.5 shadow-sm transition-transform group-hover:scale-105"
-                        />
-                      </div>
-                    )}
+                    {(() => {
+                      const companyMeta = getCompanyMeta(meta, company);
+                      return (
+                        companyMeta && (
+                          <div class="shrink-0">
+                            <Image
+                              src={companyMeta.image}
+                              alt={name}
+                              width={48}
+                              height={48}
+                              class="h-12 w-12 rounded-lg bg-white p-1.5 shadow-sm transition-transform group-hover:scale-105"
+                            />
+                          </div>
+                        )
+                      );
+                    })()}
                     <div class="min-w-0 flex-1">
                       <div class="flex items-start justify-between gap-2">
                         <div class="min-w-0 flex-1">
                           <CardTitle level={4} class="mb-1 text-base">
-                            <Link
-                              href={(meta as any)[company].url}
-                              class="text-gray-900 transition-colors hover:text-blue-700 dark:text-white dark:hover:text-blue-400"
-                              ariaLabel={`${name}の会社サイトを開く`}
-                            >
-                              {name}
-                            </Link>
+                            {(() => {
+                              const companyMeta = getCompanyMeta(meta, company);
+                              return companyMeta ? (
+                                <Link
+                                  href={companyMeta.url}
+                                  class="text-gray-900 transition-colors hover:text-blue-700 dark:text-white dark:hover:text-blue-400"
+                                  ariaLabel={`${name}の会社サイトを開く`}
+                                >
+                                  {name}
+                                </Link>
+                              ) : (
+                                <span class="text-gray-900 dark:text-white">
+                                  {name}
+                                </span>
+                              );
+                            })()}
                           </CardTitle>
                           <div class="flex items-center space-x-2">
                             <span
@@ -116,27 +151,41 @@ for (const item of items) {
                 {/* Desktop Layout */}
                 <div class="hidden md:block">
                   <div class="flex items-start gap-4">
-                    {(meta as any)[company] && (
-                      <div class="shrink-0">
-                        <Image
-                          src={(meta as any)[company].image}
-                          alt={name}
-                          width={60}
-                          height={60}
-                          class="h-16 w-16 rounded-lg bg-white p-2 shadow-sm transition-transform group-hover:scale-105"
-                        />
-                      </div>
-                    )}
+                    {(() => {
+                      const companyMeta = getCompanyMeta(meta, company);
+                      return (
+                        companyMeta && (
+                          <div class="shrink-0">
+                            <Image
+                              src={companyMeta.image}
+                              alt={name}
+                              width={60}
+                              height={60}
+                              class="h-16 w-16 rounded-lg bg-white p-2 shadow-sm transition-transform group-hover:scale-105"
+                            />
+                          </div>
+                        )
+                      );
+                    })()}
                     <div class="min-w-0 flex-1 space-y-3">
                       <div class="space-y-2">
                         <CardTitle level={4} class="text-lg">
-                          <Link
-                            href={(meta as any)[company].url}
-                            class="text-gray-900 transition-colors hover:text-blue-700 dark:text-white dark:hover:text-blue-400"
-                            ariaLabel={`${name}の会社サイトを開く`}
-                          >
-                            {name}
-                          </Link>
+                          {(() => {
+                            const companyMeta = getCompanyMeta(meta, company);
+                            return companyMeta ? (
+                              <Link
+                                href={companyMeta.url}
+                                class="text-gray-900 transition-colors hover:text-blue-700 dark:text-white dark:hover:text-blue-400"
+                                ariaLabel={`${name}の会社サイトを開く`}
+                              >
+                                {name}
+                              </Link>
+                            ) : (
+                              <span class="text-gray-900 dark:text-white">
+                                {name}
+                              </span>
+                            );
+                          })()}
                         </CardTitle>
                         <div class="flex items-center justify-between">
                           <div class="flex items-center space-x-2">

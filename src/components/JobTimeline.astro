@@ -11,41 +11,65 @@ import {
 } from "../utils/timelineCalculations";
 
 type TimelineFilter = "all" | "main" | "side";
+type JobMetaData = typeof history.meta;
+
+type CompanyMeta = {
+  image: string;
+  url: string;
+};
+
+// Helper function to safely get company metadata
+function getCompanyMeta(
+  metadata: JobMetaData,
+  companyKey: string,
+): CompanyMeta {
+  const companyMeta = metadata[companyKey as keyof JobMetaData];
+  if (!companyMeta || typeof companyMeta !== "object") {
+    throw new Error(`Company metadata not found for: ${companyKey}`);
+  }
+  return companyMeta as CompanyMeta;
+}
 
 // Transform and merge job data
 const allJobs: TimelineJob[] = [
-  ...history.main.map((job, i) => ({
-    id: `main-${i}`,
-    name: job.name,
-    company: job.company,
-    position: job.position,
-    start: new Date(job.start),
-    end: job.end ? new Date(job.end) : null,
-    type: "main" as const,
-    logo: (history.meta as any)[job.company].image,
-    url: (history.meta as any)[job.company].url,
-    row: 0,
-    startPercent: 0,
-    widthPercent: 0,
-    durationMonths: 0,
-    isActive: job.end === null,
-  })),
-  ...history.side.map((job, i) => ({
-    id: `side-${i}`,
-    name: job.name,
-    company: job.company,
-    position: job.position,
-    start: new Date(job.start),
-    end: job.end ? new Date(job.end) : null,
-    type: "side" as const,
-    logo: (history.meta as any)[job.company].image,
-    url: (history.meta as any)[job.company].url,
-    row: 0,
-    startPercent: 0,
-    widthPercent: 0,
-    durationMonths: 0,
-    isActive: job.end === null,
-  })),
+  ...history.main.map((job, i) => {
+    const meta = getCompanyMeta(history.meta, job.company);
+    return {
+      id: `main-${i}`,
+      name: job.name,
+      company: job.company,
+      position: job.position,
+      start: new Date(job.start),
+      end: job.end ? new Date(job.end) : null,
+      type: "main" as const,
+      logo: meta.image,
+      url: meta.url,
+      row: 0,
+      startPercent: 0,
+      widthPercent: 0,
+      durationMonths: 0,
+      isActive: job.end === null,
+    };
+  }),
+  ...history.side.map((job, i) => {
+    const meta = getCompanyMeta(history.meta, job.company);
+    return {
+      id: `side-${i}`,
+      name: job.name,
+      company: job.company,
+      position: job.position,
+      start: new Date(job.start),
+      end: job.end ? new Date(job.end) : null,
+      type: "side" as const,
+      logo: meta.image,
+      url: meta.url,
+      row: 0,
+      startPercent: 0,
+      widthPercent: 0,
+      durationMonths: 0,
+      isActive: job.end === null,
+    };
+  }),
 ];
 
 // Calculate date range

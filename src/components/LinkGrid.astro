@@ -1,0 +1,83 @@
+---
+import Card from "./Card.astro";
+import CardContent from "./CardContent.astro";
+import Icon from "./Icon.astro";
+
+type LinkItem = {
+  href: string;
+  icon: string;
+  title: string;
+  description: string;
+  // Quick link specific
+  gradient?: string;
+  iconColor?: string;
+  // Social link specific
+  color?: string;
+};
+
+type Props = {
+  links: LinkItem[];
+  variant?: "quick" | "social";
+  columns?: "1" | "2" | "3" | "4" | "5";
+  class?: string;
+};
+
+const { links, variant = "quick", columns, class: className } = Astro.props;
+
+// Set default columns based on variant
+const defaultColumns = variant === "quick" ? "4" : "5";
+const selectedColumns = columns || defaultColumns;
+
+const gridClasses: Record<string, string> = {
+  "1": "grid-cols-1",
+  "2": variant === "social" ? "grid-cols-2" : "grid-cols-1 md:grid-cols-2",
+  "3":
+    variant === "social"
+      ? "grid-cols-2 md:grid-cols-3"
+      : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+  "4":
+    variant === "social"
+      ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+      : "grid-cols-1 md:grid-cols-2 lg:grid-cols-4",
+  "5": "grid-cols-2 md:grid-cols-3 lg:grid-cols-5",
+};
+
+// Variant-specific styles
+const padding = variant === "quick" ? "p-6" : "p-4";
+const iconMargin = variant === "quick" ? "mb-3" : "mb-2";
+---
+
+<div class={`grid gap-4 ${gridClasses[selectedColumns]} ${className || ""}`}>
+  {
+    links.map(
+      ({ href, icon, title, description, gradient, iconColor, color }) => {
+        const cardClass =
+          variant === "quick" && gradient
+            ? `card-lift ${gradient}`
+            : "card-lift";
+
+        const iconColorClass =
+          variant === "quick" && iconColor
+            ? iconColor
+            : color || "text-gray-800 dark:text-gray-200";
+
+        return (
+          <Card variant="interactive" class={cardClass} link={{ href }}>
+            <CardContent class={`${padding} text-center`}>
+              <Icon
+                icon={icon}
+                class={`mx-auto ${iconMargin} text-4xl ${iconColorClass}`}
+              />
+              <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
+                {title}
+              </h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                {description}
+              </p>
+            </CardContent>
+          </Card>
+        );
+      },
+    )
+  }
+</div>

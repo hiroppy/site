@@ -1,11 +1,9 @@
 import { getCollection } from "astro:content";
+import { sortByDate } from "./sortItems";
 
 export async function getBlogs() {
   const posts = await getCollection("blog");
-
-  return posts.sort(
-    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
-  );
+  return sortByDate(posts, (post) => post.data.date);
 }
 
 export function parseTags(tags: string) {

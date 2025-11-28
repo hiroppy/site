@@ -1,7 +1,7 @@
 ---
 import MediaLayout from "../../layouts/MediaLayout.astro";
 import { HATENA_BLOG_URL, type MediaType } from "../../constants";
-import { sortItems } from "../../utils/sortItems";
+import { sortByDate } from "../../utils/sortItems";
 import MediaCard from "../../components/MediaCard.astro";
 import Icon from "../../components/Icon.astro";
 
@@ -21,11 +21,14 @@ const { kind } = Astro.params;
 const items: DataItem[] = await (async () => {
   switch (kind) {
     case undefined:
-      return sortItems([
-        ...(await getData("talks")),
-        ...(await getData("media")),
-        ...(await getData("podcasts")),
-      ]);
+      return sortByDate(
+        [
+          ...(await getData("talks")),
+          ...(await getData("media")),
+          ...(await getData("podcasts")),
+        ],
+        (item) => item.publishedAt,
+      );
     case "talks":
       return await getData("talks");
     // TODO: fix

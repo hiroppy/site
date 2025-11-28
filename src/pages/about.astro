@@ -1,8 +1,7 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import HeroSection from "../components/HeroSection.astro";
-import SocialLinksGrid from "../components/SocialLinksGrid.astro";
-import QuickLinksGrid from "../components/QuickLinksGrid.astro";
+import LinkGrid from "../components/LinkGrid.astro";
 import Card from "../components/Card.astro";
 import CardContent from "../components/CardContent.astro";
 import Section from "../components/Section.astro";
@@ -141,12 +140,12 @@ const quickLinks = [
 
     <!-- Social Links Section -->
     <Section title="Find me on">
-      <SocialLinksGrid links={socialLinks} />
+      <LinkGrid links={socialLinks} variant="social" />
     </Section>
 
     <!-- Quick Links Section -->
     <Section title="Quick Links">
-      <QuickLinksGrid links={quickLinks} />
+      <LinkGrid links={quickLinks} variant="quick" />
     </Section>
 
     <!-- GitHub Contributions Section -->

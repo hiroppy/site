@@ -7,7 +7,7 @@ const config: KnipConfig = {
     "src/layouts/**/*.astro",
     "scripts/**/*.mts",
   ],
-  project: ["src/**/*.{astro,ts,tsx,js,jsx,mdx}", "scripts/**/*.mts"],
+  project: ["src/**/*.{astro,ts,tsx,js,jsx,mjs,mdx}", "scripts/**/*.mts"],
   ignore: [
     "generated/**",
     // mdx uses theme files
@@ -25,7 +25,6 @@ const config: KnipConfig = {
     "tailwindcss",
     "@iconify-json/mdi",
     "@iconify-json/noto",
-    "unist-util-visit",
   ],
   astro: {
     config: ["astro.config.mjs"],

@@ -38,9 +38,32 @@ const diffDate =
   (60 * 60 * 1000 * 24);
 const { title, url: tmpUrl, description, tags } = frontmatter;
 
-// TODO: urlがファイルパスになっているバグがある
-const url =
-  tmpUrl?.replace(".mdx", "").replace(/.+?\/content/, "") || Astro.url.pathname;
+/**
+ * Resolve the post URL from frontmatter or fallback to Astro.url.pathname
+ * Handles file paths like "/path/to/content/blog/post.mdx" correctly
+ */
+function resolvePostUrl(
+  frontmatterUrl: string | undefined,
+  astroUrl: URL,
+): string {
+  if (!frontmatterUrl) {
+    return astroUrl.pathname;
+  }
+
+  // Remove file extension (.mdx or .md)
+  const withoutExtension = frontmatterUrl.replace(/\.mdx?$/, "");
+
+  // Extract path after /content/blog/ using proper regex
+  const match = withoutExtension.match(/\/content\/blog\/(.+)$/);
+  if (match && match[1]) {
+    return `/blog/${match[1]}`;
+  }
+
+  // If no match, fallback to Astro URL
+  return astroUrl.pathname;
+}
+
+const url = resolvePostUrl(tmpUrl, Astro.url);
 
 // HMRで重くなるため、dev環境ではglobをさせない
 const posts =
