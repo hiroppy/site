@@ -71,7 +71,8 @@ function SkillBox({
   items: { title: string; from: number; to?: number }[];
 }) {
   return (
-    <div className="space-y-4 rounded-xl border border-gray-200 bg-white/90 p-5 shadow-sm backdrop-blur dark:border-[#2a3d58] dark:bg-[#1f2f47]">
+    <div className="space-y-4 rounded-xl border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-slate-800">
+      <div className="p-4 md:p-6">
       <div className="mb-4 flex items-center space-x-3">
         <span className={cn("h-3 w-3 rounded-full", colorClass)} aria-hidden />
         <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
@@ -85,7 +86,7 @@ function SkillBox({
           return (
             <article
               key={`${title}-${from}`}
-              className="card-lift rounded-xl border border-gray-200 bg-white p-3 shadow-sm transition-all duration-300 hover:shadow-md dark:border-[#2a3d58] dark:bg-[#1f2f47]"
+              className="group card-lift rounded-xl border border-gray-200 bg-white p-3 shadow-sm transition-all duration-300 hover:shadow-md dark:border-gray-700 dark:bg-slate-800"
             >
               <div className="space-y-2">
                 <h4 className="flex items-center font-medium text-gray-900 dark:text-gray-100">
@@ -105,28 +106,27 @@ function SkillBox({
           );
         })}
       </div>
+      </div>
     </div>
   );
 }
 
 function SkillSection() {
   return (
-    <section className="space-y-8 mb-16">
-      <div className="space-y-4">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Technical Skills</h2>
-        <div className="space-y-2 text-gray-600 dark:text-gray-300">
-          {introParagraphs.map((text) => (
-            <p key={text}>{text}</p>
-          ))}
-        </div>
-        <div className="flex items-center justify-end">
-          <span className="inline-flex items-center space-x-1 rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">
-            <span role="img" aria-label="maintainer">
-              👷
-            </span>
-            <span>maintainer(including past)</span>
-          </span>
-        </div>
+    <section className="mb-16">
+      <h2 className="mb-8 text-3xl font-bold text-gray-900 dark:text-gray-100">
+        Technical Skills
+      </h2>
+      <div className="mb-4 space-y-2">
+        {introParagraphs.map((text) => (
+          <p key={text} className="text-gray-600 dark:text-gray-300">{text}</p>
+        ))}
+      </div>
+      <div className="mb-6 flex items-center justify-end">
+        <span className="inline-flex items-center space-x-1 rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+          <Icon icon="noto:construction-worker" width={16} height={16} />
+          <span>maintainer(including past)</span>
+        </span>
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">
@@ -227,7 +227,7 @@ function ArticleLinks({ links, companyName }: { links: ArticleLink[]; companyNam
   const uniqueId = `article-${companyName.replace(/\s+/g, "-").toLowerCase()}`;
 
   return (
-    <div className="mt-4 border-t border-gray-200 pt-4 dark:border-slate-700">
+    <div className="mt-4 border-t border-gray-200 pt-4 dark:border-gray-700">
       <details className="group">
         <summary className="flex cursor-pointer items-center justify-between rounded-lg p-2 text-sm font-medium text-gray-700 transition-colors select-none hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800">
           <div className="flex items-center space-x-2">
@@ -252,7 +252,7 @@ function ArticleLinks({ links, companyName }: { links: ArticleLink[]; companyNam
               <a
                 key={`${link.url}-${link.title}`}
                 href={link.url}
-                className="group/card w-40 shrink-0 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-md dark:border-slate-700 dark:bg-slate-800"
+                className="group/card w-40 shrink-0 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-md dark:border-gray-700 dark:bg-slate-800"
                 aria-label={link.title}
               >
                 <div className="relative h-24 overflow-hidden bg-gray-100 dark:bg-slate-900">
@@ -263,19 +263,24 @@ function ArticleLinks({ links, companyName }: { links: ArticleLink[]; companyNam
                       className="h-full w-full object-cover transition duration-300 group-hover/card:scale-105"
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 text-gray-400 dark:from-slate-800 dark:to-slate-700">
-                      <Icon icon="mdi:newspaper-variant-outline" width={32} height={32} className="text-gray-400 dark:text-gray-500" />
+                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 text-gray-400 dark:from-gray-800 dark:to-gray-900">
+                      <Icon icon="mdi:newspaper-variant-outline" width={32} height={32} className="text-gray-400 dark:text-gray-600" />
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent opacity-0 transition-opacity group-hover/card:opacity-100" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity group-hover/card:opacity-100" />
                 </div>
 
                 <div className="p-2 space-y-1">
-                  {link.name ? <div className="text-[10px] text-gray-500 dark:text-gray-400">{link.name}</div> : null}
-                  <h5 className="line-clamp-2 text-xs font-semibold text-gray-900 transition-colors group-hover/card:text-blue-600 dark:text-gray-100 dark:group-hover/card:text-blue-300">
+                  {link.name ? (
+                    <div className="mb-1 flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-400">
+                      <Icon icon="mdi:domain" width={10} height={10} />
+                      <span className="truncate text-xs">{link.name}</span>
+                    </div>
+                  ) : null}
+                  <h5 className="mb-1 line-clamp-2 text-xs font-semibold text-gray-900 transition-colors group-hover/card:text-blue-600 dark:text-gray-100 dark:group-hover/card:text-blue-400">
                     {link.title}
                   </h5>
-                  <p className="line-clamp-2 text-[11px] leading-snug text-gray-600 dark:text-gray-300">{link.description}</p>
+                  <p className="line-clamp-2 text-xs text-gray-600 dark:text-gray-300">{link.description}</p>
                 </div>
               </a>
             ))}
@@ -303,14 +308,14 @@ function JobCard({
   return (
     <article
       id={job.id}
-      className="group card-lift scroll-mt-24 rounded-xl border border-gray-200 bg-white shadow-sm dark:border-[#2a3d58] dark:bg-[#1f2f47]"
+      className="group card-lift scroll-mt-24 rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-slate-800"
       aria-label={`${job.role}-${job.name}`}
     >
-      <div className="p-5 md:p-6">
+      <div className="p-4 md:p-6">
         <div className="flex flex-col gap-4 md:flex-row">
           {logo ? (
             <div className="shrink-0">
-              <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-white p-2 shadow-sm transition-transform group-hover:scale-105 dark:bg-slate-900">
+              <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-white p-2 shadow-sm transition-transform group-hover:scale-105">
                 <img src={logo} alt={job.name} className="h-12 w-12 rounded-md object-contain" />
               </div>
             </div>
@@ -332,29 +337,34 @@ function JobCard({
                       className={cn(
                         "inline-flex items-center rounded-full px-3 py-1 text-xs font-medium",
                         isCurrent
-                          ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300"
-                          : "bg-gray-100 text-gray-800 dark:bg-slate-700 dark:text-gray-200",
+                          ? "bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-400"
+                          : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300",
                       )}
                     >
                       {job.position}
                     </span>
                     {isCurrent ? (
-                      <span className="flex items-center space-x-1 text-xs text-green-700 dark:text-green-300">
+                      <span className="flex items-center space-x-1 text-xs text-green-800 dark:text-green-400">
                         <span className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
                         <span>Current</span>
                       </span>
                     ) : null}
                   </div>
                 </div>
-                <div className="text-xs font-medium text-gray-600 dark:text-gray-300">
-                  {formatPeriod(job)} · {job.durationLabel}
+                <div className={cn(
+                  "shrink-0 text-xs font-medium",
+                  isCurrent
+                    ? "text-green-800 dark:text-green-400"
+                    : "text-gray-500 dark:text-gray-400"
+                )}>
+                  {formatPeriod(job)}
                 </div>
               </div>
             </div>
 
             {html ? (
               <div
-                className="prose prose-sm max-w-none text-gray-700 dark:prose-invert"
+                className="job-history prose prose-sm dark:prose-invert max-w-none text-sm text-gray-600 dark:text-gray-300"
                 dangerouslySetInnerHTML={{ __html: html }}
               />
             ) : null}
@@ -378,21 +388,25 @@ function WorkExperienceSection({
 }) {
   return (
     <section className="space-y-8 mb-16">
-      <div className="grid gap-6 lg:grid-cols-2 lg:divide-x lg:divide-gray-200 dark:lg:divide-[#2a3d58]">
-        <div className="lg:pr-3 space-y-4">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Main Job</h3>
+      <div className="grid divide-gray-200 lg:grid-cols-2 lg:divide-x dark:divide-gray-600">
+        <div className="lg:pr-3">
           <div className="space-y-6">
-            {mainJobs.map((job, index) => (
-              <JobCard key={job.id} job={job} meta={meta} index={index} />
-            ))}
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Main Job</h3>
+            <div className="space-y-6">
+              {mainJobs.map((job, index) => (
+                <JobCard key={job.id} job={job} meta={meta} index={index} />
+              ))}
+            </div>
           </div>
         </div>
-        <div className="lg:pl-3 space-y-4">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">My Company</h3>
+        <div className="mt-4 lg:mt-0 lg:pl-3">
           <div className="space-y-6">
-            {sideJobs.map((job, index) => (
-              <JobCard key={job.id} job={job} meta={meta} index={index} />
-            ))}
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">My Company</h3>
+            <div className="space-y-6">
+              {sideJobs.map((job, index) => (
+                <JobCard key={job.id} job={job} meta={meta} index={index} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -408,9 +422,11 @@ export default function JobsPage() {
 
   return (
     <main className="container mx-auto px-4 py-8 space-y-12">
-      <header className="py-6 text-center space-y-3">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">{PAGE_TITLE}</h1>
-      </header>
+      <div className="py-6 text-center">
+        <h1 className="mb-4 text-4xl font-bold text-gray-900 dark:text-gray-100">
+          {PAGE_TITLE}
+        </h1>
+      </div>
 
       <SkillSection />
 

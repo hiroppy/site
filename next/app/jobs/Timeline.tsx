@@ -60,8 +60,8 @@ export function Timeline({
   };
 
   return (
-    <section className="space-y-4 rounded-2xl border border-gray-200 bg-white/90 p-6 shadow-sm backdrop-blur dark:border-[#2a3d58] dark:bg-[#1f2f47]">
-      <div className="flex flex-wrap items-center gap-2">
+    <div className="mb-8">
+      <div className="mb-4 flex flex-wrap items-center gap-2">
         {filterOptions.map(({ key, label }) => {
           const isActive = key === filter;
           return (
@@ -70,9 +70,9 @@ export function Timeline({
               type="button"
               onClick={() => setFilter(key)}
               className={cn(
-                "inline-flex items-center rounded-full border px-3 py-1.5 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+                "inline-flex items-center rounded-full border px-3 py-1.5 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900",
                 isActive
-                  ? "border-blue-600 bg-blue-600 text-white shadow-sm"
+                  ? "border-blue-600 bg-blue-600 text-white shadow-sm dark:border-blue-600 dark:bg-blue-600"
                   : "border-gray-300 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700",
               )}
             >
@@ -89,11 +89,11 @@ export function Timeline({
           data-timeline-view={key}
         >
           <div
-            className="relative w-full overflow-x-auto overflow-y-auto rounded-lg bg-white px-4 shadow-sm ring-1 ring-gray-200 dark:bg-[#1b2740] dark:ring-[#233452]"
-            style={{ maxHeight: 420 }}
+            className="relative w-full overflow-x-auto overflow-y-auto rounded-lg bg-white px-6 shadow-sm dark:bg-gray-900"
+            style={{ maxHeight: 400 }}
           >
-            <div className="sticky top-0 z-10 bg-white py-2 dark:bg-[#1b2740]" style={{ minWidth: MIN_WIDTH }}>
-              <div className="relative h-10 border-b border-gray-300 dark:border-[#2a3d58]">
+            <div className="sticky top-0 z-10 bg-white py-2 dark:bg-gray-900" style={{ minWidth: MIN_WIDTH }}>
+              <div className="relative h-10 border-b border-gray-300 dark:border-gray-700">
                 {markers.map((marker) => (
                   <div
                     key={marker.label + marker.position}
@@ -109,13 +109,13 @@ export function Timeline({
                     <div
                     className={cn(
                       "w-px",
-                      marker.isMajor ? "h-3 bg-gray-400 dark:bg-slate-600" : "h-2 bg-gray-200 dark:bg-slate-700",
+                      marker.isMajor ? "h-3 bg-gray-400 dark:bg-gray-600" : "h-2 bg-gray-300 dark:bg-gray-700",
                     )}
                   />
                   <div
                     className={cn(
                       "mt-1 whitespace-nowrap text-xs",
-                      marker.isMajor ? "font-semibold text-gray-700 dark:text-gray-200" : "text-gray-500 dark:text-gray-400",
+                      marker.isMajor ? "font-semibold text-gray-700 dark:text-gray-300" : "text-gray-500 dark:text-gray-500",
                     )}
                   >
                     {marker.label}
@@ -131,7 +131,7 @@ export function Timeline({
                   key={`line-${marker.label}-${marker.position}`}
                   className={cn(
                     "pointer-events-none absolute top-0 w-px",
-                    marker.isMajor ? "bg-gray-300 dark:bg-slate-700" : "bg-gray-200 dark:bg-slate-800",
+                    marker.isMajor ? "bg-gray-300 dark:bg-gray-700" : "bg-gray-200 dark:bg-gray-800",
                   )}
                   style={{ left: `${marker.position}%`, height: "100%" }}
                 />
@@ -146,8 +146,8 @@ export function Timeline({
                       "group absolute rounded-lg shadow-sm transition-all duration-200 text-left",
                       "hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
                       job.type === "main"
-                        ? "bg-cyan-100 hover:bg-cyan-200 dark:bg-cyan-800/60 dark:hover:bg-cyan-700/60"
-                        : "bg-green-100 hover:bg-green-200 dark:bg-green-800/60 dark:hover:bg-green-700/60",
+                        ? "bg-cyan-100 hover:bg-cyan-200 dark:bg-cyan-700/45 dark:hover:bg-cyan-700/55"
+                        : "bg-green-100 hover:bg-green-200 dark:bg-green-700/45 dark:hover:bg-green-700/55",
                     )}
                   style={{
                     left: `${job.startPercent}%`,
@@ -169,13 +169,15 @@ export function Timeline({
                       </div>
                     ) : null}
                     <div className="min-w-0 flex-1">
-                      <div className="whitespace-nowrap text-sm font-bold text-slate-900 lg:text-base">
+                      <div className="whitespace-nowrap text-sm font-bold text-gray-900 lg:text-base dark:text-white">
                         {job.name}
                       </div>
                       <div
                         className={cn(
                           "flex items-center gap-1.5 text-xs lg:text-xs",
-                          "text-slate-600 dark:text-slate-100",
+                          job.type === "main"
+                            ? "text-gray-600 dark:text-cyan-400"
+                            : "text-gray-600 dark:text-green-400",
                         )}
                       >
                         <span className="font-medium whitespace-nowrap">{job.position}</span>
@@ -190,6 +192,6 @@ export function Timeline({
           </div>
         </div>
       ))}
-    </section>
+    </div>
   );
 }
