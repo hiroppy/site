@@ -29,10 +29,5 @@
     "feedle"
   ],
   "cSpell.allowCompoundWords": true,
-  "cSpell.ignorePaths": [
-    "**/package-lock.json",
-    "**/node_modules/**",
-    "**/vscode-extension/**",
-    "**/.git/objects/**"
-  ]
+  "cSpell.ignorePaths": []
 }

@@ -2,3 +2,4 @@ dist
 .lighthouseci
 .astro
 pnpm-lock.yaml
+test-results
