@@ -1,20 +1,20 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import Card from "./Card.astro";
-import CardContent from "./CardContent.astro";
-import CardDescription from "./CardDescription.astro";
-import CardHeader from "./CardHeader.astro";
-import CardTitle from "./CardTitle.astro";
-import CardImage from "./CardImage.astro";
-import Icon from "./Icon.astro";
-import Badge from "./Badge.astro";
-import { parseTags } from "../utils/blog";
-import { formatDate } from "../utils/formatDate";
+import Card from "../Card.astro";
+import CardContent from "../CardContent.astro";
+import CardDescription from "../CardDescription.astro";
+import CardHeader from "../CardHeader.astro";
+import CardTitle from "../CardTitle.astro";
+import CardImage from "../CardImage.astro";
+import Icon from "../Icon.astro";
+import Badge from "../Badge.astro";
+import { parseTags } from "../../utils/blog/index";
+import { formatDate } from "../../utils/formatDate";
 import {
   getBlogItemUrl,
   getBlogItemImageAlt,
   getBlogItemAriaLabel,
-} from "../utils/blogComponents";
+} from "../../utils/blog/components";
 
 type Props = {
   post: CollectionEntry<"blog">;

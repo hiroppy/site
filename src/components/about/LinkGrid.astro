@@ -1,7 +1,8 @@
 ---
-import Card from "./Card.astro";
-import CardContent from "./CardContent.astro";
-import Icon from "./Icon.astro";
+import Card from "../Card.astro";
+import CardContent from "../CardContent.astro";
+import Icon from "../Icon.astro";
+import { cn } from "../../utils/cn";
 
 type LinkItem = {
   href: string;
@@ -47,14 +48,11 @@ const padding = variant === "quick" ? "p-6" : "p-4";
 const iconMargin = variant === "quick" ? "mb-3" : "mb-2";
 ---
 
-<div class={`grid gap-4 ${gridClasses[selectedColumns]} ${className || ""}`}>
+<div class={cn("grid gap-4", gridClasses[selectedColumns], className)}>
   {
     links.map(
       ({ href, icon, title, description, gradient, iconColor, color }) => {
-        const cardClass =
-          variant === "quick" && gradient
-            ? `card-lift ${gradient}`
-            : "card-lift";
+        const cardClass = cn("card-lift", variant === "quick" ? gradient : "");
 
         const iconColorClass =
           variant === "quick" && iconColor
@@ -63,10 +61,10 @@ const iconMargin = variant === "quick" ? "mb-3" : "mb-2";
 
         return (
           <Card variant="interactive" class={cardClass} link={{ href }}>
-            <CardContent class={`${padding} text-center`}>
+            <CardContent class={cn(padding, "text-center")}>
               <Icon
                 icon={icon}
-                class={`mx-auto ${iconMargin} text-4xl ${iconColorClass}`}
+                class={cn("mx-auto text-4xl", iconMargin, iconColorClass)}
               />
               <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">
                 {title}

@@ -1,7 +1,8 @@
 ---
 import ServiceIcon from "./ServiceIcon.astro";
 import Icon from "../Icon.astro";
-import type { ServiceGroup } from "../../utils/articlesApi";
+import type { ServiceGroup } from "../../utils/feedle/articlesApi";
+import { cn } from "../../utils/cn";
 
 type Props = {
   serviceName: string;
@@ -39,7 +40,7 @@ const variantClasses = {
 {
   variant === "dialog" && showVisibilityToggle ? (
     <div
-      class={`source-card ${variantClasses[variant]}`}
+      class={cn("source-card", variantClasses[variant])}
       data-source-name={serviceName.toLowerCase()}
       data-source-kind={firstSource.kind.toLowerCase()}
       data-source-id={firstSource.id}
@@ -104,11 +105,12 @@ const variantClasses = {
       <span class="flex-1 truncate">{serviceName}</span>
       {showCount && (
         <span
-          class={`ml-2 rounded-full px-2 py-0.5 text-xs ${
+          class={cn(
+            "ml-2 rounded-full px-2 py-0.5 text-xs",
             isSelected
               ? "bg-blue-400 text-white"
-              : "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400"
-          }`}
+              : "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400",
+          )}
         >
           {serviceData.articleCount || 0}
         </span>

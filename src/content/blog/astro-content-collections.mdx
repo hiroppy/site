@@ -7,8 +7,8 @@ image: /images/brands/astro.png
 tags: astro
 ---
 
-import OG from "../../components/OG.astro";
-import TwitterCard from "../../components/TwitterCard.astro";
+import OG from "../../components/blog/OG.astro";
+import TwitterCard from "../../components/blog/TwitterCard.astro";
 
 先日、Astro@2 がリリースされ、多くの機能が追加されました。
 
@@ -117,8 +117,8 @@ import {
 import type { GetStaticPathsOptions, Page } from "astro";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
-import BlogCardItem from "../../components/BlogCardItem.astro";
-import Pagination from "../../components/Pagination.astro";
+import BlogCardItem from "../../components/blog/BlogCardItem.astro";
+import Pagination from "../../components/blog/Pagination.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 
 type Props = {

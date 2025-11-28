@@ -1,6 +1,7 @@
 ---
 import Image from "./Image.astro";
 import Icon from "./Icon.astro";
+import { cn } from "../utils/cn";
 
 type CardImageVariant = "thumbnail" | "cover" | "hero" | "mini" | "expand";
 
@@ -40,8 +41,8 @@ const variantSizes = {
   expand: { width: 160, height: 84 },
 };
 
-const imageClass = `${variantClasses[variant]} ${className || ""}`;
-const containerClass = `${variantContainerClasses[variant]} ${className || ""}`;
+const imageClass = cn(variantClasses[variant], className);
+const containerClass = cn(variantContainerClasses[variant], className);
 const { width, height } = variantSizes[variant];
 ---
 
@@ -56,7 +57,10 @@ const { width, height } = variantSizes[variant];
     />
   ) : (
     <div
-      class={`flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 ${containerClass}`}
+      class={cn(
+        "flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900",
+        containerClass,
+      )}
     >
       <div class="text-center">
         <Icon

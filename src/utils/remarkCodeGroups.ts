@@ -189,20 +189,21 @@ export function remarkCodeGroups() {
           "value" in child &&
           typeof child.value === "string" &&
           child.value.includes("CodeGroup") &&
-          child.value.includes("../../components/CodeGroup.astro"),
+          child.value.includes("../../components/blog/CodeGroup.astro"),
       );
       const hasCodeGroupPanelImport = tree.children.some(
         (child) =>
           "value" in child &&
           typeof child.value === "string" &&
           child.value.includes("CodeGroupPanel") &&
-          child.value.includes("../../components/CodeGroupPanel.astro"),
+          child.value.includes("../../components/blog/CodeGroupPanel.astro"),
       );
 
       if (!hasCodeGroupImport) {
         tree.children.unshift({
           type: "mdxjsEsm",
-          value: 'import CodeGroup from "../../components/CodeGroup.astro";',
+          value:
+            'import CodeGroup from "../../components/blog/CodeGroup.astro";',
           data: {
             estree: {
               type: "Program",
@@ -217,7 +218,7 @@ export function remarkCodeGroups() {
                   ],
                   source: {
                     type: "Literal",
-                    value: "../../components/CodeGroup.astro",
+                    value: "../../components/blog/CodeGroup.astro",
                   },
                 },
               ],
@@ -229,7 +230,7 @@ export function remarkCodeGroups() {
         tree.children.unshift({
           type: "mdxjsEsm",
           value:
-            'import CodeGroupPanel from "../../components/CodeGroupPanel.astro";',
+            'import CodeGroupPanel from "../../components/blog/CodeGroupPanel.astro";',
           data: {
             estree: {
               type: "Program",
@@ -247,7 +248,7 @@ export function remarkCodeGroups() {
                   ],
                   source: {
                     type: "Literal",
-                    value: "../../components/CodeGroupPanel.astro",
+                    value: "../../components/blog/CodeGroupPanel.astro",
                   },
                 },
               ],

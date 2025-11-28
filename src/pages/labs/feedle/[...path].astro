@@ -8,8 +8,11 @@ import ArticleModal from "../../../components/feedle/ArticleModal.astro";
 import ServiceInfoHeader from "../../../components/feedle/ServiceInfoHeader.astro";
 import RSSFeedButtons from "../../../components/feedle/RSSFeedButtons.astro";
 import ContentArea from "../../../components/feedle/ContentArea.astro";
-import { getFeedleData } from "../../../utils/feedleData";
-import { generatePageTitle, BASE_PATH } from "../../../utils/feedleConfig";
+import { getFeedleData } from "../../../utils/feedle/feedleData";
+import {
+  generatePageTitle,
+  BASE_PATH,
+} from "../../../utils/feedle/feedleConfig";
 
 // URLパスを解析
 const { path } = Astro.params;

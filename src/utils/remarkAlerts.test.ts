@@ -38,7 +38,7 @@ describe("remarkAlerts", () => {
     const mdxImports = result.children.filter(isMdxImport);
     expect(mdxImports).toHaveLength(1);
     expect((mdxImports[0] as any).value).toContain(
-      'import Alert from "../../components/Alert.astro";',
+      'import Alert from "../../components/blog/Alert.astro";',
     );
 
     const alertNode = result.children.find(
@@ -68,7 +68,7 @@ describe("remarkAlerts", () => {
       children: [
         {
           type: "mdxjsEsm",
-          value: 'import Alert from "../../components/Alert.astro";',
+          value: 'import Alert from "../../components/blog/Alert.astro";',
         } as any,
         {
           type: "blockquote",

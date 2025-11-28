@@ -1,8 +1,8 @@
 ---
 import { load } from "cheerio";
-import Image from "./Image.astro";
+import Image from "../Image.astro";
 import { writeFileSync, readFileSync } from "node:fs";
-import Icon from "./Icon.astro";
+import Icon from "../Icon.astro";
 
 type Props = {
   url: string;
@@ -10,9 +10,7 @@ type Props = {
 
 const { url } = Astro.props;
 const generatedFilePath = new URL(
-  import.meta.env.NODE_ENV === "development"
-    ? "../../generated/ogp.json"
-    : "../../../generated/ogp.json",
+  "../../../generated/ogp.json",
   // astroはbuild時に自身ではなくdist/entry.mjsに向けてしまう
   import.meta.url,
 );

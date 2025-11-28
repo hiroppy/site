@@ -1,5 +1,5 @@
 ---
-import history from "../../node_modules/hiroppy/generated/jobs.json";
+import history from "../../../node_modules/hiroppy/generated/jobs.json";
 import JobTimelineAxis from "./JobTimelineAxis.astro";
 import JobTimelineBar from "./JobTimelineBar.astro";
 import {
@@ -8,7 +8,8 @@ import {
   calculateDurationMonths,
   generateTimeMarkers,
   type TimelineJob,
-} from "../utils/timelineCalculations";
+} from "../../utils/jobs/timelineCalculations";
+import { cn } from "../../utils/cn";
 
 type TimelineFilter = "all" | "main" | "side";
 type JobMetaData = typeof history.meta;
@@ -154,11 +155,12 @@ const timelineViews = filterOptions.map(({ key }) => {
         return (
           <button
             type="button"
-            class={`inline-flex items-center rounded-full border px-3 py-1.5 text-sm font-medium transition focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:ring-offset-gray-900 ${
+            class={cn(
+              "inline-flex items-center rounded-full border px-3 py-1.5 text-sm font-medium transition focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:ring-offset-gray-900",
               isDefault
                 ? "border-blue-600 bg-blue-600 text-white shadow-sm dark:border-blue-600 dark:bg-blue-600"
-                : "border-gray-300 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
-            }`}
+                : "border-gray-300 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700",
+            )}
             data-filter-button
             data-filter={key}
             aria-pressed={isDefault ? "true" : "false"}
@@ -194,7 +196,12 @@ const timelineViews = filterOptions.map(({ key }) => {
           >
             {timeMarkers.map((marker) => (
               <div
-                class={`absolute top-0 w-px ${marker.isMajor ? "bg-gray-300 dark:bg-gray-700" : "bg-gray-200 dark:bg-gray-800"}`}
+                class={cn(
+                  "absolute top-0 w-px",
+                  marker.isMajor
+                    ? "bg-gray-300 dark:bg-gray-700"
+                    : "bg-gray-200 dark:bg-gray-800",
+                )}
                 style={`left: ${marker.position}%; height: 100%;`}
               />
             ))}

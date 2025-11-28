@@ -2,7 +2,7 @@ export const prerender = false;
 
 import rss from "@astrojs/rss";
 import type { APIRoute } from "astro";
-import { fetchArticles } from "../../../../utils/articlesApi";
+import { fetchArticles } from "../../../../utils/feedle/articlesApi";
 
 function getTypeConfig(type: string, kind?: string) {
   const typeCapitalized = type.charAt(0).toUpperCase() + type.slice(1);

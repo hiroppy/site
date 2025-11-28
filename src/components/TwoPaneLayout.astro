@@ -1,5 +1,6 @@
 ---
 import Footer from "./Footer.astro";
+import { cn } from "../utils/cn";
 
 export interface Props {
   class?: string;
@@ -8,7 +9,7 @@ export interface Props {
 const { class: className } = Astro.props;
 ---
 
-<div class={`flex w-full flex-col md:flex-row ${className || ""}`}>
+<div class={cn("flex w-full flex-col md:flex-row", className)}>
   <!-- サイドバー：sticky positioning で上部に固定、自身のスクロールを持つ -->
   <div class="sidebar-container">
     <slot name="sidebar" />

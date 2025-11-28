@@ -1,9 +1,9 @@
 ---
 import Dialog from "../Dialog.astro";
 import Icon from "../Icon.astro";
-import SearchInput from "../SearchInput.astro";
+import SearchInput from "./SearchInput.astro";
 import ServiceListItem from "./ServiceListItem.astro";
-import type { ServiceGroup } from "../../utils/articlesApi";
+import type { ServiceGroup } from "../../utils/feedle/articlesApi";
 
 type Props = {
   serviceGroups: Record<string, ServiceGroup>;

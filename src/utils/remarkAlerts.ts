@@ -89,13 +89,13 @@ export function remarkAlerts() {
           "value" in child &&
           typeof child.value === "string" &&
           child.value.includes("Alert") &&
-          child.value.includes("../../components/Alert.astro"),
+          child.value.includes("../../components/blog/Alert.astro"),
       );
 
       if (!hasAlertImport) {
         tree.children.unshift({
           type: "mdxjsEsm",
-          value: 'import Alert from "../../components/Alert.astro";',
+          value: 'import Alert from "../../components/blog/Alert.astro";',
           data: {
             estree: {
               type: "Program",
@@ -110,7 +110,7 @@ export function remarkAlerts() {
                   ],
                   source: {
                     type: "Literal",
-                    value: "../../components/Alert.astro",
+                    value: "../../components/blog/Alert.astro",
                   },
                 },
               ],

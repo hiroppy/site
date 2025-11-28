@@ -1,9 +1,10 @@
 ---
-import Card from "./Card.astro";
-import CardTitle from "./CardTitle.astro";
-import CardImage from "./CardImage.astro";
-import Icon from "./Icon.astro";
-import Link from "./Link.astro";
+import Card from "../Card.astro";
+import CardTitle from "../CardTitle.astro";
+import CardImage from "../CardImage.astro";
+import Icon from "../Icon.astro";
+import Link from "../Link.astro";
+import { cn } from "../../utils/cn";
 
 type Props = {
   title: string;
@@ -37,7 +38,10 @@ const {
 <div class="relative flex h-full flex-col">
   <Card
     link={{ href: url, ariaLabel: `${title} - ${description}` }}
-    class={`group flex h-full flex-col overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg ${className || ""}`}
+    class={cn(
+      "group flex h-full flex-col overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg",
+      className,
+    )}
   >
     <div
       class="relative flex h-48 items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600"
@@ -85,11 +89,12 @@ const {
         {links.map((link) => (
           <Link
             href={link.url}
-            class={`flex h-10 w-10 items-center justify-center rounded-full shadow-sm backdrop-blur-sm transition-all hover:no-underline hover:shadow-md ${
+            class={cn(
+              "flex h-10 w-10 items-center justify-center rounded-full shadow-sm backdrop-blur-sm transition-all hover:no-underline hover:shadow-md",
               link.url.includes("connpass.com")
                 ? "border border-gray-200 bg-white/90 text-orange-500 hover:bg-white hover:shadow-md dark:border-gray-600 dark:bg-gray-900/90 dark:text-orange-400 dark:hover:bg-gray-800"
-                : "border border-gray-200 bg-white/90 text-blue-500 hover:bg-white hover:shadow-md dark:border-gray-600 dark:bg-gray-900/90 dark:text-blue-400 dark:hover:bg-gray-800"
-            }`}
+                : "border border-gray-200 bg-white/90 text-blue-500 hover:bg-white hover:shadow-md dark:border-gray-600 dark:bg-gray-900/90 dark:text-blue-400 dark:hover:bg-gray-800",
+            )}
             ariaLabel={link.title}
           >
             <Icon

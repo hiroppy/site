@@ -1,5 +1,5 @@
 import { getCollection } from "astro:content";
-import { sortByDate } from "./sortItems";
+import { sortByDate } from "../sortItems";
 
 export async function getBlogs() {
   const posts = await getCollection("blog");

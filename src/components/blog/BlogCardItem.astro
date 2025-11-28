@@ -1,12 +1,12 @@
 ---
-import Card from "./Card.astro";
-import CardImage from "./CardImage.astro";
-import Link from "../components/Link.astro";
-import { parseTags } from "../utils/blog";
-import { formatDate } from "../utils/formatDate";
+import Card from "../Card.astro";
+import CardImage from "../CardImage.astro";
+import Link from "../Link.astro";
+import { parseTags } from "../../utils/blog/index";
+import { formatDate } from "../../utils/formatDate";
 import type { CollectionEntry } from "astro:content";
 import BlogTag from "./BlogTag.astro";
-import { getBlogItemImageAlt } from "../utils/blogComponents";
+import { getBlogItemImageAlt } from "../../utils/blog/components";
 
 type Props = {
   url: string;

@@ -45,10 +45,10 @@ describe("remarkCodeGroups", () => {
     const mdxImports = result.children.filter(isMdxImport);
     expect(mdxImports).toHaveLength(2);
     expect((mdxImports[0] as any).value).toContain(
-      'import CodeGroupPanel from "../../components/CodeGroupPanel.astro";',
+      'import CodeGroupPanel from "../../components/blog/CodeGroupPanel.astro";',
     );
     expect((mdxImports[1] as any).value).toContain(
-      'import CodeGroup from "../../components/CodeGroup.astro";',
+      'import CodeGroup from "../../components/blog/CodeGroup.astro";',
     );
 
     const codeGroup = result.children.find(

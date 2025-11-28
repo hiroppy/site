@@ -6,6 +6,8 @@ type Props = {
   currentPeriod?: string;
 };
 
+import { cn } from "../../utils/cn";
+
 const { currentType, currentCategory, currentService, currentPeriod } =
   Astro.props;
 
@@ -40,11 +42,12 @@ const periods = [
     periods.map((period) => (
       <a
         href={buildUrl(period.key)}
-        class={`flex-1 rounded-lg px-2 py-1.5 text-center text-xs font-medium transition-colors ${
+        class={cn(
+          "flex-1 rounded-lg px-2 py-1.5 text-center text-xs font-medium transition-colors",
           (currentPeriod || "all") === period.key
             ? "bg-blue-600 text-white shadow-sm"
-            : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
-        }`}
+            : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800",
+        )}
       >
         {period.label}
       </a>

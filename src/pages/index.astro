@@ -2,7 +2,7 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import HeroSection from "../components/HeroSection.astro";
 import Section from "../components/Section.astro";
-import CTASection from "../components/CTASection.astro";
+import CTASection from "../components/home/CTASection.astro";
 import Card from "../components/Card.astro";
 import CardContent from "../components/CardContent.astro";
 import CardTitle from "../components/CardTitle.astro";
@@ -19,8 +19,8 @@ import sponsors from "../../node_modules/hiroppy/generated/sponsors.json";
 import repos from "../../node_modules/hiroppy/generated/repos.json";
 import meta from "../../node_modules/hiroppy/generated/meta.json";
 import { getStarCount } from "../utils/github";
-import { getBookmark } from "../utils/hatena";
-import { getLanguageDot } from "../utils/languageColors";
+import { getBookmark } from "../utils/home/hatena";
+import { getLanguageDot } from "../utils/home/languageColors";
 
 const hotArticles = articles.filter(({ hot }) => !!hot);
 const articlesWithBookmarks = await Promise.all(

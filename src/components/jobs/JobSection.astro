@@ -1,13 +1,14 @@
 ---
 import type JobMeta from "hiroppy/generated/jobs.json";
-import Image from "./Image.astro";
+import Image from "../Image.astro";
 import { marked } from "marked";
-import Link from "./Link.astro";
-import Card from "./Card.astro";
-import CardContent from "./CardContent.astro";
-import CardTitle from "./CardTitle.astro";
+import Link from "../Link.astro";
+import Card from "../Card.astro";
+import CardContent from "../CardContent.astro";
+import CardTitle from "../CardTitle.astro";
 import ExpandableArticleLinks from "./ExpandableArticleLinks.astro";
-import PeriodBadge from "./PeriodBadge.astro";
+import PeriodBadge from "../PeriodBadge.astro";
+import { cn } from "../../utils/cn";
 
 type JobContent = (typeof JobMeta)["main"] | (typeof JobMeta)["side"];
 type JobMetaData = (typeof JobMeta)["meta"];
@@ -116,11 +117,12 @@ const history: JobItemWithParsedDescription[] = await Promise.all(
                           </CardTitle>
                           <div class="flex items-center space-x-2">
                             <span
-                              class={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+                              class={cn(
+                                "inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium",
                                 isCurrentJob
                                   ? "bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-400"
-                                  : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300"
-                              }`}
+                                  : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300",
+                              )}
                             >
                               {position}
                             </span>
@@ -190,11 +192,12 @@ const history: JobItemWithParsedDescription[] = await Promise.all(
                         <div class="flex items-center justify-between">
                           <div class="flex items-center space-x-2">
                             <span
-                              class={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
+                              class={cn(
+                                "inline-flex items-center rounded-full px-3 py-1 text-xs font-medium",
                                 isCurrentJob
                                   ? "bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-400"
-                                  : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300"
-                              }`}
+                                  : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300",
+                              )}
                             >
                               {position}
                             </span>

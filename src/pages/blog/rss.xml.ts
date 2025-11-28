@@ -1,6 +1,6 @@
 import rss from "@astrojs/rss";
 import { extname } from "node:path";
-import { getBlogs } from "../../utils/blog";
+import { getBlogs } from "../../utils/blog/index";
 import { BLOG_DESCRIPTION, SITE_TITLE } from "../../constants";
 
 const posts = await getBlogs();

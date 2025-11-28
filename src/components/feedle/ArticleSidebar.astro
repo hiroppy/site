@@ -5,7 +5,8 @@ import ServicesDialog from "./ServicesDialog.astro";
 import ServiceListItem from "./ServiceListItem.astro";
 import SidebarSection from "./SidebarSection.astro";
 import NavItem from "./NavItem.astro";
-import type { ServiceGroup } from "../../utils/articlesApi";
+import type { ServiceGroup } from "../../utils/feedle/articlesApi";
+import { cn } from "../../utils/cn";
 
 type Props = {
   currentType: string;
@@ -55,22 +56,24 @@ function buildServiceUrl(serviceData: ServiceGroup, category: string): string {
       <div class="space-y-1">
         <a
           href={`/labs/feedle/frontend${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
-          class={`flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+          class={cn(
+            "flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors",
             currentType === "frontend"
               ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-sm"
-              : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
-          }`}
+              : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800",
+          )}
         >
           <Icon icon="mdi:palette" class="mr-2 h-4 w-4" />
           Frontend
         </a>
         <a
           href={`/labs/feedle/ai${currentPeriod && currentPeriod !== "all" ? `?period=${currentPeriod}` : ""}`}
-          class={`flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+          class={cn(
+            "flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors",
             currentType === "ai"
               ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-sm"
-              : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
-          }`}
+              : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800",
+          )}
         >
           <Icon icon="mdi:robot" class="mr-2 h-4 w-4" />
           AI

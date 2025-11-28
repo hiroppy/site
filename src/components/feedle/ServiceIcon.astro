@@ -1,7 +1,8 @@
 ---
 import Icon from "../Icon.astro";
-import { getServiceIcon } from "../../utils/serviceIcon";
-import type { Source } from "../../utils/articlesApi";
+import { getServiceIcon } from "../../utils/feedle/serviceIcon";
+import type { Source } from "../../utils/feedle/articlesApi";
+import { cn } from "../../utils/cn";
 
 type Props = {
   source: Source;
@@ -19,7 +20,7 @@ const sizeClasses = {
   lg: "h-8 w-8",
 };
 
-const iconClass = `${sizeClasses[size]} ${className}`;
+const iconClass = cn(sizeClasses[size], className);
 ---
 
 {
@@ -27,12 +28,12 @@ const iconClass = `${sizeClasses[size]} ${className}`;
     <img
       src={serviceIcon.value}
       alt={source.name}
-      class={`${iconClass} rounded`}
+      class={cn(iconClass, "rounded")}
     />
   ) : (
     <Icon
       icon={serviceIcon.value}
-      class={`${iconClass} text-gray-500 dark:text-gray-400`}
+      class={cn(iconClass, "text-gray-500 dark:text-gray-400")}
     />
   )
 }

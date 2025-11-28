@@ -1,5 +1,6 @@
 ---
 import Icon from "./Icon.astro";
+import { cn } from "../utils/cn";
 
 type Props = {
   id: string;
@@ -44,15 +45,23 @@ const positionClasses = {
   auto: "m-auto",
 };
 
-const defaultDialogClass = `${positionClasses[position]} w-[calc(100%-2rem)] ${maxWidth} rounded-lg border border-gray-200 bg-white p-0 shadow-xl ${backdropClasses[backdrop]} dark:border-gray-700 dark:bg-gray-800 sm:w-full`;
-const finalDialogClass = dialogClass || defaultDialogClass;
+const finalDialogClass = cn(
+  positionClasses[position],
+  "w-[calc(100%-2rem)] rounded-lg border border-gray-200 bg-white p-0 shadow-xl dark:border-gray-700 dark:bg-gray-800 sm:w-full",
+  maxWidth,
+  backdropClasses[backdrop],
+  dialogClass,
+);
 ---
 
 <dialog id={id} class={finalDialogClass}>
   {
     showHeader && (
       <div
-        class={`flex items-center justify-between border-b border-gray-200 p-4 dark:border-gray-700 ${headerClass}`}
+        class={cn(
+          "flex items-center justify-between border-b border-gray-200 p-4 dark:border-gray-700",
+          headerClass,
+        )}
       >
         <h2
           class="text-lg font-semibold text-gray-900 dark:text-gray-100"

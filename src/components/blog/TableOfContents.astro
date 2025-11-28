@@ -1,4 +1,6 @@
 ---
+import { cn } from "../../utils/cn";
+
 export interface Props {
   headings: Array<{
     depth: number;
@@ -14,7 +16,7 @@ const indices = headings.filter((heading) => heading.depth <= 3);
 
 {
   indices.length > 0 && (
-    <div class={`${className || ""}`}>
+    <div class={cn(className)}>
       <nav aria-label="記事の目次">
         <ul class="space-y-1">
           {indices
