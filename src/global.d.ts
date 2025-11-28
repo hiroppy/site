@@ -1,3 +1,5 @@
+/// <reference path="../.astro/types.d.ts" />
+
 interface Window {
   algolia: {
     applicationId: string;
@@ -10,16 +12,18 @@ declare global {
   var window: Window;
 }
 
-type ImportMetaEnv = {
+interface ImportMetaEnv {
   readonly GITHUB_TOKEN: string;
   readonly ALGOLIA_APPLICATION_ID: string;
   readonly ALGOLIA_ADMIN_KEY: string;
   readonly ALGOLIA_SEARCH_ONLY_KEY: string;
-};
+  readonly FEEDLE_API_URL: string;
+  readonly FEEDLE_API_TOKEN: string;
+}
 
-type ImportMeta = {
+interface ImportMeta {
   readonly env: ImportMetaEnv;
-};
+}
 
 type DataItem = {
   siteName?: string;
