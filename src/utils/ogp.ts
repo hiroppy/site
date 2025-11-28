@@ -38,6 +38,7 @@ export async function generatePageOgImage(
     iconBase64: iconBase64!,
   });
 
+  // @ts-expect-error TODO:
   const svg = await satori(template, {
     width: 1200,
     height: 630,
@@ -60,6 +61,7 @@ export async function generateOgImage(title: string, tags: string[]) {
     tags,
   });
 
+  // @ts-expect-error TODO:
   const svg = await satori(template, {
     width: 1200,
     height: 630,
