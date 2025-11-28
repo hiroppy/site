@@ -1,6 +1,6 @@
-import { devices, type PlaywrightTestConfig } from "@playwright/test";
+import { devices, defineConfig } from "@playwright/test";
 
-const config: PlaywrightTestConfig = {
+export default defineConfig({
   testDir: "./tests",
   fullyParallel: true,
   webServer: {
@@ -83,6 +83,4 @@ const config: PlaywrightTestConfig = {
       },
     },
   ],
-};
-
-export default config;
+});
