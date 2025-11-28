@@ -51,7 +51,7 @@
     "tailwindcss": "4.1.17",
     "typescript": "5.9.3",
     "unist-util-visit": "5.0.0",
-    "vitest": "2.1.4",
+    "vitest": "2.1.9",
     "yaml": "2.8.1"
   },
   "dependencies": {
