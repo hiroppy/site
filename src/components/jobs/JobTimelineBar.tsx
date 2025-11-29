@@ -71,7 +71,9 @@ export function JobTimelineBar({ job, onClick }: Props) {
               textColorClass,
             )}
           >
-            <span className="font-medium whitespace-nowrap">{job.position}</span>
+            <span className="font-medium whitespace-nowrap">
+              {job.position}
+            </span>
             <span className="shrink-0">{"/"}</span>
             <span className="shrink-0">{durationText}</span>
           </div>
