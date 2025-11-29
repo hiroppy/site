@@ -192,15 +192,12 @@ html,
     @apply my-8 border-gray-300 dark:border-gray-600;
   }
 
-  /* Timeline marker responsive styles */
-  /* Hide minor markers on mobile */
   @media (max-width: 767px) {
     .timeline-marker-minor {
       display: none;
     }
   }
 
-  /* Show fewer markers on tablet */
   @media (min-width: 768px) and (max-width: 1023px) {
     .timeline-marker-minor:nth-child(3n) {
       display: none;

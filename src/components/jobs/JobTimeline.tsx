@@ -254,12 +254,6 @@ export function JobTimeline() {
           </div>
         );
       })}
-
-      <style>{`
-        .timeline-container {
-          scroll-behavior: smooth;
-        }
-      `}</style>
     </div>
   );
 }

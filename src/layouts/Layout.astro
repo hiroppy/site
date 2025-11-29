@@ -8,8 +8,6 @@ import meImage from "../assets/images/meta/me.png";
 import { importAssets, getImageSrc } from "../utils/importAssets";
 import "../global.css";
 
-type Theme = "light" | "dark";
-
 type Props = {
   title?: string;
   description?: string;
@@ -52,22 +50,10 @@ const isBlogPage = Astro.url.pathname.startsWith("/blog");
 const siteTitleToUse = isBlogPage ? BLOG_SITE_TITLE : SITE_TITLE;
 const titleContent =
   pageTitle === "" ? siteTitleToUse : `${pageTitle} - ${siteTitleToUse}`;
-
-const cookieTheme = Astro.cookies.get("theme")?.value;
-const prefersDarkHeader =
-  Astro.request.headers.get("sec-ch-prefers-color-scheme")?.toLowerCase() ===
-  "dark";
-const initialTheme: Theme =
-  cookieTheme === "dark" || cookieTheme === "light"
-    ? cookieTheme
-    : prefersDarkHeader
-      ? "dark"
-      : "light";
-const htmlClassList = initialTheme === "dark" ? ["dark"] : [];
 ---
 
 <!doctype html>
-<html lang="ja" class:list={htmlClassList}>
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -101,21 +87,30 @@ const htmlClassList = initialTheme === "dark" ? ["dark"] : [];
     <link rel="preconnect" href="//b.hatena.ne.jp" />
     <link rel="author" href="http://www.hatena.ne.jp/about_hiroppy/" />
     <script is:inline>
-      // Initialize theme immediately to prevent FOUC
-      function applyTheme() {
-        const theme = localStorage.getItem("theme") || "dark";
-        if (theme === "dark") {
-          document.documentElement.classList.add("dark");
-        } else {
+      (function () {
+        const theme = (() => {
+          if (
+            typeof localStorage !== "undefined" &&
+            localStorage.getItem("theme")
+          ) {
+            return localStorage.getItem("theme");
+          }
+          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            return "dark";
+          }
+          return "light";
+        })();
+
+        if (theme === "light") {
           document.documentElement.classList.remove("dark");
+        } else {
+          document.documentElement.classList.add("dark");
         }
-      }
 
-      // Apply theme on initial load
-      applyTheme();
-
-      // Re-apply theme after View Transitions navigation
-      document.addEventListener("astro:page-load", applyTheme);
+        if (typeof localStorage !== "undefined") {
+          localStorage.setItem("theme", theme);
+        }
+      })();
     </script>
     <ClientRouter fallback="swap" />
   </head>
