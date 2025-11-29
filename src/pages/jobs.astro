@@ -2,7 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import SkillBox from "../components/jobs/SkillBox.astro";
 import JobResume from "../components/jobs/JobResume.astro";
-import JobTimeline from "../components/jobs/JobTimeline.astro";
+import { JobTimeline } from "../components/jobs/JobTimeline.tsx";
 import Section from "../components/Section.astro";
 import Icon from "../components/Icon.astro";
 ---
@@ -168,7 +168,7 @@ import Icon from "../components/Icon.astro";
 
   <!-- Resume Section -->
   <Section title="Work Experience" class="mb-16">
-    <JobTimeline />
+    <JobTimeline client:load />
     <JobResume />
   </Section>
 </MainLayout>
