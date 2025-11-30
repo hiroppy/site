@@ -49,7 +49,6 @@ async function generatePageOgImage(
     iconBase64,
   });
 
-  // @ts-expect-error TODO:
   const svg = await satori(template, {
     width: 1200,
     height: 630,

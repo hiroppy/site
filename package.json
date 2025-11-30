@@ -37,8 +37,6 @@
     "@lhci/cli": "0.15.1",
     "@playwright/test": "1.57.0",
     "@types/mdast": "4.0.4",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "5.1.1",
     "@vitest/browser-playwright": "4.0.14",
     "astro-icon": "1.1.5",

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from "preact/hooks";
 import history from "../../../node_modules/hiroppy/generated/jobs.json";
 import { JobTimelineAxis } from "./JobTimelineAxis";
 import { JobTimelineBar } from "./JobTimelineBar";

@@ -11,7 +11,7 @@
     "strictNullChecks": true,
     "types": ["astro/client", "vitest"],
     "jsx": "react-jsx",
-    "jsxImportSource": "react",
+    "jsxImportSource": "preact",
     "paths": {
       "hiroppy/*": ["./node_modules/hiroppy/*"]
     }
