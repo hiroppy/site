@@ -54,7 +54,7 @@
     "typescript": "5.9.3",
     "unist-util-visit": "5.0.0",
     "vitest": "4.0.14",
-    "yaml": "2.8.1"
+    "yaml": "2.8.2"
   },
   "dependencies": {
     "@astrojs/check": "0.9.6",
