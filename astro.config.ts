@@ -3,7 +3,7 @@ import partytown from "@astrojs/partytown";
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import icon from "astro-icon";
-import react from "@astrojs/react";
+import preact from "@astrojs/preact";
 import tailwindcss from "@tailwindcss/vite";
 import astroExpressiveCode from "astro-expressive-code";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
@@ -25,7 +25,7 @@ export default defineConfig({
   },
 
   integrations: [
-    react(),
+    preact({ compat: true }),
     partytown({
       config: {
         forward: ["dataLayer.push"],
