@@ -191,4 +191,16 @@ html,
   .prose hr {
     @apply my-8 border-gray-300 dark:border-gray-600;
   }
+
+  @media (max-width: 767px) {
+    .timeline-marker-minor {
+      display: none;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .timeline-marker-minor:nth-child(3n) {
+      display: none;
+    }
+  }
 }
