@@ -46,7 +46,7 @@
     "octokit": "5.0.5",
     "prettier": "3.7.3",
     "prettier-plugin-astro": "0.14.1",
-    "prettier-plugin-tailwindcss": "0.7.1",
+    "prettier-plugin-tailwindcss": "0.7.2",
     "remark": "15.0.1",
     "remark-frontmatter": "5.0.0",
     "strip-markdown": "6.0.0",
