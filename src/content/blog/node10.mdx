@@ -1,14 +1,13 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: Node.js v10の変更点まとめ
-date: 2018-04-20
-description: Node10で入った機能を紹介します
+title: "Node.js v10の変更点まとめ"
+date: 2018-04-20T00:00:00.000Z
+description: "Node10で入った機能を紹介します"
 image: /images/brands/nodejs.png
 tags: node.js
 hatenaPath: node10
 ---
 
-import OG from "../../components/blog/OG.astro";
+import { OG } from "../../mdx/components/OG";
 
 リリース日は 4/24(UTC)の予定です。
 この記事では、バックポート含め v9 から入ったものを上げていこうかなと思います。
@@ -592,8 +591,11 @@ debuglog("hi there, it's foo-bar [%d]", 2333);
 ```
 
 <br />
-``` $ NODE_DEBUG=foo* node index.js FOO-BAR 42404: hi there, it's foo-bar [2333]
-$ NODE_DEBUG=*oo* node index.js FOO-BAR 42404: hi there, it's foo-bar [2333] ```
+
+```
+$ NODE_DEBUG=foo* node index.js FOO-BAR 42404: hi there, it's foo-bar [2333]
+$ NODE_DEBUG=*oo* node index.js FOO-BAR 42404: hi there, it's foo-bar [2333]
+```
 
 ### util.inspect に compact オプションが追加 (v9.9.0)
 

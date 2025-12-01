@@ -1,17 +1,15 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: Webサービスを作るときのテンプレートを作った
-date: 2024-02-16
-description: create-next-appをベースにWebサービスを作るのに必要なライブラリの導入や環境構築を行うテンプレートを紹介します
+title: "Webサービスを作るときのテンプレートを作った"
+date: 2024-02-16T00:00:00.000Z
+description: "create-next-appをベースにWebサービスを作るのに必要なライブラリの導入や環境構築を行うテンプレートを紹介します"
 image: /images/brands/next.png
 tags: javascript,template,github
 ---
 
-import OG from "../../components/blog/OG.astro";
-import Image from "../../components/Image.astro";
-import TwitterCard from "../../components/blog/TwitterCard.astro";
+import { OG } from "../../mdx/components/OG";
+import { TwitterCard } from "../../mdx/components/TwitterCard";
 
-<div class="flex flex-col gap-4 md:flex-row">
+<div className="flex flex-col gap-4 md:flex-row">
   <div>
     <p>
       週末に自分がよく使っている技術をまとめたら反応が良かったので、テンプレートを作りました。

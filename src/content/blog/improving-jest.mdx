@@ -1,15 +1,14 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: テストの実行時間を2倍速くした話
-date: 2019-06-10
-description: ポートを分散させることにより並列実行できるようにする工夫を紹介します
+title: "テストの実行時間を2倍速くした話"
+date: 2019-06-10T00:00:00.000Z
+description: "ポートを分散させることにより並列実行できるようにする工夫を紹介します"
 image: /images/blog/improving-jest/ogp.webp
 tags: testing
 hatenaPath: 2019/06/10/094302
 ---
 
-import OG from "../../components/blog/OG.astro";
-import TwitterCard from "../../components/blog/TwitterCard.astro";
+import { OG } from "../../mdx/components/OG";
+import { TwitterCard } from "../../mdx/components/TwitterCard";
 
 webpack-dev-server のテストを高速化しました。
 jest を使っていて、`--runInBand`を今までは使っていましたが、それを外しました。

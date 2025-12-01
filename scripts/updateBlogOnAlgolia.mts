@@ -1,13 +1,12 @@
-import { join, extname, basename } from "path";
-import { readdir, readFile } from "fs/promises";
-import { fileURLToPath } from "url";
-import * as yaml from "yaml";
+import { algoliasearch } from "algoliasearch";
+import { readFile, readdir } from "fs/promises";
+import matter from "gray-matter";
+import { basename, extname, join } from "path";
 import { remark } from "remark";
 import strip from "strip-markdown";
-import remarkFrontmatter from "remark-frontmatter";
-import { algoliasearch } from "algoliasearch";
+import { fileURLToPath } from "url";
 
-interface Frontmatter {
+type Frontmatter = {
   title?: string;
   date?: string;
   tags?: string[];
@@ -15,13 +14,13 @@ interface Frontmatter {
   image?: string;
   hatenaPath?: string;
   [key: string]: unknown;
-}
+};
 
-interface Article extends Frontmatter {
+type Article = Frontmatter & {
   objectID: string;
   path: string;
   content: string;
-}
+};
 
 const blogPath: string = join(
   fileURLToPath(import.meta.url),
@@ -37,31 +36,18 @@ async function getArticles(): Promise<Article[]> {
     posts.map(async (filename: string): Promise<Article> => {
       const name = basename(filename, ext);
       const md = await readFile(join(blogPath, filename), "utf-8");
-      let frontmatter: Frontmatter = {};
-      const processor = remark()
-        .use(remarkFrontmatter, ["yaml"])
-        .use(() => (tree: any) => {
-          const yamlNode = tree.children.find(
-            (node: any) => node.type === "yaml",
-          );
-          if (yamlNode && yamlNode.value) {
-            frontmatter = yaml.parse(yamlNode.value) as Frontmatter;
-          }
 
-          return {
-            ...tree,
-            children: tree.children.filter((node: any) => node.type !== "yaml"),
-          };
-        })
-        // @ts-expect-error
-        .use(strip);
+      // gray-matter でパース
+      const { data: frontmatter, content } = matter(md);
 
-      const content = await processor.process(md);
+      // markdown を strip
+      const processor = remark().use(strip);
+      const processedContent = await processor.process(content);
 
       return {
         objectID: name,
         path: `blog/${name}`,
-        content: String(content.value),
+        content: `${processedContent.value}`,
         ...frontmatter,
       };
     }),

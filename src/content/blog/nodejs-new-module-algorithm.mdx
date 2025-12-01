@@ -1,13 +1,12 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: Node.jsに入る新しいCJSからESMへの読み込み方法の紹介
-date: 2024-03-17
-description: Node.jsでCJSからESMを呼び出す際の仕組みが代わる提案が出てきました。この記事ではその提案について紹介します
+title: "Node.jsに入る新しいCJSからESMへの読み込み方法の紹介"
+date: 2024-03-17T00:00:00.000Z
+description: "Node.jsでCJSからESMを呼び出す際の仕組みが代わる提案が出てきました。この記事ではその提案について紹介します"
 image: /images/brands/nodejs.png
 tags: node.js
 ---
 
-import OG from "../../components/blog/OG.astro";
+import { OG } from "../../mdx/components/OG";
 
 新しくCJSとESMの間での解決方法が変わる提案が出てきました。
 まだマージされてませんが、すでに複数の承認があり、この方針から変わることはないように見えるので紹介したいと思います。
@@ -102,7 +101,7 @@ TLAの場合は、引き続きdynamic importを利用してください。
 `package.json`に`type`を追加すると、一番近くの親の`package.json`によってファイルのモジュールシステムが確定します。
 デフォルトは互換を保つため、CJSとなっており、ESMを利用したい場合は、`type:module`を追加する必要があります。
 
-![pacakge type flow](../../assets/images/blog/nodejs-new-module-algorithm/flow.png)
+![pacakge type flow](/images/blog/nodejs-new-module-algorithm/flow.png)
 
 詳しくは以下の記事を参考にしてください。
 

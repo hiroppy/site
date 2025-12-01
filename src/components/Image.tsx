@@ -1,82 +1,44 @@
-import type { ImageMetadata } from "astro";
-import { getImageSrc } from "../utils/importAssets";
+"use client";
 
-type Props = {
-  src: string | ImageMetadata;
-  alt: string;
-  class?: string;
-  className?: string;
+import NextImage, { type ImageProps } from "next/image";
+import { useState } from "react";
+import { cn } from "../utils/cn";
+
+// TODO: refactor
+export type Props = ImageProps & {
   lazy?: boolean;
-  width?: number;
-  height?: number;
 };
-
-const placeholderColor =
-  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcfPRvPQAHHgLWeG8FbgAAAABJRU5ErkJggg==";
 
 export function Image({
   src,
-  alt,
-  class: classNameProp,
   className,
   lazy = true,
-  width,
-  height,
+  width = 800,
+  height = 400,
+  ...rest
 }: Props) {
-  const loading = lazy ? "lazy" : "eager";
-  const finalClassName = classNameProp || className;
+  const [isError, setIsError] = useState(false);
+  const loading: ImageProps["loading"] = lazy ? "lazy" : "eager";
 
-  // Handle empty src
-  if (src === "") {
+  if (src === "" || isError) {
     return (
       <div
-        style={{
-          width: width ? `${width}px` : undefined,
-          height: height ? `${height}px` : undefined,
-          background: `url('${placeholderColor}')`,
-        }}
-        className={finalClassName}
+        className={cn("from-gray-100 to-gray-200 bg-linear-to-br", className)}
       />
     );
   }
-
-  // Handle external URLs
-  if (typeof src === "string" && src.startsWith("http")) {
-    return (
-      <img
-        src={src}
-        className={finalClassName}
-        alt={alt}
-        width={width ?? 0}
-        height={height ?? 0}
-        loading={loading}
-        onError={(e) => {
-          const target = e.currentTarget;
-          target.onerror = null;
-          target.src = placeholderColor;
-        }}
-        decoding="async"
-      />
-    );
-  }
-
-  // Handle local images
-  const imageSrc = getImageSrc(src);
 
   return (
-    <img
-      src={imageSrc}
-      className={finalClassName}
-      alt={alt}
-      width={width ?? 0}
-      height={height ?? 0}
+    <NextImage
+      src={src}
+      className={className}
+      width={width}
+      height={height}
       loading={loading}
-      onError={(e) => {
-        const target = e.currentTarget;
-        target.onerror = null;
-        target.src = placeholderColor;
+      onError={() => {
+        setIsError(true);
       }}
-      decoding="async"
+      {...rest}
     />
   );
 }

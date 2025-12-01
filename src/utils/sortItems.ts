@@ -1,7 +1,3 @@
-/**
- * Generic date-based sorting utility
- * Sorts items by date in descending order (newest first)
- */
 export function sortByDate<T>(
   items: T[],
   dateGetter: (item: T) => Date | string,

@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #fdfbf7;
+  --color-text-main: #333333;
+  --color-text-sub: #6d6d6d;
+  --color-text-muted: #6b7280;
+  --color-link: #555555;
+  --color-line: #e0e0e0;
+  --color-accent: #996300;
+
+  /* Card */
+  --color-card-title: #1a1a1a;
+  --color-card-text: #404040;
+  --color-heading: #111827;
+  --color-body-text: #4b5563;
+
+  /* Badge */
+  --color-badge-bg: #fafafa;
+  --color-badge-border: #d0d0d0;
+  --color-badge-text: #555555;
+  --color-icon-muted: #6b7280;
+  --color-surface: #f3f4f6;
+  --color-surface-hover: #e5e7eb;
+
+  --color-javascript: #f1e05a;
+  --color-typescript: #3178c6;
+  --color-css: #8e6fc7;
+  --color-css-dark: #563d7c;
+  --color-go: #00add8;
+  --color-rust: #ce422b;
+  --color-html: #e34c26;
+
+  --text-xs: 0.85rem;
+  --text-xs--line-height: calc(1 / 0.85);
+  --text-sm: 0.9rem;
+  --text-sm--line-height: calc(1.25 / 0.9);
+  --text-base: 0.95rem;
+  --text-base--line-height: calc(1.5 / 0.95);
+  --text-lg: 1rem;
+  --text-lg--line-height: calc(1.75 / 1);
+  --text-xl: 1.15rem;
+  --text-xl--line-height: calc(1.75 / 1.15);
+  --text-2xl: 1.2rem;
+  --text-2xl--line-height: calc(2 / 1.2);
+
+  --header-height: 74px;
+  --article-font-family:
+    "YakuHanJPs", "-apple-system", "BlinkMacSystemFont", "Segoe UI",
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP",
+    "BIZ UDGothic", "Meiryo", sans-serif;
+  /* original */
+  /* system-ui, Arial, Helvetica, "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+    "Meiryo,sans-serif", sans-serif; */
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Prose styles for markdown content */
+@layer components {
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    @apply mt-8 mb-4;
+    color: var(--color-text-main);
+  }
+  .prose h1 {
+    @apply text-3xl font-bold;
+  }
+  .prose h2 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text-sub);
+    border-bottom: 1px solid var(--color-line);
+    padding-bottom: 8px;
+    display: inline-block;
+  }
+  .prose h3 {
+    @apply text-xl font-medium;
+  }
+  .prose h4 {
+    @apply text-lg font-medium;
+  }
+  .prose p {
+    @apply my-4 text-gray-700;
+  }
+  .prose ul,
+  .prose ol {
+    @apply mb-4 pl-6 text-gray-700;
+  }
+  .prose ul {
+    list-style-type: disc;
+  }
+  .prose ol {
+    list-style-type: decimal;
+  }
+  .prose li {
+    @apply mb-2;
+  }
+  .prose a {
+    color: var(--color-link);
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+  .prose a:hover {
+    opacity: 0.6;
+    text-decoration: underline;
+  }
+  .prose code:not(pre code) {
+    @apply rounded bg-gray-100 px-1 py-0.5 text-sm text-gray-800;
+  }
+  .prose pre {
+    @apply mb-4 max-w-full overflow-x-auto rounded-lg p-4 text-sm;
+  }
+
+  .prose blockquote {
+    @apply border-l-4 border-blue-500 bg-blue-50 py-2 pl-4 text-blue-800 italic;
+  }
+  .prose img {
+    @apply mx-auto rounded-lg shadow-md;
+  }
+  .prose iframe {
+    @apply mx-auto;
+  }
+  .prose .twitter-tweet {
+    @apply mx-auto;
+  }
+  .prose .youtube-embed {
+    @apply mx-auto;
+  }
+  .prose table {
+    @apply w-full border-collapse border border-gray-300;
+  }
+  .prose th,
+  .prose td {
+    @apply border border-gray-300 px-4 py-2;
+  }
+  .prose th {
+    @apply bg-gray-100 font-semibold text-gray-900;
+  }
+  .prose td {
+    @apply text-gray-700;
+  }
+  .prose strong {
+    @apply font-semibold text-gray-900;
+  }
+  .prose hr {
+    @apply my-8 border-gray-300;
+  }
+}

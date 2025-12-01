@@ -1,8 +1,7 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: VRT
-date: 1992-04-29
-description: test as VRT
+title: "VRT"
+date: 1992-04-29T00:00:00.000Z
+description: "test as VRT"
 image: /images/meta/me.png
 tags: site
 hatenaPath: foo
@@ -11,16 +10,16 @@ references:
   - https://abouthiroppy.hatenablog.jp/
 ---
 
-import OG from "../../components/blog/OG.astro";
-import Image from "../../components/Image.astro";
-import CodeGroup from "../../components/blog/CodeGroup.astro";
-import CodeGroupPanel from "../../components/blog/CodeGroupPanel.astro";
-import TwoColumn from "../../components/blog/TwoColumn.astro";
-import GoogleSlidesCard from "../../components/blog/GoogleSlidesCard.astro";
+import { Image } from "../../components/Image";
+import { GoogleSlidesCard } from "../../mdx/components/GoogleSlidesCard";
+import { OG } from "../../mdx/components/OG";
+import { TwitterCard } from "../../mdx/components/TwitterCard";
+import { TwoColumn } from "../../mdx/components/TwoColumn";
+import { YoutubeCard } from "../../mdx/components/YoutubeCard";
 
 ---
 
-## Heading h2
+## Typography (h2)
 
 ### Heading h3
 
@@ -29,8 +28,6 @@ import GoogleSlidesCard from "../../components/blog/GoogleSlidesCard.astro";
 ##### Heading h5
 
 ###### Heading h6
-
-## Typography
 
 This article is for VRT.
 
@@ -48,80 +45,103 @@ This article is for VRT.
 ## Two column
 
 <TwoColumn>
-  <div>左側のコンテンツ</div>
-  <div>右側のコンテンツ</div>
+  <div className="bg-amber-100">左側のコンテンツ</div>
+  <div className="bg-cyan-100">右側のコンテンツ</div>
 </TwoColumn>
 
 <br />
 
 <TwoColumn ratio="2:1" gap="lg">
-  <div>幅広のコンテンツ (2)</div>
-  <div>狭いコンテンツ (1)</div>
+  <div className="bg-cyan-100">幅広のコンテンツ (2)</div>
+  <div className="bg-amber-100">狭いコンテンツ (1)</div>
 </TwoColumn>
-
-## OGP
-
-<OG url="https://hiroppy.me" />
 
 ## Image
 
-<Image alt="me" src="/images/meta/me.png" class="w-10" />
+<Image
+  alt="me"
+  src="/images/meta/me.png"
+  className="w-10"
+  width={40}
+  height={40}
+/>
 
 <br />
 
-![aa](../../assets/images/meta/me.png)
+![aa](/images/meta/me.png)
 
 ## Code
 
-```ts
+```sh
+$ echo "hello world"
+```
+
+```ts collapse={4-6}
+// foo.ts
 const foo = "foo";
+
+export function getFoo() {
+  return foo;
+}
 ```
 
-### Code Group Example
-
-test
-
-<OG url="https://hiroppy.me" />
-
-::: code-group
-
-```bash [npm]
-npm install astro
+```powershell title="PowerShell terminal example"
+Write-Output "This one has a title!"
 ```
 
-```bash [pnpm]
-pnpm add astro
+```js title="line-markers.js" del={2} ins={3-4} {6}
+function demo() {
+  console.log("this line is marked as deleted");
+  // This line and the next one are marked as inserted
+  console.log("this is the second inserted line");
+
+  return "this line uses the neutral default marker type";
+}
 ```
 
-```bash [yarn]
-yarn add astro
+```diff lang="js"
+export function add() {
+-  return 1 + 1;
++  return 2;
+}
 ```
 
-:::
+```js "given text"
+function demo() {
+  // Mark any given text inside lines
+  return "Multiple matches of the given text are supported";
+}
+```
 
-js
+```js "return true;" ins="inserted" del="deleted"
+function demo() {
+  console.log("These are inserted and deleted marker types");
+  // The return statement uses the default marker type
+  return true;
+}
+```
 
 ::: code-group
 
 ```ts [add.ts] {"2": 2}
-export function add() {
+export function add(): number {
   return 1 + 1;
 }
 ```
 
-<br />
 ```js [add.js]
 export function add() {
   return 1 + 1;
 }
 ```
-<br />
+
 ```html [index.html]
 <div>
   <p>HTML code</p>
+  <p>HTML code</p>
 </div>
 ```
-<br />
+
 ```css [style.css]
 body {
   background-color: #fff;
@@ -150,3 +170,15 @@ body {
 ## Google Slides
 
 <GoogleSlidesCard id="2PACX-1vTW6FYDrDsP-KDNZFS0wdpWxI-ePyk_EwVV4XbxYy3skbKsyxyG_3U6Yr_tYdFZkxIBohEIrVyCgvme" />
+
+## Youtube
+
+<YoutubeCard id="9AjkUyX0rVw" />
+
+## Twitter
+
+<TwitterCard id="1453525169293520901" />
+
+## OGP
+
+<OG url="https://hiroppy.me" />

@@ -1,14 +1,13 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: SPA + SSR + PWA の作り方とセキュリティについて
-date: 2019-11-22
-description: SPA, SSR, PWAをどのように安全に作るかを解説します
+title: "SPA + SSR + PWA の作り方とセキュリティについて"
+date: 2019-11-22T00:00:00.000Z
+description: "SPA, SSR, PWAをどのように安全に作るかを解説します"
 image: /images/blog/ssr-example-2/score.png
 tags: javascript,ssr
 hatenaPath: ssr-sample_2
 ---
 
-import OG from "../../components/blog/OG.astro";
+import { OG } from "../../mdx/components/OG";
 
 一年前に以下の記事を書いて、その後放置していたら多くのライブラリのメジャーリリースで完全に動かなくなってしまったのでリニューアルしました。
 
@@ -453,7 +452,7 @@ add to home screen 等はデバッグしづらいので、もし原因がわか�
 
 PC での add to home screen はこんな感じになります。
 
-![](../../assets/images/blog/ssr-example-2/pwa.png)
+![](/images/blog/ssr-example-2/pwa.png)
 
 ### Service Worker
 
@@ -495,7 +494,7 @@ service-worker からのアクセスは`connect`となります。
 
 ## Audits
 
-![](../../assets/images/blog/ssr-example-2/score.png)
+![](/images/blog/ssr-example-2/score.png)
 
 Express の http/2 対応がマージされれば全部 100 になります。(or Nginx 置いて)
 

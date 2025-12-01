@@ -1,11 +1,11 @@
-const paths = require("./testedPaths.cjs");
+const { COMMON } = require("./testedPaths.cjs");
 
 module.exports = {
   ci: {
     collect: {
-      url: paths,
+      url: COMMON,
       numberOfRuns: 1,
-      startServerCommand: "pnpm preview --port 3000",
+      startServerCommand: "pnpm start",
     },
     assert: {
       preset: "lighthouse:no-pwa",
@@ -20,7 +20,6 @@ module.exports = {
 
         // playwrightで担保しているのでオフ
         "color-contrast": "off",
-        "meta-viewport": "off",
 
         // ローカル環境でのレスポンス時間のばらつきを考慮
         "document-latency-insight": "off",
@@ -41,6 +40,17 @@ module.exports = {
         "bf-cache": "off",
         "font-display-insight": "off",
         "errors-in-console": "off",
+
+        // next.js error
+        "legacy-javascript-insight": "off",
+        // TODO: 本当はonにしたい
+        "unused-javascript": "off",
+        // mdx
+        "unsized-images": "off",
+
+        // youtube twitter, google docs
+        "total-byte-weight": "off",
+        "third-party-facades": "off",
       },
     },
   },

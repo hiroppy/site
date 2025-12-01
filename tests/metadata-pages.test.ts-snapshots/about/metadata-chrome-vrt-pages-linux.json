@@ -1,0 +1,15 @@
+{
+  "ogTitle": "About - hiroppy | hiroppy's site",
+  "ogDescription": "Learn more about hiroppy, a JavaScript Engineer, Speaker, OSS Contributor, and Community Organizer.",
+  "ogImage": "http://localhost:3000/about/opengraph-image-1ee4n1?60517a18b2453154",
+  "ogUrl": "http://localhost:3000/about",
+  "ogType": "website",
+  "twitterCard": "summary_large_image",
+  "twitterTitle": "About - hiroppy | hiroppy's site",
+  "twitterDescription": "Learn more about hiroppy, a JavaScript Engineer, Speaker, OSS Contributor, and Community Organizer.",
+  "twitterImage": "http://localhost:3000/about/opengraph-image-1ee4n1?60517a18b2453154",
+  "twitterCreator": "@about_hiroppy",
+  "title": "About - hiroppy | hiroppy's site",
+  "description": "Learn more about hiroppy, a JavaScript Engineer, Speaker, OSS Contributor, and Community Organizer.",
+  "canonical": "http://localhost:3000/about"
+}

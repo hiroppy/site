@@ -1,15 +1,14 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: OSSの現状と今後
-date: 2019-02-28
-description: どのようにOSSのメンテナーを広げていくかの戦略の一例
+title: "OSSの現状と今後"
+date: 2019-02-28T00:00:00.000Z
+description: "どのようにOSSのメンテナーを広げていくかの戦略の一例"
 image: /images/brands/github.png
 tags: oss,github
 hatenaPath: current-status-and-future-of-oss
 ---
 
-import OG from "../../components/blog/OG.astro";
-import TwitterCard from "../../components/blog/TwitterCard.astro";
+import { OG } from "../../mdx/components/OG";
+import { TwitterCard } from "../../mdx/components/TwitterCard";
 
 Gatsby が面白い仕組みを導入していて、驚いたので書くことにしました。
 
@@ -27,14 +26,14 @@ React.js の静的サイトジェネレーター
 
 最近、gatsby のメンテナチームに所属しました。
 
-![](../../assets/images/blog/current-status-and-future-of-oss/members.png)
+![](/images/blog/current-status-and-future-of-oss/members.png)
 
 人数が異常ですよね、このチームに所属していると gatsbyjs/gatsby の write 権限を持ちます。
 
 そう、個人的に画期的だと思った仕組みは、メンバーの招待です。
 1 つ PR を出し、マージされると write 権限がもらえます。
 
-![](../../assets/images/blog/current-status-and-future-of-oss/comment.png)
+![](/images/blog/current-status-and-future-of-oss/comment.png)
 
 github は、admin と write と read があり、push ができるのは write 以上です。
 なので、issue の close や label, pr の review、merge 等が行えるようになります。
@@ -47,7 +46,7 @@ github は、admin と write と read があり、push ができるのは write 
 
 しかし、github には code owner という仕組みがあり、必ず登録された人を通さないとマージしないようにする仕組みがあります。
 
-![](../../assets/images/blog/current-status-and-future-of-oss/reviewers.png)
+![](/images/blog/current-status-and-future-of-oss/reviewers.png)
 
 <br />
 
@@ -62,15 +61,15 @@ github は、admin と write と read があり、push ができるのは write 
 
 insights の結果は以下の通り。
 
-![](../../assets/images/blog/current-status-and-future-of-oss/insight.png)
+![](/images/blog/current-status-and-future-of-oss/insight.png)
 
 <br />
 
-![](../../assets/images/blog/current-status-and-future-of-oss/insight2.png)
+![](/images/blog/current-status-and-future-of-oss/insight2.png)
 
 Node Core がこれぐらい
 
-![](../../assets/images/blog/current-status-and-future-of-oss/insight3.png)
+![](/images/blog/current-status-and-future-of-oss/insight3.png)
 
 GitHub が一年に一回公開している The State of the Octoverse でも以下のように言われています。
 
@@ -78,7 +77,7 @@ GitHub が一年に一回公開している The State of the Octoverse でも以
 
 2018 年では急成長するトピックの 5 位に gatsby がいて、来年は更に伸びることが容易に想像できます。
 
-![](../../assets/images/blog/current-status-and-future-of-oss/octoverse.png)
+![](/images/blog/current-status-and-future-of-oss/octoverse.png)
 
 <OG url="https://octoverse.github.com" />
 

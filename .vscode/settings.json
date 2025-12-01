@@ -1,25 +1,12 @@
 {
-  "files.exclude": {
-    "node_modules/**": true,
-    ".lighthouseci/**": true
-  },
-  "files.watcherExclude": {
-    "node_modules/**": true,
-    ".lighthouseci/**": true
-  },
-  "search.exclude": {
-    "node_modules/**": true,
-    ".lighthouseci/**": true
-  },
-  "[astro]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "workbench.editor.customLabels.patterns": {
+    "**/app/**/{page,layout,opengraph-image}.{ts,tsx}": "(${dirname})/${filename}.${extname}",
+    "**/components/**/*": "${dirname}/${filename}.${extname}"
   },
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "cSpell.enabled": true,
   "cSpell.words": [
-    "astro",
-    "astrojs",
     "hiroppy",
     "algoliasearch",
     "pnpm",

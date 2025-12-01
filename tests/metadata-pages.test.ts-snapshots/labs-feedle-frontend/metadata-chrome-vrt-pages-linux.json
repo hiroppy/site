@@ -1,0 +1,15 @@
+{
+  "ogTitle": "Feedle - frontend | hiroppy's site",
+  "ogDescription": "開発者向けの技術記事収集プラットフォーム",
+  "ogImage": "http://localhost:3000/labs/feedle/frontend/opengraph-image-v0ndz3?5f8f271e67209b55",
+  "ogUrl": "http://localhost:3000/labs/feedle/frontend",
+  "ogType": "website",
+  "twitterCard": "summary_large_image",
+  "twitterTitle": "Feedle - frontend | hiroppy's site",
+  "twitterDescription": "開発者向けの技術記事収集プラットフォーム",
+  "twitterImage": "http://localhost:3000/labs/feedle/frontend/opengraph-image-v0ndz3?5f8f271e67209b55",
+  "twitterCreator": "@about_hiroppy",
+  "title": "Feedle - frontend | hiroppy's site",
+  "description": "開発者向けの技術記事収集プラットフォーム",
+  "canonical": "http://localhost:3000/labs/feedle/frontend"
+}

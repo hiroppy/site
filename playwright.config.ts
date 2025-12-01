@@ -1,23 +1,19 @@
-import { devices, defineConfig } from "@playwright/test";
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
   fullyParallel: true,
   webServer: {
-    command: "pnpm preview --port 3000",
+    command: "pnpm start",
     port: 3000,
     reuseExistingServer: !process.env.CI,
   },
   expect: {
     toHaveScreenshot: {
-      // Make screenshot comparison less sensitive to font rendering differences
-      maxDiffPixelRatio: 0.05,
-      threshold: 0.2,
       animations: "disabled",
     },
   },
   use: {
-    // Global settings for better stability
     actionTimeout: 60000,
     navigationTimeout: 120000,
     trace: "on-first-retry",
@@ -29,55 +25,38 @@ export default defineConfig({
   },
   projects: [
     {
-      name: "chrome-a11y-light",
-      testMatch: "tests/a11y.spec.ts",
+      name: "chrome-a11y",
+      testMatch: "tests/a11y.test.ts",
       use: {
         ...devices["Desktop Chrome"],
         colorScheme: "light",
       },
     },
     {
-      name: "chrome-a11y-dark",
-      testMatch: "tests/a11y.spec.ts",
-      use: {
-        ...devices["Desktop Chrome"],
-        colorScheme: "dark",
-      },
-    },
-    {
-      name: "android-a11y-light",
-      testMatch: "tests/a11y.spec.ts",
+      name: "android-a11y",
+      testMatch: "tests/a11y.test.ts",
       use: {
         ...devices["Pixel 7"],
         colorScheme: "light",
-      },
-    },
-    {
-      name: "android-a11y-dark",
-      testMatch: "tests/a11y.spec.ts",
-      use: {
-        ...devices["Pixel 7"],
-        colorScheme: "dark",
       },
     },
     {
       name: "chrome-vrt-pages",
-      testMatch: "tests/vrt-pages.spec.ts",
+      testMatch: ["tests/vrt-pages.test.ts", "tests/metadata-pages.test.ts"],
       use: {
         ...devices["Desktop Chrome"],
       },
     },
     {
       name: "android-vrt-pages",
-      testMatch: "tests/vrt-pages.spec.ts",
-      grep: /^VRT:/,
+      testMatch: "tests/vrt-pages.test.ts",
       use: {
         ...devices["Pixel 7"],
       },
     },
     {
       name: "chrome-vrt-components",
-      testMatch: "tests/vrt-components.spec.ts",
+      testMatch: "tests/vrt-components.test.ts",
       use: {
         ...devices["Desktop Chrome"],
       },

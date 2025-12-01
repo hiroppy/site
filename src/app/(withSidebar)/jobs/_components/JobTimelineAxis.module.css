@@ -1,0 +1,17 @@
+.markerMajor {
+}
+
+.markerMinor {
+}
+
+@media (max-width: 767px) {
+  .markerMinor {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .markerMinor:nth-child(3n) {
+    display: none;
+  }
+}
