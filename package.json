@@ -41,7 +41,7 @@
     "@vitest/browser-playwright": "4.0.14",
     "astro-icon": "1.1.5",
     "cheerio": "1.1.2",
-    "knip": "5.70.2",
+    "knip": "5.71.0",
     "lefthook": "2.0.4",
     "octokit": "5.0.5",
     "prettier": "3.7.3",
@@ -75,7 +75,7 @@
     "hiroppy": "1.0.55",
     "instantsearch.js": "4.84.0",
     "marked": "17.0.1",
-    "preact": "10.27.2",
+    "preact": "10.28.0",
     "satori": "0.18.3",
     "sharp": "0.34.5",
     "tailwind-merge": "3.4.0"
