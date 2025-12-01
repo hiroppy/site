@@ -12,11 +12,9 @@ references:
 ---
 
 import OG from "../../components/blog/OG.astro";
-import Image from "../../components/Image.astro";
-import CodeGroup from "../../components/blog/CodeGroup.astro";
-import CodeGroupPanel from "../../components/blog/CodeGroupPanel.astro";
-import TwoColumn from "../../components/blog/TwoColumn.astro";
-import GoogleSlidesCard from "../../components/blog/GoogleSlidesCard.astro";
+import { Image } from "../../components/Image";
+import { TwoColumn } from "../../components/blog/TwoColumn";
+import { GoogleSlidesCard } from "../../components/blog/GoogleSlidesCard";
 
 ---
 
@@ -65,7 +63,7 @@ This article is for VRT.
 
 ## Image
 
-<Image alt="me" src="/images/meta/me.png" class="w-10" />
+<Image alt="me" src="/images/meta/me.png" className="w-10" />
 
 <br />
 
@@ -78,10 +76,6 @@ const foo = "foo";
 ```
 
 ### Code Group Example
-
-test
-
-<OG url="https://hiroppy.me" />
 
 ::: code-group
 

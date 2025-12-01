@@ -1,6 +1,6 @@
 type JobType = "main" | "side";
 
-export interface TimelineJob {
+export type TimelineJob = {
   id: string;
   name: string;
   company: string;
@@ -15,19 +15,19 @@ export interface TimelineJob {
   widthPercent: number;
   durationMonths: number;
   isActive: boolean;
-}
+};
 
-export interface DateRange {
+export type DateRange = {
   start: Date;
   end: Date;
-}
+};
 
-interface TimeMarker {
+type TimeMarker = {
   date: Date;
   label: string;
   isMajor: boolean;
   position: number;
-}
+};
 
 /**
  * Calculate the date range for the timeline (reverse chronological)

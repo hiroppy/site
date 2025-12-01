@@ -7,9 +7,9 @@ image: /images/blog/init-coder-penguin/ogp.jpg
 tags: life
 ---
 
-import Image from "../../components/Image.astro";
+import { Image } from "../../components/Image";
 import OG from "../../components/blog/OG.astro";
-import YoutubeCard from "../../components/blog/YoutubeCard.astro";
+import { YoutubeCard } from "../../components/blog/YoutubeCard";
 import jobs from "../../../node_modules/hiroppy/generated/jobs.json";
 
 4月1日から独立し、フリーランスとして活動を始めました。
@@ -67,7 +67,7 @@ import jobs from "../../../node_modules/hiroppy/generated/jobs.json";
               alt={company}
               width={80}
               height={80}
-              class="h-20 w-20 rounded bg-white"
+              className="h-20 w-20 rounded bg-white"
             />
             <span class="text-sm">{company}</span>
           </a>

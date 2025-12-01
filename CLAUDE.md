@@ -61,27 +61,9 @@ yarn add package-name
 
 :::
 
-````
+```
 
-Alternative manual component syntax:
-
-```mdx
-import CodeGroup from "../../components/CodeGroup.astro";
-import CodeGroupPanel from "../../components/CodeGroupPanel.astro";
-
-<CodeGroup defaultTab="npm">
-  <CodeGroupPanel label="npm">
-    ```bash
-    npm install package-name
-    ```
-  </CodeGroupPanel>
-
-  <CodeGroupPanel label="pnpm">
-    ```bash
-    pnpm add package-name
-    ```
-  </CodeGroupPanel>
-</CodeGroup>
-````
+The remark plugin automatically imports `CodeGroup` and wraps each fenced code block in a `<div class="code-group-panel">` with `data-label`, `data-icon`, and `data-language` attributes, so you don't need a separate panel component.
 
 Created for agentic coding assistants working in this repository
+```

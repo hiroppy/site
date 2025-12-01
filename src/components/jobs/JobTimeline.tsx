@@ -2,6 +2,7 @@ import { useState } from "preact/hooks";
 import history from "../../../node_modules/hiroppy/generated/jobs.json";
 import { JobTimelineAxis } from "./JobTimelineAxis";
 import { JobTimelineBar } from "./JobTimelineBar";
+import { FilterTabs } from "../FilterTabs";
 import {
   calculateDateRange,
   calculatePosition,
@@ -19,29 +20,6 @@ type CompanyMeta = {
   url: string;
 };
 
-// Active button classes
-const ACTIVE_CLASSES = [
-  "border-blue-600",
-  "bg-blue-600",
-  "text-white",
-  "shadow-sm",
-  "dark:border-blue-600",
-  "dark:bg-blue-600",
-];
-
-// Inactive button classes
-const INACTIVE_CLASSES = [
-  "border-gray-300",
-  "bg-white",
-  "text-gray-700",
-  "hover:bg-gray-100",
-  "dark:border-gray-600",
-  "dark:bg-gray-800",
-  "dark:text-gray-200",
-  "dark:hover:bg-gray-700",
-];
-
-// Helper function to safely get company metadata
 function getCompanyMeta(
   metadata: JobMetaData,
   companyKey: string,
@@ -53,7 +31,6 @@ function getCompanyMeta(
   return companyMeta as CompanyMeta;
 }
 
-// Transform and merge job data
 const allJobs: TimelineJob[] = [
   ...history.main.map((job, i) => {
     const meta = getCompanyMeta(history.meta, job.company);
@@ -95,16 +72,13 @@ const allJobs: TimelineJob[] = [
   }),
 ];
 
-// Calculate date range
 const dateRange = calculateDateRange(allJobs);
-
-// Generate time markers for vertical lines
 const timeMarkers = generateTimeMarkers(dateRange.start, dateRange.end);
 
-const filterOptions: { key: TimelineFilter; label: string }[] = [
-  { key: "all", label: "All" },
-  { key: "main", label: "Main only" },
-  { key: "side", label: "Sub only" },
+const filterTabs = [
+  { value: "all" as const, label: "All" },
+  { value: "main" as const, label: "Main" },
+  { value: "side" as const, label: "Sub" },
 ];
 
 const sortJobs = (jobs: TimelineJob[]) => {
@@ -154,21 +128,30 @@ const prepareTimelineJobs = (jobs: TimelineJob[]) => {
   return sortedJobs;
 };
 
-// Prepare all timeline views
-const timelineViews = filterOptions.map(({ key }) => {
+const timelineViews = filterTabs.map(({ value }) => {
   const filteredJobs =
-    key === "all" ? allJobs : allJobs.filter((job) => job.type === key);
+    value === "all" ? allJobs : allJobs.filter((job) => job.type === value);
   const jobs = prepareTimelineJobs(filteredJobs);
 
   return {
-    key,
+    key: value,
     jobs,
     height: jobs.length * 72,
   };
 });
 
-export function JobTimeline() {
-  const [activeFilter, setActiveFilter] = useState<TimelineFilter>("all");
+type Props = {
+  activeFilter?: TimelineFilter;
+  onFilterChange?: (filter: TimelineFilter) => void;
+};
+
+export function JobTimeline({
+  activeFilter: externalActiveFilter,
+  onFilterChange,
+}: Props) {
+  const [internalActiveFilter, setInternalActiveFilter] =
+    useState<TimelineFilter>("all");
+  const activeFilter = externalActiveFilter ?? internalActiveFilter;
 
   const handleBarClick = (jobId: string) => {
     const element = document.getElementById(jobId);
@@ -186,27 +169,22 @@ export function JobTimeline() {
     }, 2000);
   };
 
+  const handleFilterChange = (key: TimelineFilter) => {
+    if (onFilterChange) {
+      onFilterChange(key);
+    } else {
+      setInternalActiveFilter(key);
+    }
+  };
+
   return (
-    <div className="mb-8">
-      <div className="mb-4 flex flex-wrap items-center gap-2">
-        {filterOptions.map(({ key, label }) => {
-          const isActive = key === activeFilter;
-          return (
-            <button
-              key={key}
-              type="button"
-              className={cn(
-                "inline-flex items-center rounded-full border px-3 py-1.5 text-sm font-medium transition focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:ring-offset-gray-900",
-                isActive ? ACTIVE_CLASSES : INACTIVE_CLASSES,
-              )}
-              onClick={() => setActiveFilter(key)}
-              aria-pressed={isActive ? "true" : "false"}
-            >
-              {label}
-            </button>
-          );
-        })}
-      </div>
+    <div>
+      <FilterTabs
+        tabs={filterTabs}
+        activeValue={activeFilter}
+        onValueChange={handleFilterChange}
+        className="mb-4"
+      />
 
       {timelineViews.map(({ key, jobs, height }) => {
         if (key !== activeFilter) return null;
@@ -214,31 +192,27 @@ export function JobTimeline() {
         return (
           <div key={key} data-timeline-view={key}>
             <div
-              className="timeline-container relative w-full overflow-x-auto overflow-y-auto rounded-lg bg-white px-6 shadow-sm dark:bg-gray-900"
-              style={{ maxHeight: "400px" }}
+              className="timeline-container border-line bg-bg relative max-h-[400px] w-full overflow-x-auto overflow-y-auto rounded border px-6"
               data-testid="job-timeline"
             >
-              <div
-                className="sticky top-0 z-10 bg-white py-2 dark:bg-gray-900"
-                style={{ minWidth: "2800px" }}
-              >
+              <div className="bg-bg sticky top-0 z-10 min-w-[2800px] py-2">
                 <JobTimelineAxis dateRange={dateRange} />
               </div>
 
               <div
-                className="relative"
-                style={{ height: `${height}px`, minWidth: "2800px" }}
+                className="relative min-w-[2800px]"
+                style={{ height: `${height}px` }}
               >
                 {timeMarkers.map((marker, index) => (
                   <div
                     key={index}
                     className={cn(
-                      "absolute top-0 w-px",
+                      "absolute top-0 h-full w-px",
                       marker.isMajor
-                        ? "bg-gray-300 dark:bg-gray-700"
-                        : "bg-gray-200 dark:bg-gray-800",
+                        ? "bg-line"
+                        : "bg-[rgb(224_224_224_/_0.5)]",
                     )}
-                    style={{ left: `${marker.position}%`, height: "100%" }}
+                    style={{ left: `${marker.position}%` }}
                   />
                 ))}
 

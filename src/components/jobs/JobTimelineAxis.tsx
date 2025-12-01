@@ -10,23 +10,21 @@ export function JobTimelineAxis({ dateRange }: Props) {
   const markers = generateTimeMarkers(dateRange.start, dateRange.end);
 
   return (
-    <div className="relative h-10 border-b border-gray-300 dark:border-gray-700">
+    <div className="border-line relative h-10 border-b">
       {markers.map((marker, index) => (
         <div
           key={index}
           className={cn(
-            "absolute top-0 flex flex-col items-center",
+            "absolute top-0 flex -translate-x-1/2 flex-col items-center",
             marker.isMajor ? "timeline-marker-major" : "timeline-marker-minor",
           )}
-          style={{ left: `${marker.position}%`, transform: "translateX(-50%)" }}
+          style={{ left: `${marker.position}%` }}
         >
           {/* Marker Line */}
           <div
             className={cn(
               "w-px",
-              marker.isMajor
-                ? "h-3 bg-gray-400 dark:bg-gray-600"
-                : "h-2 bg-gray-300 dark:bg-gray-700",
+              marker.isMajor ? "bg-text-sub h-3" : "bg-line h-2",
             )}
           />
           {/* Marker Label */}
@@ -34,8 +32,8 @@ export function JobTimelineAxis({ dateRange }: Props) {
             className={cn(
               "mt-1 text-xs whitespace-nowrap",
               marker.isMajor
-                ? "font-semibold text-gray-700 dark:text-gray-300"
-                : "text-gray-500 dark:text-gray-500",
+                ? "text-text-main font-semibold"
+                : "text-text-sub font-normal",
             )}
           >
             {marker.label}

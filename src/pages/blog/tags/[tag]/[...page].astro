@@ -32,17 +32,18 @@ const { page } = Astro.props as {
 ---
 
 <BlogListLayout
-  title={`${tag}`}
   page={page}
   allTags={allTags}
   currentTag={tag}
   showSearch={false}
 >
   <div slot="header">
-    <!-- Additional Header Info -->
     <div class="mb-8 text-center">
-      <p class="mx-auto max-w-2xl text-xl text-gray-600 dark:text-gray-300">
-        「{tag}」に関連する記事一覧（{page.data.length}件）
+      <h1 class="mx-auto mb-4 max-w-2xl text-3xl font-bold text-gray-900">
+        {tag}
+      </h1>
+      <p class="mx-auto max-w-2xl text-xl text-gray-600">
+        関連する記事一覧（{page.data.length}件）
       </p>
     </div>
   </div>

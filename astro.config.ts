@@ -8,8 +8,8 @@ import tailwindcss from "@tailwindcss/vite";
 import astroExpressiveCode from "astro-expressive-code";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
-import { remarkCodeGroups } from "./src/utils/remarkCodeGroups";
-import { remarkAlerts } from "./src/utils/remarkAlerts";
+import { remarkCodeGroups } from "./src/utils/remark/remarkCodeGroups";
+import { remarkAlerts } from "./src/utils/remark/remarkAlerts";
 
 const adapter =
   process.env.NODE_ENV !== "test"
@@ -33,7 +33,7 @@ export default defineConfig({
     }),
     sitemap(),
     astroExpressiveCode({
-      themes: ["nord", "github-light-default"],
+      themes: ["nord"],
       styleOverrides: {
         borderRadius: "0.375rem",
         borderColor: "rgb(84 88 100)",

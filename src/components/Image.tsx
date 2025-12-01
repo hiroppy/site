@@ -4,11 +4,11 @@ import { getImageSrc } from "../utils/importAssets";
 type Props = {
   src: string | ImageMetadata;
   alt: string;
-  class?: string;
   className?: string;
   lazy?: boolean;
   width?: number;
   height?: number;
+  fetchPriority?: "auto" | "high" | "low";
 };
 
 const placeholderColor =
@@ -17,39 +17,39 @@ const placeholderColor =
 export function Image({
   src,
   alt,
-  class: classNameProp,
   className,
   lazy = true,
   width,
   height,
+  fetchPriority,
 }: Props) {
   const loading = lazy ? "lazy" : "eager";
-  const finalClassName = classNameProp || className;
 
-  // Handle empty src
   if (src === "") {
     return (
-      <div
-        style={{
-          width: width ? `${width}px` : undefined,
-          height: height ? `${height}px` : undefined,
-          background: `url('${placeholderColor}')`,
-        }}
-        className={finalClassName}
+      <img
+        src={placeholderColor}
+        alt={alt}
+        className={className}
+        width={width ?? 0}
+        height={height ?? 0}
+        loading={loading}
+        fetchPriority={fetchPriority}
+        decoding="async"
       />
     );
   }
 
-  // Handle external URLs
   if (typeof src === "string" && src.startsWith("http")) {
     return (
       <img
         src={src}
-        className={finalClassName}
+        className={className}
         alt={alt}
         width={width ?? 0}
         height={height ?? 0}
         loading={loading}
+        fetchPriority={fetchPriority}
         onError={(e) => {
           const target = e.currentTarget;
           target.onerror = null;
@@ -66,11 +66,12 @@ export function Image({
   return (
     <img
       src={imageSrc}
-      className={finalClassName}
+      className={className}
       alt={alt}
       width={width ?? 0}
       height={height ?? 0}
       loading={loading}
+      fetchPriority={fetchPriority}
       onError={(e) => {
         const target = e.currentTarget;
         target.onerror = null;

@@ -10,9 +10,9 @@ const config: KnipConfig = {
   project: ["src/**/*.{astro,ts,tsx,js,jsx,mjs,mdx}", "scripts/**/*.mts"],
   ignore: [
     "generated/**",
-    // mdx uses theme files
-    "src/components/blog/BlogCardItem.astro",
-    "src/components/blog/Alert.astro",
+    // remarked
+    "src/components/blog/Alert.tsx",
+    "src/components/blog/CodeGroup.astro",
     // Unlisted dependencies
     "src/content/blog/cjs-esm-reference-chart-of-behavior.mdx",
     "src/content/blog/create-module-bundler-esm.mdx",
@@ -25,6 +25,8 @@ const config: KnipConfig = {
     "tailwindcss",
     "@iconify-json/mdi",
     "@iconify-json/noto",
+    "@fontsource/inter",
+    "@fontsource/zen-kaku-gothic-new",
   ],
   astro: {
     config: ["astro.config.ts"],

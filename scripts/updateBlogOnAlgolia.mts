@@ -7,7 +7,7 @@ import strip from "strip-markdown";
 import remarkFrontmatter from "remark-frontmatter";
 import { algoliasearch } from "algoliasearch";
 
-interface Frontmatter {
+type Frontmatter = {
   title?: string;
   date?: string;
   tags?: string[];
@@ -15,13 +15,13 @@ interface Frontmatter {
   image?: string;
   hatenaPath?: string;
   [key: string]: unknown;
-}
+};
 
-interface Article extends Frontmatter {
+type Article = Frontmatter & {
   objectID: string;
   path: string;
   content: string;
-}
+};
 
 const blogPath: string = join(
   fileURLToPath(import.meta.url),

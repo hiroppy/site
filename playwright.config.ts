@@ -11,7 +11,7 @@ export default defineConfig({
   expect: {
     toHaveScreenshot: {
       // Make screenshot comparison less sensitive to font rendering differences
-      maxDiffPixelRatio: 0.05,
+      maxDiffPixelRatio: 0.01,
       threshold: 0.2,
       animations: "disabled",
     },
@@ -29,7 +29,7 @@ export default defineConfig({
   },
   projects: [
     {
-      name: "chrome-a11y-light",
+      name: "chrome-a11y",
       testMatch: "tests/a11y.spec.ts",
       use: {
         ...devices["Desktop Chrome"],
@@ -37,27 +37,11 @@ export default defineConfig({
       },
     },
     {
-      name: "chrome-a11y-dark",
-      testMatch: "tests/a11y.spec.ts",
-      use: {
-        ...devices["Desktop Chrome"],
-        colorScheme: "dark",
-      },
-    },
-    {
-      name: "android-a11y-light",
+      name: "android-a11y",
       testMatch: "tests/a11y.spec.ts",
       use: {
         ...devices["Pixel 7"],
         colorScheme: "light",
-      },
-    },
-    {
-      name: "android-a11y-dark",
-      testMatch: "tests/a11y.spec.ts",
-      use: {
-        ...devices["Pixel 7"],
-        colorScheme: "dark",
       },
     },
     {

@@ -48,7 +48,7 @@ type ArticlesResponse = {
 
 type SourcesResponse = {
   sources: Source[];
-  categories?: any;
+  categories?: unknown;
   summary: {
     total_sources?: number;
     total_articles?: number;

@@ -1,8 +1,8 @@
 ---
 import { ClientRouter } from "astro:transitions";
-import Footer from "../components/Footer.astro";
-import GA from "../components/GA.astro";
-import Header from "../components/Header.astro";
+import { Footer } from "../components/Footer";
+import { GA } from "../components/GA.tsx";
+import { Header } from "../components/Header";
 import { SITE_DESCRIPTION, SITE_TITLE, BLOG_SITE_TITLE } from "../constants";
 import meImage from "../assets/images/meta/me.png";
 import { importAssets, getImageSrc } from "../utils/importAssets";
@@ -86,41 +86,33 @@ const titleContent =
     <link rel="dns-prefetch" href="//b.hatena.ne.jp" />
     <link rel="preconnect" href="//b.hatena.ne.jp" />
     <link rel="author" href="http://www.hatena.ne.jp/about_hiroppy/" />
-    <script is:inline>
-      (function () {
-        const theme = (() => {
-          if (
-            typeof localStorage !== "undefined" &&
-            localStorage.getItem("theme")
-          ) {
-            return localStorage.getItem("theme");
-          }
-          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-            return "dark";
-          }
-          return "light";
-        })();
-
-        if (theme === "light") {
-          document.documentElement.classList.remove("dark");
-        } else {
-          document.documentElement.classList.add("dark");
-        }
-
-        if (typeof localStorage !== "undefined") {
-          localStorage.setItem("theme", theme);
-        }
-      })();
-    </script>
+    <link
+      rel="modulepreload"
+      href="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"
+    />
+    <script
+      is:inline
+      type="module"
+      src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"
+    ></script>
     <ClientRouter fallback="swap" />
   </head>
-  <body
-    class="font-body min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
-  >
-    {finalShowHeader && <Header variant={finalHeaderVariant} />}
-    {/*TODO: 全ページこっちにmargin寄せる */}
+  <body class="bg-bg min-h-screen">
+    {
+      finalShowHeader && (
+        <Header
+          variant={finalHeaderVariant}
+          currentPath={Astro.url.pathname}
+          client:idle
+        />
+      )
+    }
     <slot />
     {finalShowFooter && <Footer />}
     {import.meta.env.PROD && <GA />}
   </body>
 </html>
+
+<style is:global>
+  @import "../styles/components/search-articles.css";
+</style>

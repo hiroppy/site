@@ -1,8 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
 
-type Theme = (typeof themes)[number];
-
-const themes = ["light", "dark"] as const;
 const SCREENSHOT_OPTIONS = {
   animations: "disabled" as const,
   timeout: 30000,
@@ -12,7 +9,7 @@ const MOBILE_VIEWPORT = { width: 375, height: 667 };
 async function setupPage(
   page: any,
   url: string,
-  options: { theme?: Theme; viewport?: "mobile" | "desktop" } = {},
+  options: { viewport?: "mobile" | "desktop" } = {},
 ) {
   await page.goto(url, { waitUntil: "networkidle" });
 
@@ -20,26 +17,14 @@ async function setupPage(
     await page.setViewportSize(MOBILE_VIEWPORT);
   }
 
-  if (options.theme) {
-    await setTheme(page, options.theme);
-  }
-
   await page.waitForLoadState("networkidle");
-}
-
-async function setTheme(page: Page, theme: Theme) {
-  await page.evaluate((selectedTheme: any) => {
-    localStorage.setItem("theme", selectedTheme);
-    document.documentElement.classList.toggle("dark", selectedTheme === "dark");
-  }, theme);
-  await page.waitForTimeout(1000);
 }
 
 async function takeScreenshot(element: any, filename: string) {
   await expect(element).toHaveScreenshot(filename, SCREENSHOT_OPTIONS);
 }
 
-async function clickMenuButton(page: any) {
+async function clickMenuButton(page: Page) {
   const menuButton = page.getByRole("button", { name: /menu|メニュー/i });
   await menuButton.click();
   await page.waitForTimeout(500);
@@ -52,38 +37,31 @@ async function performSearch(page: Page, query: string) {
 }
 
 test.describe("Component VRT Tests", () => {
-  // Hamburger menu test for mobile (both themes)
-  for (const theme of themes) {
-    test(`Hamburger menu shows links and contact (mobile ${theme})`, async ({
-      page,
-    }) => {
-      await setupPage(page, "http://localhost:3000/", {
-        viewport: "mobile",
-        theme,
-      });
-
-      await clickMenuButton(page);
-      await takeScreenshot(
-        page.getByRole("navigation"),
-        `header-menu-mobile-${theme}.png`,
-      );
+  // Hamburger menu test for mobile
+  test("Hamburger menu shows links and contact (mobile)", async ({ page }) => {
+    await setupPage(page, "http://localhost:3000/", {
+      viewport: "mobile",
     });
-  }
 
-  // Blog search test for both themes
-  for (const theme of themes) {
-    test(`Blog search results (${theme})`, async ({ page }) => {
-      await setupPage(page, "http://localhost:3000/blog", { theme });
+    await clickMenuButton(page);
+    await takeScreenshot(
+      page.getByRole("navigation"),
+      "header-menu-mobile.png",
+    );
+  });
 
-      await performSearch(page, "This article is for VRT.");
-      await takeScreenshot(
-        page.locator("#search-results"),
-        `blog-search-results-${theme}.png`,
-      );
-    });
-  }
+  // Blog search test
+  test("Blog search results", async ({ page }) => {
+    await setupPage(page, "http://localhost:3000/blog");
 
-  // Job related articles test for Mercari/Souzoh main job (Chrome only)
+    await performSearch(page, "This article is for VRT.");
+    await takeScreenshot(
+      page.locator("#search-results"),
+      "blog-search-results.png",
+    );
+  });
+
+  // Job related articles test for Mercari/Souzoh main job
   test("Job related articles expansion (Mercari/Souzoh main)", async ({
     page,
   }) => {

@@ -3,11 +3,13 @@
  * Pure JSX structure without Node.js dependencies
  */
 
+type CSSProperties = Record<string, string | number>;
+
 type JSXElement = {
   type: string;
   props: {
-    style?: Record<string, any>;
-    children?: any;
+    style?: CSSProperties;
+    children?: JSXElement | JSXElement[] | string;
     src?: string;
     width?: number;
     height?: number;
@@ -27,7 +29,7 @@ function createBackgroundDecorations(): JSXElement[] {
           width: "600px",
           height: "600px",
           background:
-            "radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(153, 99, 0, 0.08) 0%, transparent 70%)",
           borderRadius: "50%",
           transform: "translate(200px, -200px)",
         },
@@ -43,9 +45,25 @@ function createBackgroundDecorations(): JSXElement[] {
           width: "400px",
           height: "400px",
           background:
-            "radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(230, 170, 50, 0.06) 0%, transparent 70%)",
           borderRadius: "50%",
           transform: "translate(-100px, 100px)",
+        },
+      },
+    },
+    {
+      type: "div",
+      props: {
+        style: {
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          width: "800px",
+          height: "800px",
+          background:
+            "radial-gradient(circle, rgba(250, 240, 220, 0.15) 0%, transparent 60%)",
+          borderRadius: "50%",
+          transform: "translate(-50%, -50%)",
         },
       },
     },
@@ -72,7 +90,7 @@ function createHeader(iconBase64: string, headerText: string): JSXElement {
             height: 48,
             style: {
               borderRadius: "50%",
-              border: "2px solid rgba(59, 130, 246, 0.5)",
+              border: "2px solid rgba(153, 99, 0, 0.3)",
             },
           },
         },
@@ -81,7 +99,7 @@ function createHeader(iconBase64: string, headerText: string): JSXElement {
           props: {
             style: {
               fontSize: "24px",
-              color: "#e2e8f0",
+              color: "#333333",
               fontWeight: "600",
             },
             children: headerText,
@@ -102,7 +120,7 @@ function createFooter(iconBase64: string, pageType: string): JSXElement {
         justifyContent: "space-between",
         alignItems: "center",
         paddingTop: 24,
-        borderTop: "1px solid rgba(148, 163, 184, 0.2)",
+        borderTop: "1px solid rgba(224, 224, 224, 0.4)",
       },
       children: [
         {
@@ -122,7 +140,7 @@ function createFooter(iconBase64: string, pageType: string): JSXElement {
                   height: 40,
                   style: {
                     borderRadius: "50%",
-                    border: "2px solid rgba(59, 130, 246, 0.4)",
+                    border: "2px solid rgba(153, 99, 0, 0.3)",
                   },
                 },
               },
@@ -140,7 +158,7 @@ function createFooter(iconBase64: string, pageType: string): JSXElement {
                       props: {
                         style: {
                           fontSize: "20px",
-                          color: "#3b82f6",
+                          color: "#996300",
                           fontWeight: "600",
                         },
                         children: "hiroppy",
@@ -151,9 +169,9 @@ function createFooter(iconBase64: string, pageType: string): JSXElement {
                       props: {
                         style: {
                           fontSize: "14px",
-                          color: "#94a3b8",
+                          color: "#6d6d6d",
                         },
-                        children: "JavaScript Engineer",
+                        children: "Web Engineer",
                       },
                     },
                   ],
@@ -167,7 +185,7 @@ function createFooter(iconBase64: string, pageType: string): JSXElement {
           props: {
             style: {
               fontSize: "16px",
-              color: "#64748b",
+              color: "#6d6d6d",
               fontWeight: "500",
             },
             children: pageType,
@@ -198,10 +216,9 @@ function createTitleSection(title: string, description?: string): JSXElement {
             style: {
               fontSize: "56px",
               lineHeight: "1.1",
-              color: "#ffffff",
+              color: "#1a1a1a",
               fontWeight: "700",
               margin: 0,
-              textShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
             },
             children: title,
           },
@@ -214,9 +231,8 @@ function createTitleSection(title: string, description?: string): JSXElement {
                   style: {
                     fontSize: "24px",
                     lineHeight: "1.4",
-                    color: "#cbd5e1",
+                    color: "#4b5563",
                     margin: 0,
-                    opacity: 0.9,
                   },
                   children: description,
                 },
@@ -248,10 +264,9 @@ function createBlogTitleSection(title: string, tags: string[]): JSXElement {
             style: {
               fontSize: "56px",
               lineHeight: "1.1",
-              color: "#ffffff",
+              color: "#1a1a1a",
               fontWeight: "700",
               margin: 0,
-              textShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
             },
             children: title,
           },
@@ -273,17 +288,16 @@ function createBlogTitleSection(title: string, tags: string[]): JSXElement {
                         display: "flex",
                         alignItems: "center",
                         padding: "8px 20px",
-                        background: "rgba(59, 130, 246, 0.15)",
-                        border: "1px solid rgba(59, 130, 246, 0.3)",
+                        background: "rgba(153, 99, 0, 0.08)",
+                        border: "1px solid rgba(153, 99, 0, 0.25)",
                         borderRadius: "24px",
-                        backdropFilter: "blur(8px)",
                       },
                       children: {
                         type: "span",
                         props: {
                           style: {
                             fontSize: "18px",
-                            color: "#93c5fd",
+                            color: "#996300",
                             fontWeight: "500",
                           },
                           children: `#${tag}`,
@@ -315,8 +329,7 @@ function createBaseTemplate(
         flexDirection: "column",
         width: "100%",
         height: "100%",
-        background:
-          "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)",
+        background: "#fdfbf7",
         position: "relative",
       },
       children: [

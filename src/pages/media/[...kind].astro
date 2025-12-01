@@ -1,57 +1,67 @@
 ---
-import MediaLayout from "../../layouts/MediaLayout.astro";
+import SidebarLayout from "../../layouts/SidebarLayout.astro";
+import { Section } from "../../components/Section";
+import { FilterTabs } from "../../components/FilterTabs";
+import { MediaListItem } from "../../components/MediaListItem";
+import { ListContainer } from "../../components/ListContainer";
 import { HATENA_BLOG_URL, type MediaType } from "../../constants";
 import { sortByDate } from "../../utils/sortItems";
-import MediaCard from "../../components/media/MediaCard.astro";
-import Icon from "../../components/Icon.astro";
 
-type Kind = MediaType | undefined;
+type Kind = "articles" | "talks" | "podcasts" | undefined;
+
+type DataItem = {
+  title: string;
+  url: string;
+  publishedAt: string;
+  category: string;
+  siteUrl?: string;
+  icon: string;
+  prefixForTitle: string;
+};
 
 export function getStaticPaths(): Array<{ params: { kind: Kind } }> {
   return [
     { params: { kind: undefined } },
+    { params: { kind: "articles" } },
     { params: { kind: "talks" } },
-    // TODO: fix
-    { params: { kind: "articles" as "media" } },
     { params: { kind: "podcasts" } },
   ];
 }
 
 const { kind } = Astro.params;
+
+// Map kind to data file name
+function getDataKind(kind: Kind): "media" | "talks" | "podcasts" {
+  return kind === "articles" ? "media" : kind || "media";
+}
+
 const items: DataItem[] = await (async () => {
-  switch (kind) {
-    case undefined:
-      return sortByDate(
-        [
-          ...(await getData("talks")),
-          ...(await getData("media")),
-          ...(await getData("podcasts")),
-        ],
-        (item) => item.publishedAt,
-      );
-    case "talks":
-      return await getData("talks");
-    // TODO: fix
-    case "articles" as "media":
-      return await getData("media");
-    case "podcasts":
-      return await getData("podcasts");
-    default:
-      throw new Error(`Unknown kind: ${kind}`);
+  if (!kind) {
+    return sortByDate(
+      [
+        ...(await getData("talks")),
+        ...(await getData("articles")),
+        ...(await getData("podcasts")),
+      ],
+      (item) => item.publishedAt,
+    );
   }
+  return await getData(kind);
 })();
 
 async function getData(kind: Exclude<Kind, undefined>) {
+  const dataKind = getDataKind(kind);
   const res = (
-    await import(`../../../node_modules/hiroppy/generated/${kind}.json`)
+    await import(`../../../node_modules/hiroppy/generated/${dataKind}.json`)
   ).default.map((item: Record<string, string>) => ({
     ...item,
-    icon: getMediaIcon(kind),
-    prefixForTitle: getPrefixForTitle(kind),
+    icon: getMediaIcon(dataKind),
+    prefixForTitle: getPrefixForTitle(dataKind),
+    category: getCategoryLabel(dataKind),
   }));
 
-  if (kind === "media") {
-    return res.filter(({ siteUrl }: any) => {
+  if (dataKind === "media") {
+    return res.filter(({ siteUrl }: DataItem) => {
       return !(
         siteUrl?.startsWith(import.meta.env.SITE) ||
         siteUrl?.startsWith(HATENA_BLOG_URL)
@@ -60,6 +70,17 @@ async function getData(kind: Exclude<Kind, undefined>) {
   }
 
   return res;
+}
+
+function getCategoryLabel(type: "media" | "talks" | "podcasts"): string {
+  switch (type) {
+    case "media":
+      return "Article";
+    case "talks":
+      return "Talk";
+    case "podcasts":
+      return "Podcast";
+  }
 }
 
 function getMediaIcon(type: MediaType) {
@@ -86,43 +107,61 @@ function getPrefixForTitle(type: MediaType) {
       return "Unknown";
   }
 }
+
+function getKindLabel(kind: Kind): string {
+  switch (kind) {
+    case undefined:
+      return "All";
+    case "articles":
+      return "Article";
+    case "talks":
+      return "Talk";
+    case "podcasts":
+      return "Podcast";
+    default:
+      return kind;
+  }
+}
+
+function getKindPath(kind: Kind): string {
+  return kind ? `/media/${kind}` : "/media";
+}
+
+// Prepare filter tabs
+const filterTabs = [undefined, "articles", "talks", "podcasts"].map(
+  (filterKind) => ({
+    value: filterKind as Kind,
+    label: getKindLabel(filterKind as Kind),
+    href: getKindPath(filterKind as Kind),
+  }),
+);
 ---
 
-<MediaLayout>
-  <!-- Modern Grid Layout -->
-  <div
-    class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-  >
-    {
-      items.map(
-        ({ title, description, image, icon, url, publishedAt, links }) => (
-          <MediaCard
-            title={title}
-            description={description}
-            image={image}
-            icon={icon}
-            url={url}
-            publishedAt={publishedAt}
-            links={links}
-          />
-        ),
-      )
-    }
-  </div>
+<SidebarLayout
+  title={`Media & Activities${kind ? ` / ${getKindLabel(kind)}` : ""}`}
+  description="登壇・プレス・ポッドキャストなどのメディア活動"
+  pageType="Media"
+>
+  <Section title="Media & Activities" headingLevel="h1">
+    <FilterTabs tabs={filterTabs} activeValue={kind} className="mb-8" />
 
-  {
-    items.length === 0 && (
-      <div class="py-16 text-center">
-        <div class="mb-4 flex justify-center opacity-20">
-          <Icon icon="noto:memo" width="96" height="96" />
-        </div>
-        <h2 class="mb-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
-          No items found
-        </h2>
-        <p class="text-gray-600 dark:text-gray-400">
+    {
+      items.length > 0 ? (
+        <ListContainer>
+          {items.map(({ title, url, publishedAt, category }) => (
+            <MediaListItem
+              title={title}
+              url={url}
+              publishedAt={publishedAt}
+              category={category}
+            />
+          ))}
+        </ListContainer>
+      ) : (
+        <p class="text-text-sub py-12 text-center text-lg">
           該当するメディアが見つかりませんでした
         </p>
-      </div>
-    )
-  }
-</MediaLayout>
+      )
+    }
+  </Section>
+</SidebarLayout>

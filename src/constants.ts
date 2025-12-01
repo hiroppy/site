@@ -8,3 +8,14 @@ export const HATENA_BLOG_URL = "https://abouthiroppy.hatenablog.jp";
 export const HATENA_BLOG_ENTRY_URL = `${HATENA_BLOG_URL}/entry`;
 
 export type MediaType = "media" | "podcasts" | "talks";
+
+export const NAV_ITEMS = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Media", href: "/media" },
+  { label: "Jobs", href: "/jobs" },
+  { label: "Blog", href: "/blog" },
+  { label: "Labs", href: "/labs" },
+] as const;
+
+export type NavItem = (typeof NAV_ITEMS)[number];

@@ -38,6 +38,12 @@ importers:
       '@expressive-code/plugin-line-numbers':
         specifier: 0.41.3
         version: 0.41.3
+      '@fontsource/inter':
+        specifier: 5.1.0
+        version: 5.1.0
+      '@fontsource/zen-kaku-gothic-new':
+        specifier: 5.1.0
+        version: 5.1.0
       '@tailwindcss/vite':
         specifier: 4.1.17
         version: 4.1.17(vite@6.4.1(@types/node@20.12.7)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))
@@ -54,17 +60,17 @@ importers:
         specifier: 2.1.1
         version: 2.1.1
       hiroppy:
-        specifier: 1.0.55
-        version: 1.0.55
+        specifier: 1.0.56
+        version: 1.0.56
       instantsearch.js:
         specifier: 4.84.0
         version: 4.84.0(algoliasearch@5.45.0)
-      marked:
-        specifier: 17.0.1
-        version: 17.0.1
       preact:
         specifier: 10.28.0
         version: 10.28.0
+      react-markdown:
+        specifier: 10.1.0
+        version: 10.1.0(@types/react@19.2.7)(react@19.2.0)
       satori:
         specifier: 0.18.3
         version: 0.18.3
@@ -623,6 +629,12 @@ packages:
 
   '@expressive-code/plugin-text-markers@0.41.3':
     resolution: {integrity: sha512-SN8tkIzDpA0HLAscEYD2IVrfLiid6qEdE9QLlGVSxO1KEw7qYvjpbNBQjUjMr5/jvTJ7ys6zysU2vLPHE0sb2g==}
+
+  '@fontsource/inter@5.1.0':
+    resolution: {integrity: sha512-zKZR3kf1G0noIes1frLfOHP5EXVVm0M7sV/l9f/AaYf+M/DId35FO4LkigWjqWYjTJZGgplhdv4cB+ssvCqr5A==}
+
+  '@fontsource/zen-kaku-gothic-new@5.1.0':
+    resolution: {integrity: sha512-Iadu+wXoLs320Qy7Ihxz69A565PunVTi8ha8swxaMsdbJf8tkcGx/PfRL7uba/1DZdkA/mii/DQKgRxbYoZDVw==}
 
   '@formatjs/ecma402-abstract@1.18.2':
     resolution: {integrity: sha512-+QoPW4csYALsQIl8GbN14igZzDbuwzcpWrku9nyMXlaqAlwRBgl5V+p0vWMGFqHOw37czNXaP/lEk4wbLgcmtA==}
@@ -1544,6 +1556,9 @@ packages:
   '@types/qs@6.9.15':
     resolution: {integrity: sha512-uXHQKES6DQKKCLh441Xv/dwxOq1TVS3JPUMlEqoEglvlhR6Mxnlew/Xq/LRVHpLyk7iK3zODe1qYHIMltO7XGg==}
 
+  '@types/react@19.2.7':
+    resolution: {integrity: sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==}
+
   '@types/sax@1.2.7':
     resolution: {integrity: sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A==}
 
@@ -2237,6 +2252,9 @@ packages:
     resolution: {integrity: sha512-0LrrStPOdJj+SPCCrGhzryycLjwcgUSHBtxNA8aIDxf0GLsRh1cKYhB00Gd1lDOS4yGH69+SNn13+TWbVHETFQ==}
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0'}
 
+  csstype@3.2.3:
+    resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
+
   data-uri-to-buffer@6.0.2:
     resolution: {integrity: sha512-7hvf7/GW8e86rW0ptuwS3OcBGDjIi6SZva7hCyWC0yYry2cOPmLIjXAUHI6DK2HsnwJd9ifmt57i8eV2n4YNpw==}
     engines: {node: '>= 14'}
@@ -2846,8 +2864,8 @@ packages:
     resolution: {integrity: sha512-Ox1pJVrDCyGHMG9CFg1tmrRUMRPRsAWYc/PinY0XzJU4K7y7vjNoLKIQ7BR5UJMCxNN8EM1MNDmHWA/B3aZUuw==}
     engines: {node: '>=6'}
 
-  hiroppy@1.0.55:
-    resolution: {integrity: sha512-MPaQc1Oyrh+mzerjePDUOmF/bOxm6AsbmCoXgG9Sg16ZWxddo1rs7OyrTQ6bEg84N75MqRX6y7DxjQUJ2Zx6Vw==}
+  hiroppy@1.0.56:
+    resolution: {integrity: sha512-0FZFGMh+Gb/KpX6bmG2PDMQSoOHlHwdjHYWV5oRNgPj4mlg2EmhWYYZ0p/9CobD599BZyLbRKgTPkKtQnaDsGA==}
 
   hogan.js@3.0.2:
     resolution: {integrity: sha512-RqGs4wavGYJWE07t35JQccByczmNUXQT0E12ZYV1VKYu5UiAU9lsos/yBAcf840+zrUQQxgVduCR5/B8nNtibg==}
@@ -2858,6 +2876,9 @@ packages:
 
   html-escaper@3.0.3:
     resolution: {integrity: sha512-RuMffC89BOWQoY0WKGpIhn5gX3iI54O6nRA0yC124NYVtzjmFWBIiFd8M0x+ZdX0P9R4lADg1mgP8C7PxGOWuQ==}
+
+  html-url-attributes@3.0.1:
+    resolution: {integrity: sha512-ol6UPyBWqsrO6EJySPz2O7ZSr856WDrEzM5zMqp+FJJLGMW35cLYmmZnl0vztAZxRUoNZJFTCohfjuIJ8I4QBQ==}
 
   html-void-elements@3.0.0:
     resolution: {integrity: sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg==}
@@ -3306,11 +3327,6 @@ packages:
     peerDependenciesMeta:
       react:
         optional: true
-
-  marked@17.0.1:
-    resolution: {integrity: sha512-boeBdiS0ghpWcSwoNm/jJBwdpFaMnZWRzjA6SkUMYb40SVaN1x7mmfGKp0jvexGcx+7y2La5zRZsYFZI6Qpypg==}
-    engines: {node: '>= 20'}
-    hasBin: true
 
   marky@1.2.5:
     resolution: {integrity: sha512-q9JtQJKjpsVxCRVgQ+WapguSbKC3SQ5HEzFGPAJMStgh3QjCawp00UKv3MTTAArTmGmmPUvllHZoNbZ3gs0I+Q==}
@@ -4030,6 +4046,12 @@ packages:
   raw-body@2.5.2:
     resolution: {integrity: sha512-8zGqypfENjCIqGhgXToC8aB2r7YrBX+AQAfIPs/Mlk+BtPTztOvTS01NRW/3Eh60J+a48lt8qsCzirQ6loCVfA==}
     engines: {node: '>= 0.8'}
+
+  react-markdown@10.1.0:
+    resolution: {integrity: sha512-qKxVopLT/TyA6BX3Ue5NwabOsAzm0Q7kAPwq6L+wWDwisYs7R8vZ0nRXqq6rkueboxpkjvLGU9fWifiX/ZZFxQ==}
+    peerDependencies:
+      '@types/react': '>=18'
+      react: '>=18'
 
   react-refresh@0.18.0:
     resolution: {integrity: sha512-QgT5//D3jfjJb6Gsjxv0Slpj23ip+HtOpnNgnb2S5zU3CB26G/IDPGoy4RJB42wzFE46DRsstbW6tKHoKbhAxw==}
@@ -5172,26 +5194,12 @@ packages:
 
 snapshots:
 
-  '@ai-sdk/gateway@2.0.15(zod@3.25.76)':
-    dependencies:
-      '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.17(zod@3.25.76)
-      '@vercel/oidc': 3.0.5
-      zod: 3.25.76
-
   '@ai-sdk/gateway@2.0.15(zod@4.1.13)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
       '@ai-sdk/provider-utils': 3.0.17(zod@4.1.13)
       '@vercel/oidc': 3.0.5
       zod: 4.1.13
-
-  '@ai-sdk/provider-utils@3.0.17(zod@3.25.76)':
-    dependencies:
-      '@ai-sdk/provider': 2.0.0
-      '@standard-schema/spec': 1.0.0
-      eventsource-parser: 3.0.6
-      zod: 3.25.76
 
   '@ai-sdk/provider-utils@3.0.17(zod@4.1.13)':
     dependencies:
@@ -5773,6 +5781,10 @@ snapshots:
   '@expressive-code/plugin-text-markers@0.41.3':
     dependencies:
       '@expressive-code/core': 0.41.3
+
+  '@fontsource/inter@5.1.0': {}
+
+  '@fontsource/zen-kaku-gothic-new@5.1.0': {}
 
   '@formatjs/ecma402-abstract@1.18.2':
     dependencies:
@@ -6778,6 +6790,10 @@ snapshots:
 
   '@types/qs@6.9.15': {}
 
+  '@types/react@19.2.7':
+    dependencies:
+      csstype: 3.2.3
+
   '@types/sax@1.2.7':
     dependencies:
       '@types/node': 20.12.7
@@ -6994,14 +7010,6 @@ snapshots:
   acorn@8.15.0: {}
 
   agent-base@7.1.3: {}
-
-  ai@5.0.102(zod@3.25.76):
-    dependencies:
-      '@ai-sdk/gateway': 2.0.15(zod@3.25.76)
-      '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.17(zod@3.25.76)
-      '@opentelemetry/api': 1.9.0
-      zod: 3.25.76
 
   ai@5.0.102(zod@4.1.13):
     dependencies:
@@ -7633,6 +7641,8 @@ snapshots:
   csso@5.0.5:
     dependencies:
       css-tree: 2.2.1
+
+  csstype@3.2.3: {}
 
   data-uri-to-buffer@6.0.2: {}
 
@@ -8387,7 +8397,7 @@ snapshots:
 
   hex-rgb@4.3.0: {}
 
-  hiroppy@1.0.55: {}
+  hiroppy@1.0.56: {}
 
   hogan.js@3.0.2:
     dependencies:
@@ -8397,6 +8407,8 @@ snapshots:
   htm@3.1.1: {}
 
   html-escaper@3.0.3: {}
+
+  html-url-attributes@3.0.1: {}
 
   html-void-elements@3.0.0: {}
 
@@ -8500,7 +8512,7 @@ snapshots:
       '@types/google.maps': 3.55.12
       '@types/hogan.js': 3.0.5
       '@types/qs': 6.9.15
-      ai: 5.0.102(zod@3.25.76)
+      ai: 5.0.102(zod@4.1.13)
       algoliasearch: 5.45.0
       algoliasearch-helper: 3.26.1(algoliasearch@5.45.0)
       hogan.js: 3.0.2
@@ -8510,8 +8522,8 @@ snapshots:
       qs: 6.9.7
       react: 19.2.0
       search-insights: 2.17.3
-      zod: 3.25.76
-      zod-to-json-schema: 3.24.6(zod@3.25.76)
+      zod: 4.1.13
+      zod-to-json-schema: 3.24.6(zod@4.1.13)
 
   intl-messageformat@10.5.11:
     dependencies:
@@ -8866,8 +8878,6 @@ snapshots:
   markdown-to-jsx@7.7.17(react@19.2.0):
     optionalDependencies:
       react: 19.2.0
-
-  marked@17.0.1: {}
 
   marky@1.2.5: {}
 
@@ -9834,6 +9844,24 @@ snapshots:
       http-errors: 2.0.0
       iconv-lite: 0.4.24
       unpipe: 1.0.0
+
+  react-markdown@10.1.0(@types/react@19.2.7)(react@19.2.0):
+    dependencies:
+      '@types/hast': 3.0.4
+      '@types/mdast': 4.0.4
+      '@types/react': 19.2.7
+      devlop: 1.1.0
+      hast-util-to-jsx-runtime: 2.3.0
+      html-url-attributes: 3.0.1
+      mdast-util-to-hast: 13.1.0
+      react: 19.2.0
+      remark-parse: 11.0.0
+      remark-rehype: 11.1.2
+      unified: 11.0.5
+      unist-util-visit: 5.0.0
+      vfile: 6.0.3
+    transitivePeerDependencies:
+      - supports-color
 
   react-refresh@0.18.0: {}
 
@@ -11033,10 +11061,6 @@ snapshots:
   yoctocolors@2.1.1: {}
 
   yoga-layout@3.2.1: {}
-
-  zod-to-json-schema@3.24.6(zod@3.25.76):
-    dependencies:
-      zod: 3.25.76
 
   zod-to-json-schema@3.24.6(zod@4.1.13):
     dependencies:

@@ -17,3 +17,4 @@ service_account_secret.json
 *-darwin.png
 .vercel
 .vitest-attachments
+.playwright-mcp

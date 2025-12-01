@@ -1,11 +1,36 @@
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/zen-kaku-gothic-new/400.css";
+@import "@fontsource/zen-kaku-gothic-new/500.css";
 @import "tailwindcss";
 @reference "tailwindcss";
 
 @source "src/**/*.{astro,md,mdx,ts,tsx}";
 
-@custom-variant dark (.dark &);
-
 @theme {
+  --color-bg: #fdfbf7; /* 生成り色背景 */
+  --color-text-main: #333333; /* メインテキスト */
+  --color-text-sub: #6d6d6d; /* サブテキスト (WCAG AA compliant: contrast ratio 4.55) */
+  --color-text-muted: #6b7280; /* 補足テキスト（グレー500相当） */
+  --color-link: #555555; /* リンク色 */
+  --color-line: #e0e0e0; /* 区切り線 */
+  --color-accent: #996300; /* ゴールドアクセント (WCAG AA compliant: contrast ratio 4.8) */
+
+  /* Card and content colors */
+  --color-card-title: #1a1a1a; /* カードタイトル */
+  --color-card-text: #404040; /* カード本文 */
+  --color-heading: #111827; /* 見出し（グレー900相当） */
+  --color-body-text: #4b5563; /* ボディテキスト（グレー600相当） */
+
+  /* UI element colors */
+  --color-badge-bg: #fafafa; /* バッジ背景 */
+  --color-badge-border: #d0d0d0; /* バッジ枠線 */
+  --color-badge-text: #555555; /* バッジテキスト */
+  --color-icon-muted: #6b7280; /* アイコン（グレー600相当、WCAG AA compliant: contrast ratio 4.64） */
+  --color-surface: #f3f4f6; /* サーフェス（グレー100相当） */
+  --color-surface-hover: #e5e7eb; /* サーフェスホバー（グレー200相当） */
+
   /* Programming language colors */
   --color-javascript: #f1e05a;
   --color-typescript: #3178c6;
@@ -16,23 +41,25 @@
   --color-html: #e34c26;
 
   --font-family-body:
-    system-ui, Arial, Helvetica, "Hiragino Sans", "Hiragino Kaku Gothic ProN",
-    "Meiryo,sans-serif", sans-serif;
+    "Zen Kaku Gothic New", "Inter", system-ui, Arial, Helvetica,
+    "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+
+  /* Override Tailwind text scale with site defaults */
+  --text-xs: 0.85rem;
+  --text-xs--line-height: calc(1 / 0.85);
+  --text-sm: 0.9rem;
+  --text-sm--line-height: calc(1.25 / 0.9);
+  --text-base: 0.95rem;
+  --text-base--line-height: calc(1.5 / 0.95);
+  --text-lg: 1rem;
+  --text-lg--line-height: calc(1.75 / 1);
+  --text-xl: 1.15rem;
+  --text-xl--line-height: calc(1.75 / 1.15);
+  --text-2xl: 1.2rem;
+  --text-2xl--line-height: calc(2 / 1.2);
 }
 
-/* Prevent FOUC during theme transitions */
-html {
-  color-scheme: light dark;
-}
-
-/* Default to dark theme if no preference is set */
-@media (prefers-color-scheme: dark) {
-  html:not(.light) {
-    color-scheme: dark;
-  }
-}
-
-/* Custom scrollbar for dark mode */
+/* Custom scrollbar */
 @layer utilities {
   /* Hide scrollbar completely */
   .scrollbar-hide {
@@ -45,16 +72,6 @@ html {
   }
 }
 
-/* Smooth transitions for theme switching - apply selectively to avoid performance issues */
-html,
-[data-theme],
-.theme-transition {
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease,
-    color 0.3s ease;
-}
-
 /* Card animations - optimized for scroll performance */
 .card-lift {
   transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -63,7 +80,7 @@ html,
 }
 
 .card-lift:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
 }
 
 .card-image-zoom {
@@ -76,18 +93,21 @@ html,
   transform: scale(1.1);
 }
 
-/* Media overlay animation */
-.media-overlay {
-  opacity: 0;
-  transition: opacity 0.2s ease-out;
-}
-
-.group:hover .media-overlay {
-  opacity: 1;
-}
-
 /* Auto-apply responsive styles to iframes in MDX content */
 @layer base {
+  body {
+    font-family: var(--font-family-body);
+    line-height: 1.8;
+  }
+
+  /* Prevent layout shift for Iconify icons */
+  iconify-icon {
+    display: inline-block;
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+  }
+
   article iframe[src*="youtube"],
   article iframe[src*="youtu.be"] {
     @apply w-full max-w-full;
@@ -98,45 +118,36 @@ html,
 
 /* Prose styles for markdown content */
 @layer components {
-  /* Shiki dual theme support */
-  .dark .astro-code,
-  .dark .astro-code span {
-    color: var(--shiki-dark) !important;
-    background-color: var(--shiki-dark-bg) !important;
-  }
-
   .prose h1,
   .prose h2,
   .prose h3,
   .prose h4 {
-    @apply mt-8 mb-4 font-bold;
-    color: rgb(17 24 39); /* gray-900 */
-  }
-
-  .dark .prose h1,
-  .dark .prose h2,
-  .dark .prose h3,
-  .dark .prose h4 {
-    color: rgb(255 255 255); /* white */
+    @apply mt-8 mb-4;
+    color: var(--color-text-main);
   }
   .prose h1 {
-    @apply text-3xl;
+    @apply text-3xl font-bold;
   }
   .prose h2 {
-    @apply text-2xl;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text-sub);
+    border-bottom: 1px solid var(--color-line);
+    padding-bottom: 8px;
+    display: inline-block;
   }
   .prose h3 {
-    @apply text-xl;
+    @apply text-xl font-medium;
   }
   .prose h4 {
-    @apply text-lg;
+    @apply text-lg font-medium;
   }
   .prose p {
-    @apply my-4 text-gray-700 dark:text-gray-300;
+    @apply my-4 text-gray-700;
   }
   .prose ul,
   .prose ol {
-    @apply mb-4 pl-6 text-gray-700 dark:text-gray-300;
+    @apply mb-4 pl-6 text-gray-700;
   }
   .prose ul {
     list-style-type: disc;
@@ -148,17 +159,23 @@ html,
     @apply mb-2;
   }
   .prose a {
-    @apply text-blue-700 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300;
+    color: var(--color-link);
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+  .prose a:hover {
+    opacity: 0.6;
+    text-decoration: underline;
   }
   .prose code:not(pre code) {
-    @apply rounded bg-gray-100 px-1 py-0.5 text-sm text-gray-800 dark:bg-gray-700 dark:text-gray-200;
+    @apply rounded bg-gray-100 px-1 py-0.5 text-sm text-gray-800;
   }
   .prose pre {
     @apply mb-4 max-w-full overflow-x-auto rounded-lg p-4 text-sm;
   }
 
   .prose blockquote {
-    @apply border-l-4 border-blue-500 bg-blue-50 py-2 pl-4 text-blue-800 italic dark:border-blue-400 dark:bg-blue-900/20 dark:text-blue-200;
+    @apply border-l-4 border-blue-500 bg-blue-50 py-2 pl-4 text-blue-800 italic;
   }
   .prose img {
     @apply mx-auto rounded-lg shadow-md;
@@ -173,23 +190,23 @@ html,
     @apply mx-auto;
   }
   .prose table {
-    @apply w-full border-collapse border border-gray-300 dark:border-gray-600;
+    @apply w-full border-collapse border border-gray-300;
   }
   .prose th,
   .prose td {
-    @apply border border-gray-300 px-4 py-2 dark:border-gray-600;
+    @apply border border-gray-300 px-4 py-2;
   }
   .prose th {
-    @apply bg-gray-100 font-semibold text-gray-900 dark:bg-gray-700 dark:text-white;
+    @apply bg-gray-100 font-semibold text-gray-900;
   }
   .prose td {
-    @apply text-gray-700 dark:text-gray-300;
+    @apply text-gray-700;
   }
   .prose strong {
-    @apply font-semibold text-gray-900 dark:text-gray-100;
+    @apply font-semibold text-gray-900;
   }
   .prose hr {
-    @apply my-8 border-gray-300 dark:border-gray-600;
+    @apply my-8 border-gray-300;
   }
 
   @media (max-width: 767px) {

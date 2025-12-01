@@ -1,5 +1,5 @@
 ---
-import Link from "../components/Link.astro";
+import { Link } from "../components/Link";
 
 const { frontmatter } = Astro.props;
 ---
@@ -64,7 +64,7 @@ const { frontmatter } = Astro.props;
       <h1 class="text-3xl">{frontmatter.title}</h1>
       <Link
         href="https://github.com/hiroppy/site/tree/main/src/pages/resume.md"
-        class="text-sm text-blue-600"
+        className="text-sm text-blue-600"
         ariaLabel="Edit this page on GitHub">Edit this Markdown</Link
       >
     </div>

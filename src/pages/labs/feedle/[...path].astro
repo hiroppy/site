@@ -2,12 +2,12 @@
 export const prerender = false;
 
 import Layout from "../../../layouts/Layout.astro";
-import TwoPaneLayout from "../../../components/TwoPaneLayout.astro";
-import ArticleSidebar from "../../../components/feedle/ArticleSidebar.astro";
-import ArticleModal from "../../../components/feedle/ArticleModal.astro";
+import TwoPaneLayout from "../../../layouts/TwoPaneLayout.astro";
+import { ArticleSidebar } from "../../../components/feedle/ArticleSidebar.tsx";
+import { ArticleModal } from "../../../components/feedle/ArticleModal.tsx";
 import ServiceInfoHeader from "../../../components/feedle/ServiceInfoHeader.astro";
 import RSSFeedButtons from "../../../components/feedle/RSSFeedButtons.astro";
-import ContentArea from "../../../components/feedle/ContentArea.astro";
+import { ContentArea } from "../../../components/feedle/ContentArea.tsx";
 import { getFeedleData } from "../../../utils/feedle/feedleData";
 import {
   generatePageTitle,
@@ -80,6 +80,7 @@ const ogImagePath = `${BASE_PATH}/${path || "frontend"}/og.png`;
   <TwoPaneLayout>
     <div slot="sidebar" class="h-full">
       <ArticleSidebar
+        client:load
         currentType={currentType}
         currentCategory={currentCategory}
         currentService={currentService}
@@ -111,9 +112,14 @@ const ogImagePath = `${BASE_PATH}/${path || "frontend"}/og.png`;
         )
       }
 
-      <ContentArea error={error} articles={articles} sources={sources} />
+      <ContentArea
+        client:load
+        error={error}
+        articles={articles}
+        sources={sources}
+      />
     </div>
   </TwoPaneLayout>
 
-  <ArticleModal />
+  <ArticleModal client:load />
 </Layout>
