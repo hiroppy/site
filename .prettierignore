@@ -1,6 +1,5 @@
 dist
 .lighthouseci
-.astro
 pnpm-lock.yaml
 pnpm-workspace.yaml
 test-results

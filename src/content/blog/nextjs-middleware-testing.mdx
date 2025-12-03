@@ -1,13 +1,12 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: Next.jsのMiddlewareを単体テストする
-date: 2025-01-21
-description: Next.jsに実験的に新しく入ったヘルパーを紹介します
+title: "Next.jsのMiddlewareを単体テストする"
+date: 2025-01-21T00:00:00.000Z
+description: "Next.jsに実験的に新しく入ったヘルパーを紹介します"
 image: /images/brands/next.png
 tags: next.js
 ---
 
-import OG from "../../components/blog/OG.astro";
+import { OG } from "../../mdx/components/OG";
 
 Next.js@15.1から実験的にミドルウェアのテストヘルパーが追加されました。
 なぜかv15.1の[リリースノート](https://nextjs.org/blog/next-15-1)にも書かれてないため、まだまだ破壊的な変更が入るかもしれない点に注意が必要です。

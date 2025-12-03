@@ -1,10 +1,10 @@
-import { devices, defineConfig } from "@playwright/test";
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
   fullyParallel: true,
   webServer: {
-    command: "pnpm preview --port 3000",
+    command: "pnpm start",
     port: 3000,
     reuseExistingServer: !process.env.CI,
   },
@@ -54,7 +54,6 @@ export default defineConfig({
     {
       name: "android-vrt-pages",
       testMatch: "tests/vrt-pages.spec.ts",
-      grep: /^VRT:/,
       use: {
         ...devices["Pixel 7"],
       },

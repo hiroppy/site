@@ -1,6 +1,23 @@
-import { test, expect, type Page } from "@playwright/test";
-import urls from "../testedPaths.cjs";
+import { type Page, expect, test } from "@playwright/test";
+import testedUrls from "../testedPaths.cjs";
 
+interface MetadataSnapshot {
+  ogTitle: string | null;
+  ogDescription: string | null;
+  ogImage: string | null;
+  ogUrl: string | null;
+  ogType: string | null;
+  twitterCard: string | null;
+  twitterTitle: string | null;
+  twitterDescription: string | null;
+  twitterImage: string | null;
+  twitterCreator: string | null;
+  title: string;
+  description: string | null;
+  canonical: string | null;
+}
+
+const urls = [...testedUrls, "http://localhost:3000/blog/404"];
 const ogTestedUrls = [
   "http://localhost:3000/labs",
   "http://localhost:3000/media",
@@ -13,12 +30,14 @@ const ogTestedUrls = [
 
 // 既存のURLs（VRTとOGテスト両方）
 for (const url of urls) {
-  test(`VRT: ${url}`, async ({ page }) => {
-    await page.clock.setFixedTime(new Date("2024-01-01T00:00:00Z"));
+  test(`VRT: ${url}`, async ({ page }, testInfo) => {
+    await page.clock.setFixedTime(new Date("2025-12-01T00:00:00Z"));
 
     await page.goto(url);
 
-    await checkOgImage(page, url);
+    if (!testInfo.project.name.includes("android")) {
+      await checkMetadata(page, url);
+    }
 
     // Wait for all images to load
     await page.evaluate(() => {
@@ -39,15 +58,11 @@ for (const url of urls) {
     // Wait for any lazy-loaded content
     await page.waitForLoadState("networkidle");
 
-    // Generate screenshot name based on URL path
-    const urlPath = url.replace("http://localhost:3000", "");
-    const cleanPath =
-      urlPath === "/" || urlPath === ""
-        ? "home"
-        : urlPath.replace(/^\//, "").replace(/\//g, "-");
-    const screenshotName = `${cleanPath}.png`;
+    const { output } = getPathAndOutputDirname(url);
+    const projectName = test.info().project.name;
+    const screenshotName = `${projectName}.png`;
 
-    await expect(page).toHaveScreenshot(screenshotName, {
+    await expect(page).toHaveScreenshot([output, screenshotName], {
       fullPage: true,
       scale: "device",
       animations: "disabled",
@@ -76,52 +91,97 @@ for (const url of ogTestedUrls) {
     await page.goto(url, {
       waitUntil: "networkidle",
     });
-    await checkOgImage(page, url);
+    await checkMetadata(page, url);
   });
 }
 
-async function checkOgImage(page: Page, url: string) {
+async function extractMetaTags(page: Page): Promise<MetadataSnapshot> {
+  return await page.evaluate(() => {
+    const getMeta = (selector: string) =>
+      document.querySelector(selector)?.getAttribute("content") || null;
+
+    return {
+      // OpenGraph tags
+      ogTitle: getMeta('meta[property="og:title"]'),
+      ogDescription: getMeta('meta[property="og:description"]'),
+      ogImage: getMeta('meta[property="og:image"]'),
+      ogUrl: getMeta('meta[property="og:url"]'),
+      ogType: getMeta('meta[property="og:type"]'),
+
+      // Twitter tags
+      twitterCard: getMeta('meta[name="twitter:card"]'),
+      twitterTitle: getMeta('meta[name="twitter:title"]'),
+      twitterDescription: getMeta('meta[name="twitter:description"]'),
+      twitterImage: getMeta('meta[name="twitter:image"]'),
+      twitterCreator: getMeta('meta[name="twitter:creator"]'),
+
+      // Standard meta tags
+      title: document.title,
+      description: getMeta('meta[name="description"]'),
+      canonical:
+        document.querySelector('link[rel="canonical"]')?.getAttribute("href") ||
+        null,
+    };
+  });
+}
+
+async function validateOgImage(page: Page, url: string, ogImageUrl: string) {
+  let ogImagePath = ogImageUrl;
+  if (ogImagePath.startsWith("https://")) {
+    ogImagePath = ogImagePath.replace("https://hiroppy.me", "");
+  }
+
+  const ogImageFullUrl = `http://localhost:3000${ogImagePath}`;
+  const ogResponse = await page.context().request.get(ogImageFullUrl);
+
+  if (ogResponse.status() === 200) {
+    expect(ogResponse.headers()["content-type"]).toContain("image");
+
+    const ogPage = await page.context().newPage();
+    await ogPage.goto(ogImageFullUrl);
+
+    const { output } = getPathAndOutputDirname(url);
+    await expect(ogPage).toHaveScreenshot([output, "og-image.png"], {
+      fullPage: true,
+    });
+    await ogPage.close();
+  }
+}
+
+async function snapshotMetaTags(metadata: MetadataSnapshot, url: string) {
+  const { output } = getPathAndOutputDirname(url);
+  const metadataJson = JSON.stringify(metadata, null, 2);
+
+  expect(metadataJson).toMatchSnapshot([output, "metadata.json"]);
+}
+
+async function checkMetadata(page: Page, url: string) {
   const browser = page.context().browser();
   if (!browser) return;
   const browserName = browser.browserType().name();
   if (browserName !== "chromium") return;
 
   try {
-    const ogImage = page.locator('meta[property="og:image"]');
-    const hasOgImage = (await ogImage.count()) > 0;
+    const metadata = await extractMetaTags(page);
 
-    if (hasOgImage) {
-      const ogImageUrl = await ogImage.getAttribute("content");
-      expect(ogImageUrl).toBeTruthy();
-
-      let ogImagePath = ogImageUrl!;
-      if (ogImagePath.startsWith("https://")) {
-        ogImagePath = ogImagePath.replace("https://hiroppy.me", "");
-      }
-
-      const ogImageFullUrl = `http://localhost:3000${ogImagePath}`;
-      const ogResponse = await page.context().request.get(ogImageFullUrl);
-
-      if (ogResponse.status() === 200) {
-        expect(ogResponse.headers()["content-type"]).toContain("image");
-
-        const urlPath = url.replace("http://localhost:3000", "");
-        const cleanPath =
-          urlPath === "/" || urlPath === ""
-            ? "home"
-            : urlPath.replace(/^\//, "").replace(/\//g, "-");
-        const ogPage = await page.context().newPage();
-        await ogPage.goto(ogImageFullUrl);
-        await expect(ogPage).toHaveScreenshot(`${cleanPath}-og-image.png`, {
-          fullPage: true,
-        });
-        await ogPage.close();
-      }
+    if (metadata.ogImage) {
+      await validateOgImage(page, url, metadata.ogImage);
     }
+
+    await snapshotMetaTags(metadata, url);
   } catch (error) {
     if (error instanceof Error) {
-      // OG画像チェックでエラーが発生してもVRTテストは継続
-      console.log(`OG image check failed for ${url}:`, error.message);
+      console.log(`Metadata check failed for ${url}:`, error.message);
     }
   }
+}
+
+function getPathAndOutputDirname(url: string) {
+  const urlPath = url.replace("http://localhost:3000", "");
+  const output =
+    urlPath === "/" || urlPath === ""
+      ? "home"
+      : urlPath.replace(/^\//, "").replace(/\//g, "-");
+
+  return { output };
 }

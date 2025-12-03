@@ -11,15 +11,10 @@
     "node_modules/**": true,
     ".lighthouseci/**": true
   },
-  "[astro]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "cSpell.enabled": true,
   "cSpell.words": [
-    "astro",
-    "astrojs",
     "hiroppy",
     "algoliasearch",
     "pnpm",

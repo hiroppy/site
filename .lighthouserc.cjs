@@ -5,7 +5,7 @@ module.exports = {
     collect: {
       url: paths,
       numberOfRuns: 1,
-      startServerCommand: "pnpm preview --port 3000",
+      startServerCommand: "pnpm start",
     },
     assert: {
       preset: "lighthouse:no-pwa",

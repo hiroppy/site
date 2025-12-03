@@ -1,4 +1,4 @@
-import { test, expect, type Page } from "@playwright/test";
+import { type Page, expect, test } from "@playwright/test";
 
 const SCREENSHOT_OPTIONS = {
   animations: "disabled" as const,

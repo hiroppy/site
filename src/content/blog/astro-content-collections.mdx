@@ -1,14 +1,13 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: Astro v2で導入された Content Collections の移行手順まとめ
-date: 2023-01-26
-description: Astro v2で導入された Content Collectionsの紹介と移行手順の仕方を説明します
+title: "Astro v2で導入された Content Collections の移行手順まとめ"
+date: 2023-01-26T00:00:00.000Z
+description: "Astro v2で導入された Content Collectionsの紹介と移行手順の仕方を説明します"
 image: /images/brands/astro.png
 tags: astro
 ---
 
-import OG from "../../components/blog/OG.astro";
-import { TwitterCard } from "../../components/blog/TwitterCard";
+import { OG } from "../../mdx/components/OG";
+import { TwitterCard } from "../../mdx/components/TwitterCard";
 
 先日、Astro@2 がリリースされ、多くの機能が追加されました。
 
@@ -74,7 +73,7 @@ export const collections = <const>{
 
 この定義によって frontmatter に対して型検査を行うことができるようになりました。
 
-![frontmatter error](../../assets/images/blog/astro-content-collections/frontmatter-error.png)
+![frontmatter error](/images/blog/astro-content-collections/frontmatter-error.png)
 
 > **2** `config.ts`を作成し、Markdown/MDX に使われている frontmatter を定義する
 
@@ -100,9 +99,9 @@ $ npx astro sync
 ```ts
 import {
   defineCollection,
-  z,
   getCollection,
   getEntryBySlug,
+  z,
 } from "astro:content";
 ```
 

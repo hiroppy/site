@@ -1,11 +1,11 @@
-import { join, extname, basename } from "path";
-import { readdir, readFile } from "fs/promises";
+import { algoliasearch } from "algoliasearch";
+import { readFile, readdir } from "fs/promises";
+import { basename, extname, join } from "path";
+import { remark } from "remark";
+import remarkFrontmatter from "remark-frontmatter";
+import strip from "strip-markdown";
 import { fileURLToPath } from "url";
 import * as yaml from "yaml";
-import { remark } from "remark";
-import strip from "strip-markdown";
-import remarkFrontmatter from "remark-frontmatter";
-import { algoliasearch } from "algoliasearch";
 
 type Frontmatter = {
   title?: string;
@@ -61,7 +61,7 @@ async function getArticles(): Promise<Article[]> {
       return {
         objectID: name,
         path: `blog/${name}`,
-        content: String(content.value),
+        content: `${content.value}`,
         ...frontmatter,
       };
     }),

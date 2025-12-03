@@ -1,36 +1,16 @@
 import type { KnipConfig } from "knip";
 
 const config: KnipConfig = {
-  entry: [
-    "src/pages/**/*.{astro,ts}",
-    "src/content/**/*.{md,mdx}",
-    "src/layouts/**/*.astro",
-    "scripts/**/*.mts",
-  ],
-  project: ["src/**/*.{astro,ts,tsx,js,jsx,mjs,mdx}", "scripts/**/*.mts"],
   ignore: [
     "generated/**",
-    // remarked
-    "src/components/blog/Alert.tsx",
-    "src/components/blog/CodeGroup.astro",
-    // Unlisted dependencies
-    "src/content/blog/cjs-esm-reference-chart-of-behavior.mdx",
-    "src/content/blog/create-module-bundler-esm.mdx",
-    "src/content/blog/nodejs-esm.mdx",
     // Unlisted binaries (1)
     // test:vrt:${{ matrix.test-type }}  .github/workflows/ci.yml
     ".github/workflows/ci.yml",
+    ".lighthouserc.cjs",
+    // MDX content files (dynamically imported)
+    "src/content/blog/**/*.mdx",
   ],
-  ignoreDependencies: [
-    "tailwindcss",
-    "@iconify-json/mdi",
-    "@iconify-json/noto",
-    "@fontsource/inter",
-    "@fontsource/zen-kaku-gothic-new",
-  ],
-  astro: {
-    config: ["astro.config.ts"],
-  },
+  ignoreDependencies: ["shiki", "@iconify-json/mdi", "@iconify-json/noto"],
   compilers: {
     mdx: true,
   },

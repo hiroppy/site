@@ -1,5 +1,5 @@
-import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { expect, test } from "@playwright/test";
 import urls from "../testedPaths.cjs";
 
 for (const url of urls) {
@@ -10,8 +10,8 @@ for (const url of urls) {
 
     const accessibilityScanResults = await new AxeBuilder({ page })
       .disableRules(["meta-viewport"])
-      .exclude("pre.astro-code")
-      .exclude("pre.astro-code *")
+      .exclude("pre")
+      .exclude("pre *")
       .analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);
