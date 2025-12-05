@@ -1,16 +1,19 @@
+import { getAllTags } from "../../../../_utils/blogHelpers";
 import { createOgImageResponse } from "../../../../_utils/createOgImageResponse";
 
 export { size, contentType } from "../../../../_utils/createOgImageResponse";
 
-export const runtime = "nodejs";
 export const alt = "Blog Tag";
 
-export default async function Image({
-  params,
-}: {
-  params: Promise<{ tag: string }>;
-}) {
+export async function generateStaticParams() {
+  const allTags = await getAllTags();
+
+  return allTags.map((tag) => ({ tag }));
+}
+
+export default async function Image({ params }: PageProps<"/blog/tags/[tag]">) {
   const { tag } = await params;
+
   return createOgImageResponse(
     `${tag} - Blog`,
     "Blog Tag",

@@ -11,6 +11,7 @@ type Props = {
   className?: string;
   loading?: "lazy" | "eager";
   priority?: boolean;
+  lazy?: boolean;
 };
 
 const variantClasses = {
@@ -38,7 +39,13 @@ const variantSizes = {
   expand: { width: 160, height: 84 },
 };
 
-export function CardImage({ src, alt, variant = "cover", className }: Props) {
+export function CardImage({
+  src,
+  alt,
+  variant = "cover",
+  className,
+  lazy,
+}: Props) {
   const imageClass = cn(variantClasses[variant], className);
   const containerClass = cn(variantContainerClasses[variant], className);
   const { width, height } = variantSizes[variant];
@@ -51,6 +58,7 @@ export function CardImage({ src, alt, variant = "cover", className }: Props) {
         width={width}
         height={height}
         className={imageClass}
+        lazy={lazy}
       />
     );
   }
@@ -58,7 +66,7 @@ export function CardImage({ src, alt, variant = "cover", className }: Props) {
   return (
     <div
       className={cn(
-        "flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200",
+        "flex items-center justify-center bg-linear-to-br from-gray-100 to-gray-200",
         containerClass,
       )}
     >

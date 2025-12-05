@@ -27,7 +27,7 @@ const projects = [
   },
 ];
 
-export default function LabsPage() {
+export default async function LabsPage() {
   return (
     <SectionContainer>
       <Section title="Current Projects" headingLevel="h1">
@@ -52,9 +52,7 @@ export default function LabsPage() {
                     />
                   </div>
                 </div>
-
                 <CardTitle className="mb-3 text-xl">{project.title}</CardTitle>
-
                 <CardDescription className="mb-4 grow">
                   {project.description}
                 </CardDescription>

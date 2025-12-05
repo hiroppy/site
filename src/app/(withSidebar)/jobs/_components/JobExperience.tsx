@@ -1,32 +1,16 @@
 "use client";
 
 import type history from "hiroppy/generated/jobs.json";
+import type { Jobs } from "hiroppy/types";
 import { useState } from "react";
 import { JobSection } from "./JobSection";
 import { JobTimeline } from "./JobTimeline";
 
 type TimelineFilter = "all" | "main" | "side";
 
-export type JobItemWithParsedDescription = {
-  name: string;
-  start: string;
-  end: string | null;
-  position: string;
-  initialState: string;
-  description: string;
-  company: string;
-  links: Array<{
-    title: string;
-    description?: string;
-    image?: string;
-    url: string;
-    name?: string;
-  }>;
-};
-
 type Props = {
-  mainJobs: JobItemWithParsedDescription[];
-  sideJobs: JobItemWithParsedDescription[];
+  mainJobs: Jobs["main"];
+  sideJobs: Jobs["side"];
   meta: typeof history.meta;
 };
 

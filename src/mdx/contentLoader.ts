@@ -1,30 +1,87 @@
 import { slug as slugger } from "github-slugger";
 import matter from "gray-matter";
 import { readFile, readdir } from "node:fs/promises";
-import path from "node:path";
+import { join } from "node:path";
+import { parseTags } from "../app/_utils/blogHelpers";
+import { sortByDate } from "../app/_utils/sortItems";
+import type { Frontmatter, HeadingData, BlogPost } from "./types";
 
-export type HeadingData = {
-  depth: number;
-  slug: string;
-  text: string;
-};
+const contentDirectory = join(process.cwd(), "src/content/blog");
 
-export type BlogPost = {
-  id: string;
-  frontmatter: {
-    title: string;
-    description: string;
-    date: Date;
-    image: string;
-    tags: string;
-    hatenaPath?: string;
-    references?: string[];
+export async function getFrontmatter(id: string) {
+  "use cache";
+
+  const filePath = join(contentDirectory, `${id}.mdx`);
+  const fileContent = await readFile(filePath, "utf8");
+  // TODO
+  const { data, content } = matter(fileContent);
+
+  return {
+    data: {
+      ...data,
+      date: new Date(data.date),
+    } as Frontmatter,
+    content,
   };
-  MDXContent: React.ComponentType;
-  headings: HeadingData[];
-};
+}
 
-const contentDirectory = path.join(process.cwd(), "src/content/blog");
+export async function getAllBlogIds() {
+  "use cache";
+
+  const files = await readdir(contentDirectory);
+  return files
+    .filter((file) => file.endsWith(".mdx"))
+    .map((file) => file.replace(".mdx", ""));
+}
+
+// TODO: 共通化
+export async function getBlogPosts({
+  tag,
+}: {
+  tag?: string;
+} = {}): Promise<Omit<BlogPost, "MDXContent" | "headings">[]> {
+  "use cache";
+
+  try {
+    const ids = await getAllBlogIds();
+    const posts = await Promise.all(
+      ids.map(async (id) => {
+        const { data } = await getFrontmatter(id);
+
+        return {
+          id,
+          frontmatter: data,
+        };
+      }),
+    );
+    const filteredPosts = posts.filter((post) => {
+      if (!tag) return true;
+
+      const postTags = parseTags(post.frontmatter.tags);
+      return postTags.includes(tag);
+    });
+
+    return sortByDate(filteredPosts, (post) => post.frontmatter.date);
+  } catch {
+    return [];
+  }
+}
+
+export async function getBlogPost(id: string): Promise<BlogPost | null> {
+  try {
+    const { data, content } = await getFrontmatter(id);
+    const { default: MDXContent } = await import(`../content/blog/${id}.mdx`);
+
+    return {
+      id,
+      frontmatter: data,
+      MDXContent,
+      headings: extractHeadingsFromContent(content),
+    };
+  } catch {
+    return null;
+  }
+}
 
 function extractHeadingsFromContent(content: string): HeadingData[] {
   // Extract headings from markdown content (h1-h3 only)
@@ -34,69 +91,4 @@ function extractHeadingsFromContent(content: string): HeadingData[] {
     slug: slugger(match[2]),
     text: match[2],
   }));
-}
-
-export async function getBlogPosts(): Promise<
-  Omit<BlogPost, "MDXContent" | "headings">[]
-> {
-  try {
-    const files = await readdir(contentDirectory);
-    const posts = await Promise.all(
-      files
-        .filter((file) => file.endsWith(".mdx"))
-        .map(async (file) => {
-          const id = file.replace(".mdx", "");
-          const filePath = path.join(contentDirectory, file);
-          const fileContent = await readFile(filePath, "utf8");
-
-          // Parse frontmatter with gray-matter
-          const { data } = matter(fileContent);
-
-          return {
-            id,
-            frontmatter: {
-              title: data.title,
-              description: data.description,
-              date: new Date(data.date), // Convert ISO string to Date
-              image: data.image,
-              tags: data.tags,
-              hatenaPath: data.hatenaPath,
-              references: data.references,
-            } as BlogPost["frontmatter"],
-          };
-        }),
-    );
-
-    return posts.sort(
-      (a, b) => b.frontmatter.date.getTime() - a.frontmatter.date.getTime(),
-    );
-  } catch {
-    return [];
-  }
-}
-
-export async function getBlogPost(id: string): Promise<BlogPost | null> {
-  try {
-    const filePath = path.join(contentDirectory, `${id}.mdx`);
-    const fileContent = await readFile(filePath, "utf8");
-    const { data, content } = matter(fileContent);
-    const { default: MDXContent } = await import(`../content/blog/${id}.mdx`);
-
-    return {
-      id,
-      frontmatter: {
-        title: data.title,
-        description: data.description,
-        date: new Date(data.date), // Convert ISO string to Date
-        image: data.image,
-        tags: data.tags,
-        hatenaPath: data.hatenaPath,
-        references: data.references,
-      } as BlogPost["frontmatter"],
-      MDXContent,
-      headings: extractHeadingsFromContent(content),
-    };
-  } catch {
-    return null;
-  }
 }

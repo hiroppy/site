@@ -6,10 +6,11 @@ type Props = {
   to?: number;
   maintainer?: boolean;
   className?: string;
+  currentYear?: number;
 };
 
-export function SkillItem({ title, from, to, className }: Props) {
-  const years = (to || new Date().getFullYear()) - from;
+export function SkillItem({ title, from, to, className, currentYear }: Props) {
+  const years = (to || currentYear || new Date().getFullYear()) - from;
   const isCurrent = !to;
   const experienceTier =
     years >= 8 ? "expert" : years >= 4 ? "intermediate" : "learning";

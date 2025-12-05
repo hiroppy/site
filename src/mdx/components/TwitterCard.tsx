@@ -11,7 +11,6 @@ export function TwitterCard({ id, width, height }: Props) {
 
   return (
     <iframe
-      allowTransparency
       allowFullScreen
       title="Twitter Tweet"
       width={normalizedWidth}

@@ -9,7 +9,7 @@ for (const url of urls) {
     });
 
     const accessibilityScanResults = await new AxeBuilder({ page })
-      .disableRules(["meta-viewport"])
+      .disableRules([])
       .exclude("pre")
       .exclude("pre *")
       .analyze();

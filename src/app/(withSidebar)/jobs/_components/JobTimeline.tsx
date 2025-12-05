@@ -1,4 +1,5 @@
-import history from "hiroppy/generated/jobs.json";
+import jobs from "hiroppy/generated/jobs.json";
+import type { Jobs } from "hiroppy/types";
 import { useState } from "react";
 import { FilterTabs } from "../../../_components/FilterTabs";
 import { cn } from "../../../_utils/cn";
@@ -13,7 +14,6 @@ import { JobTimelineAxis } from "./JobTimelineAxis";
 import { JobTimelineBar } from "./JobTimelineBar";
 
 type TimelineFilter = "all" | "main" | "side";
-type JobMetaData = typeof history.meta;
 
 type CompanyMeta = {
   image: string;
@@ -21,10 +21,10 @@ type CompanyMeta = {
 };
 
 function getCompanyMeta(
-  metadata: JobMetaData,
+  metadata: Jobs["meta"],
   companyKey: string,
 ): CompanyMeta {
-  const companyMeta = metadata[companyKey as keyof JobMetaData];
+  const companyMeta = metadata[companyKey as keyof Jobs["meta"]];
   if (!companyMeta || typeof companyMeta !== "object") {
     throw new Error(`Company metadata not found for: ${companyKey}`);
   }
@@ -32,8 +32,8 @@ function getCompanyMeta(
 }
 
 const allJobs: TimelineJob[] = [
-  ...history.main.map((job, i) => {
-    const meta = getCompanyMeta(history.meta, job.company);
+  ...jobs.main.map((job, i) => {
+    const meta = getCompanyMeta(jobs.meta, job.company);
     return {
       id: `main-${i}`,
       name: job.name,
@@ -51,8 +51,8 @@ const allJobs: TimelineJob[] = [
       isActive: job.end === null,
     };
   }),
-  ...history.side.map((job, i) => {
-    const meta = getCompanyMeta(history.meta, job.company);
+  ...jobs.side.map((job, i) => {
+    const meta = getCompanyMeta(jobs.meta, job.company);
     return {
       id: `side-${i}`,
       name: job.name,
@@ -78,7 +78,7 @@ const timeMarkers = generateTimeMarkers(dateRange.start, dateRange.end);
 const filterTabs = [
   { value: "all" as const, label: "All" },
   { value: "main" as const, label: "Main" },
-  { value: "side" as const, label: "Sub" },
+  { value: "side" as const, label: "Side" },
 ];
 
 const sortJobs = (jobs: TimelineJob[]) => {
@@ -187,7 +187,9 @@ export function JobTimeline({
       />
 
       {timelineViews.map(({ key, jobs, height }) => {
-        if (key !== activeFilter) return null;
+        if (key !== activeFilter) {
+          return null;
+        }
 
         return (
           <div key={key} data-timeline-view={key}>
@@ -208,9 +210,7 @@ export function JobTimeline({
                     key={index}
                     className={cn(
                       "absolute top-0 h-full w-px",
-                      marker.isMajor
-                        ? "bg-line"
-                        : "bg-[rgb(224_224_224_/_0.5)]",
+                      marker.isMajor ? "bg-line" : "bg-[rgb(224_224_224/0.5)]",
                     )}
                     style={{ left: `${marker.position}%` }}
                   />

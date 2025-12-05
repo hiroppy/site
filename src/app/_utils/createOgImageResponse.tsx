@@ -1,36 +1,12 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 import { OgBaseTemplate, OgTitleSection } from "../_components/OgTemplate";
-import { BLOG_SITE_TITLE, SITE_TITLE } from "./constants";
+import { BLOG_SITE_TITLE, SITE_TITLE } from "../_constants";
 
 export const size = {
   width: 1200,
   height: 630,
 };
-
 export const contentType = "image/png";
-
-async function loadAssets() {
-  if (process.env.NODE_ENV !== "development") {
-    const [font, iconData] = await Promise.all([
-      readFile(join(process.cwd(), "public/fonts/NotoSansJP-SemiBold.ttf")),
-      readFile(join(process.cwd(), "public/images/meta/me.png")),
-    ]);
-
-    return {
-      font,
-      iconBase64: iconData.toString("base64"),
-    };
-  }
-
-  return {
-    font: null,
-    iconBase64: null,
-  };
-}
-
-const { font, iconBase64 } = await loadAssets();
 
 export async function createOgImageResponse(
   title: string,
@@ -41,14 +17,12 @@ export async function createOgImageResponse(
   try {
     const template = tags ? (
       <OgBaseTemplate
-        iconBase64={iconBase64!}
         headerText={BLOG_SITE_TITLE}
         titleContent={<OgTitleSection title={title} tags={tags} />}
         pageType="Blog Post"
       />
     ) : (
       <OgBaseTemplate
-        iconBase64={iconBase64!}
         headerText={SITE_TITLE}
         titleContent={
           <OgTitleSection title={title} description={description} />
@@ -62,7 +36,7 @@ export async function createOgImageResponse(
       fonts: [
         {
           name: "NotoSansJP",
-          data: font as Buffer,
+          data: await loadGoogleFont("Noto+Sans+JP"),
           style: "normal",
         },
       ],
@@ -85,4 +59,24 @@ export async function createOgImageResponse(
       size,
     );
   }
+}
+
+async function loadGoogleFont(font: string) {
+  "use cache";
+
+  const url = `https://fonts.googleapis.com/css2?family=${font}`;
+  const css = await (await fetch(url)).text();
+  const resource = css.match(
+    /src: url\((.+)\) format\('(opentype|truetype)'\)/,
+  );
+
+  if (resource) {
+    const response = await fetch(resource[1]);
+
+    if (response.status == 200) {
+      return await response.arrayBuffer();
+    }
+  }
+
+  throw new Error("failed to load font data");
 }

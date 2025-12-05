@@ -2,7 +2,7 @@
   "ogTitle": "404 | hiroppy's site",
   "ogDescription": "Page not found",
   "ogImage": null,
-  "ogUrl": "https://hiroppy.me/not-found",
+  "ogUrl": "http://localhost:3000/not-found",
   "ogType": "website",
   "twitterCard": "summary_large_image",
   "twitterTitle": "404 | hiroppy's site",
@@ -11,5 +11,5 @@
   "twitterCreator": "@about_hiroppy",
   "title": "404 | hiroppy's site",
   "description": "Page not found",
-  "canonical": "https://hiroppy.me/not-found"
+  "canonical": "http://localhost:3000/not-found"
 }

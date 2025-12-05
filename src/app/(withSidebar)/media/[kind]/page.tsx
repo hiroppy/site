@@ -1,85 +1,42 @@
 "use cache";
 
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { FilterTabs } from "../../../_components/FilterTabs";
-import { ListContainer } from "../../../_components/ListContainer";
-import { MediaListItem } from "../../../_components/MediaListItem";
+import { MediaList } from "../../../_components/MediaListItem";
 import { Section } from "../../../_components/Section";
 import { createMetadata } from "../../../_utils/metadata";
-import { getData } from "../_utils/data";
-import {
-  getKindDescription,
-  getKindLabel,
-  getKindPath,
-} from "../_utils/labels";
-import { type MediaType, VALID_KINDS } from "../_utils/types";
+import { KINDS, TITLE } from "./_constants";
+import { getData } from "./_utils/data";
+import { getKind } from "./_utils/getKind";
+import { getMetadata } from "./_utils/getMetadata";
 
 export async function generateStaticParams() {
-  return VALID_KINDS.map((kind) => ({ kind }));
+  return KINDS.map((kind) => ({ kind }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps<"/media/[kind]">): Promise<Metadata> {
-  const { kind } = await params;
+  const { kind: k } = await params;
+  const kind = getKind(k);
 
-  if (!VALID_KINDS.includes(kind as MediaType)) {
-    return createMetadata({
-      path: "/media",
-      title: "Media & Activities",
-      description: getKindDescription(undefined),
-    });
-  }
-
-  const kindStr = kind as MediaType;
-
-  return createMetadata({
-    path: `/media/${kindStr}`,
-    title: `Media & Activities / ${getKindLabel(kindStr)}`,
-    description: getKindDescription(kindStr),
-  });
+  return createMetadata(getMetadata(kind));
 }
 
-export default async function MediaKindPage({
-  params,
-}: PageProps<"/media/[kind]">) {
-  const { kind } = await params;
-
-  if (!VALID_KINDS.includes(kind as MediaType)) {
-    notFound();
-  }
-
-  const kindStr = kind as MediaType;
-  const items = getData(kindStr);
-
-  const filterTabs = [undefined, ...VALID_KINDS].map((filterKind) => ({
-    value: filterKind as MediaType | undefined,
-    label: getKindLabel(filterKind as MediaType | undefined),
-    href: getKindPath(filterKind as MediaType | undefined),
+export default async function Page({ params }: PageProps<"/media/[kind]">) {
+  const { kind: k } = await params;
+  const kind = getKind(k);
+  const items = await getData(kind);
+  const filterTabs = KINDS.map((filterKind) => ({
+    value: filterKind,
+    label: `${filterKind.slice(0, 1).toUpperCase()}${filterKind.slice(1).toLowerCase()}`,
+    href: getMetadata(filterKind).path,
   }));
 
   return (
-    <Section title="Media & Activities" headingLevel="h1">
-      <FilterTabs tabs={filterTabs} activeValue={kindStr} className="mb-8" />
-
-      {items.length > 0 ? (
-        <ListContainer>
-          {items.map(({ title, url, publishedAt, category }) => (
-            <MediaListItem
-              key={url}
-              title={title}
-              url={url}
-              publishedAt={publishedAt}
-              category={category}
-            />
-          ))}
-        </ListContainer>
-      ) : (
-        <p className="text-text-sub py-12 text-center text-lg">
-          該当するメディアが見つかりませんでした
-        </p>
-      )}
+    <Section title={TITLE} headingLevel="h1">
+      <FilterTabs tabs={filterTabs} activeValue={kind} className="mb-8" />
+      <MediaList items={items} />
     </Section>
   );
 }

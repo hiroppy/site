@@ -44,10 +44,10 @@
   --text-2xl: 1.2rem;
   --text-2xl--line-height: calc(2 / 1.2);
 
-  --font-family-body:
+  /* --font-family-body:
     var(--font-zen-kaku-gothic-new), var(--font-inter), system-ui, Arial,
     Helvetica, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo",
-    sans-serif;
+    sans-serif; */
 }
 
 @layer utilities {
@@ -219,38 +219,5 @@
 
   #search-results .search-result-item:hover > a {
     color: var(--color-link);
-  }
-
-  /* View Transitions */
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation-duration: 0.3s;
-    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  ::view-transition-old(root) {
-    animation-name: fade-out;
-  }
-
-  ::view-transition-new(root) {
-    animation-name: fade-in;
-  }
-
-  @keyframes fade-out {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
   }
 }

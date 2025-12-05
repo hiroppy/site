@@ -1,15 +1,15 @@
 {
   "ogTitle": "hiroppy - Web Engineer | hiroppy's site",
   "ogDescription": "Web Engineer in Tokyo. Likes Open Source, Sauna, and Games.",
-  "ogImage": "https://hiroppy.me/opengraph-image-3d7daz?11f498d998e03991",
-  "ogUrl": "https://hiroppy.me",
+  "ogImage": "http://localhost:3000/opengraph-image-3d7daz?19c31e90a66fc55c",
+  "ogUrl": "http://localhost:3000",
   "ogType": "website",
   "twitterCard": "summary_large_image",
   "twitterTitle": "hiroppy - Web Engineer | hiroppy's site",
   "twitterDescription": "Web Engineer in Tokyo. Likes Open Source, Sauna, and Games.",
-  "twitterImage": "https://hiroppy.me/opengraph-image-3d7daz?11f498d998e03991",
+  "twitterImage": "http://localhost:3000/opengraph-image-3d7daz?19c31e90a66fc55c",
   "twitterCreator": "@about_hiroppy",
   "title": "hiroppy - Web Engineer | hiroppy's site",
   "description": "Web Engineer in Tokyo. Likes Open Source, Sauna, and Games.",
-  "canonical": "https://hiroppy.me"
+  "canonical": "http://localhost:3000"
 }

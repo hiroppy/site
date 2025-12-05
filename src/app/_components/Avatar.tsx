@@ -6,9 +6,10 @@ type Props = {
   alt: string;
   className?: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
+  lazy?: boolean;
 };
 
-export function Avatar({ src, alt, className, size = "md" }: Props) {
+export function Avatar({ src, alt, className, size = "md", lazy }: Props) {
   const sizeMap = {
     xs: 24,
     sm: 32,
@@ -35,6 +36,7 @@ export function Avatar({ src, alt, className, size = "md" }: Props) {
         className="h-full w-full object-cover"
         width={sizeMap[size]}
         height={sizeMap[size]}
+        lazy={lazy}
       />
     </span>
   );

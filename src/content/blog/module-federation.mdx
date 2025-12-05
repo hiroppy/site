@@ -108,20 +108,22 @@ module.exports = {
 ```
 
 <br />
-```javascript // src/index.js import React from "react";
+
+```javascript
+// src/index.js
+import React from "react";
 
 const Page1 = () => <h1>This is Page1</h1>;
 
 export default Page1; // React.lazyはdefault exportsのみ許容
 ```
+
 <br />
+
 ```
-              Asset       Size
-             579.js   7.27 KiB  [emitted]
- 579.js.LICENSE.txt  295 bytes  [emitted]
-            main.js   7.68 KiB  [emitted]            [name: main]
-main.js.LICENSE.txt  295 bytes  [compared for emit]
-page1RemoteEntry.js   2.09 KiB  [emitted]            [name: page1]
+Asset Size 579.js 7.27 KiB [emitted] 579.js.LICENSE.txt 295 bytes [emitted]
+main.js 7.68 KiB [emitted] [name: main] main.js.LICENSE.txt 295 bytes [compared
+for emit] page1RemoteEntry.js 2.09 KiB [emitted] [name: page1]
 ```
 
 ### ローカル
@@ -146,7 +148,10 @@ module.exports = {
 ```
 
 <br />
-```javascript // src/index.js import React, {(lazy, Suspense)} from "react";
+
+```javascript
+// src/index.js
+import React, {(lazy, Suspense)} from "react";
 import {render} from "react-dom";
 
 // page1/page(remote)をdynamic import
@@ -163,8 +168,10 @@ const Wrapper = () => (
 
 render(<Wrapper />, document.getElementById("root"));
 
-````
+```
+
 <br />
+
 ```html
 <!-- index.html -->
 <!doctype html>
@@ -178,11 +185,14 @@ render(<Wrapper />, document.getElementById("root"));
     <script src="http://localhost:8081/page1RemoteEntry.js"></script>
   </body>
 </html>
-````
+```
 
 <br />
-``` Asset Size index.html 194 bytes [compared for emit] main.js 128 KiB
-[emitted] [name: main] main.js.LICENSE.txt 790 bytes [compared for emit] ```
+
+```
+Asset Size index.html 194 bytes [compared for emit] main.js 128 KiB
+[emitted] [name: main] main.js.LICENSE.txt 790 bytes [compared for emit]
+```
 
 このように、`import('<scope>/<request>')`という形でローカル側は取り込みます。
 

@@ -1,15 +1,15 @@
 {
-  "ogTitle": "Media & Activities / Talk | hiroppy's site",
+  "ogTitle": "Media & Activities / Talks | hiroppy's site",
   "ogDescription": "カンファレンスやイベントでの登壇活動",
-  "ogImage": "https://hiroppy.me/media/talks/opengraph-image-u63fef?eba3666afdbca674",
-  "ogUrl": "https://hiroppy.me/media/talks",
+  "ogImage": "http://localhost:3000/media/talks/opengraph-image-u63fef?f07b35b845ae9c2f",
+  "ogUrl": "http://localhost:3000/media/talks",
   "ogType": "website",
   "twitterCard": "summary_large_image",
-  "twitterTitle": "Media & Activities / Talk | hiroppy's site",
+  "twitterTitle": "Media & Activities / Talks | hiroppy's site",
   "twitterDescription": "カンファレンスやイベントでの登壇活動",
-  "twitterImage": "https://hiroppy.me/media/talks/opengraph-image-u63fef?eba3666afdbca674",
+  "twitterImage": "http://localhost:3000/media/talks/opengraph-image-u63fef?f07b35b845ae9c2f",
   "twitterCreator": "@about_hiroppy",
-  "title": "Media & Activities / Talk | hiroppy's site",
+  "title": "Media & Activities / Talks | hiroppy's site",
   "description": "カンファレンスやイベントでの登壇活動",
-  "canonical": "https://hiroppy.me/media/talks"
+  "canonical": "http://localhost:3000/media/talks"
 }

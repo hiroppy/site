@@ -14,6 +14,7 @@ type SkillItemType = {
 };
 
 type SkillsSectionProps = {
+  currentYear: number;
   sections: {
     title: string;
     items: SkillItemType[];
@@ -21,7 +22,7 @@ type SkillsSectionProps = {
   }[];
 };
 
-export function SkillsSection({ sections }: SkillsSectionProps) {
+export function SkillsSection({ currentYear, sections }: SkillsSectionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const totalHiddenItems = sections.reduce(
@@ -51,6 +52,7 @@ export function SkillsSection({ sections }: SkillsSectionProps) {
                         from={from}
                         to={to}
                         maintainer={maintainer}
+                        currentYear={currentYear}
                       />
                     ),
                   )}
@@ -77,6 +79,7 @@ export function SkillsSection({ sections }: SkillsSectionProps) {
             title={title}
             items={items}
             previewCount={previewCount}
+            currentYear={currentYear}
           />
         ))}
       </div>
@@ -88,10 +91,12 @@ function IndividualSection({
   title,
   items,
   previewCount,
+  currentYear,
 }: {
   title: string;
   items: SkillItemType[];
   previewCount: number;
+  currentYear: number;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const hasMore = items.length > previewCount;
@@ -108,6 +113,7 @@ function IndividualSection({
             from={from}
             to={to}
             maintainer={maintainer}
+            currentYear={currentYear}
           />
         ))}
       </ListContainer>

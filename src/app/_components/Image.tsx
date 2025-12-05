@@ -8,14 +8,11 @@ type Props = {
   alt: string;
   className?: string;
   lazy?: boolean;
-  width?: number;
-  height?: number;
+  width: number;
+  height: number;
   fetchPriority?: NextImageProps["fetchPriority"];
   fill?: boolean;
 };
-
-const DEFAULT_WIDTH = 800;
-const DEFAULT_HEIGHT = 600;
 
 export function Image({
   src,
@@ -49,11 +46,10 @@ export function Image({
         src={src}
         alt={alt}
         className={className}
-        width={width ?? DEFAULT_WIDTH}
-        height={height ?? DEFAULT_HEIGHT}
+        width={width}
+        height={height}
         loading={loading}
         priority={priority}
-        unoptimized={true}
       />
     );
   }
@@ -72,11 +68,5 @@ export function Image({
     return <NextImage {...commonProps} fill />;
   }
 
-  return (
-    <NextImage
-      {...commonProps}
-      width={width ?? DEFAULT_WIDTH}
-      height={height ?? DEFAULT_HEIGHT}
-    />
-  );
+  return <NextImage {...commonProps} width={width} height={height} />;
 }

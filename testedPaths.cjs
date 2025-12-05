@@ -5,7 +5,7 @@ const urls = [
   "http://localhost:3000/about",
   "http://localhost:3000/jobs",
   "http://localhost:3000/blog/tags/site",
-  "http://localhost:3000/blog/vrt",
+  "http://localhost:3000/blog/posts/vrt",
   "http://localhost:3000/media/articles",
   "http://localhost:3000/labs",
 ];

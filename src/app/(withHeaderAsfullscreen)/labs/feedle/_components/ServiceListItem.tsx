@@ -1,3 +1,5 @@
+"use client";
+
 import { Icon } from "../../../../_components/Icon";
 import { Link } from "../../../../_components/Link";
 import { cn } from "../../../../_utils/cn";

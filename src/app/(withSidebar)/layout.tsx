@@ -1,18 +1,18 @@
+"use cache";
+
 import { Footer } from "../_components/Footer";
 import { Header } from "../_components/Header";
-import { Sidebar } from "../_components/Sidebar";
+import { Sidebar } from "./_components/Sidebar";
 
-export default function WithSidebarLayout({ children }: LayoutProps<"/">) {
+export default async function Layout({ children }: LayoutProps<"/">) {
   return (
     <>
-      <div className="mobile-header md:hidden">
-        <Header />
-      </div>
-      <div className="mx-auto flex min-h-screen max-w-[1000px] flex-col px-6 py-10 md:flex-row md:gap-20 md:pt-20">
-        <div className="hidden md:block">
+      <Header className="mobile-header lg:hidden" />
+      <div className="mx-auto flex min-h-screen max-w-[1000px] flex-col px-6 py-10 lg:flex-row lg:gap-20 lg:pt-20">
+        <div className="hidden lg:block">
           <Sidebar />
         </div>
-        <main className="flex grow flex-col" style={{ maxWidth: "600px" }}>
+        <main className="flex grow flex-col max-w-[600px] m-auto w-full">
           <div className="grow">{children}</div>
           <Footer />
         </main>

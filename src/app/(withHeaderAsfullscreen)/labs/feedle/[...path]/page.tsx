@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import { TwoPaneLayout } from "../../../../_components/TwoPaneLayout";
 import { createMetadata } from "../../../../_utils/metadata";
 import { ArticleModal } from "../_components/ArticleModal";
@@ -9,9 +10,6 @@ import { RSSFeedButtons } from "../_components/RSSFeedButtons";
 import { ServiceInfoHeader } from "../_components/ServiceInfoHeader";
 import { BASE_PATH, generatePageTitle } from "../_utils/feedle/feedleConfig";
 import { getFeedleData } from "../_utils/feedle/feedleData";
-
-export const dynamic = "force-dynamic";
-export const revalidate = 300; // 5 min cache
 
 export async function generateMetadata({
   params,
@@ -69,7 +67,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function FeedlePage({
+async function Content({
   params,
   searchParams,
 }: PageProps<"/labs/feedle/[...path]">) {
@@ -136,5 +134,16 @@ export default async function FeedlePage({
       />
       <ArticleModal />
     </>
+  );
+}
+
+export default async function Page({
+  params,
+  searchParams,
+}: PageProps<"/labs/feedle/[...path]">) {
+  return (
+    <Suspense>
+      <Content params={params} searchParams={searchParams} />
+    </Suspense>
   );
 }

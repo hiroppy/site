@@ -2,8 +2,8 @@
 
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { NAV_ITEMS, type NavItem } from "../_constants";
 import { cn } from "../_utils/cn";
-import { NAV_ITEMS, type NavItem } from "../_utils/constants";
 import { Avatar } from "./Avatar";
 import { ContactButton } from "./ContactButton";
 import { Icon } from "./Icon";
@@ -12,9 +12,10 @@ import { NavButton } from "./NavButton";
 
 type Props = {
   variant?: "default" | "fullscreen";
+  className?: string;
 };
 
-export function Header({ variant = "default" }: Props) {
+export function Header({ variant = "default", className }: Props) {
   const currentPath = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isFullscreenPage = variant === "fullscreen";
@@ -35,7 +36,12 @@ export function Header({ variant = "default" }: Props) {
   };
 
   return (
-    <header className="border-line bg-bg/80 sticky top-0 z-50 w-full border-b backdrop-blur-md">
+    <header
+      className={cn(
+        "border-line bg-bg/80 sticky top-0 z-50 w-full border-b backdrop-blur-md",
+        className,
+      )}
+    >
       <div
         className={cn("mx-auto px-6 py-4", isFullscreenPage ? "" : "container")}
       >
@@ -72,13 +78,11 @@ export function Header({ variant = "default" }: Props) {
             <ContactButton className="hidden md:flex" />
           </div>
         </div>
-        {/* Mobile menu */}
         <nav
           className={cn("md:hidden", !isMobileMenuOpen && "hidden")}
           aria-label="モバイルナビゲーション"
         >
           <div className="px-2 pt-6 pb-3">
-            {/* Horizontal Scrollable Navigation */}
             <div className="scrollbar-hide mb-4 overflow-x-auto">
               <div className="flex space-x-2 pb-2">
                 {NAV_ITEMS.map((item) => (

@@ -15,6 +15,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NEXT_PUBLIC_SITE_URL: http://localhost:3000
   NEXT_PUBLIC_ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
   NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_KEY: ${{ secrets.ALGOLIA_SEARCH_ONLY_KEY }}
 
@@ -37,7 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-node
-      - run: pnpm build:local
+      - run: pnpm build
       - run: pnpm lh --upload.target=temporary-public-storage
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
@@ -48,7 +49,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-node
-      - run: pnpm build:local
+      - run: pnpm build
       - run: pnpm test:a11y
       - uses: actions/upload-artifact@v5
         if: failure()
@@ -61,14 +62,13 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.57.0
     strategy:
       matrix:
-        test-type: [pages, components]
+        type: [pages, components]
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-node
-      - run: pnpm build:local
-      - run: pnpm test:vrt:ci:${{ matrix.test-type }}
+      - run: pnpm build
+      - run: pnpm test:vrt:ci:${{ matrix.type }}
       - uses: actions/upload-artifact@v5
-        if: failure()
         with:
-          name: vrt-${{ matrix.test-type }}-test-results
+          name: vrt-${{ matrix.type }}-test-results
           path: test-results/

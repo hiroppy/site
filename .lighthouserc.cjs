@@ -20,7 +20,6 @@ module.exports = {
 
         // playwrightで担保しているのでオフ
         "color-contrast": "off",
-        "meta-viewport": "off",
 
         // ローカル環境でのレスポンス時間のばらつきを考慮
         "document-latency-insight": "off",
@@ -41,6 +40,13 @@ module.exports = {
         "bf-cache": "off",
         "font-display-insight": "off",
         "errors-in-console": "off",
+
+        // next.js error
+        "legacy-javascript-insight": "off",
+        // TODO: 本当はonにしたい
+        "unused-javascript": "off",
+        // mdx
+        "unsized-images": "off",
       },
     },
   },

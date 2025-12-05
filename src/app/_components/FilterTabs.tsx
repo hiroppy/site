@@ -33,6 +33,7 @@ export function FilterTabs<T = string>({
               ? "bg-accent text-bg font-medium"
               : "text-text-sub border-line border bg-transparent",
           );
+
           return (
             <li key={`${tab.value}`}>
               {tab.href ? (

@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
 const OG_COLORS = {
   brand: "#996300",
   brandBorder: "rgba(153, 99, 0, 0.3)",
@@ -39,10 +42,16 @@ const OG_SPACING = {
   footerFlexGap: 2,
 } as const;
 
-function OgAvatar({ iconBase64, size }: { iconBase64: string; size: number }) {
+function OgAvatar({ size }: { size: number }) {
+  // TODO: move to async layer
+  const me = readFileSync(
+    join(process.cwd(), "public/images/meta/me.png"),
+    "base64",
+  );
+
   return (
     <img
-      src={`data:image/png;base64,${iconBase64}`}
+      src={`data:image/png;base64,${me}`}
       width={size}
       height={size}
       style={{
@@ -76,8 +85,8 @@ function OgBackgroundDecorations() {
       height: 800,
       color: OG_COLORS.brandBgAccent3,
       gradient: 60,
-      transform: "translate(-50%, -50%)",
-      position: { top: "50%", left: "50%" },
+      transform: "translate(-400px, -400px)",
+      position: { top: 315, left: 600 },
     },
   ];
 
@@ -101,13 +110,7 @@ function OgBackgroundDecorations() {
   );
 }
 
-function OgHeader({
-  iconBase64,
-  headerText,
-}: {
-  iconBase64: string;
-  headerText: string;
-}) {
+function OgHeader({ headerText }: { headerText: string }) {
   return (
     <div
       style={{
@@ -117,7 +120,7 @@ function OgHeader({
         marginBottom: OG_SPACING.headerMarginBottom,
       }}
     >
-      <OgAvatar iconBase64={iconBase64} size={48} />
+      <OgAvatar size={48} />
       <span
         style={{
           fontSize: `${OG_FONTS.headerSize}px`,
@@ -131,13 +134,7 @@ function OgHeader({
   );
 }
 
-function OgFooter({
-  iconBase64,
-  pageType,
-}: {
-  iconBase64: string;
-  pageType: string;
-}) {
+function OgFooter({ pageType }: { pageType: string }) {
   return (
     <div
       style={{
@@ -155,7 +152,7 @@ function OgFooter({
           gap: OG_SPACING.footerGap,
         }}
       >
-        <OgAvatar iconBase64={iconBase64} size={OG_SPACING.footerImageSize} />
+        <OgAvatar size={OG_SPACING.footerImageSize} />
         <div
           style={{
             display: "flex",
@@ -276,12 +273,10 @@ export function OgTitleSection({
 }
 
 export function OgBaseTemplate({
-  iconBase64,
   headerText,
   titleContent,
   pageType,
 }: {
-  iconBase64: string;
   headerText: string;
   titleContent: React.ReactNode;
   pageType: string;
@@ -308,9 +303,9 @@ export function OgBaseTemplate({
           position: "relative",
         }}
       >
-        <OgHeader iconBase64={iconBase64} headerText={headerText} />
+        <OgHeader headerText={headerText} />
         {titleContent}
-        <OgFooter iconBase64={iconBase64} pageType={pageType} />
+        <OgFooter pageType={pageType} />
       </div>
     </div>
   );

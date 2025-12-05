@@ -1,15 +1,15 @@
 {
   "ogTitle": "Skills & Work Experience | hiroppy's site",
   "ogDescription": "技術スキル、職務経歴、プロジェクト履歴",
-  "ogImage": "https://hiroppy.me/jobs/opengraph-image-xthxqw?730fb2e3582ae412",
-  "ogUrl": "https://hiroppy.me/jobs",
+  "ogImage": "http://localhost:3000/jobs/opengraph-image-xthxqw?7f74a69687e8c282",
+  "ogUrl": "http://localhost:3000/jobs",
   "ogType": "website",
   "twitterCard": "summary_large_image",
   "twitterTitle": "Skills & Work Experience | hiroppy's site",
   "twitterDescription": "技術スキル、職務経歴、プロジェクト履歴",
-  "twitterImage": "https://hiroppy.me/jobs/opengraph-image-xthxqw?730fb2e3582ae412",
+  "twitterImage": "http://localhost:3000/jobs/opengraph-image-xthxqw?7f74a69687e8c282",
   "twitterCreator": "@about_hiroppy",
   "title": "Skills & Work Experience | hiroppy's site",
   "description": "技術スキル、職務経歴、プロジェクト履歴",
-  "canonical": "https://hiroppy.me/jobs"
+  "canonical": "http://localhost:3000/jobs"
 }

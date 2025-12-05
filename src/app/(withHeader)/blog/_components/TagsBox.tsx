@@ -1,13 +1,17 @@
+"use cache";
+
 import { Card } from "../../../_components/Card";
 import { Icon } from "../../../_components/Icon";
+import { getAllTags } from "../../../_utils/blogHelpers";
 import { BlogTag } from "./BlogTag";
 
 type Props = {
-  tags: string[];
   currentTag?: string;
 };
 
-export function TagsBox({ tags, currentTag }: Props) {
+export async function TagsBox({ currentTag }: Props) {
+  const allTags = await getAllTags();
+
   return (
     <Card>
       <div className="p-4">
@@ -17,7 +21,7 @@ export function TagsBox({ tags, currentTag }: Props) {
         </p>
         <div className="scrollbar-hide mt-4 overflow-x-auto md:overflow-visible">
           <div className="flex gap-2 pb-2 md:flex-wrap">
-            {tags.map((tag) => (
+            {allTags.map((tag) => (
               <BlogTag
                 key={tag}
                 tag={tag}

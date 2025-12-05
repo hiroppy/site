@@ -1,15 +1,15 @@
 {
   "ogTitle": "Feedle - Frontend",
   "ogDescription": "Tech article aggregation platform",
-  "ogImage": "https://hiroppy.me/labs/feedle/frontend/og.png",
-  "ogUrl": "https://hiroppy.me/labs/feedle/frontend",
+  "ogImage": "http://localhost:3000/labs/feedle/frontend/og.png",
+  "ogUrl": "http://localhost:3000/labs/feedle/frontend",
   "ogType": "website",
   "twitterCard": "summary_large_image",
   "twitterTitle": "Feedle - Frontend",
   "twitterDescription": "Tech article aggregation platform",
-  "twitterImage": "https://hiroppy.me/labs/feedle/frontend/og.png",
+  "twitterImage": "http://localhost:3000/labs/feedle/frontend/og.png",
   "twitterCreator": "@about_hiroppy",
   "title": "Feedle - Frontend | hiroppy's site",
   "description": "Tech article aggregation platform",
-  "canonical": "https://hiroppy.me/labs/feedle/frontend"
+  "canonical": "http://localhost:3000/labs/feedle/frontend"
 }

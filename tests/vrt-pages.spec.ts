@@ -19,11 +19,11 @@ interface MetadataSnapshot {
 
 const urls = [...testedUrls, "http://localhost:3000/blog/404"];
 const ogTestedUrls = [
-  "http://localhost:3000/labs",
-  "http://localhost:3000/media",
+  "http://localhost:3000/media/all",
   "http://localhost:3000/media/talks",
   "http://localhost:3000/media/podcasts",
   "http://localhost:3000/blog/tags/site",
+  "http://localhost:3000/labs",
   "http://localhost:3000/labs/feedle",
   "http://localhost:3000/labs/feedle/frontend",
 ];
@@ -126,12 +126,7 @@ async function extractMetaTags(page: Page): Promise<MetadataSnapshot> {
 }
 
 async function validateOgImage(page: Page, url: string, ogImageUrl: string) {
-  let ogImagePath = ogImageUrl;
-  if (ogImagePath.startsWith("https://")) {
-    ogImagePath = ogImagePath.replace("https://hiroppy.me", "");
-  }
-
-  const ogImageFullUrl = `http://localhost:3000${ogImagePath}`;
+  const ogImageFullUrl = ogImageUrl;
   const ogResponse = await page.context().request.get(ogImageFullUrl);
 
   if (ogResponse.status() === 200) {

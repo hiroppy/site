@@ -3,10 +3,10 @@
 ## Commands
 
 - **Setup**: `pnpm setup` (git hooks and corepack setup)
-- **Build/Run**: `pnpm build`, `pnpm build:local` (test build), `pnpm dev`, `pnpm start`
+- **Build/Run**: `pnpm build`, `pnpm dev`, `pnpm start`
 - **Lint/Format**: `pnpm fmt` (prettier), `pnpm fmt:check`, `pnpm lint` (knip dependency analysis)
 - **Test**:
-  - **Prerequisites**: Run `pnpm build:local` before running tests
+  - **Prerequisites**: Run `pnpm build` before running tests
   - **Unit**: `pnpm test` (vitest), `pnpm test:watch` (vitest watch mode)
   - **A11y**: `pnpm test:a11y` (playwright axe-core)
   - **VRT**: `pnpm test:vrt:update` (update snapshots via Docker), `pnpm test:vrt:ci` (run VRT tests), `pnpm test:vrt:ci:update` (update snapshots in CI)

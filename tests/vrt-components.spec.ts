@@ -72,7 +72,7 @@ test.describe("Component VRT Tests", () => {
 
     // Find the desktop layout (md:block) and click the related articles button
     const relatedArticlesButton = mercariMainCard
-      .locator(".hidden.md\\:block details summary")
+      .locator("details")
       .filter({ hasText: "関連記事" });
 
     await relatedArticlesButton.click();

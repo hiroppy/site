@@ -1,3 +1,5 @@
+"use client";
+
 import { Link } from "../../../../_components/Link";
 import type { ServiceGroup } from "../_utils/feedle/articlesApi";
 import { ServiceIcon } from "./ServiceIcon";

@@ -1,3 +1,5 @@
+"use cache";
+
 import meta from "hiroppy/generated/meta.json";
 import type { MetadataRoute } from "next";
 import { getBlogPosts } from "../mdx/contentLoader";
@@ -11,19 +13,18 @@ async function getBlogPostEntries(): Promise<MetadataRoute.Sitemap> {
   return posts.map((post) => ({
     url: `${baseDomain}blog/${post.id}`,
     lastModified: post.frontmatter.date,
-    changeFrequency: "never" as const,
-    priority: 0.6,
+    changeFrequency: "monthly",
+    priority: 0.8,
   }));
 }
 
 async function getTagEntries(): Promise<MetadataRoute.Sitemap> {
-  const posts = await getBlogPosts();
-  const allTags = getAllTags(posts);
+  const allTags = await getAllTags();
 
   return allTags.map((tag) => ({
     url: `${baseDomain}blog/tags/${tag}`,
     lastModified: new Date(),
-    changeFrequency: "monthly" as const,
+    changeFrequency: "monthly",
     priority: 0.5,
   }));
 }
@@ -33,25 +34,25 @@ function getMediaEntries(): MetadataRoute.Sitemap {
     {
       url: `${baseDomain}media`,
       lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.5,
+      changeFrequency: "monthly",
+      priority: 0.7,
     },
     {
       url: `${baseDomain}media/articles`,
       lastModified: new Date(),
-      changeFrequency: "monthly" as const,
+      changeFrequency: "monthly",
       priority: 0.5,
     },
     {
       url: `${baseDomain}media/talks`,
       lastModified: new Date(),
-      changeFrequency: "monthly" as const,
+      changeFrequency: "monthly",
       priority: 0.5,
     },
     {
       url: `${baseDomain}media/podcasts`,
       lastModified: new Date(),
-      changeFrequency: "monthly" as const,
+      changeFrequency: "monthly",
       priority: 0.5,
     },
   ];
@@ -62,54 +63,46 @@ function getStaticPageEntries(): MetadataRoute.Sitemap {
     {
       url: baseDomain,
       lastModified: new Date(),
-      changeFrequency: "yearly" as const,
+      changeFrequency: "monthly",
       priority: 1.0,
     },
     {
       url: `${baseDomain}about`,
       lastModified: new Date(),
-      changeFrequency: "monthly" as const,
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseDomain}jobs`,
       lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
+      changeFrequency: "monthly",
+      priority: 1.0,
     },
     {
       url: `${baseDomain}blog`,
       lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.7,
+      changeFrequency: "monthly",
+      priority: 1.0,
     },
     {
       url: `${baseDomain}labs`,
       lastModified: new Date(),
-      changeFrequency: "monthly" as const,
+      changeFrequency: "yearly",
       priority: 0.5,
     },
   ];
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  try {
-    const [staticPages, blogPosts, tags, media] = await Promise.all([
-      Promise.resolve(getStaticPageEntries()),
-      getBlogPostEntries().catch((err) => {
-        console.error("Failed to load blog posts for sitemap:", err);
-        return [];
-      }),
-      getTagEntries().catch((err) => {
-        console.error("Failed to load tags for sitemap:", err);
-        return [];
-      }),
-      Promise.resolve(getMediaEntries()),
-    ]);
+  const [blogPosts, tags] = await Promise.all([
+    getBlogPostEntries(),
+    getTagEntries(),
+  ]);
 
-    return [...staticPages, ...blogPosts, ...tags, ...media];
-  } catch (error) {
-    console.error("Sitemap generation failed:", error);
-    return getStaticPageEntries();
-  }
+  return [
+    ...getStaticPageEntries(),
+    ...getMediaEntries(),
+    ...blogPosts,
+    ...tags,
+  ];
 }

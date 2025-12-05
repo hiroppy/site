@@ -137,11 +137,14 @@ module.exports = {
 ```
 
 <br />
-``` asset main.js 2.8 KiB [emitted] [minimized] (name: main) asset src_foo_js.js
+
+```
+asset main.js 2.8 KiB [emitted] [minimized] (name: main) asset src_foo_js.js
 123 bytes [emitted] [minimized] runtime modules 7.23 KiB 10 modules cacheable
 modules 186 bytes ./src/index.js 159 bytes [built] [code generated] ./src/foo.js
 27 bytes [built] [code generated] webpack 5.0.0-rc.4 compiled successfully in
-256 ms ```
+256 ms
+```
 
 `optimization.chunkIds` に `named` を追加すればファイル名が確定しますが本番環境では表示されていいものなのかを検討してください。また、`optimization.splitChunks.name`はなくなったのでこちらに移行してください。
 
@@ -154,9 +157,13 @@ console.log(import.meta.webpack);
 ```
 
 <br />
-```javascript // ./dist/main.js //
-生成されたファイルは固定値として入り、import.meta.url, webpackは存在しなくなる
-console.log("file:///Users/hiroppy/webpack/src/index.js"); console.log(5); ```
+
+```javascript
+// ./dist/main.js
+// 生成されたファイルは固定値として入り、import.meta.url, webpackは存在しなくなる
+console.log("file:///Users/hiroppy/webpack/src/index.js");
+console.log(5);
+```
 
 また、HMR 時に今までは以下のように書いていましたが、これからは`import.meta.webpackHot`を使うことが可能です。これを使うことにより、Node.js の module への依存を減らし、ESM に沿うような書き方に変わります。
 

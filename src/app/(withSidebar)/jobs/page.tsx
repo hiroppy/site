@@ -1,6 +1,6 @@
 "use cache";
 
-import history from "hiroppy/generated/jobs.json";
+import jobs from "hiroppy/generated/jobs.json";
 import { Section } from "../../_components/Section";
 import { SectionContainer } from "../../_components/SectionContainer";
 import { createMetadata } from "../../_utils/metadata";
@@ -13,22 +13,25 @@ export const metadata = createMetadata({
   description: "技術スキル、職務経歴、プロジェクト履歴",
 });
 
-export default function JobsPage() {
-  const parsedMainJobs = (history as any).main;
-  const parsedSideJobs = (history as any).side;
+export default async function Page() {
+  const currentYear = new Date().getFullYear();
 
   return (
     <SectionContainer>
       <Section title="Technical Skills" headingLevel="h1">
         <div className="mb-6 flex flex-col gap-2">
-          <p className="text-text-main text-lg leading-[1.8]">
-            2008年頃からJavaScriptとCを使ってプログラミングを始め、4年間画像処理を研究し、ニコニコ生放送の動画最適化についても研究をしていました。
-          </p>
-          <p className="text-text-main text-lg leading-[1.8]">
-            現在は、主にwebpack、Turborepo、Viteなどのツールを使ったWebパフォーマンスとフロントエンドインフラストラクチャの構築が専門です。Next.jsとGraphQLを2017年から利用しており、様々な製品開発を行っています。
-          </p>
+          {[
+            "2008年頃からJavaScriptとCを使ってプログラミングを始め、会津大学で4年間画像処理を研究。",
+            "Node.js、React、Next.js、バンドルアルゴリズムに興味があるが、最近はLLMを使ったアプリ開発が多め。",
+            "一番好きな言語は、ActionScript 3.0だったりする。",
+          ].map((text) => (
+            <p key={text} className="text-text-main text-lg leading-[1.8]">
+              {text}
+            </p>
+          ))}
         </div>
         <SkillsSection
+          currentYear={currentYear}
           sections={[
             {
               title: "JavaScript",
@@ -37,28 +40,28 @@ export default function JobsPage() {
                 { title: "Node.js", from: 2011, maintainer: true },
                 { title: "webpack", from: 2017, maintainer: true },
                 { title: "TypeScript", from: 2016 },
-                { title: "React", from: 2015 },
                 { title: "Next.js", from: 2017 },
+                { title: "React", from: 2015 },
+                { title: "TailwindCSS", from: 2019 },
+                { title: "Vite", from: 2022 },
+                { title: "Astro", from: 2022 },
+                { title: "Apollo", from: 2017 },
+                { title: "Nestjs", from: 2020 },
+                { title: "ChakraUI", from: 2020, maintainer: true },
+                { title: "Redux", from: 2016, to: 2019 },
+                { title: "Prisma", from: 2022 },
+                { title: "Electron", from: 2017 },
                 {
                   title: "Gatsby",
                   from: 2017,
                   to: 2021,
                   maintainer: true,
                 },
-                { title: "Astro", from: 2022 },
-                { title: "Apollo", from: 2017 },
-                { title: "Nestjs", from: 2020 },
-                { title: "ChakraUI", from: 2020, maintainer: true },
-                { title: "TailwindCSS", from: 2019 },
-                { title: "Redux", from: 2016, to: 2019 },
-                { title: "Prisma", from: 2022 },
-                { title: "Electron", from: 2017 },
-                { title: "Vite", from: 2022 },
                 { title: "jQuery", from: 2008, to: 2014 },
               ],
             },
             {
-              title: "Others",
+              title: "Other",
               previewCount: 5,
               items: [
                 { title: "Go", from: 2022 },
@@ -77,12 +80,11 @@ export default function JobsPage() {
           ]}
         />
       </Section>
-
       <Section title="Work Experience (Public Only)">
         <JobExperience
-          mainJobs={parsedMainJobs}
-          sideJobs={parsedSideJobs}
-          meta={(history as any).meta}
+          mainJobs={jobs.main}
+          sideJobs={jobs.side}
+          meta={jobs.meta}
         />
       </Section>
     </SectionContainer>

@@ -62,7 +62,13 @@ This article is for VRT.
 
 ## Image
 
-<Image alt="me" src="/images/meta/me.png" className="w-10" />
+<Image
+  alt="me"
+  src="/images/meta/me.png"
+  className="w-10"
+  width={40}
+  height={40}
+/>
 
 <br />
 
@@ -70,8 +76,13 @@ This article is for VRT.
 
 ## Code
 
-```ts
+```ts collapse={4-6}
+// foo.ts
 const foo = "foo";
+
+export function getFoo() {
+  return foo;
+}
 ```
 
 ### Code Group Example

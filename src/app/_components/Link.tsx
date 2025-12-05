@@ -17,6 +17,7 @@ type Props = {
   iconClassName?: string;
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   children: ReactNode;
+  prefetch?: boolean;
 };
 
 export function Link({
@@ -32,6 +33,8 @@ export function Link({
   iconClassName,
   onClick,
   children,
+  // TODO:
+  prefetch = false,
 }: Props) {
   const isExternal = isExternalLink(href);
   const shouldOpenInBlank = isExternal ? (isBlank ?? true) : false;
@@ -60,6 +63,7 @@ export function Link({
       )}
       aria-label={ariaLabel}
       onClick={onClick}
+      prefetch={prefetch}
     >
       {icon && (
         <Icon
@@ -74,12 +78,14 @@ export function Link({
   );
 }
 
-function isExternalLink(href: string, baseUrl?: string) {
+function isExternalLink(href: string) {
   if (!href) return false;
 
-  const siteUrl = baseUrl || process.env.NEXT_PUBLIC_SITE_URL || "";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
+
   if (!siteUrl) {
     return href.startsWith("http");
   }
+
   return href.startsWith("http") && !href.startsWith(siteUrl);
 }
