@@ -1,14 +1,13 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: Node.jsとECMAScript Modules
-date: 2018-03-22
-description: Node.jsに入るECMAScript Mdoulesの特徴を紹介します
+title: "Node.jsとECMAScript Modules"
+date: 2018-03-22T00:00:00.000Z
+description: "Node.jsに入るECMAScript Mdoulesの特徴を紹介します"
 image: /images/brands/nodejs.png
 tags: node.js
 hatenaPath: nodejs-esm
 ---
 
-import OG from "../../components/blog/OG.astro";
+import { OG } from "../../mdx/components/OG";
 
 Node.js のバージョン 10 のリリースは 4/25 を予定しています。
 また、ECMAScript Modules は Stability1(実験的)でリリースされます。
@@ -56,9 +55,11 @@ Node9 で whawg url は Stability2 になり、ブラウザ同様にグローバ
 もしクエリー(`?`)が異なる場合は、たとえ同じファイルでも複数回ロードします。
 
 ```javascript
-import "./foo?query=1"; // ?query=1としてのfooがロードされる
-import "./foo?query=2"; // ?query=2としてのfooがロードされる
+// ?query=2としてのfooがロードされる
 import "file:///xxx/foo";
+import "./foo?query=1";
+// ?query=1としてのfooがロードされる
+import "./foo?query=2";
 ```
 
 ##### Node の変数である、`__dirname`や`__filename`等が使えない
@@ -108,15 +109,18 @@ export default "dog";
 ### ルートが CJS
 
 ```javascript
+// Must use import to load ES Module
+// CJSにESMのSyntaxは存在しません
+import { a } from "./test";
+
 // index.js
 
 // === 🙅bad ===
 
 // ESMのコードをCJSで呼び出すことはできません
-const test = require("./test"); // Must use import to load ES Module
+const test = require("./test");
 
-// CJSにESMのSyntaxは存在しません
-import { a } from "./test"; // SyntaxError: Unexpected token {
+// SyntaxError: Unexpected token {
 
 // ---------------------------------------------------------
 

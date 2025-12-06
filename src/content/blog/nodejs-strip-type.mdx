@@ -1,13 +1,12 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: Node.jsでTypeScriptのコードを実行できるようになるかも
-date: 2024-07-08
-description: Node.jsでTypeScriptのコードを実行できるような機能が提案されました
+title: "Node.jsでTypeScriptのコードを実行できるようになるかも"
+date: 2024-07-08T00:00:00.000Z
+description: "Node.jsでTypeScriptのコードを実行できるような機能が提案されました"
 image: /images/brands/nodejs.png
 tags: node.js
 ---
 
-import OG from "../../components/blog/OG.astro";
+import { OG } from "../../mdx/components/OG";
 
 <OG url="https://github.com/nodejs/node/pull/53725" />
 
@@ -130,7 +129,6 @@ Node.jsもこの流れになると、またこれを機会に[stc](https://githu
 
 ```ts
 // index.ts
-
 // Error: Must use .ts extension when using TypeScript files
 import { getDate } from "./getDate";
 
@@ -138,7 +136,9 @@ console.log(getDate());
 ```
 
 <br />
-```sh $ ./node --experimental-strip-types index.ts
+```sh
+
+$ ./node --experimental-strip-types index.ts
 
 node:internal/modules/run_main:121
 triggerUncaughtException(

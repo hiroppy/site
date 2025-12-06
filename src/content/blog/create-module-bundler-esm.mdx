@@ -1,14 +1,13 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: module bundlerの作り方(ECMAScript Modules編)
-date: 2020-06-01
-description: BundlerでどうESMの静的解析を行い結果を生成するかを解説します
+title: "module bundlerの作り方(ECMAScript Modules編)"
+date: 2020-06-01T00:00:00.000Z
+description: "BundlerでどうESMの静的解析を行い結果を生成するかを解説します"
 image: /images/brands/js.png
 tags: javascript,tutorial
 hatenaPath: create-module-bundler-esm
 ---
 
-import OG from "../../components/blog/OG.astro";
+import { OG } from "../../mdx/components/OG";
 
 前回の準備編では、module bundler がどのように動いているかを説明しました。
 
@@ -28,6 +27,7 @@ import OG from "../../components/blog/OG.astro";
 
 ```javascript
 import { version } from "module";
+
 export const a = 1;
 ```
 
@@ -348,6 +348,7 @@ node.declaration.declarations && node.declaration.declarations[0].id.name;
 ```javascript
 // before
 import { foo as bar } from "module";
+
 console.log(bar(10));
 // after
 const __BUNDLER__1 = require("module");

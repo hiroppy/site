@@ -1,0 +1,15 @@
+{
+  "ogTitle": "Feedle - Frontend",
+  "ogDescription": "Tech article aggregation platform",
+  "ogImage": "http://localhost:3000/labs/feedle/frontend/og.png",
+  "ogUrl": "http://localhost:3000/labs/feedle/frontend",
+  "ogType": "website",
+  "twitterCard": "summary_large_image",
+  "twitterTitle": "Feedle - Frontend",
+  "twitterDescription": "Tech article aggregation platform",
+  "twitterImage": "http://localhost:3000/labs/feedle/frontend/og.png",
+  "twitterCreator": "@about_hiroppy",
+  "title": "Feedle - Frontend | hiroppy's site",
+  "description": "Tech article aggregation platform",
+  "canonical": "http://localhost:3000/labs/feedle/frontend"
+}

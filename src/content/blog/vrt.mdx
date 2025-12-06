@@ -1,8 +1,7 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: VRT
-date: 1992-04-29
-description: test as VRT
+title: "VRT"
+date: 1992-04-29T00:00:00.000Z
+description: "test as VRT"
 image: /images/meta/me.png
 tags: site
 hatenaPath: foo
@@ -11,12 +10,10 @@ references:
   - https://abouthiroppy.hatenablog.jp/
 ---
 
-import OG from "../../components/blog/OG.astro";
-import Image from "../../components/Image.astro";
-import CodeGroup from "../../components/blog/CodeGroup.astro";
-import CodeGroupPanel from "../../components/blog/CodeGroupPanel.astro";
-import TwoColumn from "../../components/blog/TwoColumn.astro";
-import GoogleSlidesCard from "../../components/blog/GoogleSlidesCard.astro";
+import { Image } from "../../app/_components/Image";
+import { GoogleSlidesCard } from "../../mdx/components/GoogleSlidesCard";
+import { OG } from "../../mdx/components/OG";
+import { TwoColumn } from "../../mdx/components/TwoColumn";
 
 ---
 
@@ -65,36 +62,43 @@ This article is for VRT.
 
 ## Image
 
-<Image alt="me" src="/images/meta/me.png" class="w-10" />
+<Image
+  alt="me"
+  src="/images/meta/me.png"
+  className="w-10"
+  width={40}
+  height={40}
+/>
 
 <br />
 
-![aa](../../assets/images/meta/me.png)
+![aa](/images/meta/me.png)
 
 ## Code
 
-```ts
+```ts collapse={4-6}
+// foo.ts
 const foo = "foo";
+
+export function getFoo() {
+  return foo;
+}
 ```
 
 ### Code Group Example
 
-test
-
-<OG url="https://hiroppy.me" />
-
 ::: code-group
 
 ```bash [npm]
-npm install astro
+npm install next
 ```
 
 ```bash [pnpm]
-pnpm add astro
+pnpm add next
 ```
 
 ```bash [yarn]
-yarn add astro
+yarn add next
 ```
 
 :::
@@ -109,19 +113,18 @@ export function add() {
 }
 ```
 
-<br />
 ```js [add.js]
 export function add() {
   return 1 + 1;
 }
 ```
-<br />
+
 ```html [index.html]
 <div>
   <p>HTML code</p>
 </div>
 ```
-<br />
+
 ```css [style.css]
 body {
   background-color: #fff;

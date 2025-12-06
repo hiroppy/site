@@ -1,21 +1,20 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: rendertronを用いてSSRに対応してないサイトでもSEOやOGP対策を行う
-date: 2020-09-01
-description: rendertronを使い、dynamic renderingをする方法の紹介とパフォーマンス検証を行います
+title: "rendertronを用いてSSRに対応してないサイトでもSEOやOGP対策を行う"
+date: 2020-09-01T00:00:00.000Z
+description: "rendertronを使い、dynamic renderingをする方法の紹介とパフォーマンス検証を行います"
 image: /images/brands/chrome.png
 tags: javascript,ssr
 hatenaPath: rendertron
 ---
 
-import OG from "../../components/blog/OG.astro";
-import TwitterCard from "../../components/blog/TwitterCard.astro";
+import { OG } from "../../mdx/components/OG";
+import { TwitterCard } from "../../mdx/components/TwitterCard";
 
 ## Dynamic Rendering
 
 この手法は Dynamic Rendering と呼ばれ、SSR に対応してないサイトに対しての SEO 対策として有効です。Dynamic Rendering とは一言でいうと、サーバーで Node 単体ではなく、ブラウザを動かすイメージです。 これは SSR みたいな Node.js のコードを書くことないため、導入コストは低いです。
 
-![](../../assets/images/blog/rendertron/flow.png)
+![](/images/blog/rendertron/flow.png)
 
 詳しくは、以下の google の記事を読んでください。
 
@@ -39,7 +38,7 @@ puppeteer をラップした api server みたいなもので内部は koa が�
 
 上記のリポジトリでは docker-compose で簡単な構成を作りました。
 
-![](../../assets/images/blog/rendertron/arch.png)
+![](/images/blog/rendertron/arch.png)
 
 - `https://foo.com`へアクセスが来たとき、Nginx で bot かどうかを判断する
   - bot の場合は、rendertron(internal)のサーバーへ
@@ -191,19 +190,19 @@ document.querySelector("head").appendChild(fragment);
 
 ### ユーザーがアクセスした場合
 
-![](../../assets/images/blog/rendertron/res-by-user.png)
+![](/images/blog/rendertron/res-by-user.png)
 
 まんま上記の html が出力されただけとなり、CSR です。
 
 ### bot がアクセスした場合
 
-![](../../assets/images/blog/rendertron/res-by-bot.png)
+![](/images/blog/rendertron/res-by-bot.png)
 
 meta に`og`や body の中に d3 の結果出力コードが出ていて SSR が成功しました。
 
 また、画面でみてもユーザーのアクセスと同様の画面となります。
 
-![](../../assets/images/blog/rendertron/res-on-browser.png)
+![](/images/blog/rendertron/res-on-browser.png)
 
 これで google ボットや Twitter などの ogp にも対応することが可能です。
 
@@ -211,7 +210,7 @@ meta に`og`や body の中に d3 の結果出力コードが出ていて SSR �
 
 体感的に、SSR よりは遅く感じます。SSR は最適化しやすいのもあると思いますが。
 
-![](../../assets/images/blog/rendertron/res-on-network.png)
+![](/images/blog/rendertron/res-on-network.png)
 
 SSR よりは楽な分、効率が悪いようにみえますが、今後 ssr-server と rendertron で同じ鯖スペックでどれぐらい捌けるのかも含め実験してみたいなーって思ったりします。
 

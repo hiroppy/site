@@ -1,13 +1,12 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: AstroのScriptタグを扱うときの注意
-date: 2022-11-23
-description: AstroでのScriptタグのパフォーマンスの問題について説明します
+title: "AstroのScriptタグを扱うときの注意"
+date: 2022-11-23T00:00:00.000Z
+description: "AstroでのScriptタグのパフォーマンスの問題について説明します"
 image: /images/brands/astro.png
 tags: astro
 ---
 
-import OG from "../../components/blog/OG.astro";
+import { OG } from "../../mdx/components/OG";
 
 Astro の`<script>`は何もインテグレーションを入れなくても使えるお手軽さがある一方、ハマるポイントがあります。
 
@@ -48,7 +47,7 @@ import Foo from "./Foo.astro";
 
 実際の出力結果はこのようになります。このように**全てのページの HTML** にこの `<script>` が挿入されます。
 
-![script as global on html](../../assets/images/blog/astro-script-issue/global-script-on-html.png)
+![script as global on html](/images/blog/astro-script-issue/global-script-on-html.png)
 
 なぜこのようになるかというと、`<script>`はデフォルトでグローバル(`is:global`)の扱いとなるためです。
 たしかに Foo.astro の中で書いたものではあるものの、どこにでも影響を与えることができてしまうので、保証できずうまく最適化できません。
@@ -73,7 +72,7 @@ import Foo from "./Foo.astro";
 この場合は、ライブラリが hoisting され、HTML から分離されます。
 このように、ライブラリと一緒の JS へユーザーランドのコードが入ります。
 
-![hoisted js](../../assets/images/blog/astro-script-issue/hoisted.png)
+![hoisted js](/images/blog/astro-script-issue/hoisted.png)
 
 例えこのように JS に分解されても、やはり扱いはグローバルなのでこの JS は全ての HTML で呼び出しが行われてしまいます。
 これは`/blog`以外のページからすると見過ごせない無駄なコードとなり、最適化を行う必要があります。
@@ -161,7 +160,7 @@ import Foo from "./Foo.astro";
 `client:load`を使い、React 等で閉じ込めると、以下のようになります。
 これは、`/blog`以下でしかダウンロードされない JS となるため、期待通りの挙動となります。
 
-![react](../../assets/images/blog/astro-script-issue/react.png)
+![react](/images/blog/astro-script-issue/react.png)
 
 ## まとめ
 

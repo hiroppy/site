@@ -1,15 +1,14 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: webpack@5の主な変更点まとめ
-date: 2020-10-09
-description: webpack v5がリリースされたので、追加された機能等を解説します
+title: "webpack@5の主な変更点まとめ"
+date: 2020-10-09T00:00:00.000Z
+description: "webpack v5がリリースされたので、追加された機能等を解説します"
 image: /images/brands/webpack.png
 tags: webpack
 hatenaPath: webpack5
 ---
 
-import OG from "../../components/blog/OG.astro";
-import TwitterCard from "../../components/blog/TwitterCard.astro";
+import { OG } from "../../mdx/components/OG";
+import { TwitterCard } from "../../mdx/components/TwitterCard";
 
 予定では、明日の 10 日に webpack のメジャーバージョンである v5 がリリースされますが、まだエコシステムが安定していない可能性があるため、注意してアップグレードを行ってください。
 
@@ -63,7 +62,7 @@ webpack 5.0.0-rc.2 compiled successfully in 429 ms
 
 リポジトリ間(バンドル間)を跨ぐときにライブラリなどの重複しているコードを以下のように効率よく扱いバンドルサイズを下げる仕組みです。この機能はお互いの webpack と連携を取り合う必要があるため互いに webpack@5 である必要があります。
 
-![](../../assets/images/blog/webpack5/mf.png)
+![](/images/blog/webpack5/mf.png)
 
 詳しくは以下の記事を参考にしてください。
 
@@ -138,11 +137,14 @@ module.exports = {
 ```
 
 <br />
-``` asset main.js 2.8 KiB [emitted] [minimized] (name: main) asset src_foo_js.js
+
+```
+asset main.js 2.8 KiB [emitted] [minimized] (name: main) asset src_foo_js.js
 123 bytes [emitted] [minimized] runtime modules 7.23 KiB 10 modules cacheable
 modules 186 bytes ./src/index.js 159 bytes [built] [code generated] ./src/foo.js
 27 bytes [built] [code generated] webpack 5.0.0-rc.4 compiled successfully in
-256 ms ```
+256 ms
+```
 
 `optimization.chunkIds` に `named` を追加すればファイル名が確定しますが本番環境では表示されていいものなのかを検討してください。また、`optimization.splitChunks.name`はなくなったのでこちらに移行してください。
 
@@ -155,9 +157,13 @@ console.log(import.meta.webpack);
 ```
 
 <br />
-```javascript // ./dist/main.js //
-生成されたファイルは固定値として入り、import.meta.url, webpackは存在しなくなる
-console.log("file:///Users/hiroppy/webpack/src/index.js"); console.log(5); ```
+
+```javascript
+// ./dist/main.js
+// 生成されたファイルは固定値として入り、import.meta.url, webpackは存在しなくなる
+console.log("file:///Users/hiroppy/webpack/src/index.js");
+console.log(5);
+```
 
 また、HMR 時に今までは以下のように書いていましたが、これからは`import.meta.webpackHot`を使うことが可能です。これを使うことにより、Node.js の module への依存を減らし、ESM に沿うような書き方に変わります。
 
@@ -180,9 +186,11 @@ import.meta.webpackHot?.accept();
 
 ```javascript
 import x from "data:text/javascript,export default 42";
-console.log(x); // 42
+// 42
 
 import y from "file:///Users/hiroppy/webpack/src/index.js";
+
+console.log(x);
 ```
 
 また、フラグメント(`#`)もサポートされました。
@@ -194,6 +202,9 @@ const eIndexOf = require("es5-ext/array/\0#/e-index-of#fragment");
 http(s)プロトコルは、まだ完全にサポートされていないため以下の設定が必要です。
 
 ```javascript
+// index.js
+import codeOfConduct from "https://raw.githubusercontent.com/webpack/webpack/master/CODE_OF_CONDUCT.md";
+
 const webpack = require("webpack");
 
 module.exports = {
@@ -203,8 +214,6 @@ module.exports = {
   ],
 };
 
-// index.js
-import codeOfConduct from "https://raw.githubusercontent.com/webpack/webpack/master/CODE_OF_CONDUCT.md";
 console.log(codeOfConduct);
 ```
 
@@ -238,16 +247,17 @@ module.exports = {
 ネストされたモジュールの場合、今までは使われていない`b`は削除できませんでしたが v5 からは追跡可能となりできるようになりました。
 
 ```javascript
+// module.js
+import * as inner from "./inner";
+// user.js
+import * as module from "./module";
+
 // inner.js
 export const a = 1;
 export const b = 2;
 
-// module.js
-import * as inner from "./inner";
 export { inner };
 
-// user.js
-import * as module from "./module";
 console.log(module.inner.a);
 ```
 

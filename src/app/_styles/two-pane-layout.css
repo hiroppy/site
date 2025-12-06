@@ -1,0 +1,57 @@
+body {
+  overflow: auto;
+}
+
+html {
+  scroll-padding-top: 80px;
+}
+
+/* サイドバーのスティッキー配置（デスクトップのみ） */
+@media (min-width: 768px) {
+  .sidebar-container {
+    position: sticky;
+    top: 80px; /* ヘッダー分の余白を確保 */
+    height: calc(100vh - 80px); /* topで指定した分を差し引く */
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+}
+
+/* モバイルではサイドバーコンテナのスタイルを無効化 */
+@media (max-width: 767px) {
+  .sidebar-container {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+}
+
+/* lg(1024px)未満でサイドバーコンテナ内のhiddenな要素しかない場合、コンテナを非表示 */
+@media (max-width: 1023px) {
+  .sidebar-container:has(> .hidden) {
+    display: none;
+  }
+}
+
+/* メインコンテンツは最小高さを画面全体に */
+.main-content {
+  min-height: 100vh;
+}
+
+/* サイドバーのスクロールバーをカスタマイズ */
+.sidebar-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}

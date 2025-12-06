@@ -1,15 +1,14 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: webpack@5で入るPersistent Cachingについて
-date: 2020-10-05
-description: 新しく入ったPersistent cachingの機能について紹介します
+title: "webpack@5で入るPersistent Cachingについて"
+date: 2020-10-05T00:00:00.000Z
+description: "新しく入ったPersistent cachingの機能について紹介します"
 image: /images/brands/webpack.png
 tags: webpack
 hatenaPath: webpack-persistent-caching
 ---
 
-import OG from "../../components/blog/OG.astro";
-import TwitterCard from "../../components/blog/TwitterCard.astro";
+import { OG } from "../../mdx/components/OG";
+import { TwitterCard } from "../../mdx/components/TwitterCard";
 
 webpack は in-memory のみで今まで永続的なキャッシュを実装していませんでした。理由としては、パフォーマンスよりも安全性を優先していたためです。
 cache-loader を使ったことがある人はわかるかもしれませんが、確かに速くなる一方、安全性が損なわれているのは事実です。

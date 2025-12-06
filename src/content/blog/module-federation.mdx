@@ -1,15 +1,14 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: webpack@5で入るModule Federationについて
-date: 2020-05-06
-description: 新しく入ったModule Federationの機能について紹介します
+title: "webpack@5で入るModule Federationについて"
+date: 2020-05-06T00:00:00.000Z
+description: "新しく入ったModule Federationの機能について紹介します"
 image: /images/brands/webpack.png
 tags: webpack
 hatenaPath: module-federation
 ---
 
-import OG from "../../components/blog/OG.astro";
-import TwitterCard from "../../components/blog/TwitterCard.astro";
+import { OG } from "../../mdx/components/OG";
+import { TwitterCard } from "../../mdx/components/TwitterCard";
 
 Module Federation(以下 mfe)は webpack@5 から入る新しい仕組みの一つです。
 
@@ -28,7 +27,7 @@ https://whatwg.github.io/loader/#browser-loader-prototype-@@resolve
 取得するライブラリはすでに bundle 済みなため、その中には同じライブラリが存在することが多いです。
 ユーザーは重複するライブラリ(e.g. react, react-dom, etc.)の取得を行う可能性が高いため、その最適化を行うのが Module Federation です。
 
-![](../../assets/images/blog/module-federation/arch.png)
+![](/images/blog/module-federation/arch.png)
 
 上記の図だと、main.js で使っている緑のライブラリは lib-a でも lib-b でも使っていて、それを 3 つダウンロードするのは無駄なので main.js がダウンロードしている緑に lib-a/b が依存すればネットワークの最適化ができます。
 
@@ -70,7 +69,7 @@ top-level での import もビルドはできますが、同期チャンクと�
 そして、ローカルもリモートになることが可能なため、各チャンクは立ち位置がその場の状況によって変化します。
 ローカルと決めてたチャンクに exposes を設定すればそれがリモートチャンクとなるということです。
 
-![](../../assets/images/blog/module-federation/chunk.png)
+![](/images/blog/module-federation/chunk.png)
 
 この場合だと、左のノードがその例で、`/sub`へアクセスした場合は Local という扱いになりますが、`/`へアクセスすると左のノードはリモートという扱いになります。(下のノードから見てリモート)
 
@@ -109,20 +108,22 @@ module.exports = {
 ```
 
 <br />
-```javascript // src/index.js import React from "react";
+
+```javascript
+// src/index.js
+import React from "react";
 
 const Page1 = () => <h1>This is Page1</h1>;
 
 export default Page1; // React.lazyはdefault exportsのみ許容
 ```
+
 <br />
+
 ```
-              Asset       Size
-             579.js   7.27 KiB  [emitted]
- 579.js.LICENSE.txt  295 bytes  [emitted]
-            main.js   7.68 KiB  [emitted]            [name: main]
-main.js.LICENSE.txt  295 bytes  [compared for emit]
-page1RemoteEntry.js   2.09 KiB  [emitted]            [name: page1]
+Asset Size 579.js 7.27 KiB [emitted] 579.js.LICENSE.txt 295 bytes [emitted]
+main.js 7.68 KiB [emitted] [name: main] main.js.LICENSE.txt 295 bytes [compared
+for emit] page1RemoteEntry.js 2.09 KiB [emitted] [name: page1]
 ```
 
 ### ローカル
@@ -147,7 +148,10 @@ module.exports = {
 ```
 
 <br />
-```javascript // src/index.js import React, {(lazy, Suspense)} from "react";
+
+```javascript
+// src/index.js
+import React, {(lazy, Suspense)} from "react";
 import {render} from "react-dom";
 
 // page1/page(remote)をdynamic import
@@ -164,8 +168,10 @@ const Wrapper = () => (
 
 render(<Wrapper />, document.getElementById("root"));
 
-````
+```
+
 <br />
+
 ```html
 <!-- index.html -->
 <!doctype html>
@@ -179,11 +185,14 @@ render(<Wrapper />, document.getElementById("root"));
     <script src="http://localhost:8081/page1RemoteEntry.js"></script>
   </body>
 </html>
-````
+```
 
 <br />
-``` Asset Size index.html 194 bytes [compared for emit] main.js 128 KiB
-[emitted] [name: main] main.js.LICENSE.txt 790 bytes [compared for emit] ```
+
+```
+Asset Size index.html 194 bytes [compared for emit] main.js 128 KiB
+[emitted] [name: main] main.js.LICENSE.txt 790 bytes [compared for emit]
+```
 
 このように、`import('<scope>/<request>')`という形でローカル側は取り込みます。
 
@@ -195,7 +204,7 @@ render(<Wrapper />, document.getElementById("root"));
 
 上記のコードでは、このオプションを入れる前の Network は以下のようになります。
 
-![](../../assets/images/blog/module-federation/network-remote.png)
+![](/images/blog/module-federation/network-remote.png)
 
 579.js というリモートの JS に注目してください。このファイルは page1RemoteEntry.js から呼び出されます。
 この 579.js に React のライブラリソースコードが入っています。(main.js の中にも同様のコードが入っている)
@@ -213,12 +222,12 @@ new ModuleFederationPlugin({
 これは、React ライブラリのソースコードがなくなり、579.js が main.js に含まれている React のライブラリコードを参照しているという状態です。
 この 579.js に残っているコードは`const Page1 = () => <h1>This is Page1</h1>;`のみとなります。
 
-![](../../assets/images/blog/module-federation/network-remote2.png)
+![](/images/blog/module-federation/network-remote2.png)
 
 では、リモート側には`shared: ['react']`を付け、ローカル側をなくすとどうなるでしょう？
 最初に説明したとおり、ローカル側が`shared`を設定してなかった場合は、リモート側が自身の URL から React ライブラリをダウンロードするようにフォールバックが行われます。
 
-![](../../assets/images/blog/module-federation/network-remote3.png)
+![](/images/blog/module-federation/network-remote3.png)
 
 この 466.js が React のライブラリコードとなります。
 これらはコンテナである page1RemoteEntry.js が管理していて、リモートに同一のライブラリがないのでこのコンテナが 466.js をダウンロードする処理を行います。

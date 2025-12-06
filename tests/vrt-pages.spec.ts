@@ -1,167 +1,182 @@
-import { test, expect, type Page } from "@playwright/test";
-import urls from "../testedPaths.cjs";
+import { type Page, expect, test } from "@playwright/test";
+import testedUrls from "../testedPaths.cjs";
 
-const themes = ["light", "dark"] as const;
+interface MetadataSnapshot {
+  ogTitle: string | null;
+  ogDescription: string | null;
+  ogImage: string | null;
+  ogUrl: string | null;
+  ogType: string | null;
+  twitterCard: string | null;
+  twitterTitle: string | null;
+  twitterDescription: string | null;
+  twitterImage: string | null;
+  twitterCreator: string | null;
+  title: string;
+  description: string | null;
+  canonical: string | null;
+}
 
+const urls = [...testedUrls, "http://localhost:3000/blog/404"];
 const ogTestedUrls = [
-  "http://localhost:3000/labs",
-  "http://localhost:3000/media",
+  "http://localhost:3000/media/all",
   "http://localhost:3000/media/talks",
   "http://localhost:3000/media/podcasts",
   "http://localhost:3000/blog/tags/site",
+  "http://localhost:3000/labs",
   "http://localhost:3000/labs/feedle",
   "http://localhost:3000/labs/feedle/frontend",
 ];
 
-// OG画像をチェックする関数
-async function checkOgImage(page: Page, url: string) {
-  // Chrome環境でのみOG画像をチェック
+// 既存のURLs（VRTとOGテスト両方）
+for (const url of urls) {
+  test(`VRT: ${url}`, async ({ page }, testInfo) => {
+    await page.clock.setFixedTime(new Date("2025-12-01T00:00:00Z"));
+
+    await page.goto(url);
+
+    if (!testInfo.project.name.includes("android")) {
+      await checkMetadata(page, url);
+    }
+
+    // Wait for all images to load
+    await page.evaluate(() => {
+      const images = Array.from(document.querySelectorAll("img"));
+      return Promise.all(
+        images.map((img) => {
+          if (img.complete) return Promise.resolve();
+          return new Promise((resolve) => {
+            img.addEventListener("load", resolve);
+            img.addEventListener("error", resolve); // Resolve even on error to avoid hanging
+            // Fallback timeout for individual images
+            setTimeout(resolve, 10000);
+          });
+        }),
+      );
+    });
+
+    // Wait for any lazy-loaded content
+    await page.waitForLoadState("networkidle");
+
+    const { output } = getPathAndOutputDirname(url);
+    const projectName = test.info().project.name;
+    const screenshotName = `${projectName}.png`;
+
+    await expect(page).toHaveScreenshot([output, screenshotName], {
+      fullPage: true,
+      scale: "device",
+      animations: "disabled",
+      mask: [
+        page.locator('[data-testid="github-star-count"]'),
+        page.locator('[data-testid="github-fork-count"]'),
+        page.locator('[data-testid="copyright-year"]'),
+        // page.locator('[data-testid="blog-date"]'),
+        // page.locator('[data-testid="job-timeline"]'),
+        page.locator(".google-slides-container"),
+        // page.locator('img[loading="lazy"]'),
+      ],
+      timeout: 300000,
+    });
+  });
+}
+
+for (const url of ogTestedUrls) {
+  test(`OG Check: ${url}`, async ({ page }, testInfo) => {
+    // Android環境ではスキップ
+    if (testInfo.project.name.includes("android")) {
+      test.skip();
+      return;
+    }
+
+    await page.goto(url, {
+      waitUntil: "networkidle",
+    });
+    await checkMetadata(page, url);
+  });
+}
+
+async function extractMetaTags(page: Page): Promise<MetadataSnapshot> {
+  return await page.evaluate(() => {
+    const getMeta = (selector: string) =>
+      document.querySelector(selector)?.getAttribute("content") || null;
+
+    return {
+      // OpenGraph tags
+      ogTitle: getMeta('meta[property="og:title"]'),
+      ogDescription: getMeta('meta[property="og:description"]'),
+      ogImage: getMeta('meta[property="og:image"]'),
+      ogUrl: getMeta('meta[property="og:url"]'),
+      ogType: getMeta('meta[property="og:type"]'),
+
+      // Twitter tags
+      twitterCard: getMeta('meta[name="twitter:card"]'),
+      twitterTitle: getMeta('meta[name="twitter:title"]'),
+      twitterDescription: getMeta('meta[name="twitter:description"]'),
+      twitterImage: getMeta('meta[name="twitter:image"]'),
+      twitterCreator: getMeta('meta[name="twitter:creator"]'),
+
+      // Standard meta tags
+      title: document.title,
+      description: getMeta('meta[name="description"]'),
+      canonical:
+        document.querySelector('link[rel="canonical"]')?.getAttribute("href") ||
+        null,
+    };
+  });
+}
+
+async function validateOgImage(page: Page, url: string, ogImageUrl: string) {
+  const ogImageFullUrl = ogImageUrl;
+  const ogResponse = await page.context().request.get(ogImageFullUrl);
+
+  if (ogResponse.status() === 200) {
+    expect(ogResponse.headers()["content-type"]).toContain("image");
+
+    const ogPage = await page.context().newPage();
+    await ogPage.goto(ogImageFullUrl);
+
+    const { output } = getPathAndOutputDirname(url);
+    await expect(ogPage).toHaveScreenshot([output, "og-image.png"], {
+      fullPage: true,
+    });
+    await ogPage.close();
+  }
+}
+
+async function snapshotMetaTags(metadata: MetadataSnapshot, url: string) {
+  const { output } = getPathAndOutputDirname(url);
+  const metadataJson = JSON.stringify(metadata, null, 2);
+
+  expect(metadataJson).toMatchSnapshot([output, "metadata.json"]);
+}
+
+async function checkMetadata(page: Page, url: string) {
   const browser = page.context().browser();
   if (!browser) return;
   const browserName = browser.browserType().name();
   if (browserName !== "chromium") return;
 
   try {
-    // OGメタタグの存在確認
-    const ogImage = page.locator('meta[property="og:image"]');
-    const hasOgImage = (await ogImage.count()) > 0;
+    const metadata = await extractMetaTags(page);
 
-    if (hasOgImage) {
-      const ogImageUrl = await ogImage.getAttribute("content");
-      expect(ogImageUrl).toBeTruthy();
-
-      // OG画像パスを取得
-      let ogImagePath = ogImageUrl!;
-      if (ogImagePath.startsWith("https://")) {
-        ogImagePath = ogImagePath.replace("https://hiroppy.me", "");
-      }
-
-      // OG画像に直接アクセス
-      const ogImageFullUrl = `http://localhost:3000${ogImagePath}`;
-      const ogResponse = await page.context().request.get(ogImageFullUrl);
-
-      // 画像が存在することを確認
-      if (ogResponse.status() === 200) {
-        expect(ogResponse.headers()["content-type"]).toContain("image");
-
-        // OG画像のスクリーンショットを保存
-        const urlPath = url.replace("http://localhost:3000", "");
-        const cleanPath =
-          urlPath === "/" || urlPath === ""
-            ? "home"
-            : urlPath.replace(/^\//, "").replace(/\//g, "-");
-
-        // OG画像を新しいページで開いてスクリーンショット
-        const ogPage = await page.context().newPage();
-        await ogPage.goto(ogImageFullUrl);
-        await expect(ogPage).toHaveScreenshot(`${cleanPath}-og-image.png`, {
-          fullPage: true,
-        });
-        await ogPage.close();
-      }
+    if (metadata.ogImage) {
+      await validateOgImage(page, url, metadata.ogImage);
     }
+
+    await snapshotMetaTags(metadata, url);
   } catch (error) {
     if (error instanceof Error) {
-      // OG画像チェックでエラーが発生してもVRTテストは継続
-      console.log(`OG image check failed for ${url}:`, error.message);
+      console.log(`Metadata check failed for ${url}:`, error.message);
     }
   }
 }
 
-// 既存のURLs（VRTとOGテスト両方）
-for (const url of urls) {
-  for (const theme of themes) {
-    test(`VRT: ${url} (${theme})`, async ({ page }) => {
-      await page.goto(url);
+function getPathAndOutputDirname(url: string) {
+  const urlPath = url.replace("http://localhost:3000", "");
+  const output =
+    urlPath === "/" || urlPath === ""
+      ? "home"
+      : urlPath.replace(/^\//, "").replace(/\//g, "-");
 
-      // Light themeの時のみOG画像をチェック（重複を避けるため）
-      if (theme === "light") {
-        await checkOgImage(page, url);
-      }
-
-      // Set theme by adding/removing dark class and updating localStorage
-      await page.evaluate((selectedTheme) => {
-        localStorage.setItem("theme", selectedTheme);
-        document.documentElement.classList.toggle(
-          "dark",
-          selectedTheme === "dark",
-        );
-      }, theme);
-
-      // Wait for theme transition to complete
-      await page.waitForTimeout(1000);
-
-      // Wait for all images to load
-      await page.evaluate(() => {
-        const images = Array.from(document.querySelectorAll("img"));
-        return Promise.all(
-          images.map((img) => {
-            if (img.complete) return Promise.resolve();
-            return new Promise((resolve) => {
-              img.addEventListener("load", resolve);
-              img.addEventListener("error", resolve); // Resolve even on error to avoid hanging
-              // Fallback timeout for individual images
-              setTimeout(resolve, 10000);
-            });
-          }),
-        );
-      });
-
-      // Wait for any lazy-loaded content
-      await page.waitForLoadState("networkidle");
-
-      // Additional wait for any animations or transitions
-      await page.waitForTimeout(500);
-
-      // Generate screenshot name based on URL path and theme
-      const urlPath = url.replace("http://localhost:3000", "");
-      const cleanPath =
-        urlPath === "/" || urlPath === ""
-          ? "home"
-          : urlPath.replace(/^\//, "").replace(/\//g, "-");
-      const screenshotName = `${cleanPath}-${theme}.png`;
-
-      await expect(page).toHaveScreenshot(screenshotName, {
-        fullPage: true,
-        scale: "device",
-        animations: "disabled",
-        mask: [
-          page.locator('[data-testid="bookmark-count"]'),
-          page.locator('[data-testid="star-count"]'),
-          page.locator('[data-testid="github-star-count"]'),
-          page.locator('[data-testid="github-fork-count"]'),
-          page.locator('[data-testid="copyright-year"]'),
-          page.locator('[data-testid="blog-date"]'),
-          page.locator('[data-testid="job-timeline"]'),
-          page.locator(".job-history"),
-          page.locator(".google-slides-container"),
-          page.locator('img[loading="lazy"]'),
-        ],
-        timeout: 300000,
-      });
-    });
-  }
-}
-
-for (const url of ogTestedUrls) {
-  for (const theme of themes) {
-    test(`OG Check: ${url} (${theme})`, async ({ page }, testInfo) => {
-      // Android環境ではスキップ
-      if (testInfo.project.name.includes("android")) {
-        test.skip();
-        return;
-      }
-
-      // darkテーマの場合はスキップ
-      if (theme === "dark") {
-        test.skip();
-        return;
-      }
-
-      await page.goto(url, {
-        waitUntil: "networkidle",
-      });
-      await checkOgImage(page, url);
-    });
-  }
+  return { output };
 }
