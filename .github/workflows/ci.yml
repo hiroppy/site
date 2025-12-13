@@ -54,7 +54,7 @@ jobs:
       - uses: ./.github/actions/setup-node
       - run: pnpm build
       - run: pnpm test:a11y
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: a11y-test-results
@@ -71,7 +71,7 @@ jobs:
       - uses: ./.github/actions/setup-node
       - run: pnpm build
       - run: pnpm test:vrt:ci:${{ matrix.type }}
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: vrt-${{ matrix.type }}-test-results
           path: test-results/
