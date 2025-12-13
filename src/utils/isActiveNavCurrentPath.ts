@@ -4,11 +4,14 @@ export function isActiveNavCurrentPath(
   item: NavItem["href"],
   currentPath: string,
 ) {
-  console.log(item, currentPath);
   if (item === "/") {
-    if (currentPath === "/" || !currentPath) {
+    if (currentPath === "/") {
       return true;
     }
+
+    console.log(item, currentPath);
+    console.log(item === currentPath);
+    console.log(JSON.stringify(item) === JSON.stringify(currentPath));
 
     return false;
   }
