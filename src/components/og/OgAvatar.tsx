@@ -6,7 +6,7 @@ type Props = {
 export async function OgAvatar({ avatar, size }: Props) {
   return (
     <img
-      src={`data:image/png;base64,${avatar}`}
+      src={`data:image/jpeg;base64,${avatar}`}
       width={size}
       height={size}
       style={{

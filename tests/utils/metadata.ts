@@ -83,7 +83,17 @@ async function validateOgImage(page: Page, url: string, ogImageUrl: string) {
 
 async function snapshotMetaTags(metadata: MetadataSnapshot, url: string) {
   const { output } = getPathAndOutputDirname(url);
-  const metadataJson = JSON.stringify(metadata, null, 2);
+
+  // Remove query parameters from image URLs to prevent snapshot mismatches
+  const normalizedMetadata = {
+    ...metadata,
+    ogImage: metadata.ogImage ? metadata.ogImage.split("?")[0] : null,
+    twitterImage: metadata.twitterImage
+      ? metadata.twitterImage.split("?")[0]
+      : null,
+  };
+
+  const metadataJson = JSON.stringify(normalizedMetadata, null, 2);
 
   expect(metadataJson).toMatchSnapshot([output, "metadata.json"]);
 }
