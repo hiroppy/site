@@ -4,6 +4,8 @@ type Props = {
 };
 
 export async function OgAvatar({ avatar, size }: Props) {
+  "use cache";
+
   return (
     <img
       src={`data:image/jpeg;base64,${avatar}`}
