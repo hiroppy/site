@@ -5,7 +5,7 @@ export function isActiveNavCurrentPath(
   currentPath: string,
 ) {
   if (item === "/") {
-    if (currentPath === "/" || currentPath === "") {
+    if (currentPath === "/" || !currentPath) {
       return true;
     }
 

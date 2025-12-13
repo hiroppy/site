@@ -66,9 +66,9 @@ export async function createOgImageResponse(
 async function loadAvatarImage() {
   "use cache";
 
-  // webpだと読み込めないため、pngで取得する
+  // webpだと読み込めないため、jpgで取得する
   const url =
-    "https://github.com/hiroppy/site/blob/main/src/assets/images/meta/me.png?raw=true";
+    "https://github.com/hiroppy/site/blob/main/public/images/meta/ogp.jpg?raw=true";
   const meBuffer = await fetch(url, {
     cache: "force-cache",
   }).then((res) => res.arrayBuffer());
