@@ -1,0 +1,15 @@
+{
+  "ogTitle": "Media & Activities | hiroppy's site",
+  "ogDescription": "登壇・プレス・ポッドキャストなどのメディア活動",
+  "ogImage": "http://localhost:3000/media/all/opengraph-image-u63fef?93fa5ac9060226b4",
+  "ogUrl": "http://localhost:3000/media/all",
+  "ogType": "website",
+  "twitterCard": "summary_large_image",
+  "twitterTitle": "Media & Activities | hiroppy's site",
+  "twitterDescription": "登壇・プレス・ポッドキャストなどのメディア活動",
+  "twitterImage": "http://localhost:3000/media/all/opengraph-image-u63fef?93fa5ac9060226b4",
+  "twitterCreator": "@about_hiroppy",
+  "title": "Media & Activities | hiroppy's site",
+  "description": "登壇・プレス・ポッドキャストなどのメディア活動",
+  "canonical": "http://localhost:3000/media/all"
+}

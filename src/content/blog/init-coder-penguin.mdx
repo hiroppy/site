@@ -1,16 +1,15 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: 独立
-date: 2025-04-14
-description: 独立し、フリーランスとして活動を始めました
+title: "独立"
+date: 2025-04-14T00:00:00.000Z
+description: "独立し、フリーランスとして活動を始めました"
 image: /images/blog/init-coder-penguin/ogp.jpg
 tags: life
 ---
 
-import Image from "../../components/Image.astro";
-import OG from "../../components/blog/OG.astro";
-import YoutubeCard from "../../components/blog/YoutubeCard.astro";
-import jobs from "../../../node_modules/hiroppy/generated/jobs.json";
+import jobs from "hiroppy/generated/jobs.json";
+import { Image } from "../../components/Image";
+import { OG } from "../../mdx/components/OG";
+import { YoutubeCard } from "../../mdx/components/YoutubeCard";
 
 4月1日から独立し、フリーランスとして活動を始めました。
 
@@ -45,7 +44,7 @@ import jobs from "../../../node_modules/hiroppy/generated/jobs.json";
 
 また複数社の技術顧問をさせていただいています。
 
-<div class="grid grid-cols-3 gap-4 md:grid-cols-6 lg:grid-cols-8">
+<div className="grid grid-cols-3 gap-4 md:grid-cols-6 lg:grid-cols-8">
   {
     (() => {
       const companies = [
@@ -61,15 +60,15 @@ import jobs from "../../../node_modules/hiroppy/generated/jobs.json";
 
       return companies.map((company) => {
         return (
-          <a href={jobs.meta[company].url} target="_blank" rel="noopener noreferrer" class="flex gap-2 flex-col items-center">
+          <a href={jobs.meta[company].url} target="_blank" rel="noopener noreferrer" className="flex gap-2 flex-col items-center" key={company}>
             <Image
               src={jobs.meta[company].image}
               alt={company}
               width={80}
               height={80}
-              class="h-20 w-20 rounded bg-white"
+              className="h-20 w-20 rounded bg-white"
             />
-            <span class="text-sm">{company}</span>
+            <span className="text-sm">{company}</span>
           </a>
         )
       })
@@ -79,7 +78,7 @@ import jobs from "../../../node_modules/hiroppy/generated/jobs.json";
 
 </div>
 
-<p class="mt-2 text-right text-sm">※ 公開可能な企業様のみ掲載</p>
+<p className="mt-2 text-right text-sm">※ 公開可能な企業様のみ掲載</p>
 
 各社、フロントエンドエンジニアの採用を行っていますので、もし話を聞いてみたい会社あればお気軽に[DM](https://x.com/about_hiroppy)ください。
 

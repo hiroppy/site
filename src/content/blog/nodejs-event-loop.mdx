@@ -1,19 +1,18 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: Node.jsでのイベントループの仕組みとタイマーについて
-date: 2018-09-26
-description: Node.jsのベースにあるイベントループがどのように動いているのかを解説します
+title: "Node.jsでのイベントループの仕組みとタイマーについて"
+date: 2018-09-26T00:00:00.000Z
+description: "Node.jsのベースにあるイベントループがどのように動いているのかを解説します"
 image: /images/brands/nodejs.png
 tags: node.js
 hatenaPath: nodejs-event-loop
 ---
 
-import OG from "../../components/blog/OG.astro";
-import YoutubeCard from "../../components/blog/YoutubeCard.astro";
+import { OG } from "../../mdx/components/OG";
+import { YoutubeCard } from "../../mdx/components/YoutubeCard";
 
 # イベントループ
 
-![](../../assets/images/blog/nodejs-event-loop/cat.gif)
+![](/images/blog/nodejs-event-loop/cat.gif)
 
 ## イベントループとは？
 
@@ -33,7 +32,7 @@ Node.js の非同期はカーネルと会話するために libuv を使いま�
 libuv とは、非同期 I/O に強く、クロスプラットフォーム対応の抽象化ライブラリです。
 基本的には、イベントループと非同期処理を行います。
 
-![](../../assets/images/blog/nodejs-event-loop/libuv.png)
+![](/images/blog/nodejs-event-loop/libuv.png)
 
 libuv は、Node.js にイベントループ機能全体を提供しています。
 デフォルトでは、デフォルトサイズが 4 のスレッドプールを作ります。
@@ -83,7 +82,7 @@ Promise.resolve().then(() => console.log(4));
 
 Node.js が起動すると以下のイベントループが初期化されます。
 
-![](../../assets/images/blog/nodejs-event-loop/eventloop.png)
+![](/images/blog/nodejs-event-loop/eventloop.png)
 
 <OG url="http://voidcanvas.com/nodejs-event-loop" />
 
@@ -123,7 +122,7 @@ JavaScript の実行は、idle, prepare を除くどこかのフェーズで実�
 
 libuv との関係図です。
 
-![](../../assets/images/blog/nodejs-event-loop/steps.jpeg)
+![](/images/blog/nodejs-event-loop/steps.jpeg)
 
 https://jsblog.insiderattack.net/handling-io-nodejs-event-loop-part-4-418062f917d1
 
@@ -134,7 +133,7 @@ libuv は、各フェーズ毎にフェーズの結果を Node に伝達する�
 
 フローは以下の図のような感じになります。
 
-![](../../assets/images/blog/nodejs-event-loop/flow.png)
+![](/images/blog/nodejs-event-loop/flow.png)
 
 <OG url="https://medium.com/the-node-js-collection/what-you-should-know-to-really-understand-the-node-js-event-loop-and-its-metrics-c4907b19da4c" />
 

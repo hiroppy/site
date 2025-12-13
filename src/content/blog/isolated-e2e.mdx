@@ -1,13 +1,12 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: Playwrightで実際のDBを用いてテストを並列実行し高速化する
-date: 2025-07-01
-description: LLM時代におけるe2eテストの高速化と堅牢性向上のための実践的なアプローチを紹介します。
+title: "Playwrightで実際のDBを用いてテストを並列実行し高速化する"
+date: 2025-07-01T00:00:00.000Z
+description: "LLM時代におけるe2eテストの高速化と堅牢性向上のための実践的なアプローチを紹介します。"
 image: /images/brands/playwright.png
 tags: e2e,testing,node.js
 ---
 
-import OG from "../../components/blog/OG.astro";
+import { OG } from "../../mdx/components/OG";
 
 最近は、LLMによるコード生成が日常的になっています。
 それに伴って、テストはコードが正しく実行されているかを保証するために今後更に重要になっていきます。
@@ -590,7 +589,7 @@ test.describe("sign in", () => {
 ```
 
 ```ts [e2e/models/TopPage.ts]
-import { expect, type Locator, type Page } from "@playwright/test";
+import { type Locator, type Page, expect } from "@playwright/test";
 import type { User } from "next-auth";
 import { Base } from "./Base";
 

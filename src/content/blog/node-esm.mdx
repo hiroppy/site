@@ -1,14 +1,13 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: Node.jsのECMAScript Modulesの紹介
-date: 2019-04-27
-description: Node.jsのESMのリゾルバの説明と特徴を紹介します
+title: "Node.jsのECMAScript Modulesの紹介"
+date: 2019-04-27T00:00:00.000Z
+description: "Node.jsのESMのリゾルバの説明と特徴を紹介します"
 image: /images/brands/nodejs.png
 tags: node.js
 hatenaPath: node-esm
 ---
 
-import OG from "../../components/blog/OG.astro";
+import { OG } from "../../mdx/components/OG";
 
 アイルランドのイベントで話したことの日本語版です。
 
@@ -50,7 +49,7 @@ TC39 は ESM のシンタックスや JS のルールを管理します。
 
 ### 実装状況
 
-![](../../assets/images/blog/node-esm/caniuse.png)
+![](/images/blog/node-esm/caniuse.png)
 
 IE 以外はサポートされています。
 
@@ -125,7 +124,7 @@ Node.js には 2 つのブラウザにはない大きな問題がありました
 
 <br />
 
-![](../../assets/images/blog/node-esm/flow.png)
+![](/images/blog/node-esm/flow.png)
 
 **一言で言うと、一番近くの親の package.json によってファイルのモジュールシステムが確定します。**
 
@@ -140,8 +139,9 @@ Node.js には 2 つのブラウザにはない大きな問題がありました
 └── root.js
  */
 // ./root.js ----------------------------------------------------------------- 1
-import "./esm/index.js";
 import "./esm/cjs/index.js";
+import "./esm/index.js";
+
 console.log(
   "root.js          :",
   typeof module !== "undefined" ? "cjs" : "esm",
@@ -186,7 +186,6 @@ ESM として動かしたい場合は、`module`を指定する必要があり�
 ```javascript
 // always read as CJS
 import "./file.cjs";
-
 // always read as ESM
 import "./file.mjs";
 ```
@@ -196,8 +195,8 @@ import "./file.mjs";
 #### WHATWG URL に準拠する
 
 ```javascript
-import "./foo.js";
 import "file:///xxxx/foo.js";
+import "./foo.js";
 
 // dynamic import
 (async () => {
@@ -228,15 +227,15 @@ console.log(typeof __filename);
 そのかわりに ESM では以下の値で代用します。
 
 ```javascript
-// Get a path info like __dirname and __filename.
-console.log(import.meta);
 // [Object: null prototype] {
 //   url: 'file:///Users/xxxx/index.js'
 // }
-
 // Create `require` function.
 import { createRequireFromPath } from "module";
 import { fileURLToPath } from "url";
+
+// Get a path info like __dirname and __filename.
+console.log(import.meta);
 
 // ./
 const require = createRequireFromPath(fileURLToPath(import.meta.url));
@@ -260,9 +259,11 @@ CJS では、ファイル名の`index`と拡張子の`.js`, `.node`, `.json`を�
 
 ```javascript
 // strict/index.js
+// --es-module-specifier-resolution=explicit
+import "./foo";
+import "./foo/index.js";
 
-import "./foo/index.js"; // --es-module-specifier-resolution=explicit
-import "./foo"; // --es-module-specifier-resolution=node
+// --es-module-specifier-resolution=node
 ```
 
 <br />

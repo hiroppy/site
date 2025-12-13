@@ -1,14 +1,13 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: next.jsでのファイルチャンク最適化の一例
-date: 2021-08-12
-description: Next.jsでJSファイルチャンクをどのように最適化するかを紹介します
+title: "next.jsでのファイルチャンク最適化の一例"
+date: 2021-08-12T00:00:00.000Z
+description: "Next.jsでJSファイルチャンクをどのように最適化するかを紹介します"
 image: /images/blog/nextjs-chunk-optimization/20210811232045.png
 tags: next.js
 hatenaPath: 2021/08/12/092839
 ---
 
-import OG from "../../components/blog/OG.astro";
+import { OG } from "../../mdx/components/OG";
 
 今回は graphql-codegen を使い説明します。今回の例は、graphql-codegen 以外でも発生する可能性がありますが自動生成系が一番顕著に影響がわかりやすいです。
 
@@ -199,11 +198,11 @@ function d() {
 import { useAQuery } from "../generated/hooks";
 ```
 
-![](../../assets/images/blog/nextjs-chunk-optimization/20210811232045.png)
+![](/images/blog/nextjs-chunk-optimization/20210811232045.png)
 
 <br />
 
-![](../../assets/images/blog/nextjs-chunk-optimization/20210811232053.png)
+![](/images/blog/nextjs-chunk-optimization/20210811232053.png)
 
 ## この問題を解決するには？
 
@@ -218,11 +217,11 @@ import { useAQuery } from "../generated/hooks";
 
 app は特殊なファイルとして位置づけられ、すべてのファイルで呼び出されます。つまり、app でこの大規模な 1 ファイルを呼ぶと各エントリーポイントにある`../generated/hooks`が昇格し、\_app の中に入り各エントリーポイントからいなくなります。**各エントリーポイントからすると、app を読み込んだときに不要な query が大量に入ることは変わらないですが、app はどこでも使うファイルなので一回読み込めばそのコード自体がキャッシュが効くためネットワーク効率は上がります。**
 
-![](../../assets/images/blog/nextjs-chunk-optimization/20210811232317.png)
+![](/images/blog/nextjs-chunk-optimization/20210811232317.png)
 
 <br />
 
-![](../../assets/images/blog/nextjs-chunk-optimization/20210811232422.png)
+![](/images/blog/nextjs-chunk-optimization/20210811232422.png)
 
 ### 大規模生成ファイルを分割する
 
@@ -264,7 +263,7 @@ documents/
 
 それを各エントリーポイントが import すればそのファイルだけが読み込まれるためファイルサイズは最小限となり、不要な query の定義も入ることはありません。また完全に無駄がなくなり scope hoisting されるため結合され無駄な関数実行が減ります。
 
-![](../../assets/images/blog/nextjs-chunk-optimization/20210812072524.png)
+![](/images/blog/nextjs-chunk-optimization/20210812072524.png)
 
 concatenated と書かれている場合は、scope hoisting が効いてることがわかり、この例だと親のエントリーポイントとの結合がされています。
 

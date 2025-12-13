@@ -1,14 +1,13 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: webpackの仕組みを簡潔に説明する
-date: 2018-12-25
-description: webpackの内部で動いているアルゴリズムの解説をします
+title: "webpackの仕組みを簡潔に説明する"
+date: 2018-12-25T00:00:00.000Z
+description: "webpackの内部で動いているアルゴリズムの解説をします"
 image: /images/brands/webpack.png
 tags: webpack,conference
 hatenaPath: mechanism-of-webpack
 ---
 
-import OG from "../../components/blog/OG.astro";
+import { OG } from "../../mdx/components/OG";
 
 この記事は、[Node.js Advent Calendar 2018](https://qiita.com/advent-calendar/2018/nodejs)の 18 日目の記事です。
 
@@ -99,7 +98,7 @@ webpack では、`__webpack_require__`という関数を用いて、依存の走
 
 少し語弊がありますが、図は以下のような感じになります。
 
-![entrypoint](../../assets/images/blog/mechanism-of-webpack/entrypoint.png)
+![entrypoint](/images/blog/mechanism-of-webpack/entrypoint.png)
 
 長いので部分的に省略していますが、コードにすると以下のような感じです。
 
@@ -163,12 +162,12 @@ webpack がファイル変更を監視し、変更があればコンパイルし
 
 以下のような仕組みになっていて、websocket で会話しつつ、webpack plugin で仕込んだ Runtime と呼ばれる部分で webpack-dev-server で配信された新しいアセットを取得しにいきます。
 
-![hmr](../../assets/images/blog/mechanism-of-webpack/hmr.png)
+![hmr](/images/blog/mechanism-of-webpack/hmr.png)
 
 ここの websocket では、次に Runtime が取りに行く hashID を送ります。
 この hashID をファイル名につけて、webpack-dev-server へ fetch を行います。
 
-![hmr-network](../../assets/images/blog/mechanism-of-webpack/hmr-network.png)
+![hmr-network](/images/blog/mechanism-of-webpack/hmr-network.png)
 
 配信される JavaScript と json の中身は以下のようになります。
 
@@ -368,7 +367,7 @@ ESM を使うことによりインポートチェーンをフラット化し、1
 以下の難しいグラフを見てみます。
 特に何も書かれていないものは ESM を使っています。
 
-![scope-hoisting](../../assets/images/blog/mechanism-of-webpack/scope-hoisting.png)
+![scope-hoisting](/images/blog/mechanism-of-webpack/scope-hoisting.png)
 
 この構造の問題点があります。
 
@@ -378,12 +377,12 @@ ESM を使うことによりインポートチェーンをフラット化し、1
 
 これらを単純にチャンク分解すると以下のようになります。
 
-![scope-hoisting](../../assets/images/blog/mechanism-of-webpack/scope-hoisting2.png)
+![scope-hoisting](/images/blog/mechanism-of-webpack/scope-hoisting2.png)
 
 しかし、ESM 同士は静的解析するためビルド時にモジュール解決を行うことができます。
 なので、さらにチャンク内で ESM の同レイヤーのスコープ同士をくっつけることが可能です。
 
-![scope-hoisting](../../assets/images/blog/mechanism-of-webpack/scope-hoisting3.png)
+![scope-hoisting](/images/blog/mechanism-of-webpack/scope-hoisting3.png)
 
 つまり、上記のように同一スコープをまとめることが可能です。
 
@@ -558,10 +557,9 @@ module.exports = {
 ```
 
 <br />
-``` vendor.e01916c600d5e12dd9aa.16.bundle.js 1.41 MiB
 
-↓
-
+```sh
+vendor.e01916c600d5e12dd9aa.16.bundle.js 1.41 MiB
 vendor~253ae210.e46c3fe01b7780f11d81.bundle.js 316 KiB
 vendor~7274e1de.a2d5e8d87c5e36752b28.bundle.js 183 KiB
 vendor~7d359b94.79f7863fa304fe20067e.bundle.js 53.5 KiB
@@ -569,7 +567,6 @@ vendor~9c5b28f6.71223a4ff0625388be27.bundle.js 610 KiB
 vendor~b5906859.2b626aa82671c8667e3a.bundle.js 95.2 KiB
 vendor~db300d2f.d22d5b79be58987d729e.bundle.js 92.9 KiB
 vendor~ec8c427e.59a4800bc2621be8d855.bundle.js 95 KiB
-
 ```
 
 このように分けれる範囲で分解をすることも可能です。
@@ -584,4 +581,3 @@ webpack では、まだまだ様々なアルゴリズムが存在します。
 <OG url="https://github.com/webpack/changelog-v5/blob/master/README.md" />
 
 もしなにかありましたら、[twitter](https://twitter.com/about_hiroppy)までどうぞ！
-```

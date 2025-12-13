@@ -1,14 +1,13 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: Astro v2で導入された Content Collections の移行手順まとめ
-date: 2023-01-26
-description: Astro v2で導入された Content Collectionsの紹介と移行手順の仕方を説明します
+title: "Astro v2で導入された Content Collections の移行手順まとめ"
+date: 2023-01-26T00:00:00.000Z
+description: "Astro v2で導入された Content Collectionsの紹介と移行手順の仕方を説明します"
 image: /images/brands/astro.png
 tags: astro
 ---
 
-import OG from "../../components/blog/OG.astro";
-import TwitterCard from "../../components/blog/TwitterCard.astro";
+import { OG } from "../../mdx/components/OG";
+import { TwitterCard } from "../../mdx/components/TwitterCard";
 
 先日、Astro@2 がリリースされ、多くの機能が追加されました。
 
@@ -74,7 +73,7 @@ export const collections = <const>{
 
 この定義によって frontmatter に対して型検査を行うことができるようになりました。
 
-![frontmatter error](../../assets/images/blog/astro-content-collections/frontmatter-error.png)
+![frontmatter error](/images/blog/astro-content-collections/frontmatter-error.png)
 
 > **2** `config.ts`を作成し、Markdown/MDX に使われている frontmatter を定義する
 
@@ -100,9 +99,9 @@ $ npx astro sync
 ```ts
 import {
   defineCollection,
-  z,
   getCollection,
   getEntryBySlug,
+  z,
 } from "astro:content";
 ```
 
@@ -117,8 +116,8 @@ import {
 import type { GetStaticPathsOptions, Page } from "astro";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
-import BlogCardItem from "../../components/blog/BlogCardItem.astro";
-import Pagination from "../../components/blog/Pagination.astro";
+import { BlogCard } from "../../components/blog/BlogCard";
+import { Pagination } from "../../components/blog/Pagination";
 import MainLayout from "../../layouts/MainLayout.astro";
 
 type Props = {
@@ -134,15 +133,12 @@ const { page } = Astro.props;
 ---
 
 <MainLayout title="Blog">
-  <div class="flex flex-col gap-4">
+  <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
     {
       // v1: page.data.map(({ url, frontmatter }) => (
-      page.data.map(
-        (
-          { data, slug },
-          // v1: <BlogCardItem url={url} frontmatter={frontmatter} />
-        ) => <BlogCardItem url={`/blog/${slug}`} frontmatter={data} />,
-      )
+      //   <BlogCard url={url} frontmatter={frontmatter} />
+      // ))
+      page.data.map((post) => <BlogCard post={post} />)
     }
   </div>
   <Pagination prev={page.url.prev} next={page.url.next} />

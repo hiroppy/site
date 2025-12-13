@@ -1,0 +1,28 @@
+@media (min-width: 768px) {
+  .feedleLayout {
+    font-family: var(--article-font-family);
+    height: calc(100vh - var(--header-height));
+    overflow: hidden;
+  }
+
+  .feedleLayout .sidebarContainer {
+    position: sticky;
+    top: var(--header-height) !important;
+    height: calc(100vh - var(--header-height));
+    overflow-y: auto;
+  }
+
+  .feedleLayout .mainContent {
+    min-height: 0;
+    height: calc(100vh - var(--header-height));
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 767px) {
+  .feedleLayout .mainContent {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: visible;
+  }
+}

@@ -1,14 +1,13 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: PWAの実装をしてみた
-date: 2017-07-28
-description: Node.jsでのパフォーマンス改善の方法のtipsをまとめます
+title: "PWAの実装をしてみた"
+date: 2017-07-28T00:00:00.000Z
+description: "Node.jsでのパフォーマンス改善の方法のtipsをまとめます"
 image: /images/brands/nodejs.png
 tags: pwa
 hatenaPath: 2017/07/28/101318
 ---
 
-import OG from "../../components/blog/OG.astro";
+import { OG } from "../../mdx/components/OG";
 
 そういえば PWA の実装したことがなかったなと思ったので少し触ってみた。
 
@@ -37,7 +36,7 @@ import OG from "../../components/blog/OG.astro";
 
 対応状況は以下の通り
 
-![](../../assets/images/blog/pwa/caniuse.png)
+![](/images/blog/pwa/caniuse.png)
 
 https://caniuse.com/#feat=serviceworkers
 
@@ -55,7 +54,7 @@ https://caniuse.com/#feat=serviceworkers
 PWA には App Shell と Content というものがあります。
 以下の図を見るとわかりやすいと思います。
 
-![](../../assets/images/blog/pwa/appshell.png)
+![](/images/blog/pwa/appshell.png)
 
 <OG url="https://developers.google.com/web/updates/2015/11/app-shell" />
 
@@ -285,7 +284,7 @@ App は View 全体を構築します。
 
 ## アセットのインストール
 
-![](../../assets/images/blog/pwa/assets.png)
+![](/images/blog/pwa/assets.png)
 
 このような感じで保存される。
 キャッシュの種類は `main`, `additional`, `optional` の三種類ある。
@@ -300,7 +299,7 @@ https://github.com/NekR/offline-plugin/blob/master/docs/caches.md
 
 ネットワークタイムラインはこのようになります。
 
-![](../../assets/images/blog/pwa/network.png)
+![](/images/blog/pwa/network.png)
 
 size のところを見るとわかりますが、Service Worker からコードを取得しています。
 ネットワークが切れているので、sw.js の取得は失敗しますがコアコードはすでに取得済みなのであたかも生きているようにレンダリングされる。
