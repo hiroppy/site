@@ -5,13 +5,13 @@ export function isActiveNavCurrentPath(
   currentPath: string,
 ) {
   if (item === "/") {
-    if (currentPath === "/") {
-      return true;
-    }
-
     console.log(item, currentPath);
     console.log(item === currentPath);
     console.log(JSON.stringify(item) === JSON.stringify(currentPath));
+
+    if (currentPath === "/") {
+      return true;
+    }
 
     return false;
   }
