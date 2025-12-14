@@ -1,9 +1,8 @@
-"use cache";
-
 import { load } from "cheerio";
-import { readFileSync, writeFileSync } from "node:fs";
+import { writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { MdOpenInNew } from "react-icons/md";
+import ogpCache from "../../../generated/ogp.json";
 import { Image } from "../../components/Image";
 import { Link } from "../../components/Link";
 
@@ -12,6 +11,8 @@ type Props = {
 };
 
 export async function OG({ url }: Props) {
+  "use cache";
+
   const { title, description, image } = await fetchOGP(url);
 
   return (
@@ -46,7 +47,7 @@ export async function OG({ url }: Props) {
           </div>
         </div>
         {image && (
-          <div className="w-24 shrink-0 overflow-hidden md:w-[243px]">
+          <div className="w-24 shrink-0 overflow-hidden md:w-60.75">
             <Image
               src={image}
               alt={title}
@@ -67,23 +68,11 @@ type OGPData = {
   image: string;
 };
 
-type OGPCache = {
-  [url: string]: OGPData;
-};
-
 async function fetchOGP(url: string): Promise<OGPData> {
-  const generatedFilePath = resolve(process.cwd(), "generated/ogp.json");
-  let ogpCache: OGPCache = {};
+  "use cache";
 
-  try {
-    const content = readFileSync(generatedFilePath, "utf8");
-    ogpCache = JSON.parse(content);
-  } catch {
-    // File doesn't exist or is invalid
-  }
-
-  if (ogpCache[url]) {
-    return ogpCache[url];
+  if (ogpCache[url as keyof typeof ogpCache]) {
+    return ogpCache[url as keyof typeof ogpCache] as OGPData;
   }
 
   let title = "";
@@ -115,10 +104,12 @@ async function fetchOGP(url: string): Promise<OGPData> {
     image = "";
   }
 
-  // Cache the result in production
-  if (process.env.NODE_ENV === "production") {
+  // Cache the result only during local builds (not on Vercel)
+  if (process.env.NODE_ENV === "production" && !process.env.VERCEL) {
+    const generatedFilePath = resolve(process.cwd(), "generated/ogp.json");
+
     try {
-      writeFileSync(
+      await writeFile(
         generatedFilePath,
         JSON.stringify(
           {
@@ -129,8 +120,8 @@ async function fetchOGP(url: string): Promise<OGPData> {
           2,
         ),
       );
-    } catch (error) {
-      console.warn("Failed to write OGP cache:", error);
+    } catch (err) {
+      console.warn("Failed to write OGP cache:", err);
     }
   }
 

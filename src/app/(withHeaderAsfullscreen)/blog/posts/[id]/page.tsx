@@ -38,7 +38,6 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }: PageProps<"/blog/posts/[id]">) {
   const { id } = await params;
-  console.time("start");
   const post = await getBlogPost(id);
 
   if (!post) {
@@ -51,8 +50,6 @@ export default async function Page({ params }: PageProps<"/blog/posts/[id]">) {
   )
     ? [...extractedHeadings, { depth: 2, slug: "references", text: "Stuff" }]
     : extractedHeadings;
-
-  console.timeEnd("start");
 
   return (
     <div className="flex min-h-screen">
