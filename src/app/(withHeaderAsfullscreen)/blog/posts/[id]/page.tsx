@@ -7,7 +7,6 @@ import { createMetadata } from "../../../../../utils/metadata";
 import { ArticleBody } from "./_components/ArticleBody";
 import { Hero } from "./_components/Hero";
 import { Navigation } from "./_components/Navigation";
-import { References } from "./_components/References";
 import { Sidebar } from "./_components/Sidebar";
 import { getStaticParams } from "./_metadata";
 
@@ -39,6 +38,7 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }: PageProps<"/blog/posts/[id]">) {
   const { id } = await params;
+  console.time("start");
   const post = await getBlogPost(id);
 
   if (!post) {
@@ -49,11 +49,10 @@ export default async function Page({ params }: PageProps<"/blog/posts/[id]">) {
   const headings = !!(
     frontmatter.references && frontmatter.references.length > 0
   )
-    ? [
-        ...extractedHeadings,
-        { depth: 2, slug: "references", text: "参考リンク" },
-      ]
+    ? [...extractedHeadings, { depth: 2, slug: "references", text: "Stuff" }]
     : extractedHeadings;
+
+  console.timeEnd("start");
 
   return (
     <div className="flex min-h-screen">
@@ -74,15 +73,6 @@ export default async function Page({ params }: PageProps<"/blog/posts/[id]">) {
               MDXContent={MDXContent}
               headings={headings}
             />
-            {frontmatter.references && frontmatter.references.length > 0 && (
-              <Suspense
-                fallback={
-                  <div className="my-12 h-20 animate-pulse rounded-lg bg-gray-100" />
-                }
-              >
-                <References references={frontmatter.references} />
-              </Suspense>
-            )}
           </article>
           {process.env.NODE_ENV !== "development" && (
             <Suspense>

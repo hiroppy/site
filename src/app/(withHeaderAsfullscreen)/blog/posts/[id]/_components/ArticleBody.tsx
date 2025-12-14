@@ -1,10 +1,12 @@
 "use cache";
 
+import { Suspense } from "react";
 import { SiGithub } from "react-icons/si";
 import { Link } from "../../../../../../components/Link";
 import { Tag } from "../../../../../../components/Tag";
 import type { BlogPost } from "../../../../../../mdx/types";
 import { parseTags } from "../../../../../../utils/blog";
+import { References } from "./References";
 import { ShareButtons } from "./ShareButtons";
 import { TableOfContents } from "./TableOfContents";
 import { HatenaMigrationLabel, OverOneYearOldLabel } from "./WarningLabels";
@@ -53,6 +55,15 @@ export async function ArticleBody({
       </div>
       <div className="prose prose-lg max-w-none">
         <MDXContent />
+        {frontmatter.references && frontmatter.references.length > 0 && (
+          <Suspense
+            fallback={
+              <div className="my-12 h-20 animate-pulse rounded-lg bg-gray-100" />
+            }
+          >
+            <References references={frontmatter.references} />
+          </Suspense>
+        )}
       </div>
       <hr className=" border-gray-200" />
       <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">

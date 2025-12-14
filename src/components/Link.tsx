@@ -71,11 +71,9 @@ export function Link({
 function isExternalLink(href: string) {
   if (!href) return false;
 
-  const siteUrl = SITE_URL;
-
-  if (!siteUrl) {
+  if (!SITE_URL) {
     return href.startsWith("http");
   }
 
-  return href.startsWith("http") && !href.startsWith(siteUrl);
+  return href.startsWith("http") && !href.startsWith(SITE_URL);
 }

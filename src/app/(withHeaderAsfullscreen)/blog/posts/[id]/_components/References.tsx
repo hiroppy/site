@@ -21,10 +21,8 @@ export async function References({ references }: Props) {
   );
 
   return (
-    <section className="my-12 px-4 md:px-8">
-      <h2 id="references" className="mb-4 text-xl font-bold text-gray-900">
-        参考リンク
-      </h2>
+    <>
+      <h2 id="references">Stuff</h2>
       <ul className="list-outside list-disc space-y-1">
         {referencesWithTitles.map(({ url, title }, index) => (
           <li key={`${url}-${index}`} className="ml-4 marker:text-gray-700">
@@ -38,7 +36,7 @@ export async function References({ references }: Props) {
           </li>
         ))}
       </ul>
-    </section>
+    </>
   );
 }
 
