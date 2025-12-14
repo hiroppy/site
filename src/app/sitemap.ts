@@ -24,7 +24,7 @@ async function getBlogPostEntries(): Promise<MetadataRoute.Sitemap> {
   const posts = await getBlogPosts();
 
   return posts.map((post) => ({
-    url: `${baseDomain}blog/posts/${post.id}`,
+    url: `${baseDomain}/blog/posts/${post.id}`,
     lastModified: post.frontmatter.date,
     changeFrequency: "monthly",
     priority: 0.8,
@@ -35,7 +35,7 @@ async function getTagEntries(): Promise<MetadataRoute.Sitemap> {
   const allTags = await getAllTags();
 
   return allTags.map((tag) => ({
-    url: `${baseDomain}blog/tags/${tag}`,
+    url: `${baseDomain}/blog/tags/${tag}`,
     lastModified: new Date(),
     changeFrequency: "monthly",
     priority: 0.5,
@@ -45,25 +45,25 @@ async function getTagEntries(): Promise<MetadataRoute.Sitemap> {
 function getMediaEntries(): MetadataRoute.Sitemap {
   return [
     {
-      url: `${baseDomain}media`,
+      url: `${baseDomain}/media`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${baseDomain}media/articles`,
+      url: `${baseDomain}/media/articles`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.5,
     },
     {
-      url: `${baseDomain}media/talks`,
+      url: `${baseDomain}/media/talks`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.5,
     },
     {
-      url: `${baseDomain}media/podcasts`,
+      url: `${baseDomain}/media/podcasts`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.5,
@@ -80,25 +80,25 @@ function getStaticPageEntries(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
-      url: `${baseDomain}about`,
+      url: `${baseDomain}/about`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseDomain}jobs`,
+      url: `${baseDomain}/jobs`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1.0,
     },
     {
-      url: `${baseDomain}blog`,
+      url: `${baseDomain}/blog`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1.0,
     },
     {
-      url: `${baseDomain}labs`,
+      url: `${baseDomain}/labs`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.5,
