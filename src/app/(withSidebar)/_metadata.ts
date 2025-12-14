@@ -1,4 +1,4 @@
 import { SITE_DESCRIPTION } from "../../constants";
 
-export const title = "hiroppy - Web Engineer";
+export const title = "hiroppy 😵‍💫";
 export const description = SITE_DESCRIPTION;
