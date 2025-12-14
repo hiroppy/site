@@ -21,7 +21,7 @@ export async function References({ references }: Props) {
   );
 
   return (
-    <section className="my-12">
+    <section className="my-12 px-4 md:px-8">
       <h2 id="references" className="mb-4 text-xl font-bold text-gray-900">
         参考リンク
       </h2>
@@ -49,7 +49,7 @@ async function fetchTitle(url: string) {
 
   try {
     const response = await fetch(url, {
-      signal: AbortSignal.timeout(5000),
+      signal: AbortSignal.timeout(3000),
     });
 
     if (!response.ok) {

@@ -89,3 +89,38 @@ export async function getAllTags() {
 
   return Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]);
 }
+
+export async function getAdjacentBlogPosts(id: string) {
+  "use cache";
+
+  const posts = await getBlogPosts();
+  const index = posts.findIndex((p) => p.id === id);
+
+  if (index === -1) {
+    return { prev: null, next: null };
+  }
+
+  return {
+    prev: index > 0 ? posts[index - 1] : null,
+    next: index < posts.length - 1 ? posts[index + 1] : null,
+  };
+}
+
+export async function getRelatedBlogPosts(
+  id: string,
+  tags: string,
+  limit: number = 2,
+) {
+  "use cache";
+
+  const posts = await getBlogPosts();
+  const currentTags = parseTags(tags);
+
+  return posts
+    .filter((p) => p.id !== id)
+    .filter((p) => {
+      const blogTags = parseTags(p.frontmatter.tags);
+      return currentTags.some((tag) => blogTags.includes(tag));
+    })
+    .slice(0, limit);
+}

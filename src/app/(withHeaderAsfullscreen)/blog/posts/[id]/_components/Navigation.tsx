@@ -8,7 +8,10 @@ import {
 } from "../../../../../../components/Card";
 import { Image } from "../../../../../../components/Image";
 import { Tag } from "../../../../../../components/Tag";
-import { getBlogPosts } from "../../../../../../mdx/contentLoader";
+import {
+  getAdjacentBlogPosts,
+  getRelatedBlogPosts,
+} from "../../../../../../mdx/contentLoader";
 import { parseTags } from "../../../../../../utils/blog";
 import { formatDate } from "../../../../../../utils/formatDate";
 
@@ -18,54 +21,45 @@ type Props = {
 };
 
 export async function Navigation({ id, tags }: Props) {
-  const posts = await getBlogPosts();
-  const index = posts.findIndex((p) => p.id === id);
-  const currentTags = parseTags(tags);
-
-  const relatedPosts = posts
-    .filter((p) => p.id !== id)
-    .filter((p) => {
-      const blogTags = parseTags(p.frontmatter.tags);
-      return currentTags.some((tag) => blogTags.includes(tag));
-    })
-    .slice(0, 2);
+  const { prev, next } = await getAdjacentBlogPosts(id);
+  const relatedPosts = await getRelatedBlogPosts(id, tags, 2);
 
   return (
     <>
-      {index !== -1 && (
+      {(prev || next) && (
         <section className="my-12">
           <h2 className="mb-6 text-xl font-bold text-gray-900">前後の記事</h2>
           <div className="grid gap-6 md:grid-cols-2">
-            {index !== 0 ? (
+            {prev ? (
               <Card
                 className="transition-all duration-300 hover:shadow-lg"
                 link={{
-                  href: `/blog/${posts[index - 1].id}`,
-                  ariaLabel: `前の記事: ${posts[index - 1].frontmatter.title}`,
+                  href: `/blog/posts/${prev.id}`,
+                  ariaLabel: `前の記事: ${prev.frontmatter.title}`,
                 }}
               >
                 <CardContent>
                   <div className="mb-2 text-xs text-gray-500">← 前の記事</div>
                   <CardTitle className="line-clamp-2 text-sm">
-                    {posts[index - 1].frontmatter.title}
+                    {prev.frontmatter.title}
                   </CardTitle>
                 </CardContent>
               </Card>
             ) : (
               <div />
             )}
-            {index !== posts.length - 1 ? (
+            {next ? (
               <Card
                 className="transition-all duration-300 hover:shadow-lg"
                 link={{
-                  href: `/blog/${posts[index + 1].id}`,
-                  ariaLabel: `次の記事: ${posts[index + 1].frontmatter.title}`,
+                  href: `/blog/posts/${next.id}`,
+                  ariaLabel: `次の記事: ${next.frontmatter.title}`,
                 }}
               >
                 <CardContent className="text-right">
                   <div className="mb-2 text-xs text-gray-500">次の記事 →</div>
                   <CardTitle className="line-clamp-2 text-sm" level={3}>
-                    {posts[index + 1].frontmatter.title}
+                    {next.frontmatter.title}
                   </CardTitle>
                 </CardContent>
               </Card>
@@ -84,7 +78,7 @@ export async function Navigation({ id, tags }: Props) {
                 key={relatedPost.id}
                 className="transition-all duration-300 hover:shadow-lg"
                 link={{
-                  href: `/blog/${relatedPost.id}`,
+                  href: `/blog/posts/${relatedPost.id}`,
                   ariaLabel: `関連記事: ${relatedPost.frontmatter.title}`,
                 }}
               >

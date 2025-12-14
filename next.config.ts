@@ -61,11 +61,11 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/assets/:path*",
+        source: "/_next/static/(.*)",
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=2678400", // 31 days
+            value: "public, max-age=2678400, immutable", // 31 days
           },
         ],
       },
@@ -75,6 +75,7 @@ const nextConfig: NextConfig = {
     // turbopack + mdxRsはcustom pluginsをサポートしていない
     mdxRs: false,
     typedEnv: true,
+    optimizePackageImports: ["hiroppy"],
   },
   serverExternalPackages: ["cheerio"],
 };

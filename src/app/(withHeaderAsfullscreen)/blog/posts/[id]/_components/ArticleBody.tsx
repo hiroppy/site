@@ -5,12 +5,13 @@ import { Link } from "../../../../../../components/Link";
 import { Tag } from "../../../../../../components/Tag";
 import type { BlogPost } from "../../../../../../mdx/types";
 import { parseTags } from "../../../../../../utils/blog";
-import { References } from "./References";
 import { ShareButtons } from "./ShareButtons";
 import { TableOfContents } from "./TableOfContents";
 import { HatenaMigrationLabel, OverOneYearOldLabel } from "./WarningLabels";
 
-type Props = BlogPost;
+type Props = Omit<BlogPost, "frontmatter"> & {
+  frontmatter: BlogPost["frontmatter"];
+};
 
 export async function ArticleBody({
   id,
@@ -53,7 +54,6 @@ export async function ArticleBody({
       <div className="prose prose-lg max-w-none">
         <MDXContent />
       </div>
-      <References references={frontmatter.references ?? []} />
       <hr className=" border-gray-200" />
       <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
         <ShareButtons id={id} title={frontmatter.title} />

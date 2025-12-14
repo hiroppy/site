@@ -28,6 +28,7 @@ export function BlogCard({ post, lazy, maxTags = 3 }: Props) {
       link={{
         href: `/blog/posts/${id}`,
         ariaLabel: `記事「${data.title}」を読む`,
+        prefetch: false,
       }}
     >
       <CardHeader className="p-0">

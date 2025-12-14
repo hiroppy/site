@@ -10,6 +10,7 @@ import { getStaticParams, title } from "./_metadata";
 
 export const size = ogSize;
 export const contentType = ogContentType;
+
 export const alt = title;
 
 export async function generateStaticParams() {
