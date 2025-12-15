@@ -46,7 +46,7 @@ async function getArticles(): Promise<Article[]> {
 
       return {
         objectID: name,
-        path: `blog/${name}`,
+        path: `blog/posts/${name}`,
         content: `${processedContent.value}`,
         ...frontmatter,
       };

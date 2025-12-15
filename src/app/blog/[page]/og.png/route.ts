@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { SITE_URL } from "../../../../constants";
 import { fetchOGP } from "../../../../utils/ogp";
 
 // astro時代の後方互換
@@ -7,7 +8,7 @@ export async function GET(
   { params }: PageProps<"/blog/[page]">,
 ) {
   const { page } = await params;
-  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/posts/${page}`;
+  const url = `${SITE_URL}/blog/posts/${page}`;
   const data = await getData(url);
 
   if (!data?.image) {
