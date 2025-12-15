@@ -3,6 +3,7 @@
 import meta from "hiroppy/generated/meta.json";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { MdRssFeed } from "react-icons/md";
+import { SITE_REPOSITORY_URL } from "../constants";
 import { cn } from "../utils/cn";
 import { Link } from "./Link";
 
@@ -18,7 +19,7 @@ export async function Footer({ className }: Props) {
           © {new Date().getFullYear()} - Copyright Hiroppy, All Rights Reserved.
         </span>
         <div className="flex items-center gap-4">
-          <Link href={meta.sns.github} ariaLabel="GitHub">
+          <Link href={SITE_REPOSITORY_URL} ariaLabel="GitHub">
             <FaGithub size={20} aria-hidden="true" focusable="false" />
           </Link>
           <Link href={meta.sns.twitter} ariaLabel="Twitter">

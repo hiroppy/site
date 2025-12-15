@@ -5,12 +5,14 @@ on:
     paths:
       - "package.json"
       - "src/**"
+      - "tests/**"
       - ".github/workflows/ci.yml"
   push:
     branches: [main]
     paths:
       - "package.json"
       - "src/**"
+      - "tests/**"
       - ".github/workflows/ci.yml"
 
 env:
@@ -58,6 +60,20 @@ jobs:
         if: failure()
         with:
           name: a11y-test-results
+          path: test-results/
+  routes:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.57.0
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup-node
+      - run: pnpm build
+      - run: pnpm test:routes
+      - uses: actions/upload-artifact@v6
+        if: failure()
+        with:
+          name: routes-test-results
           path: test-results/
   vrt:
     runs-on: ubuntu-latest

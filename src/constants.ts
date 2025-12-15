@@ -14,6 +14,8 @@ export const BLOG_DESCRIPTION =
 const HATENA_BLOG_URL = "https://abouthiroppy.hatenablog.jp";
 export const HATENA_BLOG_ENTRY_URL = `${HATENA_BLOG_URL}/entry`;
 
+export const SITE_REPOSITORY_URL = "https://github.com/hiroppy/site";
+
 export const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },

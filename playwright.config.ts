@@ -41,6 +41,15 @@ export default defineConfig({
       },
     },
     {
+      name: "chrome-routes",
+      testMatch: "tests/routes.test.ts",
+      use: {
+        ...devices["Desktop Chrome"],
+        actionTimeout: 30000,
+        navigationTimeout: 60000,
+      },
+    },
+    {
       name: "chrome-vrt-pages",
       testMatch: ["tests/vrt-pages.test.ts", "tests/metadata-pages.test.ts"],
       use: {
