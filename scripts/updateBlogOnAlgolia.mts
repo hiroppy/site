@@ -63,7 +63,7 @@ const contents = articles.map(
   ({ layout, image, tags, hatenaPath, date, ...rest }) => rest,
 );
 const client = algoliasearch(
-  process.env.ALGOLIA_APPLICATION_ID!,
+  process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID!,
   process.env.ALGOLIA_ADMIN_KEY!,
 );
 
