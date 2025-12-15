@@ -194,15 +194,15 @@ export function JobTimeline({
         return (
           <div key={key} data-timeline-view={key}>
             <div
-              className="timeline-container border-line bg-bg relative max-h-[400px] w-full overflow-x-auto overflow-y-auto rounded border px-6"
+              className="timeline-container border-line bg-bg relative max-h-100 w-full overflow-x-auto overflow-y-auto rounded border px-6"
               data-testid="job-timeline"
             >
-              <div className="bg-bg sticky top-0 z-10 min-w-[2800px] py-2">
+              <div className="bg-bg sticky top-0 z-10 min-w-700 py-2">
                 <JobTimelineAxis dateRange={dateRange} />
               </div>
 
               <div
-                className="relative min-w-[2800px]"
+                className="relative min-w-700"
                 style={{ height: `${height}px` }}
               >
                 {timeMarkers.map((marker, index) => (

@@ -28,7 +28,7 @@ export async function Footer({ className }: Props) {
           <Link href={meta.sns.linkedin} ariaLabel="LinkedIn">
             <FaLinkedin size={20} aria-hidden="true" focusable="false" />
           </Link>
-          <Link href="/blog/rss.xml" ariaLabel="RSS">
+          <Link href="/blog/rss.xml" ariaLabel="RSS" prefetch={false}>
             <MdRssFeed size={20} aria-hidden="true" focusable="false" />
           </Link>
         </div>
