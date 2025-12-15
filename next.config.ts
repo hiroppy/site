@@ -10,6 +10,7 @@ import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { remarkAlerts } from "./src/mdx/remark/remarkAlerts";
 import { remarkCodeGroups } from "./src/mdx/remark/remarkCodeGroups";
 import { remarkExtractHeadings } from "./src/mdx/remark/remarkExtractHeadings";
+import { remarkOgLinks } from "./src/mdx/remark/remarkOgLinks";
 
 const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
@@ -90,6 +91,7 @@ const withMDX = createMDX({
       remarkGfm,
       remarkCodeGroups,
       remarkAlerts,
+      remarkOgLinks,
     ],
     rehypePlugins: [
       rehypeSlug,

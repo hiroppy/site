@@ -107,15 +107,6 @@
   .prose li {
     @apply mb-2;
   }
-  .prose a {
-    color: var(--color-link);
-    text-decoration: none;
-    transition: opacity 0.3s;
-  }
-  .prose a:hover {
-    opacity: 0.6;
-    text-decoration: underline;
-  }
   .prose code:not(pre code) {
     @apply rounded bg-gray-100 px-1 py-0.5 text-sm text-gray-800;
   }

@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import { Image, type Props as ImageProps } from "./components/Image";
+import { Link } from "./components/Link";
 import { Alert } from "./mdx/components/Alert";
 import { CodeGroup } from "./mdx/components/CodeGroup";
 import { GoogleSlidesCard } from "./mdx/components/GoogleSlidesCard";
@@ -10,6 +11,8 @@ import { YoutubeCard } from "./mdx/components/YoutubeCard";
 
 export function useMDXComponents(components: MDXComponents) {
   return {
+    img: MDImage,
+    a: Link,
     Alert,
     OG,
     CodeGroup,
@@ -18,7 +21,6 @@ export function useMDXComponents(components: MDXComponents) {
     GoogleSlidesCard,
     TwoColumn,
     Image: MDImage,
-    img: MDImage,
     ...components,
   };
 }
