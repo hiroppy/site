@@ -1,10 +1,10 @@
-import { load } from "cheerio";
 import { writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { MdOpenInNew } from "react-icons/md";
 import ogpCache from "../../../generated/ogp.json";
 import { Image } from "../../components/Image";
 import { Link } from "../../components/Link";
+import { fetchOGP, type OGPData } from "../../utils/ogp";
 
 type Props = {
   url: string;
@@ -13,7 +13,7 @@ type Props = {
 export async function OG({ url }: Props) {
   "use cache";
 
-  const { title, description, image } = await fetchOGP(url);
+  const { title, description, image } = await fetchData(url);
 
   return (
     <Link
@@ -53,7 +53,8 @@ export async function OG({ url }: Props) {
               alt={title}
               width={243}
               height={128}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover rounded-none"
+              unoptimized
             />
           </div>
         )}
@@ -62,47 +63,14 @@ export async function OG({ url }: Props) {
   );
 }
 
-type OGPData = {
-  title: string;
-  description: string;
-  image: string;
-};
-
-async function fetchOGP(url: string): Promise<OGPData> {
+async function fetchData(url: string): Promise<OGPData> {
   "use cache";
 
   if (ogpCache[url as keyof typeof ogpCache]) {
     return ogpCache[url as keyof typeof ogpCache] as OGPData;
   }
 
-  let title = "";
-  let description = "";
-  let image = "";
-
-  try {
-    const html = await fetch(url).then((res) => res.text());
-    const $ = load(html);
-
-    title = $("meta[property='og:title']").attr("content") ?? $("title").text();
-    description =
-      $("meta[property='og:description']").attr("content") ??
-      $("meta[name='description']").attr("content") ??
-      "";
-    image = $("meta[property='og:image']").attr("content") ?? "";
-
-    if (image && !image.startsWith("http")) {
-      const urlObj = new URL(url);
-      image = `${urlObj.origin}${image.startsWith("/") ? "" : "/"}${image}`;
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      console.warn(`Failed to fetch OG data for ${url}:`, error.message);
-    }
-
-    title = url;
-    description = "";
-    image = "";
-  }
+  const { title, description, image } = await fetchOGP(url);
 
   // Cache the result only during local builds (not on Vercel)
   if (process.env.NODE_ENV === "production" && !process.env.VERCEL) {

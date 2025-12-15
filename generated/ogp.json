@@ -1019,11 +1019,6 @@
     "description": "Applicatieshell-architectuur is een methode om tegenwoordig progressieve web-apps te bouwen, waarbij gebruik wordt gemaakt van een reeks technologieën.",
     "image": ""
   },
-  "https://hiroppy.me": {
-    "title": "hiroppy's site",
-    "description": "Hiroppy is a JavaScript engineer and working on some OSS projects and Japanese communities.",
-    "image": "https://hiroppy.me/_astro/me.Cw_p55Uq.png"
-  },
   "https://sushichan044.hateblo.jp/entry/2025/06/06/003325": {
     "title": "fzf で高速に git worktree 間を移動する - お雑煮研究会",
     "description": "AI Coding の発展により、 最近は一つのリポジトリの中に複数のgit worktreeを切って並列作業をすることが増えてきた。 こうなると、当然git worktreeの間を素早く移動したくなるのが人間というものである。 いいアイデアはないだろうかと考えていたら、ふと id:mizdra さんが似たものを作られていたことを思い出した。 www.mizdra.net 多分同じ要領で行けそうなので作ってみることにした。 完成形 基本 zsh で作業しているのでそれ用になっている。他のシェル使っている方は申し訳ない... 任意の Git リポジトリ内で起動すると、そのリポジトリで作成されてい…",
@@ -1073,5 +1068,10 @@
     "title": "E2EテストでNextAuth認証(OAuthなど)を突破する方法",
     "description": "",
     "image": "https://res.cloudinary.com/zenn/image/upload/s--ipCbiIXq--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:E2E%25E3%2583%2586%25E3%2582%25B9%25E3%2583%2588%25E3%2581%25A7NextAuth%25E8%25AA%258D%25E8%25A8%25BC%2528OAuth%25E3%2581%25AA%25E3%2581%25A9%2529%25E3%2582%2592%25E7%25AA%2581%25E7%25A0%25B4%25E3%2581%2599%25E3%2582%258B%25E6%2596%25B9%25E6%25B3%2595%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_34:zaru%2Cx_220%2Cy_108/bo_3px_solid_rgb:d6e3ed%2Cg_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyL2FiNDkwNTdmZTMuanBlZw==%2Cr_20%2Cw_90%2Cx_92%2Cy_102/co_rgb:6e7b85%2Cg_south_west%2Cl_text:notosansjp-medium.otf_30:%25E3%2583%25A0%25E3%2583%25BC%25E3%2582%25B6%25E3%2583%25AB%25E3%2581%25A1%25E3%2582%2583%25E3%2582%2593%25E3%2581%25AD%25E3%2582%258B%2Cx_220%2Cy_160/bo_4px_solid_white%2Cg_south_west%2Ch_50%2Cl_fetch:aHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FPaDE0R2hTeWVOcHN2TEdOdTdPeUFlU1JEbDhUNkNOX1p3NHBXSHpIRHN2NlBFPXMyNTAtYw==%2Cr_max%2Cw_50%2Cx_139%2Cy_84/v1627283836/default/og-base-w1200-v2.png"
+  },
+  "https://hiroppy.me": {
+    "title": "hiroppy 😵‍💫 | hiroppy's site",
+    "description": "Hiroppy is a JavaScript engineer and working on some OSS projects and Japanese communities.",
+    "image": "https://hiroppy.me/opengraph-image-3d7daz?9c8be3c11757d347"
   }
 }

@@ -1,6 +1,6 @@
 import { FaXTwitter } from "react-icons/fa6";
+import { SiHatenabookmark } from "react-icons/si";
 import { Link } from "../../../../../../components/Link";
-import { Hatena } from "../../../../../../components/icons/Hatena";
 import { BLOG_URL, SITE_TITLE } from "../../../../../../constants";
 
 type Props = {
@@ -13,9 +13,9 @@ export function ShareButtons({ id, title }: Props) {
   const sharedTitle = `${title} - ${SITE_TITLE}`;
   const items = [
     {
-      name: "Twitter",
+      name: "Post",
       href: `https://twitter.com/share?url=${url}&text=${sharedTitle}&related=about_hiroppy`,
-      ariaLabel: "Share on Twitter",
+      ariaLabel: "Share on X",
       icon: <FaXTwitter size={20} aria-hidden="true" focusable="false" />,
     },
     {
@@ -28,12 +28,12 @@ export function ShareButtons({ id, title }: Props) {
       name: "Bookmark",
       href: `https://b.hatena.ne.jp/entry/panel/?url=${url}&title=${sharedTitle}#bbutton`,
       ariaLabel: "Bookmark on Hatena",
-      icon: <Hatena className="h-4 w-4" />,
+      icon: <SiHatenabookmark size={20} aria-hidden="true" focusable="false" />,
     },
   ];
 
   return (
-    <div className="flex items-center justify-center gap-4">
+    <div className="flex items-center justify-center gap-6">
       {items.map((item) => (
         <Link
           key={item.name}

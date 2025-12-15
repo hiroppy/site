@@ -30,13 +30,29 @@ export function proxy(request: NextRequest) {
       return NextResponse.next();
     }
 
-    if (!/^\d+$/.test(slug)) {
-      const url = request.nextUrl.clone();
+    // 数字のみの場合、ページネーション（1, 2, 3...）か年号（2018...）かをチェック
+    if (/^\d+$/.test(slug)) {
+      const num = parseInt(slug, 10);
 
-      url.pathname = `/blog/posts/${slug}`;
+      // 2018以降の年号の場合は /blog/posts/:year にリダイレクト
+      if (num >= 2018) {
+        const url = request.nextUrl.clone();
 
-      return NextResponse.redirect(url, 308);
+        url.pathname = `/blog/posts/${slug}`;
+
+        return NextResponse.redirect(url, 308);
+      }
+
+      // それ以外の数字（ページネーション）はそのまま通過
+      return NextResponse.next();
     }
+
+    // 数字以外のslugは /blog/posts/:slug にリダイレクト
+    const url = request.nextUrl.clone();
+
+    url.pathname = `/blog/posts/${slug}`;
+
+    return NextResponse.redirect(url, 308);
   }
 
   return NextResponse.next();
