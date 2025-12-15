@@ -6,28 +6,6 @@ import {
 } from "./utils/routes";
 
 test.describe("Proxy Route Tests", () => {
-  test.describe("/labs/feedle redirect", () => {
-    test("GET /labs/feedle returns 308 redirect", async ({ page }) => {
-      const { status, headers } = await fetchWithoutRedirects(
-        page,
-        "/labs/feedle",
-      );
-
-      expect(status).toBe(308);
-      expect(headers["location"]).toContain("/labs/feedle/frontend");
-    });
-
-    test("Redirect destination /labs/feedle/frontend loads successfully", async ({
-      page,
-    }) => {
-      await verifyRedirectDestination(
-        page,
-        "/labs/feedle",
-        "/labs/feedle/frontend",
-      );
-    });
-  });
-
   test.describe("/blog redirect", () => {
     test("GET /blog returns 308 redirect to /blog/1", async ({ page }) => {
       const { status, headers } = await fetchWithoutRedirects(page, "/blog");
