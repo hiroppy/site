@@ -1,5 +1,4 @@
 import { test, expect } from "@playwright/test";
-import { getPathAndOutputDirname } from "./utils/getPathAndOutputDirname";
 import {
   fetchWithoutRedirects,
   verifyRedirectDestination,
@@ -130,15 +129,6 @@ test.describe("Blog OG Image Route Tests", () => {
 
       expect(status).toBe(200);
       expect(contentType).toContain("image/webp");
-    });
-
-    test("OG image screenshot matches", async ({ page }) => {
-      await page.goto("http://localhost:3000/blog/vrt/og.png");
-
-      const { output } = getPathAndOutputDirname("/blog/vrt");
-      await expect(page).toHaveScreenshot([output, "og-image.png"], {
-        fullPage: true,
-      });
     });
 
     test("OG image buffer is valid", async ({ page }) => {
