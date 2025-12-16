@@ -10,13 +10,13 @@ type Props = {
   children?: ReactNode;
 };
 
-// TODO: 背景色検討
 export function ContactButton({ variant = "default", className }: Props) {
   return (
     <Link
       href={meta.form.request}
       variant="button"
       className={cn(
+        "text-accent border-accent font-semibold",
         variant === "full" && "inline-flex w-full items-center justify-center",
         className,
       )}

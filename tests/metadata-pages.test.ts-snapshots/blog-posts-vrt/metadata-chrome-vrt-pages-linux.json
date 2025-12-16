@@ -1,15 +1,15 @@
 {
-  "ogTitle": "VRT | hiroppy's site",
+  "ogTitle": "Markdown Preview for VRT | hiroppy's site",
   "ogDescription": "test as VRT",
   "ogImage": "http://localhost:3000/blog/posts/vrt/opengraph-image-ygi0ps",
   "ogUrl": "http://localhost:3000/blog/posts/vrt",
   "ogType": "website",
   "twitterCard": "summary_large_image",
-  "twitterTitle": "VRT | hiroppy's site",
+  "twitterTitle": "Markdown Preview for VRT | hiroppy's site",
   "twitterDescription": "test as VRT",
   "twitterImage": "http://localhost:3000/blog/posts/vrt/opengraph-image-ygi0ps",
   "twitterCreator": "@about_hiroppy",
-  "title": "VRT | hiroppy's site",
+  "title": "Markdown Preview for VRT | hiroppy's site",
   "description": "test as VRT",
   "canonical": "http://localhost:3000/blog/posts/vrt"
 }

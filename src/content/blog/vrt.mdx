@@ -1,5 +1,5 @@
 ---
-title: "VRT"
+title: "Markdown Preview for VRT"
 date: 1992-04-29
 description: "test as VRT"
 image: /images/meta/me.png
@@ -12,9 +12,7 @@ references:
 
 import { Image } from "../../components/Image";
 import { GoogleSlidesCard } from "../../mdx/components/GoogleSlidesCard";
-import { TwitterCard } from "../../mdx/components/TwitterCard";
 import { TwoColumn } from "../../mdx/components/TwoColumn";
-import { YoutubeCard } from "../../mdx/components/YoutubeCard";
 
 ---
 
@@ -41,19 +39,128 @@ This article is for VRT.
 | 1   | 1   |
 | 2   | 2   |
 
+::: details code
+
+```md
+| foo | bar |
+| --- | --- |
+| 1   | 1   |
+| 2   | 2   |
+```
+
+:::
+
 ## Two column
 
-<TwoColumn>
-  <div className="bg-amber-100">左側のコンテンツ</div>
-  <div className="bg-cyan-100">右側のコンテンツ</div>
-</TwoColumn>
+::: columns
+
+<div className="bg-amber-100">左側のコンテンツ</div>
+
+---
+
+<div className="bg-cyan-100">右側のコンテンツ</div>
+
+:::
+
+::: details code
+
+```md
+::: columns
+
+<div className="bg-amber-100">左側のコンテンツ</div>
+
+---
+
+<div className="bg-cyan-100">右側のコンテンツ</div>
+
+:::
+```
+
+:::
 
 <br />
 
-<TwoColumn ratio="2:1" gap="lg">
-  <div className="bg-cyan-100">幅広のコンテンツ (2)</div>
-  <div className="bg-amber-100">狭いコンテンツ (1)</div>
-</TwoColumn>
+::: columns 2:1 lg
+
+<div className="bg-cyan-100">幅広のコンテンツ (2)</div>
+
+---
+
+<div className="bg-amber-100">狭いコンテンツ (1)</div>
+
+:::
+
+::: details code
+
+```md
+::: columns 2:1 lg
+
+<div className="bg-cyan-100">幅広のコンテンツ (2)</div>
+
+---
+
+<div className="bg-amber-100">狭いコンテンツ (1)</div>
+
+:::
+```
+
+:::
+
+<br />
+
+::: columns 1:2 sm
+
+![aa](/images/meta/me.png)
+
+---
+
+::: code-group
+
+```ts [add.ts] {"2": 2}
+export function add(): number {
+  return 1 + 1;
+}
+```
+
+```js [add.js]
+export function add() {
+  return 1 + 1;
+}
+```
+
+:::
+
+:::
+
+::: details code
+
+```mdx
+::: columns 1:2 sm
+
+![me](/images/meta/me.png)
+
+---
+
+::: code-group
+
+\`\`\`ts [add.ts] {"2": 2}
+export function add(): number {
+return 1 + 1;
+}
+\`\`\`
+
+\`\`\`js [add.js]
+export function add() {
+return 1 + 1;
+}
+\`\`\`
+
+:::
+
+:::
+```
+
+:::
 
 ## Image
 
@@ -65,15 +172,47 @@ This article is for VRT.
   height={40}
 />
 
-<br />
+::: details code
 
-![aa](/images/meta/me.png)
+```mdx
+import { Image } from "../../components/Image";
+
+<Image
+  alt="me"
+  src="/images/meta/me.png"
+  className="w-10"
+  width={40}
+  height={40}
+/>
+```
+
+:::
+
+![me](/images/meta/me.png)
+
+::: details code
+
+```md
+![me](/images/meta/me.png)
+```
+
+:::
 
 ## Code
 
 ```sh
 $ echo "hello world"
 ```
+
+::: details code
+
+```md
+\`\`\`sh
+$ echo "hello world"
+\`\`\`
+```
+
+:::
 
 ```ts collapse={4-6}
 // foo.ts
@@ -84,9 +223,33 @@ export function getFoo() {
 }
 ```
 
+::: details code
+
+```md
+\`\`\`ts collapse={4-6}
+// foo.ts
+const foo = "foo";
+export function getFoo() {
+return foo;
+}
+\`\`\`
+```
+
+:::
+
 ```powershell title="PowerShell terminal example"
 Write-Output "This one has a title!"
 ```
+
+::: details code
+
+```md
+\`\`\`powershell title="PowerShell terminal example"
+Write-Output "This one has a title!"
+\`\`\`
+```
+
+:::
 
 ```js title="line-markers.js" del={2} ins={3-4} {6}
 function demo() {
@@ -98,12 +261,42 @@ function demo() {
 }
 ```
 
+::: details code
+
+```md
+\`\`\`js title="line-markers.js" del={2} ins={3-4} {6}
+function demo() {
+console.log("this line is marked as deleted");
+// This line and the next one are marked as inserted
+console.log("this is the second inserted line");
+
+return "this line uses the neutral default marker type";
+}
+\`\`\`
+```
+
+:::
+
 ```diff lang="js"
 export function add() {
 -  return 1 + 1;
 +  return 2;
 }
 ```
+
+::: details code
+
+{/* prettier-ignore */}
+```md
+\`\`\`diff lang="js"
+export function add() {
+- return 1 + 1;
++ return 2;
+}
+\`\`\`
+```
+
+:::
 
 ```js "given text"
 function demo() {
@@ -112,6 +305,19 @@ function demo() {
 }
 ```
 
+::: details code
+
+```md
+\`\`\`js "given text"
+function demo() {
+// Mark any given text inside lines
+return "Multiple matches of the given text are supported";
+}
+\`\`\`
+```
+
+:::
+
 ```js "return true;" ins="inserted" del="deleted"
 function demo() {
   console.log("These are inserted and deleted marker types");
@@ -119,6 +325,20 @@ function demo() {
   return true;
 }
 ```
+
+::: details code
+
+```md
+\`\`\`js "return true;" ins="inserted" del="deleted"
+function demo() {
+console.log("These are inserted and deleted marker types");
+// The return statement uses the default marker type
+return true;
+}
+\`\`\`
+```
+
+:::
 
 ::: code-group
 
@@ -149,6 +369,40 @@ body {
 
 :::
 
+::: details code
+
+{/* prettier-ignore */}
+```md
+::: code-group
+
+\`\`\`ts [add.ts] {"2": 2}
+export function add(): number {
+  return 1 + 1;
+}
+\`\`\`
+
+\`\`\`js [add.js]
+export function add() {
+  return 1 + 1;
+}
+\`\`\`
+
+\`\`\`html [index.html]
+<div>
+  <p>HTML code</p>
+  <p>HTML code</p>
+</div>
+\`\`\`
+
+\`\`\`css [style.css]
+body {
+  background-color: #fff;
+}
+\`\`\`
+```
+
+:::
+
 ## Custom Containers
 
 ### GitHub-Flavored Alerts
@@ -156,30 +410,73 @@ body {
 > [!NOTE]
 > Highlights information that users should take into account, even when skimming.
 
+::: details code
+
+```md
+> [!NOTE]
+> Highlights information that users should take into account, even when skimming.
+```
+
+:::
+
 > [!TIP]
 > Optional information to help a user be more successful.
+
+::: details code
+
+```md
+> [!TIP]
+> Optional information to help a user be more successful.
+```
+
+:::
 
 > [!IMPORTANT]
 > Crucial information necessary for users to succeed.
 
+::: details code
+
+```md
+> [!IMPORTANT]
+> Crucial information necessary for users to succeed.
+```
+
+:::
+
 > [!WARNING]
 > Critical content demanding immediate user attention due to potential risks.
+
+::: details code
+
+```md
+> [!WARNING]
+> Critical content demanding immediate user attention due to potential risks.
+```
+
+:::
 
 > [!CAUTION]
 > Negative potential consequences of an action.
 
-### Details
+::: details code
 
-::: details
-
-This is a basic details block with default title.
+```md
+> [!CAUTION]
+> Negative potential consequences of an action.
+```
 
 :::
 
+### Details
+
 ::: details Click to see code
 
-```js
-console.log("Hello, details!");
+```md
+::: details Click to see code
+
+hi!
+
+:::
 ```
 
 :::
@@ -188,14 +485,48 @@ console.log("Hello, details!");
 
 <GoogleSlidesCard id="2PACX-1vTW6FYDrDsP-KDNZFS0wdpWxI-ePyk_EwVV4XbxYy3skbKsyxyG_3U6Yr_tYdFZkxIBohEIrVyCgvme" />
 
+::: details code
+
+```mdx
+import { GoogleSlidesCard } from "../../mdx/components/GoogleSlidesCard";
+
+<GoogleSlidesCard id="2PACX-1vTW6FYDrDsP-KDNZFS0wdpWxI-ePyk_EwVV4XbxYy3skbKsyxyG_3U6Yr_tYdFZkxIBohEIrVyCgvme" />
+```
+
+:::
+
 ## Youtube
 
-<YoutubeCard id="9AjkUyX0rVw" />
+[youtube](https://www.youtube.com/watch?v=9AjkUyX0rVw)
+
+::: details code
+
+```md
+[youtube](https://www.youtube.com/watch?v=9AjkUyX0rVw)
+```
+
+:::
 
 ## Twitter
 
-<TwitterCard id="1453525169293520901" />
+[x](https://x.com/about_hiroppy/status/1453525169293520901)
+
+::: details code
+
+```md
+[x](https://x.com/about_hiroppy/status/1453525169293520901)
+```
+
+:::
 
 ## OGP
 
 [personal site](https://hiroppy.me)
+
+::: details code
+
+```md
+[personal site](https://hiroppy.me)
+```
+
+:::
