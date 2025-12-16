@@ -76,7 +76,8 @@ The remark plugin automatically imports `CodeGroup` and wraps each fenced code b
 ## Writing Guidelines
 
 When writing blog articles:
-- **Always refer to `.claude/context/WRITING.md`** for comprehensive style guidelines, tone, structure templates, and language patterns
+
+- **Always refer to `.claude/context/writing-style.md`** for comprehensive style guidelines, tone, structure templates, and language patterns
 - **Pick several recent articles at random** from `src/content/blog/` and mimic their writing style as closely as possible to maintain consistency
 
 ---
