@@ -1,4 +1,5 @@
-import { writeFile } from "node:fs/promises";
+// don't use async api
+import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { MdOpenInNew } from "react-icons/md";
 import ogpCache from "../../../generated/ogp.json";
@@ -72,12 +73,12 @@ async function fetchData(url: string): Promise<OGPData> {
 
   const { title, description, image } = await fetchOGP(url);
 
-  // Cache the result only during local builds (not on Vercel)
   if (process.env.NODE_ENV === "production" && !process.env.VERCEL) {
     const generatedFilePath = resolve(process.cwd(), "generated/ogp.json");
 
     try {
-      await writeFile(
+      // don't use aync api
+      writeFileSync(
         generatedFilePath,
         JSON.stringify(
           {

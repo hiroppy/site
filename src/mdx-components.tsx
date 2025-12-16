@@ -3,6 +3,7 @@ import { Image, type Props as ImageProps } from "./components/Image";
 import { Link } from "./components/Link";
 import { Alert } from "./mdx/components/Alert";
 import { CodeGroup } from "./mdx/components/CodeGroup";
+import { Details } from "./mdx/components/Details";
 import { GoogleSlidesCard } from "./mdx/components/GoogleSlidesCard";
 import { OG } from "./mdx/components/OG";
 import { TwitterCard } from "./mdx/components/TwitterCard";
@@ -14,6 +15,7 @@ export function useMDXComponents(components: MDXComponents) {
     img: MDImage,
     a: Link,
     Alert,
+    Details,
     OG,
     CodeGroup,
     TwitterCard,

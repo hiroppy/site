@@ -15,7 +15,6 @@ out
 service_account_secret.json
 .githooks/*
 !/.githooks/pre-commit
-.claude
 *-darwin.png
 *-darwin.json
 .vercel
@@ -23,5 +22,6 @@ service_account_secret.json
 .playwright-mcp
 public/images/generated
 next-env.d.ts
+generated/ogp-pending.json
 
 certificates

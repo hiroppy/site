@@ -9,6 +9,7 @@ import remarkGfm from "remark-gfm";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { remarkAlerts } from "./src/mdx/remark/remarkAlerts";
 import { remarkCodeGroups } from "./src/mdx/remark/remarkCodeGroups";
+import { remarkDetails } from "./src/mdx/remark/remarkDetails";
 import { remarkExtractHeadings } from "./src/mdx/remark/remarkExtractHeadings";
 import { remarkOgLinks } from "./src/mdx/remark/remarkOgLinks";
 
@@ -91,6 +92,7 @@ const withMDX = createMDX({
       remarkGfm,
       remarkCodeGroups,
       remarkAlerts,
+      remarkDetails,
       remarkOgLinks,
     ],
     rehypePlugins: [
