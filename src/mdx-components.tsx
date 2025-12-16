@@ -4,6 +4,7 @@ import { Link } from "./components/Link";
 import { Alert } from "./mdx/components/Alert";
 import { CodeGroup } from "./mdx/components/CodeGroup";
 import { Details } from "./mdx/components/Details";
+import { DirectoryTree } from "./mdx/components/DirectoryTree";
 import { GoogleSlidesCard } from "./mdx/components/GoogleSlidesCard";
 import { OG } from "./mdx/components/OG";
 import { TwitterCard } from "./mdx/components/TwitterCard";
@@ -14,6 +15,7 @@ export function useMDXComponents(components: MDXComponents) {
   return {
     img: MDImage,
     a: Link,
+    Image: MDImage,
     Alert,
     Details,
     OG,
@@ -22,7 +24,7 @@ export function useMDXComponents(components: MDXComponents) {
     YoutubeCard,
     GoogleSlidesCard,
     TwoColumn,
-    Image: MDImage,
+    DirectoryTree,
     ...components,
   };
 }

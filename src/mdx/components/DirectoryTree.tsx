@@ -32,7 +32,7 @@ export function DirectoryTree({ className, items }: Props) {
   );
 }
 
-export type DirectoryTreeNode = {
+type DirectoryTreeNode = {
   id: string;
   label: string;
   children?: DirectoryTreeNode[];
