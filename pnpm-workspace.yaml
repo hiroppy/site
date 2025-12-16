@@ -6,3 +6,4 @@ onlyBuiltDependencies:
   - msw
   - puppeteer
   - sharp
+minimumReleaseAge: 1440
