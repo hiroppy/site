@@ -13,6 +13,7 @@ import { remarkDetails } from "./src/mdx/remark/remarkDetails";
 import { remarkExtractHeadings } from "./src/mdx/remark/remarkExtractHeadings";
 import { remarkOgLinks } from "./src/mdx/remark/remarkOgLinks";
 import { remarkTwoColumn } from "./src/mdx/remark/remarkTwoColumn";
+import { remarkTree } from "./src/mdx/remark/remarkTree";
 
 const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
@@ -96,6 +97,7 @@ const withMDX = createMDX({
       remarkDetails,
       remarkOgLinks,
       remarkTwoColumn,
+      remarkTree,
     ],
     rehypePlugins: [
       rehypeSlug,

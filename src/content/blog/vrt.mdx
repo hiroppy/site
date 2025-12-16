@@ -32,6 +32,30 @@ This article is for VRT.
 
 > blockquote
 
+## Image
+
+<Image alt="me" src="/images/meta/me.png" width={40} height={40} />
+
+::: details code
+
+```mdx
+import { Image } from "../../components/Image";
+
+<Image alt="me" src="/images/meta/me.png" width={40} height={40} />
+```
+
+:::
+
+![me](/images/meta/me.png)
+
+::: details code
+
+```md
+![me](/images/meta/me.png)
+```
+
+:::
+
 ## Table
 
 | foo | bar |
@@ -110,7 +134,7 @@ This article is for VRT.
 
 ::: columns 1:2 sm
 
-![aa](/images/meta/me.png)
+![me](/images/meta/me.png)
 
 ---
 
@@ -162,38 +186,40 @@ return 1 + 1;
 
 :::
 
-## Image
+## Tree
 
-<Image
-  alt="me"
-  src="/images/meta/me.png"
-  className="w-10"
-  width={40}
-  height={40}
-/>
+::: tree
 
-::: details code
-
-```mdx
-import { Image } from "../../components/Image";
-
-<Image
-  alt="me"
-  src="/images/meta/me.png"
-  className="w-10"
-  width={40}
-  height={40}
-/>
-```
+- pages
+  - index.tsx
+  - about.tsx
+- components
+  - Button
+    - index.tsx
+    - styles.css
+  - Card
+    - index.tsx
+    - styles.css
 
 :::
-
-![me](/images/meta/me.png)
 
 ::: details code
 
 ```md
-![me](/images/meta/me.png)
+::: tree
+
+- pages
+  - index.tsx
+  - about.tsx
+- components
+  - Button
+    - index.tsx
+    - styles.css
+  - Card
+    - index.tsx
+    - styles.css
+
+:::
 ```
 
 :::
