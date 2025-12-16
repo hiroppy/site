@@ -36,14 +36,10 @@ export function JobExperience({ mainJobs, sideJobs, meta }: Props) {
         />
         <div className="flex flex-col gap-12">
           {showMain && (
-            <div>
-              <JobSection title="Main Job" meta={meta} items={mainJobs} />
-            </div>
+            <JobSection title="Main Job" meta={meta} items={mainJobs} />
           )}
           {showSide && (
-            <div>
-              <JobSection title="My Company" meta={meta} items={sideJobs} />
-            </div>
+            <JobSection title="My Company" meta={meta} items={sideJobs} />
           )}
         </div>
       </div>

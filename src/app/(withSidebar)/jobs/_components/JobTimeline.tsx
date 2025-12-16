@@ -1,6 +1,7 @@
 import jobs from "hiroppy/generated/jobs.json";
 import type { Jobs } from "hiroppy/types";
 import { MdOpenInFull } from "react-icons/md";
+import { Button } from "../../../../components/Button";
 import { FilterTabs } from "../../../../components/FilterTabs";
 import { cn } from "../../../../utils/cn";
 import {
@@ -236,15 +237,15 @@ export function JobTimeline({
         );
       })}
       {onOpenFullscreen && (
-        <button
-          type="button"
+        <Button
           onClick={onOpenFullscreen}
-          className="cursor-pointer absolute bottom-3 right-3 z-20 flex h-11 w-11 items-center justify-center rounded-lg border border-line bg-bg/90 text-text-main shadow-md backdrop-blur-sm transition-opacity hover:opacity-60 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent opacity-0 group-hover/timeline:opacity-100 group-focus-within/timeline:opacity-100 max-md:opacity-70 md:h-10 md:w-10"
+          className="absolute bottom-3 right-3 z-20 h-11 w-11 hover:bg-accent/90 hover:text-white opacity-0 group-hover/timeline:opacity-100 transition-opacity"
+          variant="outline"
           aria-label="タイムラインをフルスクリーンで表示"
-          title="フルスクリーン表示"
+          size="icon"
         >
           <MdOpenInFull size={20} />
-        </button>
+        </Button>
       )}
     </div>
   );
