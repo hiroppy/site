@@ -1,6 +1,6 @@
 import jobs from "hiroppy/generated/jobs.json";
 import type { Jobs } from "hiroppy/types";
-import { useState } from "react";
+import { MdOpenInFull } from "react-icons/md";
 import { FilterTabs } from "../../../../components/FilterTabs";
 import { cn } from "../../../../utils/cn";
 import {
@@ -142,18 +142,24 @@ const timelineViews = filterTabs.map(({ value }) => {
 
 type Props = {
   activeFilter?: TimelineFilter;
-  onFilterChange?: (filter: TimelineFilter) => void;
+  isFullscreen?: boolean;
+  disableBarClick?: boolean;
+  onChangeFilter: (filter: TimelineFilter) => void;
+  onOpenFullscreen?: () => void;
 };
 
 export function JobTimeline({
-  activeFilter: externalActiveFilter,
-  onFilterChange,
+  activeFilter = "all",
+  isFullscreen,
+  disableBarClick,
+  onChangeFilter,
+  onOpenFullscreen,
 }: Props) {
-  const [internalActiveFilter, setInternalActiveFilter] =
-    useState<TimelineFilter>("all");
-  const activeFilter = externalActiveFilter ?? internalActiveFilter;
-
   const handleBarClick = (jobId: string) => {
+    if (disableBarClick) {
+      return;
+    }
+
     const element = document.getElementById(jobId);
     if (!element) return;
 
@@ -169,20 +175,17 @@ export function JobTimeline({
     }, 2000);
   };
 
-  const handleFilterChange = (key: TimelineFilter) => {
-    if (onFilterChange) {
-      onFilterChange(key);
-    } else {
-      setInternalActiveFilter(key);
-    }
-  };
-
   return (
-    <div>
+    <div
+      className={cn(
+        "group/timeline relative",
+        isFullscreen && "flex h-full flex-col",
+      )}
+    >
       <FilterTabs
         tabs={filterTabs}
         activeValue={activeFilter}
-        onValueChange={handleFilterChange}
+        onValueChange={onChangeFilter}
         className="mb-4"
       />
 
@@ -192,15 +195,19 @@ export function JobTimeline({
         }
 
         return (
-          <div key={key} data-timeline-view={key}>
+          <div
+            key={key}
+            className={cn(isFullscreen && "flex flex-1 flex-col overflow-auto")}
+          >
             <div
-              className="timeline-container border-line bg-bg relative max-h-100 w-full overflow-x-auto overflow-y-auto rounded border px-6"
-              data-testid="job-timeline"
+              className={cn(
+                "timeline-container border-line bg-bg relative w-full overflow-x-auto overflow-y-auto rounded border px-6",
+                isFullscreen ? "flex-1" : "max-h-100",
+              )}
             >
               <div className="bg-bg sticky top-0 z-10 min-w-700 py-2">
                 <JobTimelineAxis dateRange={dateRange} />
               </div>
-
               <div
                 className="relative min-w-700"
                 style={{ height: `${height}px` }}
@@ -228,6 +235,17 @@ export function JobTimeline({
           </div>
         );
       })}
+      {onOpenFullscreen && (
+        <button
+          type="button"
+          onClick={onOpenFullscreen}
+          className="cursor-pointer absolute bottom-3 right-3 z-20 flex h-11 w-11 items-center justify-center rounded-lg border border-line bg-bg/90 text-text-main shadow-md backdrop-blur-sm transition-opacity hover:opacity-60 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent opacity-0 group-hover/timeline:opacity-100 group-focus-within/timeline:opacity-100 max-md:opacity-70 md:h-10 md:w-10"
+          aria-label="タイムラインをフルスクリーンで表示"
+          title="フルスクリーン表示"
+        >
+          <MdOpenInFull size={20} />
+        </button>
+      )}
     </div>
   );
 }
