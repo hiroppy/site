@@ -1,29 +1,7 @@
 import type { Code, Paragraph, Root, RootContent } from "mdast";
-
-const languageIcons = {
-  javascript: "javascript",
-  js: "javascript",
-  typescript: "typescript",
-  ts: "typescript",
-  html: "html",
-  css: "css",
-  bash: "console",
-  shell: "console",
-  sh: "console",
-  zsh: "console",
-  json: "json",
-  yaml: "file-code",
-  yml: "file-code",
-  markdown: "markdown",
-  md: "markdown",
-  graphql: "graphql",
-  docker: "docker",
-  git: "git",
-  default: "file-code",
-} as const;
+import { languageIcons } from "../../utils/fileIcons";
 
 type LanguageIconsKeys = keyof typeof languageIcons;
-export type LanguageIconValues = (typeof languageIcons)[LanguageIconsKeys];
 
 type CodeGroup = {
   startIndex: number;

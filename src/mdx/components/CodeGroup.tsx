@@ -5,19 +5,8 @@ import {
   isValidElement,
   useId,
 } from "react";
-import { type IconType } from "react-icons";
-import { MdCode, MdDataObject, MdTerminal } from "react-icons/md";
-import {
-  SiCss3,
-  SiDocker,
-  SiGit,
-  SiGraphql,
-  SiHtml5,
-  SiJavascript,
-  SiMarkdown,
-  SiTypescript,
-} from "react-icons/si";
-import { LanguageIconValues } from "../remark/remarkCodeGroups";
+import { MdCode } from "react-icons/md";
+import { iconMap, type LanguageIconValues } from "../../utils/fileIcons";
 import { CodeGroupInteraction } from "./CodeGroupInteraction";
 
 type CodeGroupPanelProps = {
@@ -32,20 +21,6 @@ type PanelData = {
   language: string;
   index: number;
 };
-
-const iconMap: Record<LanguageIconValues, IconType> = {
-  javascript: SiJavascript,
-  typescript: SiTypescript,
-  html: SiHtml5,
-  css: SiCss3,
-  markdown: SiMarkdown,
-  console: MdTerminal,
-  json: MdDataObject,
-  "file-code": MdCode,
-  graphql: SiGraphql,
-  docker: SiDocker,
-  git: SiGit,
-} satisfies Record<LanguageIconValues, IconType>;
 
 type Props = {
   defaultTab?: string;
