@@ -86,24 +86,22 @@ export function Header({ variant = "default", className }: Props) {
           aria-label="モバイルナビゲーション"
         >
           <div className="px-2 pt-6 pb-3">
-            <div className="scrollbar-hide mb-4 overflow-x-auto">
-              <div className="flex space-x-2 pb-2">
-                {NAV_ITEMS.map((item) => (
-                  <NavButton
-                    key={item.href}
-                    variant={
-                      isActiveNavCurrentPath(item.href, currentPath)
-                        ? "mobile-active"
-                        : "mobile"
-                    }
-                    href={item.href}
-                    className="shrink-0"
-                    onClick={closeMobileMenu}
-                  >
-                    {item.label}
-                  </NavButton>
-                ))}
-              </div>
+            <div className="mb-4 space-y-3 pb-2">
+              {NAV_ITEMS.map((item) => (
+                <NavButton
+                  key={item.href}
+                  variant={
+                    isActiveNavCurrentPath(item.href, currentPath)
+                      ? "mobile-active"
+                      : "mobile"
+                  }
+                  href={item.href}
+                  className="w-full justify-start text-left"
+                  onClick={closeMobileMenu}
+                >
+                  {item.label}
+                </NavButton>
+              ))}
             </div>
             <div className="border-line border-t pt-4">
               <ContactButton variant="full" />
