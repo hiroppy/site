@@ -1,10 +1,4 @@
-import type {
-  List,
-  ListItem,
-  Paragraph,
-  Root,
-  RootContent,
-} from "mdast";
+import type { List, ListItem, Paragraph, Root, RootContent } from "mdast";
 
 type DirectoryTreeItem = {
   children?: DirectoryTreeItem[];
@@ -32,10 +26,12 @@ function paragraphText(node: RootContent): string | undefined {
 }
 
 function sanitizeLabel(label: string): string {
-  return label
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "") || "node";
+  return (
+    label
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "") || "node"
+  );
 }
 
 function extractText(node: RootContent): string {
@@ -44,7 +40,9 @@ function extractText(node: RootContent): string {
   }
 
   if ("children" in node && Array.isArray(node.children)) {
-    return node.children.map((child) => extractText(child as RootContent)).join("");
+    return node.children
+      .map((child) => extractText(child as RootContent))
+      .join("");
   }
 
   return "";
@@ -163,7 +161,11 @@ export function remarkTree() {
 
     let processed = 0;
 
-    for (let blockIndex = treeBlocks.length - 1; blockIndex >= 0; blockIndex--) {
+    for (
+      let blockIndex = treeBlocks.length - 1;
+      blockIndex >= 0;
+      blockIndex--
+    ) {
       const { contentNodes, endIndex, startIndex } = treeBlocks[blockIndex];
       const items = buildTreeItems(contentNodes);
       if (items.length === 0) continue;

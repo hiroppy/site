@@ -28,5 +28,8 @@
       "matchPackageNames": ["*"]
     }
   ],
-  "ignoreDeps": []
+  "ignoreDeps": [],
+  "npm": {
+    "minimumReleaseAge": "24 hours"
+  }
 }

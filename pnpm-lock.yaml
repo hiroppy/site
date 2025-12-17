@@ -48,8 +48,8 @@ importers:
         specifier: 4.0.3
         version: 4.0.3
       hiroppy:
-        specifier: 1.0.70
-        version: 1.0.70
+        specifier: 1.0.71
+        version: 1.0.71
       next:
         specifier: 16.0.10
         version: 16.0.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -2223,8 +2223,8 @@ packages:
   headers-polyfill@4.0.3:
     resolution: {integrity: sha512-IScLbePpkvO846sIwOtOTDjutRMWdXdJmXdMvk6gCBHxFO8d+QKOQedyZSxFTTFYRSmlgSTDtXqqq4pcenBXLQ==}
 
-  hiroppy@1.0.70:
-    resolution: {integrity: sha512-5H6p/QqwU0V/RJw71SqduYu9FW74wKEZA6xj28yyia3/PUed3vzOmLZGsSDnsnYon8y8zjLAGdZSof0y4kyn9A==}
+  hiroppy@1.0.71:
+    resolution: {integrity: sha512-v92K28GjTlyV15Vq5O7I0ISCU1Ioe6LYHhewM/AZQOayaChsLX+Zl9j7mqF62j+DrSBns0PKQWeZi1QSyW1Bgw==}
 
   html-url-attributes@3.0.1:
     resolution: {integrity: sha512-ol6UPyBWqsrO6EJySPz2O7ZSr856WDrEzM5zMqp+FJJLGMW35cLYmmZnl0vztAZxRUoNZJFTCohfjuIJ8I4QBQ==}
@@ -6136,7 +6136,7 @@ snapshots:
   headers-polyfill@4.0.3:
     optional: true
 
-  hiroppy@1.0.70: {}
+  hiroppy@1.0.71: {}
 
   html-url-attributes@3.0.1: {}
 
