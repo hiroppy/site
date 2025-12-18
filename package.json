@@ -38,7 +38,7 @@
     "@next/mdx": "16.0.10",
     "@next/third-parties": "16.0.10",
     "@tailwindcss/postcss": "4.1.18",
-    "algoliasearch": "5.46.0",
+    "algoliasearch": "5.46.1",
     "cheerio": "1.1.2",
     "clsx": "2.1.1",
     "feed": "5.1.0",
@@ -68,7 +68,7 @@
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "5.1.2",
-    "@vitest/browser-playwright": "4.0.15",
+    "@vitest/browser-playwright": "4.0.16",
     "babel-plugin-react-compiler": "1.0.0",
     "knip": "5.74.0",
     "lefthook": "2.0.12",
@@ -82,6 +82,6 @@
     "tailwindcss": "4.1.18",
     "typescript": "5.9.3",
     "unist-util-visit": "5.0.0",
-    "vitest": "4.0.15"
+    "vitest": "4.0.16"
   }
 }
