@@ -15,6 +15,14 @@
   - **Performance**: `pnpm lh` (lighthouse)
 - **Other**: `pnpm copy-images` (copy hiroppy package images), `pnpm index` (update Algolia search), `pnpm docker:clean`
 
+## Blog Article Creation
+
+- **Initialize Article**: `/init-article` (Claude Code skill for creating new blog articles)
+  - Interactive prompts for title, description, tags, image
+  - Auto-generates kebab-case slug from title (handles Japanese/English)
+  - Validates uniqueness and creates MDX file with proper frontmatter
+  - Provides writing guidelines and next steps
+
 ## Code Style
 
 - **Framework**: Next.js 16.0.10 (App Router) with React 19.2.0, TypeScript 5.9.3, and Tailwind CSS v4.1.17
