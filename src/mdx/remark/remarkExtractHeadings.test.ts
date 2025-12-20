@@ -301,4 +301,61 @@ describe("remarkExtractHeadings", () => {
     expect((result.children[0] as any).type).toBe("mdxjsEsm");
     expect((result.children[1] as any).type).toBe("paragraph");
   });
+
+  it("generates unique slugs for duplicate heading names", () => {
+    const tree: Root = {
+      type: "root",
+      children: [
+        {
+          type: "heading",
+          depth: 2,
+          children: [{ type: "text", value: "Introduction" }],
+        } as Heading,
+        {
+          type: "paragraph",
+          children: [{ type: "text", value: "Some content" }],
+        },
+        {
+          type: "heading",
+          depth: 2,
+          children: [{ type: "text", value: "Introduction" }],
+        } as Heading,
+        {
+          type: "paragraph",
+          children: [{ type: "text", value: "More content" }],
+        },
+        {
+          type: "heading",
+          depth: 3,
+          children: [{ type: "text", value: "Introduction" }],
+        } as Heading,
+      ] as any[],
+    };
+
+    const result = runPlugin(tree);
+
+    const headings = getExportValue(result);
+    expect(headings).toHaveLength(3);
+
+    // First occurrence should have the base slug
+    expect(headings[0]).toEqual({
+      depth: 2,
+      slug: "introduction",
+      text: "Introduction",
+    });
+
+    // Second occurrence should have -1 suffix
+    expect(headings[1]).toEqual({
+      depth: 2,
+      slug: "introduction-1",
+      text: "Introduction",
+    });
+
+    // Third occurrence should have -2 suffix
+    expect(headings[2]).toEqual({
+      depth: 3,
+      slug: "introduction-2",
+      text: "Introduction",
+    });
+  });
 });

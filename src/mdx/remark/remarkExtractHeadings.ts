@@ -1,10 +1,11 @@
-import { slug as slugger } from "github-slugger";
+import GithubSlugger from "github-slugger";
 import type { Heading, Root, RootContent, Text } from "mdast";
 import type { HeadingData } from "../types";
 
 export function remarkExtractHeadings() {
   return (tree: Root) => {
     const headings: HeadingData[] = [];
+    const slugger = new GithubSlugger();
 
     // Extract all headings (h1-h3) from the markdown AST
     for (const node of tree.children) {
@@ -30,7 +31,7 @@ export function remarkExtractHeadings() {
         if (text) {
           headings.push({
             depth: headingNode.depth,
-            slug: slugger(text),
+            slug: slugger.slug(text),
             text,
           });
         }
