@@ -1,7 +1,6 @@
 // TODO: remove link
 import type { ReactNode } from "react";
 import { cn } from "../utils/cn";
-import { commonStyles } from "../utils/commonStyles";
 import { Link } from "./Link";
 
 type ButtonProps = {
@@ -40,7 +39,7 @@ export function Button({
 }: ButtonProps) {
   const classes = cn(
     "inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50",
-    commonStyles.focusRing,
+    "focus-ring",
     active && "bg-accent text-white shadow-sm",
     !active &&
       variant === "default" &&

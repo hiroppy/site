@@ -1,6 +1,5 @@
 import { Link } from "../../../../components/Link";
 import { cn } from "../../../../utils/cn";
-import { commonStyles } from "../../../../utils/commonStyles";
 
 type Props = {
   tag: string;
@@ -16,7 +15,7 @@ export function BlogTag({ tag, className, active = false }: Props) {
     <Link
       className={cn(
         "rounded-lg border px-3 py-1 text-sm shadow-sm transition-colors hover:no-underline",
-        commonStyles.focusRing,
+        "focus-ring",
         active
           ? "bg-accent border-accent text-bg hover:opacity-80"
           : "text-text-main border-line hover:text-link hover:bg-surface bg-white",
