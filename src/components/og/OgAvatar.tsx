@@ -11,7 +11,7 @@ export function OgAvatar({ avatar, size }: Props) {
       height={size}
       style={{
         borderRadius: "50%",
-        border: "2px solid #9963004D",
+        border: "2px solid #206ba54D",
       }}
     />
   );

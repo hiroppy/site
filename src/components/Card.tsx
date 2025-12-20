@@ -33,7 +33,7 @@ export function Card({
         {...link}
         className={cn(
           baseClasses,
-          "no-underline hover:no-underline focus-visible:shadow-2xl focus-visible:ring-8 focus-visible:shadow-blue-500/50 focus-visible:ring-blue-400 focus-visible:ring-offset-4 focus-visible:outline-none",
+          "no-underline hover:no-underline focus-visible:shadow-2xl focus-visible:ring-8 focus-visible:shadow-amber-500/50 focus-visible:ring-amber-400 focus-visible:ring-offset-4 focus-visible:outline-none",
         )}
       >
         {children}
