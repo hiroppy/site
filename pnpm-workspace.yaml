@@ -7,3 +7,5 @@ onlyBuiltDependencies:
   - puppeteer
   - sharp
 minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  - hiroppy
