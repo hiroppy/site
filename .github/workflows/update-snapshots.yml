@@ -24,6 +24,16 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.57.0
     steps:
+      - name: Add eyes reaction
+        uses: actions/github-script@v8
+        with:
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: 'eyes'
+            });
       - name: Get PR information
         id: pr
         uses: actions/github-script@v8
