@@ -16,7 +16,7 @@ export default async function Layout({
     <div
       className={cn("flex w-full flex-col md:flex-row", styles.feedleLayout)}
     >
-      <div className={styles.sidebarContainer}>
+      <div className={cn("w-64 shrink-0", styles.sidebarContainer)}>
         <Suspense fallback={<SidebarSkeleton />}>
           <Sidebar params={params} />
         </Suspense>

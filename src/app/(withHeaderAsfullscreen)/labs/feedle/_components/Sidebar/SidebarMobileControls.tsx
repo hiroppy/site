@@ -67,7 +67,7 @@ export function SidebarMobileControls({ children }: Props) {
       />
       <aside
         ref={sidebarRef}
-        className={`fixed inset-y-0 left-0 z-50 w-64 shrink-0 transform border-r border-gray-200 bg-gray-50 transition-transform duration-300 ease-in-out md:relative md:z-auto md:h-full md:translate-x-0 ${sidebarTransformClass}`}
+        className={`fixed inset-y-0 left-0 z-50 w-64 transform border-r border-gray-200 bg-gray-50 transition-transform duration-300 ease-in-out md:relative md:z-auto md:h-full md:w-full md:translate-x-0 ${sidebarTransformClass}`}
       >
         {children}
       </aside>
