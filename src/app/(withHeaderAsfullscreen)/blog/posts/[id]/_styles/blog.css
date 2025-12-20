@@ -157,6 +157,15 @@ article iframe[src*="youtu.be"] {
   height: auto;
 }
 
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 @media (max-width: 640px) {
   .code-group-tab {
     padding: 0.625rem 1rem;

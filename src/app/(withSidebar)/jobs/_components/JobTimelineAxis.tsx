@@ -1,7 +1,6 @@
 import { cn } from "../../../../utils/cn";
 import type { DateRange } from "../_utils/jobs/timelineCalculations";
 import { generateTimeMarkers } from "../_utils/jobs/timelineCalculations";
-import styles from "./JobTimelineAxis.module.css";
 
 type Props = {
   dateRange: DateRange;
@@ -17,7 +16,8 @@ export function JobTimelineAxis({ dateRange }: Props) {
           key={index}
           className={cn(
             "absolute top-0 flex -translate-x-1/2 flex-col items-center",
-            marker.isMajor ? styles.markerMajor : styles.markerMinor,
+            !marker.isMajor &&
+              "hidden md:flex lg:[&:nth-child(3n)]:hidden xl:flex",
           )}
           style={{ left: `${marker.position}%` }}
         >

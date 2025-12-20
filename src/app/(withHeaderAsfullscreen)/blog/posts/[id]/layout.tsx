@@ -1,3 +1,4 @@
+import "../../../../../styles/prose.css";
 import "./_styles/blog.css";
 
 export default function BlogLayout({

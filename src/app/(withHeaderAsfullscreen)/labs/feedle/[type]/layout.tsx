@@ -14,7 +14,10 @@ export default async function Layout({
 }: LayoutProps<"/labs/feedle/[type]">) {
   return (
     <div
-      className={cn("flex w-full flex-col md:flex-row", styles.feedleLayout)}
+      className={cn(
+        "font-blog-family flex w-full flex-col md:flex-row",
+        styles.feedleLayout,
+      )}
     >
       <div className={cn("w-64 shrink-0", styles.sidebarContainer)}>
         <Suspense fallback={<SidebarSkeleton />}>
