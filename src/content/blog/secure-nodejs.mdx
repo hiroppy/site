@@ -7,8 +7,6 @@ image: /images/brands/nodejs.png
 tags: node.js
 ---
 
-import { OG } from "../../mdx/components/OG";
-
 月に一回、mozaic.fmというポッドキャストでその月に起きたフロントエンドの動向を話していますが、
 最近のセキュリティインシデントを見ていると、Node.jsアプリケーションのセキュリティ対策が
 おろそかになっているケースが多いなと感じています。
@@ -217,7 +215,7 @@ Linux/macOS 専用。枯渇すると OpenSSL API がエラーを返す。
 ファイルの整合性チェックを行い、改ざんされたコードの実行を防ぎます。
 これについては、以前詳しく書いた記事があります。
 
-<OG url="https://blog.hiroppy.me/entry/node-policy" />
+[Node.js の Policy について](https://blog.hiroppy.me/entry/node-policy)
 
 簡単に説明すると、`policy.json`で各ファイルのSRIハッシュを定義し、
 実行時にファイルが変更されていないことを検証します。
@@ -358,20 +356,12 @@ jobs:
 
 ## 参考リンク
 
-<OG url="https://nodejs.org/api/cli.html" />
+[Node.js CLI Flags](https://nodejs.org/api/cli.html)
 
-<br />
+[Node.js Permissions API](https://nodejs.org/api/permissions.html)
 
-<OG url="https://nodejs.org/api/permissions.html" />
+[Node.js Policy Manifest](https://nodejs.org/api/policy.html)
 
-<br />
+[Prototype Pollution - PortSwigger](https://portswigger.net/web-security/prototype-pollution)
 
-<OG url="https://nodejs.org/api/policy.html" />
-
-<br />
-
-<OG url="https://portswigger.net/web-security/prototype-pollution" />
-
-<br />
-
-<OG url="https://nodejs.org/ja/learn/getting-started/security-best-practices" />
+[Node.js Security Best Practices](https://nodejs.org/ja/learn/getting-started/security-best-practices)

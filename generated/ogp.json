@@ -1463,5 +1463,10 @@
     "title": "Node.js — Security Best Practices",
     "description": "Node.js® is a free, open-source, cross-platform JavaScript runtime environment that lets developers create servers, web apps, command line tools and scripts.",
     "image": "https://nodejs.org/en/next-data/og/announcement/Node.js%20%E2%80%94%20Security%20Best%20Practices"
+  },
+  "https://nodejs.org/api/cli.html": {
+    "title": "Command-line API | Node.js v25.2.1 Documentation",
+    "description": "",
+    "image": ""
   }
 }
