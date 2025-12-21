@@ -170,9 +170,9 @@ export function JobTimeline({
     });
 
     // Add a brief highlight effect
-    element.classList.add("ring-2", "ring-blue-500");
+    element.classList.add("ring-2", "ring-amber-500");
     setTimeout(() => {
-      element.classList.remove("ring-2", "ring-blue-500");
+      element.classList.remove("ring-2", "ring-amber-500");
     }, 2000);
   };
 

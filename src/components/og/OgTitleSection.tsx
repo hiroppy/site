@@ -54,15 +54,15 @@ export function OgTitleSection({ title, description, tags }: Props) {
                 display: "flex",
                 alignItems: "center",
                 padding: "8px 20px",
-                background: "#99630014",
-                border: "1px solid #9963004D",
+                background: "#206ba514",
+                border: "1px solid #206ba54D",
                 borderRadius: "32px",
               }}
             >
               <span
                 style={{
                   fontSize: "24px",
-                  color: "#996300",
+                  color: "#206ba5",
                   fontWeight: "500",
                 }}
               >

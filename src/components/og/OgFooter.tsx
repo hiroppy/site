@@ -33,7 +33,7 @@ export function OgFooter({ avatar }: Props) {
           <span
             style={{
               fontSize: "32px",
-              color: "#996300",
+              color: "#206ba5",
               fontWeight: "700",
             }}
           >
