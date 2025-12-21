@@ -64,7 +64,7 @@ export async function Repositories({ repos }: Props) {
                 </span>
               </span>
               <span
-                className="text-accent ml-3 inline-flex items-center gap-1.5 font-['Inter',sans-serif] text-lg font-medium"
+                className="text-accent ml-3 inline-flex items-center gap-1.5 font-['Inter',sans-serif] text-sm font-medium"
                 data-testid="github-star-count"
               >
                 <MdStar size={16} aria-hidden="true" focusable="false" />
