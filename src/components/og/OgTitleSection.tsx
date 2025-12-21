@@ -21,7 +21,7 @@ export function OgTitleSection({ title, description, tags }: Props) {
           fontSize: "56px",
           lineHeight: "1.1",
           color: "#1a1a1a",
-          fontWeight: "700",
+          fontWeight: "500",
           margin: 0,
         }}
       >
