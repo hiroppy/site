@@ -14,7 +14,6 @@ type Props = {
 };
 
 export async function Content({ type, category, service, period }: Props) {
-  // TODO:
   const pathSegments = [type, category, service].filter(Boolean) as string[];
 
   if (!ARTICLE_TYPES.includes(type as ArticleType)) {

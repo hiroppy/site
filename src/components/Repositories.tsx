@@ -55,6 +55,7 @@ export async function Repositories({ repos }: Props) {
                     alt={`${project.name} icon`}
                     width={24}
                     height={24}
+                    sizes="24px"
                     className="h-6 w-6 rounded-full object-cover"
                     lazy
                   />

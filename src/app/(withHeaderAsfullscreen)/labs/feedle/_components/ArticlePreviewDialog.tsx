@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { FaXTwitter } from "react-icons/fa6";
 import { MdOpenInNew } from "react-icons/md";
 import { Dialog, type DialogHandle } from "../../../../../components/Dialog";
+import { formatDateJapanese } from "../../../../../utils/formatDate";
 
 const ARTICLE_PREVIEW_EVENT = "feedle:article-preview";
 
@@ -63,15 +64,7 @@ export function ArticlePreviewDialog() {
   };
 
   const formattedPublished = useMemo(
-    () =>
-      preview?.published &&
-      new Date(preview.published).toLocaleString("ja-JP", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+    () => preview?.published && formatDateJapanese(preview.published, "long"),
     [preview?.published],
   );
 

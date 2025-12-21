@@ -20,3 +20,5 @@ export type BlogPost = {
   MDXContent: React.ComponentType;
   headings: HeadingData[];
 };
+
+export type BlogPostPreview = Omit<BlogPost, "MDXContent" | "headings">;

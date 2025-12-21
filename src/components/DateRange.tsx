@@ -1,5 +1,5 @@
 import { cn } from "../utils/cn";
-import { formatDate } from "../utils/formatDate";
+import { formatDateJapanese } from "../utils/formatDate";
 
 type Props = {
   start: string | Date;
@@ -18,7 +18,7 @@ export function DateRange({
 }: Props) {
   const formatValue = (value: string | Date) => {
     if (value instanceof Date) {
-      return formatDate(value);
+      return formatDateJapanese(value);
     }
     return value;
   };
@@ -35,7 +35,7 @@ export function DateRange({
         className,
       )}
     >
-      {startText} - {endText}
+      {startText} ~ {endText}
     </span>
   );
 }

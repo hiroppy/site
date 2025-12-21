@@ -8,12 +8,12 @@ import {
   CardTitle,
 } from "../../../../components/Card";
 import { Tag } from "../../../../components/Tag";
-import type { BlogPost } from "../../../../mdx/types";
+import type { BlogPostPreview } from "../../../../mdx/types";
 import { parseTags } from "../../../../utils/blog";
-import { formatDate } from "../../../../utils/formatDate";
+import { formatDateJapanese } from "../../../../utils/formatDate";
 
 type Props = {
-  post: Omit<BlogPost, "MDXContent" | "headings">;
+  post: BlogPostPreview;
   lazy?: boolean;
   maxTags?: number;
 };
@@ -56,7 +56,7 @@ export function BlogCard({ post, lazy, maxTags = 3 }: Props) {
         <div className="text-text-muted mb-3 flex items-center space-x-4 text-sm">
           <div className="flex items-center gap-2" data-testid="blog-date">
             <MdCalendarToday size={16} aria-hidden="true" focusable="false" />
-            <span>{formatDate(data.date)}</span>
+            <span>{formatDateJapanese(data.date)}</span>
           </div>
         </div>
         <CardTitle className="mb-3 line-clamp-2 text-xl leading-relaxed">

@@ -2,13 +2,13 @@ import { readdir } from "node:fs/promises";
 import { join } from "node:path";
 import { parseTags } from "../utils/blog";
 import { sortByDate } from "../utils/sortItems";
-import type { Frontmatter, BlogPost } from "./types";
+import type { Frontmatter, BlogPost, BlogPostPreview } from "./types";
 
 export async function getBlogPosts({
   tag,
 }: {
   tag?: string;
-} = {}): Promise<Omit<BlogPost, "MDXContent" | "headings">[]> {
+} = {}): Promise<BlogPostPreview[]> {
   "use cache";
 
   try {

@@ -1,7 +1,7 @@
 "use client";
 
 import { liteClient as algoliasearch } from "algoliasearch/lite";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { SearchInputField } from "../../../../components/SearchInputField";
 import { cn } from "../../../../utils/cn";
 import { useAlgoliaSearch } from "../_hooks/useAlgoliaSearch";
@@ -47,7 +47,7 @@ export function SearchArticles() {
   return <SearchAutocomplete searchClient={searchClient} />;
 }
 
-function SearchAutocomplete({
+const SearchAutocomplete = memo(function SearchAutocomplete({
   searchClient,
 }: {
   searchClient: ReturnType<typeof algoliasearch>;
@@ -105,7 +105,7 @@ function SearchAutocomplete({
       />
     </div>
   );
-}
+});
 
 type SearchResultsListProps = {
   hits: BlogHit[];
@@ -115,7 +115,7 @@ type SearchResultsListProps = {
   error: string | null;
 };
 
-function SearchResultsList({
+const SearchResultsList = memo(function SearchResultsList({
   hits,
   shouldShowResults,
   hasHits,
@@ -173,4 +173,4 @@ function SearchResultsList({
       )}
     </div>
   );
-}
+});

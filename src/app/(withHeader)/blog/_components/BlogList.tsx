@@ -1,9 +1,27 @@
+import dynamic from "next/dynamic";
 import { NotFoundItem } from "../../../../components/NotFoundItem";
+import { SearchInputField } from "../../../../components/SearchInputField";
 import { getPaginatedPosts } from "../_utils/getPaginatedPosts";
 import { BlogCard } from "./BlogCard";
 import { Pagination } from "./Pagination";
-import { SearchArticles } from "./SearchArticles";
 import { TagsBox } from "./TagsBox";
+
+const SearchArticles = dynamic(
+  () =>
+    import("./SearchArticles").then((mod) => ({
+      default: mod.SearchArticles,
+    })),
+  {
+    loading: () => (
+      <SearchInputField
+        id="search-loading"
+        value=""
+        placeholder="記事を検索..."
+        disabled
+      />
+    ),
+  },
+);
 
 type Props = {
   currentPage: number;

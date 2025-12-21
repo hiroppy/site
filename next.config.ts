@@ -80,7 +80,7 @@ const nextConfig: NextConfig = {
     // turbopack + mdxRsはcustom pluginsをサポートしていない
     mdxRs: false,
     typedEnv: true,
-    optimizePackageImports: ["hiroppy"],
+    optimizePackageImports: ["hiroppy", "react-icons"],
   },
   serverExternalPackages: ["cheerio"],
 };

@@ -1,13 +1,41 @@
-export function formatDate(date: Date) {
-  const parsed = Object.fromEntries(
-    new Intl.DateTimeFormat("ja-JP", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    })
-      .formatToParts(date)
-      .map(({ type, value }) => [type, value]),
-  );
+export function formatDateJapanese(
+  date: string | Date,
+  format: "short" | "long" = "short",
+): string {
+  const dateObj = typeof date === "string" ? new Date(date) : date;
 
-  return `${parsed.year} ${parsed.literal} ${parsed.month} ${parsed.literal} ${parsed.day}`;
+  if (format === "short") {
+    return dateObj
+      .toLocaleDateString("ja-JP", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour12: false,
+      })
+      .replace(/\//g, "-");
+  }
+
+  return dateObj
+    .toLocaleDateString("ja-JP", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    })
+    .replace("年", "年 ")
+    .replace("月", "月 ")
+    .replace("日", "日 ");
+}
+
+export function isRecentDate(publishedAt?: string): boolean {
+  if (!publishedAt) return false;
+
+  const publishedDate = new Date(publishedAt);
+  const oneMonthAgo = new Date();
+
+  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+  return publishedDate >= oneMonthAgo;
 }

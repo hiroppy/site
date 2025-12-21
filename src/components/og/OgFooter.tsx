@@ -34,7 +34,7 @@ export function OgFooter({ avatar }: Props) {
             style={{
               fontSize: "32px",
               color: "#996300",
-              fontWeight: "600",
+              fontWeight: "700",
             }}
           >
             hiroppy

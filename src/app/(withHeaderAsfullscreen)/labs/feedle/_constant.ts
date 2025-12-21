@@ -2,7 +2,7 @@ export const ARTICLE_TYPES = ["frontend", "ai"] as const;
 
 export type ArticleType = (typeof ARTICLE_TYPES)[number];
 
-const ARTICLE_KINDS = [
+export const ARTICLE_KINDS = [
   "all",
   "official",
   "community",

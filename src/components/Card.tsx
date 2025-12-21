@@ -127,6 +127,12 @@ export function CardImage({
     expand: { width: 160, height: 84 },
   } satisfies Record<CardImageVariant, { width: number; height: number }>;
 
+  const variantSizesAttr = {
+    thumbnail: "144px",
+    cover: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
+    expand: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px",
+  } satisfies Record<CardImageVariant, string>;
+
   const imageClass = cn(variantClasses[variant], className);
   const { width, height } = variantSizes[variant];
 
@@ -136,6 +142,7 @@ export function CardImage({
       alt={alt}
       width={width}
       height={height}
+      sizes={variantSizesAttr[variant]}
       className={imageClass}
       lazy={lazy}
       {...rest}

@@ -88,7 +88,10 @@ export async function GET(
 
     const rss = feed.rss2();
 
-    return generateRssResponse(rss);
+    return generateRssResponse(
+      rss,
+      "public, max-age=604800, stale-while-revalidate=2592000",
+    );
   } catch (error) {
     console.error("RSS generation error:", error);
     return new Response("Failed to generate RSS feed", { status: 500 });

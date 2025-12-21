@@ -1,6 +1,6 @@
 import { MdCalendarToday } from "react-icons/md";
 import { Image } from "../../../../../../components/Image";
-import { formatDate } from "../../../../../../utils/formatDate";
+import { formatDateJapanese } from "../../../../../../utils/formatDate";
 
 type HeroProps = {
   title: string;
@@ -31,7 +31,7 @@ export function Hero({ title, image, date }: HeroProps) {
         </h1>
         <div className="flex items-center text-white/90 gap-2">
           <MdCalendarToday size={16} aria-hidden="true" focusable="false" />
-          <span>{formatDate(date)}</span>
+          <span>{formatDateJapanese(date)}</span>
         </div>
       </div>
     </div>

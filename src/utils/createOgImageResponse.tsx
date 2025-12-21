@@ -38,8 +38,21 @@ export async function createOgImageResponse(
       fonts: [
         {
           name: "Zen Kaku Gothic New",
-          data: await loadGoogleFont("Zen+Kaku+Gothic+New"),
+          data: await loadGoogleFont("Zen+Kaku+Gothic+New:wght@400"),
           style: "normal",
+          weight: 400,
+        },
+        {
+          name: "Zen Kaku Gothic New",
+          data: await loadGoogleFont("Zen+Kaku+Gothic+New:wght@500"),
+          style: "normal",
+          weight: 500,
+        },
+        {
+          name: "Zen Kaku Gothic New",
+          data: await loadGoogleFont("Zen+Kaku+Gothic+New:wght@700"),
+          style: "normal",
+          weight: 700,
         },
       ],
     });
