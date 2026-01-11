@@ -4,8 +4,8 @@ import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { MdMenu } from "react-icons/md";
 import { NAV_ITEMS } from "../constants";
+import { useActiveNavPath } from "../hooks/useActiveNavPath";
 import { cn } from "../utils/cn";
-import { isActiveNavCurrentPath } from "../utils/isActiveNavCurrentPath";
 import { Avatar } from "./Avatar";
 import { Button } from "./Button";
 import { ContactButton } from "./ContactButton";
@@ -18,6 +18,7 @@ type Props = {
 
 export function Header({ variant = "default", className }: Props) {
   const currentPath = usePathname();
+  const activeNavPath = useActiveNavPath();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isFullscreenPage = variant === "fullscreen";
 
@@ -57,11 +58,7 @@ export function Header({ variant = "default", className }: Props) {
             {NAV_ITEMS.map((item) => (
               <NavButton
                 key={item.href}
-                variant={
-                  isActiveNavCurrentPath(item.href, currentPath)
-                    ? "active"
-                    : "default"
-                }
+                variant={item.href === activeNavPath ? "active" : "default"}
                 href={item.href}
               >
                 {item.label}
@@ -91,9 +88,7 @@ export function Header({ variant = "default", className }: Props) {
                 <NavButton
                   key={item.href}
                   variant={
-                    isActiveNavCurrentPath(item.href, currentPath)
-                      ? "mobile-active"
-                      : "mobile"
+                    item.href === activeNavPath ? "mobile-active" : "mobile"
                   }
                   href={item.href}
                   className="w-full justify-start text-left"

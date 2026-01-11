@@ -1,17 +1,16 @@
 "use client";
 
 import meta from "hiroppy/generated/meta.json";
-import { usePathname } from "next/navigation";
 import { Avatar } from "../../../components/Avatar";
 import { ContactButton } from "../../../components/ContactButton";
 import { Link } from "../../../components/Link";
 import { ListContainer } from "../../../components/ListContainer";
 import { NAV_ITEMS } from "../../../constants";
+import { useActiveNavPath } from "../../../hooks/useActiveNavPath";
 import { cn } from "../../../utils/cn";
-import { isActiveNavCurrentPath } from "../../../utils/isActiveNavCurrentPath";
 
 export function Sidebar() {
-  const currentPath = usePathname();
+  const activeNavPath = useActiveNavPath();
 
   return (
     <aside className="space-y-8 md:sticky md:top-20 md:h-fit md:w-60 md:shrink-0">
@@ -30,7 +29,7 @@ export function Sidebar() {
       <nav>
         <ListContainer className="nav-list flex flex-col gap-3">
           {NAV_ITEMS.map((item) => {
-            const isActive = isActiveNavCurrentPath(item.href, currentPath);
+            const isActive = item.href === activeNavPath;
 
             return (
               <li key={item.href}>

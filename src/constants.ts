@@ -25,8 +25,6 @@ export const NAV_ITEMS = [
   { label: "Labs", href: "/labs" },
 ] as const;
 
-export type NavItem = (typeof NAV_ITEMS)[number];
-
 export const MEDIA_KINDS = ["all", "articles", "talks", "podcasts"] as const;
 
 export type MediaKind = (typeof MEDIA_KINDS)[number];
