@@ -71,7 +71,7 @@
     "@vitest/browser-playwright": "4.0.17",
     "babel-plugin-react-compiler": "1.0.0",
     "knip": "5.80.2",
-    "lefthook": "2.0.14",
+    "lefthook": "2.0.15",
     "postcss": "8.5.6",
     "prettier": "3.7.4",
     "prettier-plugin-tailwindcss": "0.7.2",
