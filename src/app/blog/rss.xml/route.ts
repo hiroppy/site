@@ -23,7 +23,7 @@ export async function GET() {
   });
 
   const items: Item[] = blogs.map((blog) => ({
-    link: `${meta.site.blog}posts/${blog.id}`,
+    link: `${meta.site.blog}/posts/${blog.id}`,
     title: blog.frontmatter.title,
     description: blog.frontmatter.description,
     date: new Date(blog.frontmatter.date),

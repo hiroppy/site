@@ -43,6 +43,12 @@ test.describe("sitemap/rss", () => {
     expect(channelTitle).toBe("技術探し");
     expect(channelLink).toBe("https://hiroppy.me/blog");
     expect(items.length).toBeGreaterThan(0);
+
+    // Verify that all item links have correct URL format (/blog/posts/)
+    for (const item of items) {
+      expect(item.link).toMatch(/^https:\/\/hiroppy\.me\/blog\/posts\/.+$/);
+      expect(item.link).not.toContain("/blogposts/");
+    }
   });
 
   test("Feedle RSS returns frontend feed", async ({ page }) => {
