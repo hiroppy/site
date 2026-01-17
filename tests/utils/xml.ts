@@ -42,7 +42,13 @@ export function parseRss(xml: string) {
   const $ = load(xml, { xmlMode: true });
   const channelTitle = $("channel > title").first().text();
   const channelLink = $("channel > link").first().text();
-  const items = $("channel > item").get();
+  const items = $("channel > item")
+    .map((_, el) => ({
+      title: $(el).find("title").text(),
+      link: $(el).find("link").text(),
+      description: $(el).find("description").text(),
+    }))
+    .get();
 
   return {
     channelTitle,
