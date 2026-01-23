@@ -68,7 +68,7 @@
     "@types/react": "19.2.9",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "5.1.2",
-    "@vitest/browser-playwright": "4.0.17",
+    "@vitest/browser-playwright": "4.0.18",
     "babel-plugin-react-compiler": "1.0.0",
     "knip": "5.82.1",
     "lefthook": "2.0.15",
@@ -82,6 +82,6 @@
     "tailwindcss": "4.1.18",
     "typescript": "5.9.3",
     "unist-util-visit": "5.1.0",
-    "vitest": "4.0.17"
+    "vitest": "4.0.18"
   }
 }
