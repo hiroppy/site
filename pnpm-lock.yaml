@@ -25,7 +25,7 @@ importers:
         version: 16.1.4(@mdx-js/loader@3.1.1)(@mdx-js/react@3.1.1(@types/react@19.2.9)(react@19.2.3))
       '@next/third-parties':
         specifier: 16.1.4
-        version: 16.1.4(next@16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
+        version: 16.1.4(next@16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
       '@tailwindcss/postcss':
         specifier: 4.1.18
         version: 4.1.18
@@ -52,7 +52,7 @@ importers:
         version: 1.0.74
       next:
         specifier: 16.1.4
-        version: 16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       octokit:
         specifier: 5.0.5
         version: 5.0.5
@@ -83,13 +83,13 @@ importers:
     devDependencies:
       '@axe-core/playwright':
         specifier: 4.11.0
-        version: 4.11.0(playwright-core@1.57.0)
+        version: 4.11.0(playwright-core@1.58.0)
       '@lhci/cli':
         specifier: 0.15.1
         version: 0.15.1
       '@playwright/test':
-        specifier: 1.57.0
-        version: 1.57.0
+        specifier: 1.58.0
+        version: 1.58.0
       '@tailwindcss/vite':
         specifier: 4.1.18
         version: 4.1.18(vite@7.2.6(@types/node@24.10.9)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))
@@ -116,7 +116,7 @@ importers:
         version: 5.1.2(vite@7.2.6(@types/node@24.10.9)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))
       '@vitest/browser-playwright':
         specifier: 4.0.18
-        version: 4.0.18(msw@2.12.3(@types/node@24.10.9)(typescript@5.9.3))(playwright@1.57.0)(vite@7.2.6(@types/node@24.10.9)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))(vitest@4.0.18)
+        version: 4.0.18(msw@2.12.3(@types/node@24.10.9)(typescript@5.9.3))(playwright@1.58.0)(vite@7.2.6(@types/node@24.10.9)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))(vitest@4.0.18)
       babel-plugin-react-compiler:
         specifier: 1.0.0
         version: 1.0.0
@@ -1065,8 +1065,8 @@ packages:
   '@paulirish/trace_engine@0.0.53':
     resolution: {integrity: sha512-PUl/vlfo08Oj804VI5nDPeSk9vyslnBlVzDDwFt8SUVxY8+KdGMkra/vrXjEEHe8gb7+RqVTfOIlGw0nyrEelA==}
 
-  '@playwright/test@1.57.0':
-    resolution: {integrity: sha512-6TyEnHgd6SArQO8UO2OMTxshln3QMWBtPGrOCgs3wVEmQmwyuNtB10IZMfmYDE0riwNR1cu4q+pPcxMVtaG3TA==}
+  '@playwright/test@1.58.0':
+    resolution: {integrity: sha512-fWza+Lpbj6SkQKCrU6si4iu+fD2dD3gxNHFhUPxsfXBPhnv3rRSQVd0NtBUT9Z/RhF/boCBcuUaMUSTRTopjZg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -3074,13 +3074,13 @@ packages:
     resolution: {integrity: sha512-1wrVzJ2STrpmONHKBy228LM1b84msXDUoAzVEl0R8Mz4Ce6EPr+IVtxm8+yvrqLYMHswREkjYFaMxnyGnaY3Ng==}
     hasBin: true
 
-  playwright-core@1.57.0:
-    resolution: {integrity: sha512-agTcKlMw/mjBWOnD6kFZttAAGHgi/Nw0CZ2o6JqWSbMlI219lAFLZZCyqByTsvVAJq5XA5H8cA6PrvBRpBWEuQ==}
+  playwright-core@1.58.0:
+    resolution: {integrity: sha512-aaoB1RWrdNi3//rOeKuMiS65UCcgOVljU46At6eFcOFPFHWtd2weHRRow6z/n+Lec0Lvu0k9ZPKJSjPugikirw==}
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright@1.57.0:
-    resolution: {integrity: sha512-ilYQj1s8sr2ppEJ2YVadYBN0Mb3mdo9J0wQ+UuDhzYqURwSoW4n1Xs5vs7ORwgDGmyEh33tRMeS8KhdkMoLXQw==}
+  playwright@1.58.0:
+    resolution: {integrity: sha512-2SVA0sbPktiIY/MCOPX8e86ehA/e+tDNq+e5Y8qjKYti2Z/JG7xnronT/TXTIkKbYGWlCbuucZ6dziEgkoEjQQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -4050,10 +4050,10 @@ snapshots:
   '@astrojs/compiler@2.13.0':
     optional: true
 
-  '@axe-core/playwright@4.11.0(playwright-core@1.57.0)':
+  '@axe-core/playwright@4.11.0(playwright-core@1.58.0)':
     dependencies:
       axe-core: 4.11.0
-      playwright-core: 1.57.0
+      playwright-core: 1.58.0
 
   '@babel/code-frame@7.27.1':
     dependencies:
@@ -4606,9 +4606,9 @@ snapshots:
   '@next/swc-win32-x64-msvc@16.1.4':
     optional: true
 
-  '@next/third-parties@16.1.4(next@16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)':
+  '@next/third-parties@16.1.4(next@16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)':
     dependencies:
-      next: 16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      next: 16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       react: 19.2.3
       third-party-capital: 1.0.20
 
@@ -4853,9 +4853,9 @@ snapshots:
       legacy-javascript: 0.0.1
       third-party-web: 0.29.0
 
-  '@playwright/test@1.57.0':
+  '@playwright/test@1.58.0':
     dependencies:
-      playwright: 1.57.0
+      playwright: 1.58.0
 
   '@polka/url@1.0.0-next.29': {}
 
@@ -5200,11 +5200,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/browser-playwright@4.0.18(msw@2.12.3(@types/node@24.10.9)(typescript@5.9.3))(playwright@1.57.0)(vite@7.2.6(@types/node@24.10.9)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))(vitest@4.0.18)':
+  '@vitest/browser-playwright@4.0.18(msw@2.12.3(@types/node@24.10.9)(typescript@5.9.3))(playwright@1.58.0)(vite@7.2.6(@types/node@24.10.9)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))(vitest@4.0.18)':
     dependencies:
       '@vitest/browser': 4.0.18(msw@2.12.3(@types/node@24.10.9)(typescript@5.9.3))(vite@7.2.6(@types/node@24.10.9)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))(vitest@4.0.18)
       '@vitest/mocker': 4.0.18(msw@2.12.3(@types/node@24.10.9)(typescript@5.9.3))(vite@7.2.6(@types/node@24.10.9)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))
-      playwright: 1.57.0
+      playwright: 1.58.0
       tinyrainbow: 3.0.3
       vitest: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.9)(@vitest/browser-playwright@4.0.18)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.3(@types/node@24.10.9)(typescript@5.9.3))(yaml@2.8.2)
     transitivePeerDependencies:
@@ -7091,7 +7091,7 @@ snapshots:
 
   netmask@2.0.2: {}
 
-  next@16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+  next@16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
       '@next/env': 16.1.4
       '@swc/helpers': 0.5.15
@@ -7111,7 +7111,7 @@ snapshots:
       '@next/swc-win32-arm64-msvc': 16.1.4
       '@next/swc-win32-x64-msvc': 16.1.4
       '@opentelemetry/api': 1.9.0
-      '@playwright/test': 1.57.0
+      '@playwright/test': 1.58.0
       babel-plugin-react-compiler: 1.0.0
       sharp: 0.34.5
     transitivePeerDependencies:
@@ -7291,11 +7291,11 @@ snapshots:
     dependencies:
       pngjs: 7.0.0
 
-  playwright-core@1.57.0: {}
+  playwright-core@1.58.0: {}
 
-  playwright@1.57.0:
+  playwright@1.58.0:
     dependencies:
-      playwright-core: 1.57.0
+      playwright-core: 1.58.0
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -8151,7 +8151,7 @@ snapshots:
     optionalDependencies:
       '@opentelemetry/api': 1.9.0
       '@types/node': 24.10.9
-      '@vitest/browser-playwright': 4.0.18(msw@2.12.3(@types/node@24.10.9)(typescript@5.9.3))(playwright@1.57.0)(vite@7.2.6(@types/node@24.10.9)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))(vitest@4.0.18)
+      '@vitest/browser-playwright': 4.0.18(msw@2.12.3(@types/node@24.10.9)(typescript@5.9.3))(playwright@1.58.0)(vite@7.2.6(@types/node@24.10.9)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))(vitest@4.0.18)
     transitivePeerDependencies:
       - jiti
       - less
