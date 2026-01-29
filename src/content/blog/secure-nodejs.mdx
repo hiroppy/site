@@ -1,0 +1,367 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: 簡単に導入できるNode.js のセキュリティ強化
+date: 2025-06-12
+description: CLIオプションだけで導入できるNode.jsのセキュリティ強化をまとめました
+image: /images/brands/nodejs.png
+tags: node.js
+---
+
+月に一回、mozaic.fmというポッドキャストでその月に起きたフロントエンドの動向を話していますが、
+最近のセキュリティインシデントを見ていると、Node.jsアプリケーションのセキュリティ対策が
+おろそかになっているケースが多いなと感じています。
+
+というのも、普段の開発ではパフォーマンスや機能追加に目が行きがちで、
+セキュリティ対策は後回しにされることが多いのではないかと思っています。
+しかし、Node.jsには**CLIオプションだけで導入できる**セキュリティ強化機能が存在します。
+今回は、これらの機能をまとめてみました。
+
+正直、自分も全部を本番で使っているわけではないですが、
+プロジェクトの要件に応じて選択できるように整理しておくと良いかなと思います。
+
+## 背景
+
+Node.jsのセキュリティは、従来ライブラリやアプリケーションコードレベルで対処することが一般的でした。
+しかし、**ランタイムレベル**でのセキュリティ対策も重要な防御層となります。
+
+特に以下のような脅威に対して、CLIフラグでの対策は有効です:
+
+- 依存ライブラリからの意図しないコード実行
+- Prototype Pollution攻撃
+- Monkey Patchingによるビルトインオブジェクトの改変
+- メモリダンプからの秘密情報流出
+
+ただし、**これらのフラグを有効にすることで互換性の問題が発生する可能性があります**。
+なので、開発環境で十分にテストしてから本番に適用することをおすすめします。
+
+|  §  | テーマ                          | 重点フラグ                                    |
+| :-: | :------------------------------ | :-------------------------------------------- |
+|  1  | Injection Sinks (eval など)     | `--disallow-code-generation-from-strings`     |
+|  2  | Monkey Patching                 | `--frozen-intrinsics`                         |
+|  3  | Prototype Pollution             | `--disable-proto=throw`                       |
+|  4  | Permission Model                | `--permission`                                |
+|  5  | **Secure Heap**                 | `--secure-heap`                               |
+|  6  | **Policy & Integrity Manifest** | `--experimental-policy`, `--policy-integrity` |
+
+---
+
+## Injection Sinks
+
+`eval()`, `Function()`, `vm.runInContext()`などの動的コード生成機能は、
+外部入力を元にコードを実行する場合、**RCE (Remote Code Execution)** の脆弱性につながります。
+
+例えば、以下のようなコードは危険です:
+
+```js
+// ❌ 危険な例
+// クエリパラメータ: ?q=process.mainModule.require('fs').readFileSync('/etc/passwd','utf8')
+app.get("/search", (req, res) => {
+  const result = eval(`db.find("${req.query.q}")`); // RCE の脆弱性
+  res.json(result);
+});
+```
+
+この場合、攻撃者は任意のコードを実行できてしまいます。
+
+### 対策方法
+
+`--disallow-code-generation-from-strings` フラグを使うことで、
+`eval()` や `Function()` などの動的コード生成を完全に無効化できます。
+
+```bash
+node --disallow-code-generation-from-strings index.mjs
+```
+
+このフラグを有効にすると、以下のエラーが発生するようになります:
+
+```
+EvalError: Code generation from strings disallowed for this context
+```
+
+### 注意点
+
+このフラグを有効にすると、以下のライブラリやパターンが動作しなくなる可能性があります:
+
+- テンプレートエンジン（一部）
+- JSONスキーマバリデーター（一部の実装）
+- ビルドツールの動的ローダー
+
+なので、まずは開発環境で動作確認を行ってください。
+
+## Monkey Patching
+
+依存ライブラリが `Array.prototype.push = …` のようにビルトインオブジェクトを上書きすると、
+他のライブラリやNode.jsコアの動作前提が崩壊します。
+
+例えば、以下のような攻撃が可能です:
+
+```js
+// ❌ 悪意のあるライブラリが行う可能性がある操作
+Array.prototype.push = function (...args) {
+  // 配列に追加される値を盗聴
+  console.log("Stolen data:", args);
+  return Array.prototype.push.apply(this, args);
+};
+```
+
+### 対策方法
+
+`--frozen-intrinsics` フラグを使うことで、すべてのビルトインオブジェクト
+（Object, Array, Date など）を再帰的に `Object.freeze()` します。
+
+```bash
+node --frozen-intrinsics app.mjs
+```
+
+### 注意点
+
+必要なpolyfillは **「凍結前」にロード** する必要があります。
+`--require`または`--import`フラグを使って、凍結前にpolyfillを読み込んでください。
+
+```bash
+# core-jsを凍結前にロード
+node --require core-js --frozen-intrinsics app.mjs
+```
+
+ちなみに、このフラグは起動時に全ビルトインオブジェクトをフリーズするため、
+起動時間が数十ms増加する可能性があります。
+
+## Prototype Pollution
+
+Prototype Pollution攻撃は、`__proto__`を使ってObjectのprototypeを汚染し、
+アプリケーション全体の動作を変更する攻撃手法です。
+
+例えば、以下のようなコードは危険です:
+
+```js
+// ❌ 危険な例
+function merge(target, source) {
+  for (let key in source) {
+    target[key] = source[key]; // __proto__ も代入されてしまう
+  }
+  return target;
+}
+
+// 攻撃例
+const malicious = JSON.parse('{"__proto__": {"isAdmin": true}}');
+merge({}, malicious);
+
+console.log({}.isAdmin); // true - すべてのオブジェクトが汚染された！
+```
+
+### 対策方法
+
+`--disable-proto=throw` フラグを使うことで、`__proto__` の参照・代入時に即例外を発生させます。
+
+```bash
+node --disable-proto=throw --frozen-intrinsics server.mjs
+```
+
+### 安全な代替手段
+
+- オブジェクトのマージには `structuredClone` + スプレッド構文を使用
+- または `lodash.mergeWith` のような安全な実装を使用
+- 外部入力は JSON Schema / Ajv でバリデート
+
+```js
+// ✅ 安全な例
+const merged = { ...structuredClone(obj1), ...structuredClone(obj2) };
+```
+
+## Permission Model
+
+Node.jsのPermission Modelを使うことで、ファイルアクセスやサブプロセスの実行を
+ホワイトリスト形式で制限できます。
+
+### 基本的な使い方
+
+```bash
+node --permission \
+     --allow-fs-read=/var/data \
+     --allow-child-process \
+     api.mjs
+```
+
+デフォルトで **全権限が拒否** され、個別に `--allow-*` フラグで権限を解放します。
+
+### 主な権限フラグ
+
+- `--allow-fs-read=<path>`: 指定パスの読み取り許可
+- `--allow-fs-write=<path>`: 指定パスの書き込み許可
+- `--allow-child-process`: サブプロセス実行の許可
+- `--allow-worker`: Worker スレッド作成の許可
+
+### 注意点
+
+- v21.6.0 以降は相対パスの許可が強化されました
+- パスは絶対パスでの指定が推奨されます
+- 設定が複雑になりやすいため、必要最小限の権限に留めることが重要です
+
+---
+
+## Secure Heap
+
+ヒープダンプや隣接メモリ破壊から **秘密鍵流出 (CWE‑284)** を守る。
+
+```bash
+# 16 MiB の Secure Heap（最小ブロック 4 KiB）
+node --secure-heap=16777216 --secure-heap-min=4096 app.mjs
+```
+
+Linux/macOS 専用。枯渇すると OpenSSL API がエラーを返す。
+
+## Policy & Integrity Manifest
+
+ファイルの整合性チェックを行い、改ざんされたコードの実行を防ぎます。
+これについては、以前詳しく書いた記事があります。
+
+[Node.js の Policy について](https://blog.hiroppy.me/entry/node-policy)
+
+簡単に説明すると、`policy.json`で各ファイルのSRIハッシュを定義し、
+実行時にファイルが変更されていないことを検証します。
+
+::: details policy.json の例
+
+```json
+{
+  "onerror": "exit",
+  "resources": {
+    "./app/server.js": {
+      "integrity": "sha256-<SRI>",
+      "dependencies": { "./router": "./app/router.js" }
+    },
+    "./app/router.js": {
+      "integrity": "sha256-<SRI>"
+    }
+  }
+}
+```
+
+:::
+
+```bash
+node --experimental-policy=policy.json \
+     --policy-integrity=sha256-<policySRI> \
+     app/server.js
+```
+
+未許可のパス・ハッシュは即例外となります。
+
+ただし、正直なところ、この機能は運用コストが高く、
+現時点では大規模なプロジェクトや高セキュリティ要件がある場合にのみ推奨します。
+
+## --max-http-header-size
+
+Node.jsはデフォルトでHTTPヘッダーサイズを16KBに制限していますが、
+この値を小さくすることで、ヘッダー経由の攻撃を軽減できます。
+
+```bash
+node --max-http-header-size=8192 server.js
+```
+
+ただ、これを小さくしすぎると、正常なリクエストが失敗する可能性があるので、
+アプリケーションの要件に応じて調整してください。
+
+---
+
+## CI に組み込む推奨セット
+
+これらのフラグは、**開発環境とCI、本番環境で同じ設定を使う**ことが重要です。
+というのも、本番だけで有効にすると、開発時には見つからなかった問題が本番で発生する可能性があるためです。
+
+### 環境変数での設定
+
+`NODE_OPTIONS` 環境変数を使うことで、プロジェクト全体で統一できます:
+
+```bash
+# .env
+NODE_OPTIONS="\
+  --disallow-code-generation-from-strings \
+  --frozen-intrinsics \
+  --disable-proto=throw"
+```
+
+### package.json での設定
+
+::: code-group
+
+```json [npm]
+{
+  "scripts": {
+    "dev": "NODE_OPTIONS='--frozen-intrinsics' node server.js",
+    "test": "NODE_OPTIONS='--frozen-intrinsics --disable-proto=throw' npm test"
+  }
+}
+```
+
+```dockerfile [Docker]
+# Dockerfile
+ENV NODE_OPTIONS="--frozen-intrinsics --disable-proto=throw"
+CMD ["node", "server.js"]
+```
+
+:::
+
+### GitHub Actions での例
+
+```yaml
+# .github/workflows/test.yml
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --frozen-intrinsics --disable-proto=throw
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm test
+```
+
+ちなみに、自分のプロジェクトでは`--frozen-intrinsics`と`--disable-proto=throw`を
+デフォルトで有効にしています。案外、互換性の問題は少ないです。
+
+## 注意点とトレードオフ
+
+これらのセキュリティフラグを導入する際の注意点をまとめます。
+
+### パフォーマンスへの影響
+
+- `--frozen-intrinsics`: 起動時に全ビルトインオブジェクトをフリーズするため、起動時間が数十ms増加します
+- `--secure-heap`: メモリ確保のコストが上がるため、OpenSSL操作が若干遅くなります
+- `--permission`: ファイルアクセス毎に権限チェックが入るため、I/O性能が低下する可能性があります
+
+### 互換性の問題
+
+以下のようなケースで問題が発生する可能性があります:
+
+- Polyfillを使用するライブラリ（`--frozen-intrinsics`）
+- 動的コード生成に依存するテンプレートエンジン（`--disallow-code-generation-from-strings`）
+- `__proto__` を使用する古いライブラリ（`--disable-proto=throw`）
+
+なので、**段階的に導入する**ことをおすすめします。
+最初は開発環境で試し、問題がなければCIへ、最終的に本番へという流れが安全です。
+
+## まとめ
+
+- Node.jsには、**CLIフラグだけで導入できる**セキュリティ強化機能が複数存在する
+- 特に`--frozen-intrinsics`と`--disable-proto=throw`は導入コストが低く効果が高い
+- `--permission`は細かいアクセス制御が可能だが、設定が複雑になる
+- これらのフラグは開発環境、CI、本番環境で**同じ設定を使う**ことが重要
+- 段階的に導入し、互換性やパフォーマンスの問題を確認しながら進める
+
+正直なところ、すべてのフラグを有効にする必要はないと思います。
+プロジェクトの要件やセキュリティ要求に応じて、適切なものを選択してください。
+
+個人的には、少なくとも`--disable-proto=throw`は今後のプロジェクトで
+デフォルト有効にしていきたいと考えています。
+
+## 参考リンク
+
+[Node.js CLI Flags](https://nodejs.org/api/cli.html)
+
+[Node.js Permissions API](https://nodejs.org/api/permissions.html)
+
+[Node.js Policy Manifest](https://nodejs.org/api/policy.html)
+
+[Prototype Pollution - PortSwigger](https://portswigger.net/web-security/prototype-pollution)
+
+[Node.js Security Best Practices](https://nodejs.org/ja/learn/getting-started/security-best-practices)
