@@ -1453,5 +1453,20 @@
     "title": "ep.100 『100回記念8時間生放送』 | UIT INSIDE",
     "description": "こちらは YouTube 配信の内容より、休憩時間などをカットしたものとなります。\n基本的には画面共有などの詳細の情報が残っている YouTube アーカイブでのご視聴をおすすめいたします。\n<iframe width=\"560\" height=\"315\" style=\"width:100%;height: 513px;margin: -10px 0 10px\" src=\"https://www.youtube.com/embed/Qsuk2KCDIxw\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>\n<iframe title=\"Twitter Share\" src=\"https://platform.twitter.com/widgets/tweetbutton.html?url=https://uit-inside.linecorp.com/episode/100&amp;hashtags=UITINSIDE&amp;related=LINEDEV\" width=\"81\" height=\"21\" style=\"overflow: hidden;\"></iframe>\n音声版はこちら\n<audio src=\"https://vos.line-scdn.net/podcast/episodes/uit-inside-100.mp3\" controls ></audio>\nこちらは YouTube 配信の内容より、休憩時間やプレゼント企画など、リアルタイム配信限定の部分をカットしたものとなります。\n基本的には画面共有などの詳細の情報が残っている YouTube アーカイブでのご視聴をおすすめいたします。\n2018年12月からはじまり2年半、合計10万を超える視聴、2021年10月1日をもって ep.99 まで達した UIT INSIDE。ついに迎える ep.100 として、8時間生放送を実施します！\nhttps://uit-inside.linecorp.com\nこれまで UIT INSIDE に出演いただいたゲストを招待し、プロジェクトのその後・今考えていること・新しく行っている取り組みなどについて語っていただく8時間を予定しております。\nまた、ep.100 を記念して UIT に関するノベルティのプレゼント企画や、これまでの UIT INSIDE の人気エピソードの紹介・振り返りなどなど、 UIT のコンテンツを普段視聴してくださっているかたにこそ楽しんでいただけるコンテンツもたくさんお送りする予定ですので、ぜひ業務のお供にご視聴ください。\n<style>\n#content-inner > div > div > div:nth-child(3) > div > div > div > div > p:nth-child(1),\n#content-inner > div > div > div.container-xl.bg-white.mx-auto.flex.items-stretch.justify-between,\n.TheEpisodeCardHero,\n.TheEpisodeCardHeroicons {\n  display: none;\n}\n</style>\nRefs\nLINE 新卒採用 2022\nhttps://linecorp.com/ja/career/newgrads/engineering/\n2023 年卒向けページは近日公開！\nキャリア採用はこちらから\nhttps://linecorp.com/ja/career/position/475\nBGM&SE\n魔王魂/騒音のない世界/OtoLogic",
     "image": "https://vos.line-scdn.net/podcast/opengraphs/episode100.png"
+  },
+  "https://blog.hiroppy.me/entry/node-policy": {
+    "title": "Node.jsをPolicyにより安全に実行する | hiroppy's site",
+    "description": "Node.jsに入ったPolicyという機能を紹介します",
+    "image": "https://hiroppy.me/blog/posts/node-policy/opengraph-image-ygi0ps?d12a516206578702"
+  },
+  "https://nodejs.org/ja/learn/getting-started/security-best-practices": {
+    "title": "Node.js — Security Best Practices",
+    "description": "Node.js® is a free, open-source, cross-platform JavaScript runtime environment that lets developers create servers, web apps, command line tools and scripts.",
+    "image": "https://nodejs.org/en/next-data/og/announcement/Node.js%20%E2%80%94%20Security%20Best%20Practices"
+  },
+  "https://nodejs.org/api/cli.html": {
+    "title": "Command-line API | Node.js v25.2.1 Documentation",
+    "description": "",
+    "image": ""
   }
 }
