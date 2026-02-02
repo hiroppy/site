@@ -50,7 +50,7 @@ jobs:
   a11y:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.58.0
+      image: mcr.microsoft.com/playwright:v1.58.1
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-node
@@ -64,7 +64,7 @@ jobs:
   routes:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.58.0
+      image: mcr.microsoft.com/playwright:v1.58.1
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-node
@@ -78,7 +78,7 @@ jobs:
   vrt:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.58.0
+      image: mcr.microsoft.com/playwright:v1.58.1
     strategy:
       matrix:
         type: [pages, components]
