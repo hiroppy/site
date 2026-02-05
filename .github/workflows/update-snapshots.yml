@@ -22,7 +22,7 @@ jobs:
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/update')
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.58.0
+      image: mcr.microsoft.com/playwright:v1.58.1
     steps:
       - name: Add eyes reaction
         uses: actions/github-script@v8
