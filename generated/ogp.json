@@ -1458,5 +1458,10 @@
     "title": "GitHub - hiroppy/mf-dashboard: マネーフォワードMeを自動化、保有資産の可視化を行います",
     "description": "マネーフォワードMeを自動化、保有資産の可視化を行います. Contribute to hiroppy/mf-dashboard development by creating an account on GitHub.",
     "image": "https://opengraph.githubassets.com/9aab4196538164ab83e0655a545ce027db78aebf0561b17b0d98c4623441a5d9/hiroppy/mf-dashboard"
+  },
+  "https://github.com/hiroppy/mf-dashboard/tree/main/apps/crawler/hooks": {
+    "title": "mf-dashboard/apps/crawler/hooks at main · hiroppy/mf-dashboard",
+    "description": "マネーフォワードMeを自動化、保有資産の可視化を行います. Contribute to hiroppy/mf-dashboard development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/ebc8f4bd21e5ee7bd3988764d72e7cf54cb5c62f952f19a64402edb0627bd1ca/hiroppy/mf-dashboard"
   }
 }
