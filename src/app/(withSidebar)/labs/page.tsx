@@ -1,4 +1,4 @@
-import { MdRssFeed } from "react-icons/md";
+import { MdCalculate, MdRssFeed, MdShowChart } from "react-icons/md";
 import {
   Card,
   CardContent,
@@ -17,6 +17,37 @@ export const metadata = createMetadata({
 });
 
 const projects = [
+  {
+    title: "mf-dashboard",
+    description: "MoneyForward Meを自動化、可視化。",
+    link: "https://hiroppy.github.io/mf-dashboard/",
+    tags: ["Asset Management"],
+    icon: (
+      <MdShowChart
+        className="text-2xl text-white"
+        size={24}
+        aria-hidden="true"
+        focusable="false"
+      />
+    ),
+    color: "bg-emerald-700/80",
+  },
+  {
+    title: "資産切り崩しシミュレーター",
+    description:
+      "毎月の積立額や初期投資額、運用期間などの条件から、目標金額までの道のりをシミュレーションできます。年齢を入力すると年金受給などを考慮した将来設計がしやすくなり、さらに5,000回のモンテカルロ・シミュレーションによって資産が枯渇する確率も算出します。",
+    link: "https://asset-melt.party/",
+    tags: ["Asset Management", "Simulation"],
+    icon: (
+      <MdCalculate
+        className="text-2xl text-white"
+        size={24}
+        aria-hidden="true"
+        focusable="false"
+      />
+    ),
+    color: "bg-sky-700/80",
+  },
   {
     title: "Feedle",
     description:
@@ -47,19 +78,17 @@ export default async function LabsPage() {
               link={{ href: project.link }}
               className="group"
             >
-              <CardContent className="flex h-full flex-col p-6">
-                <div className="mb-4">
+              <CardContent className="flex flex-col gap-3 p-5">
+                <div className="flex items-center gap-3">
                   <div
-                    className={`flex h-12 w-12 items-center justify-center rounded-lg bg-linear-to-br ${project.color}`}
+                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-linear-to-br ${project.color}`}
                   >
                     {project.icon}
                   </div>
+                  <CardTitle className="text-lg">{project.title}</CardTitle>
                 </div>
-                <CardTitle className="mb-3 text-xl">{project.title}</CardTitle>
-                <CardDescription className="mb-4 grow">
-                  {project.description}
-                </CardDescription>
-                <div className="mt-auto flex flex-wrap gap-2">
+                <CardDescription>{project.description}</CardDescription>
+                <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
                     <Tag key={tag}>{tag}</Tag>
                   ))}
