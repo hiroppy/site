@@ -9,3 +9,5 @@ onlyBuiltDependencies:
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - hiroppy
+  # Renovate security update: next@16.1.7
+  - next@16.1.7
