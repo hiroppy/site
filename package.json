@@ -80,7 +80,7 @@
     "remark-mdx-frontmatter": "5.2.0",
     "strip-markdown": "6.0.0",
     "tailwindcss": "4.1.18",
-    "typescript": "5.9.3",
+    "typescript": "6.0.3",
     "unist-util-visit": "5.1.0",
     "vitest": "4.0.18"
   }
