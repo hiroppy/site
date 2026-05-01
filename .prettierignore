@@ -5,3 +5,4 @@ pnpm-lock.yaml
 pnpm-workspace.yaml
 test-results
 tests/**/*.json
+generated
