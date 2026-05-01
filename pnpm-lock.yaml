@@ -157,7 +157,7 @@ importers:
         specifier: 5.1.0
         version: 5.1.0
       vite:
-        specifier: ^8.0.10
+        specifier: 8.0.10
         version: 8.0.10(@types/node@24.12.2)(jiti@2.6.1)(yaml@2.8.2)
       vitest:
         specifier: 4.1.5
