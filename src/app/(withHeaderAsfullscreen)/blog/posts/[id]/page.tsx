@@ -45,9 +45,7 @@ export default async function Page({ params }: PageProps<"/blog/posts/[id]">) {
   }
 
   const { frontmatter, MDXContent, headings: extractedHeadings } = post;
-  const headings = !!(
-    frontmatter.references && frontmatter.references.length > 0
-  )
+  const headings = frontmatter.references?.length
     ? [...extractedHeadings, { depth: 2, slug: "references", text: "Stuff" }]
     : extractedHeadings;
 

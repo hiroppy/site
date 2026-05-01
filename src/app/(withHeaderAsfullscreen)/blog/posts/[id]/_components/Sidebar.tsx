@@ -1,13 +1,10 @@
 import { MdArrowBack, MdToc } from "react-icons/md";
 import { Link } from "../../../../../../components/Link";
+import type { HeadingData } from "../../../../../../mdx/types";
 import { TableOfContents } from "./TableOfContents";
 
 type SidebarProps = {
-  headings: Array<{
-    depth: number;
-    slug: string;
-    text: string;
-  }>;
+  headings: HeadingData[];
 };
 
 export function Sidebar({ headings }: SidebarProps) {

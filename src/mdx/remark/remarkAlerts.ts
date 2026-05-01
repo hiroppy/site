@@ -1,5 +1,6 @@
 import type { Blockquote, Paragraph, Parent, Root, RootContent } from "mdast";
 import { visit } from "unist-util-visit";
+import { ensureComponentImport } from "./_utils";
 
 type NodeReplacement = {
   parent: Parent;
@@ -84,41 +85,7 @@ export function remarkAlerts() {
 
     // Add import statement if any alerts were found
     if (nodesToReplace.length > 0) {
-      const hasAlertImport = tree.children.some(
-        (child) =>
-          "value" in child &&
-          typeof child.value === "string" &&
-          child.value.includes("Alert") &&
-          child.value.includes("../../mdx/components/Alert"),
-      );
-
-      if (!hasAlertImport) {
-        tree.children.unshift({
-          type: "mdxjsEsm",
-          value: 'import { Alert } from "../../mdx/components/Alert";',
-          data: {
-            estree: {
-              type: "Program",
-              body: [
-                {
-                  type: "ImportDeclaration",
-                  specifiers: [
-                    {
-                      type: "ImportSpecifier",
-                      imported: { type: "Identifier", name: "Alert" },
-                      local: { type: "Identifier", name: "Alert" },
-                    },
-                  ],
-                  source: {
-                    type: "Literal",
-                    value: "../../mdx/components/Alert",
-                  },
-                },
-              ],
-            },
-          },
-        } as unknown as RootContent);
-      }
+      ensureComponentImport(tree, "Alert", "../../mdx/components/Alert");
     }
   };
 }

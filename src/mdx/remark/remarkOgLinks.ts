@@ -1,7 +1,5 @@
 import type { Link, Paragraph, Root, RootContent } from "mdast";
-
-const IMPORT_SOURCE = "../../mdx/components/OG";
-const IMPORT_VALUE = `import { OG } from "${IMPORT_SOURCE}";`;
+import { buildEsmImport, hasComponentImport } from "./_utils";
 
 type ComponentName = "OG" | "YoutubeCard" | "TwitterCard";
 
@@ -10,41 +8,6 @@ const COMPONENT_IMPORT_PATHS: Record<ComponentName, string> = {
   YoutubeCard: "../../mdx/components/YoutubeCard",
   TwitterCard: "../../mdx/components/TwitterCard",
 };
-
-function buildImportForComponent(componentName: ComponentName): RootContent {
-  const importPath = COMPONENT_IMPORT_PATHS[componentName];
-  const importValue = `import { ${componentName} } from "${importPath}";`;
-
-  return {
-    type: "mdxjsEsm",
-    value: importValue,
-    data: {
-      estree: {
-        type: "Program",
-        body: [
-          {
-            type: "ImportDeclaration",
-            specifiers: [
-              {
-                type: "ImportSpecifier",
-                imported: { type: "Identifier", name: componentName },
-                local: { type: "Identifier", name: componentName },
-              },
-            ],
-            source: {
-              type: "Literal",
-              value: importPath,
-            },
-          },
-        ],
-      },
-    },
-  } as unknown as RootContent;
-}
-
-function buildOgImport(): RootContent {
-  return buildImportForComponent("OG");
-}
 
 function buildOgElement(url: string): RootContent {
   return {
@@ -220,16 +183,8 @@ export function remarkOgLinks() {
 
     for (const componentName of usedComponents) {
       const importPath = COMPONENT_IMPORT_PATHS[componentName];
-      const hasImport = tree.children.some(
-        (child) =>
-          "value" in child &&
-          typeof child.value === "string" &&
-          child.value.includes(componentName) &&
-          child.value.includes(importPath),
-      );
-
-      if (!hasImport) {
-        tree.children.unshift(buildImportForComponent(componentName));
+      if (!hasComponentImport(tree, componentName, importPath)) {
+        tree.children.unshift(buildEsmImport(componentName, importPath));
       }
     }
   };
