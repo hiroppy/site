@@ -1463,5 +1463,10 @@
     "title": "mf-dashboard/apps/crawler/hooks at main · hiroppy/mf-dashboard",
     "description": "マネーフォワードMeを自動化、保有資産の可視化を行います. Contribute to hiroppy/mf-dashboard development by creating an account on GitHub.",
     "image": "https://opengraph.githubassets.com/ebc8f4bd21e5ee7bd3988764d72e7cf54cb5c62f952f19a64402edb0627bd1ca/hiroppy/mf-dashboard"
+  },
+  "https://hiroppy.github.io/mf-dashboard/": {
+    "title": "MoneyForward Me Dashboard",
+    "description": "MoneyForward Me のデータを可視化するダッシュボード",
+    "image": "https://hiroppy.github.io/mf-dashboard/logo.png"
   }
 }
