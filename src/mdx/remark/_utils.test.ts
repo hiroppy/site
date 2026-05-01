@@ -78,7 +78,9 @@ describe("hasComponentImport", () => {
       children: [
         {
           type: "paragraph",
-          children: [{ type: "text", value: "Alert ../../mdx/components/Alert" }],
+          children: [
+            { type: "text", value: "Alert ../../mdx/components/Alert" },
+          ],
         },
       ] as RootContent[],
     };
