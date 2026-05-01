@@ -1,7 +1,7 @@
 import { type IconType } from "react-icons";
 import { MdCode, MdDataObject, MdFolder, MdTerminal } from "react-icons/md";
 import {
-  SiCss3,
+  SiCss,
   SiDocker,
   SiGit,
   SiGraphql,
@@ -47,7 +47,7 @@ export const iconMap: Record<LanguageIconValues | "folder", IconType> = {
   javascript: SiJavascript,
   typescript: SiTypescript,
   html: SiHtml5,
-  css: SiCss3,
+  css: SiCss,
   markdown: SiMarkdown,
   console: MdTerminal,
   json: MdDataObject,
