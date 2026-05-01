@@ -7,6 +7,7 @@ on:
       - "src/**"
       - "tests/**"
       - ".github/workflows/ci.yml"
+      - ".github/actions/**"
   push:
     branches: [main]
     paths:
@@ -14,6 +15,7 @@ on:
       - "src/**"
       - "tests/**"
       - ".github/workflows/ci.yml"
+      - ".github/actions/**"
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
