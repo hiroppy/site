@@ -2,14 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Link } from "../../../../../../components/Link";
+import type { HeadingData } from "../../../../../../mdx/types";
 import { cn } from "../../../../../../utils/cn";
 
 type TableOfContentsProps = {
-  headings: Array<{
-    depth: number;
-    slug: string;
-    text: string;
-  }>;
+  headings: HeadingData[];
   className?: string;
 };
 

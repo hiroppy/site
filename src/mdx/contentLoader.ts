@@ -78,7 +78,7 @@ export async function getAllTags() {
   "use cache";
 
   const posts = await getBlogPosts();
-  const allTags = posts.map((post) => parseTags(post.frontmatter.tags)).flat();
+  const allTags = posts.flatMap((post) => parseTags(post.frontmatter.tags));
   const tagCounts = allTags.reduce(
     (acc, tag) => {
       acc[tag] = (acc[tag] || 0) + 1;

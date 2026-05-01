@@ -1,8 +1,5 @@
 import type { Link, Paragraph, Root, RootContent } from "mdast";
 
-const IMPORT_SOURCE = "../../mdx/components/OG";
-const IMPORT_VALUE = `import { OG } from "${IMPORT_SOURCE}";`;
-
 type ComponentName = "OG" | "YoutubeCard" | "TwitterCard";
 
 const COMPONENT_IMPORT_PATHS: Record<ComponentName, string> = {
@@ -40,10 +37,6 @@ function buildImportForComponent(componentName: ComponentName): RootContent {
       },
     },
   } as unknown as RootContent;
-}
-
-function buildOgImport(): RootContent {
-  return buildImportForComponent("OG");
 }
 
 function buildOgElement(url: string): RootContent {

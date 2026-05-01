@@ -11,16 +11,12 @@ import { ShareButtons } from "./ShareButtons";
 import { TableOfContents } from "./TableOfContents";
 import { HatenaMigrationLabel, OverOneYearOldLabel } from "./WarningLabels";
 
-type Props = Omit<BlogPost, "frontmatter"> & {
-  frontmatter: BlogPost["frontmatter"];
-};
-
 export async function ArticleBody({
   id,
   frontmatter,
   MDXContent,
   headings,
-}: Props) {
+}: BlogPost) {
   return (
     <div className="px-4 py-8 md:px-8 space-y-8">
       <div className="flex items-center justify-between">
