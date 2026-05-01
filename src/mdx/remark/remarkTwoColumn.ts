@@ -1,5 +1,6 @@
 import type { Paragraph, Root, RootContent } from "mdast";
 import type { Gap, Ratio } from "../components/TwoColumn";
+import { ensureComponentImport } from "./_utils";
 
 const VALID_RATIOS: Ratio[] = ["1:1", "1:2", "2:1", "3:2", "2:3"];
 const VALID_GAPS: Gap[] = ["sm", "md", "lg"];
@@ -170,41 +171,11 @@ export function remarkTwoColumn() {
 
     // Add import statement if any columns blocks were processed
     if (processedBlocks > 0) {
-      const hasTwoColumnImport = tree.children.some(
-        (child) =>
-          "value" in child &&
-          typeof child.value === "string" &&
-          child.value.includes("TwoColumn") &&
-          child.value.includes("../../mdx/components/TwoColumn"),
+      ensureComponentImport(
+        tree,
+        "TwoColumn",
+        "../../mdx/components/TwoColumn",
       );
-
-      if (!hasTwoColumnImport) {
-        tree.children.unshift({
-          type: "mdxjsEsm",
-          value: 'import { TwoColumn } from "../../mdx/components/TwoColumn";',
-          data: {
-            estree: {
-              type: "Program",
-              body: [
-                {
-                  type: "ImportDeclaration",
-                  specifiers: [
-                    {
-                      type: "ImportSpecifier",
-                      imported: { type: "Identifier", name: "TwoColumn" },
-                      local: { type: "Identifier", name: "TwoColumn" },
-                    },
-                  ],
-                  source: {
-                    type: "Literal",
-                    value: "../../mdx/components/TwoColumn",
-                  },
-                },
-              ],
-            },
-          },
-        } as unknown as RootContent);
-      }
     }
   };
 }

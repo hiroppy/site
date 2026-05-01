@@ -1,4 +1,5 @@
 import type { Paragraph, Root, RootContent } from "mdast";
+import { ensureComponentImport } from "./_utils";
 
 type DetailsGroup = {
   startIndex: number;
@@ -105,41 +106,7 @@ export function remarkDetails() {
 
     // Add import statement if any details blocks were processed
     if (processedGroups > 0) {
-      const hasDetailsImport = tree.children.some(
-        (child) =>
-          "value" in child &&
-          typeof child.value === "string" &&
-          child.value.includes("Details") &&
-          child.value.includes("../../mdx/components/Details"),
-      );
-
-      if (!hasDetailsImport) {
-        tree.children.unshift({
-          type: "mdxjsEsm",
-          value: 'import { Details } from "../../mdx/components/Details";',
-          data: {
-            estree: {
-              type: "Program",
-              body: [
-                {
-                  type: "ImportDeclaration",
-                  specifiers: [
-                    {
-                      type: "ImportSpecifier",
-                      imported: { type: "Identifier", name: "Details" },
-                      local: { type: "Identifier", name: "Details" },
-                    },
-                  ],
-                  source: {
-                    type: "Literal",
-                    value: "../../mdx/components/Details",
-                  },
-                },
-              ],
-            },
-          },
-        } as unknown as RootContent);
-      }
+      ensureComponentImport(tree, "Details", "../../mdx/components/Details");
     }
   };
 }

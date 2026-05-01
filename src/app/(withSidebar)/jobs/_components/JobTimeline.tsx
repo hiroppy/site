@@ -32,45 +32,35 @@ function getCompanyMeta(
   return companyMeta as CompanyMeta;
 }
 
+type RawJob = Jobs["main"][number];
+
+function toTimelineJob(
+  job: RawJob,
+  index: number,
+  type: "main" | "side",
+): TimelineJob {
+  const meta = getCompanyMeta(jobs.meta, job.company);
+  return {
+    id: `${type}-${index}`,
+    name: job.name,
+    company: job.company,
+    position: job.position,
+    start: new Date(job.start),
+    end: job.end ? new Date(job.end) : null,
+    type,
+    logo: meta.image,
+    url: meta.url,
+    row: 0,
+    startPercent: 0,
+    widthPercent: 0,
+    durationMonths: 0,
+    isActive: job.end === null,
+  };
+}
+
 const allJobs: TimelineJob[] = [
-  ...jobs.main.map((job, i) => {
-    const meta = getCompanyMeta(jobs.meta, job.company);
-    return {
-      id: `main-${i}`,
-      name: job.name,
-      company: job.company,
-      position: job.position,
-      start: new Date(job.start),
-      end: job.end ? new Date(job.end) : null,
-      type: "main" as const,
-      logo: meta.image,
-      url: meta.url,
-      row: 0,
-      startPercent: 0,
-      widthPercent: 0,
-      durationMonths: 0,
-      isActive: job.end === null,
-    };
-  }),
-  ...jobs.side.map((job, i) => {
-    const meta = getCompanyMeta(jobs.meta, job.company);
-    return {
-      id: `side-${i}`,
-      name: job.name,
-      company: job.company,
-      position: job.position,
-      start: new Date(job.start),
-      end: job.end ? new Date(job.end) : null,
-      type: "side" as const,
-      logo: meta.image,
-      url: meta.url,
-      row: 0,
-      startPercent: 0,
-      widthPercent: 0,
-      durationMonths: 0,
-      isActive: job.end === null,
-    };
-  }),
+  ...jobs.main.map((job, i) => toTimelineJob(job, i, "main")),
+  ...jobs.side.map((job, i) => toTimelineJob(job, i, "side")),
 ];
 
 const dateRange = calculateDateRange(allJobs);

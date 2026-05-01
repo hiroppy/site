@@ -1,4 +1,5 @@
 import type { List, ListItem, Paragraph, Root, RootContent } from "mdast";
+import { ensureComponentImport } from "./_utils";
 
 type DirectoryTreeItem = {
   children?: DirectoryTreeItem[];
@@ -12,8 +13,7 @@ type TreeBlock = {
   startIndex: number;
 };
 
-const IMPORT_SOURCE = "../../mdx/components/DirectoryTree";
-const IMPORT_VALUE = `import { DirectoryTree } from "${IMPORT_SOURCE}";`;
+const DIRECTORY_TREE_IMPORT_PATH = "../../mdx/components/DirectoryTree";
 
 function paragraphText(node: RootContent): string | undefined {
   if (node.type !== "paragraph") return undefined;
@@ -96,35 +96,6 @@ function buildTreeItem(
   };
 }
 
-function createDirectoryTreeImport(): RootContent {
-  return {
-    type: "mdxjsEsm",
-    value: IMPORT_VALUE,
-    data: {
-      estree: {
-        type: "Program",
-        body: [
-          {
-            type: "ImportDeclaration",
-            specifiers: [
-              {
-                type: "ImportSpecifier",
-                imported: { type: "Identifier", name: "DirectoryTree" },
-                local: { type: "Identifier", name: "DirectoryTree" },
-              },
-            ],
-            source: {
-              type: "Literal",
-              value: IMPORT_SOURCE,
-            },
-          },
-        ],
-        sourceType: "module",
-      },
-    },
-  } as unknown as RootContent;
-}
-
 export function remarkTree() {
   return (tree: Root) => {
     const treeBlocks: TreeBlock[] = [];
@@ -194,16 +165,6 @@ export function remarkTree() {
 
     if (processed === 0) return;
 
-    const alreadyImported = tree.children.some(
-      (node) =>
-        "type" in node &&
-        node.type === "mdxjsEsm" &&
-        typeof node.value === "string" &&
-        node.value.includes("DirectoryTree"),
-    );
-
-    if (!alreadyImported) {
-      tree.children.unshift(createDirectoryTreeImport());
-    }
+    ensureComponentImport(tree, "DirectoryTree", DIRECTORY_TREE_IMPORT_PATH);
   };
 }

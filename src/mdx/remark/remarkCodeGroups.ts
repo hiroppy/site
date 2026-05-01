@@ -1,5 +1,6 @@
 import type { Code, Paragraph, Root, RootContent } from "mdast";
 import { languageIcons } from "../../utils/fileIcons";
+import { ensureComponentImport } from "./_utils";
 
 type LanguageIconsKeys = keyof typeof languageIcons;
 
@@ -143,41 +144,11 @@ export function remarkCodeGroups() {
 
     // Add import statements if any code groups were processed
     if (processedGroups > 0) {
-      const hasCodeGroupImport = tree.children.some(
-        (child) =>
-          "value" in child &&
-          typeof child.value === "string" &&
-          child.value.includes("CodeGroup") &&
-          child.value.includes("../../mdx/components/CodeGroup"),
+      ensureComponentImport(
+        tree,
+        "CodeGroup",
+        "../../mdx/components/CodeGroup",
       );
-
-      if (!hasCodeGroupImport) {
-        tree.children.unshift({
-          type: "mdxjsEsm",
-          value: 'import { CodeGroup } from "../../mdx/components/CodeGroup";',
-          data: {
-            estree: {
-              type: "Program",
-              body: [
-                {
-                  type: "ImportDeclaration",
-                  specifiers: [
-                    {
-                      type: "ImportSpecifier",
-                      imported: { type: "Identifier", name: "CodeGroup" },
-                      local: { type: "Identifier", name: "CodeGroup" },
-                    },
-                  ],
-                  source: {
-                    type: "Literal",
-                    value: "../../mdx/components/CodeGroup",
-                  },
-                },
-              ],
-            },
-          },
-        } as unknown as RootContent);
-      }
     }
   };
 }
