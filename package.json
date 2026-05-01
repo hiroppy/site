@@ -57,7 +57,7 @@
     "tailwind-merge": "3.5.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.11.2",
+    "@axe-core/playwright": "4.11.3",
     "@lhci/cli": "0.15.1",
     "@playwright/test": "1.59.1",
     "@tailwindcss/vite": "4.2.4",
@@ -72,7 +72,7 @@
     "babel-plugin-react-compiler": "1.0.0",
     "knip": "6.9.0",
     "lefthook": "2.1.6",
-    "postcss": "8.5.12",
+    "postcss": "8.5.13",
     "prettier": "3.8.3",
     "prettier-plugin-tailwindcss": "0.8.0",
     "remark": "15.0.1",
