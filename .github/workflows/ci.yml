@@ -8,6 +8,8 @@ on:
       - "tests/**"
       - ".github/workflows/ci.yml"
       - ".github/actions/**"
+      - ".prettierignore"
+      - "knip.config.ts"
   push:
     branches: [main]
     paths:
@@ -16,6 +18,8 @@ on:
       - "tests/**"
       - ".github/workflows/ci.yml"
       - ".github/actions/**"
+      - ".prettierignore"
+      - "knip.config.ts"
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
