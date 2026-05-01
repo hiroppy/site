@@ -4,6 +4,7 @@ import jobs from "hiroppy/generated/jobs.json";
 import { SectionContainer, Section } from "../../../components/Section";
 import "../../../styles/prose.css";
 import { createMetadata } from "../../../utils/metadata";
+import { CompanyMarquee } from "./_components/CompanyMarquee";
 import { JobExperience } from "./_components/JobExperience";
 import { SkillsSection } from "./_components/SkillsSection";
 import { title, description } from "./_metadata";
@@ -82,11 +83,14 @@ export default async function Page() {
         />
       </Section>
       <Section title="Work Experience (Public Only)">
-        <JobExperience
-          mainJobs={jobs.main}
-          sideJobs={jobs.side}
-          meta={jobs.meta}
-        />
+        <div className="space-y-8">
+          <CompanyMarquee meta={jobs.meta} />
+          <JobExperience
+            mainJobs={jobs.main}
+            sideJobs={jobs.side}
+            meta={jobs.meta}
+          />
+        </div>
       </Section>
     </SectionContainer>
   );
