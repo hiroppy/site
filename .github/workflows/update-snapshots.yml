@@ -25,7 +25,7 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.58.2
     steps:
       - name: Add eyes reaction
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             await github.rest.reactions.createForIssueComment({
@@ -36,7 +36,7 @@ jobs:
             });
       - name: Get PR information
         id: pr
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const { data: pullRequest } = await github.rest.pulls.get({
@@ -87,7 +87,7 @@ jobs:
           git push
       - name: Comment on PR - Success
         if: steps.changes.outputs.changed == 'true'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             await github.rest.issues.createComment({
@@ -98,7 +98,7 @@ jobs:
             });
       - name: Comment on PR - No changes
         if: steps.changes.outputs.changed == 'false'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             await github.rest.issues.createComment({
