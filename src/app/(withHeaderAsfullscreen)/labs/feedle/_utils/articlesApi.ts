@@ -61,6 +61,35 @@ type SourcesResponse = {
 
 const BASE_API_URL = process.env.FEEDLE_API_URL;
 const API_TOKEN = process.env.FEEDLE_API_TOKEN;
+const JST_OFFSET_MS = 9 * 60 * 60 * 1000;
+
+type FeedleJsonResult<T> = { ok: true; data: T } | { ok: false; error: string };
+
+function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : "Unknown error";
+}
+
+async function fetchFeedleJson<T>(
+  url: string,
+  failureMessage: string,
+): Promise<FeedleJsonResult<T>> {
+  try {
+    const response = await fetch(url, {
+      headers: {
+        "x-api-token": API_TOKEN || "",
+      },
+    });
+
+    if (!response.ok) {
+      return { ok: false, error: `${failureMessage}: ${response.statusText}` };
+    }
+
+    const data: T = await response.json();
+    return { ok: true, data };
+  } catch (error) {
+    return { ok: false, error: getErrorMessage(error) };
+  }
+}
 
 export async function fetchArticles(
   type: string,
@@ -81,45 +110,27 @@ export async function fetchArticles(
   }
   cacheTag(...tags);
 
-  try {
-    const params = new URLSearchParams();
+  const params = new URLSearchParams();
 
-    params.append("domain", type);
+  params.append("domain", type);
 
-    if (sourceId) {
-      params.append("source", sourceId);
-    }
-
-    if (kind && kind !== "all") {
-      params.append("kind", kind);
-    }
-
-    const url = `${BASE_API_URL}/articles?${params}`;
-
-    const response = await fetch(url, {
-      headers: {
-        "x-api-token": API_TOKEN || "",
-      },
-    });
-
-    if (!response.ok) {
-      return {
-        articles: [],
-        error: `Failed to fetch articles: ${response.statusText}`,
-      };
-    }
-
-    const data: ArticlesResponse = await response.json();
-
-    return { articles: data.articles || [] };
-  } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error";
-    return {
-      articles: [],
-      error: errorMessage,
-    };
+  if (sourceId) {
+    params.append("source", sourceId);
   }
+
+  if (kind && kind !== "all") {
+    params.append("kind", kind);
+  }
+
+  const url = `${BASE_API_URL}/articles?${params}`;
+  const result = await fetchFeedleJson<ArticlesResponse>(
+    url,
+    "Failed to fetch articles",
+  );
+
+  if (!result.ok) return { articles: [], error: result.error };
+
+  return { articles: result.data.articles || [] };
 }
 
 export async function fetchSources(
@@ -130,39 +141,28 @@ export async function fetchSources(
   cacheLife("hours");
   cacheTag("feedle:all", `feedle:sources:${type}`);
 
-  try {
-    const url = `${BASE_API_URL}/sources/${type}`;
+  const url = `${BASE_API_URL}/sources/${type}`;
+  const result = await fetchFeedleJson<SourcesResponse>(
+    url,
+    "Failed to fetch sources",
+  );
 
-    const response = await fetch(url, {
-      headers: {
-        "x-api-token": API_TOKEN || "",
-      },
-    });
-
-    if (!response.ok) {
-      return {
-        sources: [],
-        error: `Failed to fetch sources: ${response.statusText}`,
-      };
-    }
-
-    const data: SourcesResponse = await response.json();
-    const lastHarvested = data.summary?.last_harvest_execution
-      ? new Date(data.summary.last_harvest_execution)
-      : undefined;
-
-    return {
-      sources: data.sources || [],
-      lastHarvested,
-    };
-  } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error";
+  if (!result.ok) {
     return {
       sources: [],
-      error: errorMessage,
+      error: result.error,
     };
   }
+
+  const data = result.data;
+  const lastHarvested = data.summary?.last_harvest_execution
+    ? new Date(data.summary.last_harvest_execution)
+    : undefined;
+
+  return {
+    sources: data.sources || [],
+    lastHarvested,
+  };
 }
 
 export function createServiceGroups(
@@ -207,42 +207,16 @@ export function getServiceGroups(
   return createServiceGroups(categorySource);
 }
 
-// TODO: 下とまとめる
 /**
- * UTC日付をJST午前0時（0:00 JST）に変換し、UTC日付として返す
+ * UTC日付を指定日からN日オフセットしたJST午前0時（0:00 JST）に変換し、UTC日付として返す
  * @param date - 変換する日付
- * @returns 指定日のJST午前0時を表すUTC日付
- */
-function getJSTDayStart(date: Date): Date {
-  const jstOffset = 9 * 60 * 60 * 1000; // UTC+9
-  const dateJST = new Date(date.getTime() + jstOffset);
-
-  const dayStartJST = new Date(
-    Date.UTC(
-      dateJST.getUTCFullYear(),
-      dateJST.getUTCMonth(),
-      dateJST.getUTCDate(),
-      0,
-      0,
-      0,
-      0,
-    ),
-  );
-
-  return new Date(dayStartJST.getTime() - jstOffset);
-}
-
-/**
- * 指定日からN日オフセットした日のJST午前0時を取得
- * @param date - 基準日
  * @param daysOffset - オフセット日数（正=未来、負=過去）
  * @returns オフセット後の日のJST午前0時を表すUTC日付
  */
-function getJSTDayStartOffset(date: Date, daysOffset: number): Date {
-  const jstOffset = 9 * 60 * 60 * 1000; // UTC+9
-  const dateJST = new Date(date.getTime() + jstOffset);
+function getJSTDayStart(date: Date, daysOffset = 0): Date {
+  const dateJST = new Date(date.getTime() + JST_OFFSET_MS);
 
-  const offsetDayStartJST = new Date(
+  const dayStartJST = new Date(
     Date.UTC(
       dateJST.getUTCFullYear(),
       dateJST.getUTCMonth(),
@@ -254,7 +228,7 @@ function getJSTDayStartOffset(date: Date, daysOffset: number): Date {
     ),
   );
 
-  return new Date(offsetDayStartJST.getTime() - jstOffset);
+  return new Date(dayStartJST.getTime() - JST_OFFSET_MS);
 }
 
 export function filterArticlesByPeriod(
@@ -267,8 +241,8 @@ export function filterArticlesByPeriod(
 
   const now = new Date();
   const todayStart = getJSTDayStart(now);
-  const tomorrowStart = getJSTDayStartOffset(now, 1);
-  const oneMonthAgoStart = getJSTDayStartOffset(now, -30);
+  const tomorrowStart = getJSTDayStart(now, 1);
+  const oneMonthAgoStart = getJSTDayStart(now, -30);
 
   const filtered = articles.filter((article) => {
     if (!article.published_at) return false;
