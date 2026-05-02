@@ -1,5 +1,6 @@
-import type { Heading, Root, RootContent, Text } from "mdast";
+import type { Heading, Root, Text } from "mdast";
 import { describe, expect, it } from "vitest";
+import { isMdxEsm } from "./_testUtils";
 import { remarkExtractHeadings } from "./remarkExtractHeadings";
 
 const runPlugin = (tree: Root) => {
@@ -7,10 +8,8 @@ const runPlugin = (tree: Root) => {
   return tree;
 };
 
-const isMdxExport = (node: RootContent) => (node as any).type === "mdxjsEsm";
-
 const getExportValue = (tree: Root): any => {
-  const exportNode = tree.children.find(isMdxExport) as any;
+  const exportNode = tree.children.find(isMdxEsm);
   if (!exportNode) return undefined;
 
   // Extract JSON from "export const headings = [...];"
@@ -47,9 +46,9 @@ describe("remarkExtractHeadings", () => {
 
     const result = runPlugin(tree);
 
-    const exportNode = result.children.find(isMdxExport) as any;
+    const exportNode = result.children.find(isMdxEsm);
     expect(exportNode).toBeDefined();
-    expect(exportNode.value).toContain("export const headings =");
+    expect(exportNode?.value).toContain("export const headings =");
 
     const headings = getExportValue(result);
     expect(headings).toHaveLength(3);
@@ -91,7 +90,7 @@ describe("remarkExtractHeadings", () => {
 
     const result = runPlugin(tree);
 
-    const exportNode = result.children.find(isMdxExport) as any;
+    const exportNode = result.children.find(isMdxEsm);
     expect(exportNode).toBeDefined();
 
     const headings = getExportValue(result);
@@ -298,8 +297,8 @@ describe("remarkExtractHeadings", () => {
     const result = runPlugin(tree);
 
     // Export should be the first child
-    expect((result.children[0] as any).type).toBe("mdxjsEsm");
-    expect((result.children[1] as any).type).toBe("paragraph");
+    expect(result.children[0].type).toBe("mdxjsEsm");
+    expect(result.children[1].type).toBe("paragraph");
   });
 
   it("generates unique slugs for duplicate heading names", () => {

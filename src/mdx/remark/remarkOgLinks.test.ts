@@ -1,13 +1,19 @@
-import type { Root, RootContent } from "mdast";
+import type { Root } from "mdast";
 import { describe, expect, it } from "vitest";
+import {
+  findMdxComponent,
+  findMdxComponents,
+  findMdxEsmNodes,
+  getMdxComponent,
+  hasMdxComponent,
+  isMdxEsm,
+} from "./_testUtils";
 import { remarkOgLinks } from "./remarkOgLinks";
 
 const runPlugin = (tree: Root) => {
   remarkOgLinks()(tree);
   return tree;
 };
-
-const isMdxImport = (node: RootContent) => (node as any).type === "mdxjsEsm";
 
 describe("remarkOgLinks", () => {
   it("replaces standalone link paragraphs with OG components and injects the import", () => {
@@ -30,17 +36,14 @@ describe("remarkOgLinks", () => {
 
     const result = runPlugin(tree);
 
-    const ogNode = result.children.find(
-      (child) => (child as any).name === "OG",
-    ) as any;
-    expect(ogNode).toBeDefined();
+    const ogNode = getMdxComponent(result.children, "OG");
     expect(ogNode.attributes).toEqual([
       { type: "mdxJsxAttribute", name: "url", value: "https://example.com" },
     ]);
 
-    const mdxImports = result.children.filter(isMdxImport);
+    const mdxImports = findMdxEsmNodes(result.children);
     expect(mdxImports).toHaveLength(1);
-    expect((mdxImports[0] as any).value).toContain(
+    expect(mdxImports[0].value).toContain(
       'import { OG } from "../../mdx/components/OG";',
     );
   });
@@ -67,10 +70,8 @@ describe("remarkOgLinks", () => {
 
     const result = runPlugin(tree);
 
-    expect(result.children.some((child) => (child as any).name === "OG")).toBe(
-      false,
-    );
-    expect(result.children.some(isMdxImport)).toBe(false);
+    expect(hasMdxComponent(result.children, "OG")).toBe(false);
+    expect(result.children.some(isMdxEsm)).toBe(false);
   });
 
   it("does not duplicate imports when one is already present and handles multiple links", () => {
@@ -108,12 +109,10 @@ describe("remarkOgLinks", () => {
 
     const result = runPlugin(tree);
 
-    const mdxImports = result.children.filter(isMdxImport);
+    const mdxImports = findMdxEsmNodes(result.children);
     expect(mdxImports).toHaveLength(1);
 
-    const ogNodes = result.children.filter(
-      (child) => (child as any).name === "OG",
-    ) as any[];
+    const ogNodes = findMdxComponents(result.children, "OG");
     expect(ogNodes).toHaveLength(2);
     expect(ogNodes[0].attributes?.[0]?.value).toBe("https://first.example");
     expect(ogNodes[1].attributes?.[0]?.value).toBe("https://second.example");
@@ -145,17 +144,14 @@ describe("remarkOgLinks", () => {
 
       const result = runPlugin(tree);
 
-      const youtubeNode = result.children.find(
-        (child) => (child as any).name === "YoutubeCard",
-      ) as any;
-      expect(youtubeNode).toBeDefined();
+      const youtubeNode = getMdxComponent(result.children, "YoutubeCard");
       expect(youtubeNode.attributes).toEqual([
         { type: "mdxJsxAttribute", name: "id", value: "dQw4w9WgXcQ" },
       ]);
 
-      const mdxImports = result.children.filter(isMdxImport);
+      const mdxImports = findMdxEsmNodes(result.children);
       expect(mdxImports).toHaveLength(1);
-      expect((mdxImports[0] as any).value).toContain(
+      expect(mdxImports[0].value).toContain(
         'import { YoutubeCard } from "../../mdx/components/YoutubeCard";',
       );
     });
@@ -182,10 +178,7 @@ describe("remarkOgLinks", () => {
 
       const result = runPlugin(tree);
 
-      const youtubeNode = result.children.find(
-        (child) => (child as any).name === "YoutubeCard",
-      ) as any;
-      expect(youtubeNode).toBeDefined();
+      const youtubeNode = getMdxComponent(result.children, "YoutubeCard");
       expect(youtubeNode.attributes).toEqual([
         { type: "mdxJsxAttribute", name: "id", value: "dQw4w9WgXcQ" },
       ]);
@@ -216,10 +209,7 @@ describe("remarkOgLinks", () => {
 
       const result = runPlugin(tree);
 
-      const youtubeNode = result.children.find(
-        (child) => (child as any).name === "YoutubeCard",
-      ) as any;
-      expect(youtubeNode).toBeDefined();
+      const youtubeNode = getMdxComponent(result.children, "YoutubeCard");
       expect(youtubeNode.attributes[0].value).toBe("dQw4w9WgXcQ");
     });
 
@@ -249,10 +239,7 @@ describe("remarkOgLinks", () => {
 
       const result = runPlugin(tree);
 
-      const youtubeNode = result.children.find(
-        (child) => (child as any).name === "YoutubeCard",
-      ) as any;
-      expect(youtubeNode).toBeDefined();
+      const youtubeNode = getMdxComponent(result.children, "YoutubeCard");
       expect(youtubeNode.attributes[0].value).toBe("dQw4w9WgXcQ");
     });
 
@@ -278,13 +265,9 @@ describe("remarkOgLinks", () => {
 
       const result = runPlugin(tree);
 
-      const ogNode = result.children.find(
-        (child) => (child as any).name === "OG",
-      ) as any;
+      const ogNode = getMdxComponent(result.children, "OG");
       expect(ogNode).toBeDefined();
-      expect(
-        result.children.find((child) => (child as any).name === "YoutubeCard"),
-      ).toBeUndefined();
+      expect(findMdxComponent(result.children, "YoutubeCard")).toBeUndefined();
     });
   });
 
@@ -311,17 +294,14 @@ describe("remarkOgLinks", () => {
 
       const result = runPlugin(tree);
 
-      const twitterNode = result.children.find(
-        (child) => (child as any).name === "TwitterCard",
-      ) as any;
-      expect(twitterNode).toBeDefined();
+      const twitterNode = getMdxComponent(result.children, "TwitterCard");
       expect(twitterNode.attributes).toEqual([
         { type: "mdxJsxAttribute", name: "id", value: "20" },
       ]);
 
-      const mdxImports = result.children.filter(isMdxImport);
+      const mdxImports = findMdxEsmNodes(result.children);
       expect(mdxImports).toHaveLength(1);
-      expect((mdxImports[0] as any).value).toContain(
+      expect(mdxImports[0].value).toContain(
         'import { TwitterCard } from "../../mdx/components/TwitterCard";',
       );
     });
@@ -348,10 +328,7 @@ describe("remarkOgLinks", () => {
 
       const result = runPlugin(tree);
 
-      const twitterNode = result.children.find(
-        (child) => (child as any).name === "TwitterCard",
-      ) as any;
-      expect(twitterNode).toBeDefined();
+      const twitterNode = getMdxComponent(result.children, "TwitterCard");
       expect(twitterNode.attributes[0].value).toBe("20");
     });
 
@@ -380,10 +357,7 @@ describe("remarkOgLinks", () => {
 
       const result = runPlugin(tree);
 
-      const twitterNode = result.children.find(
-        (child) => (child as any).name === "TwitterCard",
-      ) as any;
-      expect(twitterNode).toBeDefined();
+      const twitterNode = getMdxComponent(result.children, "TwitterCard");
       expect(twitterNode.attributes[0].value).toBe("1234567890");
     });
 
@@ -407,13 +381,9 @@ describe("remarkOgLinks", () => {
 
       const result = runPlugin(tree);
 
-      const ogNode = result.children.find(
-        (child) => (child as any).name === "OG",
-      ) as any;
+      const ogNode = getMdxComponent(result.children, "OG");
       expect(ogNode).toBeDefined();
-      expect(
-        result.children.find((child) => (child as any).name === "TwitterCard"),
-      ).toBeUndefined();
+      expect(findMdxComponent(result.children, "TwitterCard")).toBeUndefined();
     });
   });
 
@@ -456,7 +426,7 @@ describe("remarkOgLinks", () => {
 
       const result = runPlugin(tree);
 
-      const mdxImports = result.children.filter(isMdxImport) as any[];
+      const mdxImports = findMdxEsmNodes(result.children);
       expect(mdxImports).toHaveLength(2);
 
       const importValues = mdxImports.map((imp) => imp.value);
@@ -504,17 +474,13 @@ describe("remarkOgLinks", () => {
 
       const result = runPlugin(tree);
 
-      const youtubeNode = result.children.find(
-        (child) => (child as any).name === "YoutubeCard",
-      );
-      const ogNode = result.children.find(
-        (child) => (child as any).name === "OG",
-      );
+      const youtubeNode = findMdxComponent(result.children, "YoutubeCard");
+      const ogNode = findMdxComponent(result.children, "OG");
 
       expect(youtubeNode).toBeDefined();
       expect(ogNode).toBeDefined();
 
-      const mdxImports = result.children.filter(isMdxImport) as any[];
+      const mdxImports = findMdxEsmNodes(result.children);
       expect(mdxImports).toHaveLength(2);
 
       const importValues = mdxImports.map((imp) => imp.value);
@@ -556,7 +522,7 @@ describe("remarkOgLinks", () => {
 
       const result = runPlugin(tree);
 
-      const mdxImports = result.children.filter(isMdxImport);
+      const mdxImports = findMdxEsmNodes(result.children);
       expect(mdxImports).toHaveLength(1);
     });
   });

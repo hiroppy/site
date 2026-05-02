@@ -1,16 +1,19 @@
-import type { Root, RootContent } from "mdast";
+import type { Root } from "mdast";
 import { describe, expect, it } from "vitest";
+import {
+  findMdxComponents,
+  findMdxEsmNodes,
+  getAttr,
+  getMdxComponent,
+  hasMdxComponent,
+  isMdxEsm,
+} from "./_testUtils";
 import { remarkCodeGroups } from "./remarkCodeGroups";
 
 const runPlugin = (tree: Root) => {
   remarkCodeGroups()(tree);
   return tree;
 };
-
-const getAttr = (panel: any, name: string) =>
-  panel.attributes.find((attr: any) => attr.name === name)?.value;
-
-const isMdxImport = (node: RootContent) => (node as any).type === "mdxjsEsm";
 
 describe("remarkCodeGroups", () => {
   it("converts code-group fences into CodeGroup with panels and imports", () => {
@@ -42,19 +45,16 @@ describe("remarkCodeGroups", () => {
 
     const result = runPlugin(tree);
 
-    const mdxImports = result.children.filter(isMdxImport);
+    const mdxImports = findMdxEsmNodes(result.children);
     expect(mdxImports).toHaveLength(1);
-    expect((mdxImports[0] as any).value).toContain(
+    expect(mdxImports[0].value).toContain(
       'import { CodeGroup } from "../../mdx/components/CodeGroup";',
     );
 
-    const codeGroup = result.children.find(
-      (child) => (child as any).name === "CodeGroup",
-    ) as any;
-    expect(codeGroup).toBeDefined();
+    const codeGroup = getMdxComponent(result.children, "CodeGroup");
     expect(codeGroup.attributes).toEqual([]);
 
-    const panels = codeGroup.children;
+    const panels = findMdxComponents(codeGroup.children, "div");
     expect(panels).toHaveLength(2);
 
     const [pnpmPanel, npmPanel] = panels;
@@ -102,12 +102,9 @@ describe("remarkCodeGroups", () => {
     };
 
     const result = runPlugin(tree);
-    const codeGroup = result.children.find(
-      (child) => (child as any).name === "CodeGroup",
-    ) as any;
-    expect(codeGroup).toBeDefined();
+    const codeGroup = getMdxComponent(result.children, "CodeGroup");
 
-    const [panel] = codeGroup.children;
+    const [panel] = findMdxComponents(codeGroup.children, "div");
     expect(getAttr(panel, "className")).toBe("code-group-panel");
     expect(getAttr(panel, "data-label")).toBe("Tab 1");
     expect(getAttr(panel, "data-icon")).toBe("file-code");
@@ -136,10 +133,8 @@ describe("remarkCodeGroups", () => {
     const result = runPlugin(tree);
 
     // No imports added
-    expect(result.children.some(isMdxImport)).toBe(false);
+    expect(result.children.some(isMdxEsm)).toBe(false);
     // Original paragraphs remain (no CodeGroup injected)
-    expect(
-      result.children.some((child) => (child as any).name === "CodeGroup"),
-    ).toBe(false);
+    expect(hasMdxComponent(result.children, "CodeGroup")).toBe(false);
   });
 });
