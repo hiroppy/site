@@ -1,17 +1,17 @@
-import type { Root, RootContent } from "mdast";
+import type { Root } from "mdast";
 import { describe, expect, it } from "vitest";
+import {
+  findMdxComponents,
+  findMdxEsmNodes,
+  getMdxComponent,
+  getStringAttr,
+} from "./_testUtils";
 import { remarkTree } from "./remarkTree";
 
 const runPlugin = (tree: Root) => {
   remarkTree()(tree);
   return tree;
 };
-
-const isMdxImport = (node: RootContent) => (node as any).type === "mdxjsEsm";
-
-const isDirectoryTree = (node: RootContent) =>
-  (node as any).type === "mdxJsxFlowElement" &&
-  (node as any).name === "DirectoryTree";
 
 describe("remarkTree", () => {
   it("replaces tree block with DirectoryTree component and single import", () => {
@@ -74,20 +74,14 @@ describe("remarkTree", () => {
 
     const result = runPlugin(tree);
 
-    const importNodes = result.children.filter(isMdxImport);
+    const importNodes = findMdxEsmNodes(result.children);
     expect(importNodes).toHaveLength(1);
-    expect((importNodes[0] as any).value).toContain(
+    expect(importNodes[0].value).toContain(
       'import { DirectoryTree } from "../../mdx/components/DirectoryTree";',
     );
 
-    const treeComponent = result.children.find(isDirectoryTree) as any;
-    expect(treeComponent).toBeDefined();
-
-    const itemsAttr = treeComponent.attributes.find(
-      (attr: any) => attr.name === "items",
-    );
-    expect(itemsAttr).toBeDefined();
-    const itemsValue = JSON.parse(itemsAttr.value);
+    const treeComponent = getMdxComponent(result.children, "DirectoryTree");
+    const itemsValue = JSON.parse(getStringAttr(treeComponent, "items"));
     expect(itemsValue).toEqual([
       {
         id: "foo-0",
@@ -127,8 +121,8 @@ describe("remarkTree", () => {
 
     const result = runPlugin(tree);
 
-    expect(result.children.filter(isMdxImport)).toHaveLength(0);
-    expect(result.children.filter(isDirectoryTree)).toHaveLength(0);
+    expect(findMdxEsmNodes(result.children)).toHaveLength(0);
+    expect(findMdxComponents(result.children, "DirectoryTree")).toHaveLength(0);
     expect(result.children[0].type).toBe("paragraph");
   });
 
@@ -177,8 +171,8 @@ describe("remarkTree", () => {
 
     const result = runPlugin(tree);
 
-    const importNodes = result.children.filter(isMdxImport);
+    const importNodes = findMdxEsmNodes(result.children);
     expect(importNodes).toHaveLength(1);
-    expect(result.children.filter(isDirectoryTree)).toHaveLength(2);
+    expect(findMdxComponents(result.children, "DirectoryTree")).toHaveLength(2);
   });
 });

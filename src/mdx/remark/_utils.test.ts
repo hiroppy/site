@@ -1,5 +1,6 @@
 import type { Root, RootContent } from "mdast";
 import { describe, expect, it } from "vitest";
+import { findMdxEsmNodes, getMdxEsmNode } from "./_testUtils";
 import {
   buildEsmImport,
   ensureComponentImport,
@@ -8,31 +9,40 @@ import {
 
 describe("buildEsmImport", () => {
   it("builds an mdxjsEsm node with the expected value string", () => {
-    const node = buildEsmImport("Alert", "../../mdx/components/Alert");
-    expect((node as any).type).toBe("mdxjsEsm");
-    expect((node as any).value).toBe(
+    const node = getMdxEsmNode(
+      buildEsmImport("Alert", "../../mdx/components/Alert"),
+    );
+    expect(node.type).toBe("mdxjsEsm");
+    expect(node.value).toBe(
       'import { Alert } from "../../mdx/components/Alert";',
     );
   });
 
   it("includes a valid estree ImportDeclaration with sourceType module", () => {
-    const node = buildEsmImport("Details", "../../mdx/components/Details");
-    const program = (node as any).data.estree;
+    const node = getMdxEsmNode(
+      buildEsmImport("Details", "../../mdx/components/Details"),
+    );
+    const program = node.data?.estree;
+    expect(program).toBeDefined();
+    if (!program) throw new Error("Expected estree program");
     expect(program.type).toBe("Program");
     expect(program.sourceType).toBe("module");
     expect(program.body).toHaveLength(1);
 
     const decl = program.body[0];
-    expect(decl.type).toBe("ImportDeclaration");
-    expect(decl.source).toEqual({
-      type: "Literal",
-      value: "../../mdx/components/Details",
-    });
-    expect(decl.specifiers).toHaveLength(1);
-    expect(decl.specifiers[0]).toEqual({
-      type: "ImportSpecifier",
-      imported: { type: "Identifier", name: "Details" },
-      local: { type: "Identifier", name: "Details" },
+    expect(decl).toMatchObject({
+      type: "ImportDeclaration",
+      source: {
+        type: "Literal",
+        value: "../../mdx/components/Details",
+      },
+      specifiers: [
+        {
+          type: "ImportSpecifier",
+          imported: { type: "Identifier", name: "Details" },
+          local: { type: "Identifier", name: "Details" },
+        },
+      ],
     });
   });
 });
@@ -103,8 +113,9 @@ describe("ensureComponentImport", () => {
     ensureComponentImport(tree, "Alert", "../../mdx/components/Alert");
 
     expect(tree.children).toHaveLength(2);
-    expect((tree.children[0] as any).type).toBe("mdxjsEsm");
-    expect((tree.children[0] as any).value).toBe(
+    const importNode = getMdxEsmNode(tree.children[0]);
+    expect(importNode.type).toBe("mdxjsEsm");
+    expect(importNode.value).toBe(
       'import { Alert } from "../../mdx/components/Alert";',
     );
   });
@@ -126,9 +137,7 @@ describe("ensureComponentImport", () => {
 
     ensureComponentImport(tree, "Alert", "../../mdx/components/Alert");
 
-    const imports = tree.children.filter(
-      (child) => (child as any).type === "mdxjsEsm",
-    );
+    const imports = findMdxEsmNodes(tree.children);
     expect(imports).toHaveLength(1);
   });
 });

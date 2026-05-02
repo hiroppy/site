@@ -1,13 +1,17 @@
-import type { Root, RootContent } from "mdast";
+import type { Root } from "mdast";
 import { describe, expect, it } from "vitest";
+import {
+  findMdxComponents,
+  findMdxEsmNodes,
+  getMdxComponent,
+  isMdxEsm,
+} from "./_testUtils";
 import { remarkDetails } from "./remarkDetails";
 
 const runPlugin = (tree: Root) => {
   remarkDetails()(tree);
   return tree;
 };
-
-const isMdxImport = (node: RootContent) => (node as any).type === "mdxjsEsm";
 
 describe("remarkDetails", () => {
   it("transforms basic details block with default title", () => {
@@ -32,17 +36,14 @@ describe("remarkDetails", () => {
     const result = runPlugin(tree);
 
     // Check import was added
-    const mdxImports = result.children.filter(isMdxImport);
+    const mdxImports = findMdxEsmNodes(result.children);
     expect(mdxImports).toHaveLength(1);
-    expect((mdxImports[0] as any).value).toContain(
+    expect(mdxImports[0].value).toContain(
       'import { Details } from "../../mdx/components/Details";',
     );
 
     // Check Details component was created
-    const detailsNode = result.children.find(
-      (child) => (child as any).name === "Details",
-    ) as any;
-    expect(detailsNode).toBeDefined();
+    const detailsNode = getMdxComponent(result.children, "Details");
     expect(detailsNode.attributes).toEqual([]);
     expect(detailsNode.children).toHaveLength(1);
     expect(detailsNode.children[0]).toMatchObject({
@@ -77,10 +78,7 @@ describe("remarkDetails", () => {
 
     const result = runPlugin(tree);
 
-    const detailsNode = result.children.find(
-      (child) => (child as any).name === "Details",
-    ) as any;
-    expect(detailsNode).toBeDefined();
+    const detailsNode = getMdxComponent(result.children, "Details");
     expect(detailsNode.attributes).toEqual([
       {
         type: "mdxJsxAttribute",
@@ -114,12 +112,10 @@ describe("remarkDetails", () => {
     };
 
     const result = runPlugin(tree);
-    const mdxImports = result.children.filter(isMdxImport);
+    const mdxImports = findMdxEsmNodes(result.children);
     expect(mdxImports).toHaveLength(1);
 
-    const detailsNode = result.children.find(
-      (child) => (child as any).name === "Details",
-    ) as any;
+    const detailsNode = getMdxComponent(result.children, "Details");
     expect(detailsNode).toBeDefined();
   });
 
@@ -141,7 +137,7 @@ describe("remarkDetails", () => {
     const result = runPlugin(tree);
 
     // No imports added
-    expect(result.children.some(isMdxImport)).toBe(false);
+    expect(result.children.some(isMdxEsm)).toBe(false);
     // Paragraphs left intact
     expect(
       result.children.filter((child) => child.type === "paragraph"),
@@ -182,24 +178,22 @@ describe("remarkDetails", () => {
     const result = runPlugin(tree);
 
     // Single import
-    const mdxImports = result.children.filter(isMdxImport);
+    const mdxImports = findMdxEsmNodes(result.children);
     expect(mdxImports).toHaveLength(1);
 
     // Two Details components
-    const detailsNodes = result.children.filter(
-      (child) => (child as any).name === "Details",
-    );
+    const detailsNodes = findMdxComponents(result.children, "Details");
     expect(detailsNodes).toHaveLength(2);
 
     // Check first Details
-    expect((detailsNodes[0] as any).attributes[0]).toMatchObject({
+    expect(detailsNodes[0].attributes[0]).toMatchObject({
       type: "mdxJsxAttribute",
       name: "summary",
       value: "First",
     });
 
     // Check second Details
-    expect((detailsNodes[1] as any).attributes[0]).toMatchObject({
+    expect(detailsNodes[1].attributes[0]).toMatchObject({
       type: "mdxJsxAttribute",
       name: "summary",
       value: "Second",
@@ -223,10 +217,7 @@ describe("remarkDetails", () => {
 
     const result = runPlugin(tree);
 
-    const detailsNode = result.children.find(
-      (child) => (child as any).name === "Details",
-    ) as any;
-    expect(detailsNode).toBeDefined();
+    const detailsNode = getMdxComponent(result.children, "Details");
     expect(detailsNode.children).toHaveLength(0);
   });
 });
