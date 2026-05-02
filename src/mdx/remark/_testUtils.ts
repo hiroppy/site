@@ -1,11 +1,8 @@
 import type { RootContent } from "mdast";
 
-export type MdxjsEsm = Extract<RootContent, { type: "mdxjsEsm" }>;
-export type MdxJsxFlowElement = Extract<
-  RootContent,
-  { type: "mdxJsxFlowElement" }
->;
-export type MdxJsxAttribute = Extract<
+type MdxjsEsm = Extract<RootContent, { type: "mdxjsEsm" }>;
+type MdxJsxFlowElement = Extract<RootContent, { type: "mdxJsxFlowElement" }>;
+type MdxJsxAttribute = Extract<
   MdxJsxFlowElement["attributes"][number],
   { type: "mdxJsxAttribute" }
 >;
@@ -25,7 +22,7 @@ export function getMdxEsmNode(node: RootContent): MdxjsEsm {
   return node;
 }
 
-export function isMdxComponent(
+function isMdxComponent(
   node: RootContent,
   name: string,
 ): node is MdxJsxFlowElement {
