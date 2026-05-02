@@ -47,8 +47,6 @@
 - **ALGOLIA_ADMIN_KEY**: Algolia admin API key for indexing
 - **NEXT_PUBLIC_ALGOLIA_APPLICATION_ID**: Algolia application ID (public)
 - **NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_KEY**: Algolia search-only API key (public)
-- **FEEDLE_API_URL**: Feedle API base URL (default: `http://localhost:8787/api/v1`)
-- **FEEDLE_API_TOKEN**: Feedle API authentication token
 
 Configure these in `.env` file for local development. See `.env.example` for reference.
 

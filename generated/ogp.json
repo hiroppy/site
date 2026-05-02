@@ -1034,11 +1034,6 @@
     "description": "next generation web podcast by Jxck",
     "image": "https://mozaic.fm/assets/img/mozaic.600x600.png"
   },
-  "https://hiroppy.me/labs/feedle/frontend": {
-    "title": "Feedle - Frontend - hiroppy's site",
-    "description": "Tech article aggregation platform",
-    "image": "https://hiroppy.me/labs/feedle/frontend/og.png"
-  },
   "https://playwright.dev/docs/test-fixtures#execution-order": {
     "title": "Fixtures | Playwright",
     "description": "Introduction",

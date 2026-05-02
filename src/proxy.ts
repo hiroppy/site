@@ -2,19 +2,11 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export const config = {
-  matcher: ["/blog/:path*", "/labs/feedle"],
+  matcher: ["/blog/:path*"],
 };
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
-  if (pathname === "/labs/feedle") {
-    const url = request.nextUrl.clone();
-
-    url.pathname = "/labs/feedle/frontend";
-
-    return NextResponse.redirect(url, 308);
-  }
 
   if (pathname === "/blog") {
     const url = request.nextUrl.clone();

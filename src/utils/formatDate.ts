@@ -28,14 +28,3 @@ export function formatDateJapanese(
     .replace("月", "月 ")
     .replace("日", "日 ");
 }
-
-export function isRecentDate(publishedAt?: string): boolean {
-  if (!publishedAt) return false;
-
-  const publishedDate = new Date(publishedAt);
-  const oneMonthAgo = new Date();
-
-  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
-  return publishedDate >= oneMonthAgo;
-}
