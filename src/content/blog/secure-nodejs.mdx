@@ -5,19 +5,18 @@ date: 2025-06-12
 description: CLIオプションだけで導入できるNode.jsのセキュリティ強化をまとめました
 image: /images/brands/nodejs.png
 tags: node.js
+references:
+  - https://nodejs.org/api/cli.html
+  - https://nodejs.org/api/permissions.html
+  - https://nodejs.org/api/policy.html
+  - https://portswigger.net/web-security/prototype-pollution
+  - https://nodejs.org/ja/learn/getting-started/security-best-practices
 ---
-
-月に一回、mozaic.fmというポッドキャストでその月に起きたフロントエンドの動向を話していますが、
-最近のセキュリティインシデントを見ていると、Node.jsアプリケーションのセキュリティ対策が
-おろそかになっているケースが多いなと感じています。
 
 普段の開発ではパフォーマンスや機能追加に目が行きがちで、
 セキュリティ対策は後回しにされることが多いのではないかと思います。
 しかし、Node.jsには**CLIオプションだけで導入できる**セキュリティ強化機能が存在します。
 今回は、これらの機能をまとめてみました。
-
-正直、自分も全部を本番で使っているわけではないですが、
-プロジェクトの要件に応じて選択できるように整理しておくと良いかなと思います。
 
 ## 背景
 
@@ -356,15 +355,3 @@ jobs:
 
 個人的には、少なくとも`--disable-proto=delete`は今後のプロジェクトで
 デフォルト有効にしていきたいと考えています。
-
-## 参考リンク
-
-[Node.js CLI Flags](https://nodejs.org/api/cli.html)
-
-[Node.js Permissions API](https://nodejs.org/api/permissions.html)
-
-[Node.js Policy Manifest](https://nodejs.org/api/policy.html)
-
-[Prototype Pollution - PortSwigger](https://portswigger.net/web-security/prototype-pollution)
-
-[Node.js Security Best Practices](https://nodejs.org/ja/learn/getting-started/security-best-practices)
