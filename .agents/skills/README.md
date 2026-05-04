@@ -1,6 +1,7 @@
-# Claude Code Skills
+# Agent Skills
 
-This directory contains project-specific Claude Code skills for the hiroppy/site repository.
+This directory contains project-specific Agent Skills for the hiroppy/site repository.
+`.claude/skills` is a symlink to this directory so Claude Code and Codex share the same skill source.
 
 ## Available Skills
 
@@ -18,7 +19,7 @@ Initialize new blog articles with interactive prompts.
 - Creates MDX file with proper frontmatter
 - Provides next steps for writing
 
-**Location**: `.claude/skills/init-article/SKILL.md`
+**Location**: `.agents/skills/init-article/SKILL.md`
 
 **Examples**:
 
@@ -41,9 +42,9 @@ The skill creates a new MDX file at `src/content/blog/{slug}.mdx` with proper fr
 
 To add a new skill to this project:
 
-1. Create a new directory: `.claude/skills/{skill-name}/`
+1. Create a new directory: `.agents/skills/{skill-name}/`
 2. Add a `SKILL.md` file with YAML frontmatter and instructions
 3. Document the skill in this README
-4. Update `CLAUDE.md` if the skill adds new commands or workflows
+4. Update `AGENTS.md` if the skill adds new commands or workflows
 
 See the [Claude Code Skills documentation](https://code.claude.com/docs/en/skills) for more information.
