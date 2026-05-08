@@ -13,3 +13,8 @@ minimumReleaseAgeExclude:
   - next@16.1.7 || 16.2.3
   # Renovate security update: postcss@8.5.10
   - postcss@8.5.10
+allowBuilds:
+  hiroppy: true
+  lefthook: true
+  msw: true
+  sharp: true
