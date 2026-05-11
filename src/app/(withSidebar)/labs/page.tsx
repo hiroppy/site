@@ -1,4 +1,4 @@
-import { MdCalculate, MdRssFeed, MdShowChart } from "react-icons/md";
+import { MdCalculate, MdShowChart } from "react-icons/md";
 import {
   Card,
   CardContent,
@@ -47,22 +47,6 @@ const projects = [
       />
     ),
     color: "bg-sky-700/80",
-  },
-  {
-    title: "Feedle",
-    description:
-      "開発者向けの技術記事収集プラットフォーム。様々なソースから技術記事を集約し、キュレーションします。",
-    link: "/labs/feedle/frontend",
-    tags: ["JavaScript", "AI"],
-    icon: (
-      <MdRssFeed
-        className="text-2xl text-white"
-        size={24}
-        aria-hidden="true"
-        focusable="false"
-      />
-    ),
-    color: "bg-orange-700/80",
   },
 ];
 

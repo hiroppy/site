@@ -16,7 +16,6 @@ const METADATA_URLS = [
   "http://localhost:3000/media/talks",
   "http://localhost:3000/media/podcasts",
   "http://localhost:3000/blog/2",
-  // "http://localhost:3000/labs/feedle/frontend",
 ];
 
 const VRT_URLS = [...COMMON, "http://localhost:3000/blog/posts/404"];

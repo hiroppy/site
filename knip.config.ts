@@ -9,7 +9,7 @@ const config: KnipConfig = {
     // MDX content files (dynamically imported)
     "src/content/blog/**/*.mdx",
   ],
-  ignoreDependencies: [],
+  ignoreDependencies: ["lefthook"],
   compilers: {
     mdx: true,
   },
