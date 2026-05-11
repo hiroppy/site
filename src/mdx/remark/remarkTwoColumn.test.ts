@@ -1,16 +1,19 @@
-import type { Root, RootContent } from "mdast";
+import type { Root } from "mdast";
 import { describe, expect, it } from "vitest";
+import {
+  findMdxComponents,
+  findMdxEsmNodes,
+  getAttr,
+  getMdxComponent,
+  hasMdxComponent,
+  isMdxEsm,
+} from "./_testUtils";
 import { remarkTwoColumn } from "./remarkTwoColumn";
 
 const runPlugin = (tree: Root) => {
   remarkTwoColumn()(tree);
   return tree;
 };
-
-const getAttr = (component: any, name: string) =>
-  component.attributes.find((attr: any) => attr.name === name)?.value;
-
-const isMdxImport = (node: RootContent) => (node as any).type === "mdxjsEsm";
 
 describe("remarkTwoColumn", () => {
   it("transforms columns block with defaults (ratio=1:1, gap=md)", () => {
@@ -41,20 +44,17 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    const mdxImports = result.children.filter(isMdxImport);
+    const mdxImports = findMdxEsmNodes(result.children);
     expect(mdxImports).toHaveLength(1);
-    expect((mdxImports[0] as any).value).toContain(
+    expect(mdxImports[0].value).toContain(
       'import { TwoColumn } from "../../mdx/components/TwoColumn";',
     );
 
-    const twoColumn = result.children.find(
-      (child) => (child as any).name === "TwoColumn",
-    ) as any;
-    expect(twoColumn).toBeDefined();
+    const twoColumn = getMdxComponent(result.children, "TwoColumn");
     expect(getAttr(twoColumn, "ratio")).toBe("1:1");
     expect(getAttr(twoColumn, "gap")).toBe("md");
 
-    const [leftDiv, rightDiv] = twoColumn.children;
+    const [leftDiv, rightDiv] = findMdxComponents(twoColumn.children, "div");
     expect(leftDiv.name).toBe("div");
     expect(rightDiv.name).toBe("div");
     expect(leftDiv.children).toHaveLength(1);
@@ -89,10 +89,7 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    const twoColumn = result.children.find(
-      (child) => (child as any).name === "TwoColumn",
-    ) as any;
-    expect(twoColumn).toBeDefined();
+    const twoColumn = getMdxComponent(result.children, "TwoColumn");
     expect(getAttr(twoColumn, "ratio")).toBe("2:1");
     expect(getAttr(twoColumn, "gap")).toBe("lg");
   });
@@ -125,9 +122,7 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    const twoColumn = result.children.find(
-      (child) => (child as any).name === "TwoColumn",
-    ) as any;
+    const twoColumn = getMdxComponent(result.children, "TwoColumn");
     expect(getAttr(twoColumn, "ratio")).toBe("1:2");
     expect(getAttr(twoColumn, "gap")).toBe("md");
   });
@@ -168,10 +163,8 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    const twoColumn = result.children.find(
-      (child) => (child as any).name === "TwoColumn",
-    ) as any;
-    const [leftDiv, rightDiv] = twoColumn.children;
+    const twoColumn = getMdxComponent(result.children, "TwoColumn");
+    const [leftDiv, rightDiv] = findMdxComponents(twoColumn.children, "div");
 
     expect(leftDiv.children).toHaveLength(2);
     expect(rightDiv.children).toHaveLength(2);
@@ -198,10 +191,8 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    const twoColumn = result.children.find(
-      (child) => (child as any).name === "TwoColumn",
-    ) as any;
-    const [leftDiv, rightDiv] = twoColumn.children;
+    const twoColumn = getMdxComponent(result.children, "TwoColumn");
+    const [leftDiv, rightDiv] = findMdxComponents(twoColumn.children, "div");
 
     expect(leftDiv.children).toHaveLength(1);
     expect(rightDiv.children).toHaveLength(0);
@@ -242,10 +233,8 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    const twoColumn = result.children.find(
-      (child) => (child as any).name === "TwoColumn",
-    ) as any;
-    const [leftDiv, rightDiv] = twoColumn.children;
+    const twoColumn = getMdxComponent(result.children, "TwoColumn");
+    const [leftDiv, rightDiv] = findMdxComponents(twoColumn.children, "div");
 
     expect(leftDiv.children).toHaveLength(1);
     // Right column gets everything after first separator
@@ -276,10 +265,8 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    const twoColumn = result.children.find(
-      (child) => (child as any).name === "TwoColumn",
-    ) as any;
-    const [leftDiv, rightDiv] = twoColumn.children;
+    const twoColumn = getMdxComponent(result.children, "TwoColumn");
+    const [leftDiv, rightDiv] = findMdxComponents(twoColumn.children, "div");
 
     expect(leftDiv.children).toHaveLength(0);
     expect(rightDiv.children).toHaveLength(1);
@@ -309,10 +296,8 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    const twoColumn = result.children.find(
-      (child) => (child as any).name === "TwoColumn",
-    ) as any;
-    const [leftDiv, rightDiv] = twoColumn.children;
+    const twoColumn = getMdxComponent(result.children, "TwoColumn");
+    const [leftDiv, rightDiv] = findMdxComponents(twoColumn.children, "div");
 
     expect(leftDiv.children).toHaveLength(1);
     expect(rightDiv.children).toHaveLength(0);
@@ -335,12 +320,9 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    const twoColumn = result.children.find(
-      (child) => (child as any).name === "TwoColumn",
-    ) as any;
-    expect(twoColumn).toBeDefined();
+    const twoColumn = getMdxComponent(result.children, "TwoColumn");
 
-    const [leftDiv, rightDiv] = twoColumn.children;
+    const [leftDiv, rightDiv] = findMdxComponents(twoColumn.children, "div");
     expect(leftDiv.children).toHaveLength(0);
     expect(rightDiv.children).toHaveLength(0);
   });
@@ -362,10 +344,8 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    expect(result.children.some(isMdxImport)).toBe(false);
-    expect(
-      result.children.some((child) => (child as any).name === "TwoColumn"),
-    ).toBe(false);
+    expect(result.children.some(isMdxEsm)).toBe(false);
+    expect(hasMdxComponent(result.children, "TwoColumn")).toBe(false);
   });
 
   it("falls back to defaults for invalid ratio", () => {
@@ -392,9 +372,7 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    const twoColumn = result.children.find(
-      (child) => (child as any).name === "TwoColumn",
-    ) as any;
+    const twoColumn = getMdxComponent(result.children, "TwoColumn");
     expect(getAttr(twoColumn, "ratio")).toBe("1:1");
     expect(getAttr(twoColumn, "gap")).toBe("lg");
   });
@@ -423,9 +401,7 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    const twoColumn = result.children.find(
-      (child) => (child as any).name === "TwoColumn",
-    ) as any;
+    const twoColumn = getMdxComponent(result.children, "TwoColumn");
     expect(getAttr(twoColumn, "ratio")).toBe("2:1");
     expect(getAttr(twoColumn, "gap")).toBe("md");
   });
@@ -459,7 +435,7 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    const mdxImports = result.children.filter(isMdxImport);
+    const mdxImports = findMdxEsmNodes(result.children);
     expect(mdxImports).toHaveLength(1);
   });
 
@@ -514,12 +490,10 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    const twoColumns = result.children.filter(
-      (child) => (child as any).name === "TwoColumn",
-    );
+    const twoColumns = findMdxComponents(result.children, "TwoColumn");
     expect(twoColumns).toHaveLength(2);
 
-    const mdxImports = result.children.filter(isMdxImport);
+    const mdxImports = findMdxEsmNodes(result.children);
     expect(mdxImports).toHaveLength(1);
 
     expect(getAttr(twoColumns[0], "ratio")).toBe("1:1");
@@ -573,10 +547,8 @@ describe("remarkTwoColumn", () => {
 
     const result = runPlugin(tree);
 
-    const twoColumn = result.children.find(
-      (child) => (child as any).name === "TwoColumn",
-    ) as any;
-    const [leftDiv, rightDiv] = twoColumn.children;
+    const twoColumn = getMdxComponent(result.children, "TwoColumn");
+    const [leftDiv, rightDiv] = findMdxComponents(twoColumn.children, "div");
 
     expect(leftDiv.children[0].type).toBe("code");
     expect(rightDiv.children[0].type).toBe("heading");

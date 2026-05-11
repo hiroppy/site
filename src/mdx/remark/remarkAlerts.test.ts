@@ -1,13 +1,12 @@
-import type { Root, RootContent } from "mdast";
+import type { Root } from "mdast";
 import { describe, expect, it } from "vitest";
+import { findMdxEsmNodes, getMdxComponent, isMdxEsm } from "./_testUtils";
 import { remarkAlerts } from "./remarkAlerts";
 
 const runPlugin = (tree: Root) => {
   remarkAlerts()(tree);
   return tree;
 };
-
-const isMdxImport = (node: RootContent) => (node as any).type === "mdxjsEsm";
 
 describe("remarkAlerts", () => {
   it("wraps blockquotes with alert markers and injects a single import", () => {
@@ -35,16 +34,13 @@ describe("remarkAlerts", () => {
 
     const result = runPlugin(tree);
 
-    const mdxImports = result.children.filter(isMdxImport);
+    const mdxImports = findMdxEsmNodes(result.children);
     expect(mdxImports).toHaveLength(1);
-    expect((mdxImports[0] as any).value).toContain(
+    expect(mdxImports[0].value).toContain(
       'import { Alert } from "../../mdx/components/Alert";',
     );
 
-    const alertNode = result.children.find(
-      (child) => (child as any).name === "Alert",
-    ) as any;
-    expect(alertNode).toBeDefined();
+    const alertNode = getMdxComponent(result.children, "Alert");
     expect(alertNode.attributes).toEqual([
       { type: "mdxJsxAttribute", name: "type", value: "warning" },
     ]);
@@ -83,13 +79,10 @@ describe("remarkAlerts", () => {
     };
 
     const result = runPlugin(tree);
-    const mdxImports = result.children.filter(isMdxImport);
+    const mdxImports = findMdxEsmNodes(result.children);
     expect(mdxImports).toHaveLength(1);
 
-    const alertNode = result.children.find(
-      (child) => (child as any).name === "Alert",
-    ) as any;
-    expect(alertNode).toBeDefined();
+    const alertNode = getMdxComponent(result.children, "Alert");
     expect(alertNode.attributes?.[0]?.value).toBe("tip");
   });
 
@@ -112,7 +105,7 @@ describe("remarkAlerts", () => {
     const result = runPlugin(tree);
 
     // No imports added
-    expect(result.children.some(isMdxImport)).toBe(false);
+    expect(result.children.some(isMdxEsm)).toBe(false);
     // Blockquote left intact
     expect(result.children.some((child) => child.type === "blockquote")).toBe(
       true,

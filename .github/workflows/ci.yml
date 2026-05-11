@@ -8,6 +8,7 @@ on:
       - "tests/**"
       - ".github/workflows/ci.yml"
       - ".github/actions/**"
+      - "pnpm-workspace.yaml"
   push:
     branches: [main]
     paths:
@@ -16,6 +17,7 @@ on:
       - "tests/**"
       - ".github/workflows/ci.yml"
       - ".github/actions/**"
+      - "pnpm-workspace.yaml"
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
