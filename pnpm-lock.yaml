@@ -48,8 +48,8 @@ importers:
         specifier: 4.0.3
         version: 4.0.3
       hiroppy:
-        specifier: 1.0.75
-        version: 1.0.75
+        specifier: 1.0.76
+        version: 1.0.76
       next:
         specifier: 16.2.6
         version: 16.2.6(@playwright/test@1.60.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
@@ -2088,8 +2088,8 @@ packages:
   hastscript@9.0.1:
     resolution: {integrity: sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==}
 
-  hiroppy@1.0.75:
-    resolution: {integrity: sha512-VhgiuDWQmAp2YhDPIuTQWFee/UdvLBqa6hPboxD3Q+FH07FxKiYlJogNY0AWrswqnSiBTR7prVMAg6l9Jue8Cw==}
+  hiroppy@1.0.76:
+    resolution: {integrity: sha512-1pD1bcv1wltf9kjQUGI7rlkKSZ2ZPjkBqUVCvRNQSH1hvKUXgd5xlWpcj9A6DhDnIPjmvodIPrAgDvZ+l43MOw==}
 
   html-url-attributes@3.0.1:
     resolution: {integrity: sha512-ol6UPyBWqsrO6EJySPz2O7ZSr856WDrEzM5zMqp+FJJLGMW35cLYmmZnl0vztAZxRUoNZJFTCohfjuIJ8I4QBQ==}
@@ -5654,7 +5654,7 @@ snapshots:
       property-information: 7.1.0
       space-separated-tokens: 2.0.2
 
-  hiroppy@1.0.75: {}
+  hiroppy@1.0.76: {}
 
   html-url-attributes@3.0.1: {}
 
