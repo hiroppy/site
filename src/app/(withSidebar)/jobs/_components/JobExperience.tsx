@@ -39,7 +39,7 @@ export function JobExperience({ mainJobs, sideJobs, meta }: Props) {
             <JobSection title="Main Job" meta={meta} items={mainJobs} />
           )}
           {showSide && (
-            <JobSection title="My Company" meta={meta} items={sideJobs} />
+            <JobSection title="Side Job" meta={meta} items={sideJobs} />
           )}
         </div>
       </div>

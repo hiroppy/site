@@ -8,7 +8,7 @@ import { MarkdownContent } from "./MarkdownContent";
 import { SectionSubheading } from "./SectionSubheading";
 
 type Props = {
-  title: "Main Job" | "My Company";
+  title: "Main Job" | "Side Job";
   items: Jobs["main"] | Jobs["side"];
   meta: Jobs["meta"];
 };
