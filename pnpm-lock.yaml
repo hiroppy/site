@@ -19,10 +19,10 @@ importers:
         version: 3.1.1
       '@mdx-js/react':
         specifier: 3.1.1
-        version: 3.1.1(@types/react@19.2.16)(react@19.2.7)
+        version: 3.1.1(@types/react@19.2.17)(react@19.2.7)
       '@next/mdx':
         specifier: 16.2.7
-        version: 16.2.7(@mdx-js/loader@3.1.1)(@mdx-js/react@3.1.1(@types/react@19.2.16)(react@19.2.7))
+        version: 16.2.7(@mdx-js/loader@3.1.1)(@mdx-js/react@3.1.1(@types/react@19.2.17)(react@19.2.7))
       '@next/third-parties':
         specifier: 16.2.7
         version: 16.2.7(next@16.2.7(@playwright/test@1.60.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)
@@ -67,7 +67,7 @@ importers:
         version: 5.6.0(react@19.2.7)
       react-markdown:
         specifier: 10.1.0
-        version: 10.1.0(@types/react@19.2.16)(react@19.2.7)
+        version: 10.1.0(@types/react@19.2.17)(react@19.2.7)
       rehype-expressive-code:
         specifier: 0.42.0
         version: 0.42.0
@@ -106,11 +106,11 @@ importers:
         specifier: 24.12.4
         version: 24.12.4
       '@types/react':
-        specifier: 19.2.16
-        version: 19.2.16
+        specifier: 19.2.17
+        version: 19.2.17
       '@types/react-dom':
         specifier: 19.2.3
-        version: 19.2.3(@types/react@19.2.16)
+        version: 19.2.3(@types/react@19.2.17)
       '@vitejs/plugin-react':
         specifier: 6.0.2
         version: 6.0.2(babel-plugin-react-compiler@1.0.0)(vite@8.0.16(@types/node@24.12.4)(jiti@2.7.0)(yaml@2.9.0))
@@ -1286,8 +1286,8 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.0
 
-  '@types/react@19.2.16':
-    resolution: {integrity: sha512-esJiCAnl0kfpNdE69f3So4WJUXy95dLZydX0KwK46riIHDzHM7O9Vtf9xCHW0PXIqvgqNrswl522kA/5yx+F4w==}
+  '@types/react@19.2.17':
+    resolution: {integrity: sha512-MXfmqaVPEVgkBT/aY0aGCkRWWtByiYQXo3xdQ8r5RzuFrPiRn8Gar2tQdXSUQ2GKV3bkXckek89V8wQBY2Q/Aw==}
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
@@ -4109,10 +4109,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mdx-js/react@3.1.1(@types/react@19.2.16)(react@19.2.7)':
+  '@mdx-js/react@3.1.1(@types/react@19.2.17)(react@19.2.7)':
     dependencies:
       '@types/mdx': 2.0.13
-      '@types/react': 19.2.16
+      '@types/react': 19.2.17
       react: 19.2.7
 
   '@napi-rs/wasm-runtime@1.1.4(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
@@ -4124,12 +4124,12 @@ snapshots:
 
   '@next/env@16.2.7': {}
 
-  '@next/mdx@16.2.7(@mdx-js/loader@3.1.1)(@mdx-js/react@3.1.1(@types/react@19.2.16)(react@19.2.7))':
+  '@next/mdx@16.2.7(@mdx-js/loader@3.1.1)(@mdx-js/react@3.1.1(@types/react@19.2.17)(react@19.2.7))':
     dependencies:
       source-map: 0.7.6
     optionalDependencies:
       '@mdx-js/loader': 3.1.1
-      '@mdx-js/react': 3.1.1(@types/react@19.2.16)(react@19.2.7)
+      '@mdx-js/react': 3.1.1(@types/react@19.2.17)(react@19.2.7)
 
   '@next/swc-darwin-arm64@16.2.7':
     optional: true
@@ -4732,11 +4732,11 @@ snapshots:
     dependencies:
       undici-types: 7.16.0
 
-  '@types/react-dom@19.2.3(@types/react@19.2.16)':
+  '@types/react-dom@19.2.3(@types/react@19.2.17)':
     dependencies:
-      '@types/react': 19.2.16
+      '@types/react': 19.2.17
 
-  '@types/react@19.2.16':
+  '@types/react@19.2.17':
     dependencies:
       csstype: 3.2.3
 
@@ -6854,11 +6854,11 @@ snapshots:
     dependencies:
       react: 19.2.7
 
-  react-markdown@10.1.0(@types/react@19.2.16)(react@19.2.7):
+  react-markdown@10.1.0(@types/react@19.2.17)(react@19.2.7):
     dependencies:
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
-      '@types/react': 19.2.16
+      '@types/react': 19.2.17
       devlop: 1.1.0
       hast-util-to-jsx-runtime: 2.3.6
       html-url-attributes: 3.0.1
