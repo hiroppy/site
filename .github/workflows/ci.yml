@@ -31,21 +31,21 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
       - uses: ./.github/actions/setup-node
       - run: pnpm fmt:check
       - run: pnpm lint
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
       - uses: ./.github/actions/setup-node
       - run: pnpm typecheck
       - run: pnpm test
   lighthouse:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
       - uses: ./.github/actions/setup-node
       - run: pnpm build
       - run: pnpm lh --upload.target=temporary-public-storage
@@ -56,11 +56,11 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.60.0
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
       - uses: ./.github/actions/setup-node
       - run: pnpm build
       - run: pnpm test:a11y
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v7.0.1
         if: failure()
         with:
           name: a11y-test-results
@@ -70,11 +70,11 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.60.0
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
       - uses: ./.github/actions/setup-node
       - run: pnpm build
       - run: pnpm test:routes
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v7.0.1
         if: failure()
         with:
           name: routes-test-results
@@ -87,11 +87,11 @@ jobs:
       matrix:
         type: [pages, components]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
       - uses: ./.github/actions/setup-node
       - run: pnpm build
       - run: pnpm test:vrt:ci:${{ matrix.type }}
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v7.0.1
         with:
           name: vrt-${{ matrix.type }}-test-results
           path: test-results/
