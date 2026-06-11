@@ -14,22 +14,34 @@ type Props = {
   }[];
 };
 
+function isGitHubAuthError(error: unknown) {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "status" in error &&
+    error.status === 401
+  );
+}
+
 export async function Repositories({ repos }: Props) {
   cacheLife("weeks");
 
-  const repositories = await Promise.allSettled(
-    repos.map(async ({ owner, repo }) => {
-      try {
-        return await getRepositoryInfo(owner, repo);
-      } catch (error) {
-        console.error(`Failed to fetch info for ${owner}/${repo}:`, error);
-        return null;
-      }
-    }),
-  );
-  const res = repositories
-    .map((result) => (result.status === "fulfilled" ? result.value : null))
-    .filter((repo) => repo !== null);
+  const res = (
+    await Promise.all(
+      repos.map(async ({ owner, repo }) => {
+        try {
+          return await getRepositoryInfo(owner, repo);
+        } catch (error) {
+          if (isGitHubAuthError(error)) {
+            throw error;
+          }
+
+          console.error(`Failed to fetch info for ${owner}/${repo}:`, error);
+          return null;
+        }
+      }),
+    )
+  ).filter((repo) => repo !== null);
 
   const formatStars = (count: number) => {
     if (count >= 1000) {
