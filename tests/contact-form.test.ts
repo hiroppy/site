@@ -1,13 +1,13 @@
-import { expect, test } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
 import { setupPage } from "./utils/setupPage";
 
 test.describe("Contact form", () => {
-  test("opens the contact modal and submits to the coder-penguin form endpoint", async ({
+  test("opens the contact modal and submits to the contact form route", async ({
     page,
   }) => {
     const requests: string[] = [];
 
-    await page.route("https://coder-penguin.com/form", async (route) => {
+    await page.route("**/form", async (route) => {
       requests.push(route.request().postData() ?? "");
 
       await route.fulfill({
@@ -18,18 +18,7 @@ test.describe("Contact form", () => {
 
     await setupPage(page, "http://localhost:3000/");
 
-    await page.getByRole("button", { name: "お問い合わせ" }).first().click();
-
-    const dialog = page.getByRole("dialog", { name: "お問い合わせ" });
-    await expect(dialog).toBeVisible();
-
-    await dialog.getByLabel(/会社名/).fill("Example Inc.");
-    await dialog.getByLabel(/連絡先メールアドレス/).fill("contact@example.com");
-    await dialog.getByLabel(/技術相談/).check();
-    await dialog
-      .getByLabel(/依頼の内容/)
-      .fill("Next.js のパフォーマンス改善について相談したいです。");
-
+    const dialog = await openAndFillContactForm(page);
     await dialog.getByRole("button", { name: "送信" }).click();
 
     await expect(dialog.getByRole("status")).toContainText(
@@ -53,7 +42,7 @@ test.describe("Contact form", () => {
   }) => {
     const requests: string[] = [];
 
-    await page.route("https://coder-penguin.com/form", async (route) => {
+    await page.route("**/form", async (route) => {
       requests.push(route.request().postData() ?? "");
 
       await route.fulfill({
@@ -81,4 +70,58 @@ test.describe("Contact form", () => {
     ).toBeVisible();
     expect(requests).toHaveLength(0);
   });
+
+  test("shows the sales rejection message when the form route returns 400", async ({
+    page,
+  }) => {
+    await page.route("**/form", async (route) => {
+      await route.fulfill({
+        status: 400,
+        body: "Bad Request",
+      });
+    });
+
+    await setupPage(page, "http://localhost:3000/");
+
+    const dialog = await openAndFillContactForm(page);
+    await dialog.getByRole("button", { name: "送信" }).click();
+
+    await expect(dialog.getByRole("alert")).toContainText(
+      "営業のお問い合わせと判断されたため送信できませんでした",
+    );
+  });
+
+  test("shows the error message when the form route fails", async ({
+    page,
+  }) => {
+    await page.route("**/form", async (route) => {
+      await route.fulfill({
+        status: 500,
+        body: "Internal Server Error",
+      });
+    });
+
+    await setupPage(page, "http://localhost:3000/");
+
+    const dialog = await openAndFillContactForm(page);
+    await dialog.getByRole("button", { name: "送信" }).click();
+
+    await expect(dialog.getByRole("alert")).toContainText("送信に失敗しました");
+  });
 });
+
+async function openAndFillContactForm(page: Page) {
+  await page.getByRole("button", { name: "お問い合わせ" }).first().click();
+
+  const dialog = page.getByRole("dialog", { name: "お問い合わせ" });
+  await expect(dialog).toBeVisible();
+
+  await dialog.getByLabel(/会社名/).fill("Example Inc.");
+  await dialog.getByLabel(/連絡先メールアドレス/).fill("contact@example.com");
+  await dialog.getByLabel(/技術相談/).check();
+  await dialog
+    .getByLabel(/依頼の内容/)
+    .fill("Next.js のパフォーマンス改善について相談したいです。");
+
+  return dialog;
+}

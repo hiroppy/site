@@ -5,7 +5,6 @@ import { MdOutlineEmail } from "react-icons/md";
 import { cn } from "../utils/cn";
 import { ContactForm, type ContactFormStatus } from "./ContactForm";
 import { Dialog, type DialogHandle } from "./Dialog";
-import { getContactFormEndpoint } from "./contactFormConfig";
 import {
   type ContactFormFieldErrors,
   getContactFormData,
@@ -17,6 +16,8 @@ type Props = {
   className?: string;
   children?: ReactNode;
 };
+
+const contactFormSubmitPath = "/form";
 
 export function ContactButton({
   variant = "default",
@@ -57,13 +58,12 @@ export function ContactButton({
       formData.append("content", result.data.content);
       formData.append("comment", result.data.comment);
 
-      const response = await fetch(getContactFormEndpoint(), {
+      const response = await fetch(contactFormSubmitPath, {
         method: "POST",
-        mode: "no-cors",
         body: formData,
       });
 
-      if (response.type !== "opaque" && !response.ok) {
+      if (!response.ok) {
         setStatus(response.status === 400 ? "sales" : "error");
         return;
       }
