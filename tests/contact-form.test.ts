@@ -48,7 +48,9 @@ test.describe("Contact form", () => {
     );
   });
 
-  test("keeps required fields from submitting empty data", async ({ page }) => {
+  test("shows zod validation errors without submitting empty data", async ({
+    page,
+  }) => {
     const requests: string[] = [];
 
     await page.route("https://coder-penguin.com/form", async (route) => {
@@ -67,7 +69,16 @@ test.describe("Contact form", () => {
     const dialog = page.getByRole("dialog", { name: "お問い合わせ" });
     await dialog.getByRole("button", { name: "送信" }).click();
 
-    await expect(dialog.getByLabel(/会社名/)).toBeFocused();
+    await expect(dialog.getByText("会社名を入力してください")).toBeVisible();
+    await expect(
+      dialog.getByText("連絡先メールアドレスを入力してください"),
+    ).toBeVisible();
+    await expect(
+      dialog.getByText("依頼の種類を選択してください"),
+    ).toBeVisible();
+    await expect(
+      dialog.getByText("依頼の内容を入力してください"),
+    ).toBeVisible();
     expect(requests).toHaveLength(0);
   });
 });

@@ -5,17 +5,18 @@ import { MdOutlineEmail } from "react-icons/md";
 import { cn } from "../utils/cn";
 import { ContactForm, type ContactFormStatus } from "./ContactForm";
 import { Dialog, type DialogHandle } from "./Dialog";
+import { getContactFormEndpoint } from "./contactFormConfig";
+import {
+  type ContactFormFieldErrors,
+  getContactFormData,
+  getContactFormFieldErrors,
+} from "./contactFormSchema";
 
 type Props = {
   variant?: "default" | "full";
   className?: string;
   children?: ReactNode;
 };
-
-const contactFormEndpoint =
-  process.env.NODE_ENV === "production"
-    ? "https://coder-penguin.com/form"
-    : "http://localhost:8787";
 
 export function ContactButton({
   variant = "default",
@@ -26,9 +27,11 @@ export function ContactButton({
   const dialogId = useId();
   const [status, setStatus] = useState<ContactFormStatus>("idle");
   const [selectedContent, setSelectedContent] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<ContactFormFieldErrors>({});
 
   const openDialog = () => {
     setStatus("idle");
+    setFieldErrors({});
     dialogRef.current?.showModal();
   };
 
@@ -36,15 +39,28 @@ export function ContactButton({
     event.preventDefault();
 
     const form = event.currentTarget;
-    if (!form.reportValidity()) return;
+    const result = getContactFormData(new FormData(form));
 
+    if (!result.success) {
+      setFieldErrors(getContactFormFieldErrors(result.error));
+      return;
+    }
+
+    setFieldErrors({});
     setStatus("submitting");
 
     try {
-      const response = await fetch(contactFormEndpoint, {
+      const formData = new FormData();
+
+      formData.append("email", result.data.email);
+      formData.append("company", result.data.company);
+      formData.append("content", result.data.content);
+      formData.append("comment", result.data.comment);
+
+      const response = await fetch(getContactFormEndpoint(), {
         method: "POST",
         mode: "no-cors",
-        body: new FormData(form),
+        body: formData,
       });
 
       if (response.type !== "opaque" && !response.ok) {
@@ -89,8 +105,10 @@ export function ContactButton({
         <ContactForm
           idPrefix={dialogId}
           status={status}
+          fieldErrors={fieldErrors}
           selectedContent={selectedContent}
           onContentChange={setSelectedContent}
+          onFieldChange={() => setFieldErrors({})}
           onSubmit={handleSubmit}
         />
       </Dialog>

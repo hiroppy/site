@@ -1,6 +1,10 @@
 import type { FormEventHandler } from "react";
 import { cn } from "../utils/cn";
 import { Button } from "./Button";
+import {
+  type ContactFormFieldErrors,
+  contactFormContentOptions,
+} from "./contactFormSchema";
 
 export type ContactFormStatus =
   | "idle"
@@ -12,33 +16,38 @@ export type ContactFormStatus =
 type Props = {
   idPrefix: string;
   status: ContactFormStatus;
+  fieldErrors: ContactFormFieldErrors;
   selectedContent: string;
   onContentChange: (value: string) => void;
+  onFieldChange: () => void;
   onSubmit: FormEventHandler<HTMLFormElement>;
 };
-
-const contentOptions = [
-  "技術顧問依頼",
-  "開発支援依頼",
-  "技術相談",
-  "登壇・執筆依頼",
-  "その他",
-] as const;
 
 export function ContactForm({
   idPrefix,
   status,
+  fieldErrors,
   selectedContent,
   onContentChange,
+  onFieldChange,
   onSubmit,
 }: Props) {
   const isSubmitting = status === "submitting";
   const companyId = `${idPrefix}-contact-company`;
+  const companyErrorId = `${companyId}-error`;
   const emailId = `${idPrefix}-contact-email`;
+  const emailErrorId = `${emailId}-error`;
+  const contentErrorId = `${idPrefix}-contact-content-error`;
   const commentId = `${idPrefix}-contact-comment`;
+  const commentErrorId = `${commentId}-error`;
 
   return (
-    <form className="flex flex-col gap-5" onSubmit={onSubmit}>
+    <form
+      noValidate
+      className="flex flex-col gap-5"
+      onInput={onFieldChange}
+      onSubmit={onSubmit}
+    >
       <div className="flex flex-col gap-2">
         <label htmlFor={companyId} className="font-semibold">
           会社名 <RequiredMark />
@@ -51,7 +60,10 @@ export function ContactForm({
           autoComplete="organization"
           data-1p-ignore
           className={inputClassName}
+          aria-invalid={Boolean(fieldErrors.company)}
+          aria-describedby={fieldErrors.company ? companyErrorId : undefined}
         />
+        <FieldError id={companyErrorId} message={fieldErrors.company} />
       </div>
 
       <div className="flex flex-col gap-2">
@@ -66,15 +78,21 @@ export function ContactForm({
           autoComplete="email"
           data-1p-ignore
           className={inputClassName}
+          aria-invalid={Boolean(fieldErrors.email)}
+          aria-describedby={fieldErrors.email ? emailErrorId : undefined}
         />
+        <FieldError id={emailErrorId} message={fieldErrors.email} />
       </div>
 
-      <fieldset className="flex flex-col gap-3">
+      <fieldset
+        className="flex flex-col gap-3"
+        aria-describedby={fieldErrors.content ? contentErrorId : undefined}
+      >
         <legend className="font-semibold">
           依頼の種類 <RequiredMark />
         </legend>
         <div className="flex flex-wrap gap-x-5 gap-y-3">
-          {contentOptions.map((option) => (
+          {contactFormContentOptions.map((option) => (
             <label key={option} className="flex items-center gap-2">
               <input
                 name="content"
@@ -83,12 +101,14 @@ export function ContactForm({
                 required
                 checked={selectedContent === option}
                 onChange={(event) => onContentChange(event.target.value)}
+                aria-invalid={Boolean(fieldErrors.content)}
                 className="h-4 w-4 accent-[var(--color-accent)]"
               />
               <span>{option}</span>
             </label>
           ))}
         </div>
+        <FieldError id={contentErrorId} message={fieldErrors.content} />
       </fieldset>
 
       {selectedContent === "その他" && (
@@ -108,7 +128,10 @@ export function ContactForm({
           rows={5}
           data-1p-ignore
           className={cn(inputClassName, "min-h-32 resize-y")}
+          aria-invalid={Boolean(fieldErrors.comment)}
+          aria-describedby={fieldErrors.comment ? commentErrorId : undefined}
         />
+        <FieldError id={commentErrorId} message={fieldErrors.comment} />
       </div>
 
       <StatusMessage status={status} />
@@ -122,6 +145,22 @@ export function ContactForm({
 
 function RequiredMark() {
   return <span className="text-red-600">*</span>;
+}
+
+function FieldError({
+  id,
+  message,
+}: {
+  id: string;
+  message: string | undefined;
+}) {
+  if (!message) return null;
+
+  return (
+    <p id={id} className="text-sm text-red-700">
+      {message}
+    </p>
+  );
 }
 
 function StatusMessage({ status }: { status: ContactFormStatus }) {
