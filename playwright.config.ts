@@ -42,7 +42,7 @@ export default defineConfig({
     },
     {
       name: "chrome-routes",
-      testMatch: "tests/routes.test.ts",
+      testMatch: ["tests/routes.test.ts", "tests/contact-form.test.ts"],
       use: {
         ...devices["Desktop Chrome"],
         actionTimeout: 30000,
