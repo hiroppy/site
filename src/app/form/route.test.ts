@@ -2,16 +2,10 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { POST } from "./route";
 
 const originalContactFormEndpoint = process.env.CONTACT_FORM_ENDPOINT;
-const originalPublicContactFormEndpoint =
-  process.env.NEXT_PUBLIC_CONTACT_FORM_ENDPOINT;
 
 describe("POST /form", () => {
   afterEach(() => {
     restoreEnv("CONTACT_FORM_ENDPOINT", originalContactFormEndpoint);
-    restoreEnv(
-      "NEXT_PUBLIC_CONTACT_FORM_ENDPOINT",
-      originalPublicContactFormEndpoint,
-    );
     vi.unstubAllGlobals();
   });
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, type ReactNode, useId, useRef, useState } from "react";
+import { type FormEvent, useId, useRef, useState } from "react";
 import { MdOutlineEmail } from "react-icons/md";
 import { cn } from "../utils/cn";
 import { ContactForm, type ContactFormStatus } from "./ContactForm";
@@ -14,16 +14,11 @@ import {
 type Props = {
   variant?: "default" | "full";
   className?: string;
-  children?: ReactNode;
 };
 
 const contactFormSubmitPath = "/form";
 
-export function ContactButton({
-  variant = "default",
-  className,
-  children,
-}: Props) {
+export function ContactButton({ variant = "default", className }: Props) {
   const dialogRef = useRef<DialogHandle>(null);
   const dialogId = useId();
   const [status, setStatus] = useState<ContactFormStatus>("idle");
@@ -92,7 +87,7 @@ export function ContactButton({
         onClick={openDialog}
       >
         <MdOutlineEmail size={16} aria-hidden="true" focusable="false" />
-        {children ?? "お問い合わせ"}
+        お問い合わせ
       </button>
       <Dialog
         id={dialogId}

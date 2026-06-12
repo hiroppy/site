@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getContactFormEndpoint } from "../../components/contactFormConfig";
+import { getContactFormEndpoint } from "./contactFormEndpoint";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
