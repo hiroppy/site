@@ -22,4 +22,13 @@ describe("getContactFormEndpoint", () => {
       "http://localhost:8787",
     );
   });
+
+  it("falls back when CONTACT_FORM_ENDPOINT is whitespace only", () => {
+    expect(
+      getContactFormEndpoint({
+        CONTACT_FORM_ENDPOINT: "   ",
+        NODE_ENV: "development",
+      }),
+    ).toBe("http://localhost:8787");
+  });
 });
