@@ -1,6 +1,12 @@
 "use client";
 
-import { type FormEvent, useId, useRef, useState } from "react";
+import {
+  type FormEvent,
+  type FormEventHandler,
+  useId,
+  useRef,
+  useState,
+} from "react";
 import { MdOutlineEmail } from "react-icons/md";
 import { cn } from "../utils/cn";
 import { ContactForm, type ContactFormStatus } from "./ContactForm";
@@ -17,18 +23,25 @@ type Props = {
 };
 
 const contactFormSubmitPath = "/form";
+const requiredFieldNames = ["company", "email", "content", "comment"] as const;
 
 export function ContactButton({ variant = "default", className }: Props) {
   const dialogRef = useRef<DialogHandle>(null);
   const dialogId = useId();
   const [status, setStatus] = useState<ContactFormStatus>("idle");
   const [selectedContent, setSelectedContent] = useState("");
+  const [canSubmit, setCanSubmit] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<ContactFormFieldErrors>({});
 
   const openDialog = () => {
     setStatus("idle");
     setFieldErrors({});
     dialogRef.current?.showModal();
+  };
+
+  const handleFieldChange: FormEventHandler<HTMLFormElement> = (event) => {
+    setFieldErrors({});
+    setCanSubmit(hasRequiredFields(new FormData(event.currentTarget)));
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -65,6 +78,7 @@ export function ContactButton({ variant = "default", className }: Props) {
 
       form.reset();
       setSelectedContent("");
+      setCanSubmit(false);
       setStatus("success");
     } catch {
       setStatus("error");
@@ -103,11 +117,20 @@ export function ContactButton({ variant = "default", className }: Props) {
           status={status}
           fieldErrors={fieldErrors}
           selectedContent={selectedContent}
+          canSubmit={canSubmit}
           onContentChange={setSelectedContent}
-          onFieldChange={() => setFieldErrors({})}
+          onFieldChange={handleFieldChange}
           onSubmit={handleSubmit}
         />
       </Dialog>
     </>
   );
+}
+
+function hasRequiredFields(formData: FormData) {
+  return requiredFieldNames.every((name) => {
+    const value = formData.get(name);
+
+    return typeof value === "string" && value.trim().length > 0;
+  });
 }

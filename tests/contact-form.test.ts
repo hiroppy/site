@@ -37,7 +37,7 @@ test.describe("Contact form", () => {
     );
   });
 
-  test("shows zod validation errors without submitting empty data", async ({
+  test("shows zod validation errors without submitting invalid data", async ({
     page,
   }) => {
     const requests: string[] = [];
@@ -56,19 +56,48 @@ test.describe("Contact form", () => {
     await page.getByRole("button", { name: "お問い合わせ" }).first().click();
 
     const dialog = page.getByRole("dialog", { name: "お問い合わせ" });
+    await dialog.getByLabel(/会社名/).fill("Example Inc.");
+    await dialog.getByLabel(/連絡先メールアドレス/).fill("not-an-email");
+    await dialog.getByLabel(/技術相談/).check();
+    await dialog
+      .getByLabel(/依頼の内容/)
+      .fill("Next.js のパフォーマンス改善について相談したいです。");
     await dialog.getByRole("button", { name: "送信" }).click();
 
-    await expect(dialog.getByText("会社名を入力してください")).toBeVisible();
     await expect(
-      dialog.getByText("連絡先メールアドレスを入力してください"),
-    ).toBeVisible();
-    await expect(
-      dialog.getByText("依頼の種類を選択してください"),
-    ).toBeVisible();
-    await expect(
-      dialog.getByText("依頼の内容を入力してください"),
+      dialog.getByText("不正なメールアドレスの形式です"),
     ).toBeVisible();
     expect(requests).toHaveLength(0);
+  });
+
+  test("disables submit until all required fields are filled", async ({
+    page,
+  }) => {
+    await setupPage(page, "http://localhost:3000/");
+
+    await page.getByRole("button", { name: "お問い合わせ" }).first().click();
+
+    const dialog = page.getByRole("dialog", { name: "お問い合わせ" });
+    const submitButton = dialog.getByRole("button", { name: "送信" });
+
+    await expect(dialog.getByLabel(/技術相談/)).toBeVisible();
+    await expect(dialog.getByLabel(/開発支援依頼/)).toBeVisible();
+    await expect(submitButton).toBeDisabled();
+    await expect(submitButton).toHaveCSS("opacity", "0.5");
+
+    await dialog.getByLabel(/会社名/).fill("Example Inc.");
+    await expect(submitButton).toBeDisabled();
+
+    await dialog.getByLabel(/連絡先メールアドレス/).fill("contact@example.com");
+    await expect(submitButton).toBeDisabled();
+
+    await dialog.getByLabel(/技術相談/).check();
+    await expect(submitButton).toBeDisabled();
+
+    await dialog
+      .getByLabel(/依頼の内容/)
+      .fill("Next.js のパフォーマンス改善について相談したいです。");
+    await expect(submitButton).toBeEnabled();
   });
 
   test("shows the sales rejection message when the form route returns 400", async ({

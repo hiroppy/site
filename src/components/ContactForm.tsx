@@ -18,8 +18,9 @@ type Props = {
   status: ContactFormStatus;
   fieldErrors: ContactFormFieldErrors;
   selectedContent: string;
+  canSubmit: boolean;
   onContentChange: (value: string) => void;
-  onFieldChange: () => void;
+  onFieldChange: FormEventHandler<HTMLFormElement>;
   onSubmit: FormEventHandler<HTMLFormElement>;
 };
 
@@ -28,6 +29,7 @@ export function ContactForm({
   status,
   fieldErrors,
   selectedContent,
+  canSubmit,
   onContentChange,
   onFieldChange,
   onSubmit,
@@ -45,7 +47,7 @@ export function ContactForm({
     <form
       noValidate
       className="flex flex-col gap-5"
-      onInput={onFieldChange}
+      onChange={onFieldChange}
       onSubmit={onSubmit}
     >
       <div className="flex flex-col gap-2">
@@ -136,7 +138,11 @@ export function ContactForm({
 
       <StatusMessage status={status} />
 
-      <Button type="submit" disabled={isSubmitting} className="mt-1">
+      <Button
+        type="submit"
+        disabled={isSubmitting || !canSubmit}
+        className="mt-1"
+      >
         {isSubmitting ? "送信中..." : "送信"}
       </Button>
     </form>

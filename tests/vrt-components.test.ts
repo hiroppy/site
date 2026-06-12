@@ -26,6 +26,18 @@ test.describe("Component VRT Tests", () => {
     );
   });
 
+  test("Contact modal form", async ({ page }) => {
+    await setupPage(page, "http://localhost:3000/");
+
+    await page.getByRole("button", { name: "お問い合わせ" }).first().click();
+
+    const dialog = page.getByRole("dialog", { name: "お問い合わせ" });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByLabel(/技術相談/)).toBeVisible();
+    await expect(dialog.getByLabel(/開発支援依頼/)).toBeVisible();
+    await expect(dialog).toHaveScreenshot("contact-modal-form.png");
+  });
+
   // Job related articles test for Mercari/Souzoh main job
   test("Job related articles expansion (Mercari/Souzoh main)", async ({
     page,
