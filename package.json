@@ -2,7 +2,7 @@
   "name": "@hiroppy/site",
   "version": "0.0.1",
   "private": true,
-  "packageManager": "pnpm@11.5.2",
+  "packageManager": "pnpm@11.5.3",
   "engines": {
     "node": "24.16.0"
   },
@@ -65,7 +65,7 @@
     "@trivago/prettier-plugin-sort-imports": "6.0.2",
     "@types/mdast": "4.0.4",
     "@types/mdx": "2.0.14",
-    "@types/node": "24.13.1",
+    "@types/node": "24.13.2",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",
