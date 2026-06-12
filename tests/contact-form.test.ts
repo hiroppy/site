@@ -108,6 +108,24 @@ test.describe("Contact form", () => {
 
     await expect(dialog.getByRole("alert")).toContainText("送信に失敗しました");
   });
+
+  test("keeps the contact modal open when clicking outside the panel", async ({
+    page,
+  }) => {
+    await setupPage(page, "http://localhost:3000/");
+
+    await page.getByRole("button", { name: "お問い合わせ" }).first().click();
+
+    const dialog = page.getByRole("dialog", { name: "お問い合わせ" });
+    await expect(dialog).toBeVisible();
+
+    await page.mouse.click(16, 16);
+
+    await expect(dialog).toBeVisible();
+
+    await dialog.getByRole("button", { name: "Close dialog" }).click();
+    await expect(dialog).not.toBeVisible();
+  });
 });
 
 async function openAndFillContactForm(page: Page) {

@@ -96,6 +96,7 @@ export function ContactButton({ variant = "default", className }: Props) {
         maxWidth="max-w-xl"
         contentClass="p-5 sm:p-6"
         backdrop="blur"
+        closeOnBackdrop={false}
       >
         <ContactForm
           idPrefix={dialogId}

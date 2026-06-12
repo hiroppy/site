@@ -29,6 +29,7 @@ type Props = {
   dynamicTitle?: boolean;
   backdrop?: BackdropVariant;
   position?: PositionVariant;
+  closeOnBackdrop?: boolean;
   onClose?: () => void;
   children: ReactNode;
 };
@@ -58,6 +59,7 @@ export const Dialog = forwardRef<DialogHandle, Props>(function Dialog(
     dynamicTitle = false,
     backdrop = "default",
     position = "center",
+    closeOnBackdrop = true,
     onClose,
     children,
   },
@@ -100,7 +102,7 @@ export const Dialog = forwardRef<DialogHandle, Props>(function Dialog(
     if (!dialog) return;
 
     const handleBackdropClick = (event: MouseEvent) => {
-      if (event.target === dialog) {
+      if (closeOnBackdrop && event.target === dialog) {
         closeDialog();
       }
     };
@@ -117,7 +119,7 @@ export const Dialog = forwardRef<DialogHandle, Props>(function Dialog(
       dialog.removeEventListener("click", handleBackdropClick);
       dialog.removeEventListener("close", handleClose);
     };
-  }, [onClose]);
+  }, [closeOnBackdrop, onClose]);
 
   return (
     <dialog
