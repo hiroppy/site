@@ -2,7 +2,7 @@
   "name": "@hiroppy/site",
   "version": "0.0.1",
   "private": true,
-  "packageManager": "pnpm@11.5.3",
+  "packageManager": "pnpm@11.6.0",
   "engines": {
     "node": "24.16.0"
   },
@@ -38,7 +38,7 @@
     "@next/mdx": "16.2.9",
     "@next/third-parties": "16.2.9",
     "@tailwindcss/postcss": "4.3.0",
-    "algoliasearch": "5.53.0",
+    "algoliasearch": "5.54.0",
     "cheerio": "1.2.0",
     "clsx": "2.1.1",
     "feed": "5.2.1",
