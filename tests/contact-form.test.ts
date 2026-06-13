@@ -2,6 +2,14 @@ import { expect, type Page, test } from "@playwright/test";
 import { setupPage } from "./utils/setupPage";
 
 test.describe("Contact form", () => {
+  test("uses a pointer cursor on the contact button", async ({ page }) => {
+    await setupPage(page, "http://localhost:3000/");
+
+    await expect(
+      page.getByRole("button", { name: "お問い合わせ" }).first(),
+    ).toHaveCSS("cursor", "pointer");
+  });
+
   test("opens the contact modal and submits to the contact form route", async ({
     page,
   }) => {

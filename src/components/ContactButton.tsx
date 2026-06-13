@@ -90,7 +90,7 @@ export function ContactButton({ variant = "default", className }: Props) {
         type="button"
         className={cn(
           "border-line text-text-main inline-flex items-center gap-2 rounded-md border px-3 py-2 text-sm font-medium no-underline transition-colors hover:bg-gray-100",
-          "focus-ring text-accent border-accent font-semibold",
+          "focus-ring text-accent border-accent cursor-pointer font-semibold",
           variant === "full" &&
             "inline-flex w-full items-center justify-center",
           className,
