@@ -9,14 +9,14 @@ describe("contactFormSchema", () => {
     const result = contactFormSchema.safeParse({
       email: "contact@example.com",
       company: "Example Inc.",
-      content: "技術相談",
+      content: "技術顧問依頼",
       comment: "Next.js のパフォーマンス改善について相談したいです。",
     });
 
     expect(result.success).toBe(true);
   });
 
-  it.each(["技術相談", "開発支援依頼", "登壇・執筆依頼", "その他"])(
+  it.each(["技術顧問依頼", "開発支援依頼", "登壇・執筆依頼", "その他"])(
     "accepts %s as a contact type",
     (content) => {
       const result = contactFormSchema.safeParse({
@@ -53,7 +53,7 @@ describe("contactFormSchema", () => {
     const result = contactFormSchema.safeParse({
       email: "contact@example.com",
       company: "Example Inc.",
-      content: "技術顧問依頼",
+      content: "技術相談",
       comment: "Next.js のパフォーマンス改善について相談したいです。",
     });
 

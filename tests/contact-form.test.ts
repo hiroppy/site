@@ -38,7 +38,7 @@ test.describe("Contact form", () => {
     expect(requests[0]).toContain('name="company"');
     expect(requests[0]).toContain("Example Inc.");
     expect(requests[0]).toContain('name="content"');
-    expect(requests[0]).toContain("技術相談");
+    expect(requests[0]).toContain("技術顧問依頼");
     expect(requests[0]).toContain('name="comment"');
     expect(requests[0]).toContain(
       "Next.js のパフォーマンス改善について相談したいです。",
@@ -115,7 +115,7 @@ test.describe("Contact form", () => {
     const dialog = page.getByRole("dialog", { name: "お問い合わせ" });
     await dialog.getByLabel(/会社名/).fill("Example Inc.");
     await dialog.getByLabel(/連絡先メールアドレス/).fill("not-an-email");
-    await dialog.getByLabel(/技術相談/).check();
+    await dialog.getByLabel(/技術顧問依頼/).check();
     await dialog
       .getByLabel(/依頼の内容/)
       .fill("Next.js のパフォーマンス改善について相談したいです。");
@@ -134,11 +134,11 @@ test.describe("Contact form", () => {
     const dialog = page.getByRole("dialog", { name: "お問い合わせ" });
     const submitButton = dialog.getByRole("button", { name: "送信" });
 
-    await expect(dialog.getByLabel(/技術相談/)).toBeVisible();
+    await expect(dialog.getByLabel(/技術顧問依頼/)).toBeVisible();
     await expect(dialog.getByLabel(/開発支援依頼/)).toBeVisible();
     await expect(dialog.getByLabel(/登壇・執筆依頼/)).toBeVisible();
     await expect(dialog.getByLabel(/その他/)).toBeVisible();
-    await expect(dialog.getByLabel(/技術顧問依頼/)).toHaveCount(0);
+    await expect(dialog.getByLabel(/技術相談/)).toHaveCount(0);
     await expect(dialog.locator("legend", { hasText: "依頼の種類" })).toHaveCSS(
       "margin-bottom",
       "12px",
@@ -152,7 +152,7 @@ test.describe("Contact form", () => {
     await dialog.getByLabel(/連絡先メールアドレス/).fill("not-an-email");
     await expect(submitButton).toBeDisabled();
 
-    await dialog.getByLabel(/技術相談/).check();
+    await dialog.getByLabel(/技術顧問依頼/).check();
     await expect(submitButton).toBeDisabled();
 
     await dialog
@@ -246,7 +246,7 @@ async function openAndFillContactForm(page: Page) {
 
   await dialog.getByLabel(/会社名/).fill("Example Inc.");
   await dialog.getByLabel(/連絡先メールアドレス/).fill("contact@example.com");
-  await dialog.getByLabel(/技術相談/).check();
+  await dialog.getByLabel(/技術顧問依頼/).check();
   await dialog
     .getByLabel(/依頼の内容/)
     .fill("Next.js のパフォーマンス改善について相談したいです。");

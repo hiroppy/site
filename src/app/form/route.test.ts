@@ -34,7 +34,7 @@ describe("POST /form", () => {
     const forwardedFormData = fetchMock.mock.calls[0]?.[1]?.body as FormData;
     expect(forwardedFormData.get("email")).toBe("contact@example.com");
     expect(forwardedFormData.get("company")).toBe("Example Inc.");
-    expect(forwardedFormData.get("content")).toBe("技術相談");
+    expect(forwardedFormData.get("content")).toBe("技術顧問依頼");
     expect(forwardedFormData.get("comment")).toBe(
       "Next.js のパフォーマンス改善について相談したいです。",
     );
@@ -79,7 +79,7 @@ function createContactFormData() {
 
   formData.append("email", "contact@example.com");
   formData.append("company", "Example Inc.");
-  formData.append("content", "技術相談");
+  formData.append("content", "技術顧問依頼");
   formData.append(
     "comment",
     "Next.js のパフォーマンス改善について相談したいです。",
