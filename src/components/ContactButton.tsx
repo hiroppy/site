@@ -97,6 +97,7 @@ export function ContactButton({ variant = "default", className }: Props) {
         )}
         aria-haspopup="dialog"
         aria-controls={dialogId}
+        title="お問い合わせフォームを開く"
         onClick={openDialog}
       >
         <MdOutlineEmail size={16} aria-hidden="true" focusable="false" />
