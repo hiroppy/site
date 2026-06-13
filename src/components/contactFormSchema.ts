@@ -1,6 +1,11 @@
 import { z, type ZodError } from "zod";
 
-export const contactFormContentOptions = ["技術相談", "開発支援依頼"] as const;
+export const contactFormContentOptions = [
+  "技術相談",
+  "開発支援依頼",
+  "登壇・執筆依頼",
+  "その他",
+] as const;
 
 export const contactFormSchema = z.object({
   company: z.string().trim().min(1, "会社名を入力してください"),

@@ -16,6 +16,20 @@ describe("contactFormSchema", () => {
     expect(result.success).toBe(true);
   });
 
+  it.each(["技術相談", "開発支援依頼", "登壇・執筆依頼", "その他"])(
+    "accepts %s as a contact type",
+    (content) => {
+      const result = contactFormSchema.safeParse({
+        email: "contact@example.com",
+        company: "Example Inc.",
+        content,
+        comment: "Next.js のパフォーマンス改善について相談したいです。",
+      });
+
+      expect(result.success).toBe(true);
+    },
+  );
+
   it("returns field errors for invalid contact payloads", () => {
     const result = contactFormSchema.safeParse({
       email: "not-an-email",
@@ -35,7 +49,7 @@ describe("contactFormSchema", () => {
     });
   });
 
-  it("rejects contact types outside consulting and development support", () => {
+  it("rejects unsupported contact types", () => {
     const result = contactFormSchema.safeParse({
       email: "contact@example.com",
       company: "Example Inc.",

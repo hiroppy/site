@@ -79,9 +79,9 @@ test.describe("Contact form", () => {
 
     await expect(dialog.getByLabel(/技術相談/)).toBeVisible();
     await expect(dialog.getByLabel(/開発支援依頼/)).toBeVisible();
+    await expect(dialog.getByLabel(/登壇・執筆依頼/)).toBeVisible();
+    await expect(dialog.getByLabel(/その他/)).toBeVisible();
     await expect(dialog.getByLabel(/技術顧問依頼/)).toHaveCount(0);
-    await expect(dialog.getByLabel(/登壇・執筆依頼/)).toHaveCount(0);
-    await expect(dialog.getByLabel(/その他/)).toHaveCount(0);
     await expect(dialog.locator("legend", { hasText: "依頼の種類" })).toHaveCSS(
       "margin-bottom",
       "12px",
@@ -105,6 +105,23 @@ test.describe("Contact form", () => {
 
     await dialog.getByLabel(/連絡先メールアドレス/).fill("contact@example.com");
     await expect(submitButton).toBeEnabled();
+  });
+
+  test("shows a red sales warning when selecting other request type", async ({
+    page,
+  }) => {
+    await setupPage(page, "http://localhost:3000/");
+
+    await page.getByRole("button", { name: "お問い合わせ" }).first().click();
+
+    const dialog = page.getByRole("dialog", { name: "お問い合わせ" });
+    await dialog.getByLabel(/その他/).check();
+
+    const warning = dialog.getByText(
+      "営業のお問い合わせは固くお断りしております。",
+    );
+    await expect(warning).toBeVisible();
+    await expect(warning).toHaveClass(/text-red-600/);
   });
 
   test("shows the sales rejection message when the form route returns 400", async ({

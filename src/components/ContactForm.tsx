@@ -42,6 +42,7 @@ export function ContactForm({
   const contentErrorId = `${idPrefix}-contact-content-error`;
   const commentId = `${idPrefix}-contact-comment`;
   const commentErrorId = `${commentId}-error`;
+  const shouldShowSalesWarning = selectedContent === "その他";
 
   return (
     <form
@@ -111,6 +112,11 @@ export function ContactForm({
           ))}
         </div>
         <FieldError id={contentErrorId} message={fieldErrors.content} />
+        {shouldShowSalesWarning && (
+          <p className="text-sm text-red-600">
+            営業のお問い合わせは固くお断りしております。
+          </p>
+        )}
       </fieldset>
 
       <div className="flex flex-col gap-2">
