@@ -33,7 +33,7 @@ test.describe("Component VRT Tests", () => {
 
     const dialog = page.getByRole("dialog", { name: "お問い合わせ" });
     await expect(dialog).toBeVisible();
-    await expect(dialog.getByLabel(/技術相談/)).toBeVisible();
+    await expect(dialog.getByLabel(/技術顧問依頼/)).toBeVisible();
     await expect(dialog.getByLabel(/開発支援依頼/)).toBeVisible();
     await expect(dialog).toHaveScreenshot("contact-modal-form.png");
   });

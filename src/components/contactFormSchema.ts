@@ -1,7 +1,7 @@
 import { z, type ZodError } from "zod";
 
 export const contactFormContentOptions = [
-  "技術相談",
+  "技術顧問依頼",
   "開発支援依頼",
   "登壇・執筆依頼",
   "その他",
