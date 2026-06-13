@@ -90,7 +90,7 @@ export function ContactForm({
         className="flex flex-col gap-3"
         aria-describedby={fieldErrors.content ? contentErrorId : undefined}
       >
-        <legend className="font-semibold">
+        <legend className="mb-3 font-semibold">
           依頼の種類 <RequiredMark />
         </legend>
         <div className="flex flex-wrap gap-x-5 gap-y-3">
@@ -112,12 +112,6 @@ export function ContactForm({
         </div>
         <FieldError id={contentErrorId} message={fieldErrors.content} />
       </fieldset>
-
-      {selectedContent === "その他" && (
-        <p className="text-sm text-red-700">
-          営業のお問い合わせは固くお断りしております。
-        </p>
-      )}
 
       <div className="flex flex-col gap-2">
         <label htmlFor={commentId} className="font-semibold">

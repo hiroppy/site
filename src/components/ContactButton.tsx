@@ -23,7 +23,6 @@ type Props = {
 };
 
 const contactFormSubmitPath = "/form";
-const requiredFieldNames = ["company", "email", "content", "comment"] as const;
 
 export function ContactButton({ variant = "default", className }: Props) {
   const dialogRef = useRef<DialogHandle>(null);
@@ -41,7 +40,7 @@ export function ContactButton({ variant = "default", className }: Props) {
 
   const handleFieldChange: FormEventHandler<HTMLFormElement> = (event) => {
     setFieldErrors({});
-    setCanSubmit(hasRequiredFields(new FormData(event.currentTarget)));
+    setCanSubmit(getContactFormData(new FormData(event.currentTarget)).success);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -125,12 +124,4 @@ export function ContactButton({ variant = "default", className }: Props) {
       </Dialog>
     </>
   );
-}
-
-function hasRequiredFields(formData: FormData) {
-  return requiredFieldNames.every((name) => {
-    const value = formData.get(name);
-
-    return typeof value === "string" && value.trim().length > 0;
-  });
 }

@@ -37,7 +37,7 @@ test.describe("Contact form", () => {
     );
   });
 
-  test("shows zod validation errors without submitting invalid data", async ({
+  test("keeps submit disabled without submitting invalid data", async ({
     page,
   }) => {
     const requests: string[] = [];
@@ -62,11 +62,8 @@ test.describe("Contact form", () => {
     await dialog
       .getByLabel(/依頼の内容/)
       .fill("Next.js のパフォーマンス改善について相談したいです。");
-    await dialog.getByRole("button", { name: "送信" }).click();
 
-    await expect(
-      dialog.getByText("不正なメールアドレスの形式です"),
-    ).toBeVisible();
+    await expect(dialog.getByRole("button", { name: "送信" })).toBeDisabled();
     expect(requests).toHaveLength(0);
   });
 
@@ -82,13 +79,20 @@ test.describe("Contact form", () => {
 
     await expect(dialog.getByLabel(/技術相談/)).toBeVisible();
     await expect(dialog.getByLabel(/開発支援依頼/)).toBeVisible();
+    await expect(dialog.getByLabel(/技術顧問依頼/)).toHaveCount(0);
+    await expect(dialog.getByLabel(/登壇・執筆依頼/)).toHaveCount(0);
+    await expect(dialog.getByLabel(/その他/)).toHaveCount(0);
+    await expect(dialog.locator("legend", { hasText: "依頼の種類" })).toHaveCSS(
+      "margin-bottom",
+      "12px",
+    );
     await expect(submitButton).toBeDisabled();
     await expect(submitButton).toHaveCSS("opacity", "0.5");
 
     await dialog.getByLabel(/会社名/).fill("Example Inc.");
     await expect(submitButton).toBeDisabled();
 
-    await dialog.getByLabel(/連絡先メールアドレス/).fill("contact@example.com");
+    await dialog.getByLabel(/連絡先メールアドレス/).fill("not-an-email");
     await expect(submitButton).toBeDisabled();
 
     await dialog.getByLabel(/技術相談/).check();
@@ -97,6 +101,9 @@ test.describe("Contact form", () => {
     await dialog
       .getByLabel(/依頼の内容/)
       .fill("Next.js のパフォーマンス改善について相談したいです。");
+    await expect(submitButton).toBeDisabled();
+
+    await dialog.getByLabel(/連絡先メールアドレス/).fill("contact@example.com");
     await expect(submitButton).toBeEnabled();
   });
 

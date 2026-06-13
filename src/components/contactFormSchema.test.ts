@@ -34,4 +34,15 @@ describe("contactFormSchema", () => {
       comment: "依頼の内容を入力してください",
     });
   });
+
+  it("rejects contact types outside consulting and development support", () => {
+    const result = contactFormSchema.safeParse({
+      email: "contact@example.com",
+      company: "Example Inc.",
+      content: "技術顧問依頼",
+      comment: "Next.js のパフォーマンス改善について相談したいです。",
+    });
+
+    expect(result.success).toBe(false);
+  });
 });
