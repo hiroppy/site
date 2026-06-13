@@ -3,6 +3,8 @@
 import {
   type FormEvent,
   type FormEventHandler,
+  useCallback,
+  useEffect,
   useId,
   useRef,
   useState,
@@ -25,17 +27,28 @@ type Props = {
 const contactFormSubmitPath = "/form";
 
 export function ContactButton({ variant = "default", className }: Props) {
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<DialogHandle>(null);
   const dialogId = useId();
   const [status, setStatus] = useState<ContactFormStatus>("idle");
   const [selectedContent, setSelectedContent] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<ContactFormFieldErrors>({});
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const closeDialog = useCallback(() => {
+    dialogRef.current?.close();
+  }, []);
+
+  const handleDialogClose = useCallback(() => {
+    setIsDialogOpen(false);
+  }, []);
 
   const openDialog = () => {
     setStatus("idle");
     setFieldErrors({});
     dialogRef.current?.showModal();
+    setIsDialogOpen(true);
   };
 
   const handleFieldChange: FormEventHandler<HTMLFormElement> = (event) => {
@@ -84,9 +97,48 @@ export function ContactButton({ variant = "default", className }: Props) {
     }
   };
 
+  useEffect(() => {
+    if (status !== "success" || !isDialogOpen) return;
+
+    const timeoutId = window.setTimeout(() => {
+      closeDialog();
+    }, 3_000);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [closeDialog, isDialogOpen, status]);
+
+  useEffect(() => {
+    if (!isDialogOpen) return;
+
+    const closeIfTriggerHidden = () => {
+      const button = buttonRef.current;
+      if (!button) return;
+
+      const style = window.getComputedStyle(button);
+      const isTriggerHidden =
+        button.getClientRects().length === 0 || style.visibility === "hidden";
+
+      if (isTriggerHidden) {
+        closeDialog();
+      }
+    };
+
+    const handleResize = () => {
+      window.requestAnimationFrame(closeIfTriggerHidden);
+    };
+
+    closeIfTriggerHidden();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [closeDialog, isDialogOpen]);
+
   return (
     <>
       <button
+        ref={buttonRef}
         type="button"
         className={cn(
           "border-line text-text-main inline-flex items-center gap-2 rounded-md border px-3 py-2 text-sm font-medium no-underline transition-colors hover:bg-gray-100",
@@ -111,6 +163,7 @@ export function ContactButton({ variant = "default", className }: Props) {
         contentClass="p-5 sm:p-6"
         backdrop="blur"
         closeOnBackdrop={false}
+        onClose={handleDialogClose}
       >
         <ContactForm
           idPrefix={dialogId}

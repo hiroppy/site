@@ -45,6 +45,55 @@ test.describe("Contact form", () => {
     );
   });
 
+  test("closes the contact modal 3 seconds after a successful submission", async ({
+    page,
+  }) => {
+    await page.route("**/form", async (route) => {
+      await route.fulfill({
+        status: 200,
+        body: "OK",
+      });
+    });
+
+    await setupPage(page, "http://localhost:3000/");
+
+    const dialog = await openAndFillContactForm(page);
+    await dialog.getByRole("button", { name: "送信" }).click();
+
+    await expect(dialog.getByRole("status")).toContainText(
+      "お問い合わせが送信されました",
+    );
+    await expect(dialog).toBeVisible();
+    await expect(dialog).not.toBeVisible({ timeout: 4_000 });
+    await expect(page.locator("dialog[open]")).toHaveCount(0);
+  });
+
+  test("keeps the mobile menu clickable after resizing with the contact modal open", async ({
+    page,
+  }) => {
+    await setupPage(page, "http://localhost:3000/");
+
+    await page.getByRole("button", { name: "お問い合わせ" }).first().click();
+
+    const dialog = page.getByRole("dialog", { name: "お問い合わせ" });
+    await expect(dialog).toBeVisible();
+
+    await page.setViewportSize({
+      width: 375,
+      height: 667,
+    });
+
+    await expect(page.locator("dialog[open]")).toHaveCount(0);
+
+    const menuButton = page.getByRole("button", { name: "menu" });
+    await menuButton.click();
+
+    await expect(menuButton).toHaveAttribute("aria-expanded", "true");
+    await expect(
+      page.getByRole("navigation", { name: "モバイルナビゲーション" }),
+    ).toBeVisible();
+  });
+
   test("keeps submit disabled without submitting invalid data", async ({
     page,
   }) => {
