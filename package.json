@@ -71,7 +71,7 @@
     "@vitejs/plugin-react": "6.0.2",
     "@vitest/browser-playwright": "4.1.9",
     "babel-plugin-react-compiler": "1.0.0",
-    "knip": "6.17.1",
+    "knip": "6.17.2",
     "lefthook": "2.1.9",
     "postcss": "8.5.15",
     "prettier": "3.8.4",
