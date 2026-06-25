@@ -60,7 +60,7 @@
   "devDependencies": {
     "@axe-core/playwright": "4.11.3",
     "@lhci/cli": "0.15.1",
-    "@playwright/test": "1.61.0",
+    "@playwright/test": "1.61.1",
     "@tailwindcss/vite": "4.3.1",
     "@trivago/prettier-plugin-sort-imports": "6.0.2",
     "@types/mdast": "4.0.4",
