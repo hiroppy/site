@@ -74,7 +74,7 @@
     "knip": "6.17.2",
     "lefthook": "2.1.9",
     "postcss": "8.5.15",
-    "prettier": "3.8.4",
+    "prettier": "3.8.5",
     "prettier-plugin-tailwindcss": "0.8.0",
     "remark": "15.0.1",
     "remark-frontmatter": "5.0.0",
