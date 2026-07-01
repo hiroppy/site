@@ -7,11 +7,7 @@ import {
 } from "./contactFormSchema";
 
 export type ContactFormStatus =
-  | "idle"
-  | "submitting"
-  | "success"
-  | "error"
-  | "sales";
+  "idle" | "submitting" | "success" | "error" | "sales";
 
 type Props = {
   idPrefix: string;
