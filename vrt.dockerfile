@@ -14,6 +14,6 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y fonts-noto-cjk fonts-noto-color-emoji
 RUN npm run setup
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN --mount=type=secret,id=github_token,env=GITHUB_TOKEN pnpm run build
+RUN pnpm run build
 
 CMD ["pnpm", "test:vrt:ci:update"]

@@ -3,8 +3,6 @@ services:
     build:
       context: .
       dockerfile: vrt.dockerfile
-      secrets:
-        - github_token
     image: hiroppy-site-vrt:latest
     env_file:
       - ./.env
@@ -14,7 +12,3 @@ services:
     network_mode: "host"
     stdin_open: true
     tty: true
-
-secrets:
-  github_token:
-    environment: GITHUB_TOKEN
