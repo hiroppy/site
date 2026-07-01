@@ -25,10 +25,24 @@ type Props = {
 };
 
 const contactFormSubmitPath = "/form";
+const contactHash = "#contact";
+const contactTriggerSelector = "[data-contact-trigger='true']";
+
+function isElementVisible(element: HTMLElement) {
+  const style = window.getComputedStyle(element);
+
+  return (
+    element.getClientRects().length > 0 &&
+    style.display !== "none" &&
+    style.visibility !== "hidden"
+  );
+}
 
 export function ContactButton({ variant = "default", className }: Props) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<DialogHandle>(null);
+  const isDialogOpenRef = useRef(false);
+  const shouldCloseWhenTriggerHiddenRef = useRef(false);
   const dialogId = useId();
   const [status, setStatus] = useState<ContactFormStatus>("idle");
   const [selectedContent, setSelectedContent] = useState("");
@@ -41,14 +55,42 @@ export function ContactButton({ variant = "default", className }: Props) {
   }, []);
 
   const handleDialogClose = useCallback(() => {
+    isDialogOpenRef.current = false;
+    shouldCloseWhenTriggerHiddenRef.current = false;
     setIsDialogOpen(false);
+
+    if (window.location.hash === contactHash) {
+      window.history.replaceState(
+        null,
+        "",
+        `${window.location.pathname}${window.location.search}`,
+      );
+    }
   }, []);
 
-  const openDialog = () => {
+  const openDialog = useCallback(() => {
+    if (isDialogOpenRef.current) return;
+
     setStatus("idle");
     setFieldErrors({});
     dialogRef.current?.showModal();
+    isDialogOpenRef.current = true;
     setIsDialogOpen(true);
+  }, []);
+
+  const openContactAnchor = () => {
+    const button = buttonRef.current;
+
+    shouldCloseWhenTriggerHiddenRef.current = button
+      ? isElementVisible(button)
+      : false;
+
+    if (window.location.hash === contactHash) {
+      openDialog();
+      return;
+    }
+
+    window.location.hash = contactHash;
   };
 
   const handleFieldChange: FormEventHandler<HTMLFormElement> = (event) => {
@@ -98,6 +140,34 @@ export function ContactButton({ variant = "default", className }: Props) {
   };
 
   useEffect(() => {
+    const syncDialogWithHash = () => {
+      if (window.location.hash !== contactHash) {
+        closeDialog();
+        return;
+      }
+
+      const contactTriggers = Array.from(
+        document.querySelectorAll<HTMLButtonElement>(contactTriggerSelector),
+      );
+      const targetContactTrigger =
+        contactTriggers.find(isElementVisible) ?? contactTriggers[0];
+
+      if (targetContactTrigger === buttonRef.current) {
+        shouldCloseWhenTriggerHiddenRef.current =
+          isElementVisible(targetContactTrigger);
+        openDialog();
+      }
+    };
+
+    syncDialogWithHash();
+    window.addEventListener("hashchange", syncDialogWithHash);
+
+    return () => {
+      window.removeEventListener("hashchange", syncDialogWithHash);
+    };
+  }, [closeDialog, openDialog]);
+
+  useEffect(() => {
     if (status !== "success" || !isDialogOpen) return;
 
     const timeoutId = window.setTimeout(() => {
@@ -111,6 +181,13 @@ export function ContactButton({ variant = "default", className }: Props) {
     if (!isDialogOpen) return;
 
     const closeIfTriggerHidden = () => {
+      if (
+        window.location.hash === contactHash &&
+        !shouldCloseWhenTriggerHiddenRef.current
+      ) {
+        return;
+      }
+
       const button = buttonRef.current;
       if (!button) return;
 
@@ -150,7 +227,8 @@ export function ContactButton({ variant = "default", className }: Props) {
         aria-haspopup="dialog"
         aria-controls={dialogId}
         title="お問い合わせフォームを開く"
-        onClick={openDialog}
+        data-contact-trigger="true"
+        onClick={openContactAnchor}
       >
         <MdOutlineEmail size={16} aria-hidden="true" focusable="false" />
         お問い合わせ

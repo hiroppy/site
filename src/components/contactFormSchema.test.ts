@@ -44,8 +44,8 @@ describe("contactFormSchema", () => {
     expect(getContactFormFieldErrors(result.error)).toEqual({
       email: "不正なメールアドレスの形式です",
       company: "会社名を入力してください",
-      content: "依頼の種類を選択してください",
-      comment: "依頼の内容を入力してください",
+      content: "ご依頼の種類を選択してください",
+      comment: "ご依頼内容を入力してください",
     });
   });
 

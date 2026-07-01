@@ -117,7 +117,7 @@ test.describe("Contact form", () => {
     await dialog.getByLabel(/連絡先メールアドレス/).fill("not-an-email");
     await dialog.getByLabel(/技術顧問依頼/).check();
     await dialog
-      .getByLabel(/依頼の内容/)
+      .getByLabel(/ご依頼内容/)
       .fill("Next.js のパフォーマンス改善について相談したいです。");
 
     await expect(dialog.getByRole("button", { name: "送信" })).toBeDisabled();
@@ -139,10 +139,9 @@ test.describe("Contact form", () => {
     await expect(dialog.getByLabel(/登壇・執筆依頼/)).toBeVisible();
     await expect(dialog.getByLabel(/その他/)).toBeVisible();
     await expect(dialog.getByLabel(/技術相談/)).toHaveCount(0);
-    await expect(dialog.locator("legend", { hasText: "依頼の種類" })).toHaveCSS(
-      "margin-bottom",
-      "12px",
-    );
+    await expect(
+      dialog.locator("legend", { hasText: "ご依頼の種類" }),
+    ).toHaveCSS("margin-bottom", "12px");
     await expect(submitButton).toBeDisabled();
     await expect(submitButton).toHaveCSS("opacity", "0.5");
 
@@ -156,7 +155,7 @@ test.describe("Contact form", () => {
     await expect(submitButton).toBeDisabled();
 
     await dialog
-      .getByLabel(/依頼の内容/)
+      .getByLabel(/ご依頼内容/)
       .fill("Next.js のパフォーマンス改善について相談したいです。");
     await expect(submitButton).toBeDisabled();
 
@@ -248,7 +247,7 @@ async function openAndFillContactForm(page: Page) {
   await dialog.getByLabel(/連絡先メールアドレス/).fill("contact@example.com");
   await dialog.getByLabel(/技術顧問依頼/).check();
   await dialog
-    .getByLabel(/依頼の内容/)
+    .getByLabel(/ご依頼内容/)
     .fill("Next.js のパフォーマンス改善について相談したいです。");
 
   return dialog;

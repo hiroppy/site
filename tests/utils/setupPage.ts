@@ -5,8 +5,6 @@ export async function setupPage(
   url: string,
   options: { viewport?: "mobile" | "desktop" } = {},
 ) {
-  await page.goto(url, { waitUntil: "networkidle" });
-
   if (options.viewport === "mobile") {
     await page.setViewportSize({
       width: 375,
@@ -14,5 +12,6 @@ export async function setupPage(
     });
   }
 
+  await page.goto(url, { waitUntil: "networkidle" });
   await page.waitForLoadState("networkidle");
 }
