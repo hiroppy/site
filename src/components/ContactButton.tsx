@@ -42,6 +42,7 @@ export function ContactButton({ variant = "default", className }: Props) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<DialogHandle>(null);
   const isDialogOpenRef = useRef(false);
+  const shouldCloseWhenTriggerHiddenRef = useRef(false);
   const dialogId = useId();
   const [status, setStatus] = useState<ContactFormStatus>("idle");
   const [selectedContent, setSelectedContent] = useState("");
@@ -55,6 +56,7 @@ export function ContactButton({ variant = "default", className }: Props) {
 
   const handleDialogClose = useCallback(() => {
     isDialogOpenRef.current = false;
+    shouldCloseWhenTriggerHiddenRef.current = false;
     setIsDialogOpen(false);
 
     if (window.location.hash === contactHash) {
@@ -77,6 +79,12 @@ export function ContactButton({ variant = "default", className }: Props) {
   }, []);
 
   const openContactAnchor = () => {
+    const button = buttonRef.current;
+
+    shouldCloseWhenTriggerHiddenRef.current = button
+      ? isElementVisible(button)
+      : false;
+
     if (window.location.hash === contactHash) {
       openDialog();
       return;
@@ -138,11 +146,15 @@ export function ContactButton({ variant = "default", className }: Props) {
         return;
       }
 
-      const visibleContactTrigger = Array.from(
+      const contactTriggers = Array.from(
         document.querySelectorAll<HTMLButtonElement>(contactTriggerSelector),
-      ).find(isElementVisible);
+      );
+      const targetContactTrigger =
+        contactTriggers.find(isElementVisible) ?? contactTriggers[0];
 
-      if (visibleContactTrigger === buttonRef.current) {
+      if (targetContactTrigger === buttonRef.current) {
+        shouldCloseWhenTriggerHiddenRef.current =
+          isElementVisible(targetContactTrigger);
         openDialog();
       }
     };
@@ -169,6 +181,13 @@ export function ContactButton({ variant = "default", className }: Props) {
     if (!isDialogOpen) return;
 
     const closeIfTriggerHidden = () => {
+      if (
+        window.location.hash === contactHash &&
+        !shouldCloseWhenTriggerHiddenRef.current
+      ) {
+        return;
+      }
+
       const button = buttonRef.current;
       if (!button) return;
 

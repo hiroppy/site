@@ -46,6 +46,16 @@ test.describe("Component VRT Tests", () => {
     await expect(dialog.getByLabel(/技術顧問依頼/)).toBeVisible();
   });
 
+  test("Contact modal opens from hash anchor on mobile", async ({ page }) => {
+    await setupPage(page, "http://localhost:3000/#contact", {
+      viewport: "mobile",
+    });
+
+    const dialog = page.getByRole("dialog", { name: "お問い合わせ" });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByLabel(/技術顧問依頼/)).toBeVisible();
+  });
+
   // Job related articles test for Mercari/Souzoh main job
   test("Job related articles expansion (Mercari/Souzoh main)", async ({
     page,
