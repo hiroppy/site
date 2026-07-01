@@ -92,7 +92,7 @@ export function ContactForm({
         aria-describedby={fieldErrors.content ? contentErrorId : undefined}
       >
         <legend className="mb-3 font-semibold">
-          依頼の種類 <RequiredMark />
+          ご依頼の種類 <RequiredMark />
         </legend>
         <div className="flex flex-wrap gap-x-5 gap-y-3">
           {contactFormContentOptions.map((option) => (
@@ -121,7 +121,7 @@ export function ContactForm({
 
       <div className="flex flex-col gap-2">
         <label htmlFor={commentId} className="font-semibold">
-          依頼の内容 <RequiredMark />
+          ご依頼内容 <RequiredMark />
         </label>
         <textarea
           id={commentId}

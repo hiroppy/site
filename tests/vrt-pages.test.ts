@@ -26,8 +26,6 @@ test.describe("Page VRT Tests", () => {
         );
       });
 
-      await page.waitForLoadState("networkidle");
-
       const { output } = getPathAndOutputDirname(url);
       const projectName = test.info().project.name;
 

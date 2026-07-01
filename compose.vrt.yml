@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: vrt.dockerfile
+      args:
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
     image: hiroppy-site-vrt:latest
     env_file:
       - ./.env

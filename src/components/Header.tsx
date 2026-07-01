@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { MdMenu } from "react-icons/md";
-import { NAV_ITEMS } from "../constants";
+import { NAV_LINK_ITEMS } from "../constants";
 import { useActiveNavPath } from "../hooks/useActiveNavPath";
 import { cn } from "../utils/cn";
 import { Avatar } from "./Avatar";
@@ -55,7 +55,7 @@ export function Header({ variant = "default", className }: Props) {
             className="hidden items-center justify-center space-x-2 md:flex"
             aria-label="メインナビゲーション"
           >
-            {NAV_ITEMS.map((item) => (
+            {NAV_LINK_ITEMS.map((item) => (
               <NavButton
                 key={item.href}
                 variant={item.href === activeNavPath ? "active" : "default"}
@@ -84,7 +84,7 @@ export function Header({ variant = "default", className }: Props) {
         >
           <div className="px-2 pt-6 pb-3">
             <div className="mb-4 space-y-3 pb-2">
-              {NAV_ITEMS.map((item) => (
+              {NAV_LINK_ITEMS.map((item) => (
                 <NavButton
                   key={item.href}
                   variant={

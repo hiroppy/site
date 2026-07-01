@@ -5,7 +5,7 @@ import { Avatar } from "../../../components/Avatar";
 import { ContactButton } from "../../../components/ContactButton";
 import { Link } from "../../../components/Link";
 import { ListContainer } from "../../../components/ListContainer";
-import { NAV_ITEMS } from "../../../constants";
+import { NAV_LINK_ITEMS } from "../../../constants";
 import { useActiveNavPath } from "../../../hooks/useActiveNavPath";
 import { cn } from "../../../utils/cn";
 
@@ -23,12 +23,14 @@ export function Sidebar() {
           Web Engineer in Tokyo.
           <br />
           CEO at Coder Penguin LLC.
+          <br />
+          CTO at iiba, Inc.
         </p>
         <ContactButton variant="full" />
       </div>
       <nav>
         <ListContainer className="nav-list flex flex-col gap-3">
-          {NAV_ITEMS.map((item) => {
+          {NAV_LINK_ITEMS.map((item) => {
             const isActive = item.href === activeNavPath;
 
             return (

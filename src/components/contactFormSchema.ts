@@ -22,9 +22,9 @@ export const contactFormSchema = z.object({
         contactFormContentOptions.includes(
           value as (typeof contactFormContentOptions)[number],
         ),
-      "依頼の種類を選択してください",
+      "ご依頼の種類を選択してください",
     ),
-  comment: z.string().trim().min(1, "依頼の内容を入力してください"),
+  comment: z.string().trim().min(1, "ご依頼内容を入力してください"),
 });
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;

@@ -25,6 +25,8 @@ export const NAV_ITEMS = [
   { label: "Labs", href: "/labs" },
 ] as const;
 
+export const NAV_LINK_ITEMS = NAV_ITEMS.filter((item) => item.href !== "/labs");
+
 export const MEDIA_KINDS = ["all", "articles", "talks", "podcasts"] as const;
 
 export type MediaKind = (typeof MEDIA_KINDS)[number];
