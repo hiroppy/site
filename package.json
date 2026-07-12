@@ -81,7 +81,7 @@
     "remark-mdx-frontmatter": "5.2.0",
     "strip-markdown": "6.0.0",
     "tailwindcss": "4.3.2",
-    "typescript": "6.0.3",
+    "typescript": "7.0.2",
     "unist-util-visit": "5.1.0",
     "vite": "8.1.4",
     "vitest": "4.1.10"
