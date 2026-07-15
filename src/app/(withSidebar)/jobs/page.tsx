@@ -1,6 +1,6 @@
 "use cache";
 
-import jobs from "hiroppy/generated/jobs.json";
+import jobs from "hiroppy/data/jobs";
 import { SectionContainer, Section } from "../../../components/Section";
 import "../../../styles/prose.css";
 import { createMetadata } from "../../../utils/metadata";

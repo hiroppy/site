@@ -1,4 +1,4 @@
-import sponsors from "hiroppy/generated/sponsors.json";
+import sponsors from "hiroppy/data/sponsors";
 import { Avatar } from "../../../components/Avatar";
 import { Link } from "../../../components/Link";
 

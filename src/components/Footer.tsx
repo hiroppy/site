@@ -1,6 +1,6 @@
 "use cache";
 
-import meta from "hiroppy/generated/meta.json";
+import meta from "hiroppy/data/meta";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { MdRssFeed } from "react-icons/md";
 import { SITE_REPOSITORY_URL } from "../constants";

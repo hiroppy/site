@@ -1,4 +1,4 @@
-import repos from "hiroppy/generated/repos.json";
+import repos from "hiroppy/data/repos";
 import { MediaList } from "../../components/MediaList";
 import { Repositories } from "../../components/Repositories";
 import { SectionContainer, Section } from "../../components/Section";

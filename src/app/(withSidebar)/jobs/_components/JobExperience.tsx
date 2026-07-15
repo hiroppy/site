@@ -1,6 +1,6 @@
 "use client";
 
-import type history from "hiroppy/generated/jobs.json";
+import type history from "hiroppy/data/jobs";
 import type { Jobs } from "hiroppy/types";
 import { useRef, useState } from "react";
 import { Dialog, DialogHandle } from "../../../../components/Dialog";
