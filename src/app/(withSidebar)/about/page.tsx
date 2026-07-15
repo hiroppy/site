@@ -1,4 +1,4 @@
-import meta from "hiroppy/generated/meta.json";
+import meta from "hiroppy/data/meta";
 import { FaGithub, FaFacebook, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { MdBusiness, MdGroup, MdPodcasts } from "react-icons/md";
 import { Link } from "../../../components/Link";

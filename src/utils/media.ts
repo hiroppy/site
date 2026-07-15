@@ -1,6 +1,6 @@
-import articlesData from "hiroppy/generated/media.json";
-import podcastsData from "hiroppy/generated/podcasts.json";
-import talksData from "hiroppy/generated/talks.json";
+import articlesData from "hiroppy/data/media";
+import podcastsData from "hiroppy/data/podcasts";
+import talksData from "hiroppy/data/talks";
 import type { Media, Talk, Podcast } from "hiroppy/types";
 import { notFound } from "next/navigation";
 import { BLOG_SITE_TITLE, MEDIA_KINDS, MediaKind } from "../constants";

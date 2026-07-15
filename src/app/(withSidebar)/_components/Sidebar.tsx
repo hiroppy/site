@@ -1,6 +1,6 @@
 "use client";
 
-import meta from "hiroppy/generated/meta.json";
+import meta from "hiroppy/data/meta";
 import { Avatar } from "../../../components/Avatar";
 import { ContactButton } from "../../../components/ContactButton";
 import { Link } from "../../../components/Link";

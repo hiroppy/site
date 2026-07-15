@@ -1,4 +1,4 @@
-import meta from "hiroppy/generated/meta.json";
+import meta from "hiroppy/data/meta";
 import { Card, CardImage } from "../../../../components/Card";
 import { DateRange } from "../../../../components/DateRange";
 import { ListContainer } from "../../../../components/ListContainer";

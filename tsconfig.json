@@ -15,6 +15,7 @@
     "allowJs": true,
     "incremental": true,
     "paths": {
+      "hiroppy/data/*": ["./node_modules/hiroppy/generated/*"],
       "hiroppy/*": ["./node_modules/hiroppy/*"]
     },
     "plugins": [

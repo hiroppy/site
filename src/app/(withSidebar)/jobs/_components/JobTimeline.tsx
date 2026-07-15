@@ -1,4 +1,4 @@
-import jobs from "hiroppy/generated/jobs.json";
+import jobs from "hiroppy/data/jobs";
 import type { Jobs } from "hiroppy/types";
 import { MdOpenInFull } from "react-icons/md";
 import { Button } from "../../../../components/Button";

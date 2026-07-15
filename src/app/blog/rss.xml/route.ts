@@ -1,5 +1,5 @@
 import type { Item } from "feed";
-import meta from "hiroppy/generated/meta.json";
+import meta from "hiroppy/data/meta";
 import { BLOG_DESCRIPTION, BLOG_SITE_TITLE } from "../../../constants";
 import { getBlogPosts } from "../../../mdx/contentLoader";
 import {

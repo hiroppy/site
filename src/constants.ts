@@ -1,4 +1,4 @@
-import meta from "hiroppy/generated/meta.json";
+import meta from "hiroppy/data/meta";
 
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? meta.site.personal;
 
