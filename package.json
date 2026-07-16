@@ -76,7 +76,7 @@
     "lefthook": "2.1.10",
     "postcss": "8.5.19",
     "prettier": "3.9.5",
-    "prettier-plugin-tailwindcss": "0.8.0",
+    "prettier-plugin-tailwindcss": "0.8.1",
     "remark": "15.0.1",
     "remark-frontmatter": "5.0.0",
     "remark-mdx-frontmatter": "5.2.0",
