@@ -31,21 +31,21 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7.0.0
+      - uses: actions/checkout@v7.0.1
       - uses: ./.github/actions/setup-node
       - run: pnpm fmt:check
       - run: pnpm lint
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7.0.0
+      - uses: actions/checkout@v7.0.1
       - uses: ./.github/actions/setup-node
       - run: pnpm typecheck
       - run: pnpm test
   lighthouse:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7.0.0
+      - uses: actions/checkout@v7.0.1
       - uses: ./.github/actions/setup-node
       - run: pnpm build
       - run: pnpm lh --upload.target=temporary-public-storage
@@ -56,7 +56,7 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.61.1
     steps:
-      - uses: actions/checkout@v7.0.0
+      - uses: actions/checkout@v7.0.1
       - uses: ./.github/actions/setup-node
       - run: pnpm build
       - run: pnpm test:a11y
@@ -70,7 +70,7 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.61.1
     steps:
-      - uses: actions/checkout@v7.0.0
+      - uses: actions/checkout@v7.0.1
       - uses: ./.github/actions/setup-node
       - run: pnpm build
       - run: pnpm test:routes
@@ -87,7 +87,7 @@ jobs:
       matrix:
         type: [pages, components]
     steps:
-      - uses: actions/checkout@v7.0.0
+      - uses: actions/checkout@v7.0.1
       - uses: ./.github/actions/setup-node
       - run: pnpm build
       - run: pnpm test:vrt:ci:${{ matrix.type }}
