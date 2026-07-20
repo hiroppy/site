@@ -74,7 +74,7 @@
     "babel-plugin-react-compiler": "1.0.0",
     "knip": "6.26.0",
     "lefthook": "2.1.10",
-    "postcss": "8.5.19",
+    "postcss": "8.5.20",
     "prettier": "3.9.5",
     "prettier-plugin-tailwindcss": "0.8.1",
     "remark": "15.0.1",
