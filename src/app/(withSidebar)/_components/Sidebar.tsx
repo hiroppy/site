@@ -25,6 +25,8 @@ export function Sidebar() {
           CEO at Coder Penguin LLC.
           <br />
           CTO at iiba, Inc.
+          <br />
+          CTO at Runpeace.
         </p>
         <ContactButton variant="full" />
       </div>
