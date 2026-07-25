@@ -9,6 +9,7 @@ onlyBuiltDependencies:
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - hiroppy
+  - postcss
 allowBuilds:
   hiroppy: true
   lefthook: true
