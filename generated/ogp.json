@@ -1,4 +1,9 @@
 {
+  "https://openai.com/ja-JP/index/open-source-codex-orchestration-symphony": {
+    "title": "Codex オーケストレーションのためのオープンソース spec: Symphony",
+    "description": "Codex オーケストレーションのためのオープンソース spec、Symphony が、issue tracker を常時稼働のエージェント システムに変え、エンジニアリングの成果を高めつつコンテキスト スイッチを減らす方法をご紹介します。",
+    "image": "https://images.ctfassets.net/kftzwdyauwt9/1lLb8Tk8Ht0kZC0UzoJysb/bac9e34838a4f94afd44b1c9adfa8780/Symphony_SEO_card__1_.png?w=1600&h=900&fit=fill"
+  },
   "https://www.nikkei.com/article/DGXZQOUC02ASK0S5A400C2000000/": {
     "title": "LayerX、AIエージェントに参入　請求書受け取り代行など - 日本経済新聞",
     "description": "支出管理システムのLayerX（レイヤーエックス、東京・中央）は2025年度中に人工知能（AI）エージェント事業に参入する。同社の既存サービスの請求書受領システムと連携させ、AIエージェントが企業の請求書受け取り代行を担うサービスなどを始める。30年には関連事業で500億円の売り上げを目指す。AIエージェントを活用して企業の間接業務を請け負うビジネス・プロセス・ア",
@@ -1463,5 +1468,15 @@
     "title": "MoneyForward Me Dashboard",
     "description": "MoneyForward Me のデータを可視化するダッシュボード",
     "image": "https://hiroppy.github.io/mf-dashboard/logo.png"
+  },
+  "https://nodejs.org/api/cli.html#-conditionscondition": {
+    "title": "Command-line API | Node.js v26.5.1 Documentation",
+    "description": "",
+    "image": ""
+  },
+  "https://github.com/hiroppy/orchestrators": {
+    "title": "GitHub - hiroppy/orchestrators: Runs one Symphony instance per project and optionally monitors all instances from Slack.",
+    "description": "Runs one Symphony instance per project and optionally monitors all instances from Slack. - hiroppy/orchestrators",
+    "image": "https://opengraph.githubassets.com/accdc9f181f55086a95ca719008cb1272f3bcaab012b0fabcb2e3a7ff2be7bd6/hiroppy/orchestrators"
   }
 }
