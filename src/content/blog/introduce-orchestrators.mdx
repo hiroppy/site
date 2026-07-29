@@ -1,0 +1,148 @@
+---
+title: "複数のSymphonyをSlackから管理するOrchestrators"
+date: 2026-07-30
+description: "プロジェクトごとにSymphonyを起動し、複数のタスクをSlackから監視、操作できるOrchestratorsを作った話です"
+image: /images/brands/github.png
+tags: ai,github
+references:
+  - https://github.com/hiroppy/orchestrators
+  - https://openai.com/ja-JP/index/open-source-codex-orchestration-symphony
+---
+
+import { Image } from "../../components/Image";
+import { GoogleSlidesCard } from "../../mdx/components/GoogleSlidesCard";
+
+今月のイベントで自分がどう開発しているかを話しました。
+Slack上で極力完結する形にしており、HermesとSymphonyを使ってLinearのチケットを中心にして開発を行っています。
+今回の本題ではないので、詳しくはスライドを見てほしいのですが、軽くどう開発しているかを説明します。
+
+- Plan
+  - Hermesを使って、やりたいことを整理し、実装できる単位のチケットに分解
+- Implementation
+  - LinearのIssueを起点に、Symphonyが各タスクを実装
+- QA
+  - コードレビューとplaywright/maestroを使った実際のQA結果を投稿
+
+みたいな流れで進めています。もちろんCLIも使うことはあり、例えばUIや精度調整などの何回も試行錯誤するものは手元でやったほうが明らかに速いです。
+
+<GoogleSlidesCard
+  id="2PACX-1vRjGkEVI0NRSgkSfcrAE9S9WIy1eBpeGU3B-QzZ0lYcaZIWKiGPcjDLzDWBSdcHFnqSc4lrXW79BeBb"
+  title="Orchestratorsの紹介"
+/>
+
+今回は、コードを書いてQAなどの反復作業を行っているSymphony関連の話が中心となります。
+
+## Symphonyとは？
+
+[Codex オーケストレーションのためのオープンソース spec: Symphony](https://openai.com/ja-JP/index/open-source-codex-orchestration-symphony)
+
+Symphonyは、LinearのようなIssue Trackerをコントロールプレーンとして使い、タスクごとにCodexを継続的に動かすための仕組みです。Issue Trackerを定期的に確認し、対象となるIssueごとに専用のワークスペースを作ってCodexを起動します。複数のタスクはそれぞれ隔離された環境で並列に進みます。基本はmdで書かれたspecをカスタマイズしていく形になります。
+
+OpenAIでは、エンジニアが複数のCodexセッションを開き、タスクの割り当てや出力の確認を繰り返していました。ただ、同時に扱うセッションが増えるほどコンテキストスイッチが発生し、管理する人間側がボトルネックになっていきます。
+
+> エージェントは高速でしたが、システムにはボトルネックがありました。それは人間の注意力です。私たちは実質的に、非常に有能なジュニア エンジニアのチームを作り、その管理を人間のエンジニアに任せていました。これではスケールしません。
+
+そこで、セッションやPRではなく、Issueやタスクなどの成果物を中心にワークフローを組み直しました。人が個々のCodexセッションを管理するのではなく、Issue Trackerに作業を追加すればエージェントが引き取り、人は結果のレビューに集中するという方針に変えたという話でした。
+
+一方で、すべてのタスクに向いているわけではありません。定型的な実装や、ゴールと確認方法が明確なタスクは得意ですが、要件が曖昧な問題や、途中で方向を調整しながら進める必要がある作業には向いていません。強い判断力や専門性が必要な作業は、引き続き対話型のCodexセッションを使うと書かれています。
+
+ちなみに作業中に新しい問題などがあったら、勝手にIssue作って作業分割とかもやってくれるので、ただcodexを裏で大量に動かしているわけではなく、チケットの管理もちゃんと行ってくれます。
+
+## Symphonyの問題点
+
+Symphonyはかなり強力ですが、Linearのプロジェクトごとに起動する必要があります。自分のPCでは10個ほどのSymphonyを動かしており、複数のプロジェクトで運用する中で、いくつか問題が見えてきました。
+
+- プロジェクトごとにダッシュボードが分かれており、すべてのタスクをまとめて確認できない
+- Linear上でプロジェクトをまたぎ、各Issueのステータスを変更するのが面倒
+- タスクが止まっていないか、PRが作られたかを確認するために、それぞれのIssueやダッシュボードを開く必要がある
+- Symphonyのライフサイクルが、現在のコードレビューの流れと合っていない
+
+まとめると、情報が複数の場所に分散していることと、コードレビューを含めたライフサイクルがうまくつながっていないことが課題でした。
+
+Symphonyは`in progress`のIssueを処理し、CIが通ってしばらくすると`in review`へ移します。この時点でIssueとブランチの紐づけがなくなり、Symphonyの監視対象から外れます。
+たとえばCodexのコードレビューでは、レビューが始まるとPRに👀が付き、終わると👍になります。しかし、この間はすでにSymphonyの監視対象から外れているため、レビューで修正が必要になってもタスクが再開されず、そのまま止まってしまいます。もう一度動かすには、Issueのステータスを手動で`in progress`へ戻す必要があります。
+Codex Code ReviewがCodeRabbitのようにCIとして動けば解決する話ではありますが、OpenAI内部ではどのように運用しているのか謎です。
+
+## Orchestratorsとは
+
+上記の問題を解決するために、自分が普段使っている仕組みをOrchestratorsとして公開しました。
+
+[hiroppy/orchestrators](https://github.com/hiroppy/orchestrators)
+
+Orchestratorsは、プロジェクトごとにSymphonyを立ち上げ、それぞれの状態を1つのSlackチャンネルへ集約するためのツールです。ワークスペース、ログ、設定はプロジェクトごとに分離したまま、確認と操作だけをSlackへまとめます。
+
+::: columns
+
+主にできることは次のとおりです。
+
+- 複数のSymphonyで動くタスクを、ひとつのSlackチャンネルから確認する
+- タスクの状態変化、PRの作成、ブロック、完了をSlackへ通知する
+- Slackのタスクスレッドへ投稿した返信を、対応するLinear Issueのコメントへ反映する
+- Slack上のセレクトボックスからLinearのIssueステータスを変更する
+- PRのリアクションを検知し、レビュー中のIssueを必要に応じて再び進行中へ戻す
+- プロジェクトごとに分離した複数のSymphonyを、ひとつのコマンドで起動する
+
+---
+
+<Image
+  src="https://raw.githubusercontent.com/hiroppy/orchestrators/main/.github/assets/task.png"
+  alt="Slackに表示されたOrchestratorsのタスクカード"
+  width={1098}
+  height={880}
+  className="w-full rounded-lg border border-gray-200"
+/>
+
+:::
+
+このツールにより、プロジェクト間の横断コストがなくなり、チームメンバーが今どの作業をやっているのかもわかりやすくなりました。
+
+## どう使っているか？
+
+使うときの流れはだいたい以下です。
+
+- 1. Hermes経由で依存関係まで整理されたIssueが`Backlog`に入るため、内容をすべてレビューして`Todo`へ移す
+- 2. SymphonyがLinearのIssueを拾って実装を始める
+- 3. WatcherがSlackにIssueのカードをポストする
+- 4. コードレビュー, QA対応などを行い、`In Review`になったら、メンションで通知が来る
+- 5. 自分のコードレビューを行い、もし指摘があればPRにコメントかSlackのスレッドにコメントし、linearにReplyを追加
+- 6. すでにSymphonyの監視が外れているので、SlackからIssueのステータスを`In Progress`へ変更
+- 7. 上記を繰り返し、PRをマージ
+- 8. 依存のチケットがあれば、2へ戻る
+
+という感じで、外でもSlackとGitHub Appで一応事足りてはいます。ただGitHub Appでコードレビューは現実的に厳しいのもあるが。いずれにせよ、PR環境やQAを固めることによって手元に落とさなくても挙動確認ができる状態は最低限作る必要があります。
+
+もしチケットの方針が大きくズレていたらどうするのって思うかもしれませんが、OpenAI的には `Rework` というstatusをLinearに追加して、その状態になったら再度0から作り直しというガチャを推奨しているので、サブスクが生きている間はそれでいこうと思います。
+
+## 余談: node --conditionsが便利
+
+[nodejs conditions](https://nodejs.org/api/cli.html#-conditionscondition)
+
+プロジェクト固有の情報を含む`config.ts`をGit管理の対象外にしています。ただWatcher本体は設定を読む必要があり、テストでローカルの設定を読むのは困ります。
+そこでNode.jsのcondition importsを使いました。`#watcher-config`という同じimport先を、通常時は`config.ts`、テスト時はfixtureの設定に切り替えています。テストには`node --conditions=test`をつけることにより、本番のconfigを読まないし、CIとかでconfigを作成しなくても良くなります。
+
+```json title="watcher/package.json"
+{
+  "imports": {
+    "#watcher-config": {
+      "test": "./src/fixtures/config.ts",
+      "default": "./config.ts"
+    }
+  },
+  "scripts": {
+    "test": "node --conditions=test --test"
+  }
+}
+```
+
+```ts title="watcher/src/entrypoints/watcher.ts"
+import config from "#watcher-config";
+```
+
+今回、設定ファイルを型で分かりやすくしたかったので、ymlからtsへ切り替えました。その結果、ファイルチェックとかも静的解析に任せれるため、`conditions`を利用しました。
+
+## まとめ
+
+Symphonyは、Issueを起点に複数のCodexを並列で動かせる、とても優秀で便利な仕組みです。一方で、複数のプロジェクトで運用すると、ダッシュボードやLinearに情報が分散し、インターフェースが扱いづらいと感じる場面が増えました。
+そこで、プロジェクトごとの実行環境は分離したまま、複数のSymphonyの情報と必要な操作を全部Slackへ集約し、見る場所を分散しづらくさせました。
+
+Symphonyに興味がある人は、一度触ってみてください！
