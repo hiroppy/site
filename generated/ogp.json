@@ -1468,5 +1468,10 @@
     "title": "MoneyForward Me Dashboard",
     "description": "MoneyForward Me のデータを可視化するダッシュボード",
     "image": "https://hiroppy.github.io/mf-dashboard/logo.png"
+  },
+  "https://nodejs.org/api/cli.html#-conditionscondition": {
+    "title": "Command-line API | Node.js v26.5.1 Documentation",
+    "description": "",
+    "image": ""
   }
 }
