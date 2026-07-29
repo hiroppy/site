@@ -1473,5 +1473,10 @@
     "title": "Command-line API | Node.js v26.5.1 Documentation",
     "description": "",
     "image": ""
+  },
+  "https://github.com/hiroppy/orchestrators": {
+    "title": "GitHub - hiroppy/orchestrators: Runs one Symphony instance per project and optionally monitors all instances from Slack.",
+    "description": "Runs one Symphony instance per project and optionally monitors all instances from Slack. - hiroppy/orchestrators",
+    "image": "https://opengraph.githubassets.com/accdc9f181f55086a95ca719008cb1272f3bcaab012b0fabcb2e3a7ff2be7bd6/hiroppy/orchestrators"
   }
 }
