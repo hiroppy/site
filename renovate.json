@@ -26,6 +26,13 @@
       "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies"],
       "groupName": "npm minor dependencies",
       "matchPackageNames": ["*"]
+    },
+    {
+      "description": "Keep pnpm minimumReleaseAge exclusions in individual Renovate PRs.",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["hiroppy"],
+      "groupName": null,
+      "automerge": false
     }
   ],
   "ignoreDeps": [],
