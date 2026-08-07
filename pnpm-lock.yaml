@@ -133,8 +133,8 @@ importers:
         specifier: 2.1.10
         version: 2.1.10
       postcss:
-        specifier: 8.5.25
-        version: 8.5.25
+        specifier: 8.5.26
+        version: 8.5.26
       prettier:
         specifier: 3.9.6
         version: 3.9.6
@@ -2903,6 +2903,11 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  nanoid@3.3.17:
+    resolution: {integrity: sha512-xQLf0A3HOMlgHq0n247/LRuAOYmB7dXJ/DvAxGvsSBij45XtBSmQycu+F8ODbHwns/XyFZagyL1+J0Offw1E0g==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
   negotiator@0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
@@ -3101,8 +3106,8 @@ packages:
     resolution: {integrity: sha512-g50586zr4bZmwFiTlflMu8E0bDTb5I5gertgwAKmsdUlTQIhZtunzUlD1WSzwcVWPoAVpsrA6vlfCD7oXvRwgg==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postcss@8.5.25:
-    resolution: {integrity: sha512-DTPx3RWSSnWyzLxQnlH0rJP+EW5ekl16ZU4/psbIhA0e53kJfdgaN5vKM+xP7yJtXVu+nfdVFmlgFDEKAe4Pyw==}
+  postcss@8.5.26:
+    resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
     engines: {node: ^10 || ^12 || >=14}
 
   prettier-plugin-tailwindcss@0.8.1:
@@ -4085,8 +4090,8 @@ snapshots:
       hast-util-to-html: 9.0.5
       hast-util-to-text: 4.0.2
       hastscript: 9.0.1
-      postcss: 8.5.25
-      postcss-nested: 6.2.0(postcss@8.5.25)
+      postcss: 8.5.26
+      postcss-nested: 6.2.0(postcss@8.5.26)
       unist-util-visit: 5.1.0
       unist-util-visit-parents: 6.0.2
 
@@ -4897,7 +4902,7 @@ snapshots:
       '@alloc/quick-lru': 5.2.0
       '@tailwindcss/node': 4.3.3
       '@tailwindcss/oxide': 4.3.3
-      postcss: 8.5.25
+      postcss: 8.5.26
       tailwindcss: 4.3.3
 
   '@tailwindcss/vite@4.3.3(vite@8.2.0(@types/node@24.13.3)(jiti@2.7.0)(yaml@2.9.0))':
@@ -6876,6 +6881,8 @@ snapshots:
 
   nanoid@3.3.16: {}
 
+  nanoid@3.3.17: {}
+
   negotiator@0.6.3: {}
 
   negotiator@0.6.4: {}
@@ -7104,9 +7111,9 @@ snapshots:
 
   pngjs@7.0.0: {}
 
-  postcss-nested@6.2.0(postcss@8.5.25):
+  postcss-nested@6.2.0(postcss@8.5.26):
     dependencies:
-      postcss: 8.5.25
+      postcss: 8.5.26
       postcss-selector-parser: 6.1.4
 
   postcss-selector-parser@6.1.4:
@@ -7120,9 +7127,9 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  postcss@8.5.25:
+  postcss@8.5.26:
     dependencies:
-      nanoid: 3.3.16
+      nanoid: 3.3.17
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
@@ -7852,7 +7859,7 @@ snapshots:
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.5
-      postcss: 8.5.25
+      postcss: 8.5.26
       rolldown: 1.2.1
       tinyglobby: 0.2.17
     optionalDependencies:
