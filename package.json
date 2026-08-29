@@ -55,7 +55,7 @@
     "rehype-slug": "6.0.0",
     "remark-gfm": "4.0.1",
     "tailwind-merge": "3.6.0",
-    "zod": "4.4.3"
+    "zod": "4.5.1"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
@@ -72,7 +72,7 @@
     "@vitejs/plugin-react": "6.1.1",
     "@vitest/browser-playwright": "4.1.11",
     "babel-plugin-react-compiler": "1.0.0",
-    "knip": "6.32.3",
+    "knip": "6.33.0",
     "lefthook": "2.1.12",
     "postcss": "8.5.26",
     "prettier": "3.9.6",
