@@ -48,8 +48,8 @@ importers:
         specifier: 4.0.3
         version: 4.0.3
       hiroppy:
-        specifier: 1.0.81
-        version: 1.0.81
+        specifier: 1.0.83
+        version: 1.0.83
       next:
         specifier: 16.3.4
         version: 16.3.4(@playwright/test@1.62.1)(@types/node@24.13.3)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -2253,8 +2253,8 @@ packages:
   hastscript@9.0.1:
     resolution: {integrity: sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==}
 
-  hiroppy@1.0.81:
-    resolution: {integrity: sha512-2dGoElS21cZp0mRGloLgWDIqNGkdlzBD+CTe1PYTmsIkdpEcwqwse098dOPcB6R8CQO8BJNwYeccTH4I0lSZrg==}
+  hiroppy@1.0.83:
+    resolution: {integrity: sha512-we7vZxfT0D++swFzs0HfPuEn4V1IGdazHVz0Qj5ixEqj/L1jOqAIJ+KvYlEjFx3dr0wxGssQXnfJ4tRFsKYLuQ==}
 
   html-url-attributes@3.0.1:
     resolution: {integrity: sha512-ol6UPyBWqsrO6EJySPz2O7ZSr856WDrEzM5zMqp+FJJLGMW35cLYmmZnl0vztAZxRUoNZJFTCohfjuIJ8I4QBQ==}
@@ -5970,7 +5970,7 @@ snapshots:
       property-information: 7.2.0
       space-separated-tokens: 2.0.2
 
-  hiroppy@1.0.81: {}
+  hiroppy@1.0.83: {}
 
   html-url-attributes@3.0.1: {}
 
