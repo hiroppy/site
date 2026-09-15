@@ -55,7 +55,7 @@
     "rehype-slug": "6.0.0",
     "remark-gfm": "4.0.1",
     "tailwind-merge": "3.7.0",
-    "zod": "4.6.4"
+    "zod": "4.6.5"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
