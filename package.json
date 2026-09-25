@@ -79,7 +79,7 @@
     "prettier-plugin-tailwindcss": "0.8.1",
     "remark": "15.0.1",
     "remark-frontmatter": "5.0.0",
-    "remark-mdx-frontmatter": "5.2.0",
+    "remark-mdx-frontmatter": "6.0.0",
     "strip-markdown": "6.0.0",
     "tailwindcss": "4.3.3",
     "typescript": "7.0.2",
