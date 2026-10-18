@@ -183,7 +183,7 @@ importers:
         version: 16.4.0(@mdx-js/loader@3.1.1(supports-color@5.5.0))(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.0))
       '@next/third-parties':
         specifier: 16.4.0
-        version: 16.4.0(next@16.4.0(@playwright/test@1.63.0)(@types/node@24.19.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react@19.3.0)
+        version: 16.4.0(next@16.4.0(@playwright/test@1.64.1)(@types/node@24.19.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react@19.3.0)
       '@tailwindcss/postcss':
         specifier: 4.3.3
         version: 4.3.3
@@ -210,7 +210,7 @@ importers:
         version: 1.0.84
       next:
         specifier: 16.4.0
-        version: 16.4.0(@playwright/test@1.63.0)(@types/node@24.19.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        version: 16.4.0(@playwright/test@1.64.1)(@types/node@24.19.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       octokit:
         specifier: 5.0.5
         version: 5.0.5
@@ -244,13 +244,13 @@ importers:
     devDependencies:
       '@axe-core/playwright':
         specifier: 4.13.0
-        version: 4.13.0(playwright-core@1.63.0)
+        version: 4.13.0(playwright-core@1.64.1)
       '@lhci/cli':
         specifier: 0.15.1
         version: 0.15.1(supports-color@5.5.0)
       '@playwright/test':
-        specifier: 1.63.0
-        version: 1.63.0
+        specifier: 1.64.1
+        version: 1.64.1
       '@tailwindcss/vite':
         specifier: 4.3.3
         version: 4.3.3(vite@8.3.4(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.0))
@@ -280,7 +280,7 @@ importers:
         version: 6.1.2(babel-plugin-react-compiler@1.0.0)(vite@8.3.4(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.0))
       '@vitest/browser-playwright':
         specifier: 5.0.4
-        version: 5.0.4(playwright@1.63.0)(vite@8.3.4(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.0))(vitest@5.0.4)
+        version: 5.0.4(playwright@1.64.1)(vite@8.3.4(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.0))(vitest@5.0.4)
       babel-plugin-react-compiler:
         specifier: 1.0.0
         version: 1.0.0
@@ -1108,8 +1108,8 @@ packages:
   '@paulirish/trace_engine@0.0.53':
     resolution: {integrity: sha512-PUl/vlfo08Oj804VI5nDPeSk9vyslnBlVzDDwFt8SUVxY8+KdGMkra/vrXjEEHe8gb7+RqVTfOIlGw0nyrEelA==}
 
-  '@playwright/test@1.63.0':
-    resolution: {integrity: sha512-oxMK4vllB9RK5NQ2l1pq1IfOf2AvnEuj/vYGDj0H2nMtmtZpKtCwt/l00GEO6xjGfpBNAvjovvYdCm50dRQkpQ==}
+  '@playwright/test@1.64.1':
+    resolution: {integrity: sha512-IaYGml/nSOiZWROfPtuIL7neuu9qDOZ3TNvNljUIrhDMxiGTgPjzj/g9p9RxpS2tSepPDRY+UwAaEeiKtUvIAg==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -3239,13 +3239,13 @@ packages:
     resolution: {integrity: sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==}
     engines: {node: '>=12'}
 
-  playwright-core@1.63.0:
-    resolution: {integrity: sha512-rYCsBF/M5HjUch52bbtVONEFjv6Xu8sm8h72dNlR5bzIE1fvC/bxgspzkjSfU+MweEMmPM8KJebG6nnyxo5mCg==}
+  playwright-core@1.64.1:
+    resolution: {integrity: sha512-BC4s8y6SEVA6Q1rSxZTto8hI1KUI3xXlHGZgvGqP4IqPdI/a6FX9H29IDNz7vKo9l21b6LfYosScPL6M3xxyDQ==}
     engines: {node: '>=20'}
     hasBin: true
 
-  playwright@1.63.0:
-    resolution: {integrity: sha512-+7ziBLidS4NaNCdt57SUDT+wYmmd5fmiQejUic/kb+YsYSCPyOOE9sebzMjNmQrsnNpDJqd4WHvV/8lfKfUDUg==}
+  playwright@1.64.1:
+    resolution: {integrity: sha512-HCrVhHr5QQuwYoswEUGTb7gGp522yflbv/ST8nF4sFWGuLjQCt17Q/EubpGGSNKYn1tsTCPZxqHhHCfVURu7UA==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -4176,10 +4176,10 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
-  '@axe-core/playwright@4.13.0(playwright-core@1.63.0)':
+  '@axe-core/playwright@4.13.0(playwright-core@1.64.1)':
     dependencies:
       axe-core: 4.13.0
-      playwright-core: 1.63.0
+      playwright-core: 1.64.1
 
   '@babel/code-frame@7.29.7':
     dependencies:
@@ -4565,9 +4565,9 @@ snapshots:
   '@next/swc-win32-x64-msvc@16.4.0':
     optional: true
 
-  '@next/third-parties@16.4.0(next@16.4.0(@playwright/test@1.63.0)(@types/node@24.19.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react@19.3.0)':
+  '@next/third-parties@16.4.0(next@16.4.0(@playwright/test@1.64.1)(@types/node@24.19.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react@19.3.0)':
     dependencies:
-      next: 16.4.0(@playwright/test@1.63.0)(@types/node@24.19.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      next: 16.4.0(@playwright/test@1.64.1)(@types/node@24.19.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react: 19.3.0
       third-party-capital: 1.0.20
 
@@ -4846,9 +4846,9 @@ snapshots:
       legacy-javascript: 0.0.1
       third-party-web: 0.29.2
 
-  '@playwright/test@1.63.0':
+  '@playwright/test@1.64.1':
     dependencies:
-      playwright: 1.63.0
+      playwright: 1.64.1
 
   '@polka/url@1.0.0-next.29': {}
 
@@ -5243,11 +5243,11 @@ snapshots:
     optionalDependencies:
       babel-plugin-react-compiler: 1.0.0
 
-  '@vitest/browser-playwright@5.0.4(playwright@1.63.0)(vite@8.3.4(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.0))(vitest@5.0.4)':
+  '@vitest/browser-playwright@5.0.4(playwright@1.64.1)(vite@8.3.4(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.0))(vitest@5.0.4)':
     dependencies:
       '@vitest/browser': 5.0.4(vite@8.3.4(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.0))(vitest@5.0.4)
       '@vitest/mocker': 5.0.4(vite@8.3.4(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.0))
-      playwright: 1.63.0
+      playwright: 1.64.1
       tinyrainbow: 3.2.0
       vitest: 5.0.4(@types/node@24.19.2)(@vitest/browser-playwright@5.0.4)(@vitest/ui@5.0.4)(vite@8.3.4(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.0))
     transitivePeerDependencies:
@@ -7046,7 +7046,7 @@ snapshots:
 
   netmask@2.1.1: {}
 
-  next@16.4.0(@playwright/test@1.63.0)(@types/node@24.19.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  next@16.4.0(@playwright/test@1.64.1)(@types/node@24.19.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
       '@next/env': 16.4.0
       '@swc/helpers': 0.5.23
@@ -7065,7 +7065,7 @@ snapshots:
       '@next/swc-linux-x64-musl': 16.4.0
       '@next/swc-win32-arm64-msvc': 16.4.0
       '@next/swc-win32-x64-msvc': 16.4.0
-      '@playwright/test': 1.63.0
+      '@playwright/test': 1.64.1
       babel-plugin-react-compiler: 1.0.0
       sharp: 0.35.4(@types/node@24.19.2)
     transitivePeerDependencies:
@@ -7257,11 +7257,11 @@ snapshots:
 
   picomatch@4.0.7: {}
 
-  playwright-core@1.63.0: {}
+  playwright-core@1.64.1: {}
 
-  playwright@1.63.0:
+  playwright@1.64.1:
     dependencies:
-      playwright-core: 1.63.0
+      playwright-core: 1.64.1
 
   pngjs@7.0.0: {}
 
@@ -8044,7 +8044,7 @@ snapshots:
       why-is-node-running: 3.2.1
     optionalDependencies:
       '@types/node': 24.19.2
-      '@vitest/browser-playwright': 5.0.4(playwright@1.63.0)(vite@8.3.4(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.0))(vitest@5.0.4)
+      '@vitest/browser-playwright': 5.0.4(playwright@1.64.1)(vite@8.3.4(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.0))(vitest@5.0.4)
       '@vitest/ui': 5.0.4(vitest@5.0.4)
     transitivePeerDependencies:
       - msw
