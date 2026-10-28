@@ -54,13 +54,13 @@ jobs:
   a11y:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.63.0
+      image: mcr.microsoft.com/playwright:v1.64.1
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: ./.github/actions/setup-node
       - run: pnpm build
       - run: pnpm test:a11y
-      - uses: actions/upload-artifact@v7.0.1
+      - uses: actions/upload-artifact@v7.0.2
         if: failure()
         with:
           name: a11y-test-results
@@ -68,13 +68,13 @@ jobs:
   routes:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.63.0
+      image: mcr.microsoft.com/playwright:v1.64.1
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: ./.github/actions/setup-node
       - run: pnpm build
       - run: pnpm test:routes
-      - uses: actions/upload-artifact@v7.0.1
+      - uses: actions/upload-artifact@v7.0.2
         if: failure()
         with:
           name: routes-test-results
@@ -82,7 +82,7 @@ jobs:
   vrt:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.63.0
+      image: mcr.microsoft.com/playwright:v1.64.1
     strategy:
       matrix:
         type: [pages, components]
@@ -91,7 +91,7 @@ jobs:
       - uses: ./.github/actions/setup-node
       - run: pnpm build
       - run: pnpm test:vrt:ci:${{ matrix.type }}
-      - uses: actions/upload-artifact@v7.0.1
+      - uses: actions/upload-artifact@v7.0.2
         with:
           name: vrt-${{ matrix.type }}-test-results
           path: test-results/
