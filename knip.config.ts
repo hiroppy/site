@@ -6,7 +6,8 @@ const config: KnipConfig = {
     // MDX content files (dynamically imported)
     "src/content/blog/**/*.mdx",
   ],
-  ignoreDependencies: ["@typescript/native-preview"],
+  // lefthook is invoked by Git hooks, not imported by application code.
+  ignoreDependencies: ["@typescript/native-preview", "lefthook"],
   compilers: {
     mdx: true,
   },

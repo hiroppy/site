@@ -38,7 +38,7 @@
     "@next/mdx": "16.4.3",
     "@next/third-parties": "16.4.3",
     "@tailwindcss/postcss": "4.3.3",
-    "algoliasearch": "5.59.0",
+    "algoliasearch": "5.60.0",
     "cheerio": "1.2.0",
     "clsx": "2.1.1",
     "feed": "6.0.0",
@@ -58,7 +58,7 @@
     "zod": "4.6.7"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.13.0",
+    "@axe-core/playwright": "4.14.0",
     "@lhci/cli": "0.15.1",
     "@playwright/test": "1.64.1",
     "@tailwindcss/vite": "4.3.3",
@@ -72,8 +72,8 @@
     "@vitejs/plugin-react": "6.1.2",
     "@vitest/browser-playwright": "5.0.5",
     "babel-plugin-react-compiler": "1.0.0",
-    "knip": "6.40.0",
-    "lefthook": "2.1.17",
+    "knip": "6.41.0",
+    "lefthook": "2.2.2",
     "postcss": "8.5.32",
     "prettier": "3.9.10",
     "prettier-plugin-tailwindcss": "0.8.1",
