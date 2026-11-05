@@ -6,7 +6,7 @@ const config: KnipConfig = {
     // MDX content files (dynamically imported)
     "src/content/blog/**/*.mdx",
   ],
-  ignoreDependencies: ["@typescript/native-preview"],
+  ignoreDependencies: ["@typescript/native-preview", "lefthook"],
   compilers: {
     mdx: true,
   },
