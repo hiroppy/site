@@ -60,7 +60,7 @@
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
     "@lhci/cli": "0.15.1",
-    "@playwright/test": "1.65.0",
+    "@playwright/test": "1.65.1",
     "@tailwindcss/vite": "4.3.5",
     "@trivago/prettier-plugin-sort-imports": "6.0.2",
     "@types/mdast": "4.0.4",
@@ -74,7 +74,7 @@
     "babel-plugin-react-compiler": "1.0.0",
     "knip": "6.40.0",
     "lefthook": "2.1.17",
-    "postcss": "8.5.32",
+    "postcss": "8.5.33",
     "prettier": "3.9.10",
     "prettier-plugin-tailwindcss": "0.8.1",
     "remark": "15.0.1",
